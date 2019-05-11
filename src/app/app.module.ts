@@ -106,11 +106,10 @@ export function HttpLoaderFactory(http: HttpClient) {
       }
     })
   ],
-  bootstrap: [IonApp,
-    AppComponent],
-  entryComponents: [
+  bootstrap: [AppComponent],
+  /*entryComponents: [
     AppComponent,
-    /*LoginPage
+    LoginPage
     DashboardNewPage,
     SignupPage,
     StartscreenNewPage,
@@ -131,8 +130,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     OrderFormPage,
     MyDataPage,
     AppointmentPlanPage,
-    ProtocolHistoryPage*/
-  ],
+    ProtocolHistoryPage
+  ],*/
   providers: [
     StatusBar,
     SplashScreen,
