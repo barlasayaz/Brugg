@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { MainNavComponent } from './main-nav.component';
 import { TranslateModule } from '@ngx-translate/core';
+import {RoundProgressModule} from 'angular-svg-round-progressbar';
 
 const routes: Routes = [
   {
@@ -22,6 +23,7 @@ const routes: Routes = [
     FormsModule,
     IonicModule,
     TranslateModule,
+    RoundProgressModule,
     RouterModule.forChild(routes)
   ],
   declarations: [MainNavComponent]
