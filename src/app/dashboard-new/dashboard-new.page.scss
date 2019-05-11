@@ -1,0 +1,189 @@
+page-dashboard-new {
+
+    .container-fix {
+        padding: 0 13px !important;
+    }
+
+    .topBar-outer {
+        margin-bottom: 3px;
+    }
+
+    .search-search {
+        display: flex;
+    }
+
+    .table-subheader-fix {
+        display: flex;
+        -webkit-justify-content: space-between;
+                justify-content: space-between;
+    }
+
+    .search-text-input-left {
+        color: #000;
+        background-color: white;
+        max-width: 170px;
+        width: 100%;
+        height: 30px;
+        top: 6px;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        padding-right: 10px;
+    }
+
+    .search-text-input-right {
+        color: #000;
+        background-color: white;
+        max-width: 170px;
+        width: 100%;
+        height: 30px;
+        top: 6px;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        padding-right: 10px;
+    }
+
+    .tbody {
+        -webkit-border-radius: var(--global-radius);
+        border-radius: var(--global-radius);
+
+        .tr:nth-child(2n) {
+            background: #f5f7f7;
+        }
+
+    }
+
+    .tfoot {
+        .item {
+            background: none;
+        }
+
+        ion-select {
+            -webkit-border-radius: var(--global-radius);
+                    border-radius: var(--global-radius);
+            .select-text {
+                color: #FFF;
+                font-size: 14px;
+            }
+        }
+    }
+
+    .btn-table-header {
+        background: color(var(--ion-color-darkmain));
+        -webkit-border-radius: var(--global-radius);
+                border-radius: var(--global-radius);
+        position: absolute;
+        right: 20px;
+        padding: 7px 5px;
+    }
+
+
+
+    .search-select-bg {
+        border: none !important;
+    }
+
+    .search-input-bg ion-input {
+        background-color: #005e86 !important;
+        padding-left: 10px;
+    }
+
+    #kundenListeFilters {
+        background-color: #0093d1 !important;
+    }
+
+    .item-cover {
+        padding: 0px !important;
+    }
+
+    .select-text {
+        min-width: 70px !important;
+        -webkit-align-self: center;
+                align-self: center;
+    }
+
+    .item-md {
+        padding-left: 0px;
+    }
+
+    .imput-wrapper {
+        width: 5px !important;
+        height: 45px !important;
+    }
+
+    .select {
+        background-color: rgb(23, 148, 207);
+        padding-left: 8px !important;
+        padding-right: 98px !important;
+        margin-right: 0px;
+        position: relative;
+        cursor: pointer;
+    }
+
+    .clickable{
+        cursor: pointer;
+    }
+
+    .item-inner {
+        padding-right: 0px !important;
+    }
+
+    div.table div.tbody div.tr.table-subheader div.th {
+        padding: 10px 10px !important;
+    }
+
+    .table-subheader {
+        padding-right: 0px !important;
+    }
+
+    .form-control {
+        border: none;
+        display: block !important;
+        .select-icon {
+            .select-icon-inner {
+                margin-top: -25px !important;
+            }
+        }
+    }
+
+    .select {
+        background-color: white !important;
+        margin-left: 56% !important;
+        border: 1px solid rgb(65, 64, 64) !important;
+        height: 30px !important;
+        margin-top: 5px !important;
+        margin-bottom: 4px !important;
+    }
+
+    .select-icon {
+        .select-icon-inner {
+            color: black !important;
+            text-align: right !important;
+            left: 90px !important;
+            margin-top: -10px !important;
+        }
+    }
+
+    .posek {
+        display: flex;
+        -webkit-align-items: center;
+                align-items: center;
+        .progress-label {
+          margin-right: 10px;
+        }
+        .progress-wrapper {
+          position: relative;
+          width: 43px;
+          height: 65px;
+          display: flex;
+          -webkit-align-items: center;
+                  align-items: center;
+          -webkit-justify-content: center;
+                  justify-content: center;
+        }
+        .current {
+          position: absolute;
+          font-size: 12px;
+        }
+      }
+
+}

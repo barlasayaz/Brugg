@@ -1,0 +1,186 @@
+import { Component } from '@angular/core';
+import { NavController, NavParams, ModalController, AlertController } from '@ionic/angular';
+import { UserdataService } from '../../services/userdata';
+import { TranslateService } from '@ngx-translate/core';
+import { ApiService } from '../../services/api';
+
+/**
+ * Generated class for the CustomerEditComponent component.
+ *
+ * See https://angular.io/api/core/Component for more info on Angular
+ * Components.
+ */
+@Component({
+  selector: 'app-customer-edit',
+  templateUrl: './customer-edit.component.html',
+  styleUrls: ['./customer-edit.component.scss'],
+})
+export class CustomerEditComponent {
+
+  public modalTitle: string ;
+  public idCustomer: number = 0;
+  public parentCustomer:number = 0;
+  public itsNew:boolean = false;
+  public activCustomer: any = {}; 
+  public inputError:boolean = false; 
+  public Branches: any = [];
+  public redirect: any = 0;
+  public customerDisabled: boolean = false;
+
+  constructor(  public navCtrl: NavController,
+                public navParams: NavParams,
+                public translate: TranslateService,
+                public userdata: UserdataService,
+                public viewCtrl: ModalController,
+                public apiService: ApiService,
+                public alertCtrl: AlertController) 
+  {
+    this.idCustomer = this.navParams.get("id"); 
+    this.redirect = this.navParams.get("redirect"); 
+    this.parentCustomer = this.navParams.get("parent"); 
+    if(!this.parentCustomer) this.parentCustomer = 0;
+    if(this.idCustomer > 0) {
+      this.itsNew = false;
+      this.modalTitle = translate.instant('Kundendaten bearbeiten');
+      this.activCustomer.rating = "C";
+      this.loadCustomer();
+    } else {
+      this.idCustomer = 0;
+      this.itsNew = true;
+      this.modalTitle = translate.instant('Neuer Kunde');
+      this.activCustomer.rating = "C";
+    }
+
+    this.Branches = [
+      { value: 'Baukran', text: 'Baukran' },
+      { value: 'Bauunternehmen', text: 'Bauunternehmen' },
+      { value: 'Fahrzeugbau', text: 'Fahrzeugbau' },
+      { value: 'Fassadenreiniger/Lift', text: 'Fassadenreiniger/Lift' },
+      { value: 'Forstunternehmen/Landmaschinen', text: 'Forstunternehmen/Landmaschinen' },
+      { value: 'Hallenkran/Industriekran', text: 'Hallenkran/Industriekran' },
+      { value: 'Handelsunternehmen', text: 'Handelsunternehmen' },
+      { value: 'Hochregallager', text: 'Hochregallager' },
+      { value: 'Hochspannung/Niederspannung', text: 'Hochspannung/Niederspannung' },
+      { value: 'Kehrichtverbrennungsanlagen', text: 'Kehrichtverbrennungsanlagen' },
+      { value: 'Kranverleih', text: 'Kranverleih' },
+      { value: 'Lagerlogistik', text: 'Lagerlogistik' },
+      { value: 'Maschinenbau', text: 'Maschinenbau' },
+      { value: 'Metallbau/Stahlbau', text: 'Metallbau/Stahlbau' },
+      { value: 'Pneukran', text: 'Pneukran' },
+      { value: 'Seilpark', text: 'Seilpark' },
+      { value: 'Spezial-Tiefbau', text: 'Spezial-Tiefbau' },
+      { value: 'Strassenbau Tiefabau', text: 'Strassenbau Tiefabau' },
+      { value: 'Transport', text: 'Transport' },
+      { value: 'Veranstaltungstechnik', text: 'Veranstaltungstechnik' },
+      { value: 'Sonstige', text: 'Sonstige' }
+    ];
+    console.log("CustomerEditComponent: " ,this.idCustomer);    
+
+    if(this.redirect == 3)
+      this.customerDisabled = true;
+  }
+
+  loadCustomer(){
+    this.apiService.pvs4_get_customer( this.idCustomer).then((result:any)=>{
+      this.activCustomer = result.obj;  
+      console.log('loadCustomer: ' , this.activCustomer); 
+    });
+  }
+
+  dismiss() {
+    this.viewCtrl.dismiss(false);
+  }
+
+  customerEdit() {
+    console.log("customerEdit()");
+     let obj={
+      active:1,
+      company:"",
+      country:"",
+      customer_number:"",
+      email:"",
+      licensee: this.userdata.licensee,
+      parent: this.parentCustomer,
+      phone:"",
+      place:"",
+      po_box:"",
+      rating:"C",
+      sector:"",
+      street:"",
+      website:"",
+      zip_code:"",
+      id: 0
+    }; 
+
+    if(this.activCustomer["active"]) obj.active = this.activCustomer["active"];
+    if(this.activCustomer["company"]) obj.company = this.activCustomer["company"];
+    if(this.activCustomer["country"]) obj.country = this.activCustomer["country"];
+    if(this.activCustomer["customer_number"]) obj.customer_number = this.activCustomer["customer_number"];
+    if(this.activCustomer["email"]) obj.email = this.activCustomer["email"];
+    if(this.activCustomer["licensee"]) obj.licensee = this.activCustomer["licensee"];
+    if(this.activCustomer["parent"]) obj.parent = this.activCustomer["parent"];
+    if(this.activCustomer["phone"]) obj.phone = this.activCustomer["phone"];
+    if(this.activCustomer["place"]) obj.place = this.activCustomer["place"];
+    if(this.activCustomer["po_box"]) obj.po_box = this.activCustomer["po_box"];
+    if(this.activCustomer["rating"]) obj.rating = this.activCustomer["rating"];
+    if(this.activCustomer["sector"]) obj.sector = this.activCustomer["sector"];
+    if(this.activCustomer["street"]) obj.street = this.activCustomer["street"];
+    if(this.activCustomer["website"]) obj.website = this.activCustomer["website"];
+    if(this.activCustomer["zip_code"]) obj.zip_code = this.activCustomer["zip_code"];
+
+    console.log(obj);
+    if (!this.itsNew) {
+      obj.id= this.activCustomer["id"];
+      this.idCustomer = this.activCustomer["id"];     
+    } else {
+      this.activCustomer.active = 1;
+    }
+    this.apiService.pvs4_set_customer(obj).then((result:any)=>{ 
+      console.log('result: ' , result, obj); 
+      if(this.redirect == 3) {
+        this.viewCtrl.dismiss(obj);
+      }
+      else {
+        this.navCtrl.navigateBack("/customer-table");
+      }
+    });
+
+  }
+
+  customerDeactivate() {
+    console.log("delete");
+    this.showConfirmAlert(this.activCustomer);
+  }
+
+  showConfirmAlert(activeCustomer) {
+    let alert = this.alertCtrl.create({
+      header: 'Confirm delete user',
+      message: 'Are you sure you want to permanently delete this user?',
+      buttons: [
+        {
+          text: 'No',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Yes',
+          handler: () => {
+            activeCustomer.active = 0;
+            this.apiService.pvs4_set_customer(activeCustomer).then((result:any)=>{ 
+              console.log('result: ', result); 
+              this.navCtrl.navigateBack("/customer-table");;
+            });
+            
+          }
+        }
+      ]
+    }).then(x=> x.present());
+  }
+
+  closeModal() {
+    this.viewCtrl.dismiss(false);
+  }
+
+
+}

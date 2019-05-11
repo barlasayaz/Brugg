@@ -1,0 +1,238 @@
+<main-nav aktivPage="MyData"></main-nav>
+
+<div class="ek-content" style="overflow: scroll; padding-top: 0px">
+	<div class="container container-fix">
+
+		<div class="mt20">
+			<div class="settings-delete">
+				<ion-button
+						type="button"
+						class="btn btn-danger"
+						(click)="delLocalAll();">
+					<span class="hidden-sm-down" style="font-size: 11px;">{{'Lokale Daten löschen' | translate}}</span>
+					<span class="hidden-md-up col-12"><ion-icon name="trash"></ion-icon></span>
+				</ion-button>
+			</div>
+
+ 			<ion-grid>			
+				<ion-row>
+<!--
+<button col-lg-2  ion-button (click)="mw_test_a(1);">
+	<span class="hidden-sm-down" style="font-size: 11px;">{{'Test 1' | translate}}</span>
+</button>
+<button col-lg-2  ion-button (click)="mw_test_a(2);">
+	<span class="hidden-sm-down" style="font-size: 11px;">{{'Test 2' | translate}}</span>
+</button>
+<button col-lg-2 ion-button (click)="mw_test_b(1);">
+	<span class="hidden-sm-down" style="font-size: 11px;">{{'Test 3 f' | translate}}</span>
+</button>
+<button col-lg-2  ion-button (click)="mw_test_b(2);">
+	<span class="hidden-sm-down" style="font-size: 11px;">{{'Test 4 f' | translate}}</span>
+</button>
+-->											
+					<ion-col size-lg="7" size-md="7" size-sm="12" size="12">
+						<!-- Meine Daten -->
+						<div class="table-responsive">
+							<div class="table-info table-striped">
+								<div class="thead">
+									<div class="tr table-header">
+										<div class="th">{{'Meine Daten' | translate}}</div>
+									</div>
+								</div>								
+								<div class="tbody">									
+									<div class="tr table-subheader table-subheader-fix" style="background-color:rgb(28, 114, 151);">												
+										<ion-button small 												
+												(click)="open_mydataedit(userdata.profile, userdata.role, userdata.role_nr)" 
+												style="margin-left:3%; margin-top:5px;">
+											<ion-icon name="create"></ion-icon>
+										</ion-button> 												    
+									</div>
+									<div class="tr table-body">
+										<div class="td">{{'Name' | translate}}</div>
+										<div class="td"><span >{{userdata.last_name}}</span></div>
+									</div>
+									<div class="tr table-body">
+										<div class="td">{{'Vorname' | translate}}</div>
+										<div class="td"><span >{{userdata.first_name}}</span></div>
+									</div>
+									<div class="tr table-body">
+										<div class="td">{{'KennungMitarbeiter' | translate}}</div>
+										<div class="td"><span >{{userdata.short_code}}</span></div>
+									</div>
+									<div class="tr table-body">
+										<div class="td">{{'Farbe' | translate}}</div>
+										<div [ngStyle]="{'width':'15px',
+														 'height':'15px',
+														 'margin-right':'10px',
+														 'display':'inline-block',
+														 'border-radius':'3px',
+														 'background-color':userdata.colour}">
+										</div>
+										<div class="td"><span >{{userdata.colour}}</span></div>
+									</div>
+									<div class="tr table-body">
+										<div class="td">{{'E-Mail' | translate}}</div>
+										<div class="td"><span  >{{userdata.email}}</span></div>
+									</div>
+									<div class="tr table-body">
+										<div class="td">{{'Telefon' | translate}}</div>
+										<div class="td"><span  >{{userdata.phone}}</span></div>
+									</div>
+									<div class="tr table-body">
+										<div class="td">{{'Sprache' | translate}}</div>
+										<div class="td"  style="margin-left: -7px;">
+											<ion-item no-lines class="pvs4-full-select">
+												<ion-select style="font-size: 14px; color:#009de0;"
+															[(ngModel)]="lang"
+															(ionChange)="changeLanguage()"
+															okText="{{'okay' | translate}}"
+															cancelText="{{'dismiss' | translate}}">
+													<ion-select-option value="de" ng-selected="de">Deutsch</ion-select-option>
+													<ion-select-option value="fr" ng-selected="fr">Français</ion-select-option>
+													<ion-select-option value="it" ng-selected="it">Italiano</ion-select-option>
+													<ion-select-option value="en" ng-selected="en">English</ion-select-option>
+												</ion-select>
+											</ion-item>
+										</div>
+									</div> 
+								</div>
+								<div class="thead">
+									<div class="tr table-header">
+										<div class="th">{{'Benutzerrechte' | translate}}</div>
+									</div>
+								</div>
+								<div class="tbody">
+									<div class="tr table-body">
+										<div class="td">{{'edit_customer' | translate}}</div>
+										<div class="td">
+											<ion-item no-lines class="item-trns " >
+												<ion-toggle disabled   color="partic" [ngModel]="userdata.role_set.edit_customer" ></ion-toggle>
+											</ion-item>
+										</div>
+									</div>
+									<div class="tr table-body">
+										<div class="td">{{'edit_membership' | translate}}</div>
+										<div class="td">
+											<ion-item no-lines  class="item-trns " >
+												<ion-toggle disabled  color="partic" [(ngModel)]="userdata.role_set.edit_membership" ></ion-toggle>
+											</ion-item>
+										</div>
+									</div>
+									<div class="tr table-body">
+										<div class="td">{{'edit_rights' | translate}}</div>
+										<div class="td">
+											<ion-item no-lines class="item-trns "  >
+												<ion-toggle disabled color="partic" [(ngModel)]="userdata.role_set.edit_rights" ></ion-toggle>
+											</ion-item>
+										</div>
+									</div>
+									<div class="tr table-body">
+										<div class="td">{{'edit_products' | translate}}</div>
+										<div class="td">
+											<ion-item no-lines class="item-trns "  >
+												<ion-toggle disabled color="partic" [(ngModel)]="userdata.role_set.edit_products" ></ion-toggle>
+											</ion-item>
+										</div>
+									</div>
+									<div class="tr table-body">
+										<div class="td">{{'check_products' | translate}}</div>
+										<div class="td">
+											<ion-item no-lines class="item-trns "   >
+												<ion-toggle disabled color="partic" [(ngModel)]="userdata.role_set.check_products" ></ion-toggle>
+											</ion-item>
+										</div>
+									</div>
+									<div class="tr table-body">
+										<div class="td">{{'edit_contact_persons' | translate}}</div>
+										<div class="td">
+											<ion-item no-lines class="item-trns " >
+												<ion-toggle disabled color="partic" [(ngModel)]="userdata.role_set.edit_contact_persons" ></ion-toggle>
+											</ion-item>
+										</div>
+									</div>
+								</div>
+								<div class="tfoot-buttons" style="margin-top:-3px;">
+									<div class="tr table-body">
+										<div class="td">
+											<!-- <button ion-button type="button" class="pvs4-btn pvs4-btn-full pvs4-btn-green" (click)="openModal(userdata.id);">
+												<ion-icon class="headerIcon" style="margin-top: -9px;" name="create"></ion-icon>
+											</button> -->
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</ion-col>
+					<ion-col size-lg="5" size-md="5" size-sm="12" size="12" *ngIf="(userdata.role==1)||(userdata.role==2)">
+						<!-- Mitarbeiter -->
+						<div class="table-responsive">
+							<div class="table-info table-striped">
+								<div class="thead">
+									<div class="tr table-header">
+										<div class="th">{{'Mitarbeiter' | translate}}
+											<!-- <button ion-button *ngIf="userdata.Type<20" type="button" class="icon button1" (click)="openModal(0);">
+												<ion-icon class="headerIcon" name="add"></ion-icon>
+											</button> -->
+										</div>
+									</div>
+								</div>
+								<div class="tbody">
+									<div class="tr table-subheader table-subheader-fix" style="background-color:rgb(28, 114, 151);">
+										<ion-button small 
+										        [disabled]="userdata.role_set.edit_membership==false"
+												(click)="open_mydataedit(0,0,0,1)" 
+												[ngClass]="{'not-allowed': userdata.role_set.edit_membership==false}"
+												style="margin-left:3%; margin-top:5px;">
+											<ion-icon name="add"></ion-icon>
+										</ion-button> 	
+									</div>
+									<div *ngFor="let coll of colleagues | orderBy:'Type':true ">
+										<div class="tr table-body" *ngIf="userdata.Type<20">
+											<div class="td" style="max-width: 100%">
+												<div (click)="open_mydataedit(coll.id,coll.role,coll.role_nr);" 
+												     [ngClass]="{'not-allowed': userdata.role_set.edit_membership==false}"
+												     style="display: flex; align-items: center; cursor:pointer;">
+													<div [ngStyle]="{'width':'15px', 'height':'15px', 'margin-right':'10px', 'display':'inline-block', 'background-color':coll.colour}"> &nbsp; </div>
+													{{coll.bid.first_name}} {{coll.bid.last_name}} ({{coll.short_code}})
+												</div>
+											</div>			
+										</div>
+									</div> 
+								</div>
+							</div>
+						</div>
+					</ion-col>
+				</ion-row>
+			<!-- <ion-row>
+					<ion-col col-lg-6 col-md-6 col-sm-12 col-12 *ngIf="userdata.OpcUa==1" >
+						-- Anlagenprüfung  --
+						<div class="table-responsive">
+							<div class="table-info table-striped">
+								<div class="thead">
+									<div class="tr table-header">
+										<div class="th">{{'Anlagenprüfung' | translate}} </div>
+									</div>
+								</div>
+								<div class="tbody">
+									<div class="tr table-body">
+										<div class="td">Server Uri</div>
+										<div class="td">
+											<ion-input type="text" id="serverUri" [(ngModel)]="system.opcuaServerUri" style="padding:5px; width:100%; border:1px solid #ccc; border-radius: 3px;"></ion-input>
+										</div>
+									</div>
+									<div class="tr table-body">
+										<div class="td">Pfad</div>
+										<div class="td">
+											<ion-input type="text" id="serverPfad" [(ngModel)]="system.opcuaServerPfad" style="padding:5px; width:100%; border:1px solid #ccc; border-radius: 3px;"></ion-input>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</ion-col>
+				</ion-row> -->
+			</ion-grid> 
+		</div>
+
+	</div>
+</div><!--//ROW-->

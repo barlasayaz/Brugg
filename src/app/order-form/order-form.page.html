@@ -1,0 +1,140 @@
+<main-nav aktivPage="OrderForm" [idCustomer]="idCustomer" [company]="company"></main-nav>
+
+<div class="ek-content" style="overflow-x: scroll;">
+    <div class="container container-bg container-fix content-sm bestellungen">
+
+      <div class="row mt20 mb20">
+        <!-- BESTELLUNGEN -->
+        <div class="col-md-4 animate-repeat" style="margin-top: 20px;">
+          <div class="div-header text-center">
+            {{'Bestellungen' | translate}}
+            <div class="btn btn-cart-add" (click)="dialogObjectNew(1)">
+                <ion-icon name="add"></ion-icon>
+            </div>
+          </div>
+          <div class="whitebox" style="margin-top: 15px;">
+            <div class="inner">
+               <div class="items item-00 animate-repeat" *ngFor="let value of bestellungen">
+                <div class="id-bg">
+                  ID. {{value.id}}
+                </div>
+                <div class="item-content">
+                  {{(value.text)}}
+                </div>
+                <div class="item-footer">
+                    <div class="minusplusbtn" (click)="minusIndex(value)">
+                      <ion-icon class="footerIcon" name="remove"></ion-icon>
+                    </div>
+                    <div class="inputitem">
+                      <ion-input type="text" value="{{value.anz}}" readonly></ion-input>
+                    </div>
+                    <div class="minusplusbtn" (click)="plusIndex(value)">
+                      <ion-icon class="footerIcon" name="add"></ion-icon>
+                    </div>
+                  <div class="edits">
+                    <div class="btn btn-edit" (click)="editOrders(value,11)">
+                      <ion-icon class="footerIcon" name="create"></ion-icon>
+                    </div>
+                    <div class="btn btn-danger" (click)="delIndex(value,11)">
+                      <ion-icon class="footerIcon" name="trash"></ion-icon>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="hidden-above-sm">
+          <div class="mt20"></div>
+        </div>
+
+        <!-- OFFERTE -->
+        <div class="col-md-4 animate-repeat" style="margin-top: 20px;">
+          <div class="div-header text-center">
+            {{'Offerte' | translate}}
+            <div class="btn btn-cart-add" (click)="dialogObjectNew(2)">
+                <ion-icon name="add"></ion-icon>
+            </div>
+          </div>
+          <div class="whitebox" style="margin-top: 15px;">
+            <div class="inner">
+              <div class="items item-00 animate-repeat" *ngFor="let value of offerten" >
+                <div class="id-bg">
+                  ID. {{value.id}}
+                </div>
+                <div class="item-content">
+                  {{(value.text)}}
+                </div>
+                <div class="item-footer">
+                    <div class="minusplusbtn" (click)="minusIndex(value)">
+                      <ion-icon class="footerIcon" name="remove"></ion-icon>
+                    </div>
+                    <div class="inputitem">
+                      <ion-input type="text" value="{{value.anz}}" readonly></ion-input>
+                    </div>
+                    <div class="minusplusbtn" (click)="plusIndex(value)">
+                      <ion-icon class="footerIcon" name="add"></ion-icon>
+                    </div>
+                  <div class="edits">
+                    <div class="btn btn-edit" (click)="editOrders(value,12)">
+                      <ion-icon class="footerIcon" name="create"></ion-icon>
+                    </div>
+                    <div class="btn btn-danger" (click)="delIndex(value,12)">
+                      <ion-icon class="footerIcon" name="trash"></ion-icon>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="hidden-above-sm">
+          <div class="mt20"></div>
+        </div>
+
+        <!-- REPERATUREN -->
+        <div class="col-md-4 mb20 animate-repeat" style="margin-top: 20px;">
+          <div class="div-header text-center">
+            {{'Prüfung' | translate}}
+            <div class="btn btn-cart-add" (click)="dialogObjectNew(3)">
+                <ion-icon name="add"></ion-icon>
+            </div>
+          </div>
+          <div class="whitebox" style="margin-top: 15px;">
+            <div class="inner">
+              <div class="items item-00 animate-repeat" *ngFor="let value of pruefungen" >
+                <div class="id-bg">
+                  ID. {{value.id}}
+                </div>
+                <div class="item-content">
+                  {{(value.text)}}
+                </div>
+                <div class="item-footer">
+                  <div class="edits">
+                    <div class="btn btn-danger" (click)="delIndex(value,13)">
+                      <ion-icon class="footerIcon" name="trash"></ion-icon>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="hidden-above-sm">
+          <div class="mt20"></div>
+        </div>
+      </div>
+
+      <div class="navbar-fixed-bottom mb20">
+        <div class="container">
+         <div class="flex-center" *ngIf="rs.anz_wahrenkorb>0">
+            <button class="btn btn-modal-success" title="Senden" data-toggle="modal" data-target="#orders-send" (click)="ordersSend();">
+              <ion-icon class="footerIcon" name="send"></ion-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /container -->
+</div>
+

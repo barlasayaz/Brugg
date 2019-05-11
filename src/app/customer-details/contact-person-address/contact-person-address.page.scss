@@ -1,0 +1,46 @@
+app-contact-person-address {
+    .highlightFehler {
+        display: -webkit-box !important;
+        display: -moz-box !important;
+        display: -webkit-flex !important;
+        display: -ms-flexbox !important;
+        display: flex !important;
+        -webkit-box-pack: center !important;
+        -moz-box-pack: center !important;
+        -o-box-pack: center !important;
+        -ms-flex-pack: center !important;
+        -webkit-justify-content: center !important;
+        justify-content: center !important;
+        -ms-flex-line-pack: center !important;
+        -webkit-align-content: center !important;
+        align-content: center !important;
+        padding: 15px 10px !important;
+        width: 100% !important;
+        color: red !important;
+        border-radius: 3px !important;
+        margin-top: 10px !important;
+    }
+
+    .ansprechpartner-row {
+        padding: 15px 15px !important;
+        cursor: pointer !important;
+    }
+
+    .ui-accordion .ui-accordion-header a {
+        padding: 0.75em !important;
+    }
+    .ui-accordion-content {
+        padding: 0.1em !important;   
+        -webkit-border-radius: var(--global-radius);
+        border-radius: var(--global-radius);
+        .tr:nth-child(2n) {
+            background: #f5f7f7;
+        }
+    }
+
+    .ui-accordion .ui-accordion-header.ui-state-active a {
+        color: #7a7e81 !important;
+        background: #8bd8f9 !important;
+        padding: 0.75em !important;
+    }
+}

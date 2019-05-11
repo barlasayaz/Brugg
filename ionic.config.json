@@ -1,0 +1,7 @@
+{
+  "name": "bruggpvs5",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}

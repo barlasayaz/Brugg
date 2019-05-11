@@ -1,0 +1,25 @@
+app-dialogproduktbildmodal {
+
+    .modal-body div {
+        text-align: center;
+    }
+
+    .dir, .file {
+        float: left;  
+        padding: 5px;
+        text-align:center;
+        width:160px;
+        height:140px;
+        overflow:hidden;
+    }
+
+    .pb_box:hover {
+        background-color:#ccc;
+    }
+
+    .file img {
+        max-width:100px;
+        max-height:100px;
+    }
+
+}

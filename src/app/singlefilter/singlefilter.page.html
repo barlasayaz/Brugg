@@ -1,0 +1,57 @@
+<div class="ek-footer">
+    <div id="search-kundenuebersicht">
+      <div>      
+        <div class="search-select-bg">
+            <ion-item no-lines>
+              <ion-select [(ngModel)]="selectedFilter" 
+                          (ionChange)="suchen()" 
+                          id="ListeFilters" 
+                          class="form-control ng-pristine ng-valid ng-touched"
+                          okText="{{'okay' | translate}}" 
+                          cancelText="{{'dismiss' | translate}}">
+                <ion-label>{{'bitte wählen' | translate}}</ion-label>
+                <ion-select-option value="alle">{{'Alle' | translate}}</ion-select-option>
+                <ion-select-option value="nr">{{'Kundennummer' | translate}}</ion-select-option>
+                <ion-select-option value="firma">{{'Firma' | translate}}</ion-select-option>
+                <ion-select-option value="typ">{{'Typ' | translate}}</ion-select-option>
+                <ion-select-option value="plz">{{'PLZ' | translate}}</ion-select-option>
+                <ion-select-option value="ort">{{'Ort' | translate}}</ion-select-option>
+              </ion-select>
+            </ion-item>
+        </div>
+      
+        <div class="search-input-bg">
+          <ion-input type="text" 
+                     (keypress)="grid.appScope.getEnterKeyboardClose($event)" 
+                     (ionChange)="suchen()" 
+                     [(ngModel)]="grid.appScope.filterValue" 
+                     placeholder="{{'Suche' | translate}}" class="form-control">
+            </ion-input>
+        </div>
+      
+      </div>
+      <!-- ALL IN MENU -->  
+<!--       <div >
+        <nav
+          class="ek-fab"
+          mfb-menu 
+          position="br" 
+          active-icon="ion-plus" 
+          resting-icon="ion-plus"
+          ng-click="grid.appScope.neuerKunde();"
+        >
+        </nav>
+      </div> -->
+
+      <div>
+        <ion-fab slot="fixed" right vertical="bottom" style="margin-right: 180px; margin-bottom: 120px;"> 
+          <ion-fab-button color="primarydark"><ion-icon name="add"></ion-icon></ion-fab-button>
+            <ion-fab-list side="top">
+              <ion-fab-button><ion-icon name="add"></ion-icon></ion-fab-button>
+            </ion-fab-list>
+        </ion-fab>
+      </div>
+    </div>
+    
+  </div>
+  

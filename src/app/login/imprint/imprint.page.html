@@ -1,0 +1,90 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="primary">
+      <ion-button icon-only (click)="dismiss()">
+        <ion-icon name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>{{translate.instant('Impressum')}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>    
+  <ion-grid>
+
+    <ion-row align-items-center>
+      <ion-col size="auto">
+        <ion-icon class="iconsize" ios="ios-contacts" md="md-contacts"></ion-icon>
+      </ion-col>
+      <ion-col>
+        <ion-label>
+          Brugg Lifting<br>Wydenstrasse 36<br>5242 Birr <br>Schweiz
+        </ion-label>
+      </ion-col>
+    </ion-row>
+
+    <ion-row align-items-center>	
+      <ion-col size="auto">
+        <ion-icon class="iconsize" ios="ios-call" md="md-call"></ion-icon>
+      </ion-col>
+      <ion-col>
+        <a target="_blank" href="tel:+410564644242">+41(0) 56 464 42 42</a>
+      </ion-col>
+    </ion-row>
+
+    <ion-row align-items-center>
+      <ion-col size="auto">
+        <ion-icon class="iconsize" ios="ios-mail" md="md-mail"></ion-icon>
+      </ion-col>
+      <ion-col>
+        <a target="_blank" href="mailto:info.lifting@brugg.com">info.lifting@brugg.com</a>
+      </ion-col>
+    </ion-row>
+
+    <ion-row align-items-center>
+      <ion-col size="auto">
+        <ion-icon class="iconsize" ios="ios-home" md="md-home"></ion-icon>
+      </ion-col>
+      <ion-col>
+        <a target="_blank" href="http://www.brugglifting.com">brugglifting.com</a>
+      </ion-col>
+    </ion-row>
+
+    <ion-row style="margin-top:20px;">
+      <ion-col>
+        <h2>{{translate.instant('Rechtliche Hinweise')}} </h2>
+      </ion-col>
+    </ion-row>
+
+    <ion-row style="text-align: justify;">
+      <ion-col>
+        {{translate.instant('RechtlicheHinweiseAussage')}} 
+      </ion-col>
+    </ion-row>
+
+    <ion-row style="margin-top:20px">
+      <ion-col>
+        <h2>{{translate.instant('Entwicklung')}}</h2>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        Brugg Lifting & <a target="_blank" href="https://www.schaefer-design.de">Schaefer Design</a>
+      </ion-col>
+    </ion-row>
+
+    <!-- Footer -->
+    <ion-row style="margin-top:15px">
+      <ion-col>
+        <ion-button class="pvs4-btn pvs4-btn-full pvs4-btn-red footerIcon" (click)="dismiss()">
+          <ion-icon name="close"></ion-icon>
+        </ion-button>  
+      </ion-col>
+    </ion-row>  
+
+  </ion-grid>
+
+  	 
+
+</ion-content>

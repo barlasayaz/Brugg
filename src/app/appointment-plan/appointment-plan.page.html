@@ -1,0 +1,13 @@
+<main-nav aktivPage="AppointmentplanPage"></main-nav>
+
+<div class="ek-content" style="overflow-x: auto;">
+    <div class="container container-fix container-bg">
+		<ng-fullcalendar #ucCalendar [(eventsModel)]="events" class="calendar"
+					[options]="calendarOptions"
+					(viewRender)="loadEvents($event.detail)"
+					(eventClick)="handleEventClick($event.detail)"
+					(eventDrop)="updateEvent($event.detail)">
+		</ng-fullcalendar>
+		<button style="visibility: hidden" (click)="newPrAppointment()" id="hdnButton"></button>
+  	</div>
+</div>

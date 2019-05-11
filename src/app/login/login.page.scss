@@ -1,0 +1,91 @@
+app-login {
+
+	ion-content {
+		.scroll-content {
+			background: url('../../assets/imgs/login-bg.jpg') center center fixed;
+			background-size: cover;
+		}
+	}
+
+	.version {
+		background: color(var(--ion-color-main));
+		color: #fff;
+		-webkit-border-radius: var(--global-radius);
+		        border-radius: var(--global-radius);
+		padding: 10px;
+	}
+
+	.pvs4-lang-select {
+		margin-top: 25px;
+		margin-bottom: 15px;
+	}
+
+	.logo {
+		width: 100%;
+		img {
+			width: 100%;
+			height: auto;
+		}
+	}
+
+	.remaind {
+		font-size: 14px;
+	}
+
+	.pvs4-login-text {
+		font-size: 14px;
+		margin-top: 5px;
+		text-align: center;
+		-webkit-border-radius: 3px;
+		        border-radius: 3px;
+		width: 100%;
+		color: #FFF;
+		background: color(var(--ion-color-main));
+		&:hover {
+			cursor: pointer;
+		}
+	}
+
+	.pvs4-register-text {
+		font-size: 14px;
+		color: color(var(--ion-color-main));
+		&:hover {
+			cursor: pointer;
+		}
+	}
+
+	.pvs4-login-infobar {
+		font-size: 12px;
+		color: color(var(--ion-color-grey));
+		a {
+			color: color(var(--ion-color-grey));
+			&:hover {
+				cursor: pointer;
+				text-decoration: none;
+			}
+		}
+	}
+}
+
+.pvs4-login-wrapper {
+	height: 100%;
+	max-width: 450px;
+	margin-left: auto;
+	margin-right: auto;
+	display: flex;
+	-webkit-align-items: center;
+	        align-items: center;
+	-webkit-justify-content: center;
+	        justify-content: center;
+}
+
+.pvs4-login-inner {
+	background: #FFF;
+	padding: 30px 45px;
+	-webkit-border-radius: var(--global-radius);
+	        border-radius: var(--global-radius);
+}
+
+.pvs4-full-select {
+	margin-top: -15px;
+}

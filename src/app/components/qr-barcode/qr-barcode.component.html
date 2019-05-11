@@ -1,0 +1,88 @@
+<ion-header>
+    <ion-toolbar color="primary">
+        <div class="modal-header" *ngIf="readOnly">
+            <ion-toggle class="schalter" [(ngModel)]="listView" checked="true">
+            </ion-toggle>
+            <ion-label class="headerText">{{'Listenansicht'| translate}}</ion-label>
+        </div>
+        <ion-buttons slot="primary">
+            <ion-button icon-only (click)="dismiss()">
+                <ion-icon name="close"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+        <!-- <ion-title>{{modalTitle}}</ion-title> -->
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <div *ngIf="readOnly" text-center>
+        <div *ngIf="!listView">
+            <ion-grid style="padding-top: 0px; padding-bottom: 0px; padding-left: 5px; padding-right: 5px;">
+                <ion-row>
+                    <ion-col size="12" text-center>
+                        <ion-item>
+                            <ion-button large
+                                (click)="scanQr()">{{translate.instant('QR-Code scannen')}}</ion-button>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </div>
+        <div *ngIf="listView" text-center>
+            <div>
+                <p-table class="scanList" [columns]="cols" [value]="scanList">
+                    <ng-template pTemplate="header" let-columns>
+                        <tr>
+                            <th *ngFor="let col of columns">{{col.header}}</th>
+                            <th></th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-scanList let-columns="cols">
+                        <tr>
+                            <td *ngFor="let col of cols">{{scanList[col.field]}}</td>
+                            <td>
+                                <ion-button icon-only (click)="delScanList(scanList)">
+                                    <ion-icon name="trash"></ion-icon>
+                                </ion-button>
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+            <div class="modal-body" style="text-align: center;">
+                <ion-button (click)="scanQrToList()">{{translate.instant('Scannen')}}</ion-button>
+                <ion-button *ngIf="scanList.length>0" class="green" (click)="createProtocol();">
+                    {{'Neues Protokoll' | translate}}
+                </ion-button>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="!readOnly" text-center>
+        <ion-grid style="padding-top: 0px; padding-bottom: 0px; padding-left: 5px; padding-right: 5px;">
+            <ion-row>
+                <ion-col size="12" text-center>
+                    <ion-item>
+                        <ion-label position="floating">Text</ion-label>
+                        <ion-input type="text" [(ngModel)]="qrText"></ion-input>
+                    </ion-item>
+                </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col size="12" text-center>
+                    <ion-item>
+                        <ion-button [disabled]="!mobilePlatform"  (click)="scanQrToDb()">{{translate.instant('Scannen')}}</ion-button>
+                        <ion-button (click)="encodeText()">{{translate.instant('QR Erstellen')}}</ion-button>
+                        <ion-button (click)="saveText()">{{translate.instant('Speichern')}}</ion-button>
+                    </ion-item>
+                </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col size="12">
+                    <ngx-qrcode [qrc-value]="qrCodeText" qrc-class="qrImage">
+                    </ngx-qrcode>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </div>
+
+</ion-content>

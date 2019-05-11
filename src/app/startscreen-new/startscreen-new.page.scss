@@ -1,0 +1,37 @@
+app-startscreen-new {
+
+	.topBar-outer {
+		margin-bottom: 3px;
+	}
+
+	.startbtn {
+		height: 140px;
+		width: 100%;
+		background-color: color(var(--ion-color-main));
+		&:hover, &:focus {
+			background-color: color(var(--ion-color-main-shade)) !important;
+		}
+	}
+
+	.starticn {
+			font-size: 48px;
+			padding-top: 0px;
+	}
+
+	.startlbl {
+		font-weight: normal;
+		font-size:small;
+		margin-bottom: 0 !important;
+	}
+
+	.logoutlbl {
+		display: flex;
+		padding: 25px;
+		.startlbl {
+			display: flex;
+			-webkit-align-items: center;
+			        align-items: center;
+		}
+	}
+
+}

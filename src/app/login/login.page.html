@@ -1,0 +1,132 @@
+<ion-content>
+
+  <div class="pvs4-login-wrapper">
+    <ion-grid class="pvs4-login-inner">
+      <ion-row>
+        <ion-col>
+          <div class="logo">
+            <img src="assets/imgs/brugg-lifting-logo.svg" alt="Brugg Lifting Logo">
+          </div>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="pvs4-lang-select" align-items-center>
+        <ion-col size="6">
+          <span class="version">
+            PVS {{api.version}}
+          </span>
+        </ion-col>
+        <ion-col size="6">
+          <ion-item class="pvs4-full-select">
+            <ion-label position="floating">{{'Sprache' | translate}}</ion-label>
+            <ion-select [(ngModel)]="lang"
+                        (ionChange)="changeLanguage()"
+                        okText="{{'okay' | translate}}"
+                        cancelText="{{'dismiss' | translate}}">
+              <ion-select-option value="de" ng-selected="de">Deutsch</ion-select-option>
+              <ion-select-option value="fr" ng-selected="fr">Français</ion-select-option>
+              <ion-select-option value="it" ng-selected="it">Italiano</ion-select-option>
+              <ion-select-option value="en" ng-selected="en">English</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row style="margin-top:15px" *ngIf="login_nok">
+        <ion-col>
+          <div class="text-center alert alert-danger wrong-log">{{'Ihre Zugangsdaten sind nicht korrekt.' | translate}}</div>
+        </ion-col>
+      </ion-row>
+
+      <form (ngSubmit)="signIn()" [formGroup]="authForm">
+        <!--
+        <ion-row>
+          <ion-col class="pvs4-login-text">PVS 3</ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-label stacked>{{ "Benutzername" | translate }}
+                <div *ngIf="!authForm.controls.username.valid && show_hide_err">
+                  <p class="form_error_text" >{{ "Eingabe nicht korrekt." | translate }}</p>
+                </div>
+              </ion-label>
+              <ion-input type="text" formControlName="username" required ></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-label stacked>{{ "Passwort" | translate }}
+                <div *ngIf="!authForm.controls.password.valid && show_hide_err">
+                  <p class="form_error_text" >{{ "Ihr Passwort ist nicht korrekt." | translate }}</p>
+                </div>
+              </ion-label>
+              <ion-input type="password" formControlName="password" required ></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+-->
+        <!-- <ion-row style="margin-top: 10px">
+          <ion-col class="pvs4-login-text">Brugg ID</ion-col>
+        </ion-row> -->
+
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-label position="floating">{{ "Benutzername" | translate }}</ion-label>
+              <ion-input type="text" formControlName="pvs4_username" required></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-label position="floating">{{ "Passwort" | translate }}</ion-label>
+              <ion-input type="password" formControlName="pvs4_password" required ></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+
+        <ion-row style="margin-top: 10px;margin-bottom: 20px">
+          <ion-col>
+            <ion-button class="pvs4-btn pvs4-btn-full pvs4-btn-green" type="submit">{{ "Login" | translate }} </ion-button>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col text-center class="pvs4-register-text">
+            <!-- <a (click)="signUp()" class="signup-btn">{{ "Sie haben noch kein Account? Jetzt registrieren!" |  translate }}</a> -->
+            <a href="https://www.bruggdigital.com/bid_reg.php" target="_blank" rel="noopener" class="signup-btn">{{ "Sie haben noch kein Account? Jetzt registrieren!" |  translate }}</a>
+          </ion-col>
+        </ion-row>
+
+      </form>
+
+      <ion-row>
+        <ion-col>
+          <hr>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="pvs4-login-infobar" style="margin-bottom: -10px">
+        <ion-col size="6" text-left (click)="imprintModal()"><a>{{ "Impressum" | translate }}</a></ion-col>
+        <ion-col size="6" text-right><a href="https://www.brugg.com/portal/pics/Documents/Datenschutzerklaerung-DSGVO-Gruppe-Brugg-10-04-2018-DE.pdf" target="_blank" rel="noopener">{{"Datenschutzerklärung" | translate}} <small>(PDF)</small></a></ion-col>
+      </ion-row>
+
+      <!-- <ion-row class="pvs4-login-infobar2">
+        <ion-col>
+          <a target="_blank" href="http://www.brugglifting.com/liftingtec/images/downloads/Brugg_PVS3_Manual_EN.pdf">
+            {{ "Handbuch" | translate }}
+          </a>
+          <ion-icon width="100" height="100" name="book"></ion-icon>
+        </ion-col>
+      </ion-row> -->
+
+    </ion-grid>
+  </div>
+
+</ion-content>

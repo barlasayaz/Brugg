@@ -1,0 +1,32 @@
+app-appointment-plan {
+
+    .container-fix {
+        padding: 0px 8px !important;
+    }
+
+    .calendar .fc-toolbar .fc-center {
+        -webkit-align-items: center;
+                align-items: center;
+    }
+
+.fc .fc-toolbar .fc-prev-button span:before {
+    content: "\02039" !important;
+    font-weight: 700;
+    font-size: 200%;
+}
+.fc .fc-toolbar .fc-prev-button span {
+    top: 6px !important;
+    height: 100%;
+}
+.fc .fc-toolbar .fc-next-button span:before {
+    content: "\0203A" !important;
+    font-weight: 700;
+    font-size: 200%;
+}
+.fc .fc-toolbar .fc-next-button span {
+    top: 6px !important;
+    height: 100%;
+}
+
+.fc-myCustomButton-button {margin-left: 50px!important}
+}

@@ -1,0 +1,32 @@
+<ion-header>
+    <ion-toolbar color="primary">
+        <ion-buttons end>
+            <button ion-button icon-only (click)="dismiss()">
+                <ion-icon name="close"></ion-icon>
+            </button>
+        </ion-buttons>
+        <ion-title>{{modalTitle}}</ion-title> 
+    </ion-toolbar>
+</ion-header> 
+
+<ion-content padding>  
+  
+  <div class="modal-body">
+    <div *ngIf="dir!=''" class="dir pb_box" (click)="back();">
+        <ion-icon name="folder" style="font-size: 72px; color: GoldenRod;"></ion-icon>
+        <br> ...
+    </div>
+    <div *ngFor="let row of plist"  >
+      <div *ngIf="row.dir" class="dir pb_box" (click)="go_dir(row.filename);">
+        <ion-icon name="folder" style="font-size: 72px; color: GoldenRod;"></ion-icon>
+        <br> {{row.name}}
+      </div>
+      <div *ngIf="!row.dir" class="file pb_box" (click)="get_img(row.filename);" >
+        <img src="assets/img/{{dir}}{{row.filename}}"> 		
+        <br> {{row.name}}
+      </div>
+    </div>
+    <div style="clear: both; "> </div>
+  </div>
+
+</ion-content>

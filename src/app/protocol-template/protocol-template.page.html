@@ -1,0 +1,252 @@
+<main-nav aktivPage="ProtocolTemplate" [idCustomer]="idCustomer" [company]="company"></main-nav>
+
+<ion-content>
+
+  <div class="ek-content">
+    <div class="container">
+      <div class="mt20 content-sm">
+        <ion-grid>
+          <ion-row>
+            <ion-col size="12" size-md="5">
+              <div class="table-responsive" id="ps_product-template">
+                <div class="table table-striped" id="product-template">
+                  <div class="thead">
+                    <div class="tr table-header">
+                      <div class="th">
+                        {{'Optionen' | translate}}
+                      </div>
+                      <div class="table-header-buttons">
+                        <ion-button small (click)="down_click()"
+                          [disabled]="downClick == 1">
+                          <i class="fas fa-sort-alpha-down"></i>
+                        </ion-button>
+                        <ion-button small (click)="down_click()"
+                          [disabled]="downClick == 0">
+                          <i class="fas fa-sort-alpha-up"></i>
+                        </ion-button>
+                      </div>
+                    </div>
+                    <div class="tbody">
+                      <div class="tr table-subheader table-subheader-fix">
+                        <div class="table-subheader-buttons">
+                          <ion-button small (click)="option_new()">
+                            <ion-icon name="add"></ion-icon>
+                          </ion-button>
+                          <ion-button small (click)="option_edit(editOption)"
+                            [disabled]="selectOption == 0">
+                            <ion-icon name="create"></ion-icon>
+                          </ion-button>
+                        </div>
+                        <div class="search-search">
+                          <ion-input type="text" placeholder="{{'Suche' |translate }}" [(ngModel)]="searchText" (input)="search_all()"></ion-input>
+                          <!-- <button ion-button small (click)="search_all()">
+                            <ion-icon name="search"></ion-icon>
+                          </button> -->
+                        </div>
+                      </div>
+                      <p-accordion> 
+                        <div style="max-height: 500px; overflow-x: auto;">
+                          <div style="padding: 10px;">
+                            <div dragula="COLUMNS" [(dragulaModel)]="options" id="options">
+                              <div *ngFor="let group of options; let opdInd = index"
+                                (click)="onclickOption(group)" [ngClass]="selectedOption[group.id]!=0 ? 'selectOption' : 'unselectOption'">
+                                
+                                <div class="product-temp-item" *ngIf="group.type == 0">
+                                  <p-accordionTab styleClass="ui-accordion-header" header="{{group.title[lang]}}">
+                                    <div class="product-temp-content">
+                                      <div><div class="temp-content-title">Type</div>{{types[group.type]}}</div>
+                                      <div><div class="temp-content-title">Default</div>{{group.options.default}}</div>
+                                      <div><div class="temp-content-title">Color</div>{{group.options.color}}</div>
+                                    </div>
+                                  </p-accordionTab>
+                                </div>
+                                
+                                <div class="product-temp-item" *ngIf="group.type == 1">
+                                  <p-accordionTab styleClass="ui-accordion-header" header="{{group.title[lang]}}">
+                                    <div class="product-temp-content">
+                                      <div><div class="temp-content-title">Type</div>{{types[group.type]}}</div>
+                                      <div class="temp-content-options">
+                                        <div class="temp-content-title">Options</div>
+                                        <div class="temp-content-options-content">
+                                          <div *ngFor="let option of group.options;">
+                                            {{option[lang]}}
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </p-accordionTab>
+                                </div>
+
+                                <div class="product-temp-item" *ngIf="group.type == 2">
+                                  <p-accordionTab styleClass="ui-accordion-header" header="{{group.title[lang]}}">
+                                    <div class="product-temp-content">
+                                      <div><div class="temp-content-title">Type</div>{{types[group.type]}}</div>
+                                      <div><div class="temp-content-title">Max Char.</div>{{group.options.max}}</div>
+                                    </div>
+                                  </p-accordionTab>
+                                </div>
+                                
+                                <div class="product-temp-item" *ngIf="group.type == 3">
+                                  <p-accordionTab styleClass="ui-accordion-header" header="{{group.title[lang]}}">
+                                    <div class="product-temp-content">
+                                      <div><div class="temp-content-title">Type</div>{{types[group.type]}}</div>
+                                      <div><div class="temp-content-title">Min</div>{{group.options.min}}</div>
+                                      <div><div class="temp-content-title">Max</div>{{group.options.max}}</div>
+                                    </div>
+                                  </p-accordionTab>
+                                </div>
+
+                                <div class="product-temp-item" *ngIf="group.type == 4">
+                                  <p-accordionTab styleClass="ui-accordion-header" header="{{group.title[lang]}}">
+                                    <div class="product-temp-content">
+                                      <div><div class="temp-content-title">Type</div>{{types[group.type]}}</div>
+                                      <div><div class="temp-content-title">Default</div>{{group.options.default}}</div>
+                                    </div>
+                                  </p-accordionTab>
+                                </div>
+
+                                <div class="product-temp-item" *ngIf="group.type == 5">
+                                  <p-accordionTab styleClass="ui-accordion-header" header="{{group.title[lang]}}">
+                                    <div class="product-temp-content">
+                                      <div><div class="temp-content-title">Type</div>{{types[group.type]}}</div>
+                                    </div>
+                                  </p-accordionTab>  
+                                </div>
+                                
+                              </div>
+                              <span class="group-handle" style="display: block; height:40px;width: 100%"></span>
+                            </div>
+                          </div>
+                        </div>
+                      </p-accordion>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ion-col>
+
+            <ion-col size-md="2" style="display: flex;align-items: center;justify-content: center">
+              <ion-button (click)="move_left()" [disabled]="selectOption == 0">
+                {{'Hinzufügen'}} &nbsp; <ion-icon name="arrow-round-forward"></ion-icon>
+              </ion-button>
+            </ion-col>
+
+            <ion-col size="12" size-md="5">
+              <div class="table-responsive" id="ps_product-template">
+                <div class="table table-striped" id="product-template">
+                  <div class="thead">
+                    <div class="tr table-header">
+                      <div class="th">
+                        {{'Neue Protokollvorlage' | translate}}
+                      </div>
+                    </div>
+                  </div>
+                  <div class="tbody">
+                    <div class="tr table-subheader table-subheader-fix">
+                      <div class="search-search">
+                        {{'Titel' | translate}}
+                        <ion-input style="margin-left:10px;" type="text" [(ngModel)]="templateTitleObj[lang]" readonly="true" (click)="promptTitel()"></ion-input>
+                      </div>
+                      <div class="table-subheader-buttons">
+                          <ion-button style="padding:15px" small (click)="template_save();">
+                            <ion-icon name="checkmark"></ion-icon>
+                          </ion-button>
+                        <ion-button class="btn-red" small (click)="template_remove(selectedTmplt)" [disabled]="selectTemplate == 0">
+                          <ion-icon name="trash"></ion-icon>
+                        </ion-button>
+                      </div>
+                    </div>
+                    <p-accordion> 
+                      <div style="max-height: 500px; overflow-x: auto;">
+                        <div style="padding: 10px;">
+                          <div dragula="COLUMNS" [(dragulaModel)]="template" class="drag-drop" id="template">
+                            <div *ngFor="let group of template; let tmpInd = index"
+                              (click)="onclickTemplate(tmpInd)" [ngClass]="selectedTemplate[tmpInd]!=0 ? 'selectTemplate' : 'unselectTemplate'">
+
+                              <div class="product-temp-item" *ngIf="group.type == 0">
+                                <p-accordionTab styleClass="ui-accordion-header" header="{{group.title[lang]}}">
+                                  <div class="product-temp-content">
+                                    <div><div class="temp-content-title">Type</div>{{types[group.type]}}</div>
+                                    <div><div class="temp-content-title">Default</div>{{group.options.default}}</div>
+                                    <div><div class="temp-content-title">Color</div>{{group.options.color}}</div>
+                                  </div>
+                                </p-accordionTab>  
+                              </div>
+                                
+                              <div class="product-temp-item" *ngIf="group.type == 1">
+                                <p-accordionTab styleClass="ui-accordion-header" header="{{group.title[lang]}}">
+                                  <div class="product-temp-content">
+                                    <div><div class="temp-content-title">Type</div>{{types[group.type]}}</div>
+                                    <div class="temp-content-options">
+                                      <div class="temp-content-title">Options</div>
+                                      <div class="temp-content-options-content">
+                                        <div *ngFor="let option of group.options;">
+                                          {{option[lang]}}
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </p-accordionTab>
+                              </div>
+
+                              <div class="product-temp-item" *ngIf="group.type == 2">
+                                <p-accordionTab styleClass="ui-accordion-header" header="{{group.title[lang]}}">
+                                  <div class="product-temp-content">
+                                    <div><div class="temp-content-title">Type</div>{{types[group.type]}}</div>
+                                    <div><div class="temp-content-title">Max Char.</div>{{group.options.max}}</div>
+                                  </div>
+                                </p-accordionTab>
+                              </div>
+                                
+                              <div class="product-temp-item" *ngIf="group.type == 3">
+                                <p-accordionTab styleClass="ui-accordion-header" header="{{group.title[lang]}}">
+                                  <div class="product-temp-content">
+                                    <div><div class="temp-content-title">Type</div>{{types[group.type]}}</div>
+                                    <div><div class="temp-content-title">Min</div>{{group.options.min}}</div>
+                                    <div><div class="temp-content-title">Max</div>{{group.options.max}}</div>
+                                  </div>
+                                </p-accordionTab>
+                              </div>
+
+                              <div class="product-temp-item" *ngIf="group.type == 4">
+                                <p-accordionTab styleClass="ui-accordion-header" header="{{group.title[lang]}}">
+                                  <div class="product-temp-content">
+                                    <div><div class="temp-content-title">Type</div>{{types[group.type]}}</div>
+                                    <div><div class="temp-content-title">Default</div>{{group.options.default}}</div>
+                                  </div>
+                                </p-accordionTab>
+                              </div>
+
+                              <div class="product-temp-item" *ngIf="group.type == 5">
+                                <p-accordionTab styleClass="ui-accordion-header" header="{{group.title[lang]}}">
+                                  <div class="product-temp-content">
+                                    <div><div class="temp-content-title">Type</div>{{types[group.type]}}</div>
+                                  </div>
+                                </p-accordionTab>
+                              </div>
+
+                            </div>
+
+                            <span class="group-handle">
+                              <span class="drag-drop-inner">
+                                {{'Ziehen Sie Ihre Optionen in dieses Feld.' | translate}}
+                                <ion-icon name="copy"></ion-icon>
+                              </span>
+                            </span>
+
+                          </div>
+                        </div>
+                      </div>
+                    </p-accordion>
+                  </div>
+                </div>
+              </div>
+            </ion-col>
+
+          </ion-row>
+        </ion-grid>
+      </div>
+    </div>
+  </div>
+
+</ion-content>

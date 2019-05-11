@@ -1,0 +1,97 @@
+<main-nav aktivPage="StartscreenNewPage"></main-nav>
+
+<ion-content>
+	<div class="ek-content">
+		<div class="container" style="max-width: 450px">
+			<ion-grid>
+				<ion-row>
+					<!-- Dashboard -->
+					<ion-col size="6">
+						<ion-button icon-only class="startbtn" (click)="go('DashboardNewPage');">
+							<div>
+								<ion-icon class="starticn" name="apps"></ion-icon><br><br>
+								<label class="startlbl">{{"Dashboard" | translate}}</label>
+							</div>
+						</ion-button>
+					</ion-col>
+					<!-- NFC -->
+					<ion-col size="6">
+						<ion-button icon-only [disabled]="!mobilePlatform" class="startbtn"
+							(click)="nfc_scan();">
+							<div>
+								<ion-icon class="starticn" name="wifi"></ion-icon><br><br>
+								<label class="startlbl">{{'NFC Scan' | translate}}</label>
+							</div>
+						</ion-button>
+					</ion-col>
+				</ion-row>
+
+				<ion-row>
+					<!-- Kundenübersicht -->
+					<ion-col size="6">
+						<ion-button icon-only class="startbtn" (click)="go('CustomerTable');">
+							<div>
+								<ion-icon class="starticn" name="people"></ion-icon><br><br>
+								<label class="startlbl">{{'Kundenuebersicht' | translate}}</label>
+							</div>
+						</ion-button>
+					</ion-col>
+					<!-- Termin Plane -->
+					<ion-col size="6">
+						<ion-button icon-only class="startbtn" (click)="go('AppointmentplanPage');">
+							<div>
+								<ion-icon class="starticn" name="time"></ion-icon><br><br>
+								<label class="startlbl">{{'Terminpläne' | translate}}</label>
+							</div>
+						</ion-button>
+					</ion-col>
+				</ion-row>
+
+				<ion-row>
+					<!-- Mein Daten -->
+					<ion-col size="6">
+						<ion-button icon-only class="startbtn" (click)="go('MyDataPage');">
+							<div>
+								<ion-icon class="starticn" name="settings"></ion-icon><br><br>
+								<label class="startlbl">{{'Einstellungen' | translate}}</label>
+							</div>
+						</ion-button>
+					</ion-col>
+					<!-- REBOX -->
+					<ion-col size="6">
+						<ion-button icon-only class="startbtn" (click)="reboxNew(userdata.id);">
+							<div>
+								<ion-icon class="starticn" name="cube"></ion-icon><br><br>
+								<label class="startlbl">{{'ReBox' | translate}}</label>
+							</div>
+						</ion-button>
+					</ion-col>
+				</ion-row>
+				<ion-row>
+					<ion-col size="6">
+						<ion-button icon-only   class="startbtn" [disabled]="!mobilePlatform" (click)="qr_barcode();">
+							<div>
+								<ion-icon class="starticn" name="qr-scanner"></ion-icon><br><br>
+								<label class="startlbl">QR CODE</label>
+							</div>
+						</ion-button>
+					</ion-col>
+				</ion-row>
+				<ion-row> 
+					<!-- Logout -->
+					<ion-col size="12">
+						<ion-button style="height:auto;" class="pvs4-btn pvs4-btn-full pvs4-btn-red"
+							(click)="logout();">
+							<div class="logoutlbl">
+								<ion-icon class="starticn" style="font-size:36px" name="power"></ion-icon>
+								<label class="startlbl" style="margin-left:20px">{{'Logout' | translate}}</label>
+							</div>
+						</ion-button>
+					</ion-col>
+				</ion-row>
+
+			</ion-grid>
+
+		</div>
+	</div>
+</ion-content>

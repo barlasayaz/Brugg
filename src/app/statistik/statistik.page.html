@@ -1,0 +1,148 @@
+<comp-navbar aktivPage="StatistikPage"></comp-navbar>
+
+<div class="ek-content">
+  <div class="container container-bg">
+
+    <div class="row">
+
+      <div class="col-md-12 col-lg-4">
+        <div class="table-info mt20 mb20" id="statistik-set">
+          <div class="thead">
+            <div class="tr table-header">
+              <div class="th">{{'Auswertungen' | translate}}</div>
+            </div>
+          </div>
+          <div class="tbody">
+            <div class="tr table-body">
+              <div class="td" style="max-width: 104px !important;">{{'Jahr' | translate}}</div>
+              <div class="td">
+                <ion-item no-lines class="itemClass">
+                  <ion-select id="jahr_statistik" 
+                              [(ngModel)]="jahr" 
+                              (ionChange)="changeStatistik()" 
+                              style="background-color: #F5F7F7; border: 1px solid rgb(224, 224, 224); min-width: 100%; width: 167px; font-size: 14px;"
+                              okText="{{'okay' | translate}}" 
+                              cancelText="{{'dismiss' | translate}}">
+                    <ion-select-option value="2015"> 2015 </ion-select-option>
+                    <ion-select-option value="2016"> 2016 </ion-select-option>
+                    <ion-select-option value="2017"> 2017 </ion-select-option>
+                    <ion-select-option value="2018"> 2018 </ion-select-option>
+                  </ion-select>
+                </ion-item>
+              </div>
+            </div>
+            <div class="tr table-body">
+              <div class="td" style="max-width: 104px !important;">{{'Monat' | translate}} </div>
+              <div class="td">
+                <ion-item no-lines class="itemClass">
+                  <ion-select id="monat_statistik" 
+                              [(ngModel)]="monat" 
+                              (ionChange)="changeStatistik()" 
+                              style="background-color: #F5F7F7; border: 1px solid rgb(224, 224, 224); min-width: 100%; width: 167px; font-size: 14px;"
+                              okText="{{'okay' | translate}}" 
+                              cancelText="{{'dismiss' | translate}}">
+                    <ion-select-option value="01"> {{'Januar' | translate}} </ion-select-option>
+                    <ion-select-option value="02"> {{'Februar' | translate}} </ion-select-option>
+                    <ion-select-option value="03"> {{'März' | translate}} </ion-select-option>
+                    <ion-select-option value="04"> {{'April' | translate}} </ion-select-option>
+                    <ion-select-option value="05"> {{'Mai' | translate}} </ion-select-option>
+                    <ion-select-option value="06"> {{'Juni' | translate}} </ion-select-option>
+                    <ion-select-option value="07"> {{'Juli' | translate}} </ion-select-option>
+                    <ion-select-option value="08"> {{'August' | translate}} </ion-select-option>
+                    <ion-select-option value="09"> {{'September' | translate}} </ion-select-option>
+                    <ion-select-option value="10"> {{'Oktober' | translate}} </ion-select-option>
+                    <ion-select-option value="11"> {{'November' | translate}} </ion-select-option>
+                    <ion-select-option value="12"> {{'Dezember' | translate}} </ion-select-option>
+                  </ion-select>
+                </ion-item>
+              </div>
+            </div>
+            <div class="tr table-body">
+              <div class="td" style="max-width: 102px !important;"> {{'Statistik' | translate}} </div>
+              <div class="td">
+                <ion-item no-lines class="itemClass">
+                  <ion-select id="type_statistik" 
+                              [(ngModel)]="type" 
+                              (ionChange)="changeStatistik()" 
+                              style="background-color: #F5F7F7; border: 1px solid rgb(224, 224, 224); min-width: 100%; width: 167px; font-size: 14px;"
+                              okText="{{'okay' | translate}}" 
+                              cancelText="{{'dismiss' | translate}}">
+                    <ion-select-option value="1"> {{'Besuchsberichte pro Monat' | translate}} </ion-select-option>
+                    <ion-select-option value="2"> {{'AD-Termine pro Monat' | translate}} </ion-select-option>
+                    <ion-select-option value="3"> {{'PR-Termine pro Monat' | translate}} </ion-select-option>
+                  </ion-select>
+                </ion-item>
+              </div>
+            </div>
+            <div class="tr table-body">
+              <div class="td" style="max-width: 120px !important;">{{'E-Mail' | translate}}</div>
+              <div class="td">
+                <ion-input id="email-an" type="text" ng-trim="true" [(ngModel)]="email" style="width: 100%; margin-left: -8px; font-size: 12px;"></ion-input>
+                <ion-button 
+                        *ngIf="aktivWarten" 
+                        type="button" 
+                        class="btn btn-modal-success headerIconSub" 
+                        (click)="sendeStatistik()" 
+                        style="width:100%; margin-top:10px">
+                  <ion-icon name="send"></ion-icon>
+                </ion-button>
+              </div>
+            </div>
+            <div class="tr table-body">
+              <div class="td" style="max-width: 120px !important;"> XLSx Export </div>
+              <div class="td">
+                <ion-button 
+                        *ngIf="aktivWarten" 
+                        type="button" 
+                        class="btn btn-modal-success headerIconSub" 
+                        style="width:100%;" 
+                        (click)="xlsxExport();">
+                  <ion-icon name="exit"></ion-icon>
+                </ion-button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-0 col-lg-8 mt20 mb20">       
+          <div class="" style="overflow-x: scroll; height:800px">
+            <p-table #tt [columns]="columnDefs" [value]="rowData" selectionMode="single"  [(selection)]="selectedRow" dataKey="Name"
+              [scrollable]="true" scrollHeight="80vh" [responsive]="true" sortField="Name">
+              <ng-template pTemplate="header" let-columns>
+                <tr>
+                  <th *ngFor="let col of columnDefs" [pSortableColumn]="col.field">
+                    {{col.headerName}}
+                    <p-sortIcon [field]="col.field"></p-sortIcon>
+                  </th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-item let-rowIndex="rowIndex" let-expanded="expanded">
+                <tr [pSelectableRow]="item" class="ui-widget-header" *ngIf="rowGroupMetadata[item.Name].index === rowIndex">
+                    <td colspan="5">
+                        <a href="#" [pRowToggler]="item">
+                            <i [ngClass]="expanded ? 'fa fa-fw fa-chevron-circle-down' : 'fa fa-fw fa-chevron-circle-right'"></i>
+                            <span>{{item.Name}}</span>
+                        </a>
+                    </td>
+                </tr> 
+                </ng-template>
+                <ng-template pTemplate="rowexpansion" let-item let-rowIndex="rowIndex">
+                  <tr [pSelectableRow]="item">
+                    <td>{{item.Firma}}</td>
+                    <td>{{item.Wertung}}</td>
+                    <td>{{item.PLZ}}</td>
+                    <td>{{item.Branche}}</td>
+                    <td>{{item.Anzahl}}</td>
+                  </tr>
+              </ng-template>
+            </p-table>
+          </div>
+      </div>
+    
+    </div>
+
+    <!-- /container -->
+  </div>
+</div>

@@ -1,0 +1,80 @@
+<main-nav aktivPage="ProtocolHistory" [idCustomer]="idCustomer" [company]="company"></main-nav>
+
+<ion-content>
+    <div class="ek-content">
+      <div class="container" id="ps_protocol">
+        <div class="mt20 content-sm" id="protocol_history">		
+          <ion-grid>
+            <ion-row>
+              <div class="table-responsive">
+                <ion-col size-xl="12" size-lg="12" size-md="12" size-sm="12" size="12">
+                  <div class="table table-striped">                      
+                    <div class="thead">
+                      <div class="tr table-header">
+                        <div class="th">{{'Protokoll Geschichte' | translate}}</div>
+                        <div style="color: white; text-align: left;">
+                            {{'Produkt ID' | translate}} : {{idProduct}} &nbsp;&nbsp; {{'Produkt Titel' | translate}} : {{titleProduct}}
+                        </div> 
+                        <div>
+                          <ion-button [disabled]="pageCount<=0" (click)="pageBack()">
+                            <ion-icon name="arrow-back"></ion-icon>
+                          </ion-button>
+                          <ion-button [disabled]="pageCount>pageTotalCount-5" (click)="pageForward()">
+                            <ion-icon name="arrow-forward"></ion-icon>
+                          </ion-button>
+                        </div>
+                      </div>
+                    </div>                    
+                  </div>
+                </ion-col>
+              </div>
+            </ion-row>  
+            <ion-row>  
+              <div class="table-responsive">
+                <div class="table table-striped">
+                  <div class="tbody" style="margin-top: -30px; max-height: 540px; overflow-x: auto;"> 
+                    <div class="tr table-body" *ngFor="let col of cols">
+                      <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12"> 
+                        <div class="td">{{col.header}}</div>
+                      </ion-col>
+                      <ion-col size-xl="2" size-lg="2" size-md="2" size-sm="12" size="12" *ngFor="let index of listCount"> 
+                        <div class="td" *ngIf="col.field != 'protocol_date'"> {{protocolList[index].data[col.field]}} </div>
+                        <div class="td" *ngIf="col.field == 'protocol_date'"> {{protocolList[index].data[col.field] | date: 'dd.MM.yyyy'}} </div>
+                      </ion-col>
+                    </div>             	
+                </div>
+              </div>
+            </div>	
+          </ion-row>		
+          </ion-grid>
+        </div>
+      </div>
+    </div>
+  </ion-content>
+  <ion-fab slot="fixed" right vertical="bottom"> 
+    <ion-fab-button color="primarydark">
+      <ion-icon name="menu"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list side="top">
+      <ion-fab-button 
+              (click)="printExcel()" 
+              [disabled]="pdfxlsButton" 
+              class="btn-primary" 
+              style="color:white"
+              (mouseover)="mouseover(1)" 
+              (mouseout)="mouseout(1)">
+        <ion-icon name="podium"></ion-icon>
+        <ion-label [hidden]="!mouseoverButton1">{{'ExportAllExcel' | translate}}</ion-label>
+      </ion-fab-button>
+      <ion-fab-button 
+              (click)="printPdf()" 
+              [disabled]="pdfxlsButton" 
+              class="btn-primary" 
+              style="color:white"
+              (mouseover)="mouseover(2)" 
+              (mouseout)="mouseout(2)">
+        <ion-icon name="document"></ion-icon>
+        <ion-label [hidden]="!mouseoverButton2">{{'PDF Ansicht' | translate}}</ion-label>
+      </ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>

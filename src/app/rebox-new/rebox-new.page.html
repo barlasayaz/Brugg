@@ -1,0 +1,123 @@
+<ion-header>
+  <ion-toolbar color="primary">
+      <ion-buttons slot="primary">
+          <ion-button icon-only (click)="dismiss()">
+              <ion-icon name="close"></ion-icon>
+          </ion-button>
+      </ion-buttons>
+      <ion-title>{{translate.instant('Lassen Sie Ihre ReBox einfach abholen.')}}</ion-title>
+  </ion-toolbar>
+</ion-header>	
+
+<ion-content style="padding-top: 5px; padding-bottom: 0px;"> 
+	<ion-grid>
+
+		<!-- Row 1 -->
+		<ion-row *ngIf="userdata.Type<20">
+			<ion-col size-xl="8" size-lg="8" size-md="8" size-sm="12" size="12">
+				<ion-item>
+					<ion-label position="floating">{{translate.instant('Firma')}}</ion-label>
+					<ion-input type="text" id="Firma" [(ngModel)]="rebox.Firma"></ion-input>                  
+				</ion-item>
+			</ion-col>
+			<ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12">
+				<ion-item>
+					<ion-label position="floating">{{translate.instant('Datum')}}</ion-label> 
+					<ion-datetime name="rebox.ReBoxDate"
+								  [(ngModel)]="rebox.ReBoxDate"   
+								  id="ReBoxDate"                        
+								  required="true"
+								  displayFormat="DD.MM.YYYY"
+								  max = {{maxDate}}
+								  doneText="{{translate.instant('okay')}}" 
+								  cancelText="{{translate.instant('dismiss')}}">
+	  				</ion-datetime>                   
+				</ion-item>
+			</ion-col>
+		</ion-row>   
+		<ion-row *ngIf="userdata.Type==20">
+			<ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12">
+				<ion-item>
+					<ion-label position="floating">{{translate.instant('Datum')}}</ion-label> 
+					<ion-datetime [(ngModel)]="rebox.ReBoxDate"                           
+								  required="true"
+								  displayFormat="DD.MM.YYYY"
+								  max = {{maxDate}}
+								  doneText="{{translate.instant('okay')}}" 
+								  cancelText="{{translate.instant('dismiss')}}">
+						</ion-datetime>                   
+				</ion-item>
+			</ion-col>
+		</ion-row>
+
+		<!-- Row 2 -->
+		<ion-row *ngIf="GPS==0">
+			<ion-col size-xl="8" size-lg="8" size-md="8" size-sm="12" size="12">
+				<ion-item>
+					<ion-label position="floating">{{translate.instant('Strasse')}}</ion-label>
+					<ion-input type="text" id="Str" [(ngModel)]="rebox.Str"></ion-input>                  
+				</ion-item>
+			</ion-col>
+			<ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12">
+				<ion-item>
+					<ion-label position="floating">{{translate.instant('PLZ')}} {{translate.instant('Ort')}}</ion-label>
+					<ion-input type="text" id="Ort" [(ngModel)]="rebox.Ort"></ion-input> 
+					<ion-button [hidden]="platform_version==0" (click)="setGPS(1);">
+						<ion-icon class="headerIcon" name="location_on"></ion-icon>
+					</ion-button>              
+				</ion-item>
+			</ion-col>
+		</ion-row>
+		<ion-row *ngIf="GPS==1">
+			<ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12">
+				<ion-item>
+					<ion-label position="floating">{{translate.instant('Position')}}</ion-label>
+					<ion-input type="text" readonly id="Ort" [(ngModel)]="rebox.latitude" (click)="goPos();"></ion-input> 
+					<ion-button (click)="setGPS(0);">
+						<ion-icon class="headerIcon" name="location_on"></ion-icon>
+					</ion-button>              
+				</ion-item>
+			</ion-col>
+		</ion-row>
+
+		<!-- Row 3 -->
+		<ion-row *ngIf="userdata.Type<20">
+			<ion-col size="12">
+				<ion-item>
+					<ion-label position="floating">{{translate.instant('Notiz')}}</ion-label>
+					<ion-textarea name="Notiz" id="Notiz" [(ngModel)]="rebox.Notiz" rows="5"></ion-textarea>                  
+				</ion-item>
+			</ion-col>
+		</ion-row>
+
+		<!-- Row 4 -->
+		<ion-row style="margin-top:20px">
+			<ion-col size="auto">
+				<ion-label style="color:#999;font-size:16px">{{translate.instant('Anzahl')}}</ion-label>
+			</ion-col>
+			<ion-col size="auto">				
+				<ion-button type="button" class="quant-rm" [disabled]="anzRebox<2" (click)="anzRebox=anzRebox-1">
+					<ion-icon name="remove"></ion-icon>
+				</ion-button>	
+			</ion-col>
+			<ion-col size="2">							
+				<ion-input readonly text-center type="numbers" [(ngModel)]="anzRebox"></ion-input>
+			</ion-col>
+			<ion-col size="auto">				
+				<ion-button type="button" class="quant-add" (click)="anzRebox=anzRebox+1">
+					<ion-icon name="add"></ion-icon>
+				</ion-button>		
+			</ion-col>
+		</ion-row>  
+	</ion-grid>
+
+
+	<div class="modal-footer">
+     	<ion-button type="button" class="btn btn-modal-danger footerIcon" (click)="dismiss()">
+			<ion-icon name="close"></ion-icon>
+		</ion-button>
+     	<ion-button type="button" class="btn btn-modal-success footerIcon" (click)="sendRebox();">
+			<ion-icon name="checkmark"></ion-icon>
+		</ion-button>
+	</div>
+</ion-content>

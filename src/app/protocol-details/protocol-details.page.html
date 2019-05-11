@@ -1,0 +1,167 @@
+<main-nav aktivPage="ProtocolDetails" [idCustomer]="idCustomer" [company]="company"></main-nav>
+
+<ion-content>
+	<div class="ek-content">
+		<div class="container">
+			<div class="mt20 content-sm">		
+				<ion-grid>
+					<ion-row>
+						<!-- Protocol Details -->
+						<ion-col size-xl="6" size-lg="6" size-md="6" size-sm="12" size="12">
+							<div class="table-responsive" id="ps_protocol">
+								<div class="table table-striped" id="protocol_details">
+									<div class="thead">
+										<div class="tr table-header">
+											<div class="th">{{'Protokoll Details' | translate}}</div>
+										</div>
+									</div>  
+									<div class="tbody" style="max-height: 560px; overflow-x: auto;">
+										<!--<div class="tr table-body">
+											<div class="td">{{'Titel' | translate}}</div>
+											<div class="td">{{activProtocol.title}}</div>
+										</div> -->
+										<div class="tr table-body">
+											<div class="td">{{'Protokoll Nummer' | translate}}</div>
+											<div class="td">{{activProtocol.protocol_number}}</div>
+										</div>
+										<div class="tr table-body"> 
+											<div class="td">{{'Datum' | translate}}</div>
+											<div class="td">{{activProtocol.protocol_date | date: 'dd.MM.yyyy'}}</div>
+										</div>
+										<div class="tr table-body">
+											<div class="td">{{'Prüfergebnis' | translate}}</div>
+											<div class="td">{{activProtocol.resultText }}</div>
+										</div>
+										<div class="tr table-body">
+											<div class="td">{{'nächste Prüfung' | translate}}</div>
+											<div class="td">{{activProtocol.protocol_date_next | date: 'dd.MM.yyyy'}}</div>
+										</div>
+		 								<!-- <div class="tr table-body">
+											<div class="td">{{'Produkt' | translate}}</div>
+											<div class="td">{{activProtocol.product}}</div>
+										</div>  -->
+										<div class="tr table-body" *ngFor="let item of activProtocol.items">
+											<div class="td">{{item.title[lang]}}</div>
+											<div class="td">{{item.value}}</div> 
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- File Attachments --> 
+							<div class="table-responsive">
+								<div class="table table-striped">
+									<div class="thead">
+										<div class="tr table-header">
+											<div class="th">{{'Dateianhänge' | translate}}</div>
+										</div>
+									</div>
+									<div class="tbody">
+										<p *ngFor="let row of dateien">   
+											<ion-icon name="trash" class="delSpan" (click)="delFile(row)"></ion-icon>         
+											<a class="datei_link" href="{{link}}{{row}}" target="_blank"> &nbsp; {{row}}</a>
+											<a *ngIf="KraftWegGraph && row=='KraftWegGraph.txt'" class="glyphicon glyphicon-signal delSpan" (click)="chart()"></a>
+										</p> 
+										<div *ngIf="userdata.role_set.check_products" class="tr">
+											<p-fileUpload name="file" 
+														url="{{url}}upload.php" 
+														(onUpload)="onUpload($event)"
+														(onBeforeUpload)="onBeforeUpload($event)"
+														method="POST"
+														accept="image/*,application/*,audio/*,message/*,text/*,video/*" 
+														maxFileSize="3000000"
+														chooseLabel="{{'Wähle Dateien' | translate}}"
+														uploadLabel="{{'Hochladen' | translate}}"
+														cancelLabel="{{'Abbrechen' | translate}}"
+														>
+												<ng-template pTemplate="content">
+													<ul *ngIf="uploadedFiles.length">
+														<li *ngFor="let file of uploadedFiles">{{file.name}} - {{file.size}} bytes</li>
+													</ul>
+												</ng-template>
+											</p-fileUpload>
+										</div>
+										<div *ngIf="!userdata.role_set.check_products" class="tr">											
+											<ng-template pTemplate="content">
+												<ul *ngIf="uploadedFiles.length">
+													<li *ngFor="let file of uploadedFiles">{{file.name}} - {{file.size}} bytes</li>
+												</ul>
+											</ng-template>											
+										</div>
+									</div>	
+								</div>
+							</div>
+						</ion-col>
+          				<!-- Product Details -->
+						<ion-col size-xl="6" size-lg="6" size-md="6" size-sm="12" size="12">
+							<div class="table-responsive" id="ps_product_2">
+								<div class="table table-striped" id="product_details_2">
+									<div class="thead">
+										<div class="tr table-header">
+											<div class="th">{{'Produkt Details' | translate}}</div>
+										</div>
+									</div>  
+									<p-accordion>
+										<div style="max-height: 560px; overflow-x: auto;">
+											<div *ngFor="let item of listProduct">
+												<p-accordionTab styleClass="ui-accordion-header" header="{{'Titel' | translate}} &nbsp;&nbsp;&nbsp;&nbsp; {{item.title}}">
+													<div class="tbody">
+														<div class="tr table-body">
+															<div class="td-lbl">DB-ID</div>
+															<div class="td">{{item.id}}</div>
+														</div>
+														<div class="tr table-body">
+															<div class="td-lbl">#</div>
+															<div class="td">{{item.id_number}}</div>
+														</div>
+														<div class="tr table-body">
+															<div class="td-lbl">{{'Articel No' | translate}}</div>
+															<div class="td">{{item.articel_no}}</div>
+														</div>
+														<div class="tr table-body">
+															<div class="td-lbl">{{'Intervall Prüfen' | translate}}</div>
+															<div class="td">{{item.check_interval}}</div>
+														</div>
+														<div class="tr table-body" *ngFor="let items of item.items">
+															<div class="td-lbl">{{items.title[lang]}}</div>
+															<div class="td">{{items.value}}</div>  
+														</div>
+													</div>
+												</p-accordionTab>
+											</div>
+										</div>
+									</p-accordion>
+								</div>
+							</div>  
+						</ion-col>
+					</ion-row>					
+				</ion-grid>
+			</div>
+		</div>
+	</div>
+</ion-content>
+<ion-fab slot="fixed" right vertical="bottom"> 
+	<ion-fab-button color="primarydark">
+	<ion-icon name="menu"></ion-icon>
+	</ion-fab-button>
+	<ion-fab-list side="top">
+		<ion-fab-button 
+				(click)="protocolDeactivate()" 
+				class="btn-primary" 
+				[disabled]="userdata.role_set.check_products==false" 
+				style="color:white"
+				(mouseover)="mouseover(1)" 
+				(mouseout)="mouseout(1)">
+			<ion-icon name="trash"></ion-icon>
+			<ion-label [hidden]="!mouseoverButton1">{{'Protokoll Löschen' | translate}}</ion-label>
+		</ion-fab-button>
+		<ion-fab-button 
+				(click)="printPdf()" 
+				class="btn-primary" 
+				style="color:white"
+				(mouseover)="mouseover(2)" 
+				(mouseout)="mouseout(2)">
+			<ion-icon name="document"></ion-icon>
+			<ion-label [hidden]="!mouseoverButton2">{{'PDF Ansicht' | translate}}</ion-label>
+		</ion-fab-button>
+	</ion-fab-list>
+</ion-fab>

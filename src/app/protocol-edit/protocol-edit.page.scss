@@ -1,0 +1,29 @@
+app-protocol-edit {
+    .th {
+        justify-content: left !important;       
+        font-size: 18px !important;
+    }
+
+    .selectTemplate {
+        background-color: #0276D8;
+    }
+
+    .unselectTemplate {
+        background-color: white;
+    }
+
+    .modal-footer {
+        margin-top: -45px !important;
+    }
+
+    .whitebox-image {
+        background: #fff;
+        color: #4a5356;
+        padding: 20px;
+        width: 100%;
+        min-height: 150px;
+        border-radius: 3px;
+        position: relative;
+        text-align: center;
+      }
+}

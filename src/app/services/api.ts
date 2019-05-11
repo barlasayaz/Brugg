@@ -1,0 +1,1028 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import 'rxjs/add/operator/timeout';
+import { UserdataService } from './userdata';
+
+//let apiURL = "http://localhost/pvs/api/";
+let apiURL = "http://testpvs.schaefer4u.de/api/";
+//let apiURL =  "http://localhost/bruggpvs/api/";
+
+//let pvs4_apiURL = "http://localhost/BruggPVS4/pvs4-api/"; 
+//let pvs4_apiURL = "http://schaefer4u.de/pvs4/pvs4-api/";
+let pvs4_apiURL = "https://www.pvs2go.com/pvs4-api/";
+
+let brugg_id_api = 'https://www.bruggdigital.com/';
+let pvs4_client_id = "brugg-pvs";
+let pvs4_client_secret = 'b23c8hfqnvd3qt7865uiat';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class ApiService {
+  ud: any;
+  isLoggedIn: any;
+  public url: any = apiURL;
+  public pvsApiURL = pvs4_apiURL;
+  public maxDate: string = '2024-12-31';
+  version: string = "4.3.2";
+  
+  constructor(public http: HttpClient, public userdata: UserdataService) {
+    console.log('Start ApiProvider Provider');
+  }
+  /*********************************** Brugg ID  *********************************************/
+  bid_login(email: string, password: string) {
+    console.log("api bid_login() ");
+    return new Promise((res, rej) => {
+      // inject our access token
+      let tick = Date.now().toString(16).toUpperCase();
+      let url = brugg_id_api + "authorize.php?tick=" + tick;
+      let data = {
+        'client_id'    : pvs4_client_id, 
+        'client_secret': pvs4_client_secret,
+        'grant_type'   : 'password',
+        'username'     : email,
+        'password'     : password
+      }
+      // call  endpoint
+      this.http.post(url, data)
+        .subscribe(
+          (data: any) => {
+            console.log("api bid_login() post data: ", data);
+            if (data.amount == 1) {
+              console.log("api bid_login() ok ");
+              window.localStorage['pvs4_login'] = 1;
+              window.localStorage['pvs4_user'] = JSON.stringify(data.user_info);
+              window.localStorage['access_token'] = data.result.access_token;
+              window.localStorage['refresh_token'] = data.result.refresh_token;
+              window.localStorage['pvs4_bruggid'] = data.user_info.email;
+              this.userdata.first_name = data.user_info.first_name;
+              this.userdata.last_name = data.user_info.last_name;
+              this.userdata.email = data.user_info.email;
+              this.userdata.phone = data.user_info.phone;
+
+              this.pvs4_get_my_profile(email).then((done: any) => { 
+                done = done.obj;
+                done.last_login = this.date2mysql(new Date(), false);
+                this.pvs4_set_profile(done).then((done: any) => { 
+                    console.log("api pvs4_set_profile() ok ");
+                },
+                  err => { // return the error
+                    console.error("api pvs4_set_profile() nok ",err);
+                });
+                
+                res(data);
+              },
+                err => { // return the error
+                  rej(err);
+              });
+            } else {
+              console.log("api bid_login() nok ");
+              window.localStorage['pvs4_login'] = 0;
+              localStorage.removeItem('user_info');
+              localStorage.removeItem('pvs4_user');
+              localStorage.removeItem('access_token');
+              localStorage.removeItem('refresh_token');
+              window.localStorage['pvs4_bruggid'] = "";
+              rej(data);
+            }
+            
+          }, // success path
+          error => {
+            window.localStorage['pvs4_login'] = 0;
+            localStorage.removeItem('user_info');
+            localStorage.removeItem('pvs4_user');
+            localStorage.removeItem('access_token');
+            localStorage.removeItem('refresh_token');
+            window.localStorage['pvs4_bruggid'] = "";
+            console.log("api bid_login() nok :", error);
+            rej(error);
+          }// error path
+        );
+    });
+  }
+  bid_reset(orig_url: string, orig_data: any, orig_headers:any) {
+    console.log("pvs4_api_reset():", orig_url, orig_data);
+    return new Promise((res, rej) => {
+      // inject our access token
+      let tick = Date.now().toString(16).toUpperCase();
+      let url = brugg_id_api + "token.php?tick=" + tick;
+      let data = {
+        'client_id'    : pvs4_client_id, 
+        'client_secret': pvs4_client_secret,
+        'grant_type': 'refresh_token',
+        'refresh_token' : window.localStorage['refresh_token']
+      }
+      // call  endpoint
+      this.http.post(url, data)
+        .subscribe(
+          (data: any) => {
+            console.log("api bid_reset() post data: ", data);
+            window.localStorage['access_token'] = data.access_token;
+            window.localStorage['refresh_token'] = data.refresh_token;
+            orig_data.token  = data.access_token;
+            this.http.post(orig_url, orig_data, { headers: orig_headers }).subscribe((done: any) => {
+              //return the result
+              console.info(url, done);
+              res(done);
+            },
+            err => {
+                console.info("bid_reset() post error:",url, err);
+                rej(err);
+            });
+          }, // success path
+          error => {
+            console.log("api bid_reset() nok :", error);
+            //res(error);
+            this.userdata.delStorage();
+            location.reload();
+          }// error path
+        );
+    });
+  }
+  /*
+  bid_userdata(email: string) {
+    console.log("bid_userdata():", email);
+    return new Promise((res, rej) => {
+      // inject our access token
+      let tick = Date.now().toString(16).toUpperCase();
+      let url = brugg_id_api + "userdata.php?tick=" + tick;
+      let data = {
+        'client_id'    : pvs4_client_id, 
+        'client_secret': pvs4_client_secret,
+        'username': this.userdata.email,
+        'userdata': email,
+        'access_token' : window.localStorage['access_token']
+      }
+      // call  endpoint
+      this.http.post(url, data)
+        .subscribe(
+          (done: any) => {
+            console.log("api bid_userdata() post data: ", done);
+            res(done);
+          }, // success path
+          error => {
+            console.log("api bid_userdata() nok :", error);
+            rej(error);
+          }// error path
+        );
+    });
+  }
+  */
+  /******************* PVS4 API  *********************************************/
+  pvs4_api_post(func: string, data: any) {
+    console.log("pvs4_api_post():", func, data);
+    return new Promise((res, rej) => {
+      let headers = new HttpHeaders().set('Content-Type', 'application/json; charset=utf-8');
+      let tick = Date.now().toString(16).toUpperCase();
+      let url = pvs4_apiURL + func + "?tick=" + tick;
+      // inject our access token
+      data.token = window.localStorage['access_token'];
+      data.bruggid = window.localStorage['pvs4_bruggid'];
+      // call  endpoint
+      this.http.post(url, data, { headers: headers }).subscribe((done: any) => {
+          //return the result
+          console.info(func, done);
+          res(done);
+        },
+          err => {
+            console.info("pvs4_api_post error:",func, err);
+            if(err.status==401){
+              this.bid_reset(url, data, headers).then((done: any) => { //return the result
+                res(done);
+              },
+                err => { // return the error
+                  rej(err);
+              });
+            }else{
+              rej(err);
+            }
+        });
+    });
+  } 
+
+  pvs4_get_my_profile(email: string) {
+    return new Promise((res, rej) => {
+      let post_data = {
+        email: email
+      }
+      this.pvs4_api_post("get_profile.php", post_data).then((done: any) => { //return the result
+        console.info("pvs4_get_my_profile done ok: ", done);
+        let system_role = JSON.parse(done.obj.system_role); 
+        let licensee_role = JSON.parse(done.obj.licensee_role); 
+        let customer_role = JSON.parse( done.obj.customer_role); 
+        this.userdata.profile = parseInt(done.obj.id);
+        this.userdata.id = this.userdata.profile;
+        this.userdata.licensee = 0; 
+        this.userdata.role = 0; 
+        this.userdata.role_nr = 0; 
+        this.userdata.role_set = {
+          check_products: false,​​
+          edit_contact_persons: false,          ​​
+          edit_customer: false,          ​​
+          edit_membership: false,          ​​
+          edit_products: false,          ​​
+          edit_rights: false
+        }; 
+        this.userdata.short_code = done.obj.short_code; 
+        this.userdata.colour = done.obj.colour; 
+        if((system_role.length>0) && (licensee_role.length==0) && (customer_role.length==0)) { 
+          this.userdata.role = 1; 
+          this.userdata.role_set = system_role[0]; 
+        }
+        if((system_role.length==0) && (licensee_role.length>0) && (customer_role.length==0)) { 
+          this.userdata.role = 2; 
+          this.userdata.role_set = licensee_role[0]; 
+          this.userdata.licensee = licensee_role[0].licensee;
+        }
+        if((system_role.length==0) && (licensee_role.length==0) && (customer_role.length>0)) { 
+          this.userdata.role = 3; 
+          this.userdata.role_set = customer_role[0]; 
+        }
+        if(!this.userdata.role_set.check_products) this.userdata.role_set.check_products = false;
+        if(!this.userdata.role_set.edit_contact_persons) this.userdata.role_set.edit_contact_persons = false;
+        if(!this.userdata.role_set.edit_customer) this.userdata.role_set.edit_customer = false;
+        if(!this.userdata.role_set.edit_membership) this.userdata.role_set.edit_membership = false;
+        if(!this.userdata.role_set.edit_products) this.userdata.role_set.edit_products = false;
+        if(!this.userdata.role_set.edit_rights) this.userdata.role_set.edit_rights = false;
+        console.info("pvs4_get_my_profile done ok: ", this.userdata); 
+        res(done);
+      },
+        err => { // return the error
+          console.log("api bid_login() nok ");
+          window.localStorage['pvs4_login'] = 0;
+          localStorage.removeItem('user_info');
+          localStorage.removeItem('pvs4_user');
+          localStorage.removeItem('access_token');
+          localStorage.removeItem('refresh_token');
+          window.localStorage['pvs4_bruggid'] = "";
+          rej(err);
+      });
+    });
+  }
+
+  pvs4_get_profile(email: string, check:number=0) {
+    return new Promise((res, rej) => {
+      let post_data = {
+        email: email,
+        check: check
+      }
+      this.pvs4_api_post("get_profile.php", post_data).then((done: any) => { //return the result
+        console.info("pvs4_get_profile done ok: ", done);
+        res(done);
+      },
+        err => { // return the error
+          rej(err);
+      });
+    });
+  }
+
+  pvs4_set_profile(obj: any) {
+    console.info("pvs4_set_profile():", obj);
+    return new Promise((res, rej) => {
+      this.pvs4_api_post("set_profile.php", obj).then((done: any) => {//return the result
+        res(done);
+      },
+        err => { // return the error
+          rej(err);
+        });
+    });
+  }
+
+  pvs4_get_colleagues_list(role: number, role_set:any, licensee:number) {
+    //let userID = this.userdata.id;
+    return new Promise((res, rej) => {
+      let data = {
+        role: role,
+        role_set: role_set,
+        licensee: licensee
+      }
+      this.pvs4_api_post("get_colleagues.php", data).then((done: any) => { //return the result
+          res(done);
+      },
+        err => { // return the error
+          rej(err);
+      });
+    });
+  }
+
+  pvs4_get_customer_list(parentID: number, offset:number=0) {
+    let userID = this.userdata.id;
+    let licensee = this.userdata.licensee;
+    let role = this.userdata.role;
+    return new Promise((res, rej) => {
+      let data = {
+        user: userID,
+        parent: parentID,
+        licensee: licensee,
+        offset :offset,
+        role: role
+      }
+      this.pvs4_api_post("get_customer_list.php", data).then((done: any) => { //return the result
+          res(done);
+          //console.log("get_customer_list offset:", offset);
+          //if(done.amount>0) this.pvs4_get_customer_list(parentID, offset+1);
+      },
+        err => { // return the error
+          rej(err);
+      });
+    });
+  }
+
+  pvs4_get_product_opt(licenseeID: number, viewID: number) {
+    let userID = this.userdata.id;
+    console.log("api pvs4_get_product_opt");
+    return new Promise((res, rej) => {
+      /* let headers = new HttpHeaders().set('Content-Type', 'application/json; charset=utf-8'); --DP */
+      /* let tick    = Date.now().toString(16).toUpperCase(); --DP-- */
+      /* let url     = pvs4_apiURL+"get_product_opt.php?tick=" + tick; --DP-- */
+      let data = {
+        user: userID,
+        licensee: licenseeID,
+        view: viewID,
+      }
+      this.pvs4_api_post("get_product_opt.php", data).then((done: any) => {//return the result
+        res(done);
+      },
+        err => { // return the error
+          rej(err);
+        });
+    });
+  }
+  pvs4_set_product_opt(obj: any) {
+    console.info("pvs4_set_product_opt():", obj);
+    return new Promise((res, rej) => {
+      this.pvs4_api_post("set_product_opt.php", obj).then((done: any) => {//return the result
+        res(done);
+      },
+        err => { // return the error
+          rej(err);
+        });
+    });
+  }
+  pvs4_get_product_tem(licenseeID: number, viewID: number) {
+    let userID = this.userdata.id;
+    return new Promise((res, rej) => {
+      let data = {
+        user: userID,
+        licensee: licenseeID,
+        view: viewID,
+      }
+      this.pvs4_api_post("get_product_tem.php", data).then((done: any) => {//return the result
+        res(done);
+      },
+        err => { // return the error
+          rej(err);
+        });
+    });
+  }
+  pvs4_set_product_tem(obj: any) {
+    console.info("pvs4_set_product_tem():", obj);
+    return new Promise((res, rej) => {
+
+      this.pvs4_api_post("set_product_tem.php", obj).then((done: any) => {//return the result
+        res(done);
+      },
+        err => { // return the error
+          rej(err);
+        });
+    });
+  }
+  pvs4_get_protocol_opt(licenseeID: number, viewID: number) {
+    let userID = this.userdata.id;
+    console.log("api pvs4_get_protocol_opt");
+    return new Promise((res, rej) => {
+      let data = {
+        user: userID,
+        licensee: licenseeID,
+        view: viewID,
+      }
+      this.pvs4_api_post("get_protocol_opt.php", data).then((done: any) => {//return the result
+        res(done);
+      },
+        err => { // return the error
+          rej(err);
+        });
+    });
+  }
+  pvs4_set_protocol_opt(obj: any) {
+    console.info("pvs4_set_protocol_opt():", obj);
+    return new Promise((res, rej) => {
+      this.pvs4_api_post("set_protocol_opt.php", obj).then((done: any) => {//return the result
+        res(done);
+      },
+        err => { // return the error
+          rej(err);
+        });
+    });
+  }
+  pvs4_get_protocol_tem(licenseeID: number, viewID: number) {
+    let userID = this.userdata.id;
+    return new Promise((res, rej) => {
+      let data = {
+        user: userID,
+        licensee: licenseeID,
+        view: viewID,
+      }
+      this.pvs4_api_post("get_protocol_tem.php", data).then((done: any) => {//return the result
+        res(done);
+      },
+        err => { // return the error
+          rej(err);
+        });
+    });
+  }
+  pvs4_set_protocol_tem(obj: any) {
+    console.info("pvs4_set_protocol_tem():", obj);
+    return new Promise((res, rej) => {
+      this.pvs4_api_post("set_protocol_tem.php", obj).then((done: any) => {//return the result
+        res(done);
+      },
+        err => { // return the error
+          rej(err);
+        });
+    });
+  }
+  pvs4_set_note(obj: any) {
+    console.info("pvs4_set_note():", obj);
+    return new Promise((res, rej) => {
+      this.pvs4_api_post("set_note.php", obj).then((done: any) => {//return the result
+        res(done);
+      },
+        err => { // return the error
+          rej(err);
+        });
+    });
+  }
+  pvs4_get_note(noteID: number) {
+    return new Promise((res, rej) => {
+      let data = {
+        id: noteID
+      }
+      this.pvs4_api_post("get_note.php", data).then((done: any) => {//return the result
+        done.obj.id = parseInt(done.obj.id);
+        done.obj.customer = parseInt(done.obj.customer);
+        done.obj.active = parseInt(done.obj.active);
+        res(done);
+      },
+        err => { // return the error
+          rej(err);
+        });
+    });
+  }
+  pvs4_get_note_list(customerID: Number) {
+    let userID = this.userdata.id;
+    return new Promise((res, rej) => {
+      let data = {
+        user: userID,
+        customer: customerID
+      }
+      this.pvs4_api_post("get_note_list.php", data).then((done: any) => {//return the result
+        res(done);
+      },
+        err => { // return the error
+          rej(err);
+        });
+    });
+  }
+  pvs4_set_protocol(obj: any) {
+    console.info("pvs4_set_protocol():", obj);
+    return new Promise((res, rej) => {
+      this.pvs4_api_post("set_protocol.php", obj).then((done: any) => {//return the result
+        res(done);
+      },
+        err => { // return the error
+          rej(err);
+        });
+    });
+  }
+  pvs4_get_protocol(protocolID: number) {
+    let userID = this.userdata.id;
+    return new Promise((res, rej) => {
+      let data = {
+        user: userID,
+        id: protocolID
+      }
+      this.pvs4_api_post("get_protocol.php", data).then((done: any) => {//return the result
+        done.obj.id = parseInt(done.obj.id);
+        done.obj.customer = parseInt(done.obj.customer);
+        done.obj.active = parseInt(done.obj.active);
+        done.obj.result = parseInt(done.obj.result);
+        done.obj.protocol_number = parseInt(done.obj.protocol_number);
+        res(done);
+      },
+        err => { // return the error
+          rej(err);
+        });
+    });
+  }
+  pvs4_get_protocol_list(customerID: Number) {
+    let userID = this.userdata.id;
+    return new Promise((res, rej) => {
+      let data = {
+        user: userID,
+        customer: customerID
+      }
+      this.pvs4_api_post("get_protocol_list.php", data).then((done: any) => {//return the result
+        res(done);
+      },
+        err => { // return the error
+          rej(err);
+        });
+    });
+  }
+  pvs4_set_product(obj: any) {
+    console.info("pvs4_set_product():", obj);
+    return new Promise((res, rej) => {
+      this.pvs4_api_post("set_product.php", obj).then((done: any) => {//return the result
+        res(done);
+      },
+        err => { // return the error
+          rej(err);
+        });
+    });
+  }
+
+  pvs4_set_product_tag(obj: any) {
+    console.info("pvs4_set_product():", obj);
+    return new Promise((res, rej) => {
+      this.pvs4_api_post("set_product_tag.php", obj).then((done: any) => {//return the result
+        res(done);
+      },
+        err => { // return the error
+          rej(err);
+        });
+    });
+  }
+  pvs4_get_nfc_product(tagID: string) {
+    let userID = this.userdata.id;
+    return new Promise((res, rej) => {
+      let data = {
+        user: userID,
+        tagID: tagID
+      }
+      this.pvs4_api_post("get_nfc_product.php", data).then((done: any) => {//return the result
+        done.amount = parseInt(done.amount);
+        if(done.amount>0) {
+          done.obj.id = parseInt(done.obj.id);
+          done.obj.active = parseInt(done.obj.active);
+          done.obj.parent = parseInt(done.obj.parent);
+          done.obj.customer = parseInt(done.obj.customer);
+          done.obj.check_interval = parseInt(done.obj.check_interval);
+        }
+        res(done);
+      },
+        err => { // return the error
+          rej(err);
+        });
+    });
+  }
+
+  pvs4_get_qr_product_list(qrCode: string) {
+    let userID = this.userdata.id;
+    return new Promise((res, rej) => {
+      let data = {
+        user: userID,
+        qrCode: qrCode
+      }
+      this.pvs4_api_post("get_qr_product_list.php", data).then((done: any) => {//return the result
+        /*
+        done.obj.id = parseInt(done.obj.id);
+        done.obj.active = parseInt(done.obj.active);
+        done.obj.parent = parseInt(done.obj.parent);
+        done.obj.customer = parseInt(done.obj.customer);
+        done.obj.check_interval = parseInt(done.obj.check_interval);
+        */
+        res(done);
+      },
+        err => { // return the error
+          rej(err);
+        });
+    });
+  }
+  pvs4_get_product(productID: number) {
+    let userID = this.userdata.id;
+    return new Promise((res, rej) => {
+      let data = {
+        user: userID,
+        id: productID
+      }
+      this.pvs4_api_post("get_product.php", data).then((done: any) => {//return the result
+        done.obj.id = parseInt(done.obj.id);
+        done.obj.active = parseInt(done.obj.active);
+        done.obj.parent = parseInt(done.obj.parent);
+        done.obj.customer = parseInt(done.obj.customer);
+        done.obj.check_interval = parseInt(done.obj.check_interval);
+        res(done);
+      },
+        err => { // return the error
+          rej(err);
+        });
+    });
+  }
+  pvs4_get_product_list(customerID: Number) {
+    let userID = this.userdata.id;
+    return new Promise((res, rej) => {
+      let data = {
+        user: userID,
+        customer: customerID
+      }
+      this.pvs4_api_post("get_product_list.php", data).then((done: any) => {//return the result
+        res(done);
+      },
+        err => { // return the error
+          rej(err);
+        });
+    });
+  }
+
+  pvs4_get_customer(customerID: number) {
+    return new Promise((res, rej) => {
+      let data = {
+        id: customerID
+      }
+      this.pvs4_api_post("get_customer.php", data).then((done: any) => {//return the result
+        if (done.obj != null) {
+          done.obj.id = parseInt(done.obj.id);
+          done.obj.active = parseInt(done.obj.active);
+          done.obj.licensee = parseInt(done.obj.licensee);
+          done.obj.parent = parseInt(done.obj.parent);
+        }
+        res(done);
+      },
+        err => { // return the error
+          rej(err);
+        });
+    });
+  }
+  pvs4_set_inspection_service(customerID: number, mode:number) {
+    return new Promise((res, rej) => {
+      let data = {
+        id: customerID,
+        mode: mode
+      }
+      this.pvs4_api_post("set_inspection_service.php", data).then((done: any) => {//return the result
+        res(done);
+      },
+        err => { // return the error
+          rej(err);
+        });
+    });
+  }
+  pvs4_set_customer(obj: any) {
+    console.info("pvs4_set_customer():", obj);
+    return new Promise((res, rej) => {
+      this.pvs4_api_post("set_customer.php", obj).then((done: any) => {//return the result
+        res(done);
+      },
+        err => { // return the error
+          rej(err);
+        });
+    });
+  }
+
+  pvs4_get_appointment_list() {
+    let userID = this.userdata.id;
+    let licensee = this.userdata.licensee;
+    let role = this.userdata.role;
+    return new Promise((res, rej) => {
+      let data = {
+        user: userID
+        ,licensee: licensee
+        ,role: role
+      }
+      this.pvs4_api_post("get_appointment_list.php", data).then((done: any) => {//return the result
+        res(done);
+      },
+        err => { // return the error
+          rej(err);
+        });
+    });
+  }
+
+  pvs4_get_customer_list_app() {
+    let userID = this.userdata.id;
+    let licensee = this.userdata.licensee;
+    let role = this.userdata.role;
+    return new Promise((res, rej) => {
+      let data = {
+        user: userID
+        ,licensee: licensee
+        ,role: role
+      }
+      this.pvs4_api_post("get_customer_list_app.php", data).then((done: any) => {//return the result
+        res(done);
+      },
+        err => { // return the error
+          rej(err);
+        });
+    });
+  }
+
+  pvs4_get_appointment_list_ps(date_start: string, date_end: string) {
+    let userID = this.userdata.id;
+    return new Promise((res, rej) => {
+      let data = {
+        user: userID,
+        date_start: date_start,
+        date_end: date_end
+      }
+      this.pvs4_api_post("get_appointment_list_ps.php", data).then((done: any) => {//return the result
+        res(done);
+      },
+        err => { // return the error
+          rej(err);
+        });
+    });
+  }
+  pvs4_set_appointment(obj: any) {
+    console.info("pvs4_set_appointment():", obj);
+    return new Promise((res, rej) => {
+      this.pvs4_api_post("set_appointment.php", obj).then((done: any) => {//return the result
+        res(done);
+      },
+        err => { // return the error
+          rej(err);
+        });
+    });
+  }
+  pvs4_get_appointment(appointmentID: number) {
+    return new Promise((res, rej) => {
+      let data = {
+        id: appointmentID
+      }
+      this.pvs4_api_post("get_appointment.php", data).then((done: any) => {//return the result
+        res(done);
+      },
+        err => { // return the error
+          rej(err);
+        });
+    });
+  }
+
+  pvs4_get_file(id: any, type: any) {
+    return new Promise((res, rej) => {
+      let data = {
+        id: id,
+        type: type
+      }
+      this.pvs4_api_post("dateiliste.php", data).then((done: any) => {//return the result
+        res(done);
+      },
+        err => { // return the error
+          rej(err);
+        });
+    });
+  }
+
+  pvs4_del_file(parameters: any) {
+    return new Promise((res, rej) => {
+      let data = {
+        id: parameters.id,
+        type: parameters.type,
+        dateiname: parameters.dateiname
+      }
+      this.pvs4_api_post("del_file.php", data).then((done: any) => {//return the result
+        res(done);
+      },
+        err => { // return the error
+          rej(err);
+        });
+    });
+  }
+
+  pvs4_set_rebox_pickup(obj: any) {
+    console.info("pvs4_set_rebox_pickup():", obj);
+    return new Promise((res, rej) => {
+      this.pvs4_api_post("set_rebox_pickup.php", obj).then((done: any) => {//return the result
+        res(done);
+      },
+        err => { // return the error
+          rej(err);
+        });
+    });
+  }
+
+  pvs4_set_orders_send(obj: any) {
+    console.info("pvs4_set_orders_send():", obj);
+    return new Promise((res, rej) => {
+      this.pvs4_api_post("set_orders_send.php", obj).then((done: any) => {//return the result
+        console.info("pvs4_set_orders_send", done);
+        res(done);
+      },
+        err => { // return the error
+          rej(err);
+        });
+    });
+  }
+
+  pvs4_get_baan(id: any) {
+    return new Promise((res, rej) => {
+      let data = {
+        id: id
+      }
+      this.pvs4_api_post("get_baan.php", data).then((done: any) => {//return the result
+        res(done);
+      },
+        err => { // return the error
+          rej(err);
+        });
+    });
+  }
+
+  pvs4_get_mydata(id: number) {
+    return new Promise((res, rej) => {
+      let data = {
+        id: id,
+        licensee: this.userdata.licensee
+      }
+      this.pvs4_api_post("get_mydata.php", data).then((done: any) => {//return the result
+        res(done);
+      },
+        err => { // return the error
+          rej(err);
+        });
+    });
+  }
+
+  pvs4_set_mydata(obj: any) {
+    console.info("pvs4_set_mydata():", obj);
+    return new Promise((res, rej) => {
+      this.pvs4_api_post("set_mydata.php", obj).then((done: any) => {//return the result
+        res(done);
+      },
+        err => { // return the error
+          rej(err);
+        });
+    });
+  }
+
+  pvs4_get_protocol_history(customerID: Number, productID: Number) {
+    let userID = this.userdata.id;
+    return new Promise((res, rej) => {
+      let data = {
+        user: userID,
+        customer: customerID,
+        product: productID
+      }
+      this.pvs4_api_post("get_protocol_history.php", data).then((done: any) => {//return the result
+        res(done);
+      },
+        err => { // return the error
+          rej(err);
+        });
+    });
+  }
+
+  pvs4_get_product_parrent(parentID: number) {
+    let userID = this.userdata.id;
+    return new Promise((res, rej) => {
+      let data = {
+        user: userID,
+        parentId: parentID
+      }
+      this.pvs4_api_post("get_product_parrent.php", data).then((done: any) => {//return the result
+        //done.obj.id = parseInt(done.obj.id);
+        res(done);
+      },
+        err => { // return the error
+          rej(err);
+        });
+    });
+  }
+
+  pvs4_copy_file(parameters: any) {
+    return new Promise((res, rej) => {
+      let data = {
+        sourceFile: parameters.sourceFile,
+        targetFile: parameters.targetFile
+      }
+      this.pvs4_api_post("copy_file.php", data).then((done: any) => {//return the result
+        res(done);
+      },
+        err => { // return the error
+          rej(err);
+        });
+    });
+  }
+
+  pvs4_get_contact_person(customerID: Number) {
+    let userID = this.userdata.id;
+    return new Promise((res, rej) => {
+      let data = {
+        user: userID,
+        customer: customerID
+      }
+      this.pvs4_api_post("get_contact_person.php", data).then((done: any) => {//return the result
+        res(done);
+      },
+        err => { // return the error
+          rej(err);
+        });
+    });
+  }
+
+  pvs4_set_contact_person(obj: any) {
+    console.info("pvs4_set_contact_person():", obj);
+    return new Promise((res, rej) => {
+      this.pvs4_api_post("set_contact_person.php", obj).then((done: any) => {//return the result
+        res(done);
+      },
+        err => { // return the error
+          rej(err);
+        });
+    });
+  }
+
+
+  /**********************************PVS 3*****************************************/
+  /********************************************************************************/
+  postData(parameters: any, func: String) {
+    return new Promise((resolve, reject) => {
+      let headers = new HttpHeaders().set('Content-Type', 'application/json; charset=utf-8');
+      let tick = Date.now().toString(16).toUpperCase();
+      let url = apiURL + func + "?tick=" + tick;
+      parameters.token = this.userdata.token;
+
+      this.http.post(url, JSON.stringify(parameters), { headers: headers }).subscribe(res => {
+        //console.info("postData", res);
+        resolve(res);
+      }, (err) => {
+        reject(err);
+      });
+    });
+  }
+
+  zeileUpdateInDB(tabName: any, objNeu: any, id: any) {
+    let params = '{"tabName":"' + tabName + '","id":' + id + ',"obj":' + objNeu + '}';
+    this.postData(JSON.parse(params), "on_update_in_db.php").then((result) => {
+      return result;
+    });
+  }
+
+  zeileDeleteInDB(tabName: any, id: any) {
+    let params = '{"tabName":"' + tabName + '","id":' + id + '}';
+    this.postData(JSON.parse(params), "on_delete_in_db.php").then((result) => {
+      return result;
+    });
+  }
+
+  zeileInsertInDB(tabName: any, objNeu: any) {
+    let params = '{"tabName":"' + tabName + '","obj":' + objNeu + '}';
+    this.postData(JSON.parse(params), "on_insert_in_db.php").then((result) => {
+      return result;
+    });
+  }
+
+  mysql2view(timestamp, kurz) {
+    //function parses mysql datetime string and returns javascript Date object
+    //input has to be in this format: 2007-06-05 15:26:02
+    let regex = /^([0-9]{2,4})-([0-1][0-9])-([0-3][0-9]) (?:([0-2][0-9]):([0-5][0-9]):([0-5][0-9]))?$/;
+    let parts = timestamp.replace(regex, "$1 $2 $3 $4 $5 $6").split(' ');
+    if (kurz) {
+      return parts[2] + '.' + parts[1] + '.' + parts[0];
+    } else {
+      return parts[2] + '.' + parts[1] + '.' + parts[0] + ' ' + parts[3] + ':' + parts[4];
+    }
+  }
+
+  mysqlDate2view(date) {
+    let parts = date.split('-');
+    return parts[2] + '.' + parts[1] + '.' + parts[0];
+  }
+
+  mysql2date(timestamp) {
+    //function parses mysql datetime string and returns javascript Date object
+    //input has to be in this format: 2007-06-05 15:26:02
+    let regex = /^([0-9]{2,4})-([0-1][0-9])-([0-3][0-9]) (?:([0-2][0-9]):([0-5][0-9]):([0-5][0-9]))?$/;
+    let parts = timestamp.replace(regex, "$1 $2 $3 $4 $5 $6").split(' ');
+    return new Date(parts[0], parts[1] - 1, parts[2], parts[3], parts[4], parts[5]);
+  }
+
+  date2mysql(dateobj, kurz) {
+    let date = new Date();
+    if (dateobj) date = new Date(dateobj);
+
+    //let mysqlDateTime = date.toISOString().slice(0, 19).replace('T', ' ');
+    //if(kurz) let mysqlDateTime = date.toISOString().slice(0, 10);
+
+    let mysqlDateTime = date.getFullYear() + "-" + this.addZero(date.getMonth() + 1) + "-" + this.addZero(date.getDate());
+    if (!kurz) mysqlDateTime += " " + this.addZero(date.getHours()) + ":" + this.addZero(date.getMinutes()) + ":" + this.addZero(date.getSeconds());
+
+    return mysqlDateTime;
+  }
+
+  time2mysql(dateobj) {
+    let date = new Date();
+    if (dateobj) date = new Date(dateobj);
+    let mysqlTime: any = '';
+    if (date.getHours() < 10) mysqlTime = '0' + date.getHours(); else mysqlTime = date.getHours();
+    if (date.getMinutes() < 10) mysqlTime += ':0' + date.getMinutes(); else mysqlTime += ':' + date.getMinutes();
+    mysqlTime += ':00';
+    return mysqlTime;
+  }
+
+  addZero(i) {
+    if (i < 10) { i = "0" + i; }
+    return i;
+  }
+}

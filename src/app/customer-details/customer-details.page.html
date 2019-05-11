@@ -1,0 +1,260 @@
+<main-nav aktivPage="CustomerDetails" [idCustomer]="idCustomer" [company]="activCustomer.company"></main-nav>
+
+<ion-content>
+  <div class="ek-content">
+      <div class="container">
+        <div class="mt20 content-sm">		
+
+         <ion-grid>
+            <ion-row>
+            <ion-col size-xl="7" size-lg="7" size-md="7" size-sm="12" size="12">
+              <div class="kunden-wrap">
+                <!-- KUNDENDATEN -->
+                <div class="kunden-col">
+                  <div class="table-info">
+                    <div class="thead">
+                      <div class="tr table-header">
+                        <div class="th" style="max-width: 200px;">{{'Firma' | translate}}</div>
+                        <div class="th">
+                          <div [hidden]="kundenSelect">
+                              {{activCustomer.company}}
+                          </div>
+                          <div class="icon"
+                              style="top:-10px; background:#005e86;border-radius: 3px; color:#fff; padding:10px 15px;"
+                              *ngIf="userdata.Type<20">
+                              {{activCustomer.rating}}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="tbody">
+                      <div class="tr table-body">
+                        <div class="td">{{'Strasse' | translate}}</div>
+                        <div class="td"><span>{{activCustomer.street}}</span></div>
+                      </div>
+                      <div class="tr table-body">
+                        <div class="td">{{'Postfach' | translate}}</div>
+                        <div class="td"><span>{{activCustomer.po_box}}</span></div>
+                      </div>
+                      <div class="tr table-body">
+                        <div class="td">{{'PLZ' | translate}} {{'Ort' | translate}}</div>
+                        <div class="td"><span>{{activCustomer.zip_code}}</span> <span>{{ activCustomer.place}}</span></div>
+                      </div>
+                      <div class="tr table-body">
+                        <div class="td">{{'Land' | translate}}</div>
+                        <div class="td"><span>{{activCustomer.country}}</span></div>
+                      </div>
+                      <div class="tr table-body">
+                        <div class="td">{{'Kundennummer' | translate}}</div>
+                        <div class="td"><span>{{activCustomer.customer_number}}</span></div>
+                      </div>
+                      <div class="tr table-body">
+                        <div class="td">{{'Branche' | translate}}</div>
+                        <div class="td">
+                          <span>{{activCustomer.sector | translate}}</span>
+                        </div>
+                      </div>
+                      <div class="tr table-body">
+                        <div class="td">{{'Telefon' | translate}}</div>
+                        <div class="td"><span>{{activCustomer.phone}}</span></div>
+                      </div>
+                      <div class="tr table-body">
+                        <div class="td">{{'E-Mail' | translate}}</div>
+                        <div class="td"><span>{{activCustomer.email}}</span></div>
+                      </div>
+                      <div class="tr table-body">
+                        <div class="td">{{'Internet' | translate}}</div>
+                        <div class="td"><span>{{activCustomer.website}}</span></div>
+                      </div>
+                      <div class="tr table-body" *ngIf="userdata.Type<20">
+                        <div class="td">{{'Daten aus Baan' | translate}}</div>
+                        <div class="td">
+                          <ion-button
+                                  small
+                                  class="btn-success"
+                                  [disabled]="!baan1_aktiv"
+                                  (click)="openBaan(1)"
+                                  style="text-transform: none; height: 40px; width: 70px;">
+                                <ion-icon name="archive"></ion-icon> &nbsp;Baan 1
+                          </ion-button>
+                          <ion-button
+                                  small
+                                  class="btn-success"
+                                  [disabled]="!baan2_aktiv"
+                                  (click)="openBaan(2)"
+                                  style="text-transform: none; height: 40px; width: 70px;">
+                                <ion-icon name="archive"></ion-icon> &nbsp; NAV
+                            </ion-button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>              
+              </div>
+            </ion-col> 
+        
+            <!-- Active Product   -->
+            <ion-col size-xl="5" size-lg="5" size-md="5" size-sm="12" size="12">
+              <div class="kunden-col">
+                <div class="table-info">
+                  <div class="thead">
+                    <div class="tr table-header">
+                      <div class="th" style="max-width: 200px;">{{'Aktive Produkte' | translate}}</div>
+                      <div class="th">
+                        <div [hidden]="kundenSelect"> {{aktive_products}} </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="tbody">
+                    <div class="tr table-body">
+                      <div class="td">{{'Produkte mit Prüfservice' | translate}}</div>
+                      <div class="td">{{inspection_service}}</div> 
+                    </div>
+                    <div class="tr table-body">
+                      <div class="td">{{'Produkte ohne Prüfservice' | translate}}</div>
+                      <div class="td">{{aktive_products-inspection_service}}</div>
+                    </div>
+                  </div>
+                  <div class="tfoot-buttons">
+                    <div class="tr table-body">
+                      <div class="td">
+                        <ion-button class="btn btn-success btn-height" 
+                                [disabled]="userdata.status==0" 
+                                (click)="setProductSrv(1)">
+                          {{'Aktivieren' | translate}}
+                        </ion-button>
+                        <ion-button class="btn btn-danger btn-height" 
+                                [disabled]="userdata.status==0" 
+                                (click)="setProductSrv(0)">
+                          {{'Deaktivieren' | translate}}
+                        </ion-button>
+                      </div>
+                    </div>
+                  </div>
+                </div>   
+              </div> 
+            </ion-col>
+          </ion-row>
+          <ion-row>
+          <!-- ANSPRECHPARTNER -->
+          <ion-col size-xl="7" size-lg="7" size-md="7" size-sm="12" size="12">
+            <div class="kunden-col">
+              <div class="table-info">  
+                <div class="thead">
+                  <div class="tr table-header">                  
+                    <div class="th" *ngFor="let contactPersonItem of contactPerson">
+                        {{contactPersonItem.last_name}} {{contactPersonItem.first_name}}
+                        <a href="mailto:{{contactPersonItem.email}}" 
+                         class="headerIcon" 
+                         style="margin-top:18px; font-size: 1.5em; padding-top: 0px;">
+                        <ion-icon name="mail"></ion-icon></a> 
+                    </div>
+                  </div>
+                </div>
+                <div class="tbody" *ngFor="let contactPersonItem of contactPerson">
+                  <div class="tr table-body">
+                    <div class="td">{{'Letzter Login' | translate}}</div>
+                    <div class="td"><!-- {{aktiverAnsprechpartner.last_login}} --></div>
+                  </div>
+                  <div class="tr table-body">
+                    <div class="td"><span class="strong">{{'Abteilung' | translate}}</span></div>
+                    <div class="td"> {{contactPersonItem.department}} </div>
+                  </div>
+                  <div class="tr table-body">
+                    <div class="td"><span class="strong">{{'E-Mail' | translate}}</span></div>
+                    <div class="td"> {{contactPersonItem.email}} </div>
+                  </div>                
+                </div>    
+                <div class="thead">
+                  <div class="tr table-subheader" style="height: 45px;">
+                    <div class="th">{{'Adressen' | translate}}</div>
+                    <ion-button [disabled]="contactPersonCount == 0" (click)="addAddress()">
+                      <ion-icon name="md-create"></ion-icon>
+                      </ion-button>
+                      &nbsp;&nbsp;
+                    <ion-button [disabled]="pageCount<=0" (click)="pageBack()">
+                      <ion-icon name="arrow-back"></ion-icon>
+                    </ion-button>
+                    &nbsp;&nbsp;
+                    <ion-button [disabled]="pageCount+1>=pageTotalCount" (click)="pageForward()">
+                      <ion-icon name="arrow-forward"></ion-icon>
+                    </ion-button>
+                    &nbsp;&nbsp;&nbsp;
+                    <div *ngIf="pageTotalCount == 0"> [ {{pageCount}} / {{pageTotalCount}} ] </div>
+                    <div *ngIf="pageTotalCount > 0"> [ {{pageCount+1}} / {{pageTotalCount}} ] </div>
+                  </div>  
+                </div>
+                <div class="tbody" *ngFor="let contactPersonAddress of contactPersonAddresses">
+                  <div class="tbody">
+                    <div class="tr table-body">
+                      <div class="td"><span class="strong">{{'Strasse' | translate}}</span></div>
+                      <div class="td"> {{contactPersonAddress.street}} </div>
+                    </div>
+                    <div class="tr table-body">
+                      <div class="td"><span class="strong">{{'PLZ' | translate}} {{'Ort' | translate}}</span></div>
+                      <div class="td"> {{contactPersonAddress.zip_code}} </div>
+                    </div>
+                    <div class="tr table-body">
+                      <div class="td"><span class="strong">{{'Abteilung' | translate}}</span></div>
+                      <div class="td"> {{contactPersonAddress.department}} </div>
+                    </div>
+                    <div class="tr table-body">
+                      <div class="td"><span class="strong">{{'E-Mail' | translate}}</span></div>
+                      <div class="td"> {{contactPersonAddress.email}} </div>
+                    </div>
+                    <div class="tr table-body">
+                      <div class="td"><span class="strong">{{'Telefon' | translate}}</span></div>
+                      <div class="td"> {{contactPersonAddress.phone}} </div>
+                    </div>
+                    <div class="tr table-body">
+                      <div class="td"><span class="strong">{{'Mobiltelefon' | translate}}</span></div>
+                      <div class="td"> {{contactPersonAddress.mobile}} </div>
+                    </div>
+                  </div> 
+                </div>                  
+              </div>
+            </div>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </div>
+    </div>
+  </div>
+</ion-content>
+<ion-fab slot="fixed" right vertical="bottom">
+  <ion-fab-button color="primarydark"><ion-icon name="list-box"></ion-icon></ion-fab-button>
+    <ion-fab-list side="top">
+      <ion-fab-button *ngIf="userdata.Type<20" 
+              (click)="appointmentEdit()" 
+              class="btn-primary"
+              (mouseover)="mouseover(1)" 
+              (mouseout)="mouseout(1)">
+        <ion-icon name="time"></ion-icon>
+        <ion-label [hidden]="!mouseoverButton1">{{'Neuer Termin' | translate}}</ion-label>
+      </ion-fab-button>
+      <ion-fab-button 
+              (click)="contactPersonPage()" 
+              class="btn-primary"
+              (mouseover)="mouseover(2)" 
+              (mouseout)="mouseout(2)">
+        <ion-icon name="people"></ion-icon>
+        <ion-label [hidden]="!mouseoverButton2">{{'Ansprechpartner' | translate}}</ion-label>
+      </ion-fab-button>
+      <ion-fab-button *ngIf="userdata.Type<20" 
+              (click)="noteEdit()" 
+              class="btn-primary"
+              (mouseover)="mouseover(3)" 
+              (mouseout)="mouseout(3)">
+        <ion-icon name="chatbubbles"></ion-icon>
+        <ion-label [hidden]="!mouseoverButton3">{{'Neue Notiz' | translate}}</ion-label>
+      </ion-fab-button>
+      <ion-fab-button *ngIf="userdata.Type<20" 
+              (click)="customerEdit()" 
+              class="btn-success"
+              (mouseover)="mouseover(4)" 
+              (mouseout)="mouseout(4)">
+        <ion-icon name="md-create"></ion-icon>
+        <ion-label [hidden]="!mouseoverButton4">{{'Kundendaten bearbeiten' | translate}}</ion-label>
+      </ion-fab-button>
+  </ion-fab-list>
+</ion-fab>

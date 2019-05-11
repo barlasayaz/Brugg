@@ -1,0 +1,117 @@
+<ion-header>
+  <nav class="navbar navbar-default navbar-ek" ng-cloak>
+    <div class="container">
+      <ion-grid class="topbar-ion-grid">
+        <ion-row>
+          <!-- TOP LEFT -->
+          <ion-col size="7" size-md="7" size-sm="12" class="topBar-sm topBar-left">
+            <div class="topBar-outer">
+              <div class="topBar-inner">
+
+                <!-- new PVS4 -->
+                  <div class="topBar-btn" (click)="go('StartscreenNew');" [ngClass]="getClass('StartscreenNewPage')">
+                    <li class="main-nav-icon">
+                      <ion-icon class="headerIcon" name="home"></ion-icon>
+                    </li>
+                  </div>
+                  <div class="topBar-btn" (click)="go('DashboardNew');" [ngClass]="getClass('DashboardNew')" >
+                      <li class="main-nav-icon">
+                        <ion-icon name="apps"></ion-icon>
+                      </li>
+                  </div>
+                  <div class="topBar-btn" (click)="go('CustomerTable',idCustomer);" [ngClass]="getClass('CustomerTable')" >
+                      <li class="main-nav-icon">
+                        <ion-icon name="people"></ion-icon>
+                      </li>
+                  </div>
+                  <ul class=" kundendaten-nav " *ngIf="idCustomer > 0">
+                    <a (click)="go('CustomerDetails', idCustomer);" [ngClass]="getClass('CustomerDetails')">
+                      <li class="main-nav-icon">
+                        <ion-icon name="person"></ion-icon>
+                      </li>
+                    </a>
+                    <a (click)="go('ProductList',idCustomer);" [ngClass]="getClass('ProductList')">
+                        <li class="main-nav-icon">
+                          <i class="fas fa-tags"></i>
+                        </li>
+                    </a>
+                    <a (click)="go('ProtocolList',idCustomer);" [ngClass]="getClass('ProtocolList')">
+                      <li class="main-nav-icon">
+                        <i class="fas fa-file-alt"></i>
+                      </li>
+                    </a>
+                    <a (click)="go('OrderForm',idCustomer);" [ngClass]="getClass('OrderForm')">
+                      <li class="main-nav-icon">
+                        <div class="count-label">{{anz_wahrenkorb}}</div>
+                        <ion-icon name="basket"></ion-icon>
+                      </li>
+                    </a>
+                    <a (click)="go('NoteList',idCustomer);" [ngClass]="getClass('NoteList')">
+                      <li class="main-nav-icon">
+                        <i class="fas fa-comment"></i>
+                      </li>
+                    </a>
+                  </ul>
+
+              </div>
+              <!-- DASHBOARD NAVIGATION -->
+              <ul class="dashboard-nav hidden-lg-up" *ngIf="aktivPage == 'DashboardNew'">
+                <a (click)="showdashfirst()" class="active" id="dashfirst">
+                  <li>
+                    <ion-icon class="headerIcon" name="calendar"></ion-icon>
+                  </li>
+                </a>
+                <a (click)="showdashsecond()" id="dashsecond">
+                  <li *ngIf="userdata.Prueferservice">
+                    <ion-icon class="headerIcon" name="briefcase"></ion-icon>
+                  </li>
+                  <li *ngIf="!userdata.Prueferservice">
+                    <ion-icon class="headerIcon" name="contact"></ion-icon>
+                  </li>
+                </a>
+              </ul>
+            </div>
+          </ion-col>
+          <!-- Status Bar  -->
+          <ion-col size="5" size-md="5" size-sm="12" class="hidden-sm-down hidden-md-down" style="text-align:right;" >
+            <div class="main-nav-fix">
+              <div class="comp-name"
+              *ngIf="
+                     aktivPage != 'CustomerTable' &&
+                     aktivPage != 'CustomerDetails'">
+                   {{company}}
+              </div>
+
+              <div
+                   *ngIf="aktivPage == 'CustomerTable' ||
+                          aktivPage == 'ProductList' ||
+                          aktivPage == 'ProtocolList' ||
+                          aktivPage == 'NoteList'">
+                   {{rowRecords}} {{'Datensätze von' | translate}} {{totalRecords}}
+              </div>
+
+              <div class="topBar-inner posek"
+                  *ngIf="aktivPage == 'CustomerTable' ||
+                         aktivPage == 'ProductList' ||
+                         aktivPage == 'ProtocolList' ||
+                         aktivPage == 'NoteList'">
+                <div class="progress-wrapper">
+                  <div class="current">{{progressBar}}%</div>
+                  <round-progress [current]="progressBar"
+                                  [max]="100"
+                                  [responsive]="true"
+                                  [color]="'#009de0'">
+                  </round-progress>
+                </div>
+              </div>
+              
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+    </div>
+  </nav>
+</ion-header>
+
+
