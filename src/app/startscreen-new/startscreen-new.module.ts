@@ -2,9 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
-import { MainNavComponentModule } from '../components/main-nav/main-nav.module';
+import { ComponentsModule } from '../components/components.module';
 import { IonicModule } from '@ionic/angular';
-
 import { StartscreenNewPage } from './startscreen-new.page';
 
 const routes: Routes = [
@@ -19,7 +18,7 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
-    MainNavComponentModule,
+    ComponentsModule,
     RouterModule.forChild(routes)
   ],
   declarations: [StartscreenNewPage]

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {  Platform, NavController, LoadingController, AlertController, ModalController } from '@ionic/angular';
+import {  Platform, NavController, LoadingController, ModalController } from '@ionic/angular';
 import { ApiService } from '../services/api';
 import { TranslateService } from '@ngx-translate/core';
 import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';

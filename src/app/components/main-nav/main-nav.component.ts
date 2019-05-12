@@ -10,7 +10,7 @@ import { ofroot } from '../../order-form/order-form-root';
  * Components.
  */
 @Component({
-  selector: 'app-main-nav',
+  selector: 'main-nav',
   templateUrl: './main-nav.component.html',
   styleUrls: ['./main-nav.component.scss']
 })

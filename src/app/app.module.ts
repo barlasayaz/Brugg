@@ -9,7 +9,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ErrorHandler, NgModule } from '@angular/core';
-import { IonApp } from '@ionic/angular';
 
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
@@ -19,7 +18,7 @@ import { SystemService } from './services/system';
 import { ApiService } from './services/api';
 import { UserdataService } from './services/userdata';
 import { FilterPipe } from './components/filter.pipe';
-import { LoginPage } from './login/login.page';
+import { LoginPageModule } from './login/login.module';
 import { MainNavComponentModule } from './components/main-nav/main-nav.module';
 
 
@@ -67,14 +66,15 @@ export function HttpLoaderFactory(http: HttpClient) {
     AppComponent,
     FilterPipe,
     HomePage,
-    LoginPage
+   // LoginPage
   ],
   imports: [
+    BrowserModule,
+    LoginPageModule,
     FormsModule,
     ReactiveFormsModule,
     AppRoutingModule,
     IonicModule.forRoot(),
-    BrowserModule,
     HttpClientModule,
     BrowserAnimationsModule,
     ColorPickerModule,

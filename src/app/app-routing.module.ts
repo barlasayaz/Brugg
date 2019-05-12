@@ -1,10 +1,10 @@
 
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 const routes: Routes = [
-  { path: '', loadChildren: './startscreen-new/startscreen-new.module#StartscreenNewPageModule' },
+  //{ path: '', loadChildren: './startscreen-new/startscreen-new.module#StartscreenNewPageModule' },
   { path: 'login', loadChildren: './login/login.module#LoginPageModule' },
   { path: 'statistik', loadChildren: './statistik/statistik.module#StatistikPageModule' },
   { path: 'startscreen-new', loadChildren: './startscreen-new/startscreen-new.module#StartscreenNewPageModule' },
@@ -48,7 +48,8 @@ const routes: Routes = [
 ];
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
+    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules }),
+    FormsModule, ReactiveFormsModule
   ],
   exports: [RouterModule]
 })
