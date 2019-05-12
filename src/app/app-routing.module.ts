@@ -2,6 +2,7 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ComponentsModule } from './components/components.module';
 
 const routes: Routes = [
   //{ path: '', loadChildren: './startscreen-new/startscreen-new.module#StartscreenNewPageModule' },
@@ -39,7 +40,6 @@ const routes: Routes = [
   { path: 'appointment-edit', loadChildren: './components/appointment-edit/appointment-edit.module#AppointmentEditComponentModule' },
   { path: 'customer-edit', loadChildren: './components/customer-edit/customer-edit.module#CustomerEditComponentModule' },
   { path: 'dialogproduktbildmodal', loadChildren: './components/dialogproduktbildmodal/dialogproduktbildmodal.module#DialogproduktbildmodalPageModule' },
-  { path: 'main-nav', loadChildren: './components/main-nav/main-nav.module#MainNavComponentModule' },
   { path: 'nfc-scan', loadChildren: './components/nfc-scan/nfc-scan.module#NfcScanComponentModule' },
   { path: 'note-edit', loadChildren: './components/note-edit/note-edit.module#NoteEditComponentModule' },
   { path: 'product-opt-edit', loadChildren: './components/product-opt-edit/product-opt-edit.module#ProductOptEditComponentModule' },
@@ -49,7 +49,8 @@ const routes: Routes = [
 @NgModule({
   imports: [
     RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules }),
-    FormsModule, ReactiveFormsModule
+    FormsModule, ReactiveFormsModule,
+    ComponentsModule,
   ],
   exports: [RouterModule]
 })

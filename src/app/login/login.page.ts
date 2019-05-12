@@ -112,7 +112,7 @@ export class LoginPage {
         console.info('userdata: pvs4_user ', pvs4_user);
         this.api.pvs4_get_my_profile(pvs4_user.email).then((result: any) => {
           console.info("pvs4_get_my_profile ok: ", result);
-          this.navCtrl.navigateRoot("/customer.table");
+          this.navCtrl.navigateRoot("/customer-table");
         }, // success path
           error => {
             // connection failed
@@ -176,7 +176,7 @@ export class LoginPage {
       this.api.bid_login(this.pvs4_username.value, this.pvs4_password.value).then((result: any) => {
         console.info('bid_login OK: ', result);
         this.hideLoader();
-        this.navCtrl.navigateRoot("/customer.table");
+        this.navCtrl.navigateRoot("/customer-table");
 
       }, // success path
         error => {

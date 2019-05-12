@@ -8,7 +8,7 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ErrorHandler, NgModule } from '@angular/core';
+import { ErrorHandler, NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
@@ -19,8 +19,8 @@ import { ApiService } from './services/api';
 import { UserdataService } from './services/userdata';
 import { FilterPipe } from './components/filter.pipe';
 import { LoginPageModule } from './login/login.module';
+import { MainNavComponent } from './components/main-nav/main-nav.component';
 import { MainNavComponentModule } from './components/main-nav/main-nav.module';
-
 
 import { ButtonModule, ColorPickerModule, SharedModule } from 'primeng/primeng';
 import { TableModule } from 'primeng/table';
@@ -57,6 +57,8 @@ import { Camera } from '@ionic-native/camera/ngx';
 import { Keyboard } from '@ionic-native/keyboard/ngx';
 
 import { AccordionModule } from 'primeng/accordion';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, "assets/lang/");
 }
@@ -65,12 +67,13 @@ export function HttpLoaderFactory(http: HttpClient) {
   declarations: [
     AppComponent,
     FilterPipe,
+    //MainNavComponent,
     HomePage/* ,
     LoginPage */
   ],
   imports: [
     BrowserModule,
-    LoginPageModule,
+    //LoginPageModule,
     FormsModule,
     ReactiveFormsModule,
     AppRoutingModule,
@@ -104,11 +107,13 @@ export function HttpLoaderFactory(http: HttpClient) {
         useFactory: HttpLoaderFactory,
         deps: [HttpClient]
       }
-    })
+    }),
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
-  bootstrap: [AppComponent],
+  bootstrap: [AppComponent, MainNavComponent],
   /*entryComponents: [
     AppComponent,
+    
     LoginPage
     DashboardNewPage,
     SignupPage,
@@ -155,6 +160,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     BarcodeScanner,
     PdfExportService,
     Keyboard
+  ],
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA
   ]
 })
 export class AppModule { }

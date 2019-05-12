@@ -67,7 +67,7 @@ import 'web-animations-js';  // Run `npm install --save web-animations-js`.
  * with the following flag, it will bypass `zone.js` patch for IE/Edge
  */
 // (window as any).__Zone_enable_cross_context_check = true;
-
+import './zone-flags.ts';
 /***************************************************************************************************
  * Zone JS is required by default for Angular itself.
  */

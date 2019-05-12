@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, AlertController } from '@ionic/angular'; 
-import { LoginPage } from '../login/login.page';
 import { ApiService } from '../services/api';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
@@ -32,7 +31,6 @@ export class SignupPage {
               public formBuilder: FormBuilder,
               public alertCtrl: AlertController,
               public translate : TranslateService) {
-      this.pushLogin = LoginPage;
       this.signupForm = formBuilder.group({
         company: ['', Validators.compose([Validators.required, Validators.minLength(1), Validators.maxLength(80)])],
         fname: ['', Validators.compose([Validators.required, Validators.minLength(1),Validators.maxLength(80)])],
