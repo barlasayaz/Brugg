@@ -111,9 +111,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   bootstrap: [AppComponent, MainNavComponent],
-  /*entryComponents: [
-    AppComponent,
-    
+  entryComponents: [
+    MainNavComponent,
+    /*
     LoginPage
     DashboardNewPage,
     SignupPage,
@@ -135,8 +135,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     OrderFormPage,
     MyDataPage,
     AppointmentPlanPage,
-    ProtocolHistoryPage
-  ],*/
+    ProtocolHistoryPage*/
+  ],
   providers: [
     StatusBar,
     SplashScreen,
