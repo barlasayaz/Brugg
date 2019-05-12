@@ -19,7 +19,7 @@ import { SystemService } from './services/system';
 import { ApiService } from './services/api';
 import { UserdataService } from './services/userdata';
 import { FilterPipe } from './components/filter.pipe';
-import { LoginPage } from './login/login.page';
+//import { LoginPage } from './login/login.page';
 import { MainNavComponentModule } from './components/main-nav/main-nav.module';
 
 
@@ -66,8 +66,8 @@ export function HttpLoaderFactory(http: HttpClient) {
   declarations: [
     AppComponent,
     FilterPipe,
-    HomePage,
-    LoginPage
+    HomePage/* ,
+    LoginPage */
   ],
   imports: [
     FormsModule,

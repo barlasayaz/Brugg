@@ -27,7 +27,7 @@
             <ion-col size="6">
                 <ion-item>
                     <ion-label position="floating">{{translate.instant('Art')}}</ion-label>
-                    <ion-select style="margin-bottom: 10px;" [ngClass]="{required:inputError}" [(ngModel)]="activOption.type"
+                    <ion-select style="margin-bottom: 10px;" [ngClass]="{required:inputError}" value="activOption.type"
                         okText="{{translate.instant('okay')}}" cancelText="{{translate.instant('dismiss')}}">
                         <ion-select-option value="0">Toggle</ion-select-option>
                         <ion-select-option value="1">Select</ion-select-option>
