@@ -38,7 +38,7 @@
         </ion-col>
       </ion-row>
 
-      <form (ngSubmit)="signIn()">
+      <form (ngSubmit)="signIn()" [formGroup]="authForm">
         <!--
         <ion-row>
           <ion-col class="pvs4-login-text">PVS 3</ion-col>
