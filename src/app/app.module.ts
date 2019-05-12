@@ -65,8 +65,8 @@ export function HttpLoaderFactory(http: HttpClient) {
   declarations: [
     AppComponent,
     FilterPipe,
-    HomePage,
-   // LoginPage
+    HomePage/* ,
+    LoginPage */
   ],
   imports: [
     BrowserModule,

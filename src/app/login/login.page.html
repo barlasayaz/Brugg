@@ -19,7 +19,7 @@
         <ion-col size="6">
           <ion-item class="pvs4-full-select">
             <ion-label position="floating">{{'Sprache' | translate}}</ion-label>
-            <ion-select [(ngModel)]="lang"
+            <ion-select value="lang"
                         (ionChange)="changeLanguage()"
                         okText="{{'okay' | translate}}"
                         cancelText="{{'dismiss' | translate}}">
@@ -38,7 +38,7 @@
         </ion-col>
       </ion-row>
 
-      <form (ngSubmit)="signIn()" [formGroup]="authForm">
+      <form (ngSubmit)="signIn()">
         <!--
         <ion-row>
           <ion-col class="pvs4-login-text">PVS 3</ion-col>

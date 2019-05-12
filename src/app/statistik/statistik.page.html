@@ -18,7 +18,7 @@
               <div class="td">
                 <ion-item no-lines class="itemClass">
                   <ion-select id="jahr_statistik" 
-                              [(ngModel)]="jahr" 
+                              value="jahr" 
                               (ionChange)="changeStatistik()" 
                               style="background-color: #F5F7F7; border: 1px solid rgb(224, 224, 224); min-width: 100%; width: 167px; font-size: 14px;"
                               okText="{{'okay' | translate}}" 
@@ -36,7 +36,7 @@
               <div class="td">
                 <ion-item no-lines class="itemClass">
                   <ion-select id="monat_statistik" 
-                              [(ngModel)]="monat" 
+                              value="monat" 
                               (ionChange)="changeStatistik()" 
                               style="background-color: #F5F7F7; border: 1px solid rgb(224, 224, 224); min-width: 100%; width: 167px; font-size: 14px;"
                               okText="{{'okay' | translate}}" 
@@ -62,7 +62,7 @@
               <div class="td">
                 <ion-item no-lines class="itemClass">
                   <ion-select id="type_statistik" 
-                              [(ngModel)]="type" 
+                              value="type" 
                               (ionChange)="changeStatistik()" 
                               style="background-color: #F5F7F7; border: 1px solid rgb(224, 224, 224); min-width: 100%; width: 167px; font-size: 14px;"
                               okText="{{'okay' | translate}}" 
