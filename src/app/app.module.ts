@@ -57,7 +57,7 @@ import { Camera } from '@ionic-native/camera/ngx';
 import { Keyboard } from '@ionic-native/keyboard/ngx';
 
 import { AccordionModule } from 'primeng/accordion';
-import { ServiceWorkerModule } from '@angular/service-worker';
+/* import { ServiceWorkerModule } from '@angular/service-worker'; */
 import { environment } from '../environments/environment';
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, "assets/lang/");
@@ -108,7 +108,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         deps: [HttpClient]
       }
     }),
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
+    /* ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }) */
   ],
   bootstrap: [AppComponent, MainNavComponent],
   entryComponents: [
