@@ -35,7 +35,7 @@
           <ion-item>  
               <ion-label position="floating">{{translate.instant('Terminart')}}</ion-label>
               <ion-select [ngClass]="{required:fehler}" 
-                          value="activAppointment.appointment_type"                        
+                          [(ngModel)]="activAppointment.appointment_type"                        
                           okText="{{translate.instant('okay')}}" 
                           cancelText="{{translate.instant('dismiss')}}"
                           >

@@ -168,7 +168,7 @@
                           <ion-col size="12" size-md="4">
                             <ion-item>
                               <ion-label position="floating">{{'Intervall Prüfen' | translate}}</ion-label>
-                              <ion-select value="activProduct.check_interval"
+                              <ion-select [(ngModel)]="activProduct.check_interval"
                                           okText="{{translate.instant('okay')}}"
                                           cancelText="{{translate.instant('dismiss')}}">
                                           <ion-select-option value = 0> {{translate.instant('kein Intervall')}} </ion-select-option>
@@ -193,7 +193,7 @@
                                 <ion-item>
                                     <ion-label position="floating">{{item.title[lang]}}</ion-label>
                                     <ion-select class="form-control" 
-                                    value="item.value"
+                                                [(ngModel)]="item.value"
                                                 okText="{{translate.instant('okay')}}"
                                                 cancelText="{{translate.instant('dismiss')}}">
                                                 <ion-select-option *ngFor="let option of item.options" >{{option[lang]}}</ion-select-option>

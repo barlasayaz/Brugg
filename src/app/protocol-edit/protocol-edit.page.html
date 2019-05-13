@@ -133,8 +133,10 @@
                           <ion-col size="7">
                             <ion-item>
                               <ion-label position="stacked">{{translate.instant('Ergebniss der Prüfung')}}</ion-label>
-                              <ion-select class="form-control" value="activProtocol.result"
-                                okText="{{translate.instant('okay')}}" cancelText="{{translate.instant('dismiss')}}">
+                              <ion-select class="form-control" 
+                                          [(ngModel)]="activProtocol.result"
+                                          okText="{{translate.instant('okay')}}" 
+                                          cancelText="{{translate.instant('dismiss')}}">
                                 <ion-select-option value="0">{{translate.instant('betriebsbereit')}}</ion-select-option>
                                 <ion-select-option value="1">{{translate.instant('reparieren')}}</ion-select-option>
                                 <ion-select-option value="3">{{translate.instant('unauffindbar')}}</ion-select-option>
@@ -186,10 +188,11 @@
                           <ion-col size="12" size-md="6" *ngIf="item.type == 1">
                             <ion-item>
                               <ion-label position="floating">{{item.title[lang]}}</ion-label>
-                              <ion-select class="form-control" value="item.value"
-                                okText="{{translate.instant('okay')}}" cancelText="{{translate.instant('dismiss')}}">
-                                <ion-select-option *ngFor="let option of item.options">{{option[lang]}}
-                                </ion-select-option>
+                              <ion-select class="form-control" 
+                                          [(ngModel)]="item.value"
+                                          okText="{{translate.instant('okay')}}" 
+                                          cancelText="{{translate.instant('dismiss')}}">
+                                <ion-select-option *ngFor="let option of item.options">{{option[lang]}}</ion-select-option>
                               </ion-select>
                             </ion-item>
                           </ion-col>

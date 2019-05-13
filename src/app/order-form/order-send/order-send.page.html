@@ -19,7 +19,7 @@
                   <ion-select (ionChange)="changeAim()"
                               name="Ziel_DropDown"
                               id="Ziel_DropDown"
-                              value="Ziel_DropDown"
+                              [(ngModel)]="Ziel_DropDown"
                               okText="{{translate.instant('okay')}}"
                               cancelText="{{translate.instant('dismiss')}}">
                     <ion-select-option value="0" [selected]="Ziel_DropDown==0" >{{translate.instant('Bitte auswählen')}}</ion-select-option>
@@ -120,7 +120,7 @@
                   <ion-select (ionChange)="changeReAnsp()"
                               name="RE_Ansp"
                               id="RE_Ansp"
-                              value="RE_Ansp"
+                              [(ngModel)]="RE_Ansp"
                               okText="{{translate.instant('okay')}}"
                               cancelText="{{translate.instant('dismiss')}}">
                     <!-- TODO -->

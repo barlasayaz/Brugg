@@ -17,8 +17,8 @@
             </ion-col>
             <ion-col col-6>
               <ion-item class="pvs4-full-select">
-                <ion-label floating>{{'Sprache' | translate}}</ion-label>
-                <ion-select value="lang"
+                <ion-label position="floating">{{'Sprache' | translate}}</ion-label>
+                <ion-select [(ngModel)]="lang"
                             (ionChange)="changeLanguage()"
                             okText="{{'okay' | translate}}"
                             cancelText="{{'dismiss' | translate}}">
@@ -42,7 +42,7 @@
           <ion-row>
             <ion-col>
               <ion-item>
-                <ion-label floating>{{ "E-Mail" | translate }}</ion-label>
+                <ion-label position="floating">{{ "E-Mail" | translate }}</ion-label>
                 <ion-input type="text" formControlName="pvs4_username" required></ion-input>
               </ion-item>
             </ion-col>
@@ -51,7 +51,7 @@
           <ion-row>
             <ion-col>
               <ion-item>
-                <ion-label floating>{{ "Passwort" | translate }}</ion-label>
+                <ion-label position="floating">{{ "Passwort" | translate }}</ion-label>
                 <ion-input type="password" formControlName="pvs4_password" required ></ion-input>
               </ion-item>
             </ion-col>
@@ -59,7 +59,7 @@
     
           <ion-row style="margin-top: 10px;margin-bottom: 20px">
             <ion-col>
-              <button ion-button class="pvs4-btn pvs4-btn-full pvs4-btn-green" type="submit">{{ "Login" | translate }} </button>
+              <ion-button class="pvs4-btn pvs4-btn-full pvs4-btn-green" type="submit">{{ "Login" | translate }} </ion-button>
             </ion-col>
           </ion-row>
     

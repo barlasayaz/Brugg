@@ -30,7 +30,7 @@
                 <ion-select style="margin-bottom: 4px;"
                             [ngClass]="{required:inputError}"
                             [disabled]="userdata.Type!=13" name="Wertung"
-                            value="activCustomer.rating"
+                            [(ngModel)]="activCustomer.rating"
                             okText="{{translate.instant('okay')}}"
                             cancelText="{{translate.instant('dismiss')}}">
                   <ion-select-option value="A">A</ion-select-option>

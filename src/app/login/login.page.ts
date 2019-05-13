@@ -20,18 +20,18 @@ import { ImprintPage } from './imprint/imprint.page';
 })
 
 export class LoginPage {
-  //public loc: any = [];
+  // public loc: any = [];
   username: AbstractControl;
   password: AbstractControl;
   pvs4_username: AbstractControl;
   pvs4_password: AbstractControl;
 
-  lang: string = "en";
+  lang: string;
   authForm: FormGroup;
   pushRegister: any;
   userData: any;
-  login_nok: boolean = false;
-  saveLogin: boolean = false;
+  login_nok: boolean;
+  saveLogin: boolean;
   private loader: HTMLIonLoadingElement;
 
   constructor(public navCtrl: NavController,
@@ -44,6 +44,9 @@ export class LoginPage {
     public formBuilder: FormBuilder,
     public modalCtrl: ModalController) {
 
+    this.lang = 'en';
+    this.login_nok = false;
+    this.saveLogin = false;
     this.authForm = formBuilder.group({
       /*
       username: ['', Validators.compose([Validators.required, Validators.minLength(5)])],
@@ -54,32 +57,33 @@ export class LoginPage {
     });
 
     if (localStorage.getItem('lang')) {
-      let x = localStorage.getItem('lang');
-      console.info("localStorage.getItem('lang'): " + x);
-      if ((x == "de") || (x == "en") || (x == "fr") || (x == "it")) {
+      const x = localStorage.getItem('lang');
+      console.info('localStorage.getItem(\'lang\'): ' + x);
+      if ((x === 'de') || (x === 'en') || (x === 'fr') || (x === 'it')) {
         this.translate.use(x);
         this.lang = x;
       } else {
-        localStorage.setItem('lang', "en");
-        this.translate.use("en");
-        this.lang = "en";
+        localStorage.setItem('lang', 'en');
+        this.translate.use('en');
+        this.lang = 'en';
       }
     } else {
       let x = translate.getBrowserLang();
-      console.info("translate.getBrowserLang(): " + x);
-      if ((x == "de") || (x == "en") || (x == "fr") || (x == "it")) {
+      console.info('translate.getBrowserLang(): ' + x);
+      if ((x === 'de') || (x === 'en') || (x === 'fr') || (x === 'it')) {
         this.translate.use(x);
         localStorage.setItem('lang', x);
         this.lang = x;
       } else {
-        this.translate.use("en");
-        localStorage.setItem('lang', "en");
-        this.lang = "en";
+        this.translate.use('en');
+        localStorage.setItem('lang', 'en');
+        this.lang = 'en';
       }
     }
 
     platform.ready().then(() => {
-      let isin: boolean = false;
+      let isin: boolean;
+      isin = false;
       let slUser: any = localStorage.getItem('UserInfo');
       if (slUser) {
         slUser = JSON.parse(slUser);
@@ -100,7 +104,7 @@ export class LoginPage {
           }
         }
       }
-      //PVS4
+      // PVS4
       isin = false;
       let pvs4_user: any = localStorage.getItem('pvs4_user');
       if (pvs4_user) {
@@ -111,19 +115,19 @@ export class LoginPage {
         this.userdata.phone = pvs4_user.phone;
         console.info('userdata: pvs4_user ', pvs4_user);
         this.api.pvs4_get_my_profile(pvs4_user.email).then((result: any) => {
-          console.info("pvs4_get_my_profile ok: ", result);
-          this.navCtrl.navigateRoot("/customer-table");
+          console.info('pvs4_get_my_profile ok: ', result);
+          this.navCtrl.navigateRoot('/customer-table');
         }, // success path
           error => {
             // connection failed
-            console.info("pvs4_get_my_profile error: ", error);
+            console.info('pvs4_get_my_profile error: ', error);
           });// error path);
       }
     });
   }
 
   ionViewDidLoad() {
-    console.log("ion View Load");
+    console.log('ion View Load');
   }
 
   timeoutShow: any;
@@ -138,13 +142,13 @@ export class LoginPage {
 
   changeLanguage() {
     let x = this.lang;
-    console.info("changeLanguage(): " + x);
-    if ((x == "de") || (x == "en") || (x == "fr") || (x == "it")) {
+    console.info('changeLanguage(): ' + x);
+    if ((x === 'de') || (x === 'en') || (x === 'fr') || (x === 'it')) {
       this.translate.use(x);
-      localStorage.setItem('lang', x)
+      localStorage.setItem('lang', x);
     } else {
-      this.translate.use("en");
-      localStorage.setItem('lang', x)
+      this.translate.use('en');
+      localStorage.setItem('lang', x);
     }
   }
   async signIn() {
@@ -158,9 +162,9 @@ export class LoginPage {
 
     this.pvs4_username = this.authForm.get('pvs4_username');
     this.pvs4_password = this.authForm.get('pvs4_password');
-    //this.saveLogin = this.authForm.controls['saveLogin'].value;  
+    // this.saveLogin = this.authForm.controls['saveLogin'].value;
     this.userData = {
-      info: "WebVersion 4.1.8",
+      info: 'WebVersion 4.1.8',
       /*
       user:this.username.value,
       password: this.password.value
@@ -169,14 +173,14 @@ export class LoginPage {
       password: '1234test'
     }
     if (!this.loader) {
-      this.loader = await this.loadingCtrl.create({ spinner: "circles" });
+      this.loader = await this.loadingCtrl.create({ spinner: 'circles' });
     }
     this.loader.present().then(done => {
       this.userdata.reset();
       this.api.bid_login(this.pvs4_username.value, this.pvs4_password.value).then((result: any) => {
         console.info('bid_login OK: ', result);
         this.hideLoader();
-        this.navCtrl.navigateRoot("/customer-table");
+        this.navCtrl.navigateRoot('/customer-table');
 
       }, // success path
         error => {
@@ -184,7 +188,7 @@ export class LoginPage {
           this.login_nok = true;
           this.userdata.reset();
           this.hideLoader();
-        });// error path);
+        }); // error path);
 
     });
 
@@ -198,10 +202,10 @@ export class LoginPage {
   }
 
   signUp() {
-    this.navCtrl.navigateForward("/signup");
+    this.navCtrl.navigateForward('/signup');
   }
 
-  //IMPRINT
+  // IMPRINT
  async imprintModal() {
     const modal =
     await this.modalCtrl.create({
