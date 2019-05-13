@@ -16,7 +16,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [MainNavComponent],
+ // declarations: [MainNavComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -24,10 +24,10 @@ const routes: Routes = [
     TranslateModule,
     RoundProgressModule,
     RouterModule.forChild(routes),
-    ComponentsModule
+    //ComponentsModule
   ],
   exports: [
-    MainNavComponent
+    //MainNavComponentModule
   ]
 })
 export class MainNavComponentModule {}

@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 import { ComponentsModule } from '../components/components.module';
 import { IonicModule } from '@ionic/angular';
-import { MainNavComponentModule } from '../components/main-nav/main-nav.module';
+//import { MainNavComponentModule } from '../components/main-nav/main-nav.module';
 import { CustomerTablePage } from './customer-table.page';
 import { MenubarModule } from 'primeng/menubar';
 import { TreeTableModule } from 'primeng/treetable';
@@ -22,7 +22,7 @@ const routes: Routes = [
     FormsModule,
     IonicModule,
     RouterModule.forChild(routes),
-    MainNavComponentModule,
+    //MainNavComponentModule,
     ComponentsModule,
     MenubarModule,
     TreeTableModule

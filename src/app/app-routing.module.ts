@@ -7,7 +7,6 @@ import { ComponentsModule } from './components/components.module';
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'login', loadChildren: './login/login.module#LoginPageModule' },
-  { path: 'main-nav', loadChildren: './components/main-nav/main-nav.module#MainNavComponentModule' },
   { path: 'statistik', loadChildren: './statistik/statistik.module#StatistikPageModule' },
   { path: 'startscreen-new', loadChildren: './startscreen-new/startscreen-new.module#StartscreenNewPageModule' },
   { path: 'my-data', loadChildren: './my-data/my-data.module#MyDataPageModule' },
@@ -49,9 +48,9 @@ const routes: Routes = [
 ];
 @NgModule({
   imports: [
+    ComponentsModule,
     RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules }),
     FormsModule, ReactiveFormsModule,
-    ComponentsModule,
   ],
   exports: [RouterModule]
 })

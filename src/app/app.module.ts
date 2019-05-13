@@ -19,8 +19,9 @@ import { ApiService } from './services/api';
 import { UserdataService } from './services/userdata';
 import { FilterPipe } from './components/filter.pipe';
 import { LoginPageModule } from './login/login.module';
-import { MainNavComponent } from './components/main-nav/main-nav.component';
-import { MainNavComponentModule } from './components/main-nav/main-nav.module';
+import { LoginPage } from './login/login.page';
+//import { MainNavComponent } from './components/main-nav/main-nav.component';
+//import { MainNavComponentModule } from './components/main-nav/main-nav.module';
 
 import { ButtonModule, ColorPickerModule, SharedModule } from 'primeng/primeng';
 import { TableModule } from 'primeng/table';
@@ -29,7 +30,7 @@ import { FullCalendarModule } from 'ng-fullcalendar';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { ToggleButtonModule } from 'primeng/togglebutton';
 import { TreeTableModule } from 'primeng/treetable';
-// import { MenubarModule } from 'primeng/menubar';
+import { MenubarModule } from 'primeng/menubar';
 import { TabMenuModule } from 'primeng/tabmenu';
 import { MenuModule } from 'primeng/menu';
 import { InputSwitchModule } from 'primeng/inputswitch';
@@ -57,7 +58,7 @@ import { Camera } from '@ionic-native/camera/ngx';
 import { Keyboard } from '@ionic-native/keyboard/ngx';
 
 import { AccordionModule } from 'primeng/accordion';
-/* import { ServiceWorkerModule } from '@angular/service-worker'; */
+import { ServiceWorkerModule } from '@angular/service-worker'; 
 import { environment } from '../environments/environment';
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, "assets/lang/");
@@ -67,17 +68,17 @@ export function HttpLoaderFactory(http: HttpClient) {
   declarations: [
     AppComponent,
     FilterPipe,
-    //MainNavComponent,
     HomePage/* ,
+    MainNavComponent,
     LoginPage */
   ],
   imports: [
     BrowserModule,
-    //LoginPageModule,
+    IonicModule.forRoot(),
+    LoginPageModule,
     FormsModule,
     ReactiveFormsModule,
     AppRoutingModule,
-    IonicModule.forRoot(),
     HttpClientModule,
     BrowserAnimationsModule,
     ColorPickerModule,
@@ -91,12 +92,12 @@ export function HttpLoaderFactory(http: HttpClient) {
     TreeTableModule,
     InputSwitchModule,
     MenuModule,
-    // MenubarModule,
+    MenubarModule,
     TabMenuModule,
     FileUploadModule,
     IonicSelectableModule,
-    ComponentsModule,
-    MainNavComponentModule,
+    //ComponentsModule,
+    //MainNavComponentModule,
     AccordionModule,
     NgxQRCodeModule,
     RoundProgressModule,
@@ -108,12 +109,12 @@ export function HttpLoaderFactory(http: HttpClient) {
         deps: [HttpClient]
       }
     }),
-    /* ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }) */
+     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }) 
   ],
-  bootstrap: [AppComponent, MainNavComponent],
+  bootstrap: [AppComponent],
   entryComponents: [
-    MainNavComponent,
-    /*
+    
+    /*MainNavComponent,
     LoginPage
     DashboardNewPage,
     SignupPage,

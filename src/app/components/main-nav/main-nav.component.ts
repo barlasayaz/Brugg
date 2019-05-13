@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component,OnInit, Input } from '@angular/core';
 import { UserdataService } from '../../services/userdata';
 import { NavController, NavParams, Events } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
@@ -14,7 +14,7 @@ import { ofroot } from '../../order-form/order-form-root';
   templateUrl: './main-nav.component.html',
   styleUrls: ['./main-nav.component.scss']
 })
-export class MainNavComponent {
+export class MainNavComponent  implements OnInit {
   @Input() aktivPage: string;
   @Input() idCustomer: number;
   @Input() company: string;
@@ -26,7 +26,7 @@ export class MainNavComponent {
   constructor(
     public userdata: UserdataService,
     public navCtrl: NavController,
-    public navParams: NavParams,
+    //public navParams: NavParams,
     public translate: TranslateService,
     public events: Events,
     public of: ofroot) {
@@ -51,6 +51,8 @@ export class MainNavComponent {
     }
 
   }
+
+  ngOnInit() {}
 
   getClass(path) {
     if (this.aktivPage === path) {
