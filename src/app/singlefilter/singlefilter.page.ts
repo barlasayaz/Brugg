@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from '@ionic/angular';
+import { NavController } from '@ionic/angular';
 
 
 /**
@@ -19,7 +19,7 @@ export class SinglefilterPage {
   zuteling_menu: any;
   public selectedFilter: any = 'alle';
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController) {
     this.zuteling_menu = 'my Current Position';
   }
 

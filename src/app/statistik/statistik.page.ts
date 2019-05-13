@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from '@ionic/angular';
+import { NavController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { ApiService } from '../services/api';
 import { UserdataService } from '../services/userdata';
@@ -29,7 +29,7 @@ export class StatistikPage {
   public params: any;
   public rowGroupMetadata: any=[];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,
+  constructor(public navCtrl: NavController, 
     public translate : TranslateService,
     public apiService : ApiService,
     public userdata: UserdataService,

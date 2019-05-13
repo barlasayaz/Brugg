@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from '@ionic/angular';
+import { NavController } from '@ionic/angular';
 import { ApiService } from '../services/api';
 import { UserdataService } from '../services/userdata';
 import { ModalController } from '@ionic/angular';
@@ -22,7 +22,7 @@ export class AppointmentPlanPage {
     public events: any[] = [];
     public calendarOptions: any;
 
-    constructor(public navCtrl: NavController, public navParams: NavParams,
+    constructor(public navCtrl: NavController,
         public apiService: ApiService,
         public userdata: UserdataService,
         public modalCtrl: ModalController,

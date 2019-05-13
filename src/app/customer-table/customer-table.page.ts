@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild,Input } from '@angular/core';
 import { NavController, NavParams, ModalController, Events } from '@ionic/angular';
 import { ApiService } from '../services/api';
 import { TranslateService } from '@ngx-translate/core';
@@ -20,6 +20,7 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
 })
 
 export class CustomerTablePage {
+    @Input() idCustomer: number;
     public customerListAll: TreeNode[] = [];
     public customerListView: TreeNode[] = [];
     public cols: any[] = [];
@@ -29,7 +30,6 @@ export class CustomerTablePage {
     public xlsHeader: any[];
     public customerList: any[];
     public splitFilter = false;
-    public idCustomer = 0;
     public move_id = 0;
     public move_obj: any = {};
     public columnFilterValues = { company: '',
@@ -163,12 +163,10 @@ export class CustomerTablePage {
         public apiService: ApiService,
         public translate: TranslateService,
         public modalCtrl: ModalController,
-        public navParams: NavParams,
         public excelService: ExcelService,
         public alertCtrl: AlertController,
         public pdf: PdfExportService,
         public events: Events) {
-
         this.cols = [
             { field: 'company', header: this.translate.instant('Firma') },
             { field: 'id', header: 'DB-ID' },
@@ -182,7 +180,7 @@ export class CustomerTablePage {
             'company', 'id', 'customer_number', 'rating', 'zip_code', 'place', 'search_all'
         ];
         this.selectedColumns = this.cols;
-        this.idCustomer = this.navParams.get('idCustomer');
+
         console.log('CustomerTablePage idCustomer:', this.idCustomer);
         this.page_load();
     }
