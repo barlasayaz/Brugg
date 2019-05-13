@@ -7,9 +7,9 @@ import { UserdataService } from './userdata';
 let apiURL = "http://testpvs.schaefer4u.de/api/";
 //let apiURL =  "http://localhost/bruggpvs/api/";
 
-//let pvs4_apiURL = "http://localhost/BruggPVS4/pvs4-api/"; 
+let pvs4_apiURL = "http://localhost/BruggPVS4/pvs4-api/"; 
 //let pvs4_apiURL = "http://schaefer4u.de/pvs4/pvs4-api/";
-let pvs4_apiURL = "https://www.pvs2go.com/pvs4-api/";
+//let pvs4_apiURL = "https://www.pvs2go.com/pvs4-api/";
 
 let brugg_id_api = 'https://www.bruggdigital.com/';
 let pvs4_client_id = "brugg-pvs";
