@@ -7,10 +7,10 @@ import { TreeTable } from 'primeng/components/treetable/treetable';
 import { TreeNode, MenuItem } from 'primeng/api';
 import { ExcelService } from '../services/excel';
 import { AlertController } from '@ionic/angular';
+import { CustomerEditComponent } from '../components/customer-edit/customer-edit.component';
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
-import { PdfExportService } from '../services/pdf-export'; 
-import { CustomerEditComponent } from '../components/customer-edit/customer-edit.component';
+import { PdfExportService } from '../services/pdf-export';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
@@ -28,17 +28,23 @@ export class CustomerTablePage {
     public selectedColumns: any[];
     public xlsHeader: any[];
     public customerList: any[];
-    public splitFilter: boolean = false;
-    public idCustomer: number = 0;
-    public move_id: number = 0;
+    public splitFilter = false;
+    public idCustomer = 0;
+    public move_id = 0;
     public move_obj: any = {};
-    public columnFilterValues = { company: "", id: "", customer_number: "", rating: "", zip_code: "", place: "", search_all: "" };
+    public columnFilterValues = { company: '',
+                                  id: '',
+                                  customer_number: '',
+                                  rating: '',
+                                  zip_code: '',
+                                  place: '',
+                                  search_all: ''
+                                };
     public filterCols: string[];
     public expendedNodes: string[] = [];
-    public rowRecords: number = 0;
-    public totalRecords: number = 0;
+    public rowRecords = 0;
+    public totalRecords = 0;
 
-   
     public menuItems: MenuItem[] = [{
         label: this.translate.instant('Ansicht'),
         icon: 'pi pi-fw pi-eye',
@@ -54,7 +60,7 @@ export class CustomerTablePage {
         disabled: true,
         visible: this.userdata.role_set.edit_customer,
         command: (event) => {
-            if(this.userdata.role_set.edit_customer!=true) return;
+            if (this.userdata.role_set.edit_customer !== true) { return; }
             console.log('command menuitem:', event);
             this.menu_edit();
         }
@@ -65,7 +71,7 @@ export class CustomerTablePage {
         visible: this.userdata.role_set.edit_customer,
         disabled: true,
         command: (event) => {
-            if(this.userdata.role_set.edit_customer!=true) return;
+            if (this.userdata.role_set.edit_customer !== true) { return; }
             console.log('command menuitem:', event);
             this.menu_move(1);
         }
@@ -74,7 +80,7 @@ export class CustomerTablePage {
         label: this.translate.instant('Stammordner'),
         icon: 'pi pi-fw pi-arrow-down',
         visible: false,
-        styleClass: "move_now",
+        styleClass: 'move_now',
         disabled: false,
         command: (event) => {
             console.log('command menuitem:', event);
@@ -86,7 +92,7 @@ export class CustomerTablePage {
         icon: 'pi pi-fw pi-plus',
         visible: this.userdata.role_set.edit_customer,
         command: (event) => {
-            if(this.userdata.role_set.edit_customer!=true) return;
+            if (this.userdata.role_set.edit_customer !== true) { return; }
             console.log('command menuitem:', event);
             this.menu_new();
         }
@@ -146,7 +152,7 @@ export class CustomerTablePage {
 
     public popupMenu: MenuItem[] = [{
         label: this.translate.instant('Menü'),
-        icon: "fa fa-fw fa-list",
+        icon: 'fa fa-fw fa-list',
         items: this.menuItems
     }];
 
@@ -176,7 +182,7 @@ export class CustomerTablePage {
             'company', 'id', 'customer_number', 'rating', 'zip_code', 'place', 'search_all'
         ];
         this.selectedColumns = this.cols;
-        this.idCustomer = this.navParams.get("idCustomer");
+        this.idCustomer = this.navParams.get('idCustomer');
         console.log('CustomerTablePage idCustomer:', this.idCustomer);
         this.page_load();
     }
@@ -185,7 +191,7 @@ export class CustomerTablePage {
         console.log('ionViewDidLoad CustomerTablePage');
         this.rowRecords = 0;
         this.totalRecords = 0;
-        this.events.publish("prozCustomer", 0);
+        this.events.publish('prozCustomer', 0);
         this.apiService.pvs4_get_customer_list(0).then((result: any) => {
             this.customerListAll = result.list;
             if (localStorage.getItem('filter_values') != undefined) {
@@ -204,20 +210,25 @@ export class CustomerTablePage {
     try_filter(node: TreeNode): boolean {
         let ret: any = false;
         for (let i = 0; i < this.cols.length; i++) {
-            if (this.columnFilterValues["search_all"].trim().length > 0 && node.data[this.cols[i].field] != undefined
-                && node.data[this.cols[i].field].toLowerCase().indexOf(this.columnFilterValues["search_all"].trim().toLowerCase()) >= 0)
+            if (this.columnFilterValues['search_all'].trim().length > 0 && node.data[this.cols[i].field] != undefined
+                && node.data[this.cols[i].field].toLowerCase().indexOf(this.columnFilterValues['search_all'].trim().toLowerCase()) >= 0) {
                 ret = true;
+            }
         }
 
-        if (this.columnFilterValues["search_all"].trim().length > 0 && !ret)
+        if (this.columnFilterValues['search_all'].trim().length > 0 && !ret) {
             return false;
-        else if (this.columnFilterValues["search_all"].trim().length == 0 && !ret)
+        }
+        else if (this.columnFilterValues['search_all'].trim().length == 0 && !ret) {
             ret = true;
+             }
 
         for (let i = 0; i < this.cols.length; i++) {
-            if (this.columnFilterValues[this.cols[i].field].trim().length > 0 && node.data[this.cols[i].field] != undefined
-                && node.data[this.cols[i].field].toLowerCase().indexOf(this.columnFilterValues[this.cols[i].field].trim().toLowerCase()) < 0)
+            if (this.columnFilterValues[this.cols[i].field].trim().length > 0 &&
+                node.data[this.cols[i].field] !== undefined &&
+                node.data[this.cols[i].field].toLowerCase().indexOf(this.columnFilterValues[this.cols[i].field].trim().toLowerCase()) < 0) {
                 ret = false;
+            }
         }
 
         return ret;
@@ -228,19 +239,19 @@ export class CustomerTablePage {
         let del_ret = false;
         for (let i = 0; i < nodes.length; i++) {
             if (nodes[i].children) {
-                let ret = this.dir_try_filter(nodes[i].children);
-                if (ret == true) {
+                const ret = this.dir_try_filter(nodes[i].children);
+                if (ret === true) {
                     del_ret = true;
                 }
                 if (nodes[i].children.length <= 0) {
                     delete nodes[i].children;
-                    if (this.try_filter(nodes[i]) == false) {
+                    if (this.try_filter(nodes[i]) === false) {
                         nodes.splice(i, 1);
                         i--;
                     }
                 }
             } else {
-                if (this.try_filter(nodes[i]) == false) {
+                if (this.try_filter(nodes[i]) === false) {
                     nodes.splice(i, 1);
                     i--;
                 }
@@ -256,19 +267,25 @@ export class CustomerTablePage {
             this.menuItems[7].items[2]['disabled'] = true;
         }
         this.generate_customerList();
-        localStorage.setItem("filter_values", JSON.stringify(this.columnFilterValues));
+        localStorage.setItem('filter_values', JSON.stringify(this.columnFilterValues));
     }
 
     cancel_filters(cancel_type) {
-        console.log("cancel_filters");
+        console.log('cancel_filters');
         this.menuItems[7].items[2]['disabled'] = true;
-        if (cancel_type == 1) {
+        if (cancel_type === 1) {
             for (let i = 0; i < this.cols.length; i++) {
-                this.columnFilterValues[this.cols[i].field] = "";
+                this.columnFilterValues[this.cols[i].field] = '';
             }
+        } else {
+            this.columnFilterValues = { company: '',
+                                        id: '',
+                                        customer_number: '',
+                                        rating: '',
+                                        zip_code: '',
+                                        place: '',
+                                        search_all: '' };
         }
-        else
-            this.columnFilterValues = { company: "", id: "", customer_number: "", rating: "", zip_code: "", place: "", search_all: "" };
         this.generate_customerList();
     }
 
@@ -276,20 +293,21 @@ export class CustomerTablePage {
         if (!this.isFilterOn()) {
             this.customerListView = JSON.parse(JSON.stringify(this.customerListAll));
         } else {
-            let try_list = JSON.parse(JSON.stringify(this.customerListAll));
+            const try_list = JSON.parse(JSON.stringify(this.customerListAll));
             this.dir_try_filter(try_list);
             this.customerListView = try_list;
         }
 
         this.rowRecords = this.customerListView.length;
         this.totalRecords = this.customerListAll.length;
-        let progressBar = Math.round(this.rowRecords * 100 / this.totalRecords);
-        this.events.publish("progressBar", progressBar);
-        this.events.publish("rowRecords", this.rowRecords);
-        this.events.publish("totalRecords", this.totalRecords);
+        const progressBar = Math.round(this.rowRecords * 100 / this.totalRecords);
+        this.events.publish('progressBar', progressBar);
+        this.events.publish('rowRecords', this.rowRecords);
+        this.events.publish('totalRecords', this.totalRecords);
 
-        if (localStorage.getItem('expanded_nodes') != undefined)
+        if (localStorage.getItem('expanded_nodes') !== undefined) {
             this.expandChildren(this.customerListView, JSON.parse(localStorage.getItem('expanded_nodes')));
+        }
 
     }
 
@@ -304,7 +322,7 @@ export class CustomerTablePage {
                 id_sn = this.selectedNode.data.id;
             }
         }
-        if (id_sn == this.move_id) {
+        if (id_sn === this.move_id) {
             this.menuItems[2].visible = this.userdata.role_set.edit_customer;
             this.menuItems[3].visible = false;
             this.move_id = 0;
@@ -333,7 +351,7 @@ export class CustomerTablePage {
 
     async menu_new() {
         console.log('menu_new', this.selectedNode);
-        let obj = { id: 0, parent: 0 };
+        const obj = { id: 0, parent: 0 };
         if (this.selectedNode) {
             if (this.selectedNode.data.id) {
                 obj.parent = this.selectedNode.data.id;
@@ -353,7 +371,7 @@ export class CustomerTablePage {
         console.log('menu_edit', this.selectedNode);
         if (this.selectedNode) {
             if (this.selectedNode.data.id) {
-                let id = parseInt(this.selectedNode.data.id);
+                const id = parseInt(this.selectedNode.data.id);
                 console.log('menu_edit id', id);
                 const modal =
                 await this.modalCtrl.create({
@@ -362,11 +380,11 @@ export class CustomerTablePage {
                     id: id
                   }
                 });
-            
+
                 modal.onDidDismiss().then(data => {
-                  if(data['data']) { 
+                  if (data['data']) {
                     this.page_load();
-                  }   
+                  }
                 }); 
                 modal.present();
             }
@@ -375,7 +393,7 @@ export class CustomerTablePage {
 
     menu_move(n) {
         console.log('menu_move_up', this.selectedNode);
-        if (n == 1) {
+        if (n === 1) {
             if (this.selectedNode) {
                 if (this.selectedNode.data.id) {
                     this.move_id = parseInt(this.selectedNode.data.id);
@@ -384,13 +402,13 @@ export class CustomerTablePage {
             }
             this.menuItems[2].visible = false;
             this.menuItems[3].visible = true;
-        } else if (n == 2) {
-            //in Stammordner
+        } else if (n === 2) {
+            // in Stammordner
             console.log('move item :', this.move_id, this.move_obj);
             this.move_obj.parent = 0;
             this.apiService.pvs4_set_customer(this.move_obj).then((result: any) => {
                 console.log('result: ', result);
-                this.page_load();;
+                this.page_load(); ;
             });
             this.menuItems[2].visible = true;
             this.menuItems[3].visible = false;
@@ -401,13 +419,13 @@ export class CustomerTablePage {
         }
     }
 
-    customer_list(num) {
-        console.log("customer_list");
-        let data: any = [];
+    customer_list(num: any) {
+        console.log('customer_list', num);
+        const data: any = [];
         this.allnodes = [];
         this.data_tree(this.customerListAll);
         for (let i = 0, len = this.allnodes.length; i < len; i++) {
-            let obj = this.allnodes[i];
+            const obj = this.allnodes[i];
 
             data.push({
                 'company': obj.company,
@@ -425,95 +443,99 @@ export class CustomerTablePage {
         console.log('menu_view', this.selectedNode);
         if (this.selectedNode) {
             if (this.selectedNode.data.id) {
-                let id = parseInt(this.selectedNode.data.id);
+                const id = parseInt(this.selectedNode.data.id);
                 console.log('menu_view id', id);
-                this.navCtrl.navigateForward("/customer-details/"+id);
+                this.navCtrl.navigateForward('/customer-details/' + id);
             }
         }
     }
 
     excel_all() {
-        console.log("excel_all");
-        let data: any = [];
+        console.log('excel_all');
+        const data: any = [];
         this.allnodes = [];
-        console.log("allnodes :", this.allnodes);
+        console.log('allnodes :', this.allnodes);
         this.data_tree(this.customerListAll);
-        for (var i = 0, len = this.allnodes.length; i < len; i++) {
-            let obj = this.allnodes[i];
-            obj.company = obj.company.replace(/(\\r\\n|\\n|\\r)/gm," ");
-            obj.country = obj.country.replace(/(\\r\\n|\\n|\\r)/gm," ");
-            obj.place   = obj.place.replace(/(\\r\\n|\\n|\\r)/gm," ");
-            obj.po_box  = obj.po_box.replace(/(\\r\\n|\\n|\\r)/gm," ");
-            obj.sector  = obj.sector.replace(/(\\r\\n|\\n|\\r)/gm," ");
-            obj.street  = obj.street.replace(/(\\r\\n|\\n|\\r)/gm," ");
-            console.log("obj >>> ", obj);
-            let json: any = {};
-            for (var j = 0; j < this.selectedColumns.length; j++) {
-                if(obj[this.selectedColumns[j].field]) {
+        for (let i = 0, len = this.allnodes.length; i < len; i++) {
+            const obj = this.allnodes[i];
+            obj.company = obj.company.replace(/(\\r\\n|\\n|\\r)/gm, ' ');
+            obj.country = obj.country.replace(/(\\r\\n|\\n|\\r)/gm, ' ');
+            obj.place   = obj.place.replace(/(\\r\\n|\\n|\\r)/gm, ' ');
+            obj.po_box  = obj.po_box.replace(/(\\r\\n|\\n|\\r)/gm, ' ');
+            obj.sector  = obj.sector.replace(/(\\r\\n|\\n|\\r)/gm, ' ');
+            obj.street  = obj.street.replace(/(\\r\\n|\\n|\\r)/gm, ' ');
+            console.log('obj >>> ', obj);
+            const json: any = {};
+            for (let j = 0; j < this.selectedColumns.length; j++) {
+                if (obj[this.selectedColumns[j].field]) {
                     json[this.selectedColumns[j].header] = obj[this.selectedColumns[j].field];
-                }else{
-                    json[this.selectedColumns[j].header] = "";
-                }                
+                } else {
+                    json[this.selectedColumns[j].header] = '';
+                }
             }
-            console.log(">>json :", json);
+            console.log('>>json :', json);
             data.push(json);
         }
         this.excelService.exportAsExcelFile(data, 'customer_all.xlsx');
     }
 
     excel_view() {
-        console.log("excel_view");
-        let data: any = [];
+        console.log('excel_view');
+        const data: any = [];
         this.allnodes = [];
         this.data_tree(this.customerListView);
         for (var i = 0, len = this.allnodes.length; i < len; i++) {
-            let obj = this.allnodes[i];
-            obj.company = obj.company.replace(/(\\r\\n|\\n|\\r)/gm," ");
-            obj.country = obj.country.replace(/(\\r\\n|\\n|\\r)/gm," ");
-            obj.place   = obj.place.replace(/(\\r\\n|\\n|\\r)/gm," ");
-            obj.po_box  = obj.po_box.replace(/(\\r\\n|\\n|\\r)/gm," ");
-            obj.sector  = obj.sector.replace(/(\\r\\n|\\n|\\r)/gm," ");
-            obj.street  = obj.street.replace(/(\\r\\n|\\n|\\r)/gm," ");
-            let json: any = {};
-            for (var j = 0; j < this.selectedColumns.length; j++) {
-                if(obj[this.selectedColumns[j].field]) {
+            const obj = this.allnodes[i];
+            obj.company = obj.company.replace(/(\\r\\n|\\n|\\r)/gm, ' ');
+            obj.country = obj.country.replace(/(\\r\\n|\\n|\\r)/gm, ' ');
+            obj.place   = obj.place.replace(/(\\r\\n|\\n|\\r)/gm, ' ');
+            obj.po_box  = obj.po_box.replace(/(\\r\\n|\\n|\\r)/gm, ' ');
+            obj.sector  = obj.sector.replace(/(\\r\\n|\\n|\\r)/gm, ' ');
+            obj.street  = obj.street.replace(/(\\r\\n|\\n|\\r)/gm, ' ');
+            const json: any = {};
+            for (let j = 0; j < this.selectedColumns.length; j++) {
+                if (obj[this.selectedColumns[j].field]) {
                     json[this.selectedColumns[j].header] = obj[this.selectedColumns[j].field];
-                }else{
-                    json[this.selectedColumns[j].header] = "";
-                }                
+                } else {
+                    json[this.selectedColumns[j].header] = '';
+                }
             }
-            console.log(">>json :", json);
+            console.log('>>json :', json);
             data.push(json);
         }
         this.excelService.exportAsExcelFile(data, 'customer_view.xlsx');
     }
 
     printPdf() {
-        let columns: any[] = [];
-        let widthsArray: string[] = [];
-        for (var k = 0; k < this.selectedColumns.length; k++) {
+        const columns: any[] = [];
+        const widthsArray: string[] = [];
+        for (let k = 0; k < this.selectedColumns.length; k++) {
             columns.push({ text: this.selectedColumns[k].header, style: 'header' });
-            widthsArray.push("*");
+            widthsArray.push('*');
         }
-        let bodyArray: any[] = [];
+        const bodyArray: any[] = [];
         bodyArray.push(columns);
         this.allnodes = [];
         this.data_tree(this.customerListView);
         let obj: any;
         let rowArray: any[] = [];
-        for (var i = 0, len = this.allnodes.length; i < len; i++) {
+        for (let i = 0, len = this.allnodes.length; i < len; i++) {
             obj = this.allnodes[i];
             rowArray = [];
-            for (var j = 0; j < this.selectedColumns.length; j++) {
-                if (obj[this.selectedColumns[j].field])
+            for (let j = 0; j < this.selectedColumns.length; j++) {
+                if (obj[this.selectedColumns[j].field]) {
                    rowArray.push(obj[this.selectedColumns[j].field]);
-                else
+                } else {
                    rowArray.push('');
+                }
             }
             bodyArray.push(rowArray);
         }
 
-        this.pdf.get_ListDocDefinition(bodyArray, widthsArray, this.translate.instant("Kunde") + " " + this.translate.instant("Liste"),this.translate.instant("Kunde")+this.translate.instant("Liste")+'.pdf');
+        this.pdf.get_ListDocDefinition(bodyArray,
+                                       widthsArray,
+                                       this.translate.instant('Kunde') + ' ' + this.translate.instant('Liste'),
+                                       this.translate.instant('Kunde') + this.translate.instant('Liste') + '.pdf');
     }
 
     data_tree(nodes: TreeNode[]): any {
@@ -530,20 +552,20 @@ export class CustomerTablePage {
         if (!this.splitFilter) {
             this.cancel_filters(1);
         }
-        localStorage.setItem("split_filter", JSON.stringify(this.splitFilter));
+        localStorage.setItem('split_filter', JSON.stringify(this.splitFilter));
     }
 
   async  show_columns() {
-      let inputs : any[] = [];
-    for (var i = 0; i < this.cols.length; i++) {
+      const inputs : any[] = [];
+    for (let i = 0; i < this.cols.length; i++) {
         inputs.push({
             type: 'checkbox',
             label: this.cols[i].header,
             value: this.cols[i].field,
-            checked: this.selectedColumns.find(x => x.field == this.cols[i].field)
+            checked: this.selectedColumns.find(x => x.field === this.cols[i].field)
         });
     }
-        let alert = await this.alertCtrl.create({header: this.translate.instant('Spalten Auswählen'), inputs:inputs,
+        const alert = await this.alertCtrl.create({header: this.translate.instant('Spalten Auswählen'), inputs: inputs,
         buttons: [{
             text: this.translate.instant('dismiss'),
             handler: data => {
@@ -567,15 +589,16 @@ export class CustomerTablePage {
     isFilterOn(): any {
         let ret = false;
         for (let i = 0; i < this.filterCols.length; i++) {
-            if (this.columnFilterValues[this.filterCols[i]].trim().length > 0)
+            if (this.columnFilterValues[this.filterCols[i]].trim().length > 0) {
                 ret = true;
+            }
         }
         return ret;
     }
 
     expandChildren(nodes: TreeNode[], expended: string[]) {
         for (let i = 0; i < nodes.length; i++) {
-            if (nodes[i].children && expended.find(x => x == nodes[i].data["id"])) {
+            if (nodes[i].children && expended.find(x => x == nodes[i].data['id'])) {
                 nodes[i].expanded = true;
                 this.expandChildren(nodes[i].children, expended);
             }
@@ -583,13 +606,12 @@ export class CustomerTablePage {
     }
 
     onNodeExpand(event) {
-        this.expendedNodes.push(event.node.data["id"]);
+        this.expendedNodes.push(event.node.data['id']);
         localStorage.setItem('expanded_nodes', JSON.stringify(this.expendedNodes));
     }
     onNodeCollapse(event) {
-        this.expendedNodes = this.expendedNodes.filter(function (element, index, array) { return element != event.node.data["id"] });
+        this.expendedNodes = this.expendedNodes.filter(function (element, index, array) { return element != event.node.data['id'] });
         localStorage.setItem('expanded_nodes', JSON.stringify(this.expendedNodes));
     }
-
 
 }

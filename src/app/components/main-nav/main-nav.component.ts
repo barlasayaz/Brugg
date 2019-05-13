@@ -62,32 +62,32 @@ export class MainNavComponent {
 
   go(action: any, id: number = 0) {
     // Navigation
-    console.info("app.go: ", action, id, this.aktivPage);
+    console.info('app.go: ', action, id, this.aktivPage);
     if (this.aktivPage != action) {
       switch (action) {
-        case "StartscreenNew": //HOME
-          this.navCtrl.navigateRoot("/startscreen-new");
+        case 'StartscreenNew': // HOME
+          this.navCtrl.navigateRoot('/startscreen-new');
           break;
-        case "DashboardNew":
-          this.navCtrl.navigateRoot("/dashboard-new");
+        case 'DashboardNew':
+          this.navCtrl.navigateRoot('/dashboard-new');
           break;
-        case "CustomerTable":
-          this.navCtrl.navigateRoot(["/customer-table", { "idCustomer": id }]);
+        case 'CustomerTable':
+          this.navCtrl.navigateRoot(['/customer-table', { 'idCustomer': id }]);
           break;
-        case "CustomerDetails":
-          this.navCtrl.navigateRoot(["/customer-details", { "idCustomer": id, "company": this.company }]);
+        case 'CustomerDetails':
+          this.navCtrl.navigateRoot(['/customer-details', { 'idCustomer': id, 'company': this.company }]);
           break;
-        case "ProductList":
-          this.navCtrl.navigateRoot(["/product-list", { "idCustomer": id, "company": this.company }]);
+        case 'ProductList':
+          this.navCtrl.navigateRoot(['/product-list', { 'idCustomer': id, 'company': this.company }]);
           break;
-        case "ProtocolList":
-          this.navCtrl.navigateRoot(["/protocol-list", { "idCustomer": id, "company": this.company }]);
+        case 'ProtocolList':
+          this.navCtrl.navigateRoot(['/protocol-list', { 'idCustomer': id, 'company': this.company }]);
           break;
-        case "OrderForm":
-          this.navCtrl.navigateRoot(["/order-form", { "idCustomer": id, "company": this.company }]);
+        case 'OrderForm':
+          this.navCtrl.navigateRoot(['/order-form', { 'idCustomer': id, 'company': this.company }]);
           break;
-        case "NoteList":
-          this.navCtrl.navigateRoot(["/note-list", { "idCustomer": id, "company": this.company }]);
+        case 'NoteList':
+          this.navCtrl.navigateRoot(['/note-list', { 'idCustomer': id, 'company': this.company }]);
           break;
       }
     }
@@ -95,13 +95,13 @@ export class MainNavComponent {
   }
 
   showdashfirst() {
-    this.events.publish("className", "showdashfirst");
+    this.events.publish('className', 'showdashfirst');
     document.getElementById('dashfirst').className = 'active';
     document.getElementById('dashsecond').className = 'inactive';
   };
 
   showdashsecond() {
-    this.events.publish("className", "showdashsecond");
+    this.events.publish('className', 'showdashsecond');
     document.getElementById('dashsecond').className = 'active';
     document.getElementById('dashfirst').className = 'inactive';
   };

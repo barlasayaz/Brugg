@@ -6,8 +6,8 @@ import { ComponentsModule } from './components/components.module';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
-  { path: 'main-nav', loadChildren: './components/main-nav/main-nav.module#MainNavComponentModule' },
   { path: 'login', loadChildren: './login/login.module#LoginPageModule' },
+  { path: 'main-nav', loadChildren: './components/main-nav/main-nav.module#MainNavComponentModule' },
   { path: 'statistik', loadChildren: './statistik/statistik.module#StatistikPageModule' },
   { path: 'startscreen-new', loadChildren: './startscreen-new/startscreen-new.module#StartscreenNewPageModule' },
   { path: 'my-data', loadChildren: './my-data/my-data.module#MyDataPageModule' },

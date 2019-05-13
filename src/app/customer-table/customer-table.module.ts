@@ -6,6 +6,8 @@ import { ComponentsModule } from '../components/components.module';
 import { IonicModule } from '@ionic/angular';
 import { MainNavComponentModule } from '../components/main-nav/main-nav.module';
 import { CustomerTablePage } from './customer-table.page';
+import { MenubarModule } from 'primeng/menubar';
+import { TreeTableModule } from 'primeng/treetable';
 
 const routes: Routes = [
   {
@@ -21,7 +23,9 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes),
     MainNavComponentModule,
-    ComponentsModule
+    ComponentsModule,
+    MenubarModule,
+    TreeTableModule
   ],
   declarations: [CustomerTablePage]
 })

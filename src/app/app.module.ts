@@ -29,7 +29,7 @@ import { FullCalendarModule } from 'ng-fullcalendar';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { ToggleButtonModule } from 'primeng/togglebutton';
 import { TreeTableModule } from 'primeng/treetable';
-import { MenubarModule } from 'primeng/menubar';
+// import { MenubarModule } from 'primeng/menubar';
 import { TabMenuModule } from 'primeng/tabmenu';
 import { MenuModule } from 'primeng/menu';
 import { InputSwitchModule } from 'primeng/inputswitch';
@@ -91,7 +91,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     TreeTableModule,
     InputSwitchModule,
     MenuModule,
-    MenubarModule,
+    // MenubarModule,
     TabMenuModule,
     FileUploadModule,
     IonicSelectableModule,

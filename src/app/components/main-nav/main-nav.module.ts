@@ -24,7 +24,7 @@ const routes: Routes = [
     TranslateModule,
     RoundProgressModule,
     RouterModule.forChild(routes),
-    //ComponentsModule
+    ComponentsModule
   ],
   exports: [
     MainNavComponent

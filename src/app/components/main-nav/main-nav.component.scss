@@ -23,198 +23,197 @@
     height: 0 !important;
   }
 
-      .main-nav-fix {
+  .main-nav-fix {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      height: 65px - 3px;
+
+      .posek {
+        margin-left: 10px;
+      }
+
+      .comp-name {
+        margin-right: 10px;
+        height: 65px;
         display: flex;
-        justify-content: flex-end;
         align-items: center;
-        height: 65px - 3px;
+      }
+  }
 
-        .posek {
-          margin-left: 10px;
-        }
+  .topBar-outer {
+      display: flex;
+      -webkit-align-items: flex-end;
+              align-items: flex-end;
+      height: 59px - 3px; // 3PX Bottomborder
 
-        .comp-name {
-          margin-right: 10px;
-          height: 65px;
-          display: flex;
-          align-items: center;
-        }
+      &-right {
+        -webkit-justify-content: flex-end;
+                justify-content: flex-end;
+      }
+  }
+
+  .topBar-inner {
+    display: flex;
+  }
+
+  .topBar-btn {
+    cursor: pointer;
+    margin: 0;
+    padding: 0;
+    width: 50px;
+    height: 47px;
+    margin-bottom: -1px;
+    -webkit-border-radius: 3px 3px 0 0;
+    border-radius: 3px 3px 0 0;
+    border: none;
+    color: #fff;
+    text-align: center;
+    background: color(var(--ion-color-darkmain));
+    position: relative;
+    display: flex;
+    -webkit-align-items: center;
+            align-items: center;
+    -webkit-justify-content: center;
+            justify-content: center;
+
+    &:hover {
+      background: color(var(--ion-color-darkmain-shade))
     }
 
-    .topBar-outer {
+    &.active {
+      background: color(var(--ion-color-main));
+      &:hover {
+        background: color(var(--ion-color-main-shade));
+      }
+    }
+
+    &-red {
+      background: color(var(--ion-color-red));
+      &:hover {
+        background: color(var(--ion-color-red-shade));
+      }
+    }
+
+    &-lime {
+      background: color(var(--ion-color-lime));
+      &:hover {
+        background: color(var(--ion-color-lime-shade));
+      }
+    }
+
+    i {
+      display: flex;
+      -webkit-justify-content: center;
+              justify-content: center;
+      -webkit-align-content: center;
+              align-content: center;
+    }
+
+    + .topBar-btn {
+      margin-left: 10px !important;
+    }
+  }
+
+  .form-select-small {
+    height: 35px !important;
+    min-height: auto !important;
+    -webkit-border-radius: 0px var(--global-radius) 0px 0px;
+            border-radius: 0px var(--global-radius) 0px 0px;
+  }
+
+  .form-control {
+    background-color: rgb(142, 154, 158) !important;
+    border: none !important;
+    -webkit-border-radius: 0px var(--global-radius) 0px 0px;
+            border-radius: 0px var(--global-radius) 0px 0px;
+    display: flex;
+    -webkit-align-items: center;
+            align-items: center;
+
+    .select-text {
+      color: #fff !important;
+      font-size: 12px;
+    }
+
+    .select-icon {
+      margin-left: 20px;
+      margin-right: 10px;
+        .select-icon-inner {
+            color : white !important;
+        }
+      }
+  }
+
+  .kundendaten-nav, .produktdaten-nav, .dashboard-nav {
+    padding: 0;
+    margin: 0 0 0 10px;
+    list-style: none;
+    display: flex;
+
+    a {
+      @extend .topBar-btn;
+      color: #FFF !important;
+      background: color(var(--ion-color-main-tint));
+
+      &.active {
+        background: color(var(--ion-color-main));
+      }
+    }
+  }
+
+  //KUNDENUEBERSICHT
+  .posek {
+    display: flex;
+    -webkit-align-items: center;
+            align-items: center;
+    .progress-label {
+      margin-right: 10px;
+    }
+    .progress-wrapper {
+      position: relative;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      -webkit-align-items: center;
+              align-items: center;
+      -webkit-justify-content: center;
+              justify-content: center;
+    }
+    .current {
+      position: absolute;
+      font-size: 12px;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .topBar-sm {
+      position: initial !important;
+    }
+
+    .kundendaten-nav, .produktdaten-nav, .dashboard-nav {
+      position: absolute;
+      top: 65px;
+      width: 100%;
+      margin: 0;
+      left: 0;
+
+      ul {
         display: flex;
-        -webkit-align-items: flex-end;
-                align-items: flex-end;
-        height: 59px - 3px; // 3PX Bottomborder
-
-        &-right {
-          -webkit-justify-content: flex-end;
-                  justify-content: flex-end;
-        }
+        -webkit-flex: 1 auto;
+            -ms-flex: 1 auto;
+                flex: 1 auto;
       }
 
-      .topBar-inner {
-        display: flex;
+      a {
+        -webkit-border-radius: 0px !important;
+                border-radius: 0px !important;
+        width: 100% !important;
       }
 
-      .topBar-btn {
-        cursor: pointer;
-        margin: 0;
-        padding: 0;
-        width: 50px;
-        height: 47px;
-        margin-bottom: -1px;
-        -webkit-border-radius: 3px 3px 0 0;
-        border-radius: 3px 3px 0 0;
-        border: none;
-        color: #fff;
-        text-align: center;
-        background: color(var(--ion-color-darkmain));
-        position: relative;
-        display: flex;
-        -webkit-align-items: center;
-                align-items: center;
-        -webkit-justify-content: center;
-                justify-content: center;
-
-        &:hover {
-          background: color(var(--ion-color-darkmain-shade))
-        }
-
-        &.active {
-          background: color(var(--ion-color-main));
-          &:hover {
-            background: color(var(--ion-color-main-shade));
-          }
-        }
-
-        &-red {
-          background: color(var(--ion-color-red));
-          &:hover {
-            background: color(var(--ion-color-red-shade));
-          }
-        }
-
-        &-lime {
-          background: color(var(--ion-color-lime));
-          &:hover {
-            background: color(var(--ion-color-lime-shade));
-          }
-        }
-
-        i {
-          display: flex;
-          -webkit-justify-content: center;
-                  justify-content: center;
-          -webkit-align-content: center;
-                  align-content: center;
-        }
-
-        + .topBar-btn {
-          margin-left: 10px !important;
-        }
+      a + a {
+        margin-left: 0 !important;
       }
+    }
 
-      .form-select-small {
-        height: 35px !important;
-        min-height: auto !important;
-        -webkit-border-radius: 0px var(--global-radius) 0px 0px;
-                border-radius: 0px var(--global-radius) 0px 0px;
-      }
-
-      .form-control {
-        background-color: rgb(142, 154, 158) !important;
-        border: none !important;
-        -webkit-border-radius: 0px var(--global-radius) 0px 0px;
-                border-radius: 0px var(--global-radius) 0px 0px;
-        display: flex;
-        -webkit-align-items: center;
-                align-items: center;
-
-        .select-text {
-          color: #fff !important;
-          font-size: 12px;
-        }
-
-        .select-icon {
-          margin-left: 20px;
-          margin-right: 10px;
-            .select-icon-inner {
-               color : white !important;
-            }
-          }
-      }
-
-      .kundendaten-nav, .produktdaten-nav, .dashboard-nav {
-        padding: 0;
-        margin: 0 0 0 10px;
-        list-style: none;
-        display: flex;
-
-        a {
-          @extend .topBar-btn;
-          color: #FFF !important;
-          background: color(var(--ion-color-main-tint));
-
-          &.active {
-            background: color(var(--ion-color-main));
-          }
-        }
-      }
-
-      //KUNDENUEBERSICHT
-      .posek {
-        display: flex;
-        -webkit-align-items: center;
-                align-items: center;
-        .progress-label {
-          margin-right: 10px;
-        }
-        .progress-wrapper {
-          position: relative;
-          width: 40px;
-          height: 40px;
-          display: flex;
-          -webkit-align-items: center;
-                  align-items: center;
-          -webkit-justify-content: center;
-                  justify-content: center;
-        }
-        .current {
-          position: absolute;
-          font-size: 12px;
-        }
-      }
-
-
-      @media (max-width: 767px) {
-        .topBar-sm {
-          position: initial !important;
-        }
-
-        .kundendaten-nav, .produktdaten-nav, .dashboard-nav {
-          position: absolute;
-          top: 65px;
-          width: 100%;
-          margin: 0;
-          left: 0;
-
-          ul {
-            display: flex;
-            -webkit-flex: 1 auto;
-                -ms-flex: 1 auto;
-                    flex: 1 auto;
-          }
-
-          a {
-            -webkit-border-radius: 0px !important;
-                    border-radius: 0px !important;
-            width: 100% !important;
-          }
-
-          a + a {
-            margin-left: 0 !important;
-          }
-        }
-
-      }
+  }
