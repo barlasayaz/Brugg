@@ -1,5 +1,5 @@
-import { Component, ViewChild,Input } from '@angular/core';
-import { NavController, NavParams, ModalController, Events } from '@ionic/angular';
+import { Component, ViewChild,Input,OnInit } from '@angular/core';
+import { NavController, ModalController, Events } from '@ionic/angular';
 import { ApiService } from '../services/api';
 import { TranslateService } from '@ngx-translate/core';
 import { UserdataService } from '../services/userdata';
@@ -19,7 +19,7 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
     styleUrls: ['./customer-table.page.scss'],
 })
 
-export class CustomerTablePage {
+export class CustomerTablePage implements OnInit {
     @Input() idCustomer: number;
     public customerListAll: TreeNode[] = [];
     public customerListView: TreeNode[] = [];
@@ -167,6 +167,8 @@ export class CustomerTablePage {
         public alertCtrl: AlertController,
         public pdf: PdfExportService,
         public events: Events) {
+    }
+    ngOnInit(): void {
         this.cols = [
             { field: 'company', header: this.translate.instant('Firma') },
             { field: 'id', header: 'DB-ID' },
@@ -184,7 +186,6 @@ export class CustomerTablePage {
         console.log('CustomerTablePage idCustomer:', this.idCustomer);
         this.page_load();
     }
-
     page_load() {
         console.log('ionViewDidLoad CustomerTablePage');
         this.rowRecords = 0;
@@ -596,7 +597,7 @@ export class CustomerTablePage {
 
     expandChildren(nodes: TreeNode[], expended: string[]) {
         for (let i = 0; i < nodes.length; i++) {
-            if (nodes[i].children && expended.find(x => x == nodes[i].data['id'])) {
+            if (nodes[i].children && expended && expended.find(x => x == nodes[i].data['id'])) {
                 nodes[i].expanded = true;
                 this.expandChildren(nodes[i].children, expended);
             }
