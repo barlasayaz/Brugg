@@ -1,15 +1,16 @@
 import { NgModule } from '@angular/core';
-import { MainNavComponentModule } from './main-nav/main-nav.module';
+import { CommonModule } from '@angular/common';
+import { MainNavComponent} from './main-nav/main-nav.component';
 import { IonicModule } from '@ionic/angular';
 import { TranslateModule } from '@ngx-translate/core';
 @NgModule({
-	/*declarations: [MainNavComponent
+	declarations: [//MainNavComponent
     ],
-	imports: [
-    ],*/
+	imports: [ CommonModule
+    ],
 	exports: [
         IonicModule,
-        MainNavComponentModule,
+        //MainNavComponent,
         TranslateModule
     ]
 })

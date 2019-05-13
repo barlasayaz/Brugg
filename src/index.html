@@ -2,33 +2,25 @@
 <html lang="en">
 
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8"/>
   <title>Ionic App</title>
 
-  <base href="/" />
+  <base href="/"/>
 
-  <meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <meta name="format-detection" content="telephone=no" />
-  <meta name="msapplication-tap-highlight" content="no" />
+  <meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+  <meta name="format-detection" content="telephone=no"/>
+  <meta name="msapplication-tap-highlight" content="no"/>
 
-  <link rel="icon" type="image/png" href="assets/icon/favicon.ico" />
-
-    <!-- cordova.js required for cordova apps (remove if not needed) -->
-
-    <script>
-      if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('service-worker.js')
-          .then(() => console.log('service worker installed'))
-          .catch(err => console.error('Error', err));
-      }
-    </script>
+  <link rel="icon" type="image/png" href="assets/icon/favicon.ico"/>
 
   <!-- add to homescreen for ios -->
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
   <script>
       var global = global || window;
   </script>
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#1976d2">
 </head>
 
 <body>
@@ -36,6 +28,7 @@
   <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script> 
   <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.1/jquery-ui-timepicker-addon.min.js"></script>
+  <noscript>Please enable JavaScript to continue using this application.</noscript>
 </body>
 
 </html>
