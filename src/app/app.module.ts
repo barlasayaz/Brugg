@@ -52,7 +52,7 @@ import { NgxQRCodeModule } from 'ngx-qrcode2';
 import { ofroot } from './order-form/order-form-root';
 
 import { HomePage } from './home/home';
-import { ComponentsModule } from './components/components.module';
+//import { ComponentsModule } from './components/components.module';
 
 import { Camera } from '@ionic-native/camera/ngx';
 import { Keyboard } from '@ionic-native/keyboard/ngx';

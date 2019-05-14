@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { NavController, ModalController, NavParams, Platform, AlertController } from '@ionic/angular';
+import { Component,Input } from '@angular/core';
+import { NavController, ModalController, Platform, AlertController } from '@ionic/angular';
 import { ApiService } from '../services/api';
 import { TranslateService } from '@ngx-translate/core';
 import { UserdataService } from '../services/userdata';
@@ -25,7 +25,7 @@ import { AppointmentEditComponent } from '../components/appointment-edit/appoint
   styleUrls: ['./customer-details.page.scss'],
 })
 export class CustomerDetailsPage {
-  public idCustomer: number = 0;
+  @Input() idCustomer: number;
   public activCustomer: any = {};
   public baan1_aktiv = false;
   public baan2_aktiv = false;
@@ -50,14 +50,13 @@ export class CustomerDetailsPage {
                 public userdata:  UserdataService, 
                 public apiService: ApiService,
                 public translate: TranslateService,
-                public navParams: NavParams,
                 public system: SystemService,
                 private inAppBrowser: InAppBrowser,
                 public platform: Platform,
                 public alertCtrl: AlertController,
                 public modalCtrl : ModalController) 
   {
-      this.idCustomer = this.navParams.get("idCustomer");   
+  
       this.loadCustomer(this.idCustomer);     
       this.getPointContactList();
       

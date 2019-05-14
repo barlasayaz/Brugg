@@ -155,7 +155,7 @@
           "builder": "@ionic/angular-toolkit:cordova-serve",
           "options": {
             "cordovaBuildTarget": "app:ionic-cordova-build",
-            "devServerTarget": "app:serve"
+            "devServerTarget": "app:serve --disableHostCheck=true"
           },
           "configurations": {
             "production": {
@@ -174,7 +174,7 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "app:serve"
+            "devServerTarget": "app:serve --disableHostCheck=true"
           },
           "configurations": {
             "ci": {
