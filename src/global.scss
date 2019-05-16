@@ -129,7 +129,7 @@ ion-item.item-select, ion-item.item-ionic-selectable {
 
   .select-disabled {
     opacity: 1 !important;
-    border: 1px solid RGBA(color(var(--ion-color-lightgrey)), 0.4) !important;
+    border: 1px solid rgba(var(--ion-color-lightgrey), 0.4) !important;
     .select-text {
       opacity: 0.4 !important;
     }
@@ -147,7 +147,7 @@ ion-item.item-select, ion-item.item-ionic-selectable {
 
 .item-select-disabled ion-label {
   opacity: 1 !important;
-  color: RGBA(#999, 0.4) !important;
+  color: rgba(#999, 0.4) !important;
 }
 
 
@@ -261,10 +261,10 @@ ion-item.item-textarea {
   margin-bottom: 10px;
   padding: 15px 10px;
   &.unselectTemplate {
-    background: RGBA(color(var(--ion-color-lightgrey)), 0.6);
+    background: rgba(var(--ion-color-lightgrey), 0.6);
   }
   &.selectTemplate {
-    background: RGBA(color(var(--ion-color-main)), 0.4);
+    background: rgba(var(--ion-color-main), 0.4);
     color: #FFF;
   }
   &:last-child {
@@ -311,7 +311,7 @@ ion-item.item-textarea {
       font-size: 16px;
       &:hover
       &:focus {
-        background: RGBA(color(var(--ion-color-main)), 0.6) !important;
+        background: rgba(var(--ion-color-main), 0.6) !important;
       }
     }
     ion-button + ion-button {
@@ -346,8 +346,8 @@ ion-item.item-textarea {
           flex-direction: column;
   height: 200px;
   width: 100%;
-  border: 1px dashed RGBA(#009de0, 0.4);
-  color: RGBA(color(var(--ion-color-grey)), 0.4);
+  border: 1px dashed rgba(#009de0, 0.4);
+  color: rgba(var(--ion-color-grey), 0.4);
   text-align: center;
   ion-icon {
     font-size: 24px;
@@ -16323,8 +16323,8 @@ tbody.ui-table-tbody {
   }
   ::-webkit-scrollbar-thumb {
     border-radius: 4px;
-    background-color: RGBA(0,0,0,0.5);
-    -box-shadow: 0 0 1px RGBA(255,255,255,0.5);
+    background-color: rgba(0,0,0,0.5);
+    -box-shadow: 0 0 1px rgba(255,255,255,0.5);
   }
   *:focus {
     outline: 0px !important;
@@ -16389,7 +16389,7 @@ tbody.ui-table-tbody {
     color: #009de0;
   }
   .bg-drop {
-    background: RGBA(0,0,0,0.6);
+    background: rgba(0,0,0,0.6);
     height: 100%;
     width: 100%;
     position: absolute;
@@ -17161,7 +17161,7 @@ tbody.ui-table-tbody {
     font-weight: 300;
     padding: 8px 10px;
     top: 21px;
-    background: RGBA(0,0,0,0.8) !important;
+    background: rgba(0,0,0,0.8) !important;
   }
   .ek-fab-teal .mfb-component__button--main {
     background: #1abc9c !important;
@@ -17213,7 +17213,7 @@ tbody.ui-table-tbody {
     font-size: 14px;
   }
   [data-mfb-label]:after {
-    background: RGBA(0,0,0,0.7) !important;
+    background: rgba(0,0,0,0.7) !important;
   }
   .sprachenAuswahl {
     position: absolute;
@@ -17615,8 +17615,8 @@ tbody.ui-table-tbody {
       margin: 15px 0px;
       border-radius: 3px;
       overflow: hidden;
-      -webkit-box-shadow: 0px 2px 9px RGBA(0,0,0,0.05);
-      box-shadow: 0px 2px 9px RGBA(0,0,0,0.05);
+      -webkit-box-shadow: 0px 2px 9px rgba(0,0,0,0.05);
+      box-shadow: 0px 2px 9px rgba(0,0,0,0.05);
     }
   }
   div.table div.tbody div.tr.table-body div.td {
@@ -17786,8 +17786,8 @@ tbody.ui-table-tbody {
   div.table-info {
     border-radius: 3px;
     overflow: hidden;
-    -webkit-box-shadow: 0px 2px 7px RGBA(0,0,0,0.05);
-    box-shadow: 0px 2px 7px RGBA(0,0,0,0.05);
+    -webkit-box-shadow: 0px 2px 7px rgba(0,0,0,0.05);
+    box-shadow: 0px 2px 7px rgba(0,0,0,0.05);
   }
   div.table-info div.thead div.tr.table-header,
   div.table-info div.thead div.tr.table-subheader {
@@ -18119,8 +18119,8 @@ tbody.ui-table-tbody {
     }
   }
   .box-shadow-fix {
-    -webkit-box-shadow: 0px 2px 7px RGBA(0,0,0,0.05);
-    box-shadow: 0px 2px 7px RGBA(0,0,0,0.05);
+    -webkit-box-shadow: 0px 2px 7px rgba(0,0,0,0.05);
+    box-shadow: 0px 2px 7px rgba(0,0,0,0.05);
   }
   .kunden-grid {
     display: -webkit-box;
@@ -18784,8 +18784,8 @@ tbody.ui-table-tbody {
   .switcher .switcher-group .switcher-btn.active,
   .switcher .switcher-group .switcher-btn:focus {
     background: #008dca;
-    -webkit-box-shadow: inset 0px 0px 9px RGBA(0,0,0,0.25);
-    box-shadow: inset 0px 0px 9px RGBA(0,0,0,0.25);
+    -webkit-box-shadow: inset 0px 0px 9px rgba(0,0,0,0.25);
+    box-shadow: inset 0px 0px 9px rgba(0,0,0,0.25);
   }
   .switcher .switcher-group .switcher-btn:first-child {
     border-radius: 3px 0 0 3px;
@@ -18889,7 +18889,7 @@ tbody.ui-table-tbody {
     box-shadow: inset 0px 0px 0px 5px #dadddd !important;
   }
   .pb_box:hover {
-    background: RGBA(0,0,0,0.075) !important;
+    background: rgba(0,0,0,0.075) !important;
   }
   #dialog_produktbild .file img {
     mix-blend-mode: multiply;
@@ -19350,17 +19350,17 @@ ion-select {
   tbody {
     tr {
       td {
-        background: #fff !important;
+        background: #fff;
         padding: 10px 5px !important;
       }
       &:nth-child(2n) {
         td {
-          background: #f5f7f7 !important;
+          background: #f5f7f7;
         }
       }
       &.ui-state-highlight {
         td {
-          background: RGBA(#009de0, 0.2) !important;
+          background: rgba(#009de0, 0.2) !important;
           .ui-treetable-toggler {
             color: #FFF !important;
           }
@@ -19371,7 +19371,7 @@ ion-select {
 }
 
 body .ui-state-active, body .ui-state-highlight {
-  background: RGBA(#009de0, 0.2) !important;
+  background: rgba(#009de0, 0.2) !important;
 }
 
 page-product-template {

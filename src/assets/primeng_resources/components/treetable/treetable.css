@@ -15,11 +15,20 @@
 }
 
 .ui-treetable .ui-treetable-toggler {
-    vertical-align: middle;
+    cursor: pointer;
+    display: inline-block;
+    height: 1em;
+    position: relative;
+    top: 50%;
+    margin-top: -.5em;
 }
 
 .ui-treetable .ui-sortable-column {
     cursor: pointer;
+}
+
+.ui-treetable p-treetablesorticon {
+    vertical-align: middle;
 }
 
 .ui-treetable-auto-layout > .ui-treetable-wrapper {
@@ -137,16 +146,6 @@
     display: none;
 }
 
-/* Edit */
-.ui-treetable .ui-treetable-tbody > tr > td.ui-editing-cell {
-    padding-top: 0;
-    padding-bottom: 0;
-}
-
-.ui-treetable .ui-treetable-tbody > tr > td.ui-editing-cell p-treetablecelleditor >  * {
-    width: 100%;
-}
-
 /* Reorder */
 .ui-treetable-reorder-indicator-up,
 .ui-treetable-reorder-indicator-down {
@@ -205,6 +204,6 @@
     margin-left: -1em;
 }
 
-.ui-treetable-loading-icon {
+.ui-treetable .ui-treetable-loading-icon {
     font-size: 2em;
 }

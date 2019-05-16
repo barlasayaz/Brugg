@@ -53,7 +53,6 @@
 
 .ui-multiselect .ui-multiselect-panel {
     min-width: 100%;
-    display: none;
 }
 
 .ui-multiselect-panel .ui-multiselect-items-wrapper {
@@ -83,7 +82,7 @@
     vertical-align: middle;
 }
 
-.ui-multiselect-panel .ui-multiselect-item label {
+.ui-multiselect-panel .ui-multiselect-item span {
     display: inline-block;
     vertical-align: middle;
 }
@@ -129,8 +128,8 @@
     right: .375em;
     top: .375em;
     display: block;
-    font-size: 1em;
     border: 0 none;
+    cursor: pointer;
 }
 
 .ui-multiselect-header a.ui-multiselect-all,
@@ -138,10 +137,6 @@
     float:left;
     margin-right: 10px;
     display: block;
-}
-
-.ui-multiselect-header .ui-multiselect-close.ui-state-hover {
-    padding:0px;
 }
 
 .ui-multiselect-footer {

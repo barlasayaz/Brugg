@@ -2,6 +2,12 @@
     position: fixed;
     padding: 0;
 }
+
+.ui-dynamicdialog {
+    top: 50%;
+    left: 50%;
+}
+
 .ui-dialog .ui-dialog-titlebar {
 	padding: .5em .75em;
     position: relative;
@@ -13,8 +19,11 @@
     border: 0;
     padding: .5em .75em;
     background: none;
-    overflow: auto;
     zoom: 1;
+}
+
+.ui-dialog-resizable .ui-dialog-content {
+    overflow: auto;
 }
 
 .ui-dialog .ui-resizable-se {
@@ -39,7 +48,6 @@
 .ui-dialog .ui-dialog-titlebar-icon span {
     display: block;
     margin: 0;
-    font-size: 1.25em;
 }
 
 .ui-dialog-footer {
@@ -62,6 +70,8 @@
 /* ConfirmDialog */
 .ui-confirmdialog {
     width: 30em;
+    top: 50%;
+    left: 50%;
 }
 
 .ui-confirmdialog.ui-dialog .ui-dialog-content {
