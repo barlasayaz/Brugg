@@ -1,4 +1,4 @@
-app-customer-table {
+
     :host ::ng-deep .priority-2,
     :host ::ng-deep .priority-3,
     :host ::ng-deep .visibility-sm {
@@ -40,14 +40,13 @@ app-customer-table {
         color: #ffffff;
     }
 
-    .ui-treetable-scrollable-body {
+   /*  .ui-treetable-scrollable-body {
         //height: auto !important;
         //max-height: calc(100% - 4em) !important;
         //overflow-y: scroll !important;
     }
 
-/*     .ui-datatable-scrollable-header {
+    .ui-datatable-scrollable-header {
         width: calc(100% - 0.3em) !important;
     } */
 
-}

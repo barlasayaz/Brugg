@@ -72,7 +72,7 @@ ion-item.item-input {
 
   .item-inner input {
     padding: 3px 10px;
-    color: color(var(--ion-color-grey));
+    color: var(--ion-color-grey);
     font-size: 14px;
   }
 
@@ -88,7 +88,7 @@ ion-item.item-input {
   }
 
   ion-input.input {
-    border: 1px solid color(var(--ion-color-lightgrey));
+    border: 1px solid var(--ion-color-lightgrey);
     border-radius: 3px;
     padding-top: 10px;
   }
@@ -119,7 +119,7 @@ ion-item.item-select, ion-item.item-ionic-selectable {
   }
 
   ion-select.select, ionic-selectable {
-    border: 1px solid color(var(--ion-color-lightgrey));
+    border: 1px solid var(--ion-color-lightgrey);
     border-radius: 3px;
     padding: 12px !important;
     -webkit-box-sizing: border-box;
@@ -139,7 +139,7 @@ ion-item.item-select, ion-item.item-ionic-selectable {
   }
   
   .ionic-selectable-value {
-    color: color(var(--ion-color-grey));
+    color: var(--ion-color-grey);
     font-size: 14px;
   }
   
@@ -169,7 +169,7 @@ ion-item.item-datetime {
   }
 
   ion-datetime {
-    border: 1px solid color(var(--ion-color-lightgrey));
+    border: 1px solid var(--ion-color-lightgrey);
     border-radius: 3px;
     padding-top: 19px;
     padding-bottom: 10px !important;
@@ -178,7 +178,7 @@ ion-item.item-datetime {
   .datetime-text {
     padding: 1px 10px;
     font-size: 14px;
-    color: color(var(--ion-color-grey));
+    color: var(--ion-color-grey);
   }
 }
 
@@ -194,22 +194,22 @@ ion-item.item-textarea {
     align-self: baseline;
   }
   textarea {
-    border: 1px solid color(var(--ion-color-lightgrey));
+    border: 1px solid var(--ion-color-lightgrey);
     border-radius: 3px;
     padding: 10px !important;
     width: 100% !important;
     font-size: 14px;
-    color: color(var(--ion-color-grey));
+    color: var(--ion-color-grey);
   }
 } 
 
 .alert-input-wrapper {
   input.alert-input {
-    border: 1px solid color(var(--ion-color-lightgrey)) !important;
+    border: 1px solid var(--ion-color-lightgrey) !important;
     border-radius: 3px;
     padding: 10px;
     font-size: 14px;
-    color: color(var(--ion-color-grey));
+    color: var(--ion-color-grey);
     margin-bottom: 10px;
     &:focus {
       margin-bottom: 10px;
@@ -253,7 +253,7 @@ ion-item.item-textarea {
 .search-search {
   input {
     border: none !important;
-    color: color(var(--ion-color-grey)) !important;
+    color: var(--ion-color-grey) !important;
   }
 }
 
@@ -328,7 +328,7 @@ ion-item.item-textarea {
     padding: 0px 15px;
     margin: 0;
     font-size: 16px;
-    background: color(var(--ion-color-darkmain));
+    background: var(--ion-color-darkmain);
   }
   ion-button + ion-button {
     margin-left: 10px;
@@ -357,7 +357,7 @@ ion-item.item-textarea {
 
 ion-item.item-toggle {
   .item-inner {
-    border: 1px solid color(var(--ion-color-lightgrey));
+    border: 1px solid var(--ion-color-lightgrey);
     border-radius: 3px;
     padding: 10px;
     font-size: 14px;
@@ -384,11 +384,11 @@ ion-item.item-toggle {
   height: 100%;
   padding: 10px 14px;
   font-size: 18px;
-  background: color(var(--ion-color-red));
+  background: var(--ion-color-red);
 }
 
 .btn-red {
-  background: color(var(--ion-color-red)) !important;
+  background: var(--ion-color-red) !important;
 }
 
 body .ui-fileupload .ui-fileupload-buttonbar {
@@ -402,11 +402,11 @@ body .ui-fileupload .ui-fileupload-buttonbar {
   padding: 5px;
   -webkit-border-radius: 3px !important;
           border-radius: 3px !important;
-  color: color(var(--ion-color-grey));
+  color: var(--ion-color-grey);
 }
 
 body .ui-button {
-  background: color(var(--ion-color-darkmain)) !important;
+  background: var(--ion-color-darkmain) !important;
   padding: 10px !important;
 }
 
@@ -488,7 +488,7 @@ ion-content {
 
 ion-item {
   padding-left: 0 !important;
-  color: color(var(--ion-color-grey));
+  color: var(--ion-color-grey);
   .item-inner {
     padding-right: 0 !important;
     input {
@@ -538,16 +538,16 @@ ion-button.button,button.button {
   }
 
   &-red {
-    background: color(var(--ion-color-red));
+    background: var(--ion-color-red);
     &:hover, &:focus {
-      background: color(var(--ion-color-red-shade)) !important;
+      background: var(--ion-color-red-shade) !important;
     }
   }
 
   &-green {
-    background: color(var(--ion-color-green));
+    background: var(--ion-color-green);
     &:hover, &:focus {
-      background: color(var(--ion-color-green-shade)) !important;
+      background: var(--ion-color-green-shade) !important;
     }
   }
 }
@@ -562,7 +562,7 @@ ion-modal {
   }
   h2 {
     margin-bottom: 0;
-    color: color(var(--ion-color-main));
+    color: var(--ion-color-main);
   }
 
   ion-grid {
@@ -571,13 +571,13 @@ ion-modal {
 }
 
 ion-label {
-  color: color(var(--ion-color-grey));
+  color: var(--ion-color-grey);
 }
 
 ion-select {
   .select-text {
     font-size: 14px;
-    color: color(var(--ion-color-grey));
+    color: var(--ion-color-grey);
   }
 }
 
@@ -608,7 +608,7 @@ ion-select {
 }
 
 .ui-table-scrollable-header-box {
-  background: color(var(--ion-color-darkmain));
+  background: var(--ion-color-darkmain);
   margin: 0 !important;
   padding-right: 7px;
 }
@@ -621,7 +621,7 @@ table.ui-table-scrollable-header-table {
 
 thead.ui-table-thead {
   th {
-    background: color(var(--ion-color-darkmain));
+    background: var(--ion-color-darkmain);
     color: #FFF;
     height: 45px;
   }
@@ -664,7 +664,7 @@ tbody.ui-table-tbody {
 
 
 .form_error_text {
-	color: color(var(--ion-color-danger)) !important;
+	color: var(--ion-color-danger) !important;
 
 }
 .align {
@@ -17251,7 +17251,7 @@ tbody.ui-table-tbody {
     max-height: 90%; */
     height: 100%;      //poyraz
     max-height: 100%;  //poyraz
-    padding-top: 65px;  //poyraz
+    //padding-top: 65px;  //poyraz
     background-color: #eeeeee;  //poyraz
   }
   @media only screen and (max-width: 767px) {

@@ -69,7 +69,7 @@
     border: none;
     color: #fff;
     text-align: center;
-    background: color(var(--ion-color-darkmain));
+    background: var(--ion-color-darkmain);
     position: relative;
     display: flex;
     -webkit-align-items: center;
@@ -78,27 +78,27 @@
             justify-content: center;
 
     &:hover {
-      background: color(var(--ion-color-darkmain-shade))
+      background: var(--ion-color-darkmain-shade)
     }
 
     &.active {
-      background: color(var(--ion-color-main));
+      background: var(--ion-color-main);
       &:hover {
-        background: color(var(--ion-color-main-shade));
+        background: var(--ion-color-main-shade);
       }
     }
 
     &-red {
-      background: color(var(--ion-color-red));
+      background: var(--ion-color-red);
       &:hover {
-        background: color(var(--ion-color-red-shade));
+        background: var(--ion-color-red-shade);
       }
     }
 
     &-lime {
-      background: color(var(--ion-color-lime));
+      background: var(--ion-color-lime);
       &:hover {
-        background: color(var(--ion-color-lime-shade));
+        background: var(--ion-color-lime-shade);
       }
     }
 
@@ -154,10 +154,10 @@
     a {
       @extend .topBar-btn;
       color: #FFF !important;
-      background: color(var(--ion-color-main-tint));
+      background: var(--ion-color-main-tint);
 
       &.active {
-        background: color(var(--ion-color-main));
+        background: var(--ion-color-main);
       }
     }
   }

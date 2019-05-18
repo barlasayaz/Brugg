@@ -29,7 +29,7 @@
         margin-top: 15px;
         margin-bottom: 25px;  
         .product-temp-title {
-            background: color(var(--ion-color-main));
+            background: var(--ion-color-main);
             color: #FFF;
             margin-top: -10px;
             padding: 10px;
@@ -122,14 +122,14 @@
     }
 
     .selectOption {
-        background: color(var(--ion-color-darkmain));
+        background: var(--ion-color-darkmain);
         .product-temp-title {
             -webkit-border-radius: 3px 3px 0px 0px;
                     border-radius: 3px 3px 0px 0px;
         }
         .product-temp-content {
-            background: color(var(--ion-color-darkmain));
-            border-color: color(var(--ion-color-darkmain));
+            background: var(--ion-color-darkmain);
+            border-color: var(--ion-color-darkmain);
             -webkit-border-radius: 0px 0px 3px 3px;
                     border-radius: 0px 0px 3px 3px;
         }
@@ -140,14 +140,14 @@
     }
 
     .selectTemplate {
-       background: color(var(--ion-color-darkmain));
+       background: var(--ion-color-darkmain);
        .product-temp-title {
            -webkit-border-radius: 3px 3px 0px 0px;
                    border-radius: 3px 3px 0px 0px;
        }
        .product-temp-content {
-           background: color(var(--ion-color-darkmain));
-           border-color: color(var(--ion-color-darkmain));
+           background: var(--ion-color-darkmain);
+           border-color: var(--ion-color-darkmain);
            -webkit-border-radius: 0px 0px 3px 3px;
                    border-radius: 0px 0px 3px 3px;
        }

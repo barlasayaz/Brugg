@@ -7,9 +7,9 @@
 	.startbtn {
 		height: 140px;
 		width: 100%;
-		background-color: color(var(--ion-color-main));
+		background-color: var(--ion-color-main);
 		&:hover, &:focus {
-			background-color: color(var(--ion-color-main-shade)) !important;
+			background-color: var(--ion-color-main-shade) !important;
 		}
 	}
 
