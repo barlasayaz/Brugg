@@ -16,8 +16,7 @@
 					</ion-col>
 					<!-- NFC -->
 					<ion-col size="6">
-						<ion-button icon-only [disabled]="!mobilePlatform" class="startbtn"
-							(click)="nfc_scan();">
+						<ion-button icon-only [disabled]="!mobilePlatform" class="startbtn" (click)="nfc_scan();">
 							<div>
 								<ion-icon class="starticn" name="wifi"></ion-icon><br><br>
 								<label class="startlbl">{{'NFC Scan' | translate}}</label>
@@ -28,7 +27,7 @@
 
 				<ion-row>
 					<!-- Kundenübersicht -->
-					<ion-col size="6">
+					<ion-col size="12">
 						<ion-button icon-only class="startbtn" (click)="go('CustomerTable');">
 							<div>
 								<ion-icon class="starticn" name="people"></ion-icon><br><br>
@@ -36,12 +35,24 @@
 							</div>
 						</ion-button>
 					</ion-col>
+				</ion-row>
+
+				<ion-row>
 					<!-- Termin Plane -->
 					<ion-col size="6">
 						<ion-button icon-only class="startbtn" (click)="go('AppointmentplanPage');">
 							<div>
 								<ion-icon class="starticn" name="time"></ion-icon><br><br>
 								<label class="startlbl">{{'Terminpläne' | translate}}</label>
+							</div>
+						</ion-button>
+					</ion-col>
+					<!-- REBOX -->
+					<ion-col size="6">
+						<ion-button icon-only class="startbtn" (click)="reboxNew(userdata.id);">
+							<div>
+								<ion-icon class="starticn" name="cube"></ion-icon><br><br>
+								<label class="startlbl">{{'ReBox' | translate}}</label>
 							</div>
 						</ion-button>
 					</ion-col>
@@ -57,19 +68,8 @@
 							</div>
 						</ion-button>
 					</ion-col>
-					<!-- REBOX -->
 					<ion-col size="6">
-						<ion-button icon-only class="startbtn" (click)="reboxNew(userdata.id);">
-							<div>
-								<ion-icon class="starticn" name="cube"></ion-icon><br><br>
-								<label class="startlbl">{{'ReBox' | translate}}</label>
-							</div>
-						</ion-button>
-					</ion-col>
-				</ion-row>
-				<ion-row>
-					<ion-col size="6">
-						<ion-button icon-only   class="startbtn" [disabled]="!mobilePlatform" (click)="qr_barcode();">
+						<ion-button icon-only class="startbtn" [disabled]="!mobilePlatform" (click)="qr_barcode();">
 							<div>
 								<ion-icon class="starticn" name="qr-scanner"></ion-icon><br><br>
 								<label class="startlbl">QR CODE</label>
@@ -77,7 +77,7 @@
 						</ion-button>
 					</ion-col>
 				</ion-row>
-				<ion-row> 
+				<ion-row>
 					<!-- Logout -->
 					<ion-col size="12">
 						<ion-button style="height:auto;" class="pvs4-btn pvs4-btn-full pvs4-btn-red"

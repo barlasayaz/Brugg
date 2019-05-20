@@ -1,6 +1,6 @@
 import { Component,OnInit, Input } from '@angular/core';
 import { UserdataService } from '../../services/userdata';
-import { NavController, NavParams, Events } from '@ionic/angular';
+import { NavController, Events } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { ofroot } from '../../order-form/order-form-root';
 /**
@@ -74,22 +74,22 @@ export class MainNavComponent  implements OnInit {
           this.navCtrl.navigateRoot('/dashboard-new');
           break;
         case 'CustomerTable':
-          this.navCtrl.navigateRoot(['/customer-table', { 'idCustomer': id }]);
+          this.navCtrl.navigateRoot(['/customer-table']);
           break;
         case 'CustomerDetails':
-          this.navCtrl.navigateRoot(['/customer-details', { 'idCustomer': id, 'company': this.company }]);
+          this.navCtrl.navigateRoot(['/customer-details/'+id]);
           break;
         case 'ProductList':
-          this.navCtrl.navigateRoot(['/product-list', { 'idCustomer': id, 'company': this.company }]);
+          this.navCtrl.navigateRoot(['/product-list/'+id]);
           break;
         case 'ProtocolList':
-          this.navCtrl.navigateRoot(['/protocol-list', { 'idCustomer': id, 'company': this.company }]);
+          this.navCtrl.navigateRoot(['/protocol-list/'+id]);
           break;
         case 'OrderForm':
-          this.navCtrl.navigateRoot(['/order-form', { 'idCustomer': id, 'company': this.company }]);
+          this.navCtrl.navigateRoot(['/order-form/'+id]);
           break;
         case 'NoteList':
-          this.navCtrl.navigateRoot(['/note-list', { 'idCustomer': id, 'company': this.company }]);
+          this.navCtrl.navigateRoot(['/note-list/'+id]);
           break;
       }
     }

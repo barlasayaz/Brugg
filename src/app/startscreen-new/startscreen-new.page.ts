@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, ModalController, Platform } from '@ionic/angular';
+import { NavController, ModalController, Platform } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { UserdataService } from '../services/userdata';
 import { NFC, Ndef } from '@ionic-native/nfc/ngx';
@@ -15,7 +15,6 @@ import { ReboxNewPage } from '../rebox-new/rebox-new.page';
   styleUrls: ['./startscreen-new.page.scss'],
 })
 export class StartscreenNewPage {
-  public idKunde: any;
   subscription: Subscription = new Subscription
   ndeflistener: any
   tagId: string = "??"
@@ -23,7 +22,7 @@ export class StartscreenNewPage {
   timeout: any;
   public mobilePlatform: boolean = false;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,
+  constructor(public navCtrl: NavController, 
     public userdata: UserdataService,
     public translate: TranslateService,
     public modalCtrl: ModalController,
@@ -33,7 +32,6 @@ export class StartscreenNewPage {
     public platform: Platform
   ) {
 
-    this.idKunde = this.navParams.get("idKunde");
     console.log(this.translate.defaultLang);
 
     platform.ready().then(() => {

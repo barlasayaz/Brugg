@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController, NavParams, ModalController, AlertController, Events } from '@ionic/angular';
+import { NavController, ModalController, AlertController, Events } from '@ionic/angular';
 import { ApiService } from '../services/api';
 import { TranslateService } from '@ngx-translate/core';
 import { UserdataService } from '../services/userdata';
@@ -12,6 +12,7 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
 import { PdfExportService } from '../services/pdf-export';
 import { DatePipe } from '@angular/common';
 import { ProductMigrationPage } from '../product-migration/product-migration.page';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
     selector: 'app-product-list',
@@ -206,11 +207,11 @@ export class ProductListPage {
         public apiService: ApiService,
         public translate: TranslateService,
         public modalCtrl: ModalController,
-        public navParams: NavParams,
         public excelService: ExcelService,
         public alertCtrl: AlertController,
         public pdf: PdfExportService,
-        public events: Events) {
+        public events: Events,
+        private route: ActivatedRoute) {
 
         this.cols = [
             { field: 'nfc_tag_id', header: 'NFC', width: "20px" },
@@ -222,8 +223,7 @@ export class ProductListPage {
             { field: 'last_protocol_next', header: this.translate.instant('Termin') + ">>" },
             { field: 'check_interval', header: this.translate.instant('Intervall Prüfen') }
         ];
-        this.idCustomer = this.navParams.get("idCustomer");
-        this.company = this.navParams.get("company");
+        this.idCustomer =  parseInt(this.route.snapshot.paramMap.get('id'));
         console.log('ProductListPage idCustomer:', this.idCustomer);
         this.page_load();
     }

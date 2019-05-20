@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController, NavParams, ModalController, AlertController, Events } from '@ionic/angular';
+import { NavController, ModalController, AlertController, Events } from '@ionic/angular';
 import { ApiService } from '../services/api';
 import { TranslateService } from '@ngx-translate/core';
 import { UserdataService } from '../services/userdata';
@@ -10,6 +10,7 @@ import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import { PdfExportService } from '../services/pdf-export';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
     selector: 'app-protocol-list',
@@ -128,11 +129,11 @@ export class ProtocolListPage {
         public apiService: ApiService,
         public translate: TranslateService,
         public modalCtrl: ModalController,
-        public navParams: NavParams,
         public excelService: ExcelService,
         public alertCtrl: AlertController,
         public pdf: PdfExportService,
-        public events: Events) {
+        public events: Events,
+        private route: ActivatedRoute) {
         this.rowRecords = 0;
         this.totalRecords = 0;
         this.events.publish("prozCustomer", 0);
@@ -145,8 +146,8 @@ export class ProtocolListPage {
             { field: 'protocol_date_next', header: this.translate.instant('nächste Prüfung') },
             { field: 'product', header: this.translate.instant('Produkt') }
         ];
-        this.idCustomer = this.navParams.get("idCustomer");
-        this.company = this.navParams.get("company");
+        this.idCustomer =  parseInt(this.route.snapshot.paramMap.get('id'));;
+        //this.company = this.navParams.get("company");
         console.log('ProtocolListPage idCustomer:', this.idCustomer);
 
         this.apiService.pvs4_get_protocol_list(this.idCustomer).then((result: any) => {

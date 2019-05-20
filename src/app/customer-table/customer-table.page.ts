@@ -20,7 +20,6 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
 })
 
 export class CustomerTablePage implements OnInit {
-    @Input() idCustomer: number;
     public customerListAll: TreeNode[] = [];
     public customerListView: TreeNode[] = [];
     public cols: any[] = [];
@@ -183,7 +182,6 @@ export class CustomerTablePage implements OnInit {
         ];
         this.selectedColumns = this.cols;
 
-        console.log('CustomerTablePage idCustomer:', this.idCustomer);
         this.page_load();
     }
     page_load() {

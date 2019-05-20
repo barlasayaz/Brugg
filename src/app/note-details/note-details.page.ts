@@ -3,7 +3,7 @@ import { NavController, NavParams } from '@ionic/angular';
 import { ApiService } from '../services/api';
 import { TranslateService } from '@ngx-translate/core';
 import { UserdataService } from '../services/userdata';
-
+import { ActivatedRoute } from '@angular/router';
 /**
  * Generated class for the NoteDetailsPage page.
  *
@@ -21,7 +21,6 @@ export class NoteDetailsPage {
   public activNote: any = {};
 
   public idCustomer: number = 0;
-  public company: string = "";
   public categoryNames: string[] = ["Besuchsberichte","Kundenpotential","Kundenbeziehung","Mitbewerber",
   "Dokumentation","Werbegeschenke","Jahreswechsel","Dienstleistungen",
   "Disposition","Sonstiges","Neukundenakquise"];
@@ -30,11 +29,11 @@ export class NoteDetailsPage {
               public navParams: NavParams,
               public userdata: UserdataService, 
               public apiService: ApiService,
-              public translate: TranslateService,) {
+              public translate: TranslateService,
+              private route: ActivatedRoute) {
 
-      this.idCustomer = this.navParams.get("idCustomer"); 
-      this.idNote = this.navParams.get("idNote");   
-      this.company = this.navParams.get("company"); 
+      //this.idCustomer = this.navParams.get("idCustomer"); 
+      this.idNote = parseInt(this.route.snapshot.paramMap.get('id'));
       this.loadNote(this.idNote);  
 
   }
@@ -47,6 +46,7 @@ export class NoteDetailsPage {
     this.apiService.pvs4_get_note(id).then((result:any)=>{
         this.activNote = result.obj;  
         this.activNote.category = this.translate.instant(this.categoryNames[this.activNote.category-1]);
+        this.idCustomer = this.activNote.customer;
         console.log('loadCustomer', this.activNote); 
     });
   }

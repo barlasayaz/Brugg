@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController, NavParams, ModalController, AlertController, Events } from '@ionic/angular';
+import { NavController, ModalController, AlertController, Events } from '@ionic/angular';
 import { ApiService } from '../services/api';
 import { TranslateService } from '@ngx-translate/core';
 import { UserdataService } from '../services/userdata';
@@ -11,7 +11,7 @@ import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import { PdfExportService } from '../services/pdf-export';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
-
+import { ActivatedRoute } from '@angular/router';
 
 /**
  * Generated class for the NoteListPage page.
@@ -35,13 +35,13 @@ export class NoteListPage {
     public xlsHeader: any[];
     public splitFilter: boolean = false;
     public idCustomer: number = 0;
+    public company: string = "";
     public columnFilterValues = { title: "", notes: "", notes_date: "", category: "", search_all: "" };
     public categoryNames: string[] = ["Besuchsberichte", "Kundenpotential", "Kundenbeziehung", "Mitbewerber", "Dokumentation", "Werbegeschenke", "Jahreswechsel", "Dienstleistungen", "Sonstiges", "Disposition", "Neukundenakquise"];
     public filterCols: string[];
     public expendedNodes: string[] = [];
     public rowRecords: number = 0;
     public totalRecords: number = 0;
-    public company: string = "";
 
     public menuItems: MenuItem[] = [{
         label: this.translate.instant('Ansicht'),
@@ -134,11 +134,11 @@ export class NoteListPage {
         public apiService: ApiService,
         public translate: TranslateService,
         public modalCtrl: ModalController,
-        public navParams: NavParams,
         public excelService: ExcelService,
         public alertCtrl: AlertController,
         public pdf: PdfExportService,
-        public events: Events) {
+        public events: Events,
+        private route: ActivatedRoute) {
         this.cols = [
             { field: 'title', header: this.translate.instant('Titel') },
             { field: 'notes', header: this.translate.instant('Notiz') },
@@ -150,8 +150,8 @@ export class NoteListPage {
             'title', 'notes', 'notes_date', 'category', 'search_all'
         ];
         this.selectedColumns = JSON.parse(JSON.stringify(this.cols));
-        this.idCustomer = this.navParams.get("idCustomer");
-        this.company = this.navParams.get("company");
+        
+        this.idCustomer = parseInt(this.route.snapshot.paramMap.get('id'));
         console.log('NoteListPage idCustomer:', this.idCustomer);
         this.page_load();
     }
@@ -314,7 +314,7 @@ export class NoteListPage {
             if (this.selectedNode.data.id) {
                 let id = parseInt(this.selectedNode.data.id);
                 console.log('menu_view id', id);
-                this.navCtrl.navigateForward(["/note-details", { idCustomer: this.idCustomer, idNote: id, company: this.company }]);
+                this.navCtrl.navigateForward(["/note-details/"+id]);
             }
         }
     }
