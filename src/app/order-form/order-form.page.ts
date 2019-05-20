@@ -6,6 +6,7 @@ import { UserdataService } from '../services/userdata';
 import { ofroot } from './order-form-root';
 import { DialogObjectNewPage } from './dialog-object-new/dialog-object-new.page';
 import { OrderSendPage } from './order-send/order-send.page';
+import { NavigationExtras, ActivatedRoute } from '@angular/router';
 
 /**
  * Generated class for the OrderFormPage page.
@@ -47,9 +48,13 @@ export class OrderFormPage {
         public translate: TranslateService,
         public modalCtrl: ModalController,
         public events: Events,
-        public rs: ofroot) {
-        this.idCustomer = this.navParams.get("idCustomer");
-        this.company = this.navParams.get("company");
+        public rs: ofroot,
+        private route: ActivatedRoute) {
+            
+        this.route.queryParams.subscribe(params => {
+            this.idCustomer = params["idCustomer"];
+            this.company = params["company"];
+        });
         this.bestellungen = this.rs.bestellungen;
         this.offerten = this.rs.offerten;
         this.pruefungen = this.rs.pruefungen;

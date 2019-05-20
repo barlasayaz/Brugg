@@ -3,6 +3,7 @@ import { UserdataService } from '../../services/userdata';
 import { NavController, Events } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { ofroot } from '../../order-form/order-form-root';
+import { NavigationExtras } from '@angular/router';
 /**
  * Generated class for the MainNavComponent component.
  *
@@ -65,6 +66,12 @@ export class MainNavComponent  implements OnInit {
   go(action: any, id: number = 0) {
     // Navigation
     console.info('app.go: ', action, id, this.aktivPage);
+    let navigationExtras: NavigationExtras = {
+      queryParams: {
+          idCustomer: id,
+          company: this.company
+      }
+  };
     if (this.aktivPage != action) {
       switch (action) {
         case 'StartscreenNew': // HOME
@@ -77,19 +84,19 @@ export class MainNavComponent  implements OnInit {
           this.navCtrl.navigateRoot(['/customer-table']);
           break;
         case 'CustomerDetails':
-          this.navCtrl.navigateRoot(['/customer-details/'+id]);
+          this.navCtrl.navigateRoot(['/customer-details',id]);
           break;
         case 'ProductList':
-          this.navCtrl.navigateRoot(['/product-list/'+id]);
+          this.navCtrl.navigateRoot(['/product-list'],navigationExtras);
           break;
         case 'ProtocolList':
-          this.navCtrl.navigateRoot(['/protocol-list/'+id]);
+          this.navCtrl.navigateRoot(['/protocol-list'],navigationExtras);
           break;
         case 'OrderForm':
-          this.navCtrl.navigateRoot(['/order-form/'+id]);
+          this.navCtrl.navigateRoot(['/order-form'],navigationExtras);
           break;
         case 'NoteList':
-          this.navCtrl.navigateRoot(['/note-list/'+id]);
+          this.navCtrl.navigateRoot(['/note-list'],navigationExtras);
           break;
       }
     }

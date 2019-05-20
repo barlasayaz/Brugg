@@ -223,7 +223,11 @@ export class ProductListPage {
             { field: 'last_protocol_next', header: this.translate.instant('Termin') + ">>" },
             { field: 'check_interval', header: this.translate.instant('Intervall Prüfen') }
         ];
-        this.idCustomer =  parseInt(this.route.snapshot.paramMap.get('id'));
+        this.route.queryParams.subscribe(params => {
+            this.idCustomer = params["idCustomer"];
+            this.company = params["company"];
+        });
+
         console.log('ProductListPage idCustomer:', this.idCustomer);
         this.page_load();
     }
@@ -569,7 +573,7 @@ export class ProductListPage {
             if (this.selectedNode.data.id) {
                 let id = parseInt(this.selectedNode.data.id);
                 console.log('menu_view id', id);
-                this.navCtrl.navigateForward(["/product-details", { idCustomer: this.idCustomer, idProduct: id, company: this.company, productList: this.selectedNode }]);
+                this.navCtrl.navigateForward(["/product-details", { idCustomer: this.idCustomer,idProduct: id,  company: this.company, productList: this.selectedNode }]);
             }
         }
     }

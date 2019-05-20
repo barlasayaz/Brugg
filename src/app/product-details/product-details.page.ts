@@ -11,6 +11,7 @@ import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import { PdfExportService } from '../services/pdf-export';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
+import { NavigationExtras,ActivatedRoute } from '@angular/router';
 
 /**
  * Generated class for the ProductDetailsPage page.
@@ -27,6 +28,7 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
 export class ProductDetailsPage {
   public idProduct: number = 0;
   public activProduct: any = {};
+  private selectedProduct: string;
   public idCustomer: number = 0;
   public company: string = "";
   public lang: string = localStorage.getItem('lang');
@@ -53,7 +55,8 @@ export class ProductDetailsPage {
     public pdf: PdfExportService,
     public datePipe: DatePipe,
     private modalCtrl: ModalController,
-    public platform: Platform) {
+    public platform: Platform,
+    private route:ActivatedRoute) {
 
     platform.ready().then(() => {
       if (this.platform.is('ios') ||
@@ -76,8 +79,12 @@ export class ProductDetailsPage {
     });
 
     this.url = this.apiService.pvsApiURL;
-    this.idProduct = this.navParams.get("idProduct");
-    this.company = this.navParams.get("company");
+    this.route.queryParams.subscribe(params => {
+      this.idProduct = params["idProduct"];
+      this.company = params["company"];
+      this.selectedProduct = params.get("productList");
+  });
+
     this.activProduct.product = null;
     this.loadProduct(this.idProduct);
     this.dateiListe();
@@ -443,10 +450,17 @@ export class ProductDetailsPage {
 
   createProtocol() {
     if (this.userdata.role_set.edit_products == false) return;
-    let selectedProduct = this.navParams.get("productList");
-    if (selectedProduct) {
-      this.navCtrl.navigateForward(["/protocol-edit", { idCustomer: this.idCustomer, productList: selectedProduct }]);
+
+    if (this.selectedProduct) {
+      let navigationExtras: NavigationExtras = {
+        queryParams: {
+          idCustomer: this.idCustomer,
+          productList: this.selectedProduct
+        }
+    };
+      this.navCtrl.navigateForward(["/protocol-edit"],navigationExtras);
     }
+
   }
 
   mouseover(buttonNumber) {

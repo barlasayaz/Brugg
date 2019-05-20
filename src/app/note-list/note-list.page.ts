@@ -151,7 +151,10 @@ export class NoteListPage {
         ];
         this.selectedColumns = JSON.parse(JSON.stringify(this.cols));
         
-        this.idCustomer = parseInt(this.route.snapshot.paramMap.get('id'));
+        this.route.queryParams.subscribe(params => {
+            this.idCustomer = params["idCustomer"];
+            this.company = params["company"];
+        });
         console.log('NoteListPage idCustomer:', this.idCustomer);
         this.page_load();
     }

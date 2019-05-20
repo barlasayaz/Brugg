@@ -5,7 +5,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { ComponentsModule } from '../components/components.module';
 import { IonicModule } from '@ionic/angular';
 
-import { ProtocolListPage } from './protocol-list.page';
+import { ProtocolListPage } from './protocol-list.page'; 
 
 const routes: Routes = [
   {

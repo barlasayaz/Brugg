@@ -146,7 +146,10 @@ export class ProtocolListPage {
             { field: 'protocol_date_next', header: this.translate.instant('nächste Prüfung') },
             { field: 'product', header: this.translate.instant('Produkt') }
         ];
-        this.idCustomer =  parseInt(this.route.snapshot.paramMap.get('id'));;
+        this.route.queryParams.subscribe(params => {
+            this.idCustomer = params["idCustomer"];
+            this.company = params["company"];
+        });
         //this.company = this.navParams.get("company");
         console.log('ProtocolListPage idCustomer:', this.idCustomer);
 
