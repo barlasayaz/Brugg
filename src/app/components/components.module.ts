@@ -7,24 +7,19 @@ import { TranslateModule } from '@ngx-translate/core';
 import { RoundProgressModule } from 'angular-svg-round-progressbar';
 import { MenubarModule } from 'primeng/menubar';
 import { TreeTableModule } from 'primeng/treetable';
-import { CustomerEditComponent } from './customer-edit/customer-edit.component';
-import { NoteEditComponent } from './note-edit/note-edit.component';
-import { ProductOptEditComponent } from './product-opt-edit/product-opt-edit.component';
-import { ProtocolOptEditComponent } from './protocol-opt-edit/protocol-opt-edit.component';
 import { IonicSelectableModule } from 'ionic-selectable';
-import { NfcScanComponent } from './nfc-scan/nfc-scan.component';
-import { QrBarcodeComponent } from './qr-barcode/qr-barcode.component';
 import { NgxQRCodeModule } from 'ngx-qrcode2';
+import { ColorPickerModule } from 'primeng/primeng';
+import { AccordionModule } from 'primeng/accordion';
+import { FileUploadModule } from 'primeng/fileupload';
 
 @NgModule({
     declarations: [MainNavComponent],
     imports: [IonicModule, TranslateModule,
         CommonModule, RoundProgressModule,
         MenubarModule, TreeTableModule,
-        CustomerEditComponent, NoteEditComponent,
-        ProductOptEditComponent, ProtocolOptEditComponent,
-        IonicSelectableModule, NfcScanComponent,
-        QrBarcodeComponent, NgxQRCodeModule],
+        IonicSelectableModule, NgxQRCodeModule,
+        ColorPickerModule,AccordionModule,FileUploadModule],
     exports: [
         //IonicModule,
         MainNavComponent,
@@ -32,10 +27,9 @@ import { NgxQRCodeModule } from 'ngx-qrcode2';
         RoundProgressModule,
         MenubarModule,
         TreeTableModule,
-        CustomerEditComponent, NoteEditComponent,
-        ProductOptEditComponent, ProtocolOptEditComponent,
-        IonicSelectableModule, NfcScanComponent,
-        QrBarcodeComponent, NgxQRCodeModule
+        IonicSelectableModule,NgxQRCodeModule,
+        ColorPickerModule,AccordionModule,
+        FileUploadModule
     ]
 })
 export class ComponentsModule { }

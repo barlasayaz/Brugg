@@ -4,7 +4,7 @@ import { Component } from '@angular/core';
 import { BarcodeScanner, BarcodeScannerOptions } from '@ionic-native/barcode-scanner/ngx';
 import { ApiService } from '../../services/api';
 import { LoadingController } from '@ionic/angular';
-import { FileTransfer} from '@ionic-native/file-transfer/ngx';
+import { FileTransfer } from '@ionic-native/file-transfer/ngx';
 import { NavigationExtras } from '@angular/router';
 /**
  * Generated class for the QrBarcodeComponent component.
@@ -53,7 +53,8 @@ export class QrBarcodeComponent {
       { field: 'title', header: translate.instant('Produkt') },
       { field: 'customer', header: translate.instant('Kunden') }
     ];
-
+  }
+  scanQr() {
     this.options = {
       prompt: this.translate.instant('QR-Code scannen')
     }
@@ -61,15 +62,14 @@ export class QrBarcodeComponent {
       console.log("scanQr:", barcodeData);
       if (barcodeData.text != "") {
         this.apiService.pvs4_get_qr_product_list(barcodeData.text).then(async (result: any) => {
-          if (result.list.length == 1)
-          {
+          if (result.list.length == 1) {
             let navigationExtras: NavigationExtras = {
               queryParams: {
-                  idCustomer: result.list[0].customer,
-                  idProduct: result.list[0].id
+                idCustomer: result.list[0].customer,
+                idProduct: result.list[0].id
               }
-          };
-          this.navCtrl.navigateForward(["/product-details"], navigationExtras);
+            };
+            this.navCtrl.navigateForward(["/product-details"], navigationExtras);
           }
 
           else if (result.list.length > 1) {
@@ -81,11 +81,11 @@ export class QrBarcodeComponent {
                 handler: id => {
                   let navigationExtras: NavigationExtras = {
                     queryParams: {
-                        idCustomer: product.customer,
-                        idProduct: product.id
+                      idCustomer: product.customer,
+                      idProduct: product.id
                     }
-                };
-                  this.navCtrl.navigateForward(["/product-details"],navigationExtras);
+                  };
+                  this.navCtrl.navigateForward(["/product-details"], navigationExtras);
                 }
               });
             });
@@ -176,11 +176,11 @@ export class QrBarcodeComponent {
     console.log("scanList :", this.scanList);
     let navigationExtras: NavigationExtras = {
       queryParams: {
-          idCustomer: this.scanList[0].idCustomer,
-          productList: JSON.stringify(this.scanList)
+        idCustomer: this.scanList[0].idCustomer,
+        productList: JSON.stringify(this.scanList)
       }
-  };
-    this.navCtrl.navigateForward(["/protocol-edit"],navigationExtras);
+    };
+    this.navCtrl.navigateForward(["/protocol-edit"], navigationExtras);
   }
 
   scanQrToList() {

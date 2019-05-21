@@ -1,11 +1,11 @@
-import { Component } from '@angular/core';
+import { Component,ViewChild } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { ApiService } from '../services/api';
 import { UserdataService } from '../services/userdata';
 import { ModalController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { AppointmentEditComponent } from '../components/appointment-edit/appointment-edit.component';
-
+import { CalendarComponent } from 'ng-fullcalendar';
 /**
  * Generated class for the TerminplanPage page.
  *
@@ -20,8 +20,8 @@ import { AppointmentEditComponent } from '../components/appointment-edit/appoint
 })
 export class AppointmentPlanPage {
     public events: any[] = [];
+    @ViewChild('fullcalendar') fullcalendar: CalendarComponent;
     public calendarOptions: any;
-
     constructor(public navCtrl: NavController,
         public apiService: ApiService,
         public userdata: UserdataService,
@@ -42,17 +42,9 @@ export class AppointmentPlanPage {
                 end: '18:00', // an end time (6pm in this example)
             },
             minTime: '6:00:00',
-            customButtons: {
-                myCustomButton: {
-                    text: this.translate.instant('Neuer Termin'),
-                    click: function () {
-                        this.newPrAppointment();
-                    }
-                }
-            },
             header: {
                 left: 'prev,next,today',
-                center: 'title, ,myCustomButton',
+                center: 'title,',
                 right: 'month,agendaWeek,agendaDay,listMonth'
             },
             events: []
@@ -111,10 +103,6 @@ export class AppointmentPlanPage {
 
         this.eventsFunc(newdate2, newdate);
 
-    }
-
-    ionViewDidLoad() {
-        console.log("ionViewDidLoad()");
     }
 
     eventsFunc(start, end) {

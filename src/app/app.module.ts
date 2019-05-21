@@ -22,9 +22,23 @@ import { LoginPageModule } from './login/login.module';
 import { LoginPage } from './login/login.page';
 //import { MainNavComponent } from './components/main-nav/main-nav.component';
 //import { MainNavComponentModule } from './components/main-nav/main-nav.module';
-
-import { NoteEditComponent } from './components/note-edit/note-edit.component';
-
+import { ImprintPageModule } from './login/imprint/imprint.module';
+import { DialogproduktbildmodalPageModule } from'./components/dialogproduktbildmodal/dialogproduktbildmodal.module';
+import { MyDataEditPageModule } from './my-data/my-data-edit/my-data-edit.module';
+import { OrderSendPageModule } from './order-form/order-send/order-send.module';
+import { ProductNewPageModule } from'./product-new/product-new.module';
+import { SignupPageModule } from './signup/signup.module';
+import { AppointmentEditComponentModule } from './components/appointment-edit/appointment-edit.module';
+import { ContactPersonPageModule } from'./customer-details/contact-person/contact-person.module';
+import { ContactPersonAddressPageModule } from'./customer-details/contact-person-address/contact-person-address.module';
+import { ReboxNewPageModule } from'./rebox-new/rebox-new.module';
+import { NfcScanComponentModule } from './components/nfc-scan/nfc-scan.module';
+import { QrBarcodeComponentModule } from './components/qr-barcode/qr-barcode.module';
+import { CustomerEditComponentModule } from './components/customer-edit/customer-edit.module';
+import { ProductOptEditComponentModule } from './components/product-opt-edit/product-opt-edit.module';
+import { ProtocolOptEditComponentModule } from './components/protocol-opt-edit/protocol-opt-edit.module';
+import { DialogObjectNewPageModule } from './order-form/dialog-object-new/dialog-object-new.module';
+import { NoteEditComponentModule } from './components/note-edit/note-edit.module';
 import { ButtonModule, ColorPickerModule, SharedModule } from 'primeng/primeng';
 import { TableModule } from 'primeng/table';
 import { OrderModule } from 'ngx-order-pipe';
@@ -100,6 +114,23 @@ export function HttpLoaderFactory(http: HttpClient) {
     IonicSelectableModule,
     //ComponentsModule,
     //MainNavComponentModule,
+    ImprintPageModule,
+    DialogproduktbildmodalPageModule,
+    MyDataEditPageModule,
+    OrderSendPageModule,
+    ProductNewPageModule,
+    SignupPageModule,
+    AppointmentEditComponentModule,
+    ContactPersonPageModule,
+    ContactPersonAddressPageModule,
+    ReboxNewPageModule,
+    ProtocolOptEditComponentModule,
+    ProductOptEditComponentModule,
+    CustomerEditComponentModule,
+    QrBarcodeComponentModule,
+    NfcScanComponentModule,
+    NoteEditComponentModule,
+    DialogObjectNewPageModule,
     AccordionModule,
     NgxQRCodeModule,
     RoundProgressModule,
@@ -115,7 +146,7 @@ export function HttpLoaderFactory(http: HttpClient) {
   ],
   bootstrap: [AppComponent],
   entryComponents: [
-    //NoteEditComponent
+   // NoteEditComponent
   ],
   providers: [
     StatusBar,

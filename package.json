@@ -25,7 +25,6 @@
     "@angular/pwa": "^0.12.4",
     "@angular/router": "^7.2.14",
     "@angular/service-worker": "^7.2.14",
-    "@fullcalendar/core": "^4.0.2",
     "@ionic-native/barcode-scanner": "^5.5.0",
     "@ionic-native/base64": "^5.5.0",
     "@ionic-native/camera": "^5.5.0",
@@ -43,39 +42,41 @@
     "@ionic/pro": "2.0.4",
     "@ngx-translate/core": "^11.0.1",
     "@ngx-translate/http-loader": "^4.0.0",
+    "@types/jquery": "^3.3.29",
     "ajv": "^6.9.1",
     "angular-svg-round-progressbar": "^2.0.0",
     "bootstrap": "^4.3.1",
+    "com-badrit-base64": "0.2.0",
     "cordova-android": "7.1.4",
     "cordova-android-support-gradle-release": "^2.0.1",
     "cordova-browser": "5.0.4",
     "cordova-ios": "4.5.5",
     "cordova-plugin-add-swift-support": "1.7.2",
-    "cordova-plugin-camera": "^4.0.3",
+    "cordova-plugin-camera": "4.0.3",
     "cordova-plugin-device": "^2.0.2",
-    "cordova-plugin-dialogs": "^2.0.1",
-    "cordova-plugin-file": "^6.0.1",
-    "cordova-plugin-file-opener2": "^2.2.0",
-    "cordova-plugin-file-transfer": "^1.7.1",
-    "cordova-plugin-inappbrowser": "^3.0.0",
+    "cordova-plugin-dialogs": "2.0.1",
+    "cordova-plugin-file": "6.0.1",
+    "cordova-plugin-file-opener2": "2.2.0",
+    "cordova-plugin-file-transfer": "1.7.1",
+    "cordova-plugin-inappbrowser": "3.0.0",
     "cordova-plugin-ionic": "^5.0.0",
-    "cordova-plugin-ionic-keyboard": "2.1.3",
-    "cordova-plugin-ionic-webview": "^4.0.1",
+    "cordova-plugin-ionic-keyboard": "^2.1.3",
+    "cordova-plugin-ionic-webview": "^3.1.2",
     "cordova-plugin-splashscreen": "^5.0.2",
     "cordova-plugin-statusbar": "^2.4.2",
     "cordova-plugin-whitelist": "^1.3.3",
     "core-js": "^2.5.4",
-    "fullcalendar": "^4.0.0-alpha.4",
+    "fullcalendar": "^3.6.1",
     "ionic-selectable": "^4.4.0",
     "jquery": "^3.4.1",
-    "ng-fullcalendar": "^2.0.3",
+    "ng-fullcalendar": "^1.7.1",
     "ng2-dragula": "^2.1.1",
     "ngx-color-picker": "^7.1.0",
     "ngx-order-pipe": "^2.0.1",
     "ngx-qrcode2": "0.0.9",
     "node-sass": "^4.12.0",
     "pdfmake": "^0.1.56",
-    "phonegap-nfc": "^1.0.3",
+    "phonegap-nfc": "1.0.3",
     "phonegap-plugin-barcodescanner": "8.0.1",
     "popper.js": "^1.15.0",
     "primeng": "^7.1.1",
@@ -118,7 +119,30 @@
   "description": "An Ionic project",
   "cordova": {
     "plugins": {
-      "cordova-plugin-ionic-keyboard": {}
-    }
+      "cordova-plugin-ionic-keyboard": {},
+      "cordova-plugin-whitelist": {},
+      "cordova-plugin-statusbar": {},
+      "cordova-plugin-device": {},
+      "cordova-plugin-splashscreen": {},
+      "cordova-plugin-ionic-webview": {
+        "ANDROID_SUPPORT_ANNOTATIONS_VERSION": "27.+"
+      },
+      "phonegap-plugin-barcodescanner": {
+        "ANDROID_SUPPORT_V4_VERSION": "27.+"
+      },
+      "phonegap-nfc": {},
+      "cordova-plugin-file": {},
+      "cordova-plugin-camera": {},
+      "com-badrit-base64": {},
+      "cordova-plugin-file-opener2": {
+        "ANDROID_SUPPORT_V4_VERSION": "27.+"
+      },
+      "cordova-plugin-file-transfer": {},
+      "cordova-plugin-inappbrowser": {},
+      "cordova-plugin-dialogs": {}
+    },
+    "platforms": [
+      "android"
+    ]
   }
 }
