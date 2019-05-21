@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, ModalController, Events } from '@ionic/angular';
+import { NavController, ModalController, Events } from '@ionic/angular';
 import { ApiService } from '../services/api';
 import { TranslateService } from '@ngx-translate/core';
 import { UserdataService } from '../services/userdata';
@@ -42,7 +42,6 @@ export class OrderFormPage {
     public anz_wahrenkorb: any;
 
     constructor(public navCtrl: NavController,
-        public navParams: NavParams,
         public apiService: ApiService,
         public userdata: UserdataService,
         public translate: TranslateService,

@@ -23,6 +23,8 @@ import { LoginPage } from './login/login.page';
 //import { MainNavComponent } from './components/main-nav/main-nav.component';
 //import { MainNavComponentModule } from './components/main-nav/main-nav.module';
 
+import { NoteEditComponent } from './components/note-edit/note-edit.component';
+
 import { ButtonModule, ColorPickerModule, SharedModule } from 'primeng/primeng';
 import { TableModule } from 'primeng/table';
 import { OrderModule } from 'ngx-order-pipe';
@@ -113,30 +115,7 @@ export function HttpLoaderFactory(http: HttpClient) {
   ],
   bootstrap: [AppComponent],
   entryComponents: [
-    
-    /*MainNavComponent,
-    LoginPage
-    DashboardNewPage,
-    SignupPage,
-    StartscreenNewPage,
-    SinglefilterPage,
-    CustomerTablePage,
-    CustomerDetailsPage,
-    ProductListPage,
-    ProductDetailsPage,    
-    ProtocolListPage,
-    ProtocolDetailsPage,
-    NoteListPage,
-    NoteDetailsPage,
-    ProductTemplatePage,
-    ProductEditPage,
-    ProtocolTemplatePage,
-    ProtocolEditPage,
-    StatistikPage,
-    OrderFormPage,
-    MyDataPage,
-    AppointmentPlanPage,
-    ProtocolHistoryPage*/
+    //NoteEditComponent
   ],
   providers: [
     StatusBar,

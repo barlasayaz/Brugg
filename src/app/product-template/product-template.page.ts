@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, ModalController, AlertController } from '@ionic/angular';
+import { NavController, ModalController, AlertController } from '@ionic/angular';
 import { ApiService } from '../services/api';
 import { TranslateService } from '@ngx-translate/core';
 import { UserdataService } from '../services/userdata';
 import { DragulaService } from 'ng2-dragula';
 import { ProductOptEditComponent } from '../components/product-opt-edit/product-opt-edit.component';
-
+import { ActivatedRoute } from '@angular/router';
 
 /**
  * Generated class for the ProductTemplatePage page.
@@ -50,7 +50,7 @@ export class ProductTemplatePage {
 
 
   constructor(public navCtrl: NavController,
-    public navParams: NavParams,
+    public route: ActivatedRoute,
     public apiService: ApiService,
     public translate: TranslateService,
     public userdata: UserdataService,
@@ -74,12 +74,16 @@ export class ProductTemplatePage {
         return target.id !== 'options';
       }
     });
+    this.route.queryParams.subscribe(params => {
+      this.idCustomer = params["idCustomer"];
+      this.company = params["company"];
+      this.idTemplate = params["idTemplate"];
+      this.itsNew = params["itsNew"];
+      this.activTemplate = params["activTemplate"];
+      if (this.activTemplate)
+        this.activTemplate = JSON.parse(this.activTemplate);
+    });
 
-    this.idCustomer = this.navParams.get("idCustomer");
-    this.idTemplate = this.navParams.get("idTemplate");
-    this.itsNew = this.navParams.get("itsNew");
-    this.company = this.navParams.get("company");
-    this.activTemplate = this.navParams.get("activTemplate");
     this.loadOption();
     this.loadTemplate();
     this.lang = localStorage.getItem('lang');
@@ -138,7 +142,7 @@ export class ProductTemplatePage {
           }
         }
       ]
-    }).then(x=> x.present());
+    }).then(x => x.present());
   }
 
 
@@ -232,44 +236,44 @@ export class ProductTemplatePage {
     else if (this.itsNew == undefined) this.promptTitel();
   }
 
- async option_new() {
+  async option_new() {
     const modal =
-    await this.modalCtrl.create({
-      component: ProductOptEditComponent,
-      componentProps: {
-        id: 0, idCustomer: this.idCustomer
-      }
-    });
+      await this.modalCtrl.create({
+        component: ProductOptEditComponent,
+        componentProps: {
+          id: 0, idCustomer: this.idCustomer
+        }
+      });
 
     modal.onDidDismiss().then(data => {
-      if(data['data']) { 
+      if (data['data']) {
         this.options.push(data['data']);
-      }   
-    }); 
-    modal.present(); 
+      }
+    });
+    modal.present();
   }
 
   async option_edit(option) {
     console.log("option :", option);
     const modal =
-    await this.modalCtrl.create({
-      component: ProductOptEditComponent,
-      componentProps: {
-        id: option.id, option: option, idCustomer: this.idCustomer
-      }
-    });
+      await this.modalCtrl.create({
+        component: ProductOptEditComponent,
+        componentProps: {
+          id: option.id, option: option, idCustomer: this.idCustomer
+        }
+      });
 
     modal.onDidDismiss().then(data => {
-      if(data['data']) { 
+      if (data['data']) {
         for (let index = 0; index < this.options.length; index++) {
           if (option.id == this.options[index].id) {
             this.options[index] = data['data'];
             this.editOption = data['data'];
           }
         }
-      }   
-    }); 
-    modal.present(); 
+      }
+    });
+    modal.present();
   }
 
   template_remove(ind) {
@@ -283,7 +287,7 @@ export class ProductTemplatePage {
     console.log("templateTitle : ", this.templateTitleObj[this.lang]);
     if (this.templateTitleObj[this.lang] != "") {
       let obj = {
-        active:1,
+        active: 1,
         user: this.userdata.id,
         title: "",
         options: "",
@@ -316,7 +320,7 @@ export class ProductTemplatePage {
               }
             }
           ]
-        }).then(x=> x.present());
+        }).then(x => x.present());
         console.log('result: ', result);
       });
     }

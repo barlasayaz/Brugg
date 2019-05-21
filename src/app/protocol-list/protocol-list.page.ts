@@ -10,7 +10,7 @@ import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import { PdfExportService } from '../services/pdf-export';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute,NavigationExtras } from '@angular/router';
 
 @Component({
     selector: 'app-protocol-list',
@@ -150,7 +150,6 @@ export class ProtocolListPage {
             this.idCustomer = params["idCustomer"];
             this.company = params["company"];
         });
-        //this.company = this.navParams.get("company");
         console.log('ProtocolListPage idCustomer:', this.idCustomer);
 
         this.apiService.pvs4_get_protocol_list(this.idCustomer).then((result: any) => {
@@ -314,15 +313,21 @@ export class ProtocolListPage {
 
     menu_new() {
         console.log('menu_new', this.idCustomer);
-        let obj = { id: 0, idCustomer: this.idCustomer };
-        this.navCtrl.navigateForward(["/protocol-edit", obj]);
+
+        let navigationExtras: NavigationExtras = {
+            queryParams: { id: 0, idCustomer: this.idCustomer }
+        };
+        this.navCtrl.navigateForward(["/protocol-edit"],navigationExtras);
     }
 
     menu_edit() {
         console.log('menu_edit', this.selectedNode);
         if (this.selectedNode) {
             if (this.selectedNode.data.id) {
-                this.navCtrl.navigateForward(["/protocol-edit", { "id": this.selectedNode.data.id, idCustomer: this.idCustomer, parent: this.selectedNode.data.parent, company: this.company }]);
+                let navigationExtras: NavigationExtras = {
+                    queryParams: { "id": this.selectedNode.data.id, idCustomer: this.idCustomer, parent: this.selectedNode.data.parent, company: this.company }
+                };
+                this.navCtrl.navigateForward(["/protocol-edit"], navigationExtras);
             }
         }
     }
@@ -333,7 +338,10 @@ export class ProtocolListPage {
             if (this.selectedNode.data.id) {
                 let id = parseInt(this.selectedNode.data.id);
                 console.log('menu_view id', id);
-                this.navCtrl.navigateForward(["/protocol-details", { idCustomer: this.idCustomer, idProtocol: id, protocol: this.selectedNode.data, company: this.company }]);
+                let navigationExtras: NavigationExtras = {
+                    queryParams: { idCustomer: this.idCustomer, idProtocol: id, protocol: JSON.stringify(this.selectedNode.data), company: this.company }
+                };
+                this.navCtrl.navigateForward(["/protocol-details"], navigationExtras);
             }
         }
     }

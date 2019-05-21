@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, ModalController, AlertController } from '@ionic/angular';
+import { NavController, ModalController, AlertController } from '@ionic/angular';
 import { UserdataService } from '../services/userdata';
 import { TranslateService } from '@ngx-translate/core';
 import { ApiService } from '../services/api';
 import { DatePipe } from '@angular/common';
+import { ActivatedRoute, NavigationExtras } from '@angular/router';
 
 /**
  * Generated class for the ProtocolEditPage page.
@@ -18,78 +19,78 @@ import { DatePipe } from '@angular/common';
   styleUrls: ['./protocol-edit.page.scss'],
 })
 export class ProtocolEditPage {
-  public pageTitle: string ;
+  public pageTitle: string;
   public idCustomer: number = 0;
   public idProtocol: number = 0;
-  public itsNew:boolean = false;
-  public activProtocol: any = { 
-    active:1,
-    id : 0,
+  public itsNew: boolean = false;
+  public activProtocol: any = {
+    active: 1,
+    id: 0,
     protocol_number: 0,
-    protocol_date:"",
-    protocol_date_next : "",
+    protocol_date: "",
+    protocol_date_next: "",
     result: 0,
-    items : "",
-    customer:0,
-    title:"",
+    items: "",
+    customer: 0,
+    title: "",
     product: ""
   };
-  public inputError:boolean = false;
+  public inputError: boolean = false;
   public templates: any[] = [];
   public products: any[] = [];
   public productList: any[] = [];
   public templateAll: any[] = [];
   public selectedTemplate: any[] = [];
   public selectedTmplt: any = 0;
-  public selectTemplate: any = 0; 
-  public searchText:string = "";
-  public lang:string = "";
+  public selectTemplate: any = 0;
+  public searchText: string = "";
+  public lang: string = "";
   public company: string = "";
   public downClick: any = 0;
   public maxDate: string;
 
-  constructor(  public navCtrl: NavController,
-                public navParams: NavParams,
-                public translate: TranslateService,
-                public userdata: UserdataService,
-                public apiService: ApiService,
-                public modalCtrl : ModalController,
-                public alertCtrl: AlertController) {
+  constructor(public navCtrl: NavController,
+    public route: ActivatedRoute,
+    public translate: TranslateService,
+    public userdata: UserdataService,
+    public apiService: ApiService,
+    public modalCtrl: ModalController,
+    public alertCtrl: AlertController) {
 
-      this.maxDate = this.apiService.maxDate;
-      this.idProtocol = this.navParams.get("id"); 
-      this.idCustomer = this.navParams.get("idCustomer"); 
-      this.company = this.navParams.get("company");
-       
-      if(this.idProtocol > 0) {
-        this.itsNew = false;
-        this.pageTitle = translate.instant('Protokoll bearbeiten');
-        this.loadProtocol();   
-      } else {
-        this.idProtocol = 0;
-        this.itsNew = true;
-        this.pageTitle = translate.instant('Neues Protokoll'); 
-        this.activProtocol.protocol_date = new Date().toISOString();   
-        let date = new Date();
-        date.setDate(date.getDate() + 365);
-        this.activProtocol.protocol_date_next = date.toISOString();   
-      }
-      this.lang = localStorage.getItem('lang'); 
-      this.loadTemplate(); 
-      this.loadProduct();
-      console.log("ProtocolEditComponent: " ,this.idProtocol);
+    this.maxDate = this.apiService.maxDate;
+    this.route.queryParams.subscribe(params => {
+      this.idCustomer = params["idCustomer"];
+      this.idProtocol = params["id"];
+      this.company = params["company"];
+      let list = params["productList"];
+      if (list)
+        this.productList = JSON.parse(list);
+    });
+
+    if (this.idProtocol > 0) {
+      this.itsNew = false;
+      this.pageTitle = translate.instant('Protokoll bearbeiten');
+      this.loadProtocol();
+    } else {
+      this.idProtocol = 0;
+      this.itsNew = true;
+      this.pageTitle = translate.instant('Neues Protokoll');
+      this.activProtocol.protocol_date = new Date().toISOString();
+      let date = new Date();
+      date.setDate(date.getDate() + 365);
+      this.activProtocol.protocol_date_next = date.toISOString();
+    }
+    this.lang = localStorage.getItem('lang');
+    this.loadTemplate();
+    this.loadProduct();
+    console.log("ProtocolEditComponent: ", this.idProtocol);
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad ProtocolEditPage');
-  }
-
-  keyDown(event:any)
-  {
+  keyDown(event: any) {
     //const pattern = /^(\d*\,)?\d+$/;
     let regex = new RegExp(/[0-9]/g);
     let inputChar = String.fromCharCode(event.keyCode);
-    if(event.keyCode == 37 || event.keyCode == 39 || event.keyCode == 8 || event.keyCode == 46 || event.keyCode == 188 || event.keyCode == 110 || (event.keyCode >= 96 && event.keyCode<=105))  // Left / Up / Right / Down Arrow, Backspace, Delete keys
+    if (event.keyCode == 37 || event.keyCode == 39 || event.keyCode == 8 || event.keyCode == 46 || event.keyCode == 188 || event.keyCode == 110 || (event.keyCode >= 96 && event.keyCode <= 105))  // Left / Up / Right / Down Arrow, Backspace, Delete keys
       return;
 
     if (!inputChar.match(regex)) {
@@ -115,72 +116,72 @@ export class ProtocolEditPage {
   }
 
   onclickTemplate(tmpId) {
-    if(tmpId != this.selectedTmplt) {
+    if (tmpId != this.selectedTmplt) {
       this.selectedTemplate[this.selectedTmplt] = 0;
     }
-    if(this.selectedTemplate[tmpId] == 0) {
-      this.selectedTemplate[tmpId] = 1;     
-      this.selectTemplate = 1;       
+    if (this.selectedTemplate[tmpId] == 0) {
+      this.selectedTemplate[tmpId] = 1;
+      this.selectTemplate = 1;
     }
     else {
-      this.selectedTemplate[tmpId]= 0;
-      this.selectTemplate = 0; 
-    } 
+      this.selectedTemplate[tmpId] = 0;
+      this.selectTemplate = 0;
+    }
     this.selectedTmplt = tmpId;
-  }  
+  }
 
-  loadProtocol(){   
-    this.apiService.pvs4_get_protocol(this.idProtocol).then((result:any)=>{
-      this.activProtocol = result.obj;  
+  loadProtocol() {
+    this.apiService.pvs4_get_protocol(this.idProtocol).then((result: any) => {
+      this.activProtocol = result.obj;
       this.activProtocol.title = JSON.parse(this.activProtocol.title);
-      this.activProtocol.items = JSON.parse(result.obj.items);  
-      if(result.obj.protocol_date && result.obj.protocol_date!=null && new Date(result.obj.protocol_date) >= new Date(1970,0,1)){
-          this.activProtocol.protocol_date = new Date(result.obj.protocol_date).toISOString();
-          this.activProtocol.protocol_date_next = new Date(result.obj.protocol_date_next).toISOString();
+      this.activProtocol.items = JSON.parse(result.obj.items);
+      if (result.obj.protocol_date && result.obj.protocol_date != null && new Date(result.obj.protocol_date) >= new Date(1970, 0, 1)) {
+        this.activProtocol.protocol_date = new Date(result.obj.protocol_date).toISOString();
+        this.activProtocol.protocol_date_next = new Date(result.obj.protocol_date_next).toISOString();
       }
-      console.log('loadProtocol: ' , this.activProtocol);    
+      console.log('loadProtocol: ', this.activProtocol);
     });
   }
 
   loadTemplate() {
     this.templates = [];
-    this.apiService.pvs4_get_protocol_tem(1, 1).then((result:any)=>{
-      result.list.forEach(element => { 
-        element.data.options = JSON.parse(element.data.options);    
-        element.data.title = JSON.parse(element.data.title);    
+    this.apiService.pvs4_get_protocol_tem(1, 1).then((result: any) => {
+      result.list.forEach(element => {
+        element.data.options = JSON.parse(element.data.options);
+        element.data.title = JSON.parse(element.data.title);
         this.templates.push(element.data);
         this.selectedTemplate[element.data.id] = 0;
       });
       this.templateAll = JSON.parse(JSON.stringify(this.templates));
       console.log('Template Title :', this.templates);
-     });   
+    });
   }
 
-  loadProduct(){   
-      this.productList = this.navParams.get("productList");
-      console.log('loadProduct() productList:', this.productList); 
-      let interval:number = 36;
-      this.productList.forEach(element => {
-        let obj = element;
-        if(element.data) obj = element.data;
-        obj.id = parseInt( obj.id );
-        this.products.push({"id":obj.id,"id_number":obj.id_number});
-        obj.check_interval = parseInt(obj.check_interval);
-        if((obj.check_interval  < interval) && (obj.check_interval>1)) interval = obj.check_interval;
-      });     
-      let date = new Date(this.activProtocol.protocol_date);
-      date.setDate(date.getDate() + (30*interval) );
-      this.activProtocol.protocol_date_next = date.toISOString(); 
-      this.activProtocol.product = this.products;
-      console.log('products :', this.products, interval); 
-  } 
+  loadProduct() {
 
-  search_all() { 
+    console.log('loadProduct() productList:', this.productList);
+    let interval: number = 36;
+    this.productList.forEach(element => {
+      let obj = element;
+      if (element.data) obj = element.data;
+      obj.id = parseInt(obj.id);
+      this.products.push({ "id": obj.id, "id_number": obj.id_number });
+      obj.check_interval = parseInt(obj.check_interval);
+      if ((obj.check_interval < interval) && (obj.check_interval > 1)) interval = obj.check_interval;
+    });
+    let date = new Date(this.activProtocol.protocol_date);
+    date.setDate(date.getDate() + (30 * interval));
+    this.activProtocol.protocol_date_next = date.toISOString();
+    this.activProtocol.product = this.products;
+    console.log('products :', this.products, interval);
+  }
+
+  search_all() {
     this.templates = JSON.parse(JSON.stringify(this.templateAll));
-    for(let i =this.templates.length-1;i>=0;i--) {
-        if(this.templates[i].title[this.lang].toLowerCase().indexOf(this.searchText.toLowerCase())<0)
-           this.templates.splice(i,1); 
-    } 
+    for (let i = this.templates.length - 1; i >= 0; i--) {
+      if (this.templates[i].title[this.lang].toLowerCase().indexOf(this.searchText.toLowerCase()) < 0)
+        this.templates.splice(i, 1);
+    }
   }
 
   move_left() {
@@ -190,34 +191,34 @@ export class ProtocolEditPage {
   protocolEdit() {
     console.log("protocolEdit()");
 
-    if(!this.activProtocol["title"]) {
+    if (!this.activProtocol["title"]) {
       this.showEditAlert();
       return;
     }
- 
-    let obj={
-        active: 1,
-        protocol_number: 0,
-        protocol_date : "",
-        protocol_date_next : "",
-        result: 0,
-        items : "",
-        title : "",
-        customer:this.idCustomer,
-        id: 0,
-        product: ""
-    }; 
+
+    let obj = {
+      active: 1,
+      protocol_number: 0,
+      protocol_date: "",
+      protocol_date_next: "",
+      result: 0,
+      items: "",
+      title: "",
+      customer: this.idCustomer,
+      id: 0,
+      product: ""
+    };
     console.log("this.activProtocol :", this.activProtocol);
-    if(this.activProtocol["active"]) obj.active = this.activProtocol["active"];
-    if(this.activProtocol["protocol_number"]) obj.protocol_number = this.activProtocol["protocol_number"];
-    if(this.activProtocol["title"]) obj.title = JSON.stringify(this.activProtocol["title"]); 
-    if(this.activProtocol["items"]) obj.items = JSON.stringify(this.activProtocol["items"]);
-    if(this.activProtocol["customer"]) obj.customer = this.activProtocol["customer"];
-    if(this.activProtocol["product"]) obj.product = JSON.stringify(this.activProtocol["product"]);
-    let pipe = new DatePipe('en-US'); 
-    if(this.activProtocol["protocol_date"]) obj.protocol_date = pipe.transform(this.activProtocol["protocol_date"], 'yyyy-MM-dd HH:mm:ss'); 
-    if(this.activProtocol["protocol_date_next"]) obj.protocol_date_next = pipe.transform(this.activProtocol["protocol_date_next"], 'yyyy-MM-dd HH:mm:ss'); 
-    if(this.activProtocol["result"]) obj.result = parseInt(this.activProtocol["result"]);
+    if (this.activProtocol["active"]) obj.active = this.activProtocol["active"];
+    if (this.activProtocol["protocol_number"]) obj.protocol_number = this.activProtocol["protocol_number"];
+    if (this.activProtocol["title"]) obj.title = JSON.stringify(this.activProtocol["title"]);
+    if (this.activProtocol["items"]) obj.items = JSON.stringify(this.activProtocol["items"]);
+    if (this.activProtocol["customer"]) obj.customer = this.activProtocol["customer"];
+    if (this.activProtocol["product"]) obj.product = JSON.stringify(this.activProtocol["product"]);
+    let pipe = new DatePipe('en-US');
+    if (this.activProtocol["protocol_date"]) obj.protocol_date = pipe.transform(this.activProtocol["protocol_date"], 'yyyy-MM-dd HH:mm:ss');
+    if (this.activProtocol["protocol_date_next"]) obj.protocol_date_next = pipe.transform(this.activProtocol["protocol_date_next"], 'yyyy-MM-dd HH:mm:ss');
+    if (this.activProtocol["result"]) obj.result = parseInt(this.activProtocol["result"]);
 
     console.log("edit title :", this.activProtocol["title"]);
     if (!this.itsNew) {
@@ -226,16 +227,15 @@ export class ProtocolEditPage {
     } else {
       this.activProtocol.active = 1;
     }
-    
-    this.apiService.pvs4_set_protocol(obj).then((result:any)=>{ 
+
+    this.apiService.pvs4_set_protocol(obj).then((result: any) => {
       //console.log('result: ', result); 
-      this.navCtrl.navigateBack("/protocol-list/"+this.idCustomer);
-    }); 
- 
+      this.navCtrl.navigateBack("/protocol-list/" + this.idCustomer);
+    });
+
   }
 
-  dismiss()
-  {
+  dismiss() {
     this.modalCtrl.dismiss();
   }
 
@@ -262,16 +262,16 @@ export class ProtocolEditPage {
             let obj = JSON.parse(JSON.stringify(this.activProtocol));
             obj["items"] = JSON.stringify(this.activProtocol["items"]);
             obj["title"] = JSON.stringify(this.activProtocol["title"]);
-            let pipe = new DatePipe('en-US'); 
-            if(obj.protocol_date) obj.protocol_date = pipe.transform(this.activProtocol["protocol_date"], 'yyyy-MM-dd HH:mm:ss'); 
-            this.apiService.pvs4_set_protocol(obj).then((result:any)=>{ 
-              console.log('result: ', result); 
-              this.navCtrl.navigateBack("/protocol-list/"+this.idCustomer);
+            let pipe = new DatePipe('en-US');
+            if (obj.protocol_date) obj.protocol_date = pipe.transform(this.activProtocol["protocol_date"], 'yyyy-MM-dd HH:mm:ss');
+            this.apiService.pvs4_set_protocol(obj).then((result: any) => {
+              console.log('result: ', result);
+              this.navCtrl.navigateBack("/protocol-list/" + this.idCustomer);
             });
           }
         }
       ]
-    }).then(x=> x.present());
+    }).then(x => x.present());
   }
 
   showConfirmTemplateAlert(activProtocol) {
@@ -288,19 +288,19 @@ export class ProtocolEditPage {
         {
           text: this.translate.instant('ja'),
           handler: () => {
-            let temp = this.templates.find(x=>x.id ==this.selectedTmplt);
-            console.log("items: ", temp); 
+            let temp = this.templates.find(x => x.id == this.selectedTmplt);
+            console.log("items: ", temp);
 
             this.activProtocol.items = temp.options;
             for (let index = 0; index < temp.options.length; index++) {
-              if(temp.options[index].type == 0 || temp.options[index].type == 4)
-                this.activProtocol.items[index].value =  temp.options[index].options.default;
+              if (temp.options[index].type == 0 || temp.options[index].type == 4)
+                this.activProtocol.items[index].value = temp.options[index].options.default;
             }
             this.activProtocol.title = temp.title;
           }
         }
       ]
-    }).then(x=> x.present());
+    }).then(x => x.present());
   }
 
   showEditAlert() {
@@ -315,13 +315,15 @@ export class ProtocolEditPage {
           }
         }
       ]
-    }).then(x=> x.present());
+    }).then(x => x.present());
   }
 
-  edit_template()
-  {
-    let activTemplate = this.templates.find(x=>x.id ==this.selectedTmplt);
+  edit_template() {
+    let activTemplate = this.templates.find(x => x.id == this.selectedTmplt);
     console.log('Active Template :', activTemplate);
-    this.navCtrl.navigateForward(["/protocol-template", { "idTemplate": this.selectedTmplt, "idCustomer": this.idCustomer,"activTemplate": activTemplate,"company" :this.company }]);
+    let navigationExtras: NavigationExtras = {
+      queryParams: { "idTemplate": this.selectedTmplt, "idCustomer": this.idCustomer, "activTemplate": JSON.stringify(activTemplate), "company": this.company }
+    };
+    this.navCtrl.navigateForward(["/protocol-template"], navigationExtras);
   }
 }

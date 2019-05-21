@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from '@ionic/angular';
+import { NavController } from '@ionic/angular';
 import { UserdataService } from '../services/userdata';
 import { MyDataEditPage } from './my-data-edit/my-data-edit.page';
 import { TranslateService } from '@ngx-translate/core';
@@ -24,7 +24,6 @@ export class MyDataPage {
   public colleagues:any = []; 
 
   constructor(public navCtrl: NavController, 
-              public navParams: NavParams,
               public apiService: ApiService,
               private translate: TranslateService,
               public userdata: UserdataService,

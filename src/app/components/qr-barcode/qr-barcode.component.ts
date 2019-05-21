@@ -4,7 +4,8 @@ import { Component } from '@angular/core';
 import { BarcodeScanner, BarcodeScannerOptions } from '@ionic-native/barcode-scanner/ngx';
 import { ApiService } from '../../services/api';
 import { LoadingController } from '@ionic/angular';
-import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
+import { FileTransfer} from '@ionic-native/file-transfer/ngx';
+import { NavigationExtras } from '@angular/router';
 /**
  * Generated class for the QrBarcodeComponent component.
  *
@@ -61,7 +62,16 @@ export class QrBarcodeComponent {
       if (barcodeData.text != "") {
         this.apiService.pvs4_get_qr_product_list(barcodeData.text).then(async (result: any) => {
           if (result.list.length == 1)
-            this.navCtrl.navigateForward(["/product-details", { idCustomer: result.list[0].customer, idProduct: result.list[0].id }]);
+          {
+            let navigationExtras: NavigationExtras = {
+              queryParams: {
+                  idCustomer: result.list[0].customer,
+                  idProduct: result.list[0].id
+              }
+          };
+          this.navCtrl.navigateForward(["/product-details"], navigationExtras);
+          }
+
           else if (result.list.length > 1) {
             let buttons: any[] = [];
 
@@ -69,7 +79,13 @@ export class QrBarcodeComponent {
               buttons.push({
                 text: JSON.parse(product.title)[this.lang] + " - " + product.id_number,
                 handler: id => {
-                  this.navCtrl.navigateForward(["/product-details", { idCustomer: product.customer, idProduct: product.id }]);
+                  let navigationExtras: NavigationExtras = {
+                    queryParams: {
+                        idCustomer: product.customer,
+                        idProduct: product.id
+                    }
+                };
+                  this.navCtrl.navigateForward(["/product-details"],navigationExtras);
                 }
               });
             });
@@ -158,7 +174,13 @@ export class QrBarcodeComponent {
 
   createProtocol() {
     console.log("scanList :", this.scanList);
-    this.navCtrl.navigateForward(["/protocol-edit", { idCustomer: this.scanList[0].idCustomer, productList: this.scanList }]);
+    let navigationExtras: NavigationExtras = {
+      queryParams: {
+          idCustomer: this.scanList[0].idCustomer,
+          productList: JSON.stringify(this.scanList)
+      }
+  };
+    this.navCtrl.navigateForward(["/protocol-edit"],navigationExtras);
   }
 
   scanQrToList() {

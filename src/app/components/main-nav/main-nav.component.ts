@@ -27,7 +27,6 @@ export class MainNavComponent  implements OnInit {
   constructor(
     public userdata: UserdataService,
     public navCtrl: NavController,
-    //public navParams: NavParams,
     public translate: TranslateService,
     public events: Events,
     public of: ofroot) {

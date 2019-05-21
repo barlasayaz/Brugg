@@ -5,6 +5,7 @@ import { NFC, Ndef } from '@ionic-native/nfc/ngx';
 import { Subscription } from 'rxjs/Subscription';
 import { TranslateService } from '@ngx-translate/core';
 import { ApiService } from '../../services/api';
+import { NavigationExtras } from '@angular/router';
 /**
  * Generated class for the NfcScanComponent component.
  *
@@ -134,7 +135,13 @@ export class NfcScanComponent {
                   return;
                 }
                 if (!this.listView) {
-                  this.navCtrl.navigateForward(["/product-details", { idCustomer: result.obj.customer, idProduct: result.obj.id}] );
+                  let navigationExtras: NavigationExtras = {
+                    queryParams: {
+                        idCustomer: result.obj.customer,
+                        idProduct: result.obj.id
+                    }
+                };
+                  this.navCtrl.navigateForward(["/product-details"],navigationExtras );
                 }
                 else {
                   let rein = true;
@@ -240,7 +247,13 @@ export class NfcScanComponent {
   createProtocol(){    
     console.log("scanList :", this.scanList);
     if (this.scanList.length>0) {
-      this.navCtrl.navigateForward(["/protocol-edit", { idCustomer: this.scanList[0].idCustomer, productList: this.scanList }]);
+      let navigationExtras: NavigationExtras = {
+        queryParams: {
+            idCustomer: this.scanList[0].idCustomer,
+            productList: JSON.stringify(this.scanList)
+        }
+      }
+      this.navCtrl.navigateForward(["/protocol-edit"], navigationExtras);
     } 
   }
 

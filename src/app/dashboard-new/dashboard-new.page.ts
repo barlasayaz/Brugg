@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, LoadingController,ModalController, AlertController, Events } from '@ionic/angular';
+import { NavController, LoadingController,ModalController, AlertController, Events } from '@ionic/angular';
 import { ApiService } from '../services/api';
 import { UserdataService } from '../services/userdata';
 import { TranslateService } from '@ngx-translate/core';
@@ -31,7 +31,6 @@ export class DashboardNewPage {
     public filterValueApp: string = "";
     public selectedEmployee: string = "0";
     public listeEmployee: any = [];
-    // public display = 0;
     public className: string = "showdashfirst";
     public selectedMitarbeiter: any;
     public progressBarAppointment: any = 0;
@@ -44,7 +43,7 @@ export class DashboardNewPage {
     public cols: any[] = [];
     private loader: HTMLIonLoadingElement;
 
-    constructor(public navCtrl: NavController, public navParams: NavParams,
+    constructor(public navCtrl: NavController,
         public apiService: ApiService,
         public excelService: ExcelService,
         public userdata: UserdataService,

@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, ModalController, AlertController } from '@ionic/angular';
+import { NavController, ModalController, AlertController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { UserdataService } from '../services/userdata';
 import { ApiService } from '../services/api';
 import { TreeNode } from 'primeng/api';
-
+import { ActivatedRoute,NavigationExtras } from '@angular/router';
 /**
  * Generated class for the ProductMigrationPage page.
  *
@@ -31,23 +31,23 @@ export class ProductMigrationPage {
   public attachmentsFileCount: any = 0;
 
   constructor(public navCtrl: NavController, 
-              public navParams: NavParams,
               public viewCtrl: ModalController,
               public translate: TranslateService,
               public userdata: UserdataService,
               public apiService: ApiService,
-              public alertCtrl: AlertController) {
+              public alertCtrl: AlertController,
+              private route: ActivatedRoute) {
                 this.url = this.apiService.pvsApiURL;
-                this.idCustomer = this.navParams.get("idCustomer");
-                this.productList = this.navParams.get("productList");
+                this.route.queryParams.subscribe(params => {
+                  this.idCustomer = params["idCustomer"];
+                  this.productList = params["productList"];
+              });
+
                 console.log('ProductMigrationPage productList:', this.productList); 
                 this.loadSourceCustomer();
                 this.loadTargetCustomer();
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad ProductMigrationPage');
-  }
 
   dismiss() {
     this.viewCtrl.dismiss(false);

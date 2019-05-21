@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, ModalController, AlertController, Platform } from '@ionic/angular';
+import { NavController, ModalController, AlertController, Platform } from '@ionic/angular';
 import { UserdataService } from '../services/userdata';
 import { TranslateService } from '@ngx-translate/core';
 import { ApiService } from '../services/api';
@@ -8,6 +8,7 @@ import { ProductNewPage } from '../product-new/product-new.page';
 import { CameraOptions, Camera } from '@ionic-native/camera/ngx';
 import { LoadingController } from '@ionic/angular';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
+import { NavigationExtras, ActivatedRoute } from '@angular/router';
 
 /**
  * Generated class for the ProductEditPage page.
@@ -63,7 +64,7 @@ export class ProductEditPage {
   private loader: HTMLIonLoadingElement;
 
   constructor(public navCtrl: NavController,
-    public navParams: NavParams,
+    public route: ActivatedRoute,
     public translate: TranslateService,
     public userdata: UserdataService,
     public apiService: ApiService,
@@ -76,10 +77,13 @@ export class ProductEditPage {
 
     this.url = this.apiService.pvsApiURL;
     this.maxDate = this.apiService.maxDate;
-    this.idProduct = this.navParams.get("id");
-    this.idCustomer = this.navParams.get("idCustomer");
-    this.parentProduct = this.navParams.get("parent");
-    this.company = this.navParams.get("company");
+    this.route.queryParams.subscribe(params => {
+      this.idCustomer = params["idCustomer"];
+      this.company = params["company"];
+      this.idProduct = params["id"];
+      this.parentProduct = params["parent"];
+    });
+
     this.dateiListe();
 
     platform.ready().then(() => {
@@ -276,7 +280,7 @@ export class ProductEditPage {
     this.apiService.pvs4_set_product(obj).then((result: any) => {
       console.log('result: ', result);
       //this.viewCtrl.dismiss(true);
-      this.navCtrl.navigateBack("/product-list/"+this.idCustomer);
+      this.navCtrl.navigateBack("/product-list/" + this.idCustomer);
     });
 
     var str: string = this.imagesSave;
@@ -321,19 +325,19 @@ export class ProductEditPage {
 
   async getImage() {
     const modal =
-    await this.modalCtrl.create({
-      component: DialogproduktbildmodalPage,
-      componentProps: {
-        "Bild": this.activProduct.images
-      }
-    });
+      await this.modalCtrl.create({
+        component: DialogproduktbildmodalPage,
+        componentProps: {
+          "Bild": this.activProduct.images
+        }
+      });
 
     modal.onDidDismiss().then(data => {
       if (data['data']) {
-        this.activProduct.images = data['data'] ;
-        this.imagesSave = data['data'] ;
+        this.activProduct.images = data['data'];
+        this.imagesSave = data['data'];
       }
-    }); 
+    });
     modal.present();
 
     console.log("get images :", this.imagesSave);
@@ -422,7 +426,7 @@ export class ProductEditPage {
             obj["title"] = JSON.stringify(this.activProduct["title"]);
             this.apiService.pvs4_set_product(obj).then((result: any) => {
               console.log('result: ', result);
-              this.navCtrl.navigateBack("/product-list/"+this.idCustomer);
+              this.navCtrl.navigateBack("/product-list/" + this.idCustomer);
             });
           }
         }
@@ -523,26 +527,34 @@ export class ProductEditPage {
   edit_template() {
     let activTemplate = this.templates.find(x => x.id == this.selectedTmplt);
     console.log('Active Template :', activTemplate);
-    this.navCtrl.navigateForward(["/product-template", { "idTemplate": this.selectedTmplt, "idCustomer": this.idCustomer, "activTemplate": activTemplate, "company": this.company }]);
+    let navigationExtras: NavigationExtras = {
+      queryParams: {
+        idTemplate: this.selectedTmplt,
+        idCustomer: this.idCustomer,
+        activTemplate: JSON.stringify(activTemplate),
+        company: this.company
+      }
+    };
+    this.navCtrl.navigateForward(["/product-template"], navigationExtras);
   }
 
   async new_Option() {
     const modal =
-    await this.modalCtrl.create({
-      component: ProductNewPage,
-      componentProps: {
-        id: 0, idCustomer: this.idCustomer
-      }
-    });
+      await this.modalCtrl.create({
+        component: ProductNewPage,
+        componentProps: {
+          id: 0, idCustomer: this.idCustomer
+        }
+      });
 
     modal.onDidDismiss().then(data => {
-      if(data['data']) { 
+      if (data['data']) {
         if (this.activProduct.items == '') {
           this.activProduct.items = [];
         }
         this.activProduct.items.push(data['data']);
-      }   
-    }); 
+      }
+    });
     modal.present();
   }
 

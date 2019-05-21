@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, AlertController, Platform } from '@ionic/angular';
+import { NavController, AlertController, Platform } from '@ionic/angular';
 import { ApiService } from '../services/api';
 import { TranslateService } from '@ngx-translate/core';
 import { UserdataService } from '../services/userdata';
 import { DatePipe } from '@angular/common';
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
-import { PdfExportService } from '../services/pdf-export'; 
+import { PdfExportService } from '../services/pdf-export';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
-
+import { ActivatedRoute } from '@angular/router';
 /**
  * Generated class for the ProtocolDetailsPage page.
  *
@@ -40,7 +40,7 @@ export class ProtocolDetailsPage {
   public index: number = -1;
 
   constructor(public navCtrl: NavController,
-    public navParams: NavParams,
+    public route: ActivatedRoute,
     public userdata: UserdataService,
     public apiService: ApiService,
     public translate: TranslateService,
@@ -51,13 +51,12 @@ export class ProtocolDetailsPage {
 
     platform.ready().then(() => {
       if (this.platform.is('ios') ||
-          this.platform.is('android') ||
-          this.platform.is('ipad') ||          
-          this.platform.is('iphone') ||
-          this.platform.is('mobile') ||
-          this.platform.is('phablet') ||
-          this.platform.is('tablet'))
-      {
+        this.platform.is('android') ||
+        this.platform.is('ipad') ||
+        this.platform.is('iphone') ||
+        this.platform.is('mobile') ||
+        this.platform.is('phablet') ||
+        this.platform.is('tablet')) {
         this.mobilePlatform = true;
         this.mouseoverButton1 = true;
         this.mouseoverButton2 = true;
@@ -72,16 +71,15 @@ export class ProtocolDetailsPage {
     });
 
     this.url = this.apiService.pvsApiURL;
-    this.idCustomer = this.navParams.get("idCustomer");
-    this.idProtocol = this.navParams.get("idProtocol");
-    this.company = this.navParams.get("company");
+    this.route.queryParams.subscribe(params => {
+      this.idCustomer = params["idCustomer"];
+      this.idProtocol = params["idProtocol"];
+      this.company = params["company"];
+    });
+
     console.log("idProtocol :", this.idProtocol);
     this.loadProtocol(this.idProtocol);
     this.dateiListe();
-  }
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad ProtocolDetailsPage');
   }
 
   loadProtocol(id: any) {
@@ -152,12 +150,12 @@ export class ProtocolDetailsPage {
             if (obj.protocol_date) obj.protocol_date = pipe.transform(this.activProtocol["protocol_date"], 'yyyy-MM-dd HH:mm:ss');
             this.apiService.pvs4_set_protocol(obj).then((result: any) => {
               console.log('result: ', result);
-              this.navCtrl.navigateBack("/protocol-list/"+this.idCustomer);
+              this.navCtrl.navigateBack("/protocol-list/" + this.idCustomer);
             });
           }
         }
       ]
-    }).then(x=> x.present());
+    }).then(x => x.present());
   }
 
   printPdf() {
@@ -177,27 +175,27 @@ export class ProtocolDetailsPage {
     // Protocol
     var bodyProtocol = [];
     let prtclTitle = [
-                      {
-                        text: this.translate.instant('Protokoll Details'),
-                        color: '#ffffff',
-                        fillColor: '#009de0',
-                        colSpan: 2,
-                        alignment: 'center'
-                      },
-                      {
-                        text: "",
-                        color: '#ffffff',
-                        fillColor: '#009de0',
-                        colSpan: 2,
-                        alignment: 'center'
-                      }
+      {
+        text: this.translate.instant('Protokoll Details'),
+        color: '#ffffff',
+        fillColor: '#009de0',
+        colSpan: 2,
+        alignment: 'center'
+      },
+      {
+        text: "",
+        color: '#ffffff',
+        fillColor: '#009de0',
+        colSpan: 2,
+        alignment: 'center'
+      }
     ];
     bodyProtocol.push(prtclTitle);
 
-    protocolList.push({ "title": this.translate.instant('Protokoll Nummer'), "value": protocol.protocol_number});
-    protocolList.push({ "title": this.translate.instant('Datum'), "value": pipe.transform(protocol.protocol_date, 'dd.MM.yyyy')});
-    protocolList.push({ "title": this.translate.instant('Prüfergebnis'), "value": protocol.resultText});
-    protocolList.push({ "title": this.translate.instant('nächste Prüfung'), "value": pipe.transform(protocol.protocol_date_next, 'dd.MM.yyyy')});
+    protocolList.push({ "title": this.translate.instant('Protokoll Nummer'), "value": protocol.protocol_number });
+    protocolList.push({ "title": this.translate.instant('Datum'), "value": pipe.transform(protocol.protocol_date, 'dd.MM.yyyy') });
+    protocolList.push({ "title": this.translate.instant('Prüfergebnis'), "value": protocol.resultText });
+    protocolList.push({ "title": this.translate.instant('nächste Prüfung'), "value": pipe.transform(protocol.protocol_date_next, 'dd.MM.yyyy') });
 
     protocolItems.forEach(elementItems => {
       if (elementItems.title[this.lang] != '' && elementItems.value != undefined) {
@@ -224,20 +222,20 @@ export class ProtocolDetailsPage {
     // Product
     var bodyProduct = [];
     var prdctTitle = [
-                      {
-                        text: this.translate.instant('Produkt Details'),
-                        color: '#ffffff',
-                        fillColor: '#009de0',
-                        colSpan: 2,
-                        alignment: 'center'
-                      },
-                      {
-                        text: "",
-                        color: '#ffffff',
-                        fillColor: '#009de0',
-                        colSpan: 2,
-                        alignment: 'center'
-                      }
+      {
+        text: this.translate.instant('Produkt Details'),
+        color: '#ffffff',
+        fillColor: '#009de0',
+        colSpan: 2,
+        alignment: 'center'
+      },
+      {
+        text: "",
+        color: '#ffffff',
+        fillColor: '#009de0',
+        colSpan: 2,
+        alignment: 'center'
+      }
     ];
     bodyProduct.push(prdctTitle);
 
@@ -246,55 +244,55 @@ export class ProtocolDetailsPage {
 
       if (element.title != undefined) {
         bodyProduct.push([{ text: this.translate.instant('Titel'), color: '#000000', fillColor: '#8bd8f9' },
-                          { text: element.title, color: '#000000', fillColor: '#8bd8f9' }]);
+        { text: element.title, color: '#000000', fillColor: '#8bd8f9' }]);
       }
       else {
         bodyProduct.push([{ text: this.translate.instant('Titel'), color: '#000000', fillColor: '#8bd8f9' },
-                          { text: "", color: '#000000', fillColor: '#8bd8f9' }]);       
+        { text: "", color: '#000000', fillColor: '#8bd8f9' }]);
       }
       if (element.id != undefined) {
         bodyProduct.push([{ text: 'DB-ID' }, { text: element.id }]);
       }
       else {
-        bodyProduct.push([{ text: 'DB-ID' },{ text: "" }]);       
+        bodyProduct.push([{ text: 'DB-ID' }, { text: "" }]);
       }
       if (element.id_number != undefined) {
         bodyProduct.push([{ text: '#' }, { text: element.id_number }]);
       }
       else {
-        bodyProduct.push([{ text: '#' },{ text: "" }]);       
+        bodyProduct.push([{ text: '#' }, { text: "" }]);
       }
       if (element.articel_no != undefined) {
         bodyProduct.push([{ text: this.translate.instant('Articel No') }, { text: element.articel_no }]);
       }
       else {
-        bodyProduct.push([{ text: this.translate.instant('Articel No') },{ text: "" }]);       
+        bodyProduct.push([{ text: this.translate.instant('Articel No') }, { text: "" }]);
       }
       if (element.check_interval != undefined) {
         bodyProduct.push([{ text: this.translate.instant('Intervall Prüfen') }, { text: element.check_interval }]);
       }
       else {
-        bodyProduct.push([{ text: this.translate.instant('Intervall Prüfen') },{ text: "" }]);       
+        bodyProduct.push([{ text: this.translate.instant('Intervall Prüfen') }, { text: "" }]);
       }
-     
+
       // product oprtions
       element.items.forEach(elementItems => {
         console.log("product oprtions :", elementItems.title, '- ', elementItems.title[this.lang], ' - ', elementItems.value);
         if (elementItems.title[this.lang] != '' && elementItems.value != undefined) {
-          bodyProduct.push([{ text: elementItems.title[this.lang]}, {text: elementItems.value }]);
+          bodyProduct.push([{ text: elementItems.title[this.lang] }, { text: elementItems.value }]);
         }
         else {
-          bodyProduct.push([{ text: elementItems.title[this.lang]}, {text: "" }]);
+          bodyProduct.push([{ text: elementItems.title[this.lang] }, { text: "" }]);
         }
       });
 
     });
 
-    let prdctBody = bodyProduct;  
+    let prdctBody = bodyProduct;
 
     console.log("product body :", prdctBody);
 
-      this.pdf.toDataURL(src,resDataURL => {
+    this.pdf.toDataURL(src, resDataURL => {
       var docDefinition = {
         pageSize: 'A4',
         pageOrientation: 'landscape',
@@ -368,8 +366,8 @@ export class ProtocolDetailsPage {
           }
         ]
       };
-      
-      this.pdf.createPdf(docDefinition,this.translate.instant("Protokoll Details".replace(/\s/g, "")) + ".pdf");
+
+      this.pdf.createPdf(docDefinition, this.translate.instant("Protokoll Details".replace(/\s/g, "")) + ".pdf");
 
     });
   }
@@ -413,7 +411,7 @@ export class ProtocolDetailsPage {
           }
         }
       ]
-    }).then(x=> x.present());
+    }).then(x => x.present());
 
   }
 
@@ -426,17 +424,17 @@ export class ProtocolDetailsPage {
   }
 
   mouseover(buttonNumber) {
-    if(buttonNumber == 1) 
+    if (buttonNumber == 1)
       this.mouseoverButton1 = true;
-    else if(buttonNumber == 2)
+    else if (buttonNumber == 2)
       this.mouseoverButton2 = true;
   }
 
   mouseout(buttonNumber) {
-    if(this.mobilePlatform == false) {
-      if(buttonNumber == 1) 
+    if (this.mobilePlatform == false) {
+      if (buttonNumber == 1)
         this.mouseoverButton1 = false;
-      else if(buttonNumber == 2)
+      else if (buttonNumber == 2)
         this.mouseoverButton2 = false;
     }
   }

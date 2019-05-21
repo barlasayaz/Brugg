@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, AlertController, Platform } from '@ionic/angular';
+import { NavController, AlertController, Platform } from '@ionic/angular';
 import { ApiService } from '../services/api';
 import { TranslateService } from '@ngx-translate/core';
 import { UserdataService } from '../services/userdata';
@@ -10,7 +10,7 @@ import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import { PdfExportService } from '../services/pdf-export'; 
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
-
+import { ActivatedRoute,NavigationExtras } from '@angular/router';
 /**
  * Generated class for the ProtocolHistoryPage page.
  *
@@ -47,7 +47,7 @@ export class ProtocolHistoryPage {
     public mouseoverButton2: boolean;
 
     constructor(public navCtrl: NavController, 
-                public navParams: NavParams,
+                public route: ActivatedRoute,
                 public userdata: UserdataService, 
                 public apiService: ApiService,
                 public translate: TranslateService,
@@ -89,10 +89,13 @@ export class ProtocolHistoryPage {
                     ];
 
                     this.url = this.apiService.pvsApiURL;
-                    this.idCustomer = this.navParams.get("idCustomer"); 
-                    this.idProduct = this.navParams.get("idProduct"); 
-                    this.titleProduct = this.navParams.get("titleProduct");
-                    this.company = this.navParams.get("company");
+                    this.route.queryParams.subscribe(params => {
+                        this.idCustomer = params["idCustomer"];
+                        this.company = params["company"];
+                        this.idProduct = params["idProduct"]; 
+                        this.titleProduct = params["titleProduct"];
+                    });
+   
                     this.loadProtocol();  
     }
 

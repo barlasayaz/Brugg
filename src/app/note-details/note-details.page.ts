@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from '@ionic/angular';
+import { NavController } from '@ionic/angular';
 import { ApiService } from '../services/api';
 import { TranslateService } from '@ngx-translate/core';
 import { UserdataService } from '../services/userdata';
@@ -26,13 +26,11 @@ export class NoteDetailsPage {
   "Disposition","Sonstiges","Neukundenakquise"];
 
   constructor(public navCtrl: NavController, 
-              public navParams: NavParams,
               public userdata: UserdataService, 
               public apiService: ApiService,
               public translate: TranslateService,
               private route: ActivatedRoute) {
 
-      //this.idCustomer = this.navParams.get("idCustomer"); 
       this.idNote = parseInt(this.route.snapshot.paramMap.get('id'));
       this.loadNote(this.idNote);  
 

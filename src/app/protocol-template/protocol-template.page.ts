@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, ModalController, AlertController } from '@ionic/angular';
+import { NavController, ModalController, AlertController } from '@ionic/angular';
 import { ApiService } from '../services/api';
 import { TranslateService } from '@ngx-translate/core';
 import { UserdataService } from '../services/userdata';
 import { DragulaService } from 'ng2-dragula';
 import { ProductOptEditComponent } from '../components/product-opt-edit/product-opt-edit.component';
 import { ProtocolOptEditComponent } from '../components/protocol-opt-edit/protocol-opt-edit.component';
-
+import { ActivatedRoute } from '@angular/router';
 /**
  * Generated class for the ProtocolTemplatePage page.
  *
@@ -48,7 +48,7 @@ export class ProtocolTemplatePage {
   public company: string = "";
 
   constructor(public navCtrl: NavController,
-    public navParams: NavParams,
+    public route: ActivatedRoute,
     public apiService: ApiService,
     public translate: TranslateService,
     public userdata: UserdataService,
@@ -72,12 +72,16 @@ export class ProtocolTemplatePage {
         return target.id !== 'options';
       }
     });
+    this.route.queryParams.subscribe(params => {
+      this.idCustomer = params["idCustomer"];
+      this.company = params["company"];
+      this.idTemplate = params["idTemplate"];
+      this.itsNew = params["itsNew"];
+      this.activTemplate = params["activTemplate"];
+      if (this.activTemplate)
+        this.activTemplate = JSON.parse(this.activTemplate);
+    });
 
-    this.idCustomer = this.navParams.get("idCustomer");
-    this.idTemplate = this.navParams.get("idTemplate");
-    this.company = this.navParams.get("company");
-    this.itsNew = this.navParams.get("itsNew");
-    this.activTemplate = this.navParams.get("activTemplate");
     this.loadOption();
     this.loadTemplate();
     this.lang = localStorage.getItem('lang');

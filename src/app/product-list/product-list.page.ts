@@ -12,7 +12,7 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
 import { PdfExportService } from '../services/pdf-export';
 import { DatePipe } from '@angular/common';
 import { ProductMigrationPage } from '../product-migration/product-migration.page';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute,NavigationExtras } from '@angular/router';
 
 @Component({
     selector: 'app-product-list',
@@ -495,14 +495,20 @@ export class ProductListPage {
                 obj.parent = this.selectedNode.data.id;
             }
         }
-        this.navCtrl.navigateForward(["/product-edit", obj]);
+        let navigationExtras: NavigationExtras = {
+            queryParams: obj
+        };
+        this.navCtrl.navigateForward(["/product-edit"], navigationExtras);
     }
 
     menu_edit() {
         console.log('menu_edit', this.selectedNode);
         if (this.selectedNode) {
             if (this.selectedNode.data.id) {
-                this.navCtrl.navigateForward(["/product-edit", { "id": this.selectedNode.data.id, idCustomer: this.idCustomer, parent: this.selectedNode.data.parent, company: this.company }]);
+                let navigationExtras: NavigationExtras = {
+                    queryParams: { id: this.selectedNode.data.id, idCustomer: this.idCustomer, parent: this.selectedNode.data.parent, company: this.company }
+                };
+                this.navCtrl.navigateForward(["/product-edit"], navigationExtras);
             }
         }
     }
@@ -513,7 +519,10 @@ export class ProductListPage {
             if (this.selectedNode.data.id) {
                 let id = parseInt(this.selectedNode.data.id);
                 console.log('menu_history id', id);
-                this.navCtrl.navigateForward(["/protocol-history", { idCustomer: this.idCustomer, idProduct: id, titleProduct: this.selectedNode.data.title, company: this.company }]);
+                let navigationExtras: NavigationExtras = {
+                    queryParams: { idCustomer: this.idCustomer, idProduct: id, titleProduct: this.selectedNode.data.title, company: this.company }
+                };
+                this.navCtrl.navigateForward(["/protocol-history"],navigationExtras);
             }
         }
     }
@@ -573,20 +582,29 @@ export class ProductListPage {
             if (this.selectedNode.data.id) {
                 let id = parseInt(this.selectedNode.data.id);
                 console.log('menu_view id', id);
-                this.navCtrl.navigateForward(["/product-details", { idCustomer: this.idCustomer,idProduct: id,  company: this.company, productList: this.selectedNode }]);
+                let navigationExtras: NavigationExtras = {
+                    queryParams:  { idCustomer: this.idCustomer,idProduct: id,  company: this.company, productList: JSON.stringify(this.selectedNode) }
+                };
+                this.navCtrl.navigateForward(["/product-details"], navigationExtras);
             }
         }
     }
 
     create_template() {
         console.log('create_template', this.selectedNode);
-        this.navCtrl.navigateForward(["/product-template", { idCustomer: this.idCustomer, company: this.company }]);
+        let navigationExtras: NavigationExtras = {
+            queryParams:  { idCustomer: this.idCustomer, company: this.company }
+        };
+        this.navCtrl.navigateForward(["/product-template"], navigationExtras);
     }
 
     create_protocol() {
         if (this.selectedNode) {
             console.log('create_protocol', this.selectedNode);
-            this.navCtrl.navigateForward(["/protocol-edit", { idCustomer: this.idCustomer, productList: this.selectedNode }]);
+            let navigationExtras: NavigationExtras = {
+                queryParams: { idCustomer: this.idCustomer, productList: JSON.stringify(this.selectedNode) }
+            };
+            this.navCtrl.navigateForward(["/protocol-edit"], navigationExtras);
         }
     }
 
