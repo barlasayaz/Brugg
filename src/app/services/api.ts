@@ -44,9 +44,10 @@ export class ApiService {
         'password'     : password
       };
       // call  endpoint
-      this.http.post(url, data)
+      this.http.post(url, data,{ responseType:"text" })
         .subscribe(
           (data: any) => {
+            data =JSON.parse(data);
             console.log('api bid_login() post data: ', data);
             if (data.amount === 1) {
               console.log('api bid_login() ok ');
@@ -113,15 +114,17 @@ export class ApiService {
         'refresh_token' : window.localStorage['refresh_token']
       };
       // call  endpoint
-      this.http.post(url, data)
+      this.http.post(url, data,{ responseType:"text" })
         .subscribe(
           (data: any) => {
+            data = JSON.parse(data);
             console.log('api bid_reset() post data: ', data);
             window.localStorage['access_token'] = data.access_token;
             window.localStorage['refresh_token'] = data.refresh_token;
             orig_data.token  = data.access_token;
-            this.http.post(orig_url, orig_data, { headers: orig_headers }).subscribe((done: any) => {
+            this.http.post(orig_url, orig_data, { headers: orig_headers,responseType:"text" }).subscribe((done: any) => {
               // return the result
+              done = JSON.parse(done);
               console.info(url, done);
               res(done);
             },
@@ -172,15 +175,16 @@ export class ApiService {
   pvs4_api_post(func: string, data: any) {
     console.log('pvs4_api_post():', func, data);
     return new Promise((res, rej) => {
-      const headers = new HttpHeaders().set('Content-Type', 'application/json; charset=utf-8');
+      const headers = new HttpHeaders().set('Content-Type', 'text; charset=utf-8');
       const tick = Date.now().toString(16).toUpperCase();
       const url = pvs4_apiURL + func + '?tick=' + tick;
       // inject our access token
       data.token = window.localStorage['access_token'];
       data.bruggid = window.localStorage['pvs4_bruggid'];
       // call  endpoint
-      this.http.post(url, data, { headers: headers }).subscribe((done: any) => {
+      this.http.post(url, data, { headers: headers,responseType:"text" }).subscribe((done: any) => {
           // return the result
+          done =JSON.parse(done);
           console.info(func, done);
           res(done);
         },
@@ -207,6 +211,7 @@ export class ApiService {
       }
       this.pvs4_api_post('get_profile.php', post_data).then((done: any) => { // return the result
         console.info('pvs4_get_my_profile done ok: ', done);
+
         const system_role = JSON.parse(done.obj.system_role); 
         const licensee_role = JSON.parse(done.obj.licensee_role); 
         const customer_role = JSON.parse( done.obj.customer_role); 
