@@ -203,7 +203,7 @@
                             <ion-col size="12" size-md="8" *ngIf="item.type == 2">
                                 <ion-item>
                                     <ion-label position="floating">{{item.title[lang]}}</ion-label>
-                                    <ion-textarea [ngClass]="{required:inputError}" [(ngModel)]="item.value" max="{{item.options.max}}" >
+                                    <ion-textarea [ngClass]="{required:inputError}" [(ngModel)]="item.value" maxlength="{{item.options.max}}" >
                                   </ion-textarea> 
                                 </ion-item>
                             </ion-col> 

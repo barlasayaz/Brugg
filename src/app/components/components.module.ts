@@ -12,6 +12,7 @@ import { NgxQRCodeModule } from 'ngx-qrcode2';
 import { ColorPickerModule } from 'primeng/primeng';
 import { AccordionModule } from 'primeng/accordion';
 import { FileUploadModule } from 'primeng/fileupload';
+import { DragulaModule } from 'ng2-dragula';
 
 @NgModule({
     declarations: [MainNavComponent],
@@ -19,7 +20,8 @@ import { FileUploadModule } from 'primeng/fileupload';
         CommonModule, RoundProgressModule,
         MenubarModule, TreeTableModule,
         IonicSelectableModule, NgxQRCodeModule,
-        ColorPickerModule,AccordionModule,FileUploadModule],
+        ColorPickerModule,AccordionModule,
+        FileUploadModule,DragulaModule],
     exports: [
         //IonicModule,
         MainNavComponent,
@@ -29,7 +31,7 @@ import { FileUploadModule } from 'primeng/fileupload';
         TreeTableModule,
         IonicSelectableModule,NgxQRCodeModule,
         ColorPickerModule,AccordionModule,
-        FileUploadModule
+        FileUploadModule,DragulaModule
     ]
 })
 export class ComponentsModule { }
