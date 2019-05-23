@@ -129,7 +129,7 @@ ion-item.item-select, ion-item.item-ionic-selectable {
 
   .select-disabled {
     opacity: 1 !important;
-    border: 1px solid rgba(var(--ion-color-lightgrey), 0.4) !important;
+    border: 1px solid rgba(var(--ion-color-lightgrey-rgb), 0.4) !important;
     .select-text {
       opacity: 0.4 !important;
     }
@@ -261,10 +261,10 @@ ion-item.item-textarea {
   margin-bottom: 10px;
   padding: 15px 10px;
   &.unselectTemplate {
-    background: rgba(var(--ion-color-lightgrey), 0.6);
+    background: rgba(var(--ion-color-lightgrey-rgb), 0.6);
   }
   &.selectTemplate {
-    background: rgba(var(--ion-color-main), 0.4);
+    background: rgba(var(--ion-color-main-rgb), 0.4);
     color: #FFF;
   }
   &:last-child {
@@ -311,7 +311,7 @@ ion-item.item-textarea {
       font-size: 16px;
       &:hover
       &:focus {
-        background: rgba(var(--ion-color-main), 0.6) !important;
+        background: rgba(var(--ion-color-main-rgb), 0.6) !important;
       }
     }
     ion-button + ion-button {
@@ -347,7 +347,7 @@ ion-item.item-textarea {
   height: 200px;
   width: 100%;
   border: 1px dashed rgba(#009de0, 0.4);
-  color: rgba(var(--ion-color-grey), 0.4);
+  color: rgba(var(--ion-color-grey-rgb), 0.4);
   text-align: center;
   ion-icon {
     font-size: 24px;
