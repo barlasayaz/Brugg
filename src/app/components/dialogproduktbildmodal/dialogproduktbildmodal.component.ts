@@ -53,10 +53,6 @@ export class DialogproduktbildmodalPage {
     );
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad DialogproduktbildmodalPage');
-  }
-
   back() {
     this.plist = this.plist_old;
     this.dir = '';

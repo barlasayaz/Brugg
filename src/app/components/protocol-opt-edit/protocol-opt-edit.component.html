@@ -10,181 +10,191 @@
 </ion-header>
 
 <ion-content>
-    <ion-grid>
-        <!-- Row 1 -->
-        <ion-row>
-            <ion-col size="12">
-                <ion-item>
-                    <ion-label position="floating">{{translate.instant('Titel')}} </ion-label>
-                    <ion-input type="text" [ngClass]="{required:inputError}" [(ngModel)]="activOption.title[lang]"
-                        readonly="true" (click)="promptOptionTitle(activOption.title,1,0)">
-                    </ion-input>
-                </ion-item>
-            </ion-col>
-        </ion-row>
-        <!-- Row 2-->
-        <ion-row>
-            <ion-col size="6">
-                <ion-item>
-                    <ion-label position="floating">{{translate.instant('Art')}}</ion-label>
-                    <ion-select style="margin-bottom: 10px;" 
-                                [ngClass]="{required:inputError}" 
-                                [(ngModel)]="activOption.type"
-                                okText="{{translate.instant('okay')}}" 
-                                cancelText="{{translate.instant('dismiss')}}">
-                        <ion-select-option value="0">Toggle</ion-select-option>
-                        <ion-select-option value="1">Select</ion-select-option>
-                        <ion-select-option value="2">Textarea</ion-select-option>
-                        <ion-select-option value="3">Number</ion-select-option>
-                        <ion-select-option value="4">Time</ion-select-option>
-                        <ion-select-option value="5">Date</ion-select-option>
-                    </ion-select>
-                </ion-item>
-            </ion-col>
-            <ion-col size="6" *ngIf="activOption.type==1">
-                <ion-item no-lines>
-                    <ion-button class="opt-add" small (click)="add_option()">
-                        <ion-icon name="add"></ion-icon>
-                    </ion-button>
-                </ion-item>
-            </ion-col>
-        </ion-row>
-
-        <!-- Toggle -->
-        <ion-row *ngIf="activOption.type==0" style="align-items: center;margin-top:15px">
-            <ion-col size="6">
-                <ion-item>
-                    <ion-label *ngIf="defaultToggle==true">
-                        {{translate.instant('Standard')}}:
-                        {{translate.instant('Wahr')}}
-                    </ion-label>
-                    <ion-label *ngIf="defaultToggle==false">
-                        {{translate.instant('Standard')}}:
-                        {{translate.instant('Falsch')}}
-                    </ion-label>
-                    <ion-toggle [(ngModel)]="defaultToggle" checked="true"></ion-toggle>
-                </ion-item>
-            </ion-col>
-            <ion-col size="1">
-                <p-colorPicker [(ngModel)]="inputColor" [inline]="false" ></p-colorPicker>
-            </ion-col>
-            <ion-col size="5" style="margin-top:-15px">
-                <ion-item>
-                    <ion-label position="floating">{{translate.instant('Farbe')}}</ion-label>
-                    <ion-input [(ngModel)]="inputColor" class="clsinput" type="text" placeholder="" readonly="true"></ion-input>
-                </ion-item>
-            </ion-col>
-        </ion-row>
-
-        <!-- Select -->
-        <div *ngIf="activOption.type==1">
-            <ion-row *ngFor="let option of options; let opdInd = index" style="margin-top: -7px">
-                <ion-col size="6">
+        <ion-grid>
+            <!-- Row 1 -->
+            <ion-row>
+                <ion-col size="12">
                     <ion-item>
-                        <ion-label position="floating">{{translate.instant('Optionen')+' '+(opdInd+1)}} </ion-label>
-                        <ion-input type="text" [ngClass]="{required:inputError}" [(ngModel)]="option[lang]" readonly="true"
-                            (click)="promptOptionTitle(option,2,opdInd)">
+                        <ion-label position="floating">{{translate.instant('Titel')}} </ion-label>
+                        <ion-input type="text" [ngClass]="{required:inputError}" [(ngModel)]="activOption.title[lang]"
+                            readonly="true" (click)="promptOptionTitle(activOption.title,1,0)">
                         </ion-input>
                     </ion-item>
                 </ion-col>
-
+            </ion-row>
+            <!-- Row 2-->
+            <ion-row>
                 <ion-col size="6">
+                    <ion-item>
+                        <ion-label position="floating">{{translate.instant('Art')}}</ion-label>
+                        <ion-select style="margin-bottom: 10px;" [ngClass]="{required:inputError}" [(ngModel)]="activOption.type"
+                            okText="{{translate.instant('okay')}}" cancelText="{{translate.instant('dismiss')}}">
+                            <ion-select-option value="0">Toggle</ion-select-option>
+                            <ion-select-option value="1">Select</ion-select-option>
+                            <ion-select-option value="2">Textarea</ion-select-option>
+                            <ion-select-option value="3">Number</ion-select-option>
+                            <ion-select-option value="4">Time</ion-select-option>
+                            <ion-select-option value="5">Date</ion-select-option>
+                        </ion-select>
+                    </ion-item>
+                </ion-col>
+                <ion-col size="1">
                     <ion-item no-lines>
-                        <ion-button class="opt-remove" small (click)="remove_option(opdInd)">
-                            <ion-icon name="remove"></ion-icon>
+                        <ion-button size="small" class="opt-add" (click)="add_option()" *ngIf="activOption.type==1">
+                            <ion-icon name="add"></ion-icon>
                         </ion-button>
                     </ion-item>
                 </ion-col>
+                <ion-col size="5" style="align-items: center;margin-top:12px">
+                    <ion-item>
+                        <ion-label *ngIf="mandatoryToogle==true">
+                            {{translate.instant('Verpflichtend')}}:
+                            {{translate.instant('Wahr')}}
+                        </ion-label>
+                        <ion-label *ngIf="mandatoryToogle==false">
+                            {{translate.instant('Verpflichtend')}}:
+                            {{translate.instant('Falsch')}}
+                        </ion-label>
+                            <ion-toggle [(ngModel)]="mandatoryToogle" checked="false"></ion-toggle>
+                    </ion-item>
+                </ion-col>
             </ion-row>
-        </div>
-
-        <!-- Textarea -->
-        <ion-row *ngIf="activOption.type==2">
-            <ion-col size="6">
-                <ion-item>
-                    <ion-label position="floating">{{translate.instant('Max')}} {{translate.instant('Charakter')}}</ion-label>
-                    <ion-input type="Number" [ngClass]="{required:inputError}" [(ngModel)]="maxChar">
-                    </ion-input>
-                </ion-item>
-            </ion-col>
-        </ion-row>
-
-        <!-- Number -->
-        <ion-row *ngIf="activOption.type==3">
-            <ion-col size="6">
-                <ion-item>
-                    <ion-label position="floating">{{translate.instant('Min')}}</ion-label>
-                    <ion-input type="Number" [ngClass]="{required:inputError}" [(ngModel)]="minNumber">
-                    </ion-input>
-                </ion-item>
-            </ion-col>
-            <ion-col size="6">
-                <ion-item>
-                    <ion-label position="floating">{{translate.instant('Max')}}</ion-label>
-                    <ion-input type="Number" [ngClass]="{required:inputError}" [(ngModel)]="maxNumber">
-                    </ion-input>
-                </ion-item>
-            </ion-col>
-        </ion-row>
-
-         <!-- Date -->
-       <!-- <ion-row style="margin-top:-5px;" *ngIf="activOption.type==4">
-          <ion-col col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12>
-            <ion-item>
-                <ion-label floating>{{translate.instant('Datum')}}</ion-label>
-                <ion-datetime [ngClass]="{required:inputError}" 
-                              [(ngModel)]="default_date"
-                              displayFormat="DD.MM.YYYY"
-                              doneText="{{translate.instant('okay')}}"
-                              cancelText="{{translate.instant('dismiss')}}">
-                </ion-datetime>
-            </ion-item>
-          </ion-col>  
-        </ion-row>-->
-
-         <!-- Time -->
-        <ion-row *ngIf="activOption.type==4">
-          <ion-col size="6">
-            <ion-item>
-              <ion-label position="floating">{{translate.instant('Standard')}}</ion-label>
-              <ion-datetime 
-                            [ngClass]="{required:fehler}"
-                            type="time"
-                            [(ngModel)]="defaultTime"
-                            name="start_time" 
-                            required="true"
-                            displayFormat="HH:mm"
-                            doneText="{{translate.instant('okay')}}" 
-                            cancelText="{{translate.instant('dismiss')}}">
-              </ion-datetime>  
-            </ion-item>
-          </ion-col>
-        </ion-row>
-        <!-- Error -->
-        <div [hidden]="inputError" class="fehler">
-            <div>
-                &nbsp;
+    
+            <!-- Toggle -->
+            <ion-row *ngIf="activOption.type==0" style="align-items: center;margin-top:15px">
+                <ion-col size="6">
+                    <ion-item>
+                        <ion-label *ngIf="defaultToggle==true">
+                            {{translate.instant('Standard')}}:
+                            {{translate.instant('Wahr')}}
+                        </ion-label>
+                        <ion-label *ngIf="defaultToggle==false">
+                            {{translate.instant('Standard')}}:
+                            {{translate.instant('Falsch')}}
+                        </ion-label>
+                        <ion-toggle [(ngModel)]="defaultToggle" checked="true"></ion-toggle>
+                    </ion-item>
+                </ion-col>
+                <ion-col size="1">
+                    <p-colorPicker [(ngModel)]="inputColor" [inline]="false" ></p-colorPicker>
+                </ion-col>
+                <ion-col size="5" style="margin-top:-15px">
+                    <ion-item>
+                        <ion-label position="floating">{{translate.instant('Farbe')}}</ion-label>
+                        <ion-input [(ngModel)]="inputColor" class="clsinput" type="text" placeholder="" readonly="true"></ion-input>
+                    </ion-item>
+                </ion-col>
+            </ion-row> 
+    
+            <!-- Select -->
+            <div *ngIf="activOption.type==1">
+                <ion-row *ngFor="let option of options; let opdInd = index" style="margin-top: -7px">
+                    <ion-col size="6">
+                        <ion-item>
+                            <ion-label position="floating">{{translate.instant('Optionen')+' '+(opdInd+1)}} </ion-label>
+                            <ion-input type="text" [ngClass]="{required:inputError}" [(ngModel)]="option[lang]" readonly="true"
+                                (click)="promptOptionTitle(option,2,opdInd)">
+                            </ion-input>
+                        </ion-item>
+                    </ion-col>
+    
+                    <ion-col size="6">
+                        <ion-item no-lines>
+                            <ion-button size="small" class="opt-remove" (click)="remove_option(opdInd)">
+                                <ion-icon name="remove"></ion-icon>
+                            </ion-button>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
             </div>
-        </div>
-        <div [hidden]="!inputError" class="pfehler" style="margin-top: 15px; margin-left: 5px;">
-            <div class="highlightFehler">
-                {{translate.instant('Bitte füllen Sie alle Pflichtfelder aus.')}}
+    
+            <!-- Textarea -->
+            <ion-row *ngIf="activOption.type==2">
+                <ion-col size="6">
+                    <ion-item>
+                        <ion-label position="floating">{{translate.instant('Max')}} {{translate.instant('Charakter')}}</ion-label>
+                        <ion-input type="Number" [ngClass]="{required:inputError}" [(ngModel)]="maxChar">
+                        </ion-input>
+                    </ion-item>
+                </ion-col>
+            </ion-row> 
+    
+            <!-- Number -->
+            <ion-row *ngIf="activOption.type==3">
+                <ion-col size="6">
+                    <ion-item>
+                        <ion-label position="floating">{{translate.instant('Min')}}</ion-label>
+                        <ion-input type="Number" [ngClass]="{required:inputError}" [(ngModel)]="minNumber">
+                        </ion-input>
+                    </ion-item>
+                </ion-col>
+                <ion-col size="6">
+                    <ion-item>
+                        <ion-label position="floating">{{translate.instant('Max')}}</ion-label>
+                        <ion-input type="Number" [ngClass]="{required:inputError}" [(ngModel)]="maxNumber">
+                        </ion-input>
+                    </ion-item>
+                </ion-col>
+            </ion-row>
+    
+             <!-- Date -->
+           <!-- <ion-row style="margin-top:-5px;" *ngIf="activOption.type==4">
+              <ion-col col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12>
+                <ion-item>
+                    <ion-label floating>{{translate.instant('Datum')}}</ion-label>
+                    <ion-datetime [ngClass]="{required:inputError}" 
+                                  [(ngModel)]="default_date"
+                                  displayFormat="DD.MM.YYYY"
+                                  doneText="{{translate.instant('okay')}}"
+                                  cancelText="{{translate.instant('dismiss')}}">
+                    </ion-datetime>
+                </ion-item>
+              </ion-col>  
+            </ion-row>-->
+    
+             <!-- Time -->
+            <ion-row *ngIf="activOption.type==4">
+              <ion-col size="6">
+                <ion-item>
+                  <ion-label position="floating">{{translate.instant('Standard')}}</ion-label>
+                  <ion-datetime 
+                                [ngClass]="{required:fehler}"
+                                type="time"
+                                [(ngModel)]="defaultTime"
+                                name="start_time" 
+                                required="true"
+                                displayFormat="HH:mm"
+                                doneText="{{translate.instant('okay')}}" 
+                                cancelText="{{translate.instant('dismiss')}}">
+                  </ion-datetime>  
+                </ion-item>
+              </ion-col>
+            </ion-row>
+            <!-- Error -->
+            <div [hidden]="inputError" class="fehler">
+                <div>
+                    &nbsp;
+                </div>
             </div>
-        </div>
-
-        <!-- Footer -->
-        <ion-row style="margin-top:-18px;">
-                  <div class="modal-footer">
-                <!--<button ion-button *ngIf="!itsNew" class="btn btn-modal-danger btn-del footerIcon" (click)="productOptionsDeactivate();">
-            <ion-icon name="trash"></ion-icon>
-          </button>-->
-                <ion-button class="btn btn-modal-danger footerIcon" (click)="dismiss()">
-                    <ion-icon name="close"></ion-icon>
-                </ion-button>
-                <ion-button class="btn btn-modal-success footerIcon" (click)="productOptionsEdit();">
-                    <ion-icon name="checkmark"></ion-icon>
-                </ion-button>
+            <div [hidden]="!inputError" class="pfehler" style="margin-top: 15px; margin-left: 5px;">
+                <div class="highlightFehler">
+                    {{translate.instant('Bitte füllen Sie alle Pflichtfelder aus.')}}
+                </div>
             </div>
-        </ion-row>
-    </ion-grid>
-</ion-content>
+    
+            <!-- Footer -->
+            <ion-row style="margin-top:-18px;">
+                      <div class="modal-footer">
+                    <!--<button ion-button *ngIf="!itsNew" class="btn btn-modal-danger btn-del footerIcon" (click)="productOptionsDeactivate();">
+                <ion-icon name="trash"></ion-icon>
+              </button>-->
+                    <ion-button class="btn btn-modal-danger footerIcon" (click)="dismiss()">
+                        <ion-icon name="close"></ion-icon>
+                    </ion-button>
+                    <ion-button class="btn btn-modal-success footerIcon" (click)="protocolOptionsEdit();">
+                        <ion-icon name="checkmark"></ion-icon>
+                    </ion-button>
+                </div>
+            </ion-row>
+        </ion-grid>
+    </ion-content>

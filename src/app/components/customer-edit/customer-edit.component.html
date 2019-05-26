@@ -11,155 +11,240 @@
 
 
 <ion-content>
-    <ion-grid style="padding-top: 0px; padding-bottom: 0px; padding-left: 15px; padding-right: 15px;">
-      <!-- Row 1 -->
-      <ion-row>
-          <ion-col size-xl="8" size-lg="8" size-md="8" size-sm="12" size="12">
-            <ion-item>
-                <ion-label position="floating" >{{translate.instant('Firma')}}</ion-label>
-                <ion-input type="text" 
-                           [ngClass]="{required:inputError}" 
-                           [(ngModel)]="activCustomer.company"
-                           [disabled] = customerDisabled>
-                </ion-input>
-            </ion-item>
-          </ion-col>
-          <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12">
-            <ion-item>
-                <ion-label position="floating" >{{translate.instant('Wertung')}}</ion-label>
-                <ion-select style="margin-bottom: 4px;"
-                            [ngClass]="{required:inputError}"
-                            [disabled]="userdata.Type!=13" name="Wertung"
-                            [(ngModel)]="activCustomer.rating"
-                            okText="{{translate.instant('okay')}}"
-                            cancelText="{{translate.instant('dismiss')}}">
-                  <ion-select-option value="A">A</ion-select-option>
-                  <ion-select-option value="B">B</ion-select-option>
-                  <ion-select-option value="C">C</ion-select-option>
-                  <ion-select-option value="D">D</ion-select-option>
-                  <ion-select-option *ngIf="userdata.Type==13" value="F">F</ion-select-option>
-                </ion-select>
-            </ion-item>
-          </ion-col>
-      </ion-row>
-      <!-- Row 2 -->
-      <ion-row>
-          <ion-col size-xl="8" size-lg="8" size-md="8" size-sm="12" size="12">
-            <ion-item>
-                <ion-label position="floating" >{{translate.instant('Strasse')}}</ion-label>
-                <ion-input type="text"  [ngClass]="{required:inputError}" [(ngModel)]="activCustomer.street"></ion-input>
-            </ion-item>
-          </ion-col>
-          <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12">
-            <ion-item>
-                <ion-label position="floating" >{{translate.instant('Postfach')}}</ion-label>
-                <ion-input type="text"  [(ngModel)]="activCustomer.po_box"></ion-input>
-             </ion-item>
-          </ion-col>
-      </ion-row>
-      <!-- Row 3 -->
-      <ion-row>
-        <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12">
-          <ion-item>
-              <ion-label position="floating" >{{translate.instant('PLZ')}}</ion-label>
-              <ion-input type="text"  [ngClass]="{required:inputError}" [(ngModel)]="activCustomer.zip_code"></ion-input>
-          </ion-item>
-        </ion-col>
-        <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12">
-          <ion-item>
-              <ion-label position="floating" >{{translate.instant('Ort')}}</ion-label>
-              <ion-input type="text"  [ngClass]="{required:inputError}" [(ngModel)]="activCustomer.place"></ion-input>
-          </ion-item>
-        </ion-col>
-        <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12">
-            <ion-item>
-                <ion-label position="floating" >{{translate.instant('Land')}}</ion-label>
-                <ion-input type="text"  [(ngModel)]="activCustomer.country"></ion-input>
-            </ion-item>
-        </ion-col>
-      </ion-row>
-      <!-- Row 4 -->
-      <ion-row>
+  <ion-grid style="padding-top: 0px; padding-bottom: 0px; padding-left: 15px; padding-right: 15px;">
+    <!-- Row 1 -->
+    <ion-row>
         <ion-col size-xl="8" size-lg="8" size-md="8" size-sm="12" size="12">
           <ion-item>
-            <ion-label position="floating" >{{translate.instant('Kundennummer')}}</ion-label>
-            <ion-input type="text"  [(ngModel)]="activCustomer.customer_number"></ion-input>
+              <ion-label position="floating" >{{translate.instant('Firma')}}</ion-label>
+              <ion-input type="text" 
+                         [ngClass]="{required:inputError}" 
+                         [(ngModel)]="activCustomer.company"
+                         [disabled] = customerDisabled>
+              </ion-input>
           </ion-item>
         </ion-col>
-       
-      </ion-row>
-      <!-- Row 5 -->
-      <ion-row>
-        <ion-col size="12">
+        <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12">
           <ion-item>
-            <ion-label position="floating" >{{translate.instant('Branche')}}</ion-label>
-            <ion-select style="margin-bottom: 4px;"
-                        [ngClass]="{required:inputError}"
-                        name="selectBranche" id="selectBranche"
-                        okText="{{translate.instant('okay')}}"
-                        cancelText="{{translate.instant('dismiss')}}"
-                        [(ngModel)]="activCustomer.sector">
-              <ion-select-option *ngFor="let s of Branches" value="{{s.value}}">{{translate.instant(s.value)}}</ion-select-option>
-            </ion-select>
+              <ion-label position="floating" >{{translate.instant('Wertung')}}</ion-label>
+              <ion-select style="margin-bottom: 4px;"
+                          [ngClass]="{required:inputError}"
+                          [disabled]="!this.userdata.role_set.edit_customer" 
+                          name="Wertung"
+                          [(ngModel)]="activCustomer.rating"
+                          okText="{{translate.instant('okay')}}"
+                          cancelText="{{translate.instant('dismiss')}}">
+                <ion-select-option value="A">A</ion-select-option>
+                <ion-select-option value="B">B</ion-select-option>
+                <ion-select-option value="C">C</ion-select-option>
+                <ion-select-option value="D">D</ion-select-option>
+                <ion-select-option *ngIf="userdata.Type==13" value="F">F</ion-select-option>
+              </ion-select>
           </ion-item>
         </ion-col>
-      </ion-row>
-      <!-- Row 6 -->
-      <ion-row>
-        <ion-col size="12">
+    </ion-row>
+    <!-- Row 2 -->
+    <ion-row>
+        <ion-col size-xl="8" size-lg="8" size-md="8" size-sm="12" size="12">
           <ion-item>
-            <ion-label position="floating" >{{translate.instant('Telefon')}}</ion-label>
-            <ion-input type="text"  [(ngModel)]="activCustomer.phone"></ion-input>
+              <ion-label position="floating" >{{translate.instant('Strasse')}}</ion-label>
+              <ion-input type="text" 
+                         [ngClass]="{required:inputError}" 
+                         [disabled]="!this.userdata.role_set.edit_customer"
+                         [(ngModel)]="activCustomer.street">
+              </ion-input>
           </ion-item>
         </ion-col>
-      </ion-row>
-      <!-- Row 7 -->
-      <ion-row>
-        <ion-col size="12">
+        <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12">
           <ion-item>
-            <ion-label position="floating" >{{translate.instant('E-Mail')}}</ion-label>
-            <ion-input type="text"  [(ngModel)]="activCustomer.email"></ion-input>
-          </ion-item>
+              <ion-label position="floating" >{{translate.instant('Postfach')}}</ion-label>
+              <ion-input type="text" 
+                         [disabled]="!this.userdata.role_set.edit_customer"
+                         [(ngModel)]="activCustomer.po_box">
+              </ion-input>
+           </ion-item>
         </ion-col>
-      </ion-row>
-      <!-- Row 8 -->
-      <ion-row>
-        <ion-col size="12">
+    </ion-row>
+    <!-- Row 3 -->
+    <ion-row>
+      <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12">
+        <ion-item>
+            <ion-label position="floating" >{{translate.instant('PLZ')}}</ion-label>
+            <ion-input type="text" 
+                       [ngClass]="{required:inputError}" 
+                       [disabled]="!this.userdata.role_set.edit_customer"
+                       [(ngModel)]="activCustomer.zip_code">
+            </ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12">
+        <ion-item>
+            <ion-label position="floating" >{{translate.instant('Ort')}}</ion-label>
+            <ion-input type="text" 
+                       [ngClass]="{required:inputError}"
+                       [disabled]="!this.userdata.role_set.edit_customer"
+                       [(ngModel)]="activCustomer.place">
+            </ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12">
           <ion-item>
-            <ion-label position="floating" >{{translate.instant('Internet')}}</ion-label>
-            <ion-input type="text"  [(ngModel)]="activCustomer.website"></ion-input>
+              <ion-label position="floating" >{{translate.instant('Land')}}</ion-label>
+              <ion-input type="text" 
+                         [disabled]="!this.userdata.role_set.edit_customer"
+                         [(ngModel)]="activCustomer.country">
+              </ion-input>
           </ion-item>
-        </ion-col>
-      </ion-row>
-  
-      <!-- Error -->
-      <div [hidden]="inputError" class="fehler">
-        <div>
-            &nbsp;
-        </div>
+      </ion-col>
+    </ion-row>
+    <!-- Row 4 -->
+    <ion-row>
+      <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12">
+        <ion-item>
+          <ion-label position="floating" >{{translate.instant('Kundennummer')}}</ion-label>
+          <ion-input type="text" 
+                     [disabled]="!this.userdata.role_set.edit_customer"
+                     [(ngModel)]="activCustomer.customer_number">
+          </ion-input>
+        </ion-item>
+      </ion-col>
+      <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12">
+        <ion-item no-lines>
+          <ion-label position="floating" >{{translate.instant('AD-Mitarbeiter')}}</ion-label>
+          <ion-select style="margin-bottom: 4px;"
+                      [ngClass]="{required:inputError}"
+                      [disabled]="!this.userdata.role_set.edit_customer"
+                      name="selectSales" 
+                      id="selectSales"
+                      [(ngModel)]="activCustomer.sales"
+                      okText="{{translate.instant('okay')}}"
+                      cancelText="{{translate.instant('dismiss')}}">
+            <ion-select-option *ngFor="let pr of salesListe" [value]="pr.id">{{pr.first_name + " " + pr.last_name}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+      <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12">
+        <ion-item no-lines>
+          <ion-label position="floating" >{{translate.instant('Prüfer')}}</ion-label>
+          <ion-select style="margin-bottom: 4px;"
+                      [ngClass]="{required:inputError}"
+                      [disabled]="!this.userdata.role_set.edit_customer"
+                      name="selectTester" 
+                      id="selectTester"
+                      [(ngModel)]="activCustomer.tester"
+                      okText="{{translate.instant('okay')}}"
+                      cancelText="{{translate.instant('dismiss')}}">
+            <ion-select-option *ngFor="let pr of testerListe" [value]="pr.id">{{pr.first_name + " " + pr.last_name}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <!-- Row 5 -->
+    <ion-row>
+      <ion-col size="12">
+        <ion-item>
+          <ion-label position="floating" >{{translate.instant('Branche')}}</ion-label>
+          <ion-select style="margin-bottom: 4px;"
+                      [ngClass]="{required:inputError}"
+                      [disabled]="!this.userdata.role_set.edit_customer"
+                      name="selectBranche" 
+                      id="selectBranche"
+                      [(ngModel)]="activCustomer.sector"
+                      okText="{{translate.instant('okay')}}"
+                      cancelText="{{translate.instant('dismiss')}}">
+            <ion-select-option *ngFor="let s of Branches" value="{{s.value}}">{{translate.instant(s.value)}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <!-- Row 6 -->
+    <ion-row>
+      <ion-col size="12">
+        <ion-item>
+          <ion-label position="floating" >{{translate.instant('Telefon')}}</ion-label>
+          <ion-input type="text"
+                     [disabled]="!this.userdata.role_set.edit_customer"
+                     [(ngModel)]="activCustomer.phone">
+          </ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <!-- Row 7 -->
+    <ion-row>
+      <ion-col size="12">
+        <ion-item>
+          <ion-label position="floating" >{{translate.instant('E-Mail')}}</ion-label>
+          <ion-input type="text"
+                     [disabled]="!this.userdata.role_set.edit_customer"
+                     [(ngModel)]="activCustomer.email">
+          </ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <!-- Row 8 -->
+    <ion-row>
+      <ion-col size="12">
+        <ion-item>
+          <ion-label position="floating" >{{translate.instant('Internet')}}</ion-label>
+          <ion-input type="text"
+                     [disabled]="!this.userdata.role_set.edit_customer"
+                     [(ngModel)]="activCustomer.website"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col size="12">
+        <ion-item>
+          <ion-label position="floating" >{{translate.instant('Notiz')}}</ion-label>
+          <ion-textarea type="text" 
+                        rows="5" 
+                        [(ngModel)]="activCustomer.note">
+          </ion-textarea>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <!-- Error -->
+    <div [hidden]="inputError" class="fehler">
+      <div>
+          &nbsp;
       </div>
-      <div [hidden]="!inputError" class="pfehler" style="margin-top: 15px; margin-left: 5px;">
-        <div class="highlightFehler">
-          {{translate.instant('Bitte füllen Sie alle Pflichtfelder aus.')}}
-        </div>
+    </div>
+    <div [hidden]="!inputError" class="pfehler" style="margin-top: 15px; margin-left: 5px;">
+      <div class="highlightFehler">
+        {{translate.instant('Bitte füllen Sie alle Pflichtfelder aus.')}}
       </div>
-  
-      <!-- Footer -->
-      <ion-row style="margin-top:-18px;">
-        <div class="modal-footer">
-            <ion-button *ngIf="!itsNew" class="btn btn-modal-danger btn-del footerIcon" (click)="customerDeactivate();">
-              <ion-icon name="trash"></ion-icon>
-            </ion-button>
-            <ion-button class="btn btn-modal-danger footerIcon" (click)="dismiss()">
-              <ion-icon name="close"></ion-icon>
-            </ion-button>
-            <ion-button *ngIf="itsNew" class="btn btn-modal-success footerIcon" (click)="customerEdit();">
-              <ion-icon name="checkmark"></ion-icon>
-            </ion-button>
-            <ion-button *ngIf="!itsNew" class="btn btn-modal-success footerIcon" (click)="customerEdit();">
-              <ion-icon name="checkmark"></ion-icon>
-            </ion-button>
-        </div>
-      </ion-row>
-    </ion-grid>
-  </ion-content>
+    </div>
+
+    <!-- Footer -->
+    <ion-row style="margin-top:-18px;">
+      <div class="modal-footer">
+          <ion-button 
+                  *ngIf="!itsNew" 
+                  [disabled]="!this.userdata.role_set.edit_customer"
+                  class="btn btn-modal-danger btn-del footerIcon" 
+                  (click)="customerDeactivate();">
+            <ion-icon name="trash"></ion-icon>
+          </ion-button>
+          <ion-button 
+                  class="btn btn-modal-danger footerIcon" 
+                  (click)="dismiss()">
+            <ion-icon name="close"></ion-icon>
+          </ion-button>
+          <ion-button 
+                  *ngIf="itsNew" 
+                  class="btn btn-modal-success footerIcon" 
+                  (click)="customerEdit();">
+            <ion-icon name="checkmark"></ion-icon>
+          </ion-button>
+          <ion-button 
+                  *ngIf="!itsNew" 
+                  class="btn btn-modal-success footerIcon" 
+                  (click)="customerEdit();">
+            <ion-icon name="checkmark"></ion-icon>
+          </ion-button>
+      </div>
+    </ion-row>
+  </ion-grid>
+</ion-content>

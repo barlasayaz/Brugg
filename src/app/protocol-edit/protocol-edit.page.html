@@ -16,11 +16,11 @@
                         {{'Protokollvorlage' | translate}}
                       </div>
                       <div class="table-header-buttons">
-                        <ion-button small (click)="down_click()"
+                        <ion-button size="small" (click)="down_click()"
                           [disabled]="downClick == 1">
                           <i class="fas fa-sort-alpha-down"></i>
                         </ion-button>
-                        <ion-button small (click)="down_click()"
+                        <ion-button size="small" (click)="down_click()"
                           [disabled]="downClick == 0">
                           <i class="fas fa-sort-alpha-up"></i>
                         </ion-button>
@@ -29,11 +29,11 @@
                     <div class="tbody">
                       <div class="tr table-subheader table-subheader-fix">
                         <div class="table-subheader-buttons">
-                          <ion-button small (click)="edit_template()"
+                          <ion-button size="small" (click)="edit_template()"
                             [disabled]="selectTemplate == 0">
                             <ion-icon name="create"></ion-icon>
                           </ion-button>                          
-                          <ion-button small (click)="move_left()"
+                          <ion-button size="small" (click)="move_left()"
                             [disabled]="selectTemplate == 0">
                             <ion-icon name="arrow-round-forward"></ion-icon>
                           </ion-button>
@@ -77,14 +77,14 @@
                         {{'Protokoll' | translate}}
                       </div>
                       <div class="table-header-buttons">
-                        <ion-button small *ngIf="!itsNew" class="btn-red"
+                        <ion-button size="small" *ngIf="!itsNew" class="btn-red"
                           (click)="protocolDeactivate();">
                           <ion-icon name="trash"></ion-icon>
                         </ion-button>
-                        <ion-button small (click)="dismiss()">
+                        <ion-button size="small" (click)="dismiss()">
                           <ion-icon name="close"></ion-icon>
                         </ion-button>
-                        <ion-button small (click)="protocolEdit();">
+                        <ion-button size="small" (click)="protocolEdit();">
                           <ion-icon name="checkmark"></ion-icon>
                         </ion-button>
                       </div>

@@ -57,8 +57,7 @@ export class StartscreenNewPage {
       componentProps: {
         readOnly: true
       }
-    });
-    modal.present(); 
+    }).then(x=> x.present());;
   
   } 
  async qr_barcode()
@@ -69,8 +68,7 @@ export class StartscreenNewPage {
       componentProps: {
         readOnly: true
       }
-    });
-    modal.present();  
+    }).then(x=> x.present());;
   } 
  async reboxNew(userid) {
     const modal =
@@ -78,8 +76,8 @@ export class StartscreenNewPage {
       component: ReboxNewPage,
       componentProps: {
       }
-    });
-    modal.present();  
+    }).then(x=> x.present());
+
   }
 
   //IMPRESSUM
@@ -89,8 +87,8 @@ export class StartscreenNewPage {
       component: ImprintPage,
       componentProps: {
       }
-    });
-    modal.present();  
+    }).then(x=> x.present());
+ 
   }
 
   ionViewDidLoad() {

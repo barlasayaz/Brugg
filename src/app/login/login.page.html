@@ -10,12 +10,12 @@
     
         <ion-row>
           <div class="pvs4-lang-select">
-            <ion-col col-6>
+            <ion-col size="6">
              <div class="logo">
                <img src="assets/imgs/pvs2go-logo.svg" alt="PVS2GO Logo">
              </div>
             </ion-col>
-            <ion-col col-6>
+            <ion-col size="6">
               <ion-item class="pvs4-full-select">
                 <ion-label position="floating">{{'Sprache' | translate}}</ion-label>
                 <ion-select [(ngModel)]="lang"
@@ -83,8 +83,8 @@
         </ion-row>
     
         <ion-row class="pvs4-login-infobar" style="margin-bottom: -10px">
-          <ion-col col-5 text-left (click)="imprintModal()"><a>{{ "Impressum" | translate }}</a></ion-col>
-          <ion-col col-7 text-right><a href="https://www.brugg.com/portal/pics/Documents/Datenschutzerklaerung-DSGVO-Gruppe-Brugg-10-04-2018-DE.pdf" target="_blank" rel="noopener">{{"Datenschutzerklärung" | translate}} <small>(PDF)</small></a></ion-col>
+          <ion-col size="5" text-left (click)="imprintModal()"><a>{{ "Impressum" | translate }}</a></ion-col>
+          <ion-col size="7" text-right><a href="https://www.brugg.com/portal/pics/Documents/Datenschutzerklaerung-DSGVO-Gruppe-Brugg-10-04-2018-DE.pdf" target="_blank" rel="noopener">{{"Datenschutzerklärung" | translate}} <small>(PDF)</small></a></ion-col>
         </ion-row>
     
         <!-- <ion-row class="pvs4-login-infobar2">

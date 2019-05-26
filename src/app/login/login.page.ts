@@ -212,8 +212,7 @@ export class LoginPage {
       component: ImprintPage,
       componentProps: {
       }
-    });
-    modal.present();
+    }).then(x=> x.present());
   }
 
 }

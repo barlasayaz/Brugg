@@ -17,8 +17,10 @@ export class NoteEditComponent {
   public idNote: number = 0;
   public invalidForm = true;
   public itsNew:boolean = false;
-  public activNote: any = { active: 1,
+  public activNote: any = { user: this.userdata.id,
+                            active: 1,
                             title: "",
+                            contact_person: 0,
                             customer: this.idCustomer,
                             notes: "",
                             notes_date: "",
@@ -27,6 +29,8 @@ export class NoteEditComponent {
   public inputError:boolean = false;
   public redirect: any = 0;
   public maxDate: string;
+  public userList: any = [];
+  public selectedContact: any = {};
 
   constructor(  public navCtrl: NavController,
                 public navParams: NavParams,
@@ -39,17 +43,18 @@ export class NoteEditComponent {
     this.maxDate = this.apiService.maxDate;
     this.idNote = this.navParams.get("id"); 
     this.idCustomer = this.navParams.get("idCustomer"); 
-    this.redirect = this.navParams.get("redirect"); 
+    this.redirect = this.navParams.get("redirect");    
 
     if(this.idNote > 0) {
       this.itsNew = false;
-      this.modalTitle = translate.instant('Note bearbeiten');
+      this.modalTitle = translate.instant('Bearbeiten Notiz');
       this.loadNote();   
     } else {
       this.idNote = 0;
       this.itsNew = true;
       this.modalTitle = translate.instant('Neue Notiz');     
       this.activNote.notes_date = new Date().toISOString();  
+      this.loadUserList(0);
     }
     this.loadCustomer(this.idCustomer);    
     console.log("NoteEditComponent: " ,this.idNote);    
@@ -58,9 +63,12 @@ export class NoteEditComponent {
   loadNote(){   
     this.apiService.pvs4_get_note(this.idNote).then((result:any)=>{
       this.activNote = result.obj;  
+      this.activNote.contact_person = parseInt(this.activNote.contact_person);
+      console.log("activeNote :", this.activNote);
       if(result.obj.notes_date && result.obj.notes_date!=null && new Date(result.obj.notes_date) >= new Date(1970,0,1))
          this.activNote.notes_date = new Date(result.obj.notes_date).toISOString();
       console.log('loadNote: ' , this.activNote); 
+      this.loadUserList(this.activNote.contact_person);
     });
   }
 
@@ -77,8 +85,10 @@ export class NoteEditComponent {
   noteEdit() {
     console.log("noteEdit()");
     let obj={
+        user: 0,
         active: 1,
         title: "",
+        contact_person: 0,
         customer: this.idCustomer,
         notes: "",
         notes_date: "",
@@ -86,15 +96,15 @@ export class NoteEditComponent {
         category: 1
     }; 
 
-    if(this.activNote["active"]) obj.active = parseInt(  this.activNote["active"]);
-    if(this.activNote["customer"]) obj.customer = parseInt( this.activNote["customer"]);
+    if(this.activNote["user"] == 0) obj.user = this.userdata.id; else obj.user = parseInt(this.activNote["user"]);
+    if(this.activNote["active"]) obj.active = parseInt(this.activNote["active"]);
+    if(this.activNote["customer"]) obj.customer = parseInt(this.activNote["customer"]);
     if(this.activNote["title"]) obj.title = this.activNote["title"];
+    obj.contact_person = parseInt(this.selectedContact.id);
     if(this.activNote["notes"]) obj.notes = this.activNote["notes"];
-    if(this.activNote["category"]) obj.category = parseInt( this.activNote["category"] );
+    if(this.activNote["category"]) obj.category = parseInt(this.activNote["category"] );
     let pipe = new DatePipe('en-US'); 
-    if(this.activNote["notes_date"]) obj.notes_date = pipe.transform(this.activNote["notes_date"], 'yyyy-MM-dd HH:mm:ss');  
-
-
+    if(this.activNote["notes_date"]) obj.notes_date = pipe.transform(this.activNote["notes_date"], 'yyyy-MM-dd HH:mm'); 
     console.log(obj);
     if (!this.itsNew) {
       obj.id = this.activNote["id"];
@@ -104,9 +114,9 @@ export class NoteEditComponent {
     }
 
     this.apiService.pvs4_set_note(obj).then((result:any)=>{ 
-      console.log('result: ', result); 
+      console.log('result - redirect: ', result, '- ', this.redirect); 
       if(this.redirect == 1)
-        this.navCtrl.navigateForward("/note-list/"+this.idCustomer);
+      this.navCtrl.navigateForward("/note-list/"+this.idCustomer);
       if(this.redirect == 2)
         this.dismiss();
     }); 
@@ -116,9 +126,11 @@ export class NoteEditComponent {
   checkInvalidForm(){
     let t1 = this.activNote.title.trim();
     let t2 = this.activNote.notes.trim();
+    let t3 = this.selectedContact.id;
     this.invalidForm = false;
     if(t1=="") this.invalidForm = true;
     if(t2=="") this.invalidForm = true;
+    if(t3==undefined) this.invalidForm = true;
   }
 
   noteDeactivate() {
@@ -158,5 +170,27 @@ export class NoteEditComponent {
     this.viewCtrl.dismiss(false);
   }
 
+  loadUserList(idContactPerson: any) {
+    // Point of Contact
+    this.userList = [];
+    this.apiService.pvs4_get_contact_person(this.idCustomer).then((result: any) => {
+      console.log('loadUserList result', result.list);
+      for (var i = 0, len = result.list.length; i < len; i++) {
+        var item = result.list[i].data;
+        item.id = parseInt(item.id);
+        item.addresses = JSON.parse(item.addresses);
+        let contactPersonList = {id: item.id, name: item.first_name + ' ' + item.last_name};
+        this.userList.push(contactPersonList);
+        if(idContactPerson == item.id) {
+          this.selectedContact = contactPersonList;
+        }
+      }
+    });
+  }
+
+  userChange(event) {
+    console.log('port:', event.value);
+    this.checkInvalidForm()
+  }
 
 }

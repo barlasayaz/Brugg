@@ -41,7 +41,7 @@
 								</div>								
 								<div class="tbody">									
 									<div class="tr table-subheader table-subheader-fix" style="background-color:rgb(28, 114, 151);">												
-										<ion-button small 												
+										<ion-button size="small" 												
 												(click)="open_mydataedit(userdata.profile, userdata.role, userdata.role_nr)" 
 												style="margin-left:3%; margin-top:5px;">
 											<ion-icon name="create"></ion-icon>
@@ -178,7 +178,7 @@
 								</div>
 								<div class="tbody">
 									<div class="tr table-subheader table-subheader-fix" style="background-color:rgb(28, 114, 151);">
-										<ion-button small 
+										<ion-button size="small" 
 										        [disabled]="userdata.role_set.edit_membership==false"
 												(click)="open_mydataedit(0,0,0,1)" 
 												[ngClass]="{'not-allowed': userdata.role_set.edit_membership==false}"

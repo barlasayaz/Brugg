@@ -124,7 +124,7 @@ export class MyDataPage {
           this.loadList();
         }
       }
-    }); 
+    })
     modal.present();
   }
 

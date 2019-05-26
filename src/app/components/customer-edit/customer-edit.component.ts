@@ -26,6 +26,8 @@ export class CustomerEditComponent {
   public Branches: any = [];
   public redirect: any = 0;
   public customerDisabled: boolean = false;
+  public salesListe: any = [];
+  public testerListe: any = [];
 
   constructor(  public navCtrl: NavController,
                 public navParams: NavParams,
@@ -35,7 +37,7 @@ export class CustomerEditComponent {
                 public apiService: ApiService,
                 public alertCtrl: AlertController) 
   {
-    this.idCustomer = this.navParams.get("id"); 
+      this.idCustomer = this.navParams.get("id"); 
     this.redirect = this.navParams.get("redirect"); 
     this.parentCustomer = this.navParams.get("parent"); 
     if(!this.parentCustomer) this.parentCustomer = 0;
@@ -43,7 +45,7 @@ export class CustomerEditComponent {
       this.itsNew = false;
       this.modalTitle = translate.instant('Kundendaten bearbeiten');
       this.activCustomer.rating = "C";
-      this.loadCustomer();
+      this.loadCustomer(this.idCustomer);
     } else {
       this.idCustomer = 0;
       this.itsNew = true;
@@ -51,6 +53,8 @@ export class CustomerEditComponent {
       this.activCustomer.rating = "C";
     }
 
+    this.salesTesterList();
+    
     this.Branches = [
       { value: 'Baukran', text: 'Baukran' },
       { value: 'Bauunternehmen', text: 'Bauunternehmen' },
@@ -79,9 +83,11 @@ export class CustomerEditComponent {
     if(this.redirect == 3)
       this.customerDisabled = true;
   }
+  
 
-  loadCustomer(){
-    this.apiService.pvs4_get_customer( this.idCustomer).then((result:any)=>{
+
+  loadCustomer(id){
+    this.apiService.pvs4_get_customer(id).then((result:any)=>{
       this.activCustomer = result.obj;  
       console.log('loadCustomer: ' , this.activCustomer); 
     });
@@ -109,7 +115,10 @@ export class CustomerEditComponent {
       street:"",
       website:"",
       zip_code:"",
-      id: 0
+      id: 0,
+      note:"",
+      sales:"",
+      tester:""
     }; 
 
     if(this.activCustomer["active"]) obj.active = this.activCustomer["active"];
@@ -127,6 +136,9 @@ export class CustomerEditComponent {
     if(this.activCustomer["street"]) obj.street = this.activCustomer["street"];
     if(this.activCustomer["website"]) obj.website = this.activCustomer["website"];
     if(this.activCustomer["zip_code"]) obj.zip_code = this.activCustomer["zip_code"];
+    if(this.activCustomer["note"]) obj.note = this.activCustomer["note"];
+    if(this.activCustomer["sales"]) obj.sales = this.activCustomer["sales"];
+    if(this.activCustomer["tester"]) obj.tester = this.activCustomer["tester"];
 
     console.log(obj);
     if (!this.itsNew) {
@@ -182,5 +194,25 @@ export class CustomerEditComponent {
     this.viewCtrl.dismiss(false);
   }
 
+  salesTesterList() {
+    this.apiService.pvs4_get_colleagues_list(this.userdata.role, this.userdata.role_set ,this.userdata.licensee)
+    .then((result: any) => {
+      console.log("pvs4_get_colleagues_list result:", result);
+      let k = result["obj"];
+      result["amount"] = parseInt(result["amount"]);
+      if(result["amount"]>0){
+        for (var i = 0, len = k.length; i < len; i++) {
+          let item = k[i];
+          item.id = parseInt(item.id);
+          this.salesListe.push(item);
+          if(item.role_set.check_products) {
+            this.testerListe.push(item);
+          }
+        }
+      }     
+    });
+    console.log("salesListe :", this.salesListe);
+    console.log("testerListe :", this.testerListe);
+  }
 
 }

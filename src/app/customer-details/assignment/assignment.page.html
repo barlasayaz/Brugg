@@ -1,0 +1,50 @@
+<ion-header>
+  <ion-toolbar color="primary">
+      <ion-buttons slot="primary">
+          <ion-button icon-only (click)="dismiss()">
+              <ion-icon name="close"></ion-icon>
+          </ion-button>
+      </ion-buttons>
+      <ion-title>{{translate.instant('Zuweisung')}}</ion-title>
+  </ion-toolbar>
+</ion-header>	
+
+<ion-content style="padding-top: -8px; padding-bottom: 0px;">
+    <ion-grid>
+        <!-- Row 1 -->
+        <ion-row>
+            <ion-col size="12">
+              <ion-item>  
+                <ion-label position="floating">{{translate.instant('AD-Mitarbeiter')}}</ion-label>
+                <ion-select [(ngModel)]="idSales"  required
+                            okText="{{translate.instant('okay')}}" 
+                            cancelText="{{translate.instant('dismiss')}}">
+                  <ion-select-option *ngFor="let pr of salesListe" [value]="pr.id">{{pr.first_name + " " + pr.last_name}}</ion-select-option>
+                </ion-select>                  
+              </ion-item>
+            </ion-col>
+        </ion-row>   
+        <!-- Row 1 -->
+        <ion-row>
+          <ion-col size="12">
+            <ion-item>  
+              <ion-label position="floating">{{translate.instant('Prüfer')}}</ion-label>
+              <ion-select [(ngModel)]="idTester" required
+                          okText="{{translate.instant('okay')}}" 
+                          cancelText="{{translate.instant('dismiss')}}">
+                <ion-select-option *ngFor="let pr of testerListe" [value]="pr.id">{{pr.first_name + " " + pr.last_name}}</ion-select-option>
+              </ion-select>                  
+            </ion-item>
+          </ion-col>
+      </ion-row>   
+    </ion-grid>
+    
+    <div class="modal-footer">
+      <ion-button type="button" class="btn btn-modal-danger footerIcon" (click)="dismiss()"  >
+        <ion-icon name="close"></ion-icon>
+      </ion-button>
+      <ion-button type="button" class="btn btn-modal-success footerIcon"  (click)="editAssignment();" [disabled]="((idSales==0) || (idTester==0))">
+        <ion-icon name="checkmark"></ion-icon>
+      </ion-button>
+    </div>
+</ion-content>

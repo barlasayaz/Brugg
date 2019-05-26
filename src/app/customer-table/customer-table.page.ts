@@ -360,8 +360,7 @@ export class CustomerTablePage implements OnInit {
           componentProps: {
             obj: obj
           }
-        });
-        modal.present();
+        }).then(x=> x.present());
     }
 
     async menu_edit() {

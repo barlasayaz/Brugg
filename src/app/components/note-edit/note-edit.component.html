@@ -10,97 +10,132 @@
 </ion-header>	
 
 <ion-content>
-  <ion-grid style="padding-top: 0px; padding-bottom: 0px; padding-left: 15px; padding-right: 15px;">
-    <!-- Row 1 -->
-    <ion-row>
-        <ion-col size-xl="8" size-lg="8" size-md="8" size-sm="12" size="12">
+    <ion-grid style="padding-top: 0px; padding-bottom: 0px; padding-left: 15px; padding-right: 15px;">
+      <!-- Row 1 -->
+      <ion-row>
+          <ion-col size-xl="8" size-lg="8" size-md="8" size-sm="12" size="12">
+            <ion-item>
+                <ion-label position="floating">{{translate.instant('Titel')}}</ion-label>
+                <ion-input type="text" (ionChange)="checkInvalidForm()" required
+                           [ngClass]="{required:inputError}" 
+                           [(ngModel)]="activNote.title" >
+                </ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12">
+            <ion-item>
+                <ion-label position="floating">{{translate.instant('Firma')}}</ion-label>
+                <ion-input type="text" (ionChange)="checkInvalidForm()" 
+                           readonly 
+                           [ngClass]="{required:inputError}" 
+                           [(ngModel)]="activNote.company">
+                </ion-input>
+            </ion-item>
+          </ion-col>          
+      </ion-row>
+      <!-- Row 2 -->
+      <ion-row>
+        <ion-col size-xl="12" size-lg="12" size-md="12" size-sm="12" size="12">
           <ion-item>
-              <ion-label position="floating">{{translate.instant('Titel')}}</ion-label>
-              <ion-input type="text" (ionChange)="checkInvalidForm()" required
-                         [ngClass]="{required:inputError}" 
-                         [(ngModel)]="activNote.title" >
-              </ion-input>
+            <ion-label position="floating">{{translate.instant('Ansprechpartner')}}</ion-label>
+            <ionic-selectable item-content 
+                              [ngClass]="{required:fehler}" 
+                              [(ngModel)]="selectedContact"
+                              [(items)]="userList"
+                              itemValueField="id"
+                              itemTextField="name"
+                              [canSearch]="true"
+                              (onChange)="userChange($event)">
+            </ionic-selectable> 
+  
           </ion-item>
-        </ion-col>
+        </ion-col>       
+      </ion-row>
+      <!-- Row 3 -->
+      <ion-row>
         <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12">
           <ion-item>
-              <ion-label position="floating">{{translate.instant('Firma')}}</ion-label>
-              <ion-input type="text" (ionChange)="checkInvalidForm()" 
-                         readonly 
-                         [ngClass]="{required:inputError}" 
-                         [(ngModel)]="activNote.company">
-              </ion-input>
+              <ion-label position="floating">{{translate.instant('Datum')}}</ion-label>
+              <ion-datetime [ngClass]="{required:inputError}" 
+                            (ionChange)="checkInvalidForm()" 
+                            [(ngModel)]="activNote.notes_date"
+                            displayFormat="DD.MM.YYYY"
+                            max = {{maxDate}}
+                            doneText="{{translate.instant('okay')}}"
+                            cancelText="{{translate.instant('dismiss')}}">
+              </ion-datetime>
           </ion-item>
-        </ion-col>          
-    </ion-row>
-    <!-- Row 2 -->
-    <ion-row>
-      <ion-col size-xl="8" size-lg="8" size-md="8" size-sm="12" size="12">
-        <ion-item>
-            <ion-label position="floating">{{translate.instant('Datum')}}</ion-label>
-            <ion-datetime [ngClass]="{required:inputError}" (ionChange)="checkInvalidForm()" 
-                          [(ngModel)]="activNote.notes_date"
-                          displayFormat="DD.MM.YYYY"
-                          max = {{maxDate}}
-                          doneText="{{translate.instant('okay')}}"
-                          cancelText="{{translate.instant('dismiss')}}">
-            </ion-datetime>
-        </ion-item>
-      </ion-col>  
-      <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12">
-        <ion-item>
-          <ion-label position="floating">{{translate.instant('Notizkategorie')}}</ion-label>
-          <ion-select
-                      [(ngModel)]="activNote.category" required (ionChange)="checkInvalidForm()" 
-                      okText="{{translate.instant('okay')}}"
-                      cancelText="{{translate.instant('dismiss')}}">
-              <ion-select-option value="1" selected>{{translate.instant('Besuchsberichte')}}</ion-select-option>
-              <ion-select-option value="10">{{translate.instant('Disposition')}}</ion-select-option>
-              <ion-select-option value="11">{{translate.instant('Neukundenakquise')}}</ion-select-option>
-          </ion-select>
-        </ion-item>
-      </ion-col>    
-    </ion-row>
-    <!-- Row 3 -->
-    <ion-row>
-      <ion-col size-xl="12" size-lg="12" size-md="12" size-sm="12" size="12">
-        <ion-item>
-            <ion-label position="floating">{{translate.instant('Notes')}}</ion-label>            
-            <ion-textarea type="text"  required (ionChange)="checkInvalidForm()"
-                          rows="5" 
-                          id="Notiztext" 
-                          [ngClass]="{required:inputError}"
-                          [(ngModel)]="activNote.notes">
-            </ion-textarea>
-        </ion-item>
-      </ion-col>      
-    </ion-row>      
-   
-    <!-- Error -->
-    <div [hidden]="inputError" class="fehler">
-      <div>
-          &nbsp;
+        </ion-col>  
+        <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12">
+          <ion-item>
+              <ion-label position="floating">{{translate.instant('Uhrzeit')}}</ion-label>
+              <ion-datetime [ngClass]="{required:inputError}" 
+                            (ionChange)="checkInvalidForm()" 
+                            [(ngModel)]="activNote.notes_date"
+                            displayFormat="HH:mm"
+                            max = {{maxDate}}
+                            doneText="{{translate.instant('okay')}}"
+                            cancelText="{{translate.instant('dismiss')}}">
+              </ion-datetime>
+          </ion-item>
+        </ion-col> 
+        <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12">
+          <ion-item>
+            <ion-label position="floating">{{translate.instant('Notizkategorie')}}</ion-label>
+            <ion-select
+                        [(ngModel)]="activNote.category" 
+                        required 
+                        (ionChange)="checkInvalidForm()" 
+                        okText="{{translate.instant('okay')}}"
+                        cancelText="{{translate.instant('dismiss')}}">
+                <ion-select-option value="1" selected>{{translate.instant('Besuchsberichte')}}</ion-select-option>
+                <ion-select-option value="10">{{translate.instant('Disposition')}}</ion-select-option>
+                <ion-select-option value="11">{{translate.instant('Neukundenakquise')}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>    
+      </ion-row>
+      <!-- Row 4 -->
+      <ion-row>
+        <ion-col size-xl="12" size-lg="12" size-md="12" size-sm="12" size="12">
+          <ion-item>
+              <ion-label position="floating">{{translate.instant('Notes')}}</ion-label>     
+              <ion-textarea type="text" 
+                            (ionChange)="checkInvalidForm()"
+                            rows="5" 
+                            id="Notiztext" 
+                            [ngClass]="{required:inputError}"
+                            [(ngModel)]="activNote.notes">
+              </ion-textarea>
+          </ion-item>
+        </ion-col>      
+      </ion-row>      
+     
+      <!-- Error -->
+      <div [hidden]="inputError" class="fehler">
+        <div>
+            &nbsp;
+        </div>
       </div>
-    </div>
-    <div [hidden]="!inputError" class="pfehler" style="margin-top: 15px; margin-left: 5px;">
-      <div class="highlightFehler">
-        {{translate.instant('Bitte füllen Sie alle Pflichtfelder aus.')}}
+      <div [hidden]="!inputError" class="pfehler" style="margin-top: 15px; margin-left: 5px;">
+        <div class="highlightFehler">
+          {{translate.instant('Bitte füllen Sie alle Pflichtfelder aus.')}}
+        </div>
       </div>
-    </div>
-
-    <!-- Footer -->
-    <ion-row style="margin-top:-18px;">
-      <div class="modal-footer">
-          <ion-button *ngIf="!itsNew" class="btn btn-modal-danger btn-del footerIcon" (click)="noteDeactivate();">
-            <ion-icon name="trash"></ion-icon>
-          </ion-button>
-          <ion-button class="btn btn-modal-danger footerIcon" (click)="dismiss()">
-            <ion-icon name="close"></ion-icon>
-          </ion-button>
-          <ion-button class="btn btn-modal-success footerIcon" (click)="noteEdit();" [disabled]="invalidForm">
-            <ion-icon name="checkmark"></ion-icon>
-          </ion-button>
-      </div>
-    </ion-row>
-  </ion-grid>
-</ion-content>
+  
+      <!-- Footer -->
+      <ion-row style="margin-top:-18px;">
+        <div class="modal-footer">
+            <ion-button *ngIf="!itsNew" class="btn btn-modal-danger btn-del footerIcon" (click)="noteDeactivate();">
+              <ion-icon name="trash"></ion-icon>
+            </ion-button>
+            <ion-button class="btn btn-modal-danger footerIcon" (click)="dismiss()">
+              <ion-icon name="close"></ion-icon>
+            </ion-button>
+            <ion-button class="btn btn-modal-success footerIcon" (click)="noteEdit();" [disabled]="invalidForm">
+              <ion-icon name="checkmark"></ion-icon>
+            </ion-button>
+        </div>
+      </ion-row>
+    </ion-grid>
+  </ion-content>

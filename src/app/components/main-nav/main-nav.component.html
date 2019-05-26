@@ -7,7 +7,7 @@
           <ion-col size="7" size-md="7" size-sm="12" class="topBar-sm topBar-left">
             <div class="topBar-outer">
               <div class="topBar-inner">
-
+                
                 <!-- new PVS4 -->
                   <div class="topBar-btn" (click)="go('StartscreenNew');" [ngClass]="getClass('StartscreenNewPage')">
                     <li class="main-nav-icon">
@@ -46,7 +46,7 @@
                         <ion-icon name="basket"></ion-icon>
                       </li>
                     </a>
-                    <a (click)="go('NoteList',idCustomer);" [ngClass]="getClass('NoteList')">
+                    <a (click)="go('NoteList',idCustomer);" [ngClass]="getClass('NoteList')" *ngIf="(userdata.role==1)||(userdata.role==2)" >
                       <li class="main-nav-icon">
                         <i class="fas fa-comment"></i>
                       </li>
@@ -75,12 +75,12 @@
           <!-- Status Bar  -->
           <ion-col size="5" size-md="5" size-sm="12" class="hidden-sm-down hidden-md-down" style="text-align:right;" >
             <div class="main-nav-fix">
-              <div class="comp-name"
-              *ngIf="
+              <!-- <div class="comp-name"
+              *ngIf="aktivPage != 'KundenuebersichtPage' &&
                      aktivPage != 'CustomerTable' &&
                      aktivPage != 'CustomerDetails'">
                    {{company}}
-              </div>
+              </div> -->
 
               <div
                    *ngIf="aktivPage == 'CustomerTable' ||
@@ -90,7 +90,7 @@
                    {{rowRecords}} {{'Datensätze von' | translate}} {{totalRecords}}
               </div>
 
-               <div class="topBar-inner posek"
+              <div class="topBar-inner posek"
                   *ngIf="aktivPage == 'CustomerTable' ||
                          aktivPage == 'ProductList' ||
                          aktivPage == 'ProtocolList' ||
@@ -104,7 +104,7 @@
                   </round-progress>
                 </div>
               </div>
-
+              
             </div>
           </ion-col>
         </ion-row>

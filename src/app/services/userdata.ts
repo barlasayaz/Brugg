@@ -40,6 +40,7 @@ export class UserdataService {
   public role:number = 0; // 1=system , 2=licensee , 3=customer
   public role_nr:number = 0;
   public role_set: any = [];
+  public all_role_set: any = [];
   public short_code:string = "??";
   public colour:string = "#FF5511";
   public first_name:string = " ";

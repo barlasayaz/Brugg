@@ -4,25 +4,22 @@ import { FormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
-
-import { NoteEditComponent } from './note-edit.component';
-import { ComponentsModule } from '../components.module';
-
+import { AssignmentPage } from './assignment.page';
 const routes: Routes = [
   {
     path: '',
-    component: NoteEditComponent
+    component: AssignmentPage
   }
 ];
-
 @NgModule({
+  declarations: [
+    AssignmentPage,
+  ],
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    ComponentsModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [NoteEditComponent]
 })
-export class NoteEditComponentModule {}
+export class AssignmentPageModule {}

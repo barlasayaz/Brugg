@@ -229,8 +229,7 @@ export class DashboardNewPage {
           componentProps: {
             appointment: appointment, redirect: 1
           }
-        });
-        modal.present();
+        }).then(x=> x.present());
     }
 
     go(rowID) {
@@ -258,8 +257,7 @@ export class DashboardNewPage {
           componentProps: {
             appointment: row, redirect: 1
           }
-        });
-        modal.present();
+        }).then(x=> x.present());
     }
 
     search_all() {

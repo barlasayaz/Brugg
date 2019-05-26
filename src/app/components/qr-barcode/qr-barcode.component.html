@@ -10,7 +10,7 @@
                 <ion-icon name="close"></ion-icon>
             </ion-button>
         </ion-buttons>
-        <!-- <ion-title>{{modalTitle}}</ion-title> -->
+        <ion-title>{{'QR-Code' | translate}}</ion-title>
     </ion-toolbar>
 </ion-header>
 
@@ -21,7 +21,7 @@
                 <ion-row>
                     <ion-col size="12" text-center>
                         <ion-item>
-                            <ion-button large
+                            <ion-button size="large"
                                 (click)="scanQr()">{{translate.instant('QR-Code scannen')}}</ion-button>
                         </ion-item>
                     </ion-col>

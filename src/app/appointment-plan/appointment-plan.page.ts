@@ -1,8 +1,7 @@
 import { Component,ViewChild } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { NavController,ModalController , Platform } from '@ionic/angular';
 import { ApiService } from '../services/api';
 import { UserdataService } from '../services/userdata';
-import { ModalController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { AppointmentEditComponent } from '../components/appointment-edit/appointment-edit.component';
 import { CalendarComponent } from 'ng-fullcalendar';
@@ -20,31 +19,49 @@ import { CalendarComponent } from 'ng-fullcalendar';
 })
 export class AppointmentPlanPage {
     public events: any[] = [];
-    @ViewChild('fullcalendar') fullcalendar: CalendarComponent;
+    public allEvents: any[] = [];
+    public people: any[] = [];
     public calendarOptions: any;
+    public mouseoverButton1: boolean;
+    public mouseoverButton2: boolean;
+    public mouseoverButton3: boolean;
+    public mouseoverButton4: boolean;
+    public mouseoverButton5: boolean;
+    public mobilePlatform: boolean = false;
+    public viewMode: number = 0;
+    public peopleFilter:string = "none";  
+    public typeFilter:number = 99;   
+
+    @ViewChild('fullcalendar') fullcalendar: CalendarComponent;
+
     constructor(public navCtrl: NavController,
         public apiService: ApiService,
         public userdata: UserdataService,
         public modalCtrl: ModalController,
-        private translate: TranslateService
+        private translate: TranslateService,
+        public platform: Platform
         //private datePipe: DatePipe
     ) {
         this.calendarOptions = {
+            timezone: 'local',
             editable: true,
             eventLimit: false,
-            timeFormat: "H:mm",
-            slotLabelFormat: "H:mm",
-            weekHeader: "KW",
+            timeFormat: "HH:mm",
+            slotLabelFormat: "HH:mm",
+            weekHeader: "dd",
             dateFormat: "dd.mm.yy",
+            firstDay: 1,
+            allDaySlot: false,
             businessHours: {
                 dow: [1, 2, 3, 4, 5], // Monday - Thursday
-                start: '7:00', // a start time (10am in this example)
+                start: '07:00', // a start time (10am in this example)
                 end: '18:00', // an end time (6pm in this example)
             },
-            minTime: '6:00:00',
+            minTime: '06:00:00',
+            maxTime: '19:00:00',
             header: {
                 left: 'prev,next,today',
-                center: 'title,',
+                center: 'title, myCustomButton',
                 right: 'month,agendaWeek,agendaDay,listMonth'
             },
             events: []
@@ -100,25 +117,107 @@ export class AppointmentPlanPage {
         var newdate2 = new Date();
         newdate2.setDate(today.getDate() - 30);
         console.log(newdate + ' - ' + newdate2);
+        this.peopleFilter = this.userdata.email;
 
         this.eventsFunc(newdate2, newdate);
 
+        platform.ready().then(() => {
+            if ( this.platform.is('ios') ||
+              this.platform.is('android') ) {
+              this.mobilePlatform = true;
+              this.mouseoverButton1 = true;
+              this.mouseoverButton2 = true;
+              this.mouseoverButton3 = true;
+              this.mouseoverButton4 = true;
+              console.log("platform mobile:", this.platform.platforms());
+            }
+            else {
+              console.log("platform not mobile:", this.platform.platforms());
+              this.mobilePlatform = false;
+              this.mouseoverButton1 = false;
+              this.mouseoverButton2 = false;
+              this.mouseoverButton3 = false;
+              this.mouseoverButton4 = false;
+            }
+          });
     }
 
-    eventsFunc(start, end) {
+    mouseover(buttonNumber) {
+        if (buttonNumber == 1)
+            this.mouseoverButton1 = true;
+        else if (buttonNumber == 2)
+            this.mouseoverButton2 = true;
+        else if (buttonNumber == 3)
+            this.mouseoverButton3 = true;
+        else if (buttonNumber == 4)
+            this.mouseoverButton4 = true;
+        else if (buttonNumber == 5)
+            this.mouseoverButton5 = true;
+    }
 
+    mouseout(buttonNumber) {
+        if (this.mobilePlatform == false) {
+            if (buttonNumber == 1)
+            this.mouseoverButton1 = false;
+            else if (buttonNumber == 2)
+            this.mouseoverButton2 = false;
+            else if (buttonNumber == 3)
+            this.mouseoverButton3 = false;
+            else if (buttonNumber == 4)
+            this.mouseoverButton4 = false;
+            else if (buttonNumber == 5)
+            this.mouseoverButton5 = false;
+        }
+    }
+
+    changeFilter(){
+        console.log( "changeFilter()", this.peopleFilter, this.typeFilter );
+        for (let k = 0; k < this.events.length; k++) this.events.pop(); //clear
+        this.events = [];
+        let l = this.events.length;
+        for (let k = 0; k < this.allEvents.length; k++) {  
+            if(this.peopleFilter=="none"){
+                if(this.typeFilter ==99 ) {
+                    this.events.push( JSON.parse(JSON.stringify( this.allEvents[k] )) );
+                }else{
+                    if(this.typeFilter == this.allEvents[k].type){
+                        this.events.push( JSON.parse(JSON.stringify( this.allEvents[k] )) );
+                    }
+                }   
+            }else{                
+                if(this.allEvents[k].email == this.peopleFilter ) {
+                    if(this.typeFilter ==99 ) {
+                        this.events.push( JSON.parse(JSON.stringify( this.allEvents[k] )) );
+                    }else{
+                        if(this.typeFilter == this.allEvents[k].type){
+                            this.events.push( JSON.parse(JSON.stringify( this.allEvents[k] )) );
+                        }
+                    }                    
+                }
+            }
+        }  
+    }
+
+    eventsFunc(start:any, end:any) {
         this.apiService.pvs4_get_appointment_list_ps(start, end).then((result: any) => {
             this.events = [];
+            this.allEvents = []
             let liste = [];
             for (let i = 0; i < result.list.length; i++) {
                 let obj = result.list[i].data;
                 liste.push(obj);
             }
+            this.people = [];  
+            for (let k = 0; k < liste.length; k++) {                      
+                let p = {"first_name":liste[k].first_name, "last_name":liste[k].last_name, "short_code":liste[k].short_code, "email":liste[k].email };
+                let n = true;
+                for (let z = 0; z < this.people.length; z++) { 
+                    if(this.people[z].email == liste[k].email ) n = false;
+                }
+                if(n) this.people.push(p); //nur neue personen
 
-            for (let k = 0; k < liste.length; k++) {
                 let z1 = new Date(liste[k].appointment_date + ' ' + liste[k].start_time);
                 let z2 = new Date(liste[k].appointment_date + ' ' + liste[k].end_time);
-
                 if (z1.getHours() < 7) {
                     z1.setHours(7);
                     z1.setMinutes(0);
@@ -136,14 +235,19 @@ export class AppointmentPlanPage {
                     z2.setMinutes(0);
                 }
 
-                let title = liste[k].company;
-                if (liste[k].appointment_type == 2) title = liste[k].company + ' (' + this.translate.instant('Urlaub') + ')';
-                let t = { id: liste[k].id, title: title, start: z1, end: z2, allDay: false, textColor: "white" };
+                let title = liste[k].short_code;
+                if (liste[k].appointment_type == 2) {
+                    title +=' (' + this.translate.instant('Urlaub') + ')';
+                } else{
+                    title += ' '+liste[k].zip_code+' '+ liste[k].company;
+                }
+                let t = { id: liste[k].id, email:liste[k].email, type:liste[k].appointment_type,  title: title, start: z1, end: z2, allDay: false, textColor: "#000", backgroundColor: liste[k].colour, borderColor: liste[k].colour };
                 t.id = parseInt(t.id);
-
-                this.events.push(t);
+                this.events.push( JSON.parse(JSON.stringify(t)) );
+                this.allEvents.push( JSON.parse(JSON.stringify(t)));
             }
-            console.log("events: ", this.events);
+            console.log("events: ", this.events, this.allEvents);
+            this.changeFilter(); 
         });
     }
     loadEvents(model: any) {
@@ -154,9 +258,9 @@ export class AppointmentPlanPage {
         console.log("event_end: ", event_end);
         this.eventsFunc(event_start, event_end);
     }
-    handleEventClick(model: any) {
+     handleEventClick(model: any) {
         console.log(model.event);
-         this.apiService.pvs4_get_appointment(model.event.id).then(async (result: any) => {
+        this.apiService.pvs4_get_appointment(model.event.id).then(async (result: any) => {
             const modal: HTMLIonModalElement =
             await this.modalCtrl.create({
               component: AppointmentEditComponent,
@@ -167,7 +271,6 @@ export class AppointmentPlanPage {
             });
 
           modal.present();
-
         });
     }
 
@@ -187,7 +290,7 @@ export class AppointmentPlanPage {
         });
     }
 
-    async newPrAppointment() {
+    async newAppointment() {
         console.log("newPrAppointment");
         const modal: HTMLIonModalElement =
         await this.modalCtrl.create({
@@ -200,6 +303,21 @@ export class AppointmentPlanPage {
       modal.present();
     }
 
-}
+    setView(nr:number){
+        console.log("setView():",nr);
+        this.viewMode = nr;
+        if( nr==0 ) {
+            this.peopleFilter = this.userdata.email;
+            this.typeFilter = 99;
+        }else  {
+            this.peopleFilter = "none";
+        }
 
+        if( nr==1 ) this.typeFilter = 0;
+        if( nr==2 ) this.typeFilter = 1;
+        if( nr==3 ) this.typeFilter = 2;
+
+        this.changeFilter();
+    }
+}
 
