@@ -118,49 +118,41 @@
 	</div>
 </ion-content>
 <div class="ek-footer fabfix">
-	<ion-fab slot="fixed" vertical="bottom" right >
-		<ion-fab-button color="primarydark">
+	<ion-fab slot="fixed" vertical="bottom" horizontal="end" >
+		<ion-fab-button color="tertiary">
 			<ion-icon name="menu"></ion-icon>
 		</ion-fab-button>
 		<ion-fab-list side="top">
-			<ion-fab-button 
+			<ion-fab-button  color="primary"
 					(click)="createProtocol()" 
-					class="btn-primary" 
 					[disabled]="userdata.role_set.check_products==false" 
-					style="color:white"
 					(mouseover)="mouseover(1)" 
 					(mouseout)="mouseout(1)">				
 				<ion-icon name="clipboard"></ion-icon>
-				<ion-label [hidden]="!mouseoverButton1">{{'Neues Protokoll' | translate}}</ion-label>
 			</ion-fab-button>
-			<ion-fab-button 
+			<ion-label [hidden]="!mouseoverButton1">{{'Neues Protokoll' | translate}}</ion-label>
+			<ion-fab-button   color="primary"
 					(click)="printPdf()" 
-					class="btn-primary" 
-					style="color:white"
 					(mouseover)="mouseover(2)"
 					(mouseout)="mouseout(2)">				
 				<ion-icon name="document"></ion-icon>
-				<ion-label [hidden]="!mouseoverButton2">{{'PDF Ansicht' | translate}}</ion-label>
 			</ion-fab-button>
-			<ion-fab-button 
+			<ion-label [hidden]="!mouseoverButton2">{{'PDF Ansicht' | translate}}</ion-label>
+			<ion-fab-button  color="primary"
 					[disabled]="!mobilePlatform" 
 					(click)="nfc_scan()" 
-					class="btn-primary" 
-					style="color:white"
 					(mouseover)="mouseover(3)" 
 					(mouseout)="mouseout(3)">				
 				<ion-icon name="wifi"></ion-icon>
-				<ion-label [hidden]="!mouseoverButton3">{{'NFC Scan' | translate}}</ion-label>
 			</ion-fab-button>
-			<ion-fab-button 					
+			<ion-label [hidden]="!mouseoverButton3">{{'NFC Scan' | translate}}</ion-label>
+			<ion-fab-button  color="primary" 					
 					(click)="qr_code()" 
-					class="btn-primary" 
-					style="color:white"
 					(mouseover)="mouseover(4)" 
 					(mouseout)="mouseout(4)">				
 				<ion-icon name="qr-scanner"></ion-icon>
-				<ion-label [hidden]="!mouseoverButton4">{{'QR-Code scannen' | translate}}</ion-label>
 			</ion-fab-button>
+			<ion-label [hidden]="!mouseoverButton4">{{'QR-Code scannen' | translate}}</ion-label>
 		</ion-fab-list>
 	</ion-fab>
 </div>

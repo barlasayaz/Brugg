@@ -139,29 +139,25 @@
 		</div>
 	</div>
 </ion-content>
-<ion-fab slot="fixed" right vertical="bottom"> 
-	<ion-fab-button color="primarydark">
+<ion-fab slot="fixed" horizontal="end" vertical="bottom"> 
+	<ion-fab-button color="tertiary">
 	<ion-icon name="menu"></ion-icon>
 	</ion-fab-button>
 	<ion-fab-list side="top">
-		<ion-fab-button 
+		<ion-fab-button  color="primary"
 				(click)="protocolDeactivate()" 
-				class="btn-primary" 
 				[disabled]="userdata.role_set.check_products==false" 
-				style="color:white"
 				(mouseover)="mouseover(1)" 
 				(mouseout)="mouseout(1)">
 			<ion-icon name="trash"></ion-icon>
-			<ion-label [hidden]="!mouseoverButton1">{{'Protokoll Löschen' | translate}}</ion-label>
 		</ion-fab-button>
-		<ion-fab-button 
+		<ion-label [hidden]="!mouseoverButton1">{{'Protokoll Löschen' | translate}}</ion-label>
+		<ion-fab-button  color="primary"
 				(click)="printPdf()" 
-				class="btn-primary" 
-				style="color:white"
 				(mouseover)="mouseover(2)" 
 				(mouseout)="mouseout(2)">
 			<ion-icon name="document"></ion-icon>
-			<ion-label [hidden]="!mouseoverButton2">{{'PDF Ansicht' | translate}}</ion-label>
 		</ion-fab-button>
+		<ion-label [hidden]="!mouseoverButton2">{{'PDF Ansicht' | translate}}</ion-label>
 	</ion-fab-list>
 </ion-fab>

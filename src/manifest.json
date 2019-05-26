@@ -1,12 +1,17 @@
 {
-  "name": "app",
-  "short_name": "app",
-  "theme_color": "#1976d2",
-  "background_color": "#fafafa",
+  "name": "Ionic",
+  "short_name": "Ionic",
+  "theme_color": "#4e8ef7",
+  "background_color": "#4e8ef7",
   "display": "standalone",
   "scope": "/",
-  "start_url": "/",
+  "start_url": "index.html",
   "icons": [
+    {
+      "src": "assets/imgs/logo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
     {
       "src": "assets/icons/icon-72x72.png",
       "sizes": "72x72",

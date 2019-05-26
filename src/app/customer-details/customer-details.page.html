@@ -180,8 +180,8 @@
                       <ion-icon name="arrow-forward"></ion-icon>
                     </ion-button>
                     &nbsp;&nbsp;&nbsp;
-                    <div *ngIf="pageTotalCount == 0"> [ {{pageCount}} / {{pageTotalCount}} ] </div>
-                    <div *ngIf="pageTotalCount > 0"> [ {{pageCount+1}} / {{pageTotalCount}} ] </div>
+                    <div *ngIf="pageTotalCount == 0" style="color:#fff"> [ {{pageCount}} / {{pageTotalCount}} ] </div>
+                    <div *ngIf="pageTotalCount > 0" style="color:#fff"> [ {{pageCount+1}} / {{pageTotalCount}} ] </div>
                   </div>  
                 </div>
                 <div class="tbody" *ngFor="let contactPersonAddress of contactPersonAddresses">
@@ -221,40 +221,36 @@
     </div>
   </div>
 </ion-content>
-<ion-fab slot="fixed" right vertical="bottom">
-  <ion-fab-button color="primarydark"><ion-icon name="list-box"></ion-icon></ion-fab-button>
+<ion-fab slot="fixed" horizontal="end" vertical="bottom">
+  <ion-fab-button color="tertiary"><ion-icon name="list-box"></ion-icon></ion-fab-button>
     <ion-fab-list side="top">
-      <ion-fab-button *ngIf="userdata.Type<20" 
+      <ion-fab-button color="primary" *ngIf="userdata.Type<20" 
               (click)="appointmentEdit()" 
-              class="btn-primary"
               (mouseover)="mouseover(1)" 
-              (mouseout)="mouseout(1)">
+              (mouseout)="mouseout(1)" data-desc="">
         <ion-icon name="time"></ion-icon>
-        <ion-label [hidden]="!mouseoverButton1">{{'Neuer Termin' | translate}}</ion-label>
       </ion-fab-button>
-      <ion-fab-button 
+      <ion-label [hidden]="!mouseoverButton1">{{'Neuer Termin' | translate}}</ion-label>
+      <ion-fab-button  color="primary"
               (click)="contactPersonPage()" 
-              class="btn-primary"
               (mouseover)="mouseover(2)" 
               (mouseout)="mouseout(2)">
         <ion-icon name="people"></ion-icon>
-        <ion-label [hidden]="!mouseoverButton2">{{'Ansprechpartner' | translate}}</ion-label>
       </ion-fab-button>
-      <ion-fab-button *ngIf="userdata.Type<20" 
+      <ion-label [hidden]="!mouseoverButton2">{{'Ansprechpartner' | translate}}</ion-label>
+      <ion-fab-button color="primary" *ngIf="userdata.Type<20" 
               (click)="noteEdit()" 
-              class="btn-primary"
               (mouseover)="mouseover(3)" 
               (mouseout)="mouseout(3)">
         <ion-icon name="chatbubbles"></ion-icon>
-        <ion-label [hidden]="!mouseoverButton3">{{'Neue Notiz' | translate}}</ion-label>
       </ion-fab-button>
-      <ion-fab-button *ngIf="userdata.Type<20" 
+      <ion-label [hidden]="!mouseoverButton3">{{'Neue Notiz' | translate}}</ion-label>
+      <ion-fab-button color="success" *ngIf="userdata.Type<20" 
               (click)="customerEdit()" 
-              class="btn-success"
               (mouseover)="mouseover(4)" 
               (mouseout)="mouseout(4)">
         <ion-icon name="md-create"></ion-icon>
-        <ion-label [hidden]="!mouseoverButton4">{{'Kundendaten bearbeiten' | translate}}</ion-label>
       </ion-fab-button>
+      <ion-label [hidden]="!mouseoverButton4">{{'Kundendaten bearbeiten' | translate}}</ion-label>
   </ion-fab-list>
 </ion-fab>
