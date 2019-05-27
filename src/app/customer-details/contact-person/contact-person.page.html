@@ -10,7 +10,7 @@
       <ion-title>{{translate.instant('Ansprechpartner')}}</ion-title>
     </ion-toolbar>
   
-    <ion-toolbar no-border-top>
+    <ion-toolbar no-border-top style="min-height: 0px;padding:0px">
       <ion-segment [(ngModel)]="kundendaten">
         <ion-segment-button value="person" style="background-color: rgba(17, 121, 170); color: white;">
           <ion-icon name="person"></ion-icon>
@@ -32,18 +32,18 @@
           <div class="ansprechpartner-row" *ngFor="let contactPerson of contactPersonList">
             <div class="row ansprechpartner-row">
               <!-- NAME -->
-              <div class="col-lg-10 col-md-9 col-8 " (click)="setContactPerson(contactPerson);">
+              <div class="col-8" (click)="setContactPerson(contactPerson);">
                 <div class="ansprechpartner-name" style="font-size:1.5em;">{{contactPerson.first_name}} {{contactPerson.last_name}}</div>
               <div class="ansprechpartner-name" style="font-size:1.5em;"> </div>
                 <div class="ansprechpartner-position" style="font-size:1.1em;">{{contactPerson.department}}</div>
               <div class="ansprechpartner-position" style="font-size:1.1em;"> </div>
               </div>
               <!-- ACTION -->
-              <div class="col-lg-2 col-md-3 col-4 push-left" style="display: flex;" *ngIf="userdata.Type<20">
-                <div class="btn btn-round-green" (click)="editContactPerson(contactPerson);" style="margin-right: 10px">
+              <div class="col-4" style="display: flex;justify-content: flex-end;" *ngIf="userdata.Type<20">
+                <div class="btn btn-round-blue" (click)="editContactPerson(contactPerson);" style="min-width:50px;margin-right: 10px">
                   <ion-icon class="footerIcon" name="create"></ion-icon>
                 </div>
-                <div class="btn btn-round-red" (click)="delContactPerson(contactPerson);" >
+                <div class="btn btn-round-red" style="min-width:50px;" (click)="delContactPerson(contactPerson);" >
                   <ion-icon class="footerIcon" name="trash"></ion-icon>
                 </div>
               </div>
@@ -122,6 +122,21 @@
                   </ion-item>
                 </ion-col>
               </ion-row>
+              <!-- -->
+              <ion-row *ngIf="true">
+                <ion-col size-md="6" size-sm="12" size="12">
+                    <ion-item no-lines class="item-trns " >
+                        <ion-label  >{{translate.instant('edit_products')}}</ion-label>
+                        <ion-toggle     color="partic" [(ngModel)]="contactPersonEdit.edit_products" disabled="{{!setRights}}" ></ion-toggle>
+                    </ion-item>						
+                </ion-col>
+                <ion-col size-md="6" size-sm="12" size="12">
+                    <ion-item no-lines class="item-trns " >
+                        <ion-label  >{{translate.instant('check_products')}}</ion-label>
+                        <ion-toggle     color="partic" [(ngModel)]="contactPersonEdit.check_products" disabled="{{!setRights}}" ></ion-toggle>
+                    </ion-item>						
+                </ion-col>
+            </ion-row> 
             </ion-col>  
           </ion-row>
         </ion-grid>
@@ -130,28 +145,28 @@
         <div class="highlightFehler" *ngIf="email_felder"> * {{translate.instant('E-Mail nicht standardkonform.')}}</div>
 
         <div class="modal-footer">    
-         	<ion-button 
-                  type="button" 
-                  class="btn btn-modal-danger" 
-                  (click)="dismiss()">
-            <ion-icon class="footerIcon" name="close"></ion-icon>
-          </ion-button>
-          <!-- Edit -->
-         	<ion-button 
-                  type="button" 
-                  class="btn btn-modal-success" 
-                  [hidden]="contactPersonEditOderNeu==1" 
-                  (click)="updateData(1);">
-            <ion-icon class="footerIcon" name="checkmark"></ion-icon>
-          </ion-button>
-          <!-- New -->
-         	<ion-button 
-                  type="button" 
-                  class="btn btn-modal-success" 
-                  [hidden]="contactPersonEditOderNeu==0" 
-                  (click)="updateData(0);">
-            <ion-icon class="footerIcon" name="checkmark"></ion-icon>
-          </ion-button>
+               	<ion-button 
+          type="button" 
+          class="btn btn-modal-danger" 
+          (click)="dismiss()">
+    <ion-icon class="footerIcon" name="close"></ion-icon>
+  </ion-button>
+  <!-- Edit -->
+     	<ion-button 
+          type="button" 
+          class="btn btn-modal-success" 
+          [hidden]="contactPersonEditOderNeu==1" 
+          (click)="updateData(1);">
+    <ion-icon class="footerIcon" name="checkmark"></ion-icon>
+  </ion-button>
+  <!-- New -->
+     	<ion-button 
+          type="button" 
+          class="btn btn-modal-success" 
+          [hidden]="contactPersonEditOderNeu==0" 
+          (click)="updateData(0);">
+    <ion-icon class="footerIcon" name="checkmark"></ion-icon>
+  </ion-button>
         </div>
       </ion-list>
   

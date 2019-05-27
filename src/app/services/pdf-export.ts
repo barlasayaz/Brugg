@@ -8,6 +8,7 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
 import { File } from '@ionic-native/file/ngx';
 import { FileOpener } from '@ionic-native/file-opener/ngx';
 
+
 /*
   Generated class for the PdfExportProvider provider.
 
@@ -47,22 +48,27 @@ export class PdfExportService {
         ];
     
     }
-
-    get_ListDocDefinition(bodyArray: any[], widthsArray: any[], title: string, fileName: string) {
-        let src = 'assets/imgs/banner.jpg';
-        let addr1 = 'Brugg Drahtseil AG';
+    
+    get_ListDocDefinition(bodyArray: any[], 
+                          widthsArray: any[], 
+                          headerRowVisible: any,
+                          title: string, 
+                          fileName: string) {
+        let pdfLicensee = this.apiProvider.pdfLicensee;
+        let src = 'assets/imgs/banner_'+pdfLicensee+'.jpg';
+/*         let addr1 = 'Brugg Drahtseil AG';
         let addr2 = 'Wydenstrasse 36';
         let addr3 = 'CH-5242 Birr';
-        let addr4 = ' ';
+        let addr4 = ' '; */
 
         if (this.userdata.Type >= 20) {
             for (let i = 0, len = this.specialCustomer.length; i < len; i++) {
                 if (this.specialCustomer[i].kid == this.userdata.idKunde) {
                     src = 'assets/imgs/' + this.specialCustomer[i].banner;
-                    addr1 = this.specialCustomer[i].line1;
+/*                     addr1 = this.specialCustomer[i].line1;
                     addr2 = this.specialCustomer[i].line2;
                     addr3 = this.specialCustomer[i].line3;
-                    addr4 = this.specialCustomer[i].line4;
+                    addr4 = this.specialCustomer[i].line4; */
                 }
             }
         }
@@ -75,12 +81,12 @@ export class PdfExportService {
                     background: { image: result, width: 800, margin: 20 },
                     header: {
                         columns: [
-                            [
+/*                             [
                                 { text: addr1, margin: [30, 30, 0, 0], fontSize: 12 },
                                 { text: addr2, margin: [30, 5, 0, 0], fontSize: 12 },
                                 { text: addr3, margin: [30, 5, 0, 0], fontSize: 12 },
                                 { text: addr4, margin: [30, 5, 0, 33], fontSize: 12 }
-                            ],
+                            ], */
                             [{ text: ' ' }, { text: ' ' }, { text: ' ' }, { text: ' ' }]
                         ]
                     },
@@ -94,19 +100,20 @@ export class PdfExportService {
                             paddingBottom: function (i, node) { return 4; },
                         },
                         table: {
-                            headerRows: 1,
+                            headerRows: headerRowVisible,
                             widths: widthsArray,
                             body: bodyArray
-                        }
+                        },
+                        fontSize: 10
                     }
                     ],
                     styles: {
                         title: {
-                            fontSize: 22,
+                            fontSize: 16,
                             bold: true
                         },
                         header: {
-                            fontSize: 16,
+                            fontSize: 10,
                             //bold: true,
                             color: '#ffffff',
                             fillColor: '#009de0'

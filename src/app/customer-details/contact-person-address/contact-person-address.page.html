@@ -14,14 +14,36 @@
   <ion-content>
     <ion-grid>
       <ion-row>          
-        <ion-col size-xl="12" size-lg="12" size-md="12" size-sm="12" size="12">      
-          <!-- Row 1 -->
+        <ion-col size-xl="12" size-lg="12" size-md="12" size-sm="12" size="12">            
           <p-accordion>
             <div *ngFor="let contactPersonAddress of contactPersonAddresses; let indAdr = index;">
               <p-accordionTab styleClass="ui-accordion-header" header="{{translate.instant('Ort')}} : {{contactPersonAddress.zip_code}}">
+                <!-- Row 1 -->
                 <div class="tbody">
                 <ion-row>
-                  <ion-col size="11">
+                  <ion-col size="10">
+                    <ion-item no-lines style="padding-left: 0px;">
+                      <ion-label position="floating">{{translate.instant('Adresstyp')}} *</ion-label>
+                      <ion-select id="ansp_address_type" 
+                                  [ngClass]="{required:inputError}"
+                                  [(ngModel)]="contactPersonAddress.address_type"
+                                  required
+                                  okText="{{translate.instant('okay')}}"
+                                  cancelText="{{translate.instant('dismiss')}}">
+                        <ion-select-option value="Rechnungsadresse" selected>{{translate.instant('Rechnungsadresse')}}</ion-select-option>
+                        <ion-select-option value="Lieferadresse">{{translate.instant('Lieferadresse')}}</ion-select-option>
+                      </ion-select>            
+                    </ion-item>
+                  </ion-col>
+                  <ion-col size="2" style="text-align: center;">
+                    <ion-button size="small" color="red" (click)="remAddress(indAdr)" style="margin-top: 22px;"> 
+                        <ion-icon class="footerIcon" name="remove"></ion-icon>
+                    </ion-button>
+                  </ion-col>
+                </ion-row>
+                <!-- Row 2 -->
+                <ion-row>
+                  <ion-col size="12">
                     <ion-item no-lines style="padding-left: 0px;">
                       <ion-label position="floating">{{translate.instant('Strasse')}} *</ion-label>
                       <ion-input type="text" 
@@ -31,13 +53,8 @@
                       </ion-input>                
                     </ion-item>
                   </ion-col>
-                  <ion-col size="1">
-                    <ion-button size="small" color="red" (click)="remAddress(indAdr)" style="margin-top: 22px;"> 
-                        <ion-icon class="footerIcon" name="remove"></ion-icon>
-                    </ion-button>
-                  </ion-col>
                 </ion-row>
-                <!-- Row 2 -->
+                <!-- Row 3 -->
                 <ion-row>
                   <ion-col size="12">
                     <ion-item no-lines style="padding-left: 0px;">
@@ -114,24 +131,24 @@
     <div class="highlightFehler" *ngIf="email_felder"> * {{translate.instant('E-Mail nicht standardkonform.')}}</div>
   
     <div class="modal-footer">    
-      <ion-button 
-              type="button" 
-              class="btn btn-modal-success"
-              (click)="addAddress()"
-              style="left: -150px; width: 50px;">
-        <ion-icon class="footerIcon" name="add"></ion-icon>
-      </ion-button>
-      <ion-button 
-              type="button" 
-              class="btn btn-modal-danger" 
-              (click)="dismiss()">
-        <ion-icon class="footerIcon" name="close"></ion-icon>
-      </ion-button>
-      <ion-button 
-              type="button" 
-              class="btn btn-modal-success" 
-              (click)="updateData();">
-        <ion-icon class="footerIcon" name="checkmark"></ion-icon>
-      </ion-button>
+      <ion-button 
+      type="button" 
+      class="btn btn-modal-success"
+      (click)="addAddress()"
+      style="left: -150px; width: 50px;">
+      <ion-icon class="footerIcon" name="add"></ion-icon>
+    </ion-button>
+    <ion-button 
+      type="button" 
+      class="btn btn-modal-danger" 
+      (click)="dismiss()">
+<ion-icon class="footerIcon" name="close"></ion-icon>
+</ion-button>
+    <ion-button 
+      type="button" 
+      class="btn btn-modal-success" 
+      (click)="updateData();">
+<ion-icon class="footerIcon" name="checkmark"></ion-icon>
+</ion-button>
     </div>  
   </ion-content>  

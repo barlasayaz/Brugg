@@ -21,31 +21,29 @@ export class ContactPersonAddressPage {
   public contactPerson: any = [];
   public kundendaten: any = "person";
   public contactPersonEditOderNeu = 1; // 0>bearbeiten 1>neu   
-  public contactPersonList: any = [];  
+  public contactPersonList: any = [];
   public params: any;
   public pfelder: any = 0;
   public fehler: boolean = false;
   public email_felder: any = 0;
   public pw_felder: any = 0;
-  public contactPersonAddresses: any = []; 
+  public contactPersonAddresses: any = [];
+  public contactPersonAddress: any;
 
-  constructor(public navCtrl: NavController, 
-              public navParams: NavParams,              
-              public translate: TranslateService,
-              public userdata: UserdataService,
-              public apiService: ApiService,
-              public viewCtrl: ModalController) {
+  constructor(public navCtrl: NavController,
+    public navParams: NavParams,
+    public translate: TranslateService,
+    public userdata: UserdataService,
+    public apiService: ApiService,
+    public viewCtrl: ModalController) {
 
     this.idCustomer = this.navParams.get("idCustomer");
     this.contactPerson = this.navParams.get("contactPerson");
     this.contactPersonAddresses = [];
     this.contactPersonAddresses = this.navParams.get("contactPersonAddresses");
+    this.contactPersonAddress = "Rechnung";
     console.log("contactPersonAddresses :", this.contactPerson, this.contactPersonAddresses);
 
-  }
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad ContactPersonAddressPage');
   }
 
   dismiss() {
@@ -57,9 +55,17 @@ export class ContactPersonAddressPage {
     this.fehler = true;
     this.email_felder = 0;
     this.pw_felder = 1;
-    console.log("updateData contactPersonAddresses :", this.contactPersonAddresses);
+    console.log("updateData contactPersonAddresses :", this.contactPersonAddresses, this.contactPersonAddresses.length);
     if (this.contactPersonAddresses.length > 0) {
       for (var i = 0, len = this.contactPersonAddresses.length; i < len; i++) {  
+        if (this.contactPersonAddresses[i].address_type != undefined) {
+          this.pw_felder = 0;
+        }
+        else {
+            this.pw_felder = 1;
+            this.pfelder = 1;
+            return;
+        }
         if (this.contactPersonAddresses[i].street) {
             this.pw_felder = 0;
         }
@@ -92,7 +98,7 @@ export class ContactPersonAddressPage {
                 first_name: "",
                 last_name: "",
                 customer: this.idCustomer,
-                addresses: '[{"address":"", "zipcode":"", "department":"", "email":"", "phone":"", "mobile":""}]',
+                addresses: '[{"address_type":"Rechnung","street":"", "zip_code":"", "department":"", "email":"", "phone":"", "mobile":""}]',
                 department: "",
                 active: 1
       };    
@@ -128,6 +134,7 @@ export class ContactPersonAddressPage {
     this.contactPersonAddresses.splice(indAdr, 1); 
     if(this.contactPersonAddresses.length==0) {
       this.contactPersonAddresses.push({
+        address_type: "Rechnung",
         street: "",
         zip_code: "",
         department: "",
@@ -140,6 +147,7 @@ export class ContactPersonAddressPage {
   
   addAddress() {
     this.contactPersonAddresses.push({
+      address_type: "Rechnung",
       street: "",
       zip_code: "",
       department: "",
@@ -147,6 +155,7 @@ export class ContactPersonAddressPage {
       phone: "",
       mobile: ""
     }); 
+    console.log("addAddress :", this.contactPersonAddresses);
   }
  
 }

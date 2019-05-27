@@ -3,8 +3,8 @@ import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/timeout';
 import { UserdataService } from './userdata';
 
-let apiURL = "http://localhost/pvs/api/";
-//let apiURL = "http://testpvs.schaefer4u.de/api/";
+//let apiURL = "http://localhost/pvs/api/";
+let apiURL = "http://testpvs.schaefer4u.de/api/";
 //let apiURL =  "http://localhost/bruggpvs/api/";
 
 //let pvs4_apiURL = "http://localhost/BruggPVS4/pvs4-api/"; 
@@ -21,7 +21,6 @@ let pvs4_client_secret = 'b23c8hfqnvd3qt7865uiat';
 export class ApiService {
   ud: any;
   isLoggedIn: any;
-  public url: any = apiURL;
   public pvsApiURL = pvs4_apiURL;
   public maxDate: string = '2024-12-31';
   public appointmentStartTime: string = '08:00';
@@ -52,6 +51,7 @@ export class ApiService {
       this.http.post(url, data,{ responseType:"text" })
         .subscribe(
           (data: any) => {
+            data =JSON.parse(data);
             console.log("api bid_login() post data: ", data);
             if (data.amount == 1) {
               console.log("api bid_login() ok ");
@@ -189,6 +189,7 @@ export class ApiService {
       // call  endpoint
       this.http.post(url, data, { headers: headers,responseType:"text" }).subscribe((done: any) => {
           //return the result
+          done =JSON.parse(done);
           console.info(func, done);
           res(done);
         },
@@ -1036,27 +1037,6 @@ export class ApiService {
       }, (err) => {
         reject(err);
       });
-    });
-  }
-
-  zeileUpdateInDB(tabName: any, objNeu: any, id: any) {
-    let params = '{"tabName":"' + tabName + '","id":' + id + ',"obj":' + objNeu + '}';
-    this.postData(JSON.parse(params), "on_update_in_db.php").then((result) => {
-      return result;
-    });
-  }
-
-  zeileDeleteInDB(tabName: any, id: any) {
-    let params = '{"tabName":"' + tabName + '","id":' + id + '}';
-    this.postData(JSON.parse(params), "on_delete_in_db.php").then((result) => {
-      return result;
-    });
-  }
-
-  zeileInsertInDB(tabName: any, objNeu: any) {
-    let params = '{"tabName":"' + tabName + '","obj":' + objNeu + '}';
-    this.postData(JSON.parse(params), "on_insert_in_db.php").then((result) => {
-      return result;
     });
   }
 
