@@ -18,8 +18,66 @@ input:-webkit-autofill:hover,
 input:-webkit-autofill:focus, 
 input:-webkit-autofill:active  {
     -webkit-box-shadow: 0 0 0 30px white inset !important;
-    box-shadow: 0 0 0 30px white inset !important;
 }
+
+.heightCalc {
+  display: block;
+  position: absolute;
+  top: calc(65px + 55px + 41px);
+  left: 0;
+  height: calc(100% - 65px - 55px - 41px - 35px);
+  width: 100%;
+  //background: #333;
+  z-index: -55;
+}
+
+.list-md .item-input:last-child, .item-input:last-child {
+  border-bottom: none !important;
+}
+
+
+body .ui-widget, 
+body .ui-widget .ui-widget, 
+body .ui-widget input, 
+body .ui-widget select, 
+body .ui-widget textarea, 
+body .ui-widget button {
+  font-family: inherit !important;
+}
+
+//FAB
+.fab-in-list.show {
+  color: #FFF;
+}
+
+a {
+  text-decoration: none !important;
+}
+
+ion-fab-button ion-label {
+  color: #FFF !important;
+  background: var(--ion-color-darkmain) !important;
+  font-weight: 700;
+}
+
+.ui-paginator-bottom {
+  position: fixed;
+  width: 100%;
+  height: 35px !important;
+  padding: 20px 0px;
+  bottom: 0;
+  background: var(--ion-color-darkmain) !important;
+  a {
+    color: #FFF !important;
+    &:hover {
+      color: #222 !important;
+    }
+  }
+  .ui-state-active, .ui-state-highlight {
+    background: rgba(#009de0, 0.7) !important;
+  }
+}
+
 
 //***** NEU ******
 
@@ -161,7 +219,7 @@ ion-item.item-datetime {
     margin-bottom: -16px;
     margin-left: 5px;
     margin-top: 0;
-    padding: 5px;
+    padding: 5px 10px 5px 5px;
     background: #FFF;
     width: auto;
     align-self: baseline;
@@ -188,7 +246,7 @@ ion-item.item-textarea {
     margin-bottom: -24px;
     margin-left: 5px;
     margin-top: 0;
-    padding: 5px;
+    padding: 5px 10px 5px 5px;
     background: #FFF;
     width: auto;
     align-self: baseline;
@@ -272,9 +330,13 @@ ion-item.item-textarea {
   }
 }
 
-.table .tbody .table-subheader-fix {
+.table .thead .table-subheader-fix,
+.table-info .thead .table-subheader-fix,
+.table .tbody .table-subheader-fix,
+.table-info .tbody .table-subheader-fix {
   display: flex;
-  height: 55px;
+  background: #005e86;
+  height: 55px !important;
   padding: 10px !important;
   -webkit-align-items: center !important;
           align-items: center !important;
@@ -375,15 +437,15 @@ ion-item.item-toggle {
 
 //BUTTONS
 .opt-add {
-  height: 100%;
-  padding: 10px 14px;
-  font-size: 18px;
+  width: 25px;
+  height: 25px;
+  margin-top: 10px;
 }
 
 .opt-remove {
-  height: 100%;
-  padding: 10px 14px;
-  font-size: 18px;
+  width: 25px;
+  height: 25px;
+  margin-top: 10px;
   background: var(--ion-color-red);
 }
 
@@ -19345,6 +19407,7 @@ ion-select {
       background: #005E86 !important;
       color: #fff !important;
       padding: 10px 5px !important;
+      white-space: nowrap !important;  
     }
   }
   tbody {

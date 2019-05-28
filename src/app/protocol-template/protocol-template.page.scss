@@ -45,7 +45,7 @@
       margin-top: 15px;
       margin-bottom: 25px;  
       .product-temp-title {
-          background: color($colors, main);
+          background: var(--ion-color-main);
           color: #FFF;
           margin-top: -10px;
           padding: 10px;
@@ -138,10 +138,10 @@
   }
 
   .selectOption {
-      background: color($colors, darkmain);
+      background: var(--ion-color-darkmain);
       .product-temp-content {
-          background: color($colors, darkmain);
-          border-color: color($colors, darkmain);
+          background: var(--ion-color-darkmain);
+          border-color: var(--ion-color-darkmain);
       }
   }
 
@@ -150,10 +150,10 @@
   }
 
   .selectTemplate {
-     background: color($colors, darkmain);
+     background: var(--ion-color-darkmain);
      .product-temp-content {
-         background: color($colors, darkmain);
-         border-color: color($colors, darkmain);
+         background: var(--ion-color-darkmain);
+         border-color: var(--ion-color-darkmain);
      }
   }
 
