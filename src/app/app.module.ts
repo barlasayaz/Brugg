@@ -68,7 +68,7 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { NgxQRCodeModule } from 'ngx-qrcode2';
 import { ofroot } from './order-form/order-form-root';
 
-import { HomePage } from './home/home';
+//import { HomePage } from './home/home';
 //import { ComponentsModule } from './components/components.module';
 
 import { Camera } from '@ionic-native/camera/ngx';
@@ -85,7 +85,7 @@ export function HttpLoaderFactory(http: HttpClient) {
   declarations: [
     AppComponent,
     FilterPipe,
-    HomePage/* ,
+    /*HomePage ,
     MainNavComponent,
     LoginPage */
   ],

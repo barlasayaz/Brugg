@@ -29,21 +29,20 @@ export class ProductEditPage {
   public parentProduct: number = 0;
   public itsNew: boolean = false;
   public activProduct: any = {
-    active: 1,
-    id: 0,
-    id_number: "",
-    articel_no: "",
-    check_interval: 0,
-    last_protocol: "",
-    items: "",
-    title: "",
-    images: "",
-    parent: this.parentProduct,
-    customer: 0,
-    nfc_tag_id: "",
-    qr_code: ""
+          active: 1,
+          id: 0,
+          id_number: "",
+          articel_no: "",
+          check_interval: 0,
+          last_protocol: "",
+          items: "",
+          title: "",
+          images: "",
+          parent: this.parentProduct,
+          customer: 0,    
+          nfc_tag_id: "",
+          qr_code: ""
   };
-  public inputError: boolean = false;
   public templates: any[] = [];
   public templateAll: any[] = [];
   public selectedTemplate: any[] = [];
@@ -62,6 +61,10 @@ export class ProductEditPage {
   public nocache: any;
   public maxDate: string;
   private loader: HTMLIonLoadingElement;
+  public mandatoryControl: boolean = false;
+  public productListAll: any[] = [];
+  public allnodes: any[] = [];
+  public idnumberControl: boolean = false;
 
   constructor(public navCtrl: NavController,
     public route: ActivatedRoute,
@@ -79,7 +82,7 @@ export class ProductEditPage {
     this.maxDate = this.apiService.maxDate;
     this.route.queryParams.subscribe(params => {
       this.idCustomer = params["idCustomer"];
-      this.company = params["company"];
+      //this.company = params["company"];
       this.idProduct = params["id"];
       this.parentProduct = params["parent"];
     });
@@ -114,20 +117,17 @@ export class ProductEditPage {
     }
     this.lang = localStorage.getItem('lang');
     this.loadTemplate();
+    this.loadProductList();
 
     console.log("ProductEditComponent: ", this.idProduct);
-
-  }
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad ProductEditPage');
     this.nocache = new Date().getTime();
+
   }
 
   dateiListe() {
     this.apiService.pvs4_get_file(this.idProduct, 'product').then((result) => {
-      console.log("dateiliste", result);
-      this.file_link = result["file_link"];
+        console.log("dateiliste", result);
+        this.file_link = result["file_link"];
     });
   }
 
@@ -186,7 +186,7 @@ export class ProductEditPage {
 
   loadTemplate() {
     this.templates = [];
-    this.apiService.pvs4_get_product_tem(1, 1).then((result: any) => {
+    this.apiService.pvs4_get_product_tem(this.userdata.licensee, 1).then((result: any) => {
       result.list.forEach(element => {
         element.data.options = JSON.parse(element.data.options);
         element.data.title = JSON.parse(element.data.title);
@@ -196,6 +196,25 @@ export class ProductEditPage {
       this.templateAll = JSON.parse(JSON.stringify(this.templates));
       console.log('Template Title :', this.templates);
     });
+  }
+
+  loadProductList() {
+    this.productListAll = [];
+    this.apiService.pvs4_get_product_list(this.idCustomer).then((result: any) => {
+      console.log("ionViewDidLoad result :", result);
+      this.productListAll = JSON.parse(JSON.stringify(result.list));
+      this.data_tree(this.productListAll);
+      console.log("productListAll :", this.productListAll);
+    });
+  }
+
+  data_tree(nodes: any[]): any {
+    for (let i = 0; i < nodes.length; i++) {
+        this.allnodes.push(nodes[i].data);
+        if (nodes[i].children && nodes[i].children.length > 0) {
+            this.data_tree(nodes[i].children);
+        }
+    }
   }
 
   search_all() {
@@ -213,16 +232,81 @@ export class ProductEditPage {
   productEdit() {
     console.log("productEdit()");
 
-    if (!this.activProduct["title"]) {
-      this.showEditAlert();
-      return;
-    }
-
+    this.mandatoryControl = false;    
     if (!this.activProduct["items"]) {
       this.showOptionAlert();
       return;
     }
+    if (!this.activProduct["title"]) {
+      this.mandatoryControl = true;
+    }
+    if (!this.activProduct["id_number"]) {
+      this.mandatoryControl = true;
+    }    
+    this.activProduct.items.forEach(element => {
+      console.log("Mandatory Control :", element, element.mandatory, element.type, element.value);
+      // Toggle
+      if(element.type == 0) {
+        if(element.mandatory == 'true' && !element.value) {
+          this.mandatoryControl = true;
+        }        
+      }
+      // Select 
+      if(element.type == 1) {
+        console.log("select :", element.mandatory, element.value);
+        if(element.mandatory == 'true' && element.value == null) {
+          this.mandatoryControl = true;
+        }
+      }
+      // Textarea
+      if(element.type == 2) {
+        console.log("textarea :", element.mandatory, element.value);
+        if(element.mandatory == 'true' &&  element.value == null) {
+          this.mandatoryControl = true;
+        }        
+      }
+      // Number
+      if(element.type == 3) {
+        console.log("number :", element.mandatory, element.value);
+        if(element.mandatory == 'true' &&  element.value == null) {
+          this.mandatoryControl = true;
+        }        
+      }
+      // Time
+      if(element.type == 4) {
+        console.log("time :", element.mandatory, element.value);
+        if(element.mandatory == 'true' && element.value == null) {
+          this.mandatoryControl = true;
+        }        
+      }
+      // Date
+      if(element.type == 5) {
+        console.log("date :", element.mandatory, element.value);
+        if(element.mandatory == 'true' && element.value == null) {
+          this.mandatoryControl = true;
+        }        
+      }
 
+    });
+
+    if(this.mandatoryControl) {
+      this.showMandatoryAlert();
+      return;
+    }
+
+    this.idnumberControl = false;
+    console.log("allnodes :", this.allnodes);
+    this.allnodes.forEach(element => {
+      if((this.activProduct.id_number == element.id_number) && (this.activProduct.id != element.id)) {
+        this.idnumberControl = true;
+      }
+    });
+
+    if(this.idnumberControl) { 
+      this.showConfirmIDNumberAlert(); 
+      return; 
+    }
+   
     let imgstr: string = this.imagesSave;
     console.log("productEdit imgstr :", imgstr);
     if (imgstr != null) {
@@ -310,11 +394,12 @@ export class ProductEditPage {
     this.showConfirmDeleteTemplate();
   }
 
-  keyDown(event: any) {
+  keyDown(event:any)
+  {
     //const pattern = /^(\d*\,)?\d+$/;
     let regex = new RegExp(/[0-9]/g);
     let inputChar = String.fromCharCode(event.keyCode);
-    if (event.keyCode == 37 || event.keyCode == 39 || event.keyCode == 8 || event.keyCode == 46 || event.keyCode == 188 || event.keyCode == 110 || (event.keyCode >= 96 && event.keyCode <= 105))  // Left / Up / Right / Down Arrow, Backspace, Delete keys
+    if(event.keyCode == 37 || event.keyCode == 39 ||  event.keyCode == 8 || event.keyCode == 46 || event.keyCode == 188 || event.keyCode == 110 || (event.keyCode >= 96 && event.keyCode<=105))  // Left / Up / Right / Down Arrow, Backspace, Delete keys
       return;
 
     if (!inputChar.match(regex)) {
@@ -328,7 +413,7 @@ export class ProductEditPage {
       await this.modalCtrl.create({
         component: DialogproduktbildmodalPage,
         componentProps: {
-          "Bild": this.activProduct.images
+          "Bild": this.activProduct.images,redDirect:1
         }
       });
 
@@ -432,6 +517,7 @@ export class ProductEditPage {
         }
       ]
     }).then(x => x.present());
+
   }
 
   showConfirmDeleteTemplate() {
@@ -480,24 +566,41 @@ export class ProductEditPage {
           text: this.translate.instant('ja'),
           handler: () => {
             let temp = this.templates.find(x => x.id == this.selectedTmplt);
-            console.log("items: ", temp);
-
-            this.activProduct.items = temp.options;
+            console.log("items: ", temp);            
+            
             for (let index = 0; index < temp.options.length; index++) {
-              if (temp.options[index].type == 0 || temp.options[index].type == 4)
-                this.activProduct.items[index].value = temp.options[index].options.default;
+              if(temp.options[index].mandatory == '' || temp.options[index].mandatory == undefined) {
+                temp.options[index].mandatory = 'false';
+              }
+              if(temp.options[index].mandatory == 0) {
+                temp.options[index].mandatory = 'false';
+              }
+              if(temp.options[index].mandatory == 1) {
+                temp.options[index].mandatory = 'true';
+              }
+              console.log("mandatory :", temp.options[index].mandatory);
+              if (temp.options[index].type == 0 || temp.options[index].type == 4) {
+                temp.options[index].value = temp.options[index].options.default;
+                //this.activProduct.items[index].value = temp.options[index].options.default;
+              } else {
+                temp.options[index].value = null;
+              }
+
             }
+            
+            this.activProduct.items = temp.options;
             this.activProduct.title = this.templates.find(x => x.id == this.selectedTmplt).title;
+            console.log("activProduct.items :", this.activProduct.items);
           }
         }
       ]
     }).then(x => x.present());
   }
 
-  showEditAlert() {
+  showMandatoryAlert() {
     let alert = this.alertCtrl.create({
       header: this.translate.instant('Produkt speichern short'),
-      message: this.translate.instant('Produkt speichern long'),
+      message: this.translate.instant('Bitte füllen Sie alle Pflichtfelder aus.'),
       buttons: [
         {
           text: this.translate.instant('ja'),
@@ -531,14 +634,13 @@ export class ProductEditPage {
       queryParams: {
         idTemplate: this.selectedTmplt,
         idCustomer: this.idCustomer,
-        activTemplate: JSON.stringify(activTemplate),
-        company: this.company
+        activTemplate: JSON.stringify(activTemplate)
       }
     };
     this.navCtrl.navigateForward(["/product-template"], navigationExtras);
   }
 
-  async new_Option() {
+  /*async new_Option() {
     const modal =
       await this.modalCtrl.create({
         component: ProductNewPage,
@@ -556,7 +658,7 @@ export class ProductEditPage {
       }
     });
     modal.present();
-  }
+  }*/
 
   promptOptionTitle(title, type, index) {
     console.log('promptProductTitle(): ', title, type, index);
@@ -618,6 +720,22 @@ export class ProductEditPage {
         }
       ]
     }).then(x => x.present());
+  }
+
+  showConfirmIDNumberAlert() {
+    let alert = this.alertCtrl.create({
+      header: this.translate.instant('Produkt speichern short'),
+      message: this.translate.instant('Bitte überprüfen Sie das Feld ID-Nummer. Diese Nummer wird verwendet.'),
+      buttons: [
+        {
+          text: this.translate.instant('ja'),
+          handler: () => {
+
+          }
+        }
+      ]
+    }).then(x => x.present());
+
   }
 
 }

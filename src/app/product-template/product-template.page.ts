@@ -37,8 +37,6 @@ export class ProductTemplatePage {
   public selectOption: any = 0;
   public tmpInd: any = 0;
   public downClick: any = 0;
-
-
   public template: Array<any> = [];
   public options: Array<any> = [];
   public optionsAll: Array<any> = [];
@@ -47,6 +45,7 @@ export class ProductTemplatePage {
   public itsNew: boolean = true;
   public activTemplate: any = {};
   public company: string = "";
+  public mandatory: string = "false"; 
 
 
   constructor(public navCtrl: NavController,
@@ -76,7 +75,7 @@ export class ProductTemplatePage {
     });
     this.route.queryParams.subscribe(params => {
       this.idCustomer = params["idCustomer"];
-      this.company = params["company"];
+      //this.company = params["company"];
       this.idTemplate = params["idTemplate"];
       this.itsNew = params["itsNew"];
       this.activTemplate = params["activTemplate"];
@@ -143,12 +142,6 @@ export class ProductTemplatePage {
         }
       ]
     }).then(x => x.present());
-  }
-
-
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad ProductTemplatePage');
   }
 
   down_click() {

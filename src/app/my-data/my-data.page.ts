@@ -29,11 +29,8 @@ export class MyDataPage {
               public userdata: UserdataService,
               public modalCtrl : ModalController) {
         this.lang = localStorage.getItem('lang');
-  }
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad MyDataPage',this.userdata, this.userdata.role_set.edit_customer);
-    this.loadList();
+        console.log('ionViewDidLoad MyDataPage',this.userdata, this.userdata.role_set.edit_customer);
+        if((this.userdata.role==1)||(this.userdata.role==2)) this.loadList();
   }
 
   loadList(){
@@ -58,7 +55,7 @@ export class MyDataPage {
   delLocalAll() {
     console.log('delLocalAll()');
     this.userdata.delStorage(); 
-    this.navCtrl.navigateForward("/Login");   
+    this.navCtrl.navigateForward("/Login");  
   }
 
   mw_test_a(nr:number) {

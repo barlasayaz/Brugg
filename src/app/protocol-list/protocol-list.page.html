@@ -1,6 +1,6 @@
-<main-nav aktivPage="ProtocolList" [idCustomer]="idCustomer" [company]="company"></main-nav>
+<main-nav aktivPage="ProtocolList" [idCustomer]="idCustomer" ></main-nav>
 
-<div class="ek-content"> 
+<div class="ek-content" (window:resize)="onResize($event)"> 
     <p-menubar [model]="popupMenu" [autoDisplay]="false" id="menuMin"> 
         <div class="ui-inputgroup search-search">
             <input type="text" 
@@ -8,11 +8,11 @@
                    placeholder="{{'Suche' |translate }}" 
                    [(ngModel)]="columnFilterValues['search_all']" 
                    (input)="search_all()">   
-            <button (click)="search_all()" 
+            <!-- <button (click)="search_all()" 
                     pButton type="button" 
                     icon="fa fa-search" 
                     class="ui-button-warn">
-            </button>      
+            </button>  -->     
         </div>   
     </p-menubar>
     <p-menubar [model]="menuItems" [autoDisplay]="false" id="menuMax"> 
@@ -29,6 +29,8 @@
             </button>       -->
         </div>   
     </p-menubar>
+
+    <div id="heightCalc" class="heightCalc" #divHeightCalc></div>
     <p-treeTable [value]="protocolListView" 
                  [columns]="cols" 
                  selectionMode="single" 
@@ -36,8 +38,10 @@
                  (onNodeSelect)="nodeSelect($event)" 
                  (onNodeUnselect)="nodeUnselect()" 
                  dataKey="id"
-                 [scrollable]="true"
-                 scrollHeight="80vh"
+                 [scrollable]="true" 
+                 [scrollHeight]="heightCalc" 
+                 [rows]="25"                 
+                 [paginator]="true"
                  [resizableColumns]="true">
                  <ng-template pTemplate="colgroup" let-columns>
                     <colgroup>

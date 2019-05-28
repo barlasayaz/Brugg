@@ -1,255 +1,255 @@
-	ion-content {
-		.scroll-content {
-			overflow: hidden !important;
-			@media screen and (max-width: 767px) {
-				overflow: auto !important;
-				background: rgb(0,157,224);
-				background: linear-gradient(-45deg, rgba(0,35,65,1) 0%, rgba(0,157,224,1) 100%);
-			}
-		}
-	} 
-
-	.pvs4-login-container {
-		display: flex;
-		height: 100%;
-	}	
-
-	.version {
-		color: #eee;
-/* 		-webkit-border-radius: $global-radius;
-		        border-radius: $global-radius; */
-		padding: 10px;
-		width: 100%;
-		max-width: 400px;
-		text-align: right;
-		display: flex;
-		justify-content: flex-end;
-		margin: 0 auto;
-	}
-
-	.pvs4-lang-select {
-		margin-bottom: 15px;
-		display: flex;
-		align-items: flex-end;
-		width: 100%;
-	}
-
-	.logo {
-		width: 100%;
-		max-width: 100px;
+ion-content {
+	.scroll-content {
+		overflow: hidden !important;
 		@media screen and (max-width: 767px) {
-			text-align: left;
-			max-height: 100%;
-			max-width: 70px;
-		}
-		img {
-			width: 100%;
-			height: auto;
+			overflow: auto !important;
+			background: rgb(0,157,224);
+			background: linear-gradient(-45deg, rgba(0,35,65,1) 0%, rgba(0,157,224,1) 100%);
 		}
 	}
+} 
 
-	.remaind {
-		font-size: 14px;
+.pvs4-login-container {
+	display: flex;
+	height: 100%;
+}	
+
+.version {
+	color: #eee;
+	-webkit-border-radius: var(--global-radius);
+			border-radius: var(--global-radius);
+	padding: 10px;
+	width: 100%;
+	max-width: 400px;
+	text-align: right;
+	display: flex;
+	justify-content: flex-end;
+	margin: 0 auto;
+}
+
+.pvs4-lang-select {
+	margin-bottom: 15px;
+	display: flex;
+	align-items: flex-end;
+	width: 100%;
+}
+
+.logo {
+	width: 100%;
+	max-width: 100px;
+	@media screen and (max-width: 767px) {
+		text-align: left;
+		max-height: 100%;
+		max-width: 70px;
 	}
-
-	.pvs4-login-text {
-		font-size: 14px;
-		margin-top: 5px;
-		text-align: center;
- 		-webkit-border-radius: 3px;
-		        border-radius: 3px; 
+	img {
 		width: 100%;
+		height: auto;
+	}
+}
+
+.remaind {
+	font-size: 14px;
+}
+
+.pvs4-login-text {
+	font-size: 14px;
+	margin-top: 5px;
+	text-align: center;
+	-webkit-border-radius: 3px;
+			border-radius: 3px;
+	width: 100%;
+	color: #FFF;
+	background: var(--ion-color-main);
+	&:hover {
+		cursor: pointer;
+	}
+}
+
+.pvs4-register-text {
+	font-size: 14px;
+	color: var(--ion-color-main);
+	&:hover {
+		cursor: pointer;
+	}
+}
+
+.pvs4-login-infobar {
+	font-size: 12px;
+	color: var(--ion-color-grey);
+	a {
+		color: var(--ion-color-grey);
+		&:hover {
+			cursor: pointer;
+			text-decoration: none;
+		}
+	}
+}
+
+.brugg-digital-wrapper {
+	margin: 60px 0px;
+}
+
+h1 {
+	font-size: 28px;
+	margin-top: 0;
+	margin-bottom: 20px;
+}
+
+h2 {
+	font-size: 18px;
+	color: #009de0;
+}
+
+p {
+	line-height: 24px;
+}
+
+.featuers {
+	margin: 60px 0px;
+	display: flex;
+	flex-direction: column;
+	h2,p {
+		margin: 0;
+		padding: 0;
+	}
+	span {
+		margin-top: 10px;
+		font-style: italic;
+	}
+	.feat {
+		display: flex;
+		padding: 20px 0px;
+		align-items: center;
+		&:nth-child(2) {
+			border-bottom: 1px solid #eee;
+			border-top: 1px solid #eee;
+		}
+		h2 {
+			margin-right: 10px;
+			width: 100px;
+			min-width: 100px;
+		}
+	}
+}
+
+.vorteile {
+	background: #009de0;
+	padding: 40px;
+	margin-left: -40px;
+	margin-right: -40px;
+	margin-top: 40px;
+	-webkit-border-radius: 3px;
+			border-radius: 3px;
+	h2 {
 		color: #FFF;
-		/* background: color($colors, main); */
-		&:hover {
-			cursor: pointer;
-		}
-	}
-
-	.pvs4-register-text {
-		font-size: 14px;
-		/* color: color($colors, main); */
-		&:hover {
-			cursor: pointer;
-		}
-	}
-
-	.pvs4-login-infobar {
-		font-size: 12px;
-		/* color: color($colors, grey); */
-		a {
-			/* color: color($colors, grey); */
-			&:hover {
-				cursor: pointer;
-				text-decoration: none;
-			}
-		}
-	}
-
-	.brugg-digital-wrapper {
-		margin: 60px 0px;
-	}
-
-	h1 {
-		font-size: 28px;
 		margin-top: 0;
+		font-size: 24px;
 		margin-bottom: 20px;
 	}
 
-	h2 {
-		font-size: 18px;
-		color: #009de0;
-	}
-
-	p {
-		line-height: 24px;
-	}
-
-	.featuers {
-		margin: 60px 0px;
+	.vorteil {
 		display: flex;
-		flex-direction: column;
-		h2,p {
-			margin: 0;
-			padding: 0;
-		}
-		span {
-			margin-top: 10px;
-			font-style: italic;
-		}
-		.feat {
-			display: flex;
-			padding: 20px 0px;
-			align-items: center;
-			&:nth-child(2) {
-				border-bottom: 1px solid #eee;
-				border-top: 1px solid #eee;
-			}
-			h2 {
-				margin-right: 10px;
-				width: 100px;
-				min-width: 100px;
-			}
-		}
-	}
-
-	.vorteile {
-		background: #009de0;
-		padding: 40px;
-		margin-left: -40px;
-		margin-right: -40px;
-		margin-top: 40px;
- 		-webkit-border-radius: 3px;
-		        border-radius: 3px;
-		h2 {
-			color: #FFF;
-			margin-top: 0;
-			font-size: 24px;
-			margin-bottom: 20px;
-		}
-
-		.vorteil {
-			display: flex;
-			@media screen and (max-width: 1000px) {
-				flex-direction: column;
-			}
-			.vort {
-				color: #FFF;
-				text-align: center;
-				@media screen and (max-width: 1000px) {
-					margin: 10px 0px;
-				}
-				&:nth-child(2) {
-					p {
-						padding-right: 10px;
-						padding-left: 10px;
-					}
-				}
-				img {
-					padding: 0px 40px;
-					margin-bottom: 10px;
-					@media screen and (max-width: 1000px) {
-						padding: 20px 80px;
-					}
-				}
-			}
-		}
-	}	
-
-	.intro-img {
-		padding: 20px;
-		margin-top: -20px;
-		width: 100%;
-		margin-bottom: -150px;
 		@media screen and (max-width: 1000px) {
-			margin-bottom: -50px;
-			margin-top: 0;
+			flex-direction: column;
+		}
+		.vort {
+			color: #FFF;
+			text-align: center;
+			@media screen and (max-width: 1000px) {
+				margin: 10px 0px;
+			}
+			&:nth-child(2) {
+				p {
+					padding-right: 10px;
+					padding-left: 10px;
+				}
+			}
+			img {
+				padding: 0px 40px;
+				margin-bottom: 10px;
+				@media screen and (max-width: 1000px) {
+					padding: 20px 80px;
+				}
+			}
 		}
 	}
+}	
 
-	.login-intro-text {
-		text-align: left;
-		max-width: 400px;
-		width: 100%;
-		margin-bottom: 40px;
-		h1 {
-			color: #FFF;
-			margin-top: 0px;
-			margin-bottom: 10px;
+.intro-img {
+	padding: 20px;
+	margin-top: -20px;
+	width: 100%;
+	margin-bottom: -150px;
+	@media screen and (max-width: 1000px) {
+		margin-bottom: -50px;
+		margin-top: 0;
+	}
+}
+
+.login-intro-text {
+	text-align: left;
+	max-width: 400px;
+	width: 100%;
+	margin-bottom: 40px;
+	h1 {
+		color: #FFF;
+		margin-top: 0px;
+		margin-bottom: 10px;
+	}
+	p {
+		color: #FFF;
+	}
+	@media screen and (max-width: 767px) {
+		display: none;
+	}
+}
+
+.logov {
+	display: flex;
+	flex-direction: column;
+justify-content: center;
+align-content: center;
+	width: 100%;
+	text-align: center;
+	margin-top: 40px;
+	margin-bottom: 20px;
+	@media screen and (max-width: 767px) {
+		margin: 20px 0px;
+	}
+	img {
+		max-width: 200px;
+		margin: 0 auto;
+		@media screen and (max-width: 767px) {
+			max-width: 150px;
 		}
-		p {
-			color: #FFF;
-		}
+	}
+	span {
+		color: #aaa;
+		margin-bottom: 5px;
 		@media screen and (max-width: 767px) {
 			display: none;
 		}
 	}
+}
 
-	.logov {
-		display: flex;
-		flex-direction: column;
-    justify-content: center;
-    align-content: center;
-		width: 100%;
-		text-align: center;
-		margin-top: 40px;
-		margin-bottom: 20px;
-		@media screen and (max-width: 767px) {
-			margin: 20px 0px;
-		}
-		img {
-			max-width: 200px;
-			margin: 0 auto;
-			@media screen and (max-width: 767px) {
-				max-width: 150px;
-			}
-		}
-		span {
-			color: #aaa;
-			margin-bottom: 5px;
-			@media screen and (max-width: 767px) {
-				display: none;
-			}
-		}
+
+.login-log-container {
+	max-width: 800px;
+	margin-left: auto;
+	margin-right: auto;
+	@media screen and (max-width:1400px) {
+		max-width: 600px;
 	}
-
-
-	.login-log-container {
-		max-width: 800px;
-		margin-left: auto;
-		margin-right: auto;
-		@media screen and (max-width:1400px) {
-			max-width: 600px;
-		}
-		@media screen and (max-width:1200px) {
-			max-width: 450px;
-		}
-		@media screen and (max-width:1000px) {
-			max-width: 100%;
-			padding-left: 20px;
-			padding-right: 20px;
-		}
+	@media screen and (max-width:1200px) {
+		max-width: 450px;
 	}
+	@media screen and (max-width:1000px) {
+		max-width: 100%;
+		padding-left: 20px;
+		padding-right: 20px;
+	}
+}
 
 .pvs4-info-wrapper {
 	background: #FFF;
@@ -292,8 +292,8 @@
 	background: #FFF;
 	padding: 30px 45px;
 	max-width: 400px;
-/* 	-webkit-border-radius: $global-radius;
-	        border-radius: $global-radius; */
+	-webkit-border-radius: var(--global-radius);
+	        border-radius: var(--global-radius);
 }
 
 .pvs4-full-select {

@@ -45,19 +45,6 @@ export class ReboxNewPage {
                 this.rebox.ReBoxDate = new Date().toISOString().substring(0, 10);
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad ReboxNewPage');
-  }
-
-/*   editMeine() {   TODO
-    console.log(this.userdata);
-    this.params = '{"id":' + this.userdata.id + ',"tabelle":"verantwortlicher"}';
-
-    this.apiService.postData(JSON.parse(this.params), "on_obj_in_tabelle.php").then((result) => {
-      this.edit = result["obj"];
-    });
-  }
- */
   dismiss() {
     this.viewCtrl.dismiss();
   }

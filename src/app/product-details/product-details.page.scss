@@ -1,38 +1,33 @@
 
-    .th {
-        justify-content: left !important;       
-        font-size: 18px !important;
-    }
-   
-    .td-lbl {
-        height: auto;
-        padding: 7px 10px;
-        line-height: 32px;
-        color: #7a7e81;
-        font-size: 14px;
-        font-weight: 200;
-        border: none !important;
-        overflow: hidden;
-        -webkit-box-flex: 1;
-        -o-box-flex: 1;
-        box-flex: 1;
-        -webkit-flex: 1;
-        -ms-flex: 1;
-        flex: 1;
-        position: relative;
-        max-width: 200px;
-    }
+    .qrqr {
+      display: flex;
+      -webkit-align-items: center;
+              align-items: center;
+          -webkit-justify-content: center;
+                  justify-content: center;
+      img {
+          width: 100%;
+      }
+  }
+
+  .pdownloads {
+      padding: 20px;
+      background: #FFF;
+      
+      .delSpan {
+          color: #e74c3c;
+      }
+  }
 
     .whitebox-image {
-        background: #fff;
-        color: #4a5356;
-        padding: 20px;
-        width: 100%;
-        min-height: 278px;
-        border-radius: 3px;
-        position: relative;
-        text-align: center;
-    }
+      background: #fff;
+      color: #4a5356;
+      padding: 20px;
+      width: 100%;
+      border-radius: 3px;
+      position: relative;
+      text-align: center;
+  }
 
     .btn-primary:disabled {
         background-color: rgb(136, 177, 221) !important;
@@ -55,3 +50,22 @@
           border-radius: 4px;
         }
       }
+
+      .header-buttons {
+        height: 100%;
+        display: flex;
+        ion-button {
+          height: 100%;
+          padding: 0px 15px;
+          margin: 0;
+          font-size: 16px;
+          background: var(--ion-color-darkmain);
+          &:hover
+          {
+            background: rgba(var(--ion-color-darkmain-rgb), 0.6) !important;
+          }
+        }
+        ion-button  + ion-button  {
+          margin-left: 10px;
+        }
+    }

@@ -767,13 +767,16 @@ export class ApiService {
     });
   }
 
-  pvs4_get_customer_list_app() {
+  pvs4_get_customer_list_app( a:boolean) {
     let userID = this.userdata.id;
     let licensee = this.userdata.licensee;
     let role = this.userdata.role;
+    let all = 0;
+    if(a) all = 1;
     return new Promise((res, rej) => {
       let data = {
         user: userID
+        ,all: all
         ,licensee: licensee
         ,role: role
       }

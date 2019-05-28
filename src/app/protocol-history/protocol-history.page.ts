@@ -91,16 +91,12 @@ export class ProtocolHistoryPage {
                     this.url = this.apiService.pvsApiURL;
                     this.route.queryParams.subscribe(params => {
                         this.idCustomer = params["idCustomer"];
-                        this.company = params["company"];
+                        //this.company = params["company"];
                         this.idProduct = params["idProduct"]; 
                         this.titleProduct = params["titleProduct"];
                     });
    
                     this.loadProtocol();  
-    }
-
-    ionViewDidLoad() {
-        console.log('ionViewDidLoad ProtocolHistoryPage');
     }
 
     loadProtocol() {
@@ -263,6 +259,7 @@ export class ProtocolHistoryPage {
         let pageCount: any = 0;
         let HeaderCount: any = 6;
         let colCountAdd: any = 0;
+        let headerRowVisible: any = 1;
 
         if(this.listCount.length > HeaderCount ) {
             colCountStart = 0;
@@ -335,7 +332,7 @@ export class ProtocolHistoryPage {
             }
         };
         docDefinition = JSON.parse(JSON.stringify(docDefinition));
-        this.pdf.get_ListDocDefinition(bodyArray, widthsArray, this.translate.instant("Protokoll Geschichte"),this.translate.instant("Protokoll Geschichte")+'.pdf')
+        this.pdf.get_ListDocDefinition(bodyArray, widthsArray, headerRowVisible, this.translate.instant("Protokoll Geschichte"),this.translate.instant("Protokoll Geschichte")+'.pdf')
 
         let pList: any[] = [];
         for (let index = 0; index < this.prtclLst.length; index++) {

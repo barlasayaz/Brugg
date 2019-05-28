@@ -31,21 +31,21 @@ export class ProtocolTemplatePage {
   public selectedTemplate: any[] = [];
   public selectedTmplt: any = 0;
   public selectTemplate: any = 0;
-  public editOption: any;
+  public editOption: any[];
   public selectedOption: any[] = [];
   public selectedOptionId: any = 0;
   public selectOption: any = 0;
   public tmpInd: any = 0;
   public downClick: any = 0;
-
   public template: Array<any> = [];
   public options: Array<any> = [];
   public optionsAll: Array<any> = [];
-  public types: Array<string> = ["Toggle", "Select", "Textarea", "Number", "Time", "Date"];
+  public types: Array<string> = ["Toggle", "Select", "Textarea", "Number","Time","Date"];
   public lang: string = "";
   public itsNew: boolean = true;
   public activTemplate: any = {};
   public company: string = "";
+  public mandatory: string = "false"; 
 
   constructor(public navCtrl: NavController,
     public route: ActivatedRoute,
@@ -74,7 +74,7 @@ export class ProtocolTemplatePage {
     });
     this.route.queryParams.subscribe(params => {
       this.idCustomer = params["idCustomer"];
-      this.company = params["company"];
+      //this.company = params["company"];
       this.idTemplate = params["idTemplate"];
       this.itsNew = params["itsNew"];
       this.activTemplate = params["activTemplate"];
@@ -143,10 +143,6 @@ export class ProtocolTemplatePage {
     }).then(x => x.present());
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad ProtocolTemplatePage');
-  }
-
   down_click() {
     if (this.downClick == 0) {
       this.downClick = 1;
@@ -208,16 +204,17 @@ export class ProtocolTemplatePage {
       result.list.forEach(element => {
         element.data.options = JSON.parse(element.data.options);
         element.data.title = JSON.parse(element.data.title);
+        if(element.data.mandatory == 0) element.data.mandatory = "false";
+        if(element.data.mandatory == 1) element.data.mandatory = "true";
         this.options.push(element.data);
         this.selectedOption[element.data.id] = 0;
-        console.log("elemet data :", element.data.id);
+        console.log("elemet data :", element.data.id, ' - ', element.data);
         console.log("selectedOption :", this.selectedOption[element.data.id]);
       });
-      //this.template = JSON.parse(JSON.stringify(this.options));
       this.optionsAll = JSON.parse(JSON.stringify(this.options));
       console.log('loadOption: ', result.list);
     });
-  }
+  } 
 
   loadTemplate() {
     if (this.idTemplate && this.idTemplate > 0 && this.activTemplate) {

@@ -35,11 +35,7 @@ export class NoteDetailsPage {
       this.loadNote(this.idNote);  
 
   }
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad NoteDetailsPage');
-  }
-
+  
   loadNote(id) {
     this.apiService.pvs4_get_note(id).then((result:any)=>{
         this.activNote = result.obj;  

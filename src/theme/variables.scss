@@ -147,7 +147,9 @@
   }
 
   --ion-color-grey-rgb: 74,83,86;
+  --ion-color-grey:#4a5356;
   .ion-color-grey {
+    --ion-color-base: var(--ion-color-grey) !important;
     --ion-color-base-rgb: var(--ion-color-grey-rgb) !important;
   }
   --ion-color-lime: #1abc9c;

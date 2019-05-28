@@ -63,10 +63,6 @@ export class MyDataEditPage {
               this.editData(this.pid);
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad MyDataEditPage');
-  }
-
   dismiss() {
     this.viewCtrl.dismiss({'update':false});
   }  

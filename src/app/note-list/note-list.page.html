@@ -1,6 +1,6 @@
-<main-nav aktivPage="NoteList" [idCustomer]="idCustomer" [company]="company"></main-nav>
+<main-nav aktivPage="NoteList" [idCustomer]="idCustomer"></main-nav>
 
-<div class="ek-content"> 
+<div class="ek-content" (window:resize)="onResize($event)"> 
     <p-menubar [model]="popupMenu" [autoDisplay]="false" id="menuMin"> 
         <div class="ui-inputgroup search-search">
             <input type="text" 
@@ -29,6 +29,8 @@
             </button>   -->    
         </div>   
     </p-menubar>
+
+    <div id="heightCalc" class="heightCalc" #divHeightCalc></div>
     <p-treeTable [value]="noteListView" 
                  [columns]="cols" 
                  selectionMode="single" 
@@ -38,8 +40,10 @@
                  dataKey="id" 
                  (onNodeExpand)="onNodeExpand($event)" 
                  (onNodeCollapse)="onNodeCollapse($event)"
-                 [scrollable]="true"
-                 scrollHeight="78vh">
+                 [scrollable]="true" 
+                 [scrollHeight]="heightCalc" 
+                 [rows]="25"                 
+                 [paginator]="true">
         <ng-template pTemplate="header" let-columns>
             <tr>
                 <th *ngFor="let col of selectedColumns" [ttSortableColumn]="col.field">
@@ -57,9 +61,9 @@
         </ng-template>
         <ng-template pTemplate="body" let-rowNode let-rowData="rowData" let-columns="columns">
             <tr [ttSelectableRow]="rowNode" >
-                <td *ngFor="let col of selectedColumns; let i = index">
+                <td *ngFor="let col of selectedColumns; let i = index" style="text-align: justify;">
                     <p-treeTableToggler [rowNode]="rowNode" *ngIf="i == 0"></p-treeTableToggler>
-                    <label *ngIf="col.field == 'notes_date'">{{rowData[col.field] | date : 'dd.MM.yyyy'}}</label>
+                    <label *ngIf="col.field == 'notes_date'">{{rowData[col.field] | date : 'dd.MM.yyyy - HH:mm'}}</label>
                     <label *ngIf="col.field != 'notes_date'">{{rowData[col.field]}}</label>
                 </td>
             </tr>

@@ -36,6 +36,13 @@
         }
     }
 
+    .heightCalc {
+        @media (max-width: 767px) {
+          top: calc(65px + 55px + 41px + 47px);
+          height: calc(100% - 65px - 55px - 41px - 35px - 47px);
+        }
+    }
+
     .ek-content {
         @media only screen and (max-width: 767px) {
             padding-top: 112px;

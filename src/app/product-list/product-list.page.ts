@@ -29,6 +29,7 @@ export class ProductListPage {
     public xlsHeader: any[];
     public splitFilter: boolean = false;
     public idCustomer: number = 0;
+    public heightCalc:any="700px";
     public move_id: number = 0;
     public move_obj: any = {};
     public columnFilterValues = { title: "", nfc_tag_id: "", id_number: "", articel_no: "", check_interval: "", search_all: "" };
@@ -55,7 +56,7 @@ export class ProductListPage {
         disabled: true,
         visible: this.userdata.role_set.edit_products,
         command: (event) => {
-            if (this.userdata.role_set.edit_products == false) return;
+            if(this.userdata.role_set.edit_products==false) return;
             console.log('command menuitem:', event.item);
             this.menu_edit();
         }
@@ -72,10 +73,10 @@ export class ProductListPage {
     {
         label: this.translate.instant('Bewegen'),
         icon: 'pi pi-fw pi-arrow-up',
-        visible: this.userdata.role_set.edit_products,
+        visible:  this.userdata.role_set.edit_products,
         disabled: true,
         command: (event) => {
-            if (this.userdata.role_set.edit_products == false) return;
+            if(this.userdata.role_set.edit_products==false) return;
             console.log('command menuitem:', event.item);
             this.menu_move(1);
         }
@@ -87,22 +88,22 @@ export class ProductListPage {
         styleClass: "move_now",
         disabled: false,
         command: (event) => {
-            if (this.userdata.role_set.edit_products == false) return;
+            if(this.userdata.role_set.edit_products==false) return;
             console.log('command menuitem:', event.item);
             this.menu_move(2);
         }
     },
     {
         label: this.translate.instant('Neu'),
-        icon: 'pi pi-fw pi-plus',
-        visible: (this.userdata.role_set.edit_products || this.userdata.role_set.check_products),
+        icon: 'pi pi-fw pi-plus',              
+        visible:  (this.userdata.role_set.edit_products || this.userdata.role_set.check_products),  
         items: [
             {
                 label: this.translate.instant('Neue Produktvorlage'),
                 icon: 'pi pi-fw pi-plus',
-                visible: this.userdata.role_set.edit_products,
+                visible:  this.userdata.role_set.edit_products,
                 command: (event) => {
-                    if (this.userdata.role_set.edit_products == false) return;
+                    if(this.userdata.role_set.edit_products==false) return;
                     console.log('command menuitem:', event.item);
                     this.create_template();
                 }
@@ -110,20 +111,20 @@ export class ProductListPage {
             {
                 label: this.translate.instant('Neues Produkt'),
                 icon: 'pi pi-fw pi-plus',
-                visible: this.userdata.role_set.edit_products,
+                visible:  this.userdata.role_set.edit_products,
                 command: (event) => {
-                    if (this.userdata.role_set.edit_products == false) return;
+                    if(this.userdata.role_set.edit_products==false) return;
                     console.log('command menuitem:', event.item);
                     this.menu_new();
                 }
-            },
+            },            
             {
                 label: this.translate.instant('Neues Protokoll'),
                 icon: 'pi pi-fw pi-plus',
-                visible: this.userdata.role_set.check_products,
+                visible:  this.userdata.role_set.check_products,
                 disabled: true,
                 command: (event) => {
-                    if (this.userdata.role_set.check_products == false) return;
+                    if(this.userdata.role_set.check_products==false) return;
                     console.log('command menuitem:', event.item);
                     this.create_protocol();
                 }
@@ -183,10 +184,10 @@ export class ProductListPage {
             {
                 label: this.translate.instant('Produkt Migration'),
                 icon: 'pi pi-fw pi-arrow-right',
-                visible: this.userdata.role_set.edit_products,
+                visible:  this.userdata.role_set.edit_products,
                 disabled: true,
                 command: (event) => {
-                    if (this.userdata.role_set.edit_products == false) return;
+                    if(this.userdata.role_set.edit_products==false) return;
                     console.log('command menuitem:', event.item);
                     this.product_migration();
                 }
@@ -213,23 +214,37 @@ export class ProductListPage {
         public events: Events,
         private route: ActivatedRoute) {
 
-        this.cols = [
-            { field: 'nfc_tag_id', header: 'NFC', width: "20px" },
-            { field: 'title', header: this.translate.instant('Titel') },
-            //{ field: 'id', header: 'DB-ID' },
-            { field: 'id_number', header: '#' },
-            { field: 'articel_no', header: this.translate.instant('Artikel-Nr.') },
-            { field: 'last_protocol_date', header: "<<" + this.translate.instant('Termin') },
-            { field: 'last_protocol_next', header: this.translate.instant('Termin') + ">>" },
-            { field: 'check_interval', header: this.translate.instant('Intervall Prüfen') }
-        ];
+            this.cols = [
+                { field: 'nfc_tag_id', header: 'NFC' },
+                { field: 'title', header: this.translate.instant('Titel') },
+                //{ field: 'id', header: 'DB-ID' },
+                { field: 'id_number', header: '#' },
+                { field: 'articel_no', header: this.translate.instant('Artikel-Nr.') },
+                { field: 'last_protocol_date', header: "<<"+this.translate.instant('Termin') },
+                { field: 'last_protocol_next', header: this.translate.instant('Termin')+">>" },
+                { field: 'check_interval', header: this.translate.instant('Intervall Prüfen') }
+            ];
         this.route.queryParams.subscribe(params => {
             this.idCustomer = params["idCustomer"];
-            this.company = params["company"];
+           // this.company = params["company"];
         });
 
         console.log('ProductListPage idCustomer:', this.idCustomer);
         this.page_load();
+    }
+
+    onResize(event) {
+        console.log("onResize");
+        this.funcHeightCalc();
+     }
+
+    @ViewChild('divHeightCalc') divHeightCalc: any;
+    funcHeightCalc(){
+        var x = this.divHeightCalc.nativeElement.offsetHeight;
+        if(this.splitFilter) x= x - 51;
+        if(x<80) x = 80;
+        this.heightCalc = x+"px";
+        console.log("heightCalc:",x, this.heightCalc );
     }
 
     page_load() {
@@ -240,8 +255,7 @@ export class ProductListPage {
 
         this.events.publish("prozCustomer", 0);
         this.apiService.pvs4_get_product_list(this.idCustomer).then((result: any) => {
-            console.log("ionViewDidLoad result :", result);
-
+            //console.log("ionViewDidLoad result :", result);
             this.productListAll = JSON.parse(JSON.stringify(result.list));
 
             if (localStorage.getItem('filter_values_product') != undefined) {
@@ -249,63 +263,70 @@ export class ProductListPage {
             }
             if (localStorage.getItem('split_filter_product') != undefined) {
                 this.splitFilter = JSON.parse(localStorage.getItem('split_filter_product'));
+                this.funcHeightCalc();
             }
             if (localStorage.getItem('show_columns_product') != undefined) {
                 this.selectedColumns = JSON.parse(localStorage.getItem('show_columns_product'));
             }
 
-            this.title_translate(this.productListAll);
+            this.title_translate(this.productListAll);            
 
             for (let index = 0; index < this.productListAll.length; index++) {
                 //last_protocol & last_protocol_next
                 let pr = this.productListAll[index].data.last_protocol;
-                if (pr) {
-                    if (pr.length > 0) {
-                        console.log("pr :", pr);
+                if(pr){
+                    if(pr.length>0){
+                        //console.log("pr :", pr);
                         pr = JSON.parse(pr);
-                        if (pr.protocol_date) this.productListAll[index].data.last_protocol_date = this.apiService.mysqlDate2view(pr.protocol_date);
-                        if (pr.protocol_date_next) this.productListAll[index].data.last_protocol_next = this.apiService.mysqlDate2view(pr.protocol_date_next);
-                        if (pr.result) {
-                            if (pr.result == 1) this.productListAll[index].data.last_protocol_next = this.translate.instant('reparieren');
-                            if (pr.result == 3) this.productListAll[index].data.last_protocol_next = this.translate.instant('unauffindbar');
-                            if (pr.result == 4) this.productListAll[index].data.last_protocol_next = this.translate.instant('ausmustern');
+                        if(pr.protocol_date) this.productListAll[index].data.last_protocol_date = this.apiService.mysqlDate2view(pr.protocol_date) ;
+                        if(pr.protocol_date_next) this.productListAll[index].data.last_protocol_next = this.apiService.mysqlDate2view(pr.protocol_date_next) ;
+                        if(pr.result) {
+                            if(pr.result==1) this.productListAll[index].data.last_protocol_next =this.translate.instant('reparieren');
+                            if(pr.result==3) this.productListAll[index].data.last_protocol_next =this.translate.instant('unauffindbar');
+                            if(pr.result==4) this.productListAll[index].data.last_protocol_next =this.translate.instant('ausmustern');
                         }
                     }
                 }
                 //options
+                
                 let options = JSON.parse(this.productListAll[index].data.items);
                 console.log("options :", options);
+                
                 if (options == null) options = [];
 
                 for (let i = 0; i < options.length; i++) {
-                    if (!this.cols.find(x => x.field == options[i].title[this.lang])) this.cols.push({ field: options[i].title[this.lang], header: options[i].title[this.lang] });
-                    let pipe = new DatePipe('en-US');
-                    if (options[i].type == 5) this.productListAll[index].data[options[i].title[this.lang]] = pipe.transform(options[i].value, 'dd.MM.yyyy');
-                    if (options[i].type != 5) this.productListAll[index].data[options[i].title[this.lang]] = options[i].value;
+                    console.log("options :", options[i]);
+                    console.log("options :", options[i].id);
+                    console.log("options :", options[i].title);
+                    
+                    if (!this.cols.find(x => x.field == options[i].title[this.lang]))  this.cols.push({ field: options[i].title[this.lang], header: options[i].title[this.lang] });
+                    let pipe = new DatePipe('en-US'); 
+                    if(options[i].type == 5) this.productListAll[index].data[options[i].title[this.lang]] = pipe.transform(options[i].value,'dd.MM.yyyy');
+                    if(options[i].type != 5) this.productListAll[index].data[options[i].title[this.lang]] = options[i].value;                    
                 }
-            }
-
+                //console.log("index :", index);
+            } 
+            //console.log("selectedColumns :", this.cols);
             this.selectedColumns = JSON.parse(JSON.stringify(this.cols));
-
             let json = "{";
             for (var j = 0; j < this.cols.length; j++) {
                 json += '"' + this.cols[j].field + '":""';
                 json += ',';
             }
             json += '"search_all":""}';
+            console.log("columnFilterValues :", json );
             this.columnFilterValues = JSON.parse(json);
 
             this.generate_productList();
         });
+        this.funcHeightCalc();
     }
 
     title_translate(nodes: TreeNode[]): any {
-        for (let i = 0; i < nodes.length; i++) {
-            /*         
-            if(nodes[i].data.nfc_tag_id) {
+        for (let i = 0; i < nodes.length; i++) {   
+            /*if(nodes[i].data.nfc_tag_id) {
                 nodes[i].data.nfc_tag_id = true;
-            }
-            else {
+            } else {
                 nodes[i].data.nfc_tag_id = false;
             }*/
             let title = JSON.parse(nodes[i].data.title);
@@ -334,7 +355,7 @@ export class ProductListPage {
         for (let i = 0; i < this.cols.length; i++) {
             if (this.columnFilterValues[this.cols[i].field].trim().length > 0
                 && (node.data[this.cols[i].field] == undefined || (node.data[this.cols[i].field] != undefined
-                    && node.data[this.cols[i].field].toString().toLowerCase().indexOf(this.columnFilterValues[this.cols[i].field].trim().toLowerCase()) < 0)))
+                && node.data[this.cols[i].field].toString().toLowerCase().indexOf(this.columnFilterValues[this.cols[i].field].trim().toLowerCase()) < 0)))
                 ret = false;
         }
 
@@ -391,7 +412,6 @@ export class ProductListPage {
                 json += ',';
             }
             json += 'search_all:""}';
-            console.log("aaaaaaaa :", json);
             this.columnFilterValues = JSON.parse(json);
         }
         this.generate_productList();
@@ -406,7 +426,7 @@ export class ProductListPage {
             let try_list = JSON.parse(JSON.stringify(this.productListAll));
             this.dir_try_filter(try_list);
             this.productListView = try_list;
-        }
+        }        
 
         this.rowRecords = this.productListView.length;
         this.totalRecords = this.productListAll.length;
@@ -423,7 +443,7 @@ export class ProductListPage {
         console.log("nodeSelect selectedNode :", selectedNode.length);
         let selectedNodeLength = selectedNode.length;
         console.log("selectMulti :", this.selectMulti);
-        if (!this.selectMulti) {
+        if (!this.selectMulti){
             selectedNodeLength = 1;
             this.selectMulti = 1;
         }
@@ -432,16 +452,16 @@ export class ProductListPage {
         this.selectedNode.data = event.node.data;
         this.menuItems[0].disabled = false;
         this.menuItems[1].disabled = false;
-        this.menuItems[2].disabled = false;
-        this.menuItems[3].disabled = false;
+        this.menuItems[2].disabled = false;         
+        this.menuItems[3].disabled = false; 
         this.menuItems[5].items[0]['disabled'] = false;
         this.menuItems[5].items[1]['disabled'] = false;
-        this.menuItems[8].items[4]['disabled'] = false;
+        this.menuItems[8].items[4]['disabled'] = false; 
         let id_sn = 0;
 
         console.log("selectedNodeLength :", selectedNodeLength);
         if (selectedNodeLength == 1) {
-
+            
             if (this.selectedNode) {
                 if (this.selectedNode.data.id) {
                     id_sn = this.selectedNode.data.id;
@@ -466,24 +486,24 @@ export class ProductListPage {
         else {
             this.menuItems[0].disabled = true;
             this.menuItems[1].disabled = true;
-            this.menuItems[2].disabled = true;
+            this.menuItems[2].disabled = true;            
             this.menuItems[3].disabled = true;
             this.menuItems[3].visible = this.userdata.role_set.edit_products;
             this.menuItems[4].visible = false;
             this.menuItems[8].items[4]['disabled'] = true;
             this.move_id = 0;
-        }
-        if (selectedNodeLength == 0) {
+        }             
+        if(selectedNodeLength == 0) {            
             this.menuItems[5].items[2]['disabled'] = true;
-            this.menuItems[8].items[4]['disabled'] = true;
+            this.menuItems[8].items[4]['disabled'] = true;            
         }
-        else {
-            this.menuItems[5].items[2]['disabled'] = false;
-            this.menuItems[8].items[4]['disabled'] = false;
+        else {           
+            this.menuItems[5].items[2]['disabled'] = false; 
+            this.menuItems[8].items[4]['disabled'] = false;           
         }
-        if (selectedNodeLength >= 2) {
-            this.menuItems[5].items[0]['disabled'] = true;
-            this.menuItems[5].items[1]['disabled'] = true;
+        if(selectedNodeLength >= 2) {
+            this.menuItems[5].items[0]['disabled']  = true;
+            this.menuItems[5].items[1]['disabled']  = true;
         }
     }
 
@@ -498,8 +518,7 @@ export class ProductListPage {
         let navigationExtras: NavigationExtras = {
             queryParams: obj
         };
-        this.navCtrl.navigateForward(["/product-edit"], navigationExtras);
-    }
+        this.navCtrl.navigateForward(["/product-edit"], navigationExtras);    }
 
     menu_edit() {
         console.log('menu_edit', this.selectedNode);
@@ -508,8 +527,7 @@ export class ProductListPage {
                 let navigationExtras: NavigationExtras = {
                     queryParams: { id: this.selectedNode.data.id, idCustomer: this.idCustomer, parent: this.selectedNode.data.parent, company: this.company }
                 };
-                this.navCtrl.navigateForward(["/product-edit"], navigationExtras);
-            }
+                this.navCtrl.navigateForward(["/product-edit"], navigationExtras);            }
         }
     }
 
@@ -549,7 +567,7 @@ export class ProductListPage {
 
     menu_move(n) {
         console.log('menu_move_up', this.selectedNode);
-        if (n == 1) {
+        if (n == 1) {            
             if (this.selectedNode) {
                 if (this.selectedNode.data.id) {
                     this.move_id = parseInt(this.selectedNode.data.id);
@@ -583,7 +601,7 @@ export class ProductListPage {
                 let id = parseInt(this.selectedNode.data.id);
                 console.log('menu_view id', id);
                 let navigationExtras: NavigationExtras = {
-                    queryParams:  { idCustomer: this.idCustomer,idProduct: id,  company: this.company, productList: JSON.stringify(this.selectedNode) }
+                    queryParams:  { idCustomer: this.idCustomer,idProduct: id,  productList: JSON.stringify(this.selectedNode) }
                 };
                 this.navCtrl.navigateForward(["/product-details"], navigationExtras);
             }
@@ -593,7 +611,7 @@ export class ProductListPage {
     create_template() {
         console.log('create_template', this.selectedNode);
         let navigationExtras: NavigationExtras = {
-            queryParams:  { idCustomer: this.idCustomer, company: this.company }
+            queryParams:  { idCustomer: this.idCustomer }
         };
         this.navCtrl.navigateForward(["/product-template"], navigationExtras);
     }
@@ -616,18 +634,19 @@ export class ProductListPage {
         this.data_tree(this.productListAll);
         for (var i = 0, len = this.allnodes.length; i < len; i++) {
             let obj = this.allnodes[i];
-            obj.items = obj.items.replace(/(\\r\\n|\\n|\\r)/gm, " ");
+            obj.items = obj.items.replace(/(\\r\\n|\\n|\\r)/gm," ");
             let json: any = {};
             for (var j = 0; j < this.selectedColumns.length; j++) {
-                if (obj[this.selectedColumns[j].field]) {
+                if(obj[this.selectedColumns[j].field]) {
                     json[this.selectedColumns[j].header] = obj[this.selectedColumns[j].field];
-                } else {
+                }else{
                     json[this.selectedColumns[j].header] = "";
-                }
+                }                
             }
             console.log(">>json :", json);
             data.push(json);
         }
+        console.log("excel_all data :", data);
         this.excelService.exportAsExcelFile(data, 'product_all.xlsx');
     }
 
@@ -638,14 +657,14 @@ export class ProductListPage {
         this.data_tree(this.productListView);
         for (var i = 0, len = this.allnodes.length; i < len; i++) {
             let obj = this.allnodes[i];
-            obj.items = obj.items.replace(/(\\r\\n|\\n|\\r)/gm, " ");
+            obj.items = obj.items.replace(/(\\r\\n|\\n|\\r)/gm," ");
             let json: any = {};
             for (var j = 0; j < this.selectedColumns.length; j++) {
-                if (obj[this.selectedColumns[j].field]) {
+                if(obj[this.selectedColumns[j].field]) {
                     json[this.selectedColumns[j].header] = obj[this.selectedColumns[j].field];
-                } else {
+                }else{
                     json[this.selectedColumns[j].header] = "";
-                }
+                }                
             }
             console.log(">>json :", json);
             data.push(json);
@@ -653,7 +672,7 @@ export class ProductListPage {
         this.excelService.exportAsExcelFile(data, 'product_view.xlsx');
     }
 
-    printPdf() {
+/*     printPdf() {
         let columns: any[] = [];
         let widthsArray: string[] = [];
         for (var k = 0; k < this.selectedColumns.length; k++) {
@@ -668,7 +687,7 @@ export class ProductListPage {
         let rowArray: any[] = [];
         for (var i = 0, len = this.allnodes.length; i < len; i++) {
             obj = this.allnodes[i];
-            obj.items = obj.items.replace(/(\\r\\n|\\n|\\r)/gm, " ");
+            obj.items = obj.items.replace(/(\\r\\n|\\n|\\r)/gm," ");
             rowArray = [];
             for (var j = 0; j < this.selectedColumns.length; j++) {
                 if (obj[this.selectedColumns[j].field])
@@ -679,8 +698,69 @@ export class ProductListPage {
             bodyArray.push(rowArray);
         }
 
-        this.pdf.get_ListDocDefinition(bodyArray, widthsArray, this.translate.instant("Produkt") + " " + this.translate.instant("Liste"), this.translate.instant("Produkt") + this.translate.instant("Liste") + '.pdf');
-    }
+        this.pdf.get_ListDocDefinition(bodyArray, widthsArray, this.translate.instant("Produkt") + " " + this.translate.instant("Liste"),this.translate.instant("Produkt") + this.translate.instant("Liste") +'.pdf');
+    } */
+
+    printPdf() {
+        let pdfTitle: any = this.translate.instant("Produkt") + " " + this.translate.instant("Liste");
+        let columns: any[] = [];
+        let widthsArray: string[] = [];
+        let bodyArray: any[] = [];
+        this.allnodes = [];
+        let rowArray: any[] = [];
+        this.data_tree(this.productListView);
+        let obj: any;
+        let headerRowVisible: any = 0;
+        widthsArray.push('*','auto','*','*','*','*','*');
+        
+        for (var i = 0, len = this.allnodes.length; i < len; i++) {
+            obj = this.allnodes[i];
+            obj.items = obj.items.replace(/(\\r\\n|\\n|\\r)/gm," ");
+
+            columns = [];           
+            for (var k = 0; k < 7; k++) {
+                columns.push({ text: this.selectedColumns[k].header, style: 'header' });
+            } 
+            bodyArray.push(columns);
+
+            rowArray = [];
+            for (var j = 0; j < 7; j++) {
+                if (obj[this.selectedColumns[j].field])
+                    rowArray.push(obj[this.selectedColumns[j].field]);
+                else
+                    rowArray.push('');
+            }            
+            bodyArray.push(rowArray);
+
+            for (var l = 7; l < this.selectedColumns.length; l++) {
+                rowArray = [];
+                rowArray.push({ text: this.selectedColumns[l].header, style: 'header' });
+                if (obj[this.selectedColumns[l].field])
+                    rowArray.push(obj[this.selectedColumns[l].field]);
+                else
+                    rowArray.push('');
+                rowArray.push({text:'',border: [false, false, false, false]});
+                rowArray.push({text:'',border: [false, false, false, false]});
+                rowArray.push({text:'',border: [false, false, false, false]});
+                rowArray.push({text:'',border: [false, false, false, false]});
+                rowArray.push({text:'',border: [false, false, false, false]});
+                bodyArray.push(rowArray);
+            }
+
+                rowArray = [];           
+                rowArray.push({text:'',border: [false, false, false, false]});
+                rowArray.push({text:'',border: [false, false, false, false]});
+                rowArray.push({text:'',border: [false, false, false, false]});
+                rowArray.push({text:'',border: [false, false, false, false]});
+                rowArray.push({text:'',border: [false, false, false, false]});
+                rowArray.push({text:'',border: [false, false, false, false]});
+                rowArray.push({text:'',border: [false, false, false, false]});
+                bodyArray.push(rowArray);            
+           
+        }
+
+        this.pdf.get_ListDocDefinition(bodyArray, widthsArray, headerRowVisible, pdfTitle ,this.translate.instant("Produkt") + this.translate.instant("Liste") +'.pdf');
+    } 
 
     data_tree(nodes: TreeNode[]): any {
         for (let i = 0; i < nodes.length; i++) {
@@ -697,6 +777,7 @@ export class ProductListPage {
             this.cancel_filters(1);
         }
         localStorage.setItem("split_filter_product", JSON.stringify(this.splitFilter));
+        this.funcHeightCalc();
     }
 
     async show_columns() {

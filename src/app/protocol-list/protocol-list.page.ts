@@ -34,6 +34,7 @@ export class ProtocolListPage {
     public totalRecords: number = 0;
     public lang: string = localStorage.getItem('lang');
     public company: string = "";
+    public heightCalc:any="700px";
 
     public menuItems: MenuItem[] = [
         {
@@ -48,7 +49,7 @@ export class ProtocolListPage {
         {
             label: this.translate.instant('Neue Protokollvorlage'),
             icon: 'pi pi-fw pi-plus',
-            visible: this.userdata.role_set.check_products,
+            visible:  this.userdata.role_set.check_products,
             command: (event) => {
                 console.log('command menuitem:', event.item);
                 this.create_template();
@@ -74,7 +75,7 @@ export class ProtocolListPage {
             label: this.translate.instant('l\u00f6schen'),
             icon: 'pi pi-fw pi-trash',
             disabled: true,
-            visible: this.userdata.role_set.check_products,
+            visible:  this.userdata.role_set.check_products,
             command: (event) => {
                 console.log('command menuitem:', event.item);
                 this.protocolDeactivate();
@@ -148,7 +149,7 @@ export class ProtocolListPage {
         ];
         this.route.queryParams.subscribe(params => {
             this.idCustomer = params["idCustomer"];
-            this.company = params["company"];
+           // this.company = params["company"];
         });
         console.log('ProtocolListPage idCustomer:', this.idCustomer);
 
@@ -195,9 +196,20 @@ export class ProtocolListPage {
 
     }
 
-    ionViewDidLoad() {
-        console.log('ionViewDidLoad ProtocolListPage');
+    onResize(event) {
+        console.log("onResize");
+        this.funcHeightCalc();
+     }
+
+    @ViewChild('divHeightCalc') divHeightCalc: any;
+    funcHeightCalc(){
+        var x = this.divHeightCalc.nativeElement.offsetHeight;
+        if(this.splitFilter) x= x - 51;
+        if(x<80) x = 80;
+        this.heightCalc = x+"px";
+        console.log("heightCalc:",x, this.heightCalc );
     }
+
 
     title_translate(nodes: TreeNode[]): any {
         for (let i = 0; i < nodes.length; i++) {
@@ -325,7 +337,7 @@ export class ProtocolListPage {
         if (this.selectedNode) {
             if (this.selectedNode.data.id) {
                 let navigationExtras: NavigationExtras = {
-                    queryParams: { "id": this.selectedNode.data.id, idCustomer: this.idCustomer, parent: this.selectedNode.data.parent, company: this.company }
+                    queryParams: { "id": this.selectedNode.data.id, idCustomer: this.idCustomer, parent: this.selectedNode.data.parent }
                 };
                 this.navCtrl.navigateForward(["/protocol-edit"], navigationExtras);
             }
@@ -339,7 +351,7 @@ export class ProtocolListPage {
                 let id = parseInt(this.selectedNode.data.id);
                 console.log('menu_view id', id);
                 let navigationExtras: NavigationExtras = {
-                    queryParams: { idCustomer: this.idCustomer, idProtocol: id, protocol: JSON.stringify(this.selectedNode.data), company: this.company }
+                    queryParams: { idCustomer: this.idCustomer, idProtocol: id, protocol: JSON.stringify(this.selectedNode.data) }
                 };
                 this.navCtrl.navigateForward(["/protocol-details"], navigationExtras);
             }
@@ -411,33 +423,65 @@ export class ProtocolListPage {
     }
 
     printPdf() {
+        let pdfTitle: any = this.translate.instant("Protokolle") + " " + this.translate.instant("Liste");
         let columns: any[] = [];
         let widthsArray: string[] = [];
-        for (var k = 0; k < this.selectedColumns.length; k++) {
-            columns.push({ text: this.selectedColumns[k].header, style: 'header' });
-            widthsArray.push("*");
-        }
         let bodyArray: any[] = [];
-        bodyArray.push(columns);
         this.allnodes = [];
+        let rowArray: any[] = [];
         this.data_tree(this.protocolListView);
         let obj: any;
-        let rowArray: any[] = [];
+        let headerRowVisible: any = 0;
+        widthsArray.push('*','auto','*','*','*','*','*');
+        
         for (var i = 0, len = this.allnodes.length; i < len; i++) {
             obj = this.allnodes[i];
-            obj.items = obj.items.replace(/(\\r\\n|\\n|\\r)/gm, " ");
+            obj.items = obj.items.replace(/(\\r\\n|\\n|\\r)/gm," ");
+
+            columns = [];           
+            for (var k = 0; k < 7; k++) {
+                columns.push({ text: this.selectedColumns[k].header, style: 'header' });
+            } 
+            bodyArray.push(columns);
+
             rowArray = [];
-            for (var j = 0; j < this.selectedColumns.length; j++) {
+            for (var j = 0; j < 7; j++) {
                 if (obj[this.selectedColumns[j].field])
                     rowArray.push(obj[this.selectedColumns[j].field]);
                 else
                     rowArray.push('');
-            }
+            }            
             bodyArray.push(rowArray);
+
+            for (var l = 7; l < this.selectedColumns.length; l++) {
+                rowArray = [];
+                rowArray.push({ text: this.selectedColumns[l].header, style: 'header' });
+                if (obj[this.selectedColumns[l].field])
+                    rowArray.push(obj[this.selectedColumns[l].field]);
+                else
+                    rowArray.push('');
+                rowArray.push({text:'',border: [false, false, false, false]});
+                rowArray.push({text:'',border: [false, false, false, false]});
+                rowArray.push({text:'',border: [false, false, false, false]});
+                rowArray.push({text:'',border: [false, false, false, false]});
+                rowArray.push({text:'',border: [false, false, false, false]});
+                bodyArray.push(rowArray);
+            }
+
+                rowArray = [];           
+                rowArray.push({text:'',border: [false, false, false, false]});
+                rowArray.push({text:'',border: [false, false, false, false]});
+                rowArray.push({text:'',border: [false, false, false, false]});
+                rowArray.push({text:'',border: [false, false, false, false]});
+                rowArray.push({text:'',border: [false, false, false, false]});
+                rowArray.push({text:'',border: [false, false, false, false]});
+                rowArray.push({text:'',border: [false, false, false, false]});
+                bodyArray.push(rowArray);            
+           
         }
 
-        this.pdf.get_ListDocDefinition(bodyArray, widthsArray, this.translate.instant("Produkt") + " " + this.translate.instant("Liste"), this.translate.instant("Produkt") + this.translate.instant("Liste") + '.pdf');
-    }
+        this.pdf.get_ListDocDefinition(bodyArray, widthsArray, headerRowVisible, pdfTitle, this.translate.instant("Protokolle") + this.translate.instant("Liste") +'.pdf');
+    } 
 
     data_tree(nodes: TreeNode[]): any {
         for (let i = 0; i < nodes.length; i++) {
@@ -454,6 +498,7 @@ export class ProtocolListPage {
             this.cancel_filters(1);
         }
         localStorage.setItem("split_filter_protocol", JSON.stringify(this.splitFilter));
+        this.funcHeightCalc();
     }
 
     async show_columns() {

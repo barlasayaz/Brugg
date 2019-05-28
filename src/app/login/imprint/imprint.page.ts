@@ -15,10 +15,6 @@ export class ImprintPage {
        
     }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad ImprintPage');
-  }
-
   dismiss() {
     this.viewCtrl.dismiss();
   }

@@ -126,10 +126,6 @@ updateRowGroupMetaData() {
     this.navCtrl.navigateForward("/login"); 
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad StatistikPage');
-  }
-
   sendeStatistik() {
     console.log("sendeStatistik" );
     this.aktivWarten = true;    

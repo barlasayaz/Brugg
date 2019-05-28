@@ -1,64 +1,70 @@
+:host ::ng-deep .priority-2, 
+:host ::ng-deep .priority-3,
+:host ::ng-deep .visibility-sm {
+    display: none;
+}
 
-    :host ::ng-deep .priority-2, 
-    :host ::ng-deep .priority-3,
+@media screen and (max-width: 39.938em) {
     :host ::ng-deep .visibility-sm {
+        display: inline;
+    }
+}
+
+@media screen and (min-width: 40em) {
+    :host ::ng-deep .priority-2 {
+        display: table-cell;
+    }
+}
+
+@media screen and (min-width: 64em) {
+    :host ::ng-deep .priority-3 {
+        display: table-cell;
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    #menuMin {
         display: none;
     }
+}
 
-    @media screen and (max-width: 39.938em) {
-        :host ::ng-deep .visibility-sm {
-            display: inline;
+@media screen and (max-width: 1024px) {
+    #menuMax {
+        display: none;
+    }
+}
+
+.move_now{
+    background-color:#009de0;
+    color: #ffffff;
+}
+
+.ek-content {
+    @media only screen and (max-width: 767px) {
+        padding-top: 112px;
+    }
+}
+
+.heightCalc {
+    @media (max-width: 767px) {
+      top: calc(65px + 55px + 41px + 47px);
+      height: calc(100% - 65px - 55px - 41px - 35px - 47px);
+    }
+}
+
+.topBar-outer {
+  margin-bottom: 3px;
+}
+
+.ui-treetable-scrollable-view {
+    colgroup col:first-child {
+        max-width: 90px !important;
+        width: 90px !important;
+    }
+    @supports not ( -moz-appearance:none ) {
+        tbody tr td:first-child{
+            padding-left: 15px !important;
         }
     }
 
-    @media screen and (min-width: 40em) {
-        :host ::ng-deep .priority-2 {
-            display: table-cell;
-        }
-    }
-
-    @media screen and (min-width: 64em) {
-        :host ::ng-deep .priority-3 {
-            display: table-cell;
-        }
-    }
-
-    @media screen and (min-width: 1024px) {
-        #menuMin {
-            display: none;
-        }
-    }
-
-    @media screen and (max-width: 1024px) {
-        #menuMax {
-            display: none;
-        }
-    }
-
-    .move_now{
-        background-color:#009de0;
-        color: #ffffff;
-    }
-
-    .ek-content {
-        @media only screen and (max-width: 767px) {
-            padding-top: 112px;
-        }
-    }
-
-    .topBar-outer {
-      margin-bottom: 3px;
-    }
-
-    .ui-treetable-scrollable-view {
-        colgroup col:first-child {
-            max-width: 70px !important;
-            width: 70px !important;
-        }
-        @supports not ( -moz-appearance:none ) {
-            tbody tr td:first-child{
-                padding-left: 15px !important;
-            }
-        }
-
-    }  
+}  

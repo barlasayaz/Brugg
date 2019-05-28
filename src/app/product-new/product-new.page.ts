@@ -66,10 +66,6 @@ export class ProductNewPage {
 
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad ProductNewPage');
-  }
-
   dismiss() {
     this.viewCtrl.dismiss(false);
   }

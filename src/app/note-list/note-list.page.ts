@@ -35,13 +35,16 @@ export class NoteListPage {
     public xlsHeader: any[];
     public splitFilter: boolean = false;
     public idCustomer: number = 0;
-    public company: string = "";
-    public columnFilterValues = { title: "", notes: "", notes_date: "", category: "", search_all: "" };
-    public categoryNames: string[] = ["Besuchsberichte", "Kundenpotential", "Kundenbeziehung", "Mitbewerber", "Dokumentation", "Werbegeschenke", "Jahreswechsel", "Dienstleistungen", "Sonstiges", "Disposition", "Neukundenakquise"];
+    public columnFilterValues = { title: "", notes: "", notes_date: "", category: "", name_user: "", name_contact: "", search_all: "" };
+    public categoryNames: string[] = ["Besuchsberichte", "Kundenpotential", "Kundenbeziehung", "Mitbewerber", "Dokumentation", "Werbegeschenke", "Jahreswechsel", "Dienstleistungen", "Sonstiges", "Disposition",  "Neukundenakquise"];
     public filterCols: string[];
     public expendedNodes: string[] = [];
     public rowRecords: number = 0;
     public totalRecords: number = 0;
+    public company: string = "";
+    public heightCalc:any="700px";
+    public authorList: any = [];
+    public pointofContactList: any = [];
 
     public menuItems: MenuItem[] = [{
         label: this.translate.instant('Ansicht'),
@@ -139,28 +142,44 @@ export class NoteListPage {
         public pdf: PdfExportService,
         public events: Events,
         private route: ActivatedRoute) {
-        this.cols = [
-            { field: 'title', header: this.translate.instant('Titel') },
-            { field: 'notes', header: this.translate.instant('Notiz') },
-            { field: 'notes_date', header: this.translate.instant('Datum') },
-            { field: 'category', header: this.translate.instant('Kategorie') }
-        ];
-
-        this.filterCols = [
-            'title', 'notes', 'notes_date', 'category', 'search_all'
-        ];
-        this.selectedColumns = JSON.parse(JSON.stringify(this.cols));
+            this.cols = [
+                { field: 'title', header: this.translate.instant('Titel') },
+                { field: 'notes', header: this.translate.instant('Notiz') },
+                { field: 'notes_date', header: this.translate.instant('Datum') },
+                { field: 'category', header: this.translate.instant('Kategorie') },
+                { field: 'name_user', header: this.translate.instant('Verfasser') },
+                { field: 'name_contact', header: this.translate.instant('Ansprechpartner') }
+            ];
+    
+            this.filterCols = [
+                'title', 'notes', 'notes_date', 'category', 'name_user', 'name_contact', 'search_all'
+            ];
+            this.selectedColumns = JSON.parse(JSON.stringify(this.cols));
         
         this.route.queryParams.subscribe(params => {
             this.idCustomer = params["idCustomer"];
-            this.company = params["company"];
+           // this.company = params["company"];
         });
         console.log('NoteListPage idCustomer:', this.idCustomer);
         this.page_load();
     }
 
+    onResize(event) {
+        console.log("onResize");
+        this.funcHeightCalc();
+     }
+
+    @ViewChild('divHeightCalc') divHeightCalc: any;
+    funcHeightCalc(){
+        var x = this.divHeightCalc.nativeElement.offsetHeight;
+        if(this.splitFilter) x= x - 51;
+        if(x<80) x = 80;
+        this.heightCalc = x+"px";
+        console.log("heightCalc:",x, this.heightCalc );
+    }
+
+
     page_load() {
-        console.log('ionViewDidLoad NoteListPage');
         this.rowRecords = 0;
         this.totalRecords = 0;
         this.events.publish("prozCustomer", 0);
@@ -171,21 +190,24 @@ export class NoteListPage {
             }
             if (localStorage.getItem('split_filter_note') != undefined) {
                 this.splitFilter = JSON.parse(localStorage.getItem('split_filter_note'));
+                this.funcHeightCalc();
             }
 
             if (localStorage.getItem('show_columns_note') != undefined) {
                 this.selectedColumns = JSON.parse(localStorage.getItem('show_columns_note'));
             }
+
             for (let i = 0; i < this.noteListAll.length; i++) {
-                let ci = parseInt(this.noteListAll[i].data.category) - 1;
-                if (ci < 0) ci = 8;
+                let ci = parseInt(this.noteListAll[i].data.category) - 1 ;
+                if (ci < 0) ci=8;
                 let cn = this.categoryNames[ci];
                 console.log('categoryName:', cn, ci, this.noteListAll[i]);
-                this.noteListAll[i].data.category = this.translate.instant(cn);
+                this.noteListAll[i].data.category = this.translate.instant(cn); 
             }
 
             this.generate_noteList();
         });
+        this.funcHeightCalc();
     }
 
 
@@ -202,7 +224,11 @@ export class NoteListPage {
             ret = true;
 
         for (let i = 0; i < this.cols.length; i++) {
-            if (this.columnFilterValues[this.cols[i].field].trim().length > 0 && node.data[this.cols[i].field] != undefined && node.data[this.cols[i].field].toLowerCase().indexOf(this.columnFilterValues[this.cols[i].field].trim().toLowerCase()) < 0)
+            let fx = "";
+            if(this.columnFilterValues[this.cols[i].field]) {
+                fx = this.columnFilterValues[this.cols[i].field].trim();
+            }
+            if (fx.length > 0 && node.data[this.cols[i].field] != undefined && node.data[this.cols[i].field].toLowerCase().indexOf(fx.toLowerCase()) < 0)
                 ret = false;
         }
 
@@ -237,7 +263,7 @@ export class NoteListPage {
             }
         }
         else
-            this.columnFilterValues = { title: "", notes: "", notes_date: "", category: "", search_all: "" };
+            this.columnFilterValues = { title: "", notes: "", notes_date: "", category: "", name_user: "", name_contact: "", search_all: "" };
         this.generate_noteList();
     }
 
@@ -286,7 +312,6 @@ export class NoteListPage {
 
         modal.present();
     }
-
     async menu_edit() {
         console.log('menu_edit', this.selectedNode);
         if (this.selectedNode) {
@@ -330,17 +355,17 @@ export class NoteListPage {
         this.data_tree(this.noteListAll);
         for (var i = 0, len = this.allnodes.length; i < len; i++) {
             let obj = this.allnodes[i];
-            obj.notes = obj.notes.replace(/(\\r\\n|\\n|\\r)/gm, " ");
+            obj.notes = obj.notes.replace(/(\\r\\n|\\n|\\r)/gm," ");
             let json: any = {};
             for (var j = 0; j < this.selectedColumns.length; j++) {
-                if (obj[this.selectedColumns[j].field]) {
+                if(obj[this.selectedColumns[j].field]) {
                     json[this.selectedColumns[j].header] = obj[this.selectedColumns[j].field];
-                } else {
+                }else{
                     json[this.selectedColumns[j].header] = "";
                 }
             }
             console.log(">>json :", json);
-            data.push(json);
+            data.push(json); 
         }
         this.excelService.exportAsExcelFile(data, 'note_all.xlsx');
     }
@@ -352,14 +377,14 @@ export class NoteListPage {
         this.data_tree(this.noteListView);
         for (var i = 0, len = this.allnodes.length; i < len; i++) {
             let obj = this.allnodes[i];
-            obj.notes = obj.notes.replace(/(\\r\\n|\\n|\\r)/gm, " ");
+            obj.notes = obj.notes.replace(/(\\r\\n|\\n|\\r)/gm," ");
             let json: any = {};
             for (var j = 0; j < this.selectedColumns.length; j++) {
-                if (obj[this.selectedColumns[j].field]) {
+                if(obj[this.selectedColumns[j].field]) {
                     json[this.selectedColumns[j].header] = obj[this.selectedColumns[j].field];
-                } else {
+                }else{
                     json[this.selectedColumns[j].header] = "";
-                }
+                }                
             }
             console.log(">>json :", json);
             data.push(json);
@@ -370,9 +395,10 @@ export class NoteListPage {
     printPdf() {
         let columns: any[] = [];
         let widthsArray: string[] = [];
+        let headerRowVisible: any = 1;
         for (var k = 0; k < this.selectedColumns.length; k++) {
             columns.push({ text: this.selectedColumns[k].header, style: 'header' });
-            widthsArray.push("*");
+            widthsArray.push("*"); 
         }
         let bodyArray: any[] = [];
         bodyArray.push(columns);
@@ -382,7 +408,7 @@ export class NoteListPage {
         let rowArray: any[] = [];
         for (var i = 0, len = this.allnodes.length; i < len; i++) {
             obj = this.allnodes[i];
-            obj.notes = obj.notes.replace(/(\\r\\n|\\n|\\r)/gm, " ");
+            obj.notes = obj.notes.replace(/(\\r\\n|\\n|\\r)/gm," ");
             rowArray = [];
             for (var j = 0; j < this.selectedColumns.length; j++) {
                 if (obj[this.selectedColumns[j].field])
@@ -393,7 +419,7 @@ export class NoteListPage {
             bodyArray.push(rowArray);
         }
 
-        this.pdf.get_ListDocDefinition(bodyArray, widthsArray, this.translate.instant("Notiz") + " " + this.translate.instant("Liste"), this.translate.instant("Notiz") + this.translate.instant("Liste") + '.pdf');
+        this.pdf.get_ListDocDefinition(bodyArray, widthsArray, headerRowVisible, this.translate.instant("Notiz") + " " + this.translate.instant("Liste"),this.translate.instant("Notiz")+this.translate.instant("Liste")+'.pdf');
     }
 
     data_tree(nodes: TreeNode[]): any {
@@ -408,6 +434,7 @@ export class NoteListPage {
             this.cancel_filters(1);
         }
         localStorage.setItem("split_filter_note", JSON.stringify(this.splitFilter));
+        this.funcHeightCalc();
     }
 
     async show_columns() {

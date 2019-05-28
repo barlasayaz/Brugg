@@ -18,7 +18,7 @@ import { NavigationExtras } from '@angular/router';
 export class MainNavComponent  implements OnInit {
   @Input() aktivPage: string;
   @Input() idCustomer: number;
-  @Input() company: string;
+  //@Input() company: string;
   public progressBar: any = 0;
   public rowRecords: any = 0;
   public totalRecords: any = 0;
@@ -67,8 +67,7 @@ export class MainNavComponent  implements OnInit {
     console.info('app.go: ', action, id, this.aktivPage);
     let navigationExtras: NavigationExtras = {
       queryParams: {
-          idCustomer: id,
-          company: this.company
+          idCustomer: id
       }
   };
     if (this.aktivPage != action) {

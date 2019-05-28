@@ -52,7 +52,7 @@ export class OrderFormPage {
             
         this.route.queryParams.subscribe(params => {
             this.idCustomer = params["idCustomer"];
-            this.company = params["company"];
+           // this.company = params["company"];
         });
         this.bestellungen = this.rs.bestellungen;
         this.offerten = this.rs.offerten;

@@ -5,6 +5,7 @@ import { UserdataService } from '../services/userdata';
 import { ApiService } from '../services/api';
 import { TreeNode } from 'primeng/api';
 import { ActivatedRoute,NavigationExtras } from '@angular/router';
+import { File } from '@ionic-native/file/ngx';
 /**
  * Generated class for the ProductMigrationPage page.
  *
@@ -36,11 +37,14 @@ export class ProductMigrationPage {
               public userdata: UserdataService,
               public apiService: ApiService,
               public alertCtrl: AlertController,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              public file: File) {
                 this.url = this.apiService.pvsApiURL;
                 this.route.queryParams.subscribe(params => {
                   this.idCustomer = params["idCustomer"];
-                  this.productList = params["productList"];
+                  let list = params["productList"];
+                  if (list)
+                    this.productList = JSON.parse(list);
               });
 
                 console.log('ProductMigrationPage productList:', this.productList); 

@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
-import { NavController, AlertController, ModalController, Platform } from '@ionic/angular';
+import { NavController, AlertController, ModalController, Platform, LoadingController } from '@ionic/angular';
 import { ApiService } from '../services/api';
 import { TranslateService } from '@ngx-translate/core';
 import { UserdataService } from '../services/userdata';
 import { QrBarcodeComponent } from '../components/qr-barcode/qr-barcode.component';
 import { NfcScanComponent } from '../components/nfc-scan/nfc-scan.component';
+import { CameraOptions, Camera } from '@ionic-native/camera/ngx';
+import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
 
 import { DatePipe } from '@angular/common';
 import pdfMake from 'pdfmake/build/pdfmake';
@@ -39,6 +41,7 @@ export class ProductDetailsPage {
   public url: any;
   public listProduct: any[] = [];
   public mobilePlatform: boolean = false;
+  public imageURI: any;
   public file_link: any;
   public nocache: any;
   public mouseoverButton1: boolean;
@@ -55,50 +58,49 @@ export class ProductDetailsPage {
     public datePipe: DatePipe,
     private modalCtrl: ModalController,
     public platform: Platform,
+    public camera: Camera,
+    public loadingCtrl: LoadingController,
+    public transfer: FileTransfer,
     private route:ActivatedRoute) {
 
-    platform.ready().then(() => {
-      if (this.platform.is('ios') ||
-        this.platform.is('android')) {
-        this.mobilePlatform = true;
-        this.mouseoverButton1 = true;
-        this.mouseoverButton2 = true;
-        this.mouseoverButton3 = true;
-        this.mouseoverButton4 = true;
-        console.log("platform mobile:", this.platform.platforms());
-      }
-      else {
-        console.log("platform not mobile:", this.platform.platforms());
-        this.mobilePlatform = false;
-        this.mouseoverButton1 = false;
-        this.mouseoverButton2 = false;
-        this.mouseoverButton3 = false;
-        this.mouseoverButton4 = false;
-      }
-    });
+      platform.ready().then(() => {
+        if ( this.platform.is('ios') ||
+          this.platform.is('android') ) {
+          this.mobilePlatform = true;
+          this.mouseoverButton1 = true;
+          this.mouseoverButton2 = true;
+          this.mouseoverButton3 = true;
+          this.mouseoverButton4 = true;
+          console.log("platform mobile:", this.platform.platforms());
+        }
+        else {
+          console.log("platform not mobile:", this.platform.platforms());
+          this.mobilePlatform = false;
+          this.mouseoverButton1 = false;
+          this.mouseoverButton2 = false;
+          this.mouseoverButton3 = false;
+          this.mouseoverButton4 = false;
+        }
+      });
 
     this.url = this.apiService.pvsApiURL;
     this.route.queryParams.subscribe(params => {
       this.idProduct = params["idProduct"];
-      this.company = params["company"];
+      //this.company = params["company"];
       this.selectedProduct = params.get("productList");
   });
 
     this.activProduct.product = null;
     this.loadProduct(this.idProduct);
     this.dateiListe();
-  }
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad ProductDetailsPage');
     this.nocache = new Date().getTime();
   }
+
 
   loadProduct(id) {
     this.activProduct.images = '';
     this.apiService.pvs4_get_product(id).then((result: any) => {
       this.activProduct = result.obj;
-      this.idCustomer = this.activProduct.customer;
       let title = JSON.parse(this.activProduct.title);
       this.activProduct.title = title[this.lang];
       this.activProduct.items = JSON.parse(this.activProduct.items);
@@ -205,7 +207,7 @@ export class ProductDetailsPage {
       link: productImagePath
     });
     urlList.push({
-      link: 'assets/imgs/banner.jpg'
+      link: 'assets/imgs/banner_'+this.apiService.pdfLicensee+'.jpg'
     });
 
     let that = this;
@@ -234,10 +236,6 @@ export class ProductDetailsPage {
   }
 
   printPdf() {
-    var addr1 = 'Brugg Drahtseil AG';
-    var addr2 = 'Wydenstrasse 36';
-    var addr3 = 'CH-5242 Birr';
-    var addr4 = ' ';
     let productList = [];
     let columns = ['title', 'value'];
     let product = this.listProduct;
@@ -349,14 +347,15 @@ export class ProductDetailsPage {
 
     this.getProductUrlList(productImagePath, dataUrlList => {
       prdct_img = { "image": dataUrlList[0].dataURL, "margin": 0, "fit": [300, 180], "alignment": 'center' };
-      let prdct_qr = {};
-      if (this.activProduct.qr_code && this.activProduct.qr_code != "") {
+      let prdct_qr = {};      
+      if (this.activProduct.qr_code && this.activProduct.qr_code != "")
+      {
         let x = document.getElementsByClassName("qrImage")[0];
-        console.log("getElementsByClassName:", x);
+        console.log("getElementsByClassName:",x);
         let y = x.getElementsByTagName('img');
-        console.log("getElementsByTagName:", y);
+        console.log("getElementsByTagName:",y);
         let z = y[0].getAttribute('src');
-        console.log("getAttribute:", z);
+        console.log("getAttribute:",z);
         prdct_qr = { "image": z, "margin": 0, "fit": [200, 100], "alignment": 'center' };
       }
 
@@ -368,26 +367,6 @@ export class ProductDetailsPage {
           columns: [
             {
               "image": dataUrlList[1].dataURL, "width": 800, margin: 20
-            },
-            {
-              margin: [-770, 40, 0, 0],
-              text: addr1,
-              fontSize: 12
-            },
-            {
-              margin: [-780, 55, 0, 0],
-              text: addr2,
-              fontSize: 12
-            },
-            {
-              margin: [-790, 70, 0, 0],
-              text: addr3,
-              fontSize: 12
-            },
-            {
-              margin: [-800, 85, 0, 0],
-              text: addr4,
-              fontSize: 12
             }
           ]
         },
@@ -430,7 +409,7 @@ export class ProductDetailsPage {
                     [prdct_img],
 
                     [pdrctNullTitle],
-
+                    
                     [prdctQrCodeTitle],
                     [prdct_qr]
                   ]
@@ -449,7 +428,6 @@ export class ProductDetailsPage {
 
   createProtocol() {
     if (this.userdata.role_set.edit_products == false) return;
-
     if (this.selectedProduct) {
       let navigationExtras: NavigationExtras = {
         queryParams: {
@@ -459,7 +437,6 @@ export class ProductDetailsPage {
     };
       this.navCtrl.navigateForward(["/protocol-edit"],navigationExtras);
     }
-
   }
 
   mouseover(buttonNumber) {
@@ -485,5 +462,60 @@ export class ProductDetailsPage {
         this.mouseoverButton4 = false;
     }
   }
+
+  getCamera() {
+    let options: CameraOptions = {
+      quality: 100,
+      destinationType: this.camera.DestinationType.FILE_URI,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE
+    };
+
+    this.imageURI = '';
+    this.camera.getPicture(options).then((imageData) => {
+      // imageData is either a base64 encoded string or a file URI
+      // If it's base64 (DATA_URL):
+      //this.activProtocol.images = 'data:image/jpeg;base64,' + imageData;
+      this.imageURI = imageData;
+      this.uploadFile();
+    }, (err) => {
+      console.log(err);
+    });
+  }
+
+  async uploadFile() {
+    let loader = await this.loadingCtrl.create({
+      message:"Uploading..."
+    });
+    loader.present();
+    const fileTransfer: FileTransferObject = this.transfer.create();
+
+    let imageName = this.imageURI.substr(this.imageURI.indexOf('/cache/')+7);
+    let options: FileUploadOptions = {      
+      fileKey: 'file',
+      fileName: 'product_' + imageName,
+      chunkedMode: false,
+      mimeType: "image/jpeg",
+      httpMethod: 'POST',
+      params: {
+        'dir': 'product_' + this.idProduct,
+        'token': window.localStorage['access_token']
+      }
+    }
+    
+    console.log("imageURI :", this.imageURI);
+    console.log("upload :", this.url + 'upload.php');
+
+    fileTransfer.upload(this.imageURI, this.url + 'upload.php', options)
+      .then((data) => {
+        console.log("Uploaded Successfully :", data);
+        this.dateiListe();
+        loader.dismiss();
+      }, (err) => {
+        console.log('Uploaded Error :', err);
+        this.activProduct.images = '';
+        loader.dismiss();
+      });      
+  }  
 
 }

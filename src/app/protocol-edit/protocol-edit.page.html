@@ -1,4 +1,4 @@
-<main-nav aktivPage="ProtocolEdit" [idCustomer]="idCustomer" [company]="company"></main-nav>
+<main-nav aktivPage="ProtocolEdit" [idCustomer]="idCustomer"></main-nav>
 
 <ion-content>
   <div class="ek-content">
@@ -16,12 +16,16 @@
                         {{'Protokollvorlage' | translate}}
                       </div>
                       <div class="table-header-buttons">
-                        <ion-button size="small" (click)="down_click()"
-                          [disabled]="downClick == 1">
+                        <ion-button 
+                                size="small" 
+                                (click)="down_click()"
+                                [disabled]="downClick == 1">
                           <i class="fas fa-sort-alpha-down"></i>
                         </ion-button>
-                        <ion-button size="small" (click)="down_click()"
-                          [disabled]="downClick == 0">
+                        <ion-button 
+                                size="small" 
+                                (click)="down_click()"
+                                [disabled]="downClick == 0">
                           <i class="fas fa-sort-alpha-up"></i>
                         </ion-button>
                       </div>
@@ -29,19 +33,25 @@
                     <div class="tbody">
                       <div class="tr table-subheader table-subheader-fix">
                         <div class="table-subheader-buttons">
-                          <ion-button size="small" (click)="edit_template()"
-                            [disabled]="selectTemplate == 0">
+                          <ion-button 
+                                  size="small" 
+                                  (click)="edit_template()"
+                                  [disabled]="selectTemplate == 0">
                             <ion-icon name="create"></ion-icon>
                           </ion-button>                          
-                          <ion-button size="small" (click)="move_left()"
-                            [disabled]="selectTemplate == 0">
+                          <ion-button 
+                                  size="small" 
+                                  (click)="move_left()"
+                                  [disabled]="selectTemplate == 0">
                             <ion-icon name="arrow-round-forward"></ion-icon>
                           </ion-button>
                         </div>
 
                         <div class="search-search">
-                          <ion-input type="text" placeholder="{{'Suche' |translate }}" [(ngModel)]="searchText"
-                            (input)="search_all()">
+                          <ion-input type="text" 
+                                     placeholder="{{'Suche' |translate }}" 
+                                     [(ngModel)]="searchText"
+                                     (input)="search_all()">
                           </ion-input>
                           <!-- <button ion-button small (click)="search_all()" style="margin-top:7px;">
                             <ion-icon name="search"></ion-icon>
@@ -50,10 +60,10 @@
                       </div>
                       <div style="max-height: 518px; overflow-x: auto;">
                         <div style="padding: 10px; cursor: pointer;">
-                          <div class="product-edit-item" *ngFor="let group of templates; let opdInd = index"
-                            (click)="onclickTemplate(group.id)" 
-                            [ngClass]="selectedTemplate[group.id]!=0 ? 'selectTemplate' : 'unselectTemplate'">
-
+                          <div class="product-edit-item" 
+                               *ngFor="let group of templates; let opdInd = index"
+                               (click)="onclickTemplate(group.id)" 
+                               [ngClass]="selectedTemplate[group.id]!=0 ? 'selectTemplate' : 'unselectTemplate'">
                             <div class="group-handle">
                               <span class="group-handle">{{group.title[lang]}}</span>
                             </div>
@@ -76,21 +86,23 @@
                       <div class="th">
                         {{'Protokoll' | translate}}
                       </div>
-                      <div class="table-header-buttons">
-                        <ion-button size="small" *ngIf="!itsNew" class="btn-red"
-                          (click)="protocolDeactivate();">
-                          <ion-icon name="trash"></ion-icon>
-                        </ion-button>
-                        <ion-button size="small" (click)="dismiss()">
-                          <ion-icon name="close"></ion-icon>
-                        </ion-button>
-                        <ion-button size="small" (click)="protocolEdit();">
-                          <ion-icon name="checkmark"></ion-icon>
-                        </ion-button>
-                      </div>
                     </div>
                   </div>
                   <div class="tbody">
+                    <div class="tr table-subheader table-subheader-fix">
+                        <div class="table-subheader-buttons">
+                            <ion-button size="small" *ngIf="!itsNew" class="btn-red"
+                              (click)="protocolDeactivate();">
+                              <ion-icon name="trash"></ion-icon>
+                            </ion-button>
+                            <ion-button size="small" (click)="dismiss()">
+                              <ion-icon name="close"></ion-icon>
+                            </ion-button>
+                            <ion-button size="small" (click)="protocolEdit();">
+                              <ion-icon name="checkmark"></ion-icon>
+                            </ion-button>
+                        </div>
+                    </div>
                     <div style="max-height: 518px; overflow-x: auto;">
                       <div class="container" style="padding: 0px 20px 20px 20px">
                         <!-- Row 1 -->
@@ -108,20 +120,23 @@
                           <ion-col size="7">
                             <ion-item>
                               <ion-label position="stacked">{{translate.instant('Protokoll Nummer')}}</ion-label>
-                              <ion-input *ngIf="activProtocol.protocol_number != 0" readonly type="number"
-                                placeholder="{{translate.instant('Automatisch generiert!')}}"
-                                [(ngModel)]="activProtocol.protocol_number">
+                              <ion-input *ngIf="activProtocol.protocol_number != 0" 
+                                         readonly 
+                                         type="number"
+                                         placeholder="{{translate.instant('Automatisch generiert!')}}"
+                                         [(ngModel)]="activProtocol.protocol_number">
                               </ion-input>
-                              <ion-input *ngIf="activProtocol.protocol_number == 0" readonly type="text"
-                                placeholder="{{translate.instant('Automatisch generiert!')}}">
+                              <ion-input *ngIf="activProtocol.protocol_number == 0" 
+                                         readonly 
+                                         type="text"
+                                         placeholder="{{translate.instant('Automatisch generiert!')}}">
                               </ion-input>
                             </ion-item>
                           </ion-col>
-                          <ion-col size="5">
+                          <ion-col size="5"> 
                             <ion-item>
                               <ion-label position="floating">{{translate.instant('Datum')}}</ion-label>
-                              <ion-datetime [ngClass]="{required:inputError}"
-                                            [(ngModel)]="activProtocol.protocol_date" 
+                              <ion-datetime [(ngModel)]="activProtocol.protocol_date" 
                                             displayFormat="DD.MM.YYYY"
                                             max = {{maxDate}}
                                             doneText="{{translate.instant('okay')}}"
@@ -147,8 +162,7 @@
                           <ion-col size="5">
                             <ion-item>
                               <ion-label position="stacked">{{translate.instant('nächster Prüftermin')}}</ion-label>
-                              <ion-datetime [ngClass]="{required:inputError}"
-                                            [(ngModel)]="activProtocol.protocol_date_next" 
+                              <ion-datetime [(ngModel)]="activProtocol.protocol_date_next" 
                                             displayFormat="DD.MM.YYYY"
                                             max = {{maxDate}}
                                             doneText="{{translate.instant('okay')}}"
@@ -162,16 +176,16 @@
                           <ion-col size="7">
                             <ion-item>
                               <ion-label position="floating">{{translate.instant('Produkt')}}</ion-label>
-                              <ion-input  readonly type="text"
-                                [(ngModel)]="item.title">
+                              <ion-input readonly type="text"
+                                         [(ngModel)]="item.data.title">
                               </ion-input>
                             </ion-item>
                           </ion-col>
                           <ion-col size="5">
                             <ion-item>
                               <ion-label position="stacked">{{translate.instant('Produktnummer')}}</ion-label>
-                              <ion-input  readonly type="text"
-                              [(ngModel)]="item.id_number">
+                              <ion-input readonly type="text"
+                                         [(ngModel)]="item.data.id_number">
                             </ion-input>
                             </ion-item>
                           </ion-col>
@@ -179,53 +193,68 @@
 
                         <!-- Row 3 -->
                         <ion-row *ngFor="let item of activProtocol.items">
-                          <ion-col size="12" size-md="6" *ngIf="item.type == 0">
+                          <ion-col size="12" size-md="7" *ngIf="item.type == 0">
                             <ion-item>
-                              <ion-label>{{item.title[lang]}}</ion-label>
-                              <ion-toggle [(ngModel)]="item.value" color="{{item.options.color}}"> </ion-toggle>
+                              <ion-label *ngIf="item.mandatory=='true'">{{item.title[lang]}} *</ion-label>
+                              <ion-label *ngIf="item.mandatory=='false'">{{item.title[lang]}}</ion-label>
+                              <ion-toggle [(ngModel)]="item.value" 
+                                          color="{{item.options.color}}">
+                              </ion-toggle>
                             </ion-item>
                           </ion-col>
-                          <ion-col size="12" size-md="6" *ngIf="item.type == 1">
+                          <ion-col size="12" size-md="7" *ngIf="item.type == 1">
                             <ion-item>
-                              <ion-label position="floating">{{item.title[lang]}}</ion-label>
+                              <ion-label position="floating" *ngIf="item.mandatory=='true'">{{item.title[lang]}} *</ion-label>
+                              <ion-label position="floating" *ngIf="item.mandatory=='false'">{{item.title[lang]}}</ion-label>
                               <ion-select class="form-control" 
                                           [(ngModel)]="item.value"
                                           okText="{{translate.instant('okay')}}" 
                                           cancelText="{{translate.instant('dismiss')}}">
-                                <ion-select-option *ngFor="let option of item.options">{{option[lang]}}</ion-select-option>
+                                <ion-select-option *ngFor="let option of item.options">{{option[lang]}}
+                                </ion-select-option>
                               </ion-select>
                             </ion-item>
                           </ion-col>
-                          <ion-col size="12" size-md="6" *ngIf="item.type == 2">
+                          <ion-col size="12" size-md="7" *ngIf="item.type == 2">
                             <ion-item>
-                              <ion-label position="floating">{{item.title[lang]}}</ion-label>
-                              <ion-textarea [ngClass]="{required:inputError}" [(ngModel)]="item.value"
-                                max="{{item.options.max}}">
+                              <ion-label position="floating" *ngIf="item.mandatory=='true'">{{item.title[lang]}} *</ion-label>
+                              <ion-label position="floating" *ngIf="item.mandatory=='false'">{{item.title[lang]}}</ion-label>
+                              <ion-textarea [(ngModel)]="item.value"
+                                            max="{{item.options.max}}">
                               </ion-textarea>
                             </ion-item>
                           </ion-col>
-                          <ion-col size="12" size-md="6" *ngIf="item.type == 3">
+                          <ion-col size="12" size-md="7" *ngIf="item.type == 3">
                             <ion-item>
-                              <ion-label position="floating">{{item.title[lang]}}</ion-label>
-                              <ion-input type="text" (keydown)="keyDown($event)"  [(ngModel)]="item.value" min="{{item.options.min}}"
-                                max="{{item.options.max}}"> </ion-input>
+                              <ion-label position="floating" *ngIf="item.mandatory=='true'">{{item.title[lang]}} *</ion-label>
+                              <ion-label position="floating" *ngIf="item.mandatory=='false'">{{item.title[lang]}}</ion-label>
+                              <ion-input type="text" 
+                                         (keydown)="keyDown($event)" 
+                                         [(ngModel)]="item.value" 
+                                         min="{{item.options.min}}"
+                                         max="{{item.options.max}}">
+                              </ion-input>
                             </ion-item>
                           </ion-col>
-                          <ion-col size="12" size-md="6" *ngIf="item.type == 4">
+                          <ion-col size="12" size-md="7" *ngIf="item.type == 4">
                             <ion-item>
-                              <ion-label position="floating">{{item.title[lang]}}</ion-label>
-                              <ion-datetime [ngClass]="{required:fehler}" type="time" [(ngModel)]="item.value"
-                                name="time" required="true" displayFormat="HH:mm"
-                                doneText="{{translate.instant('okay')}}"
-                                cancelText="{{translate.instant('dismiss')}}">
+                              <ion-label position="floating" *ngIf="item.mandatory=='true'">{{item.title[lang]}} *</ion-label>
+                              <ion-label position="floating" *ngIf="item.mandatory=='false'">{{item.title[lang]}}</ion-label>
+                              <ion-datetime [ngClass]="{required:fehler}" 
+                                            type="time" 
+                                            [(ngModel)]="item.value"
+                                            name="time" required="true" 
+                                            displayFormat="HH:mm"
+                                            doneText="{{translate.instant('okay')}}"
+                                            cancelText="{{translate.instant('dismiss')}}">
                               </ion-datetime>
                             </ion-item>
                           </ion-col>
-                          <ion-col size="12" size-md="6" *ngIf="item.type == 5">
+                          <ion-col size="12" size-md="7" *ngIf="item.type == 5">
                             <ion-item>
-                              <ion-label position="floating">{{item.title[lang]}}</ion-label>
-                              <ion-datetime [ngClass]="{required:inputError}" 
-                                            [(ngModel)]="item.value"
+                              <ion-label position="floating" *ngIf="item.mandatory=='true'">{{item.title[lang]}} *</ion-label>
+                              <ion-label position="floating" *ngIf="item.mandatory=='false'">{{item.title[lang]}}</ion-label>
+                              <ion-datetime [(ngModel)]="item.value"
                                             displayFormat="DD.MM.YYYY" 
                                             max = {{maxDate}}
                                             doneText="{{translate.instant('okay')}}"
@@ -239,19 +268,7 @@
                   </div>
                 </div>
               </div>
-              <!-- Error -->
-              <div [hidden]="inputError" class="fehler">
-                <div>
-                  &nbsp;
-                </div>
-              </div>
-              <div [hidden]="!inputError" class="pfehler" style="margin-top: 15px; margin-left: 5px;">
-                <div class="highlightFehler">
-                  {{translate.instant('Bitte füllen Sie alle Pflichtfelder aus.')}}
-                </div>
-              </div>
-            </ion-col>
-            
+            </ion-col>            
           </ion-row>
         </ion-grid>
       </div>

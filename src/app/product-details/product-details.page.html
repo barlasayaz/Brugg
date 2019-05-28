@@ -1,4 +1,4 @@
-<main-nav aktivPage="ProductDetails" [idCustomer]="idCustomer" [company]="company"></main-nav>
+<main-nav aktivPage="ProductDetails" [idCustomer]="idCustomer"></main-nav>
 
 <ion-content>
 	<div class="ek-content">
@@ -7,9 +7,26 @@
 				<ion-grid>
 					<ion-row>
 						<!-- Product Details -->
-						<ion-col size-xl="7" size-lg="7" size-md="7" size-sm="12" size="12">
+						<ion-col size-lg="7" size="12">
+
+							<div *ngIf="activProduct.images" class="table-responsive hidden-lg-up" id="ps_product"
+								style="margin-bottom:10px">
+								<div class="table-info table-striped" id="product-template">
+									<div class="thead">
+										<div class="tr table-header">
+											<div class="th">{{'Produktbild' | translate}}</div>
+										</div>
+									</div>
+									<div class="tbody">
+										<div class="whitebox-image">
+											<img *ngIf="activProduct.images" src="{{activProduct.images}}?{{nocache}}">
+										</div>
+									</div>
+								</div>
+							</div>
+
 							<div class="table-responsive" id="ps_product" style="margin-bottom:10px">
-								<div class="table table-striped" id="product_details">
+								<div class="table-info table-striped" id="product_details">
 									<div class="thead">
 										<div class="tr table-header">
 											<div class="th">{{'Produkt Details' | translate}}</div>
@@ -17,29 +34,30 @@
 									</div>
 									<div class="tbody">
 										<div class="tr table-body">
-											<div class="td-lbl">{{'Titel' | translate}}</div>
+											<div class="td td-lbl">{{'Titel' | translate}}</div>
 											<div class="td">{{activProduct.title}}</div>
 										</div>
 										<div class="tr table-body">
-											<div class="td-lbl">DB-ID</div>
+											<div class="td td-lbl">DB-ID</div>
 											<div class="td">{{activProduct.id}}</div>
 										</div>
 										<div class="tr table-body">
-											<div class="td-lbl">#</div>
+											<div class="td td-lbl">#</div>
 											<div class="td">{{activProduct.id_number}}</div>
 										</div>
 										<div class="tr table-body">
-											<div class="td-lbl">{{'Articel No' | translate}}</div>
+											<div class="td td-lbl">{{'Articel No' | translate}}</div>
 											<div class="td">{{activProduct.articel_no}}</div>
 										</div>
 										<div class="tr table-body">
-											<div class="td-lbl">{{'Intervall Prüfen' | translate}}</div>
+											<div class="td td-lbl">{{'Intervall Prüfen' | translate}}</div>
 											<div class="td">{{activProduct.check_interval}}</div>
 										</div>
 										<div class="tr table-body" *ngFor="let item of activProduct.items">
-											<div class="td-lbl">{{item.title[lang]}}</div>
+											<div class="td td-lbl">{{item.title[lang]}}</div>
 											<div *ngIf="item.type != 5" class="td">{{item.value}}</div>
-											<div *ngIf="item.type == 5" class="td">{{item.value | date : 'dd.MM.yyyy'}}</div>
+											<div *ngIf="item.type == 5" class="td">{{item.value | date : 'dd.MM.yyyy'}}
+											</div>
 										</div>
 									</div>
 								</div>
@@ -50,21 +68,34 @@
 									<div class="thead">
 										<div class="tr table-header">
 											<div class="th">{{'Dateianhänge' | translate}}</div>
+											<div *ngIf="(userdata.role==1)||(userdata.role==2)" class="header-buttons">
+												<ion-button size="small" (click)="getCamera()"
+													[disabled]="!mobilePlatform">
+													<ion-icon name="camera"></ion-icon>
+												</ion-button>
+											</div>
 										</div>
 									</div>
 									<div class="tbody">
-										<p *ngFor="let row of dateien">
+										<div class="pdownloads" *ngFor="let row of dateien">
 											<ion-icon name="trash" class="delSpan" (click)="delFile(row)"></ion-icon>
-											<a class="datei_link" href="{{link}}{{row}}" target="_blank"> &nbsp; {{row}}</a>
-											<a *ngIf="KraftWegGraph && row=='KraftWegGraph.txt'" class="glyphicon glyphicon-signal delSpan" (click)="chart()"></a>
-										</p>
-										<div *ngIf="userdata.Type<20" class="tr">
-											<p-fileUpload name="file" url="{{url}}upload.php" (onUpload)="onUpload($event)" (onBeforeUpload)="onBeforeUpload($event)"
-											 method="POST" accept="image/*,application/*,audio/*,message/*,text/*,video/*" maxFileSize="2000000"
-											 chooseLabel="{{'Wähle Dateien' | translate}}" uploadLabel="{{'Hochladen' | translate}}" cancelLabel="{{'Abbrechen' | translate}}">
+											<a class="datei_link" href="{{link}}{{row}}" target="_blank"> &nbsp;
+												{{row}}</a>
+											<a *ngIf="KraftWegGraph && row=='KraftWegGraph.txt'"
+												class="glyphicon glyphicon-signal delSpan" (click)="chart()"></a>
+										</div>
+										<div *ngIf="(userdata.role==1)||(userdata.role==2)" class="tr">
+											<p-fileUpload name="file" url="{{url}}upload.php"
+												(onUpload)="onUpload($event)" (onBeforeUpload)="onBeforeUpload($event)"
+												method="POST"
+												accept="image/*,application/*,audio/*,message/*,text/*,video/*"
+												maxFileSize="2000000" chooseLabel="{{'Wähle Dateien' | translate}}"
+												uploadLabel="{{'Hochladen' | translate}}"
+												cancelLabel="{{'Abbrechen' | translate}}">
 												<ng-template pTemplate="content">
 													<ul *ngIf="uploadedFiles.length">
-														<li *ngFor="let file of uploadedFiles">{{file.name}} - {{file.size}} bytes</li>
+														<li *ngFor="let file of uploadedFiles">{{file.name}} -
+															{{file.size}} bytes</li>
 													</ul>
 												</ng-template>
 											</p-fileUpload>
@@ -74,9 +105,9 @@
 							</div>
 						</ion-col>
 						<!-- Product Image -->
-						<ion-col size-xl="5" size-lg="5" size-md="5" size-sm="12" size="12">
-							<div class="table-responsive" id="ps_product">
-								<div class="table table-striped" id="product-template">
+						<ion-col size-lg="5" size="12">
+							<div class="table-responsive hidden-md-down" id="ps_product">
+								<div class="table-info table-striped" id="product-template">
 									<div class="thead">
 										<div class="tr table-header">
 											<div class="th">{{'Produktbild' | translate}}</div>
@@ -86,25 +117,21 @@
 										<div class="whitebox-image">
 											<img *ngIf="activProduct.images" src="{{activProduct.images}}?{{nocache}}">
 										</div>
-									<!--<div class="whitebox-image" *ngIf="qrImage">
-											<br>
-											<img  src="{{qrImage}}?{{nocache}}">
-										</div> -->
 									</div>
 								</div>
 							</div>
 							<!-- Product QR -->
-							<div class="table-responsive" id="ps_product">
-								<div class="table table-striped" id="product-template">
+							<div *ngIf="activProduct.qr_code" class="table-responsive" id="ps_product"
+								style="margin-top:10px">
+								<div class="table-info table-striped" id="product-template">
 									<div class="thead">
 										<div class="tr table-header">
 											<div class="th">{{'QR-Code' | translate}}</div>
 										</div>
 									</div>
 									<div class="tbody">
-										<div class="whitebox-image">
-											<ngx-qrcode [qrc-value]="activProduct.qr_code" 
-														qrc-class="qrImage">
+										<div class="whitebox-image qrqr">
+											<ngx-qrcode [qrc-value]="activProduct.qr_code" qrc-class="qrImage">
 											</ngx-qrcode>
 										</div>
 									</div>
@@ -117,42 +144,29 @@
 		</div>
 	</div>
 </ion-content>
-<div class="ek-footer fabfix">
-	<ion-fab slot="fixed" vertical="bottom" horizontal="end" >
-		<ion-fab-button color="tertiary">
-			<ion-icon name="menu"></ion-icon>
+
+<ion-fab slot="fixed" vertical="bottom" horizontal="end">
+	<ion-fab-button color="tertiary">
+		<ion-icon name="menu"></ion-icon>
+	</ion-fab-button>
+	<ion-fab-list side="top">
+		<ion-fab-button color="primary" (click)="createProtocol()" [disabled]="userdata.role_set.check_products==false"
+			(mouseover)="mouseover(1)" (mouseout)="mouseout(1)">
+			<ion-icon name="clipboard"></ion-icon>
 		</ion-fab-button>
-		<ion-fab-list side="top">
-			<ion-fab-button  color="primary"
-					(click)="createProtocol()" 
-					[disabled]="userdata.role_set.check_products==false" 
-					(mouseover)="mouseover(1)" 
-					(mouseout)="mouseout(1)">				
-				<ion-icon name="clipboard"></ion-icon>
-			</ion-fab-button>
-			<ion-label [hidden]="!mouseoverButton1">{{'Neues Protokoll' | translate}}</ion-label>
-			<ion-fab-button   color="primary"
-					(click)="printPdf()" 
-					(mouseover)="mouseover(2)"
-					(mouseout)="mouseout(2)">				
-				<ion-icon name="document"></ion-icon>
-			</ion-fab-button>
-			<ion-label [hidden]="!mouseoverButton2">{{'PDF Ansicht' | translate}}</ion-label>
-			<ion-fab-button  color="primary"
-					[disabled]="!mobilePlatform" 
-					(click)="nfc_scan()" 
-					(mouseover)="mouseover(3)" 
-					(mouseout)="mouseout(3)">				
-				<ion-icon name="wifi"></ion-icon>
-			</ion-fab-button>
-			<ion-label [hidden]="!mouseoverButton3">{{'NFC Scan' | translate}}</ion-label>
-			<ion-fab-button  color="primary" 					
-					(click)="qr_code()" 
-					(mouseover)="mouseover(4)" 
-					(mouseout)="mouseout(4)">				
-				<ion-icon name="qr-scanner"></ion-icon>
-			</ion-fab-button>
-			<ion-label [hidden]="!mouseoverButton4">{{'QR-Code scannen' | translate}}</ion-label>
-		</ion-fab-list>
-	</ion-fab>
-</div>
+		<ion-label [hidden]="!mouseoverButton1">{{'Neues Protokoll' | translate}}</ion-label>
+		<ion-fab-button color="primary" (click)="printPdf()" (mouseover)="mouseover(2)" (mouseout)="mouseout(2)">
+			<ion-icon name="document"></ion-icon>
+		</ion-fab-button>
+		<ion-label [hidden]="!mouseoverButton2">{{'PDF Ansicht' | translate}}</ion-label>
+		<ion-fab-button color="primary" [disabled]="!mobilePlatform" (click)="nfc_scan()" (mouseover)="mouseover(3)"
+			(mouseout)="mouseout(3)">
+			<ion-icon name="wifi"></ion-icon>
+		</ion-fab-button>
+		<ion-label [hidden]="!mouseoverButton3">{{'NFC Scan' | translate}}</ion-label>
+		<ion-fab-button color="primary" (click)="qr_code()" (mouseover)="mouseover(4)" (mouseout)="mouseout(4)">
+			<ion-icon name="qr-scanner"></ion-icon>
+		</ion-fab-button>
+		<ion-label [hidden]="!mouseoverButton4">{{'QR-Code scannen' | translate}}</ion-label>
+	</ion-fab-list>
+</ion-fab>
