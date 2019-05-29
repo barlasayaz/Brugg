@@ -27,7 +27,7 @@ export class ApiService {
   public appointmentEndTime: string = '16:59';
   public appointmentMinTime: string = '07:00';
   public appointmentMaxTime: string = '17:59';
-  public pdfLicensee: any = this.userdata.licensee;
+
   version: string = "4.3.17";
   
   constructor(public http: HttpClient, public userdata: UserdataService) {

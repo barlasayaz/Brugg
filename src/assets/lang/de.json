@@ -807,5 +807,25 @@
     "Datenschutzerklärung": "Datenschutzerklärung",
     "Rechnung": "Rechnung",
     "Versand": "Versand",
-    "Adresstyp": "Adresstyp"
+    "Adresstyp": "Adresstyp",
+    "Bestellformular": "Bestellformular",
+    "Reparatur": "Reparatur",
+    "Miete": "Miete",
+    "Beauftragt": "Beauftragt",
+    "Bestell Nr.": "Bestell Nr.",
+    "Auftrags Nr.": "Auftrags Nr.",
+    "PVS Bestellungs Nr.": "PVS Bestellungs Nr.",
+    "Komission": "Komission",
+    "Bestelldatum": "Bestelldatum",
+    "Liefertermin": "Liefertermin",
+    "Musterlieferung": "Musterlieferung",
+    "Gutschrift": "Gutschrift",
+    "Auftragsbestätigung": "Auftragsbestätigung",
+    "Nach belastung": "Nach belastung",
+    "Post": "Post",
+    "Express": "Express",
+    "Überbracht": "Überbracht",
+    "Selbst Abholer": "Selbst Abholer",
+    "Bestellung Abschicken": "Bestellung Abschicken"
+    
 }

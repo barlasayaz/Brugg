@@ -54,8 +54,8 @@ export class PdfExportService {
                           headerRowVisible: any,
                           title: string, 
                           fileName: string) {
-        let pdfLicensee = this.apiProvider.pdfLicensee;
-        let src = 'assets/imgs/banner_'+pdfLicensee+'.jpg';
+
+        let src = 'assets/imgs/banner_'+this.userdata.licensee+'.jpg';
 /*         let addr1 = 'Brugg Drahtseil AG';
         let addr2 = 'Wydenstrasse 36';
         let addr3 = 'CH-5242 Birr';

@@ -18,6 +18,7 @@ input:-webkit-autofill:hover,
 input:-webkit-autofill:focus, 
 input:-webkit-autofill:active  {
     -webkit-box-shadow: 0 0 0 30px white inset !important;
+    box-shadow: 0 0 0 30px white inset !important;
 }
 
 .heightCalc {
@@ -89,11 +90,11 @@ ion-item.item-input {
     -webkit-box-shadow: none !important;
             box-shadow: none !important;
     ion-input.input {
-      border-color: #f53d3d;
+      border-color: var(--ion-color-red);
     }
 
     ion-label.label {
-      color: #f53d3d;
+      color: var(--ion-color-red);
     }
   }
 
@@ -103,11 +104,11 @@ ion-item.item-input {
             box-shadow: none !important;
         
     ion-input.input {
-      border-color: #32db64;
+      border-color: var(--ion-color-green);
     }
 
     ion-label.label {
-      color: #32db64;
+      color: var(--ion-color-green);
     }
   }
 
@@ -116,11 +117,11 @@ ion-item.item-input {
     -webkit-box-shadow: none !important;
             box-shadow: none !important;
     ion-input.input {
-      border-color: #009de0;
+      border-color: var(--ion-color-main);
     }
 
     ion-label.label {
-      color: #009de0;
+      color: var(--ion-color-main);
     }
   }
 
@@ -138,7 +139,7 @@ ion-item.item-input {
     margin-bottom: -16px;
     margin-left: 5px;
     margin-top: 0;
-    padding: 5px;
+    padding: 5px 10px 5px 5px;
     background: #FFF;
     width: auto;
     align-self: baseline;
@@ -169,7 +170,7 @@ ion-item.item-select, ion-item.item-ionic-selectable {
     margin-bottom: -16px;
     margin-left: 5px;
     margin-top: 0px;
-    padding: 5px;
+    padding: 5px 10px 5px 5px;
     background: #FFF;
     width: auto;
     align-self: baseline;
@@ -17987,36 +17988,37 @@ tbody.ui-table-tbody {
     position: fixed;
     top: 15px;
     z-index: 555;
-    width: 1108px;
+    width: calc(1108px - 300px);
+    margin-left: 300px;
   }
   @media only screen and (max-width: 1200px) {
     .settings-delete {
-      width: 928px;
+      width: calc(928px - 300px);
+      margin-left: 300px;
     }
   }
   @media only screen and (max-width: 992px) {
     .settings-delete {
-      width: 690px;
+      width: calc(690px - 300px);
+      margin-left: 300px;   
     }
   }
   @media only screen and (max-width: 767px) {
     .settings-delete {
-      width: calc(100% - 57px);
+      position: relative;
+      margin-left: 0;
+      width: 100%;
+      z-index: 2;
+      margin-bottom: 20px;
+      margin-top: -50px;
     }
   }
   .settings-delete ion-button {
-    width: 250px !important;
+    width: 200px !important;
     position: absolute;
     right: -7px;
     margin: 0 !important;
     border-radius: 3px 3px 0px 0px;
-  }
-  @media only screen and (max-width: 767px) {
-    .settings-delete ion-button {
-      width: 50px !important;
-      position: absolute;
-      right: 0;
-    }
   }
 
   .nfc-info-container {
@@ -19435,25 +19437,6 @@ ion-select {
 
 body .ui-state-active, body .ui-state-highlight {
   background: rgba(#009de0, 0.2) !important;
-}
-
-page-product-template {
-  .selectOption, .selectTemplate {
-    background: #009de0 !important;
-    color: #FFF !important;
-    border: none !important;
-    margin-bottom: 10px;
-    cursor: move !important;
-  }  
-  
-  .unselectOption, .unselectTemplate {
-    margin-bottom: 10px;
-    cursor: move !important;
-    &:last-child {
-      margin-bottom: 0;
-    }
-  }
-
 }
 
 //DRAGULA

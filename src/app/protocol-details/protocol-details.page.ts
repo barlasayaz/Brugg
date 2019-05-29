@@ -168,7 +168,7 @@ export class ProtocolDetailsPage {
   }
 
   printPdf() {
-    var src = 'assets/imgs/banner_'+this.apiService.pdfLicensee+'.jpg';
+    var src = 'assets/imgs/banner_'+this.userdata.licensee+'.jpg';
     let pipe = new DatePipe('en-US');
     let protocolList = [];
     let columns = ['title', 'value'];

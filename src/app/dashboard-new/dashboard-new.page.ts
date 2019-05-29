@@ -183,11 +183,6 @@ export class DashboardNewPage {
         this.selectedMitarbeiter = 0; 
     }
 
-    ionViewDidLoad() {
-        console.log('ionViewDidLoad DashboardNewPage');
-    }
-
-
     async loadTable() {
         console.log("loadTable()");
         let loader = await this.loadingCtrl.create({ spinner: "circles" });

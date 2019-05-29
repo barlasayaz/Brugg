@@ -291,7 +291,7 @@ export class AppointmentPlanPage {
     }
 
     async newAppointment() {
-        console.log("newPrAppointment");
+        console.log("newAppointment");
         const modal: HTMLIonModalElement =
         await this.modalCtrl.create({
           component: AppointmentEditComponent,

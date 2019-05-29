@@ -207,7 +207,7 @@ export class ProductDetailsPage {
       link: productImagePath
     });
     urlList.push({
-      link: 'assets/imgs/banner_'+this.apiService.pdfLicensee+'.jpg'
+      link: 'assets/imgs/banner_'+this.userdata.licensee+'.jpg'
     });
 
     let that = this;
