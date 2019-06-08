@@ -20,7 +20,7 @@ const routes: Routes = [
   { path: 'note-details/:id', loadChildren: './note-details/note-details.module#NoteDetailsPageModule' },
   { path: 'note-list', loadChildren: './note-list/note-list.module#NoteListPageModule' },
   { path: 'order-form-new', loadChildren: './order-form-new/order-form-new.module#OrderFormNewPageModule' },
-  { path: 'product-details', loadChildren: './product-details/product-detailWs.module#ProductDetailsPageModule' },
+  { path: 'product-details', loadChildren: './product-details/product-details.module#ProductDetailsPageModule' },
   { path: 'product-edit', loadChildren: './product-edit/product-edit.module#ProductEditPageModule' },
   { path: 'product-list', loadChildren: './product-list/product-list.module#ProductListPageModule' },
   { path: 'product-migration', loadChildren: './product-migration/product-migration.module#ProductMigrationPageModule' },
