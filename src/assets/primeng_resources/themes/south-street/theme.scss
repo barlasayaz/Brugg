@@ -1,7 +1,3 @@
-/*
-* Deprecated: Use nova instead
-*/
-
 $fontFamily: segoe ui, Arial, sans-serif;
 $fontSize: 1em;
 $borderRadius: 6px;
@@ -59,9 +55,3 @@ $invalidInputBorderColor: #e3a345;
 $inputGroupTextColor: #ffffff;
 
 @import '../_theme';
-
-.ui-paginator .ui-paginator-page.ui-state-active {
-    background: #fafaf4;
-    color: #459e00;
-    border-color: #d4ccb0;
-}

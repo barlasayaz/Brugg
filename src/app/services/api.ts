@@ -28,7 +28,7 @@ export class ApiService {
   public appointmentMinTime: string = '07:00';
   public appointmentMaxTime: string = '17:59';
 
-  version: string = "4.3.17";
+  version: string = "4.4";
   
   constructor(public http: HttpClient, public userdata: UserdataService) {
     console.log('Start ApiProvider Provider');
@@ -1022,6 +1022,22 @@ export class ApiService {
         err => { // return the error
           rej(err);
         });
+    });
+  }
+
+  pvs4_uploadphp(obj: any) {
+    console.info("pvs4_uploadphp():", obj);
+    return new Promise((resolve, reject) => {
+      let tick = Date.now().toString(16).toUpperCase();
+      let url = pvs4_apiURL + "upload.php" + "?tick=" + tick;
+      //obj.append("token",this.userdata.token);
+      this.http.post(url, obj).subscribe(res => {
+        console.info("pvs4_uploadphp done :", res);
+        resolve(res);
+      }, (err) => {
+        console.log("pvs4_uploadphp err :", err);
+        reject(err);
+      });    
     });
   }
 

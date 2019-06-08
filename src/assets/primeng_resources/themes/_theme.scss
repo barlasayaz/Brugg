@@ -1,6 +1,3 @@
-/*
-* Deprecated: Use nova instead
-*/
 @mixin hover-element() {
     border-color: $stateHoverBorderColor;
     background-color: $stateHoverBgColor;
@@ -242,7 +239,7 @@
     @include hover-element();
 }
 
-.ui-dropdown-panel .ui-dropdown-item:not(.ui-state-highlight):not(.ui-state-disabled):hover {
+.ui-dropdown-panel .ui-dropdown-item:not(.ui-state-highlight):hover {
     @include hover-element();
 }
 
@@ -256,13 +253,8 @@
     }
 
     &:not(.ui-state-disabled) {
-        .ui-listbox-item:not(.ui-state-highlight):not(.ui-state-disabled):hover {
+        .ui-listbox-item:not(.ui-state-highlight):hover {
             @include hover-element();
-        }
-
-        .ui-listbox-item.ui-state-disabled .ui-chkbox-box:hover {
-            background-color: $inputBgColor;
-            border-color: $stateDefaultBorderColor;
         }
     }
 
@@ -279,13 +271,8 @@
     @include hover-element();
 }
 
-.ui-multiselect-panel .ui-multiselect-item:not(.ui-state-highlight):not(.ui-state-disabled):hover {
+.ui-multiselect-panel .ui-multiselect-item:not(.ui-state-highlight):hover {
     @include hover-element();
-}
-
-.ui-multiselect-panel .ui-multiselect-item.ui-state-disabled:hover .ui-chkbox-box {
-    background-color: $inputBgColor;
-    border-color: $stateDefaultBorderColor;
 }
 
 .ui-multiselect-panel .ui-multiselect-close {
@@ -566,12 +553,6 @@
             }
         }
     }
-
-    .ui-monthpicker {
-        .ui-monthpicker-month:hover {
-            @include hover-element();
-        }
-    }
 }
 
 .fc {
@@ -674,7 +655,7 @@
     }
 
     &.ui-table-hoverable-rows {
-        .ui-table-tbody > tr:not(.ui-state-highlight):not(.ui-contextmenu-selected):hover {
+        .ui-table-tbody > tr:not(.ui-state-highlight):hover {
             cursor: pointer;
             background-color: $stateHoverBgColor;
             color: $stateHoverTextColor;
@@ -728,10 +709,6 @@
         &.ui-contextmenu-selected {
             background-color: lighten($stateHighlightBgColor, 20%);
             color: $stateHighlightTextColor;
-
-            .ui-treetable-toggler {
-                color: $stateHighlightTextColor;
-            }
         }
 
         .ui-treetable-toggler {
@@ -764,7 +741,7 @@
     }
 
     &.ui-treetable-hoverable-rows {
-        .ui-treetable-tbody > tr:not(.ui-state-highlight):not(.ui-contextmenu-selected):hover {
+        .ui-treetable-tbody > tr:not(.ui-state-highlight):hover {
             cursor: pointer;
             background-color: $stateHoverBgColor;
             color: $stateHoverTextColor;
@@ -786,45 +763,6 @@
 
 .ui-treetable .ui-treetable-tbody > tr.ui-treetable-dragpoint-bottom > td {
     box-shadow: inset 0 -2px 0 0 $stateHighlightBgColor;
-}
-
-/* InputSwitch */
-.ui-inputswitch {
-    .ui-inputswitch-slider {
-        -webkit-transition: background-color .3s, box-shadow .2s;
-        transition: background-color .3s, box-shadow .2s;
-        background: #cccccc; 
-    
-        &:before {
-            background-color: #ffffff;
-        }
-    }
-
-    &.ui-inputswitch-focus {
-        .ui-inputswitch-slider {
-            -moz-box-shadow: 0px 0px 5px $stateFocusBorderColor;
-            -webkit-box-shadow: 0px 0px 5px $stateFocusBorderColor;
-            box-shadow: 0px 0px 5px $stateFocusBorderColor;
-        } 
-    }
-
-    &:not(.ui-state-disabled):hover {
-        .ui-inputswitch-slider {
-            background-color: #b7b7b7;
-        }
-    }
-
-    &.ui-inputswitch-checked {
-        .ui-inputswitch-slider {
-            background-color: #186ba0;
-        }
-
-        &:not(.ui-state-disabled):hover {
-            .ui-inputswitch-slider {
-                background-color: darken(#186ba0, 10%);
-            }
-        }
-    }
 }
 
 /* Validation */

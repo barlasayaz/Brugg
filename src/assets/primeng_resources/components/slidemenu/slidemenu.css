@@ -5,6 +5,7 @@
 
 .ui-slidemenu.ui-slidemenu-dynamic {
     position: absolute;
+    display: none;
 }
 
 .ui-slidemenu .ui-menu-separator {
@@ -39,13 +40,7 @@
 
 .ui-slidemenu .ui-menuitem-icon {
     margin-right: .25em;
-    vertical-align: middle;
 }
-
-.ui-slidemenu .ui-menuitem-text {
-    vertical-align: middle;
-}
-
 
 .ui-slidemenu .ui-menuitem {
     position: relative;

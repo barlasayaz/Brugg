@@ -30,7 +30,7 @@ export class ProtocolEditPage {
     protocol_date:"",
     protocol_date_next : "",
     result: 0,
-    items : "",
+    items : [],
     customer:0,
     title:"",
     product: ""
@@ -194,7 +194,19 @@ export class ProtocolEditPage {
 
     this.mandatoryControl = false;
     if(!this.activProtocol["title"]) {
-      this.mandatoryControl = true;
+      //this.mandatoryControl = true;
+      let alert = this.alertCtrl.create({
+        header: this.translate.instant('Protokoll speichern short'),
+        message: this.translate.instant('Bitte fÃ¼llen Sie alle Pflichtfelder aus.'),
+        buttons: [
+          {
+            text: this.translate.instant('ja'),
+            handler: () => {
+  
+            }
+          }
+        ]
+      }).then(x => x.present());
     }    
     this.activProtocol.items.forEach(element => {
       console.log("Mandatory Control :", element, element.mandatory, element.type, element.value);
@@ -375,7 +387,7 @@ export class ProtocolEditPage {
   showMandatoryAlert() {
     let alert = this.alertCtrl.create({
       header: this.translate.instant('Protokoll speichern short'),
-      message: this.translate.instant('Bitte füllen Sie alle Pflichtfelder aus.'),
+      message: this.translate.instant('Bitte eine Vorlage wählen!'),
       buttons: [
         {
           text: this.translate.instant('ja'),

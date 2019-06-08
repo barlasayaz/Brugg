@@ -818,5 +818,8 @@
   "Express": "Express",
   "Überbracht": "About Bracht",
   "Selbst Abholer": "Even Pickup",
-  "Bestellung Abschicken": "Send Order"
+  "Bestellung Abschicken": "Send Order",
+
+  "Bitte warten": "Please wait...",
+  "Bitte eine Vorlage wählen!": "Please select a template!"
 }

@@ -430,7 +430,8 @@ export class ProductListPage {
 
         this.rowRecords = this.productListView.length;
         this.totalRecords = this.productListAll.length;
-        let progressBar = Math.round(this.rowRecords * 100 / this.totalRecords);
+        let progressBar = 100;
+        if(this.totalRecords >0 ) Math.round(this.rowRecords * 100 / this.totalRecords);
         this.events.publish("progressBar", progressBar);
         this.events.publish("rowRecords", this.rowRecords);
         this.events.publish("totalRecords", this.totalRecords);

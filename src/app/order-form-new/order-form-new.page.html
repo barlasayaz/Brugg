@@ -1,0 +1,419 @@
+<main-nav aktivPage="OrderFormNew" [idCustomer]="idCustomer"></main-nav>
+
+<ion-content>
+    <div class="ek-content">
+      <div class="container">
+        <div class="mt20 content-sm">  
+          <ion-grid>
+            <ion-row>
+              <ion-col size-xl="12" size-lg="12" size-md="12" size-sm="12" size="12">
+                <div class="kunden-wrap">
+                  <!-- SELECTION -->
+                  <div class="kunden-col">
+                    <div class="table-info">
+                      <div class="thead">
+                        <div class="tr table-header">
+                          <div class="th">{{'Bestellformular' | translate}}</div>
+                        </div>
+                      </div>
+                      <div class="tbody">
+                        <div class="tr table-body" style="border:2px solid #ccc;">
+                            <div class="td" style="max-width: 30px;"><ion-checkbox [(ngModel)]="activOrderForm.orderCheckBox"></ion-checkbox></div>
+                            <div class="td" style="font-weight: bolder; font-size: 20px; color: rgba(17, 238, 17, 0.658); text-transform: uppercase;">{{'Bestellen' | translate}}</div>
+                            <div class="td" style="max-width: 30px;"><ion-checkbox [(ngModel)]="activOrderForm.offerCheckBox"></ion-checkbox></div>
+                            <div class="td" style="font-weight: bolder; font-size: 20px; color: rgba(255, 166, 0, 0.719); text-transform: uppercase;">{{'Offerte' | translate}}</div>
+                            <div class="td" style="max-width: 30px;"><ion-checkbox [(ngModel)]="activOrderForm.repairCheckBox"></ion-checkbox></div>
+                            <div class="td" style="font-weight: bolder; font-size: 20px; color: rgba(0, 0, 255, 0.63); text-transform: uppercase;">{{'Reparatur' | translate}}</div>
+                            <div class="td" style="max-width: 30px;"><ion-checkbox [(ngModel)]="activOrderForm.inspectionCheckBox"></ion-checkbox></div>
+                            <div class="td" style="font-weight: bolder; font-size: 20px; color: rgba(128, 128, 128, 0.678); text-transform: uppercase;">{{'Prüfung' | translate}}</div>
+                            <div class="td" style="max-width: 30px;"><ion-checkbox [(ngModel)]="activOrderForm.rentCheckBox"></ion-checkbox></div>
+                            <div class="td" style="font-weight: bolder; font-size: 20px; color: rgba(207, 207, 26, 0.753); text-transform: uppercase;">{{'Miete' | translate}}</div> 
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="12" size="12">  
+                <!-- Invoice Address -->
+                <div class="kunden-col" style="border:2px solid #ccc;">
+                  <div class="table-info">      
+                    <div class="thead">
+                      <div class="tr table-subheader table-subheader-fix">
+                        <div class="th">{{'Rechnungsadresse' | translate}}</div>
+                      </div>
+                    </div>
+                    <div class="tbody">
+                      <div class="tr table-body">
+                        <div class="td"><span class="strong">{{'Firma' | translate}}</span></div>
+                        <ion-input type="text" 
+                                    [(ngModel)]="activOrderForm.billing.company">
+                        </ion-input>
+                      </div>
+                      <div class="tr table-body">
+                        <div class="td"><span class="strong">{{'Strasse' | translate}}</span></div>
+                        <ion-input type="text" 
+                                    [(ngModel)]="activOrderForm.billing.street">
+                        </ion-input>
+                      </div>
+                      <div class="tr table-body">
+                        <div class="td"><span class="strong">{{'PLZ' | translate}} {{'Ort' | translate}}</span></div>
+                        <ion-input type="text"                                     
+                                    [(ngModel)]="activOrderForm.billing.zip_code">
+                        </ion-input>
+                      </div>
+                      <div class="tr table-body">
+                        <div class="td"><span class="strong">{{'Branche' | translate}}</span></div>
+                        <ion-input type="text" 
+                                    [(ngModel)]="activOrderForm.billing.sector">
+                        </ion-input>
+                      </div>
+                      <div class="tr table-body">
+                        <div class="td"><span class="strong">{{'E-Mail' | translate}}</span></div>
+                        <ion-input type="text" 
+                                    [(ngModel)]="activOrderForm.billing.email">
+                        </ion-input>
+                      </div>
+                      <div class="tr table-body">
+                        <div class="td"><span class="strong">{{'Telefon' | translate}}</span></div>
+                       <ion-input type="text"
+                                  [(ngModel)]="activOrderForm.billing.phone">
+                      </ion-input>
+                      </div>
+                      <div class="tr table-body">
+                        <div class="td"><span class="strong">{{'Internet' | translate}}</span></div>
+                        <ion-input type="text"
+                                    [(ngModel)]="activOrderForm.billing.internet">
+                        </ion-input>
+                      </div>
+                    </div>
+                  </div>
+                </div>  
+              </ion-col>            
+              <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="12" size="12">  
+                <!-- Shipping Address -->
+                <div class="kunden-col" style="border:2px solid #ccc;">
+                  <div class="table-info">      
+                    <div class="thead">
+                      <div class="tr table-subheader table-subheader-fix">
+                        <div class="th">{{'Lieferadresse' | translate}}</div>
+                         <div>
+                          <ion-item style="max-height: 15px; height: 10px;">
+                            <ion-select (ionChange)="changeContactPerson($event)"
+                                        name="RE_Ansp"
+                                        id="RE_Ansp"
+                                        [(ngModel)]="RE_Ansp"
+                                        style="background-color: white; border: 1px solid #ccc; max-width: 340px; width: 330px;"
+                                        okText="{{translate.instant('okay')}}"
+                                        cancelText="{{translate.instant('dismiss')}}">
+                              <ion-select-option [value]="ansp" *ngFor="let ansp of contactPersonList">{{ansp.first_name}} {{ansp.last_name}}</ion-select-option>
+                            </ion-select>
+                          </ion-item>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="tbody">
+                        <div class="tr table-body">
+                          <div class="td"><span class="strong">{{'Name' | translate}}</span></div>
+                          <ion-input type="text"
+                                      [(ngModel)]="activOrderForm.shipping.name">
+                          </ion-input>
+                        </div>
+                        <div class="tr table-body">
+                          <div class="td"><span class="strong">{{'Strasse' | translate}}</span></div>
+                          <ion-input type="text"
+                                      [(ngModel)]="activOrderForm.shipping.street">
+                          </ion-input>
+                        </div>
+                        <div class="tr table-body">
+                          <div class="td"><span class="strong">{{'PLZ' | translate}} {{'Ort' | translate}}</span></div>
+                          <ion-input type="text"
+                                      [(ngModel)]="activOrderForm.shipping.zip_code">
+                          </ion-input>
+                        </div>
+                        <div class="tr table-body">
+                          <div class="td"><span class="strong">{{'Abteilung' | translate}}</span></div>
+                          <ion-input type="text"
+                                      [(ngModel)]="activOrderForm.shipping.department">
+                          </ion-input>
+                        </div>
+                        <div class="tr table-body">
+                          <div class="td"><span class="strong">{{'E-Mail' | translate}}</span></div>
+                          <ion-input type="text"
+                                      [(ngModel)]="activOrderForm.shipping.email">
+                          </ion-input>
+                        </div>
+                        <div class="tr table-body">
+                          <div class="td"><span class="strong">{{'Telefon' | translate}}</span></div>
+                          <ion-input type="text" 
+                                      [(ngModel)]="activOrderForm.shipping.phone">
+                          </ion-input>
+                        </div>
+                        <div class="tr table-body">
+                          <div class="td"><span class="strong">{{'Mobiltelefon' | translate}}</span></div>
+                          <ion-input type="text"
+                                      [(ngModel)]="activOrderForm.shipping.mobile">
+                          </ion-input>
+                        </div>
+                    </div>
+                  </div>
+                </div>    
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="12" size="12">  
+                <div class="kunden-col" style="border:2px solid #ccc;">
+                  <div class="table-info">      
+                    <div class="tbody">
+                      <div class="tr table-body">
+                        <div class="td"><span class="strong">{{'Bestell Nr.' | translate}}</span></div>
+                        <ion-input type="text" 
+                                    [(ngModel)]="activOrderForm.order_nr">
+                        </ion-input>
+                      </div>
+                      <div class="tr table-body">
+                        <div class="td"><span class="strong">{{'PVS Bestellungs Nr.' | translate}}</span></div>
+                        <ion-input type="text" 
+                                    [(ngModel)]="activOrderForm.pvs_order_nr">
+                        </ion-input>
+                      </div>
+                      <div class="tr table-body">                
+                        <div class="td"><span class="strong">{{'Bestelldatum' | translate}}</span></div>  
+                          <div>
+                            <ion-item>   
+                            <ion-datetime [(ngModel)]="activOrderForm.order_date"
+                                          id="order_date"
+                                          required="true"
+                                          displayFormat="DD.MM.YYYY"
+                                          max = {{maxDate}}
+                                          style="border: 1px solid  #ccc;"
+                                          doneText="{{translate.instant('okay')}}"
+                                          cancelText="{{translate.instant('dismiss')}}">
+                            </ion-datetime>
+                          </ion-item>
+                        </div>                            
+                      </div>                        
+                    </div>
+                  </div>
+                </div>    
+              </ion-col>
+              <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="12" size="12">  
+                <div class="kunden-col" style="border:2px solid #ccc;">
+                  <div class="table-info">      
+                    <div class="tbody">
+                      <div class="tr table-body">
+                        <div class="td"><span class="strong">{{'Auftrags Nr.' | translate}}</span></div>
+                        <ion-input type="text" 
+                                    [(ngModel)]="activOrderForm.contract_nr">
+                        </ion-input>
+                      </div>
+                      <div class="tr table-body">
+                        <div class="td"><span class="strong">{{'Komission' | translate}}</span></div>
+                        <ion-input type="text" 
+                                    [(ngModel)]="activOrderForm.commission">
+                        </ion-input>
+                      </div>
+                      <div class="tr table-body">
+                        <div class="td"><span class="strong">{{'Liefertermin' | translate}}</span></div>
+                        <div>
+                          <ion-item>
+                            <ion-datetime [(ngModel)]="activOrderForm.delivery_date"
+                                          id="date_delivery"
+                                          required="true"
+                                          displayFormat="DD.MM.YYYY"
+                                          max = {{maxDate}}
+                                          style="border: 1px solid  #ccc;"
+                                          doneText="{{translate.instant('okay')}}"
+                                          cancelText="{{translate.instant('dismiss')}}">
+                            </ion-datetime>
+                          </ion-item>
+                        </div>
+                      </div>                        
+                    </div>
+                  </div>
+                </div>    
+              </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col size-xl="12" size-lg="12" size-md="12" size-sm="12" size="12">
+                  <div class="kunden-wrap">
+                    <!-- SELECTION -->
+                    <div class="kunden-col">
+                      <div class="table-info">
+                        <div class="tbody">
+                          <div class="tr table-body" style="border:2px solid #ccc;">
+                              <div class="td" style="max-width: 30px; width: 30px;"><ion-checkbox [(ngModel)]="activOrderForm.sampleDeliveryCheckBox"></ion-checkbox></div>
+                              <div class="td" style="font-size: 15px;">{{'Musterlieferung' | translate}}</div>
+                              <div class="td" style="max-width: 30px; width: 30px;"><ion-checkbox [(ngModel)]="activOrderForm.creditCheckBox"></ion-checkbox></div>
+                              <div class="td" style="font-size: 15px;">{{'Gutschrift' | translate}}</div>
+                              <div class="td" style="max-width: 30px; width: 30px;"><ion-checkbox [(ngModel)]="activOrderForm.confOrderCheckBox"></ion-checkbox></div>
+                              <div class="td" style="font-size: 15px;">{{'Auftragsbestätigung' | translate}}</div>
+                              <div class="td" style="max-width: 30px; width: 30px;"><ion-checkbox [(ngModel)]="activOrderForm.afterLoadingCheckBox"></ion-checkbox></div>
+                              <div class="td" style="font-size: 15px;">{{'Nach belastung' | translate}}</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col size-xl="12" size-lg="12" size-md="12" size-sm="12" size="12">
+                  <div class="kunden-wrap">
+                    <!-- SELECTION -->
+                    <div class="kunden-col">
+                      <div class="table-info">
+                        <div class="tbody">
+                          <div class="tr table-body" style="border:2px solid #ccc;">
+                              <div class="td" style="max-width: 30px; width: 30px;"><ion-checkbox [(ngModel)]="activOrderForm.postCheckBox"></ion-checkbox></div>
+                              <div class="td" style="font-size: 15px;">{{'Post' | translate}}</div>
+                              <div class="td" style="max-width: 30px; width: 30px;"><ion-checkbox [(ngModel)]="activOrderForm.expressCheckBox"></ion-checkbox></div>
+                              <div class="td" style="font-size: 15px;">{{'Express' | translate}}</div>
+                              <div class="td" style="max-width: 30px; width: 30px;"><ion-checkbox [(ngModel)]="activOrderForm.aboutBrachtCheckBox"></ion-checkbox></div>
+                              <div class="td" style="font-size: 15px;">{{'Überbracht' | translate}}</div>
+                              <div class="td" style="max-width: 30px; width: 30px;"><ion-checkbox [(ngModel)]="activOrderForm.lkwCheckBox"></ion-checkbox></div>
+                              <div class="td" style="font-size: 15px;">{{'LKW' | translate}}</div>
+                              <div class="td" style="max-width: 30px; width: 30px;"><ion-checkbox [(ngModel)]="activOrderForm.evenPickupCheckBox"></ion-checkbox></div>
+                              <div class="td" style="font-size: 15px;">{{'Selbst Abholer' | translate}}</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </ion-col>
+              </ion-row>
+              <ion-row>     
+                <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="12" size="12">
+                  <div class="kunden-col" style="border:2px solid #ccc;">
+                    <div class="table-info"> 
+                      <div class="tbody">
+                        <div class="tr table-body" >
+                          <ion-label>
+                              {{'ID-Nummer beibehalten' | translate}}
+                          </ion-label>
+                          <ion-toggle checked="false"
+                                      [(ngModel)]="activOrderForm.keepIdNumber">                            
+                          </ion-toggle>
+                        </div>
+                      </div>
+                    </div>
+                  </div>  
+                </ion-col>             
+              </ion-row>
+              <ion-row>
+                <ion-col size-xl="12" size-lg="12" size-md="12" size-sm="12" size="12">  
+                <!-- Product Info -->
+                  <div class="kunden-col" style="border:2px solid #ccc;">
+                    <div class="table-info">      
+                      <div class="thead">
+                        <div class="tr table-subheader table-subheader-fix">
+                          <div class="th">{{'Menge' | translate}}</div>
+                          <div class="th">{{'PVS ID' | translate}}</div>
+                          <div class="th">{{'Artikel-Nr.' | translate}}</div>
+                          <div class="th">{{'Bezeichnung' | translate}}</div>
+                          <ion-button (click)="addProduct()">
+                            <ion-icon name="md-add"></ion-icon>
+                          </ion-button>
+                        </div>
+                        <div class="tr table-subheader table-subheader-fix" 
+                             style="background: white"
+                             *ngFor="let product of products; let prdctInd = index">
+                          <div class="th">
+                            <ion-input type="text" 
+                                       style="color: black"
+                                       [(ngModel)]="product.quantity">
+                            </ion-input>
+                          </div>
+                          <div class="th">
+                            <ion-input type="text" 
+                                       style="color: black"
+                                       [(ngModel)]="product.pvsid">
+                            </ion-input>
+                          </div>
+                          <div class="th">
+                            <ion-input type="text" 
+                                       style="color: black"
+                                       [(ngModel)]="product.articleno">
+                            </ion-input>
+                          </div>
+                          <div class="th">
+                            <ion-input type="text" 
+                                       style="color: black"
+                                       [(ngModel)]="product.designation">
+                            </ion-input>
+                          </div>
+                          <ion-button class="opt-remove" (click)="remProduct(prdctInd)">
+                            <ion-icon name="remove"></ion-icon>
+                          </ion-button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </ion-col>
+              </ion-row>
+              <!-- Notes -->
+              <ion-row>
+                <ion-col size-xl="12" size-lg="12" size-md="12" size-sm="12" size="12">  
+                  <div class="kunden-col" style="border:2px solid #ccc;">
+                    <div class="table-info" style="background: white;">      
+                      <div class="thead">
+                        <div class="tr table-subheader table-subheader-fix">
+                          <div class="th">{{'Notizen' | translate}}</div>
+                        </div>
+                        <ion-textarea type="text" 
+                                      rows="3" 
+                                      [(ngModel)]="activOrderForm.note">
+                        </ion-textarea>                       
+                      </div>
+                    </div>
+                  </div>
+                </ion-col>
+              </ion-row>
+              <!-- Commissioned -->
+              <ion-row>
+                <ion-col size-xl="12" size-lg="12" size-md="12" size-sm="12" size="12">  
+                  <div class="kunden-col" style="border:2px solid #ccc;">
+                    <div class="table-info" style="background: white;">      
+                      <div class="thead">
+                        <div class="tr table-subheader table-subheader-fix">
+                          <div class="th">{{'Beauftragt' | translate}}</div>
+                        </div>
+                        <ion-input type="text" 
+                                    style="color: black;" 
+                                    [(ngModel)]="activOrderForm.commissioned">
+                        </ion-input>
+                      </div>
+                    </div>
+                  </div>
+                </ion-col>
+              </ion-row>
+          </ion-grid>
+        </div>
+      </div>
+    </div>
+  </ion-content>
+  <ion-fab slot="fixed" right vertical="bottom">
+      <ion-fab-button color="primarydark">
+        <ion-icon name="list-box"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-list side="top">
+        <ion-fab-button 
+                class="btn-primary"
+                (click)="ordersSend()" 
+                (mouseover)="mouseover(1)" 
+                (mouseout)="mouseout(1)">
+          <ion-icon name="send"></ion-icon>
+          <ion-label [hidden]="!mouseoverButton1">{{'Bestellung Abschicken' | translate}}</ion-label>
+        </ion-fab-button>
+        <ion-fab-button 
+                (click)="printPdf('download')" 
+                class="btn-primary" 
+                (mouseover)="mouseover(2)" 
+                (mouseout)="mouseout(2)">
+          <ion-icon name="document"></ion-icon>
+          <ion-label [hidden]="!mouseoverButton2">{{'PDF Ansicht' | translate}}</ion-label>
+        </ion-fab-button>
+      </ion-fab-list>
+    </ion-fab>

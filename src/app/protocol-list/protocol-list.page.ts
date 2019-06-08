@@ -159,8 +159,9 @@ export class ProtocolListPage {
             this.title_translate(this.protocolListAll);
 
             for (let index = 0; index < this.protocolListAll.length; index++) {
+                //console.log("data :", this.protocolListAll[index].data);
                 let options = JSON.parse(this.protocolListAll[index].data.items);
-                console.log("options :", options);
+                //console.log("options :", options);
                 if (options == null) options = [];
 
                 for (let i = 0; i < options.length; i++) {
@@ -304,7 +305,8 @@ export class ProtocolListPage {
 
         this.rowRecords = this.protocolListView.length;
         this.totalRecords = this.protocolListAll.length;
-        let progressBar = Math.round(this.rowRecords * 100 / this.totalRecords);
+        let progressBar = 100;
+        if(this.totalRecords >0 ) Math.round(this.rowRecords * 100 / this.totalRecords);
         this.events.publish("progressBar", progressBar);
         this.events.publish("rowRecords", this.rowRecords);
         this.events.publish("totalRecords", this.totalRecords);

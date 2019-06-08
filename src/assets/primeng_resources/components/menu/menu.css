@@ -5,6 +5,7 @@
 
 .ui-menu.ui-menu-dynamic {
     position: absolute;
+    display: none;
 }
 
 .ui-menu .ui-menu-separator {
@@ -27,7 +28,6 @@
 }
 
 .ui-menu .ui-menuitem-link {
-    cursor: pointer;
     padding: .25em;
     display: block;
     text-decoration: none;
@@ -35,9 +35,4 @@
 
 .ui-menu .ui-menuitem-icon {
     margin-right: .25em;
-    vertical-align: middle;
-}
-
-.ui-menu .ui-menuitem-text {
-    vertical-align: middle;
 }

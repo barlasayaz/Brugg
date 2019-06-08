@@ -1,0 +1,50 @@
+
+    .text-input-md {
+        margin: 8px 8px !important;
+        padding: 0 !important;
+        width: calc(100% - 8px - 8px) !important;
+    }
+
+    ion-input {
+        position: relative !important;
+        display: block !important;
+        -webkit-box-flex: 1 !important;
+        -webkit-flex: 1 !important;
+        -ms-flex: 1 !important;
+        flex: 1 !important;
+        border: 1px solid #ccc !important;
+        width: 100% !important;
+    }
+
+    textarea.text-input {
+        padding: 5px !important;
+        display: block !important;
+        border: 1px solid !important;
+        border: 1px solid #ccc !important;
+    }
+
+    .sendIcon {
+        font-size: 1.9em;
+        padding-top: 0px;
+    }    
+
+    button[ion-fab] {
+        overflow: visible;
+        position: relative;
+    
+        ion-label {
+            position: absolute;
+            top: -8px;
+            right: 40px;    
+            color: black;
+            background-color: rgba(139, 138, 138, 0.7);
+            line-height: 24px;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 14px;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+    }    
+    .fab{
+        contain: layout;
+    }

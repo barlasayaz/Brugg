@@ -421,7 +421,7 @@ export class ProductDetailsPage {
         ]
       };
 
-      this.pdf.createPdf(docDefinition, this.translate.instant("Produkt Details".replace(/\s/g, "")) + ".pdf");
+      this.pdf.createPdf(docDefinition,'download',this.translate.instant("Produkt Details".replace(/\s/g, "")) + ".pdf");
 
     });
   }

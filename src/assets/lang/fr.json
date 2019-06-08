@@ -824,5 +824,8 @@
   "Express": "Express",
   "Überbracht": "A propos Bracht",
   "Selbst Abholer": "Même Ramassage",
-  "Bestellung Abschicken": "Soumettre Ordre"
+  "Bestellung Abschicken": "Soumettre Ordre",
+
+  "Bitte warten": "S'il vous plaît attendrez...",
+  "Bitte eine Vorlage wählen!": "Veuillez sélectionner un modèle!"
 }

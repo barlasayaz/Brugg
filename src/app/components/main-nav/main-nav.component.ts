@@ -2,7 +2,6 @@ import { Component,OnInit, Input } from '@angular/core';
 import { UserdataService } from '../../services/userdata';
 import { NavController, Events } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
-import { ofroot } from '../../order-form/order-form-root';
 import { NavigationExtras } from '@angular/router';
 /**
  * Generated class for the MainNavComponent component.
@@ -28,8 +27,7 @@ export class MainNavComponent  implements OnInit {
     public userdata: UserdataService,
     public navCtrl: NavController,
     public translate: TranslateService,
-    public events: Events,
-    public of: ofroot) {
+    public events: Events) {
 
     console.log('Hello MainNavComponent Component');
     this.events.subscribe('progressBar', (progressBar) => {
@@ -43,12 +41,6 @@ export class MainNavComponent  implements OnInit {
     this.events.subscribe('totalRecords', (totalRecords) => {
       this.totalRecords = totalRecords;
     });
-
-    if (this.of.anz_wahrenkorb) {
-      this.anz_wahrenkorb = this.of.anz_wahrenkorb;
-    } else {
-      this.anz_wahrenkorb = 0;
-    }
 
   }
 
@@ -90,8 +82,8 @@ export class MainNavComponent  implements OnInit {
         case 'ProtocolList':
           this.navCtrl.navigateRoot(['/protocol-list'],navigationExtras);
           break;
-        case 'OrderForm':
-          this.navCtrl.navigateRoot(['/order-form'],navigationExtras);
+        case 'OrderFormNew':
+          this.navCtrl.navigateRoot(['/order-form-new'],navigationExtras);
           break;
         case 'NoteList':
           this.navCtrl.navigateRoot(['/note-list'],navigationExtras);

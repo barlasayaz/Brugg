@@ -351,7 +351,7 @@ export class ProtocolDetailsPage {
         ]
       };
       
-      this.pdf.createPdf(docDefinition,this.translate.instant("Protokoll Details".replace(/\s/g, "")) + ".pdf");
+      this.pdf.createPdf(docDefinition,'download',this.translate.instant("Protokoll Details".replace(/\s/g, "")) + ".pdf");
 
     });  
   }

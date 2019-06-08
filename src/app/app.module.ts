@@ -26,7 +26,7 @@ import { AssignmentPageModule } from './customer-details/assignment/assignment.m
 import { ImprintPageModule } from './login/imprint/imprint.module';
 import { DialogproduktbildmodalPageModule } from'./components/dialogproduktbildmodal/dialogproduktbildmodal.module';
 import { MyDataEditPageModule } from './my-data/my-data-edit/my-data-edit.module';
-import { OrderSendPageModule } from './order-form/order-send/order-send.module';
+import { OrderSendNewPageModule } from './order-form-new/order-send-new/order-send-new.module';
 import { ProductNewPageModule } from'./product-new/product-new.module';
 import { SignupPageModule } from './signup/signup.module';
 import { AppointmentEditComponentModule } from './components/appointment-edit/appointment-edit.module';
@@ -38,7 +38,6 @@ import { QrBarcodeComponentModule } from './components/qr-barcode/qr-barcode.mod
 import { CustomerEditComponentModule } from './components/customer-edit/customer-edit.module';
 import { ProductOptEditComponentModule } from './components/product-opt-edit/product-opt-edit.module';
 import { ProtocolOptEditComponentModule } from './components/protocol-opt-edit/protocol-opt-edit.module';
-import { DialogObjectNewPageModule } from './order-form/dialog-object-new/dialog-object-new.module';
 import { NoteEditComponentModule } from './components/note-edit/note-edit.module';
 import { ButtonModule, ColorPickerModule, SharedModule } from 'primeng/primeng';
 import { TableModule } from 'primeng/table';
@@ -66,7 +65,6 @@ import { IonicSelectableModule } from 'ionic-selectable';
 import { NFC, Ndef } from '@ionic-native/nfc/ngx';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { NgxQRCodeModule } from 'ngx-qrcode2';
-import { ofroot } from './order-form/order-form-root';
 
 //import { HomePage } from './home/home';
 //import { ComponentsModule } from './components/components.module';
@@ -119,7 +117,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     ImprintPageModule,
     DialogproduktbildmodalPageModule,
     MyDataEditPageModule,
-    OrderSendPageModule,
+    OrderSendNewPageModule,
     ProductNewPageModule,
     SignupPageModule,
     AppointmentEditComponentModule,
@@ -132,7 +130,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     QrBarcodeComponentModule,
     NfcScanComponentModule,
     NoteEditComponentModule,
-    DialogObjectNewPageModule,
     AccordionModule,
     NgxQRCodeModule,
     RoundProgressModule,
@@ -159,7 +156,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     ApiService,
     UserdataService,
     InAppBrowser,
-    ofroot,
     DatePipe,
     MessageService,
     File,

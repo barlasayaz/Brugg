@@ -5,12 +5,12 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
-import { DialogObjectNewPage } from './dialog-object-new.page';
+import { OrderSendNewPage } from './order-send-new.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: DialogObjectNewPage
+    component: OrderSendNewPage
   }
 ];
 
@@ -21,6 +21,6 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [DialogObjectNewPage]
+  declarations: [OrderSendNewPage]
 })
-export class DialogObjectNewPageModule {}
+export class OrderSendNewPageModule {}

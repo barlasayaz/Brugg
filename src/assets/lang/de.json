@@ -826,6 +826,8 @@
     "Express": "Express",
     "Überbracht": "Überbracht",
     "Selbst Abholer": "Selbst Abholer",
-    "Bestellung Abschicken": "Bestellung Abschicken"
-    
+    "Bestellung Abschicken": "Bestellung Abschicken",
+
+    "Bitte warten": "Bitte warten...",
+    "Bitte eine Vorlage wählen!": "Bitte eine Vorlage wählen!" 
 }
