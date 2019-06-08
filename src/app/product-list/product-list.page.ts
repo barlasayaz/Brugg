@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild,OnInit } from '@angular/core';
 import { NavController, ModalController, AlertController, Events } from '@ionic/angular';
 import { ApiService } from '../services/api';
 import { TranslateService } from '@ngx-translate/core';
@@ -19,7 +19,7 @@ import { ActivatedRoute,NavigationExtras } from '@angular/router';
     templateUrl: './product-list.page.html',
     styleUrls: ['./product-list.page.scss'],
 })
-export class ProductListPage {
+export class ProductListPage implements OnInit {
     public productListAll: TreeNode[] = [];
     public productListView: TreeNode[] = [];
     public cols: any[] = [];
@@ -213,20 +213,22 @@ export class ProductListPage {
         public pdf: PdfExportService,
         public events: Events,
         private route: ActivatedRoute) {
+    }
 
-            this.cols = [
-                { field: 'nfc_tag_id', header: 'NFC' },
-                { field: 'title', header: this.translate.instant('Titel') },
-                //{ field: 'id', header: 'DB-ID' },
-                { field: 'id_number', header: '#' },
-                { field: 'articel_no', header: this.translate.instant('Artikel-Nr.') },
-                { field: 'last_protocol_date', header: "<<"+this.translate.instant('Termin') },
-                { field: 'last_protocol_next', header: this.translate.instant('Termin')+">>" },
-                { field: 'check_interval', header: this.translate.instant('Intervall Prüfen') }
-            ];
+    ngOnInit() { 
+        this.cols = [
+            { field: 'nfc_tag_id', header: 'NFC' },
+            { field: 'title', header: this.translate.instant('Titel') },
+            //{ field: 'id', header: 'DB-ID' },
+            { field: 'id_number', header: '#' },
+            { field: 'articel_no', header: this.translate.instant('Artikel-Nr.') },
+            { field: 'last_protocol_date', header: "<<"+this.translate.instant('Termin') },
+            { field: 'last_protocol_next', header: this.translate.instant('Termin')+">>" },
+            { field: 'check_interval', header: this.translate.instant('Intervall Prüfen') }
+        ];
         this.route.queryParams.subscribe(params => {
             this.idCustomer = params["idCustomer"];
-           // this.company = params["company"];
+        // this.company = params["company"];
         });
 
         console.log('ProductListPage idCustomer:', this.idCustomer);

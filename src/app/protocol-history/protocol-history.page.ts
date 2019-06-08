@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component,OnInit } from '@angular/core';
 import { NavController, AlertController, Platform } from '@ionic/angular';
 import { ApiService } from '../services/api';
 import { TranslateService } from '@ngx-translate/core';
@@ -24,7 +24,7 @@ import { ActivatedRoute,NavigationExtras } from '@angular/router';
     styleUrls: ['./protocol-history.page.scss'],
 })
 
-export class ProtocolHistoryPage {
+export class ProtocolHistoryPage implements OnInit {
     public prtclLst: any[] = [];
     public allnodes: any[] = [];
     public selectedColumns: any[];
@@ -56,47 +56,52 @@ export class ProtocolHistoryPage {
                 public pdf: PdfExportService,
                 public platform: Platform) {
        
-                    platform.ready().then(() => {
-                        if (this.platform.is('ios') ||
-                            this.platform.is('android') ||
-                            this.platform.is('ipad') ||          
-                            this.platform.is('iphone') ||
-                            this.platform.is('mobile') ||
-                            this.platform.is('phablet') ||
-                            this.platform.is('tablet'))
-                        {
-                            this.mobilePlatform = true;
-                            this.mouseoverButton1 = true;
-                            this.mouseoverButton2 = true;
-                            console.log("platform mobile:", this.platform.platforms());
-                        }
-                        else {
-                            console.log("platform not mobile:", this.platform.platforms());
-                            this.mobilePlatform = false;
-                            this.mouseoverButton1 = false;
-                            this.mouseoverButton2 = false;
-                        }
-                    });
+    }
 
-                    this.cols = [
-                        { field: 'protocol_number', header: this.translate.instant('Protokoll Nummer') },
-                        { field: 'protocol_date', header: this.translate.instant('Datum') }
-                    ];
-                    
-                    this.colsExcel = [
-                        { field: 'protocol_number', header: this.translate.instant('Protokoll Nummer') },
-                        { field: 'protocol_date', header: this.translate.instant('Datum') }
-                    ];
+    ngOnInit()
+    {
+        this.platform.ready().then(() => {
+            if (this.platform.is('ios') ||
+                this.platform.is('android') ||
+                this.platform.is('ipad') ||          
+                this.platform.is('iphone') ||
+                this.platform.is('mobile') ||
+                this.platform.is('phablet') ||
+                this.platform.is('tablet'))
+            {
+                this.mobilePlatform = true;
+                this.mouseoverButton1 = true;
+                this.mouseoverButton2 = true;
+                console.log("platform mobile:", this.platform.platforms());
+            }
+            else {
+                console.log("platform not mobile:", this.platform.platforms());
+                this.mobilePlatform = false;
+                this.mouseoverButton1 = false;
+                this.mouseoverButton2 = false;
+            }
+        });
 
-                    this.url = this.apiService.pvsApiURL;
-                    this.route.queryParams.subscribe(params => {
-                        this.idCustomer = params["idCustomer"];
-                        //this.company = params["company"];
-                        this.idProduct = params["idProduct"]; 
-                        this.titleProduct = params["titleProduct"];
-                    });
-   
-                    this.loadProtocol();  
+        this.cols = [
+            { field: 'protocol_number', header: this.translate.instant('Protokoll Nummer') },
+            { field: 'protocol_date', header: this.translate.instant('Datum') }
+        ];
+        
+        this.colsExcel = [
+            { field: 'protocol_number', header: this.translate.instant('Protokoll Nummer') },
+            { field: 'protocol_date', header: this.translate.instant('Datum') }
+        ];
+
+        this.url = this.apiService.pvsApiURL;
+        this.route.queryParams.subscribe(params => {
+            this.idCustomer = params["idCustomer"];
+            //this.company = params["company"];
+            this.idProduct = params["idProduct"]; 
+            this.titleProduct = params["titleProduct"];
+            this.loadProtocol(); 
+        });
+
+ 
     }
 
     loadProtocol() {

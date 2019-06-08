@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component,OnInit } from '@angular/core';
 import { NavController, AlertController, Platform, LoadingController, ModalController } from '@ionic/angular';
 import { CameraOptions, Camera } from '@ionic-native/camera/ngx';
 import { ApiService } from '../services/api';
@@ -23,7 +23,7 @@ import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-nati
   templateUrl: './protocol-details.page.html',
   styleUrls: ['./protocol-details.page.scss'],
 })
-export class ProtocolDetailsPage {
+export class ProtocolDetailsPage implements OnInit {
   public idProtocol: number = 0;
   public activProtocol: any = {};
   public idCustomer: number = 0;
@@ -58,7 +58,12 @@ export class ProtocolDetailsPage {
     public loadingCtrl: LoadingController,
     public transfer: FileTransfer) {
 
-    platform.ready().then(() => {
+  }
+
+  ngOnInit()
+  {
+
+    this.platform.ready().then(() => {
       if (this.platform.is('ios') ||
         this.platform.is('android') ||
         this.platform.is('ipad') ||

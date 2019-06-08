@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild,OnInit } from '@angular/core';
 import { NavController, ModalController, AlertController, Events } from '@ionic/angular';
 import { ApiService } from '../services/api';
 import { TranslateService } from '@ngx-translate/core';
@@ -17,7 +17,7 @@ import { ActivatedRoute,NavigationExtras } from '@angular/router';
     templateUrl: './protocol-list.page.html',
     styleUrls: ['./protocol-list.page.scss'],
 })
-export class ProtocolListPage {
+export class ProtocolListPage implements OnInit {
     public protocolListAll: TreeNode[] = [];
     public protocolListView: TreeNode[] = [];
     public cols: any[] = [];
@@ -135,6 +135,10 @@ export class ProtocolListPage {
         public pdf: PdfExportService,
         public events: Events,
         private route: ActivatedRoute) {
+    }
+
+    ngOnInit()
+    {
         this.rowRecords = 0;
         this.totalRecords = 0;
         this.events.publish("prozCustomer", 0);
@@ -183,6 +187,7 @@ export class ProtocolListPage {
             }
             if (localStorage.getItem('split_filter_protocol') != undefined) {
                 this.splitFilter = JSON.parse(localStorage.getItem('split_filter_protocol'));
+                this.funcHeightCalc();
             }
             if (localStorage.getItem('show_columns_protocol') != undefined) {
                 this.selectedColumns = JSON.parse(localStorage.getItem('show_columns_protocol'));
@@ -193,8 +198,8 @@ export class ProtocolListPage {
             }
 
             this.generate_protocolList();
+            this.funcHeightCalc();
         });
-
     }
 
     onResize(event) {

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NavController, AlertController, ModalController, Platform, LoadingController } from '@ionic/angular';
 import { ApiService } from '../services/api';
 import { TranslateService } from '@ngx-translate/core';
@@ -27,7 +27,7 @@ import { NavigationExtras,ActivatedRoute } from '@angular/router';
   templateUrl: './product-details.page.html',
   styleUrls: ['./product-details.page.scss'],
 })
-export class ProductDetailsPage {
+export class ProductDetailsPage implements OnInit {
   public idProduct: number = 0;
   public activProduct: any = {};
   private selectedProduct: string;
@@ -63,39 +63,44 @@ export class ProductDetailsPage {
     public transfer: FileTransfer,
     private route:ActivatedRoute) {
 
-      platform.ready().then(() => {
-        if ( this.platform.is('ios') ||
-          this.platform.is('android') ) {
-          this.mobilePlatform = true;
-          this.mouseoverButton1 = true;
-          this.mouseoverButton2 = true;
-          this.mouseoverButton3 = true;
-          this.mouseoverButton4 = true;
-          console.log("platform mobile:", this.platform.platforms());
-        }
-        else {
-          console.log("platform not mobile:", this.platform.platforms());
-          this.mobilePlatform = false;
-          this.mouseoverButton1 = false;
-          this.mouseoverButton2 = false;
-          this.mouseoverButton3 = false;
-          this.mouseoverButton4 = false;
-        }
-      });
-
-    this.url = this.apiService.pvsApiURL;
-    this.route.queryParams.subscribe(params => {
-      this.idProduct = params["idProduct"];
-      //this.company = params["company"];
-      this.selectedProduct = params.get("productList");
-  });
-
-    this.activProduct.product = null;
-    this.loadProduct(this.idProduct);
-    this.dateiListe();
-    this.nocache = new Date().getTime();
   }
+  ngOnInit()
+  {
 
+    this.platform.ready().then(() => {
+      if ( this.platform.is('ios') ||
+        this.platform.is('android') ) {
+        this.mobilePlatform = true;
+        this.mouseoverButton1 = true;
+        this.mouseoverButton2 = true;
+        this.mouseoverButton3 = true;
+        this.mouseoverButton4 = true;
+        console.log("platform mobile:", this.platform.platforms());
+      }
+      else {
+        console.log("platform not mobile:", this.platform.platforms());
+        this.mobilePlatform = false;
+        this.mouseoverButton1 = false;
+        this.mouseoverButton2 = false;
+        this.mouseoverButton3 = false;
+        this.mouseoverButton4 = false;
+      }
+    });
+
+      this.url = this.apiService.pvsApiURL;
+      this.route.queryParams.subscribe(params => {
+        this.idProduct = params["idProduct"];
+        this.idCustomer = params["idCustomer"];
+        //this.company = params["company"];
+        this.selectedProduct = params["productList"];
+
+        this.activProduct.product = null;
+        this.loadProduct(this.idProduct);
+        this.dateiListe();
+    });
+
+      this.nocache = new Date().getTime();
+  }
 
   loadProduct(id) {
     this.activProduct.images = '';

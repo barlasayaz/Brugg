@@ -22,6 +22,7 @@ import { LoginPageModule } from './login/login.module';
 import { LoginPage } from './login/login.page';
 //import { MainNavComponent } from './components/main-nav/main-nav.component';
 //import { MainNavComponentModule } from './components/main-nav/main-nav.module';
+import { ProductMigrationPageModule } from './product-migration/product-migration.module';
 import { AssignmentPageModule } from './customer-details/assignment/assignment.module';
 import { ImprintPageModule } from './login/imprint/imprint.module';
 import { DialogproduktbildmodalPageModule } from'./components/dialogproduktbildmodal/dialogproduktbildmodal.module';
@@ -113,6 +114,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     IonicSelectableModule,
     //ComponentsModule,
     //MainNavComponentModule,
+    ProductMigrationPageModule,
     AssignmentPageModule,
     ImprintPageModule,
     DialogproduktbildmodalPageModule,

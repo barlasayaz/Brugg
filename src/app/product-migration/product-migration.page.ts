@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component,OnInit } from '@angular/core';
 import { NavController, ModalController, AlertController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { UserdataService } from '../services/userdata';
@@ -18,7 +18,7 @@ import { File } from '@ionic-native/file/ngx';
   templateUrl: './product-migration.page.html',
   styleUrls: ['./product-migration.page.scss'],
 })
-export class ProductMigrationPage {
+export class ProductMigrationPage implements OnInit {
   public inputError: boolean = false;
   public lang: string = localStorage.getItem('lang');
   public idCustomer: any;
@@ -39,19 +39,23 @@ export class ProductMigrationPage {
               public alertCtrl: AlertController,
               private route: ActivatedRoute,
               public file: File) {
-                this.url = this.apiService.pvsApiURL;
-                this.route.queryParams.subscribe(params => {
-                  this.idCustomer = params["idCustomer"];
-                  let list = params["productList"];
-                  if (list)
-                    this.productList = JSON.parse(list);
-              });
 
-                console.log('ProductMigrationPage productList:', this.productList); 
-                this.loadSourceCustomer();
-                this.loadTargetCustomer();
   }
 
+   ngOnInit()
+   {
+      this.url = this.apiService.pvsApiURL;
+      this.route.queryParams.subscribe(params => {
+        this.idCustomer = params["idCustomer"];
+        let list = params["productList"];
+        if (list)
+          this.productList = JSON.parse(list);
+      });
+
+      console.log('ProductMigrationPage productList:', this.productList); 
+      this.loadSourceCustomer();
+      this.loadTargetCustomer();
+   }
 
   dismiss() {
     this.viewCtrl.dismiss(false);

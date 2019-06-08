@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component,OnInit } from '@angular/core';
 import { NavController, ModalController, AlertController, Platform } from '@ionic/angular';
 import { UserdataService } from '../services/userdata';
 import { TranslateService } from '@ngx-translate/core';
@@ -22,7 +22,7 @@ import { NavigationExtras, ActivatedRoute } from '@angular/router';
   templateUrl: './product-edit.page.html',
   styleUrls: ['./product-edit.page.scss'],
 })
-export class ProductEditPage {
+export class ProductEditPage implements OnInit {
   public pageTitle: string;
   public idCustomer: number = 0;
   public idProduct: number = 0;
@@ -78,6 +78,10 @@ export class ProductEditPage {
     public transfer: FileTransfer,
     public loadingCtrl: LoadingController) {
 
+  }
+
+  ngOnInit()
+  {
     this.url = this.apiService.pvsApiURL;
     this.maxDate = this.apiService.maxDate;
     this.route.queryParams.subscribe(params => {
@@ -89,7 +93,7 @@ export class ProductEditPage {
 
     this.dateiListe();
 
-    platform.ready().then(() => {
+    this.platform.ready().then(() => {
       if (this.platform.is('ios') ||
         this.platform.is('android') ||
         this.platform.is('ipad') ||
@@ -108,12 +112,12 @@ export class ProductEditPage {
     if (!this.parentProduct) this.parentProduct = 0;
     if (this.idProduct > 0) {
       this.itsNew = false;
-      this.pageTitle = translate.instant('Produkt bearbeiten');
+      this.pageTitle = this.translate.instant('Produkt bearbeiten');
       this.loadProduct();
     } else {
       this.idProduct = 0;
       this.itsNew = true;
-      this.pageTitle = translate.instant('Neues Produkt');
+      this.pageTitle = this.translate.instant('Neues Produkt');
     }
     this.lang = localStorage.getItem('lang');
     this.loadTemplate();
@@ -121,7 +125,6 @@ export class ProductEditPage {
 
     console.log("ProductEditComponent: ", this.idProduct);
     this.nocache = new Date().getTime();
-
   }
 
   dateiListe() {

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component,OnInit } from '@angular/core';
 import { NavController, ModalController, AlertController } from '@ionic/angular';
 import { UserdataService } from '../services/userdata';
 import { TranslateService } from '@ngx-translate/core';
@@ -18,7 +18,7 @@ import { ActivatedRoute, NavigationExtras } from '@angular/router';
   templateUrl: './protocol-edit.page.html',
   styleUrls: ['./protocol-edit.page.scss'],
 })
-export class ProtocolEditPage {
+export class ProtocolEditPage implements OnInit {
   public pageTitle: string ;
   public idCustomer: number = 0;
   public idProtocol: number = 0;
@@ -56,7 +56,10 @@ export class ProtocolEditPage {
     public apiService: ApiService,
     public modalCtrl: ModalController,
     public alertCtrl: AlertController) {
+  }
 
+  ngOnInit()
+  {
     this.maxDate = this.apiService.maxDate;
     this.route.queryParams.subscribe(params => {
       this.idCustomer = params["idCustomer"];
@@ -69,12 +72,12 @@ export class ProtocolEditPage {
 
     if (this.idProtocol > 0) {
       this.itsNew = false;
-      this.pageTitle = translate.instant('Protokoll bearbeiten');
+      this.pageTitle = this.translate.instant('Protokoll bearbeiten');
       this.loadProtocol();
     } else {
       this.idProtocol = 0;
       this.itsNew = true;
-      this.pageTitle = translate.instant('Neues Protokoll');
+      this.pageTitle = this.translate.instant('Neues Protokoll');
       this.activProtocol.protocol_date = new Date().toISOString();
       let date = new Date();
       date.setDate(date.getDate() + 365);

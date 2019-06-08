@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component,OnInit } from '@angular/core';
 import { NavController, ModalController, AlertController } from '@ionic/angular';
 import { ApiService } from '../services/api';
 import { TranslateService } from '@ngx-translate/core';
@@ -19,7 +19,7 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './product-template.page.html',
   styleUrls: ['./product-template.page.scss'],
 })
-export class ProductTemplatePage {
+export class ProductTemplatePage implements OnInit {
 
   public availableOptions: any[];
   public draggedOption: any = {};
@@ -57,9 +57,14 @@ export class ProductTemplatePage {
     public modalCtrl: ModalController,
     public alertCtrl: AlertController) {
 
+
+  }
+
+  ngOnInit()
+  {
     this.dragulaService.destroy("COLUMNS");
 
-    dragulaService.createGroup('COLUMNS', {
+    this.dragulaService.createGroup('COLUMNS', {
       copy: (el, source) => {
         return source.id === 'options';
       },

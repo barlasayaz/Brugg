@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, ElementRef,OnInit } from '@angular/core';
 import { NavController, ModalController, AlertController, Events } from '@ionic/angular';
 import { ApiService } from '../services/api';
 import { TranslateService } from '@ngx-translate/core';
@@ -25,7 +25,7 @@ import { ActivatedRoute } from '@angular/router';
     templateUrl: './note-list.page.html',
     styleUrls: ['./note-list.page.scss'],
 })
-export class NoteListPage {
+export class NoteListPage implements OnInit {
     public noteListAll: TreeNode[] = [];
     public noteListView: TreeNode[] = [];
     public cols: any[] = [];
@@ -131,6 +131,7 @@ export class NoteListPage {
     }]
 
     @ViewChild('tt') dataTable: TreeTable;
+    @ViewChild("divHeightCalc") divHeightCalc: ElementRef;
 
     constructor(public navCtrl: NavController,
         public userdata: UserdataService,
@@ -142,34 +143,36 @@ export class NoteListPage {
         public pdf: PdfExportService,
         public events: Events,
         private route: ActivatedRoute) {
-            this.cols = [
-                { field: 'title', header: this.translate.instant('Titel') },
-                { field: 'notes', header: this.translate.instant('Notiz') },
-                { field: 'notes_date', header: this.translate.instant('Datum') },
-                { field: 'category', header: this.translate.instant('Kategorie') },
-                { field: 'name_user', header: this.translate.instant('Verfasser') },
-                { field: 'name_contact', header: this.translate.instant('Ansprechpartner') }
-            ];
-    
-            this.filterCols = [
-                'title', 'notes', 'notes_date', 'category', 'name_user', 'name_contact', 'search_all'
-            ];
-            this.selectedColumns = JSON.parse(JSON.stringify(this.cols));
-        
-        this.route.queryParams.subscribe(params => {
-            this.idCustomer = params["idCustomer"];
-           // this.company = params["company"];
-        });
-        console.log('NoteListPage idCustomer:', this.idCustomer);
-        this.page_load();
-    }
 
+    }
+    ngOnInit() { 
+        this.cols = [
+            { field: 'title', header: this.translate.instant('Titel') },
+            { field: 'notes', header: this.translate.instant('Notiz') },
+            { field: 'notes_date', header: this.translate.instant('Datum') },
+            { field: 'category', header: this.translate.instant('Kategorie') },
+            { field: 'name_user', header: this.translate.instant('Verfasser') },
+            { field: 'name_contact', header: this.translate.instant('Ansprechpartner') }
+        ];
+
+        this.filterCols = [
+            'title', 'notes', 'notes_date', 'category', 'name_user', 'name_contact', 'search_all'
+        ];
+        this.selectedColumns = JSON.parse(JSON.stringify(this.cols));
+    
+    this.route.queryParams.subscribe(params => {
+        this.idCustomer = params["idCustomer"];
+       // this.company = params["company"];
+       console.log('NoteListPage idCustomer:', this.idCustomer);
+       this.page_load();
+    });
+
+    }
     onResize(event) {
         console.log("onResize");
         this.funcHeightCalc();
      }
 
-    @ViewChild('divHeightCalc') divHeightCalc: any;
     funcHeightCalc(){
         var x = this.divHeightCalc.nativeElement.offsetHeight;
         if(this.splitFilter) x= x - 51;

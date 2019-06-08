@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component,OnInit } from '@angular/core';
 import { NavController, ModalController, AlertController } from '@ionic/angular';
 import { ApiService } from '../services/api';
 import { TranslateService } from '@ngx-translate/core';
@@ -19,7 +19,7 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './protocol-template.page.html',
   styleUrls: ['./protocol-template.page.scss'],
 })
-export class ProtocolTemplatePage {
+export class ProtocolTemplatePage implements OnInit {
 
   public availableOptions: any[];
   public draggedOption: any = {};
@@ -55,10 +55,14 @@ export class ProtocolTemplatePage {
     private dragulaService: DragulaService,
     public modalCtrl: ModalController,
     public alertCtrl: AlertController) {
+  }
+
+  ngOnInit()
+  {
 
     this.dragulaService.destroy("COLUMNS");
 
-    dragulaService.createGroup('COLUMNS', {
+    this.dragulaService.createGroup('COLUMNS', {
       copy: (el, source) => {
         return source.id === 'options';
       },
@@ -80,10 +84,10 @@ export class ProtocolTemplatePage {
       this.activTemplate = params["activTemplate"];
       if (this.activTemplate)
         this.activTemplate = JSON.parse(this.activTemplate);
+        this.loadOption();
+        this.loadTemplate();
     });
 
-    this.loadOption();
-    this.loadTemplate();
     this.lang = localStorage.getItem('lang');
     console.log('template: ', this.template);
   }
