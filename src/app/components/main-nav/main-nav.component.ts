@@ -21,7 +21,6 @@ export class MainNavComponent  implements OnInit {
   public progressBar: any = 0;
   public rowRecords: any = 0;
   public totalRecords: any = 0;
-  public anz_wahrenkorb: any = 0;
 
   constructor(
     public userdata: UserdataService,
