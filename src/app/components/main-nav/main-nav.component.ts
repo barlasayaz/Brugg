@@ -17,7 +17,7 @@ import { NavigationExtras } from '@angular/router';
 export class MainNavComponent  implements OnInit {
   @Input() aktivPage: string;
   @Input() idCustomer: number;
-  //@Input() company: string;
+  // @Input() company: string;
   public progressBar: any = 0;
   public rowRecords: any = 0;
   public totalRecords: any = 0;
@@ -29,7 +29,7 @@ export class MainNavComponent  implements OnInit {
     public events: Events) {
 
     console.log('Hello MainNavComponent Component');
-    this.events.subscribe('progressBar', (progressBar) => {
+    this.events.subscribe('progressBar', (progressBar) => {      
       if (progressBar > 0) {
         this.progressBar = progressBar;
       }
@@ -56,12 +56,12 @@ export class MainNavComponent  implements OnInit {
   go(action: any, id: number = 0) {
     // Navigation
     console.info('app.go: ', action, id, this.aktivPage);
-    let navigationExtras: NavigationExtras = {
+    const navigationExtras: NavigationExtras = {
       queryParams: {
           idCustomer: id
       }
   };
-    if (this.aktivPage != action) {
+    if (this.aktivPage !== action) {
       switch (action) {
         case 'StartscreenNew': // HOME
           this.navCtrl.navigateRoot('/startscreen-new');

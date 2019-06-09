@@ -317,13 +317,14 @@ export class CustomerTablePage implements OnInit {
         this.rowRecords = this.customerListView.length;
         this.totalRecords = this.customerListAll.length;
         let progressBar = 100;
-        if(this.totalRecords >0 ) Math.round(this.rowRecords * 100 / this.totalRecords);
-        this.events.publish("progressBar", progressBar);
-        this.events.publish("rowRecords", this.rowRecords);
-        this.events.publish("totalRecords", this.totalRecords);
+        if (this.totalRecords > 0 ) { progressBar = Math.round(this.rowRecords * 100 / this.totalRecords); }
+        this.events.publish('progressBar', progressBar);
+        this.events.publish('rowRecords', this.rowRecords);
+        this.events.publish('totalRecords', this.totalRecords);
 
-        if (localStorage.getItem('expanded_nodes') != undefined)
+        if (localStorage.getItem('expanded_nodes') !== undefined) {
             this.expandChildren(this.customerListView, JSON.parse(localStorage.getItem('expanded_nodes')));
+        }
 
     }
 
@@ -615,9 +616,11 @@ export class CustomerTablePage implements OnInit {
 
     expandChildren(nodes: TreeNode[], expended: string[]) {
         for (let i = 0; i < nodes.length; i++) {
-            if (nodes[i].children && expended.find(x => x == nodes[i].data["id"])) {
-                nodes[i].expanded = true;
-                this.expandChildren(nodes[i].children, expended);
+            if (expended !== null ) {
+                if (nodes[i].children && expended.find(x => x === nodes[i].data['id'])) {
+                    nodes[i].expanded = true;
+                    this.expandChildren(nodes[i].children, expended);
+                }
             }
         }
     }
