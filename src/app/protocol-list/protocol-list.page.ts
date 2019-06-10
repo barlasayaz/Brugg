@@ -311,10 +311,10 @@ export class ProtocolListPage implements OnInit {
         this.rowRecords = this.protocolListView.length;
         this.totalRecords = this.protocolListAll.length;
         let progressBar = 100;
-        if(this.totalRecords >0 ) Math.round(this.rowRecords * 100 / this.totalRecords);
-        this.events.publish("progressBar", progressBar);
-        this.events.publish("rowRecords", this.rowRecords);
-        this.events.publish("totalRecords", this.totalRecords);
+        if (this.totalRecords > 0 ) { progressBar = Math.round(this.rowRecords * 100 / this.totalRecords); }
+        this.events.publish('progressBar', progressBar);
+        this.events.publish('rowRecords', this.rowRecords);
+        this.events.publish('totalRecords', this.totalRecords);
 
     }
 
