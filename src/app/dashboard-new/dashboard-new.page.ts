@@ -1,4 +1,4 @@
-import { Component,NgZone } from '@angular/core';
+import { Component,NgZone,OnInit } from '@angular/core';
 import { NavController, LoadingController,ModalController, AlertController, Events } from '@ionic/angular';
 import { ApiService } from '../services/api';
 import { UserdataService } from '../services/userdata';
@@ -15,7 +15,7 @@ import { Keyboard } from '@ionic-native/keyboard/ngx';
     styleUrls: ['./dashboard-new.page.scss'],
 })
 
-export class DashboardNewPage {
+export class DashboardNewPage implements OnInit {
     public nextAppointment: any = [];
     public nextAppointmentAll: any = [];
     public params: any;
@@ -57,12 +57,26 @@ export class DashboardNewPage {
         private keyboard: Keyboard,
         public events: Events) {
 
-            this.loadTable();
-            //this.loadListeEmployee();
-            this.events.subscribe('className', (data) => {
-                this.className = data;
-                console.log(this.className);
-            });
+    }
+
+    ngOnInit()
+    {
+        this.cols = [
+            { field: 'customer_number', header: '#' },
+            { field: 'company', header: this.translate.instant('Firma') },
+            { field: 'zip_code', header: this.translate.instant('PLZ') },
+            { field: 'place', header: this.translate.instant('Ort') },
+            { field: 'days10', header: this.translate.instant('10T') },
+            { field: 'days30', header: this.translate.instant('30T') },
+            { field: 'days90', header: this.translate.instant('90T') }
+        ];
+
+        this.loadTable();
+        //this.loadListeEmployee();
+        this.events.subscribe('className', (data) => {
+            this.className = data;
+            console.log(this.className);
+        });
     }
 
     all_dates(){
@@ -169,11 +183,11 @@ export class DashboardNewPage {
             obj.company = obj.company.replace(/(\\r\\n|\\n|\\r)/gm," ");
             obj.place = obj.place.replace(/(\\r\\n|\\n|\\r)/gm," ");
             let json: any = {};
-            for (var j = 0; j < this.selectedColumns.length; j++) {
-                if(obj[this.selectedColumns[j].field]) {
-                    json[this.selectedColumns[j].header] = obj[this.selectedColumns[j].field];
+            for (var j = 0; j < this.cols.length; j++) {
+                if(obj[this.cols[j].field]) {
+                    json[this.cols[j].header] = obj[this.cols[j].field];
                 }else{
-                    json[this.selectedColumns[j].header] = "";
+                    json[this.cols[j].header] = "";
                 }
             }
             console.log(">>json :", json);
@@ -345,10 +359,10 @@ export class DashboardNewPage {
             let s = this.filterValue.toLowerCase();
             let a = this.listInspection[i];
             let del = true;
-            if ( a.company.toLowerCase().indexOf(s) >= 0) del = false;
-            if ( a.place.toLowerCase().indexOf(s) >= 0) del = false;
-            if ( a.customer_number.toLowerCase().indexOf(s) >= 0) del = false;
-            if ( a.zip_code.toLowerCase().indexOf(s) >= 0) del = false;
+            if (a.company && a.company!=null && a.company.toLowerCase().indexOf(s) >= 0) del = false;
+            if (a.place && a.place!=null && a.place.toLowerCase().indexOf(s) >= 0) del = false;
+            if (a.customer_number && a.customer_number!=null && a.customer_number.toLowerCase().indexOf(s) >= 0) del = false;
+            if (a.zip_code && a.zip_code!=null && a.zip_code.toLowerCase().indexOf(s) >= 0) del = false;
             console.log(a ,s,del,i);
             if(del) this.listInspection.splice(i, 1);                
         }
@@ -362,8 +376,8 @@ export class DashboardNewPage {
             let s = this.filterValueApp.toLowerCase();
             let a = this.nextAppointment[i];
             let del = true;
-            if (a.company.toLowerCase().indexOf( s ) >= 0)  del = false;
-            if (a.appointment_type_text.toLowerCase().indexOf( s ) >= 0)  del = false;
+            if (a.company && a.company!=null && a.company.toLowerCase().indexOf( s ) >= 0)  del = false;
+            if (a.appointment_type_text && a.appointment_type_text!=null && a.appointment_type_text.toLowerCase().indexOf( s ) >= 0)  del = false;
             if ( this.all_dates_view ) if (a.last_name.toLowerCase().indexOf( s ) >= 0)  del = false;
             console.log(a ,s,del,i);
             if(del) this.nextAppointment.splice(i, 1);
