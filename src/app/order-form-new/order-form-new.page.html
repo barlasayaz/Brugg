@@ -100,7 +100,7 @@
                       <div class="tr table-subheader table-subheader-fix">
                         <div class="th">{{'Lieferadresse' | translate}}</div>
                          <div>
-                          <ion-item style="max-height: 15px; height: 10px;">
+                          <ion-item style="max-height: 15px; height: 10px; margin-top: -25px; max-width: 325px;">
                             <ion-select (ionChange)="changeContactPerson($event)"
                                         name="RE_Ansp"
                                         id="RE_Ansp"
@@ -394,26 +394,25 @@
       </div>
     </div>
   </ion-content>
-  <ion-fab slot="fixed" right vertical="bottom">
-      <ion-fab-button color="primarydark">
-        <ion-icon name="list-box"></ion-icon>
+
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+    <ion-fab-button color="tertiary">
+      <ion-icon name="menu"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list side="top">
+      <ion-fab-button color="primary"
+                      (click)="ordersSend()" 
+                      (mouseover)="mouseover(1)" 
+                      (mouseout)="mouseout(1)">
+        <ion-icon name="send"></ion-icon>        
       </ion-fab-button>
-      <ion-fab-list side="top">
-        <ion-fab-button 
-                class="btn-primary"
-                (click)="ordersSend()" 
-                (mouseover)="mouseover(1)" 
-                (mouseout)="mouseout(1)">
-          <ion-icon name="send"></ion-icon>
-          <ion-label [hidden]="!mouseoverButton1">{{'Bestellung Abschicken' | translate}}</ion-label>
-        </ion-fab-button>
-        <ion-fab-button 
-                (click)="printPdf('download')" 
-                class="btn-primary" 
-                (mouseover)="mouseover(2)" 
-                (mouseout)="mouseout(2)">
-          <ion-icon name="document"></ion-icon>
-          <ion-label [hidden]="!mouseoverButton2">{{'PDF Ansicht' | translate}}</ion-label>
-        </ion-fab-button>
-      </ion-fab-list>
-    </ion-fab>
+      <ion-label [hidden]="!mouseoverButton1">{{'Bestellung Abschicken' | translate}}</ion-label>
+      <ion-fab-button color="primary" 
+                      (click)="printPdf('download')"
+                      (mouseover)="mouseover(2)" 
+                      (mouseout)="mouseout(2)">
+        <ion-icon name="document"></ion-icon>        
+      </ion-fab-button>
+      <ion-label [hidden]="!mouseoverButton2">{{'PDF Ansicht' | translate}}</ion-label>
+    </ion-fab-list>
+  </ion-fab>

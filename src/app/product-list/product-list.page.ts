@@ -1,4 +1,4 @@
-import { Component, ViewChild,OnInit } from '@angular/core';
+import { Component, ViewChild, OnInit } from '@angular/core';
 import { NavController, ModalController, AlertController, Events } from '@ionic/angular';
 import { ApiService } from '../services/api';
 import { TranslateService } from '@ngx-translate/core';
@@ -12,7 +12,7 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
 import { PdfExportService } from '../services/pdf-export';
 import { DatePipe } from '@angular/common';
 import { ProductMigrationPage } from '../product-migration/product-migration.page';
-import { ActivatedRoute,NavigationExtras } from '@angular/router';
+import { ActivatedRoute, NavigationExtras } from '@angular/router';
 
 @Component({
     selector: 'app-product-list',
@@ -27,18 +27,18 @@ export class ProductListPage implements OnInit {
     public allnodes: any[] = [];
     public selectedColumns: any[];
     public xlsHeader: any[];
-    public splitFilter: boolean = false;
-    public idCustomer: number = 0;
-    public heightCalc:any="700px";
-    public move_id: number = 0;
+    public splitFilter = false;
+    public idCustomer = 0;
+    public heightCalc: any = '700px';
+    public move_id = 0;
     public move_obj: any = {};
-    public columnFilterValues = { title: "", nfc_tag_id: "", id_number: "", articel_no: "", check_interval: "", search_all: "" };
+    public columnFilterValues = { title: '', nfc_tag_id: '', id_number: '', articel_no: '', check_interval: '', search_all: '' };
     public filterCols: string[];
     public expendedNodes: string[] = [];
-    public rowRecords: number = 0;
-    public totalRecords: number = 0;
+    public rowRecords = 0;
+    public totalRecords = 0;
     public lang: string = localStorage.getItem('lang');
-    public company: string = "";
+    public company = '';
     public selectMulti: number;
 
     public menuItems: MenuItem[] = [{
@@ -56,7 +56,7 @@ export class ProductListPage implements OnInit {
         disabled: true,
         visible: this.userdata.role_set.edit_products,
         command: (event) => {
-            if(this.userdata.role_set.edit_products==false) return;
+            if (this.userdata.role_set.edit_products === false) { return; }
             console.log('command menuitem:', event.item);
             this.menu_edit();
         }
@@ -76,7 +76,7 @@ export class ProductListPage implements OnInit {
         visible:  this.userdata.role_set.edit_products,
         disabled: true,
         command: (event) => {
-            if(this.userdata.role_set.edit_products==false) return;
+            if (this.userdata.role_set.edit_products === false) { return; }
             console.log('command menuitem:', event.item);
             this.menu_move(1);
         }
@@ -85,25 +85,25 @@ export class ProductListPage implements OnInit {
         label: this.translate.instant('Stammordner'),
         icon: 'pi pi-fw pi-arrow-down',
         visible: false,
-        styleClass: "move_now",
+        styleClass: 'move_now',
         disabled: false,
         command: (event) => {
-            if(this.userdata.role_set.edit_products==false) return;
+            if (this.userdata.role_set.edit_products === false) { return; }
             console.log('command menuitem:', event.item);
             this.menu_move(2);
         }
     },
     {
         label: this.translate.instant('Neu'),
-        icon: 'pi pi-fw pi-plus',              
-        visible:  (this.userdata.role_set.edit_products || this.userdata.role_set.check_products),  
+        icon: 'pi pi-fw pi-plus',
+        visible:  (this.userdata.role_set.edit_products || this.userdata.role_set.check_products),
         items: [
             {
                 label: this.translate.instant('Neue Produktvorlage'),
                 icon: 'pi pi-fw pi-plus',
                 visible:  this.userdata.role_set.edit_products,
                 command: (event) => {
-                    if(this.userdata.role_set.edit_products==false) return;
+                    if (this.userdata.role_set.edit_products === false) { return; }
                     console.log('command menuitem:', event.item);
                     this.create_template();
                 }
@@ -113,18 +113,18 @@ export class ProductListPage implements OnInit {
                 icon: 'pi pi-fw pi-plus',
                 visible:  this.userdata.role_set.edit_products,
                 command: (event) => {
-                    if(this.userdata.role_set.edit_products==false) return;
+                    if (this.userdata.role_set.edit_products === false) { return; }
                     console.log('command menuitem:', event.item);
                     this.menu_new();
                 }
-            },            
+            },
             {
                 label: this.translate.instant('Neues Protokoll'),
                 icon: 'pi pi-fw pi-plus',
                 visible:  this.userdata.role_set.check_products,
                 disabled: true,
                 command: (event) => {
-                    if(this.userdata.role_set.check_products==false) return;
+                    if (this.userdata.role_set.check_products === false) { return; }
                     console.log('command menuitem:', event.item);
                     this.create_protocol();
                 }
@@ -187,7 +187,7 @@ export class ProductListPage implements OnInit {
                 visible:  this.userdata.role_set.edit_products,
                 disabled: true,
                 command: (event) => {
-                    if(this.userdata.role_set.edit_products==false) return;
+                    if (this.userdata.role_set.edit_products === false) { return; }
                     console.log('command menuitem:', event.item);
                     this.product_migration();
                 }
@@ -197,7 +197,7 @@ export class ProductListPage implements OnInit {
 
     public popupMenu: MenuItem[] = [{
         label: this.translate.instant('Menü'),
-        icon: "fa fa-fw fa-list",
+        icon: 'fa fa-fw fa-list',
         items: this.menuItems
     }];
 
@@ -215,19 +215,19 @@ export class ProductListPage implements OnInit {
         private route: ActivatedRoute) {
     }
 
-    ngOnInit() { 
+    ngOnInit() {
         this.cols = [
             { field: 'nfc_tag_id', header: 'NFC' },
             { field: 'title', header: this.translate.instant('Titel') },
-            //{ field: 'id', header: 'DB-ID' },
+            // { field: 'id', header: 'DB-ID' },
             { field: 'id_number', header: '#' },
             { field: 'articel_no', header: this.translate.instant('Artikel-Nr.') },
-            { field: 'last_protocol_date', header: "<<"+this.translate.instant('Termin') },
-            { field: 'last_protocol_next', header: this.translate.instant('Termin')+">>" },
+            { field: 'last_protocol_date', header: '<<' + this.translate.instant('Termin') },
+            { field: 'last_protocol_next', header: this.translate.instant('Termin') + '>>' },
             { field: 'check_interval', header: this.translate.instant('Intervall Prüfen') }
         ];
         this.route.queryParams.subscribe(params => {
-            this.idCustomer = params["idCustomer"];
+            this.idCustomer = params['idCustomer'];
         // this.company = params["company"];
         });
 
@@ -236,17 +236,17 @@ export class ProductListPage implements OnInit {
     }
 
     onResize(event) {
-        console.log("onResize");
+        console.log('onResize');
         this.funcHeightCalc();
      }
 
     @ViewChild('divHeightCalc') divHeightCalc: any;
-    funcHeightCalc(){
+    funcHeightCalc() {
         var x = this.divHeightCalc.nativeElement.offsetHeight;
-        if(this.splitFilter) x= x - 51;
-        if(x<80) x = 80;
-        this.heightCalc = x+"px";
-        console.log("heightCalc:",x, this.heightCalc );
+        if (this.splitFilter) { x = x - 51; }
+        if (x < 80) { x = 80; }
+        this.heightCalc = x + 'px';
+        console.log('heightCalc:', x, this.heightCalc );
     }
 
     page_load() {
@@ -255,68 +255,78 @@ export class ProductListPage implements OnInit {
         this.totalRecords = 0;
         this.selectMulti = 1;
 
-        this.events.publish("prozCustomer", 0);
+        this.events.publish('prozCustomer', 0);
         this.apiService.pvs4_get_product_list(this.idCustomer).then((result: any) => {
-            //console.log("ionViewDidLoad result :", result);
+            // console.log("ionViewDidLoad result :", result);
             this.productListAll = JSON.parse(JSON.stringify(result.list));
 
-            if (localStorage.getItem('filter_values_product') != undefined) {
+            if (localStorage.getItem('filter_values_product') !== undefined) {
                 this.columnFilterValues = JSON.parse(localStorage.getItem('filter_values_product'));
             }
-            if (localStorage.getItem('split_filter_product') != undefined) {
+            if (localStorage.getItem('split_filter_product') !== undefined) {
                 this.splitFilter = JSON.parse(localStorage.getItem('split_filter_product'));
                 this.funcHeightCalc();
             }
-            if (localStorage.getItem('show_columns_product') != undefined) {
+            if (localStorage.getItem('show_columns_product') !== undefined) {
                 this.selectedColumns = JSON.parse(localStorage.getItem('show_columns_product'));
             }
 
-            this.title_translate(this.productListAll);            
+            this.title_translate(this.productListAll);
 
             for (let index = 0; index < this.productListAll.length; index++) {
-                //last_protocol & last_protocol_next
+                // last_protocol & last_protocol_next
                 let pr = this.productListAll[index].data.last_protocol;
-                if(pr){
-                    if(pr.length>0){
-                        //console.log("pr :", pr);
+                if (pr) {
+                    if (pr.length > 0) {
+                        // console.log("pr :", pr);
                         pr = JSON.parse(pr);
-                        if(pr.protocol_date) this.productListAll[index].data.last_protocol_date = this.apiService.mysqlDate2view(pr.protocol_date) ;
-                        if(pr.protocol_date_next) this.productListAll[index].data.last_protocol_next = this.apiService.mysqlDate2view(pr.protocol_date_next) ;
-                        if(pr.result) {
-                            if(pr.result==1) this.productListAll[index].data.last_protocol_next =this.translate.instant('reparieren');
-                            if(pr.result==3) this.productListAll[index].data.last_protocol_next =this.translate.instant('unauffindbar');
-                            if(pr.result==4) this.productListAll[index].data.last_protocol_next =this.translate.instant('ausmustern');
+                        if (pr.protocol_date) {
+                            this.productListAll[index].data.last_protocol_date = this.apiService.mysqlDate2view(pr.protocol_date);
+                        }
+                        if (pr.protocol_date_next) {
+                            this.productListAll[index].data.last_protocol_next = this.apiService.mysqlDate2view(pr.protocol_date_next);
+                        }
+                        if (pr.result) {
+                            if (pr.result === 1) {
+                                this.productListAll[index].data.last_protocol_next = this.translate.instant('reparieren');
+                            }
+                            if (pr.result === 3) {
+                                this.productListAll[index].data.last_protocol_next = this.translate.instant('unauffindbar');
+                            }
+                            if (pr.result === 4) {
+                                this.productListAll[index].data.last_protocol_next = this.translate.instant('ausmustern');
+                            }
                         }
                     }
                 }
-                //options
-                
+                // options
+
                 let options = JSON.parse(this.productListAll[index].data.items);
-                console.log("options :", options);
-                
-                if (options == null) options = [];
+                console.log('options :', options);
+
+                if (options === null) { options = []; }
 
                 for (let i = 0; i < options.length; i++) {
-                    console.log("options :", options[i]);
-                    console.log("options :", options[i].id);
-                    console.log("options :", options[i].title);
-                    
-                    if (!this.cols.find(x => x.field == options[i].title[this.lang]))  this.cols.push({ field: options[i].title[this.lang], header: options[i].title[this.lang] });
-                    let pipe = new DatePipe('en-US'); 
-                    if(options[i].type == 5) this.productListAll[index].data[options[i].title[this.lang]] = pipe.transform(options[i].value,'dd.MM.yyyy');
-                    if(options[i].type != 5) this.productListAll[index].data[options[i].title[this.lang]] = options[i].value;                    
+                    console.log('options :', options[i]);
+                    console.log('options :', options[i].id);
+                    console.log('options :', options[i].title);
+
+                    if (!this.cols.find(x => x.field === options[i].title[this.lang])) {  this.cols.push({ field: options[i].title[this.lang], header: options[i].title[this.lang] }); }
+                    const pipe = new DatePipe('en-US');
+                    if (options[i].type === 5) { this.productListAll[index].data[options[i].title[this.lang]] = pipe.transform(options[i].value, 'dd.MM.yyyy'); }
+                    if (options[i].type !== 5) { this.productListAll[index].data[options[i].title[this.lang]] = options[i].value; }
                 }
-                //console.log("index :", index);
-            } 
-            //console.log("selectedColumns :", this.cols);
+                // console.log("index :", index);
+            }
+            // console.log("selectedColumns :", this.cols);
             this.selectedColumns = JSON.parse(JSON.stringify(this.cols));
-            let json = "{";
+            let json = '{';
             for (var j = 0; j < this.cols.length; j++) {
                 json += '"' + this.cols[j].field + '":""';
                 json += ',';
             }
             json += '"search_all":""}';
-            console.log("columnFilterValues :", json );
+            console.log('columnFilterValues :', json );
             this.columnFilterValues = JSON.parse(json);
 
             this.generate_productList();
@@ -325,13 +335,13 @@ export class ProductListPage implements OnInit {
     }
 
     title_translate(nodes: TreeNode[]): any {
-        for (let i = 0; i < nodes.length; i++) {   
+        for (let i = 0; i < nodes.length; i++) {
             /*if(nodes[i].data.nfc_tag_id) {
                 nodes[i].data.nfc_tag_id = true;
             } else {
                 nodes[i].data.nfc_tag_id = false;
             }*/
-            let title = JSON.parse(nodes[i].data.title);
+            const title = JSON.parse(nodes[i].data.title);
             nodes[i].data.titleJson = title;
             nodes[i].data.title = title[this.lang];
             if (nodes[i].children && nodes[i].children.length > 0) {
@@ -343,22 +353,29 @@ export class ProductListPage implements OnInit {
     try_filter(node: TreeNode): boolean {
         let ret: any = false;
         for (let i = 0; i < this.cols.length; i++) {
-            if (this.columnFilterValues["search_all"].trim().length > 0
-                && node.data[this.cols[i].field] != undefined
-                && node.data[this.cols[i].field].toString().toLowerCase().indexOf(this.columnFilterValues["search_all"].trim().toLowerCase()) >= 0)
+            if (this.columnFilterValues['search_all'].trim().length > 0
+                && node.data[this.cols[i].field] !== undefined
+                && node.data[this.cols[i].field].toString().
+                                                 toLowerCase().
+                                                 indexOf(this.columnFilterValues['search_all'].trim().toLowerCase()) >= 0) {
                 ret = true;
+            }
         }
 
-        if (this.columnFilterValues["search_all"].trim().length > 0 && !ret)
+        if (this.columnFilterValues['search_all'].trim().length > 0 && !ret) {
             return false;
-        else if (this.columnFilterValues["search_all"].trim().length == 0 && !ret)
+        } else if (this.columnFilterValues['search_all'].trim().length === 0 && !ret) {
             ret = true;
+             }
 
         for (let i = 0; i < this.cols.length; i++) {
             if (this.columnFilterValues[this.cols[i].field].trim().length > 0
-                && (node.data[this.cols[i].field] == undefined || (node.data[this.cols[i].field] != undefined
-                && node.data[this.cols[i].field].toString().toLowerCase().indexOf(this.columnFilterValues[this.cols[i].field].trim().toLowerCase()) < 0)))
+                && (node.data[this.cols[i].field] === undefined || (node.data[this.cols[i].field] !== undefined
+                && node.data[this.cols[i].field].toString().
+                                                 toLowerCase().
+                                                 indexOf(this.columnFilterValues[this.cols[i].field].trim().toLowerCase()) < 0))) {
                 ret = false;
+            }
         }
 
         return ret;
@@ -368,19 +385,19 @@ export class ProductListPage implements OnInit {
         let del_ret = false;
         for (let i = 0; i < nodes.length; i++) {
             if (nodes[i].children) {
-                let ret = this.dir_try_filter(nodes[i].children);
-                if (ret == true) {
+                const ret = this.dir_try_filter(nodes[i].children);
+                if (ret === true) {
                     del_ret = true;
                 }
                 if (nodes[i].children.length <= 0) {
                     delete nodes[i].children;
-                    if (this.try_filter(nodes[i]) == false) {
+                    if (this.try_filter(nodes[i]) === false) {
                         nodes.splice(i, 1);
                         i--;
                     }
                 }
             } else {
-                if (this.try_filter(nodes[i]) == false) {
+                if (this.try_filter(nodes[i]) === false) {
                     nodes.splice(i, 1);
                     i--;
                 }
@@ -396,19 +413,18 @@ export class ProductListPage implements OnInit {
             this.menuItems[8].items[2]['disabled'] = true;
         }
         this.generate_productList();
-        localStorage.setItem("filter_values_product", JSON.stringify(this.columnFilterValues));
+        localStorage.setItem('filter_values_product', JSON.stringify(this.columnFilterValues));
     }
 
     cancel_filters(cancel_type) {
-        console.log("cancel_filters");
+        console.log('cancel_filters');
         this.menuItems[8].items[2]['disabled'] = true;
-        if (cancel_type == 1) {
+        if (cancel_type === 1) {
             for (let i = 0; i < this.cols.length; i++) {
-                this.columnFilterValues[this.cols[i].field] = "";
+                this.columnFilterValues[this.cols[i].field] = '';
             }
-        }
-        else {
-            let json = "{";
+        } else {
+            let json = '{';
             for (var j = 0; j < this.cols.length; j++) {
                 json += '"' + this.cols[j].field + '":""';
                 json += ',';
@@ -425,7 +441,7 @@ export class ProductListPage implements OnInit {
         if (!this.isFilterOn()) {
             this.productListView = JSON.parse(JSON.stringify(this.productListAll));
         } else {
-            let try_list = JSON.parse(JSON.stringify(this.productListAll));
+            const try_list = JSON.parse(JSON.stringify(this.productListAll));
             this.dir_try_filter(try_list);
             this.productListView = try_list;
         }
@@ -444,10 +460,10 @@ export class ProductListPage implements OnInit {
     }
 
     nodeSelect(event, selectedNode) {
-        console.log("nodeSelect selectedNode :", selectedNode.length);
+        console.log('nodeSelect selectedNode :', selectedNode.length);
         let selectedNodeLength = selectedNode.length;
-        console.log("selectMulti :", this.selectMulti);
-        if (!this.selectMulti){
+        console.log('selectMulti :', this.selectMulti);
+        if (!this.selectMulti) {
             selectedNodeLength = 1;
             this.selectMulti = 1;
         }
@@ -456,22 +472,22 @@ export class ProductListPage implements OnInit {
         this.selectedNode.data = event.node.data;
         this.menuItems[0].disabled = false;
         this.menuItems[1].disabled = false;
-        this.menuItems[2].disabled = false;         
-        this.menuItems[3].disabled = false; 
+        this.menuItems[2].disabled = false;
+        this.menuItems[3].disabled = false;
         this.menuItems[5].items[0]['disabled'] = false;
         this.menuItems[5].items[1]['disabled'] = false;
-        this.menuItems[8].items[4]['disabled'] = false; 
+        this.menuItems[8].items[4]['disabled'] = false;
         let id_sn = 0;
 
-        console.log("selectedNodeLength :", selectedNodeLength);
-        if (selectedNodeLength == 1) {
-            
+        console.log('selectedNodeLength :', selectedNodeLength);
+        if (selectedNodeLength === 1) {
+
             if (this.selectedNode) {
                 if (this.selectedNode.data.id) {
                     id_sn = this.selectedNode.data.id;
                 }
             }
-            if (id_sn == this.move_id) {
+            if (id_sn === this.move_id) {
                 this.menuItems[3].visible = this.userdata.role_set.edit_products;
                 this.menuItems[4].visible = false;
                 this.move_id = 0;
@@ -486,26 +502,24 @@ export class ProductListPage implements OnInit {
                 this.menuItems[4].visible = false;
                 this.move_id = 0;
             }
-        }
-        else {
+        } else {
             this.menuItems[0].disabled = true;
             this.menuItems[1].disabled = true;
-            this.menuItems[2].disabled = true;            
+            this.menuItems[2].disabled = true;
             this.menuItems[3].disabled = true;
             this.menuItems[3].visible = this.userdata.role_set.edit_products;
             this.menuItems[4].visible = false;
             this.menuItems[8].items[4]['disabled'] = true;
             this.move_id = 0;
-        }             
-        if(selectedNodeLength == 0) {            
+        }
+        if (selectedNodeLength === 0) {
             this.menuItems[5].items[2]['disabled'] = true;
-            this.menuItems[8].items[4]['disabled'] = true;            
+            this.menuItems[8].items[4]['disabled'] = true;
+        } else {
+            this.menuItems[5].items[2]['disabled'] = false;
+            this.menuItems[8].items[4]['disabled'] = false;
         }
-        else {           
-            this.menuItems[5].items[2]['disabled'] = false; 
-            this.menuItems[8].items[4]['disabled'] = false;           
-        }
-        if(selectedNodeLength >= 2) {
+        if (selectedNodeLength >= 2) {
             this.menuItems[5].items[0]['disabled']  = true;
             this.menuItems[5].items[1]['disabled']  = true;
         }
@@ -513,25 +527,30 @@ export class ProductListPage implements OnInit {
 
     menu_new() {
         console.log('menu_new', this.selectedNode, this.idCustomer);
-        let obj = { id: 0, parent: 0, idCustomer: this.idCustomer };
+        const obj = { id: 0, parent: 0, idCustomer: this.idCustomer };
         if (this.selectedNode) {
             if (this.selectedNode.data.id) {
                 obj.parent = this.selectedNode.data.id;
             }
         }
-        let navigationExtras: NavigationExtras = {
+        const navigationExtras: NavigationExtras = {
             queryParams: obj
         };
-        this.navCtrl.navigateForward(["/product-edit"], navigationExtras);    }
+        this.navCtrl.navigateForward(['/product-edit'], navigationExtras);    }
 
     menu_edit() {
         console.log('menu_edit', this.selectedNode);
         if (this.selectedNode) {
             if (this.selectedNode.data.id) {
-                let navigationExtras: NavigationExtras = {
-                    queryParams: { id: this.selectedNode.data.id, idCustomer: this.idCustomer, parent: this.selectedNode.data.parent, company: this.company }
+                const navigationExtras: NavigationExtras = {
+                    queryParams: { id: this.selectedNode.data.id, 
+                                   idCustomer: this.idCustomer, 
+                                   parent: this.selectedNode.data.parent, 
+                                   company: this.company
+                    }
                 };
-                this.navCtrl.navigateForward(["/product-edit"], navigationExtras);            }
+                this.navCtrl.navigateForward(['/product-edit'], navigationExtras);
+            }
         }
     }
 
@@ -539,12 +558,16 @@ export class ProductListPage implements OnInit {
         console.log('menu_history', this.selectedNode);
         if (this.selectedNode) {
             if (this.selectedNode.data.id) {
-                let id = parseInt(this.selectedNode.data.id);
+                const id = parseInt(this.selectedNode.data.id);
                 console.log('menu_history id', id);
-                let navigationExtras: NavigationExtras = {
-                    queryParams: { idCustomer: this.idCustomer, idProduct: id, titleProduct: this.selectedNode.data.title, company: this.company }
+                const navigationExtras: NavigationExtras = {
+                    queryParams: { idCustomer: this.idCustomer,
+                                   idProduct: id,
+                                   titleProduct: this.selectedNode.data.title,
+                                   company: this.company
+                    }
                 };
-                this.navCtrl.navigateForward(["/protocol-history"],navigationExtras);
+                this.navCtrl.navigateForward(['/protocol-history'], navigationExtras);
             }
         }
     }
@@ -556,7 +579,7 @@ export class ProductListPage implements OnInit {
                 await this.modalCtrl.create({
                     component: ProductMigrationPage,
                     componentProps: {
-                        "idCustomer": this.idCustomer, productList: this.selectedNode
+                        'idCustomer': this.idCustomer, productList: this.selectedNode
                     }
                 });
 
@@ -571,7 +594,7 @@ export class ProductListPage implements OnInit {
 
     menu_move(n) {
         console.log('menu_move_up', this.selectedNode);
-        if (n == 1) {            
+        if (n === 1) {
             if (this.selectedNode) {
                 if (this.selectedNode.data.id) {
                     this.move_id = parseInt(this.selectedNode.data.id);
@@ -581,8 +604,8 @@ export class ProductListPage implements OnInit {
             this.menuItems[3].visible = false;
             this.menuItems[4].visible = true;
             this.selectMulti = 0;
-        } else if (n == 2) {
-            //in Root            
+        } else if (n === 2) {
+            // in Root
             this.move_obj.parent = 0;
             this.move_obj.title = JSON.stringify(this.move_obj.titleJson);
             this.apiService.pvs4_set_product(this.move_obj).then((result: any) => {
@@ -602,22 +625,22 @@ export class ProductListPage implements OnInit {
         console.log('menu_view', this.selectedNode);
         if (this.selectedNode) {
             if (this.selectedNode.data.id) {
-                let id = parseInt(this.selectedNode.data.id);
+                const id = parseInt(this.selectedNode.data.id);
                 console.log('menu_view id', id);
-                let navigationExtras: NavigationExtras = {
-                    queryParams:  { idCustomer: this.idCustomer,idProduct: id,  productList: JSON.stringify(this.selectedNode) }
+                const navigationExtras: NavigationExtras = {
+                    queryParams:  { idCustomer: this.idCustomer, idProduct: id,  productList: JSON.stringify(this.selectedNode) }
                 };
-                this.navCtrl.navigateForward(["/product-details"], navigationExtras);
+                this.navCtrl.navigateForward(['/product-details/' + id], navigationExtras);
             }
         }
     }
 
     create_template() {
         console.log('create_template', this.selectedNode);
-        let navigationExtras: NavigationExtras = {
+        const navigationExtras: NavigationExtras = {
             queryParams:  { idCustomer: this.idCustomer }
         };
-        this.navCtrl.navigateForward(["/product-template"], navigationExtras);
+        this.navCtrl.navigateForward(['/product-template'], navigationExtras);
     }
 
     create_protocol() {
@@ -638,7 +661,7 @@ export class ProductListPage implements OnInit {
         this.data_tree(this.productListAll);
         for (let i = 0, len = this.allnodes.length; i < len; i++) {
             const obj = this.allnodes[i];
-            obj.items = obj.items.replace(/(\\r\\n|\\n|\\r)/gm,' ');
+            obj.items = obj.items.replace(/(\\r\\n|\\n|\\r)/gm, ' ');
             const json: any = {};
             for (let j = 0; j < this.selectedColumns.length; j++) {
                 if (obj[this.selectedColumns[j].field]) {
@@ -701,7 +724,6 @@ export class ProductListPage implements OnInit {
             }
             bodyArray.push(rowArray);
         }
-
         this.pdf.get_ListDocDefinition(bodyArray, widthsArray, this.translate.instant("Produkt") + " " + this.translate.instant("Liste"),this.translate.instant("Produkt") + this.translate.instant("Liste") +'.pdf');
     } */
 
@@ -719,12 +741,12 @@ export class ProductListPage implements OnInit {
 
         for (let i = 0, len = this.allnodes.length; i < len; i++) {
             obj = this.allnodes[i];
-            obj.items = obj.items.replace(/(\\r\\n|\\n|\\r)/gm,' ');
+            obj.items = obj.items.replace(/(\\r\\n|\\n|\\r)/gm, ' ');
 
             columns = [];
             for (let k = 0; k < 7; k++) {
                 columns.push({ text: this.selectedColumns[k].header, style: 'header' });
-            } 
+            }
             bodyArray.push(columns);
 
             rowArray = [];
@@ -740,32 +762,36 @@ export class ProductListPage implements OnInit {
             for (var l = 7; l < this.selectedColumns.length; l++) {
                 rowArray = [];
                 rowArray.push({ text: this.selectedColumns[l].header, style: 'header' });
-                if (obj[this.selectedColumns[l].field])
+                if (obj[this.selectedColumns[l].field]) {
                     rowArray.push(obj[this.selectedColumns[l].field]);
-                else
+                } else {
                     rowArray.push('');
-                rowArray.push({text:'',border: [false, false, false, false]});
-                rowArray.push({text:'',border: [false, false, false, false]});
-                rowArray.push({text:'',border: [false, false, false, false]});
-                rowArray.push({text:'',border: [false, false, false, false]});
-                rowArray.push({text:'',border: [false, false, false, false]});
+                }
+                rowArray.push({text: '', border: [false, false, false, false]});
+                rowArray.push({text: '', border: [false, false, false, false]});
+                rowArray.push({text: '', border: [false, false, false, false]});
+                rowArray.push({text: '', border: [false, false, false, false]});
+                rowArray.push({text: '', border: [false, false, false, false]});
                 bodyArray.push(rowArray);
             }
 
-                rowArray = [];           
-                rowArray.push({text:'',border: [false, false, false, false]});
-                rowArray.push({text:'',border: [false, false, false, false]});
-                rowArray.push({text:'',border: [false, false, false, false]});
-                rowArray.push({text:'',border: [false, false, false, false]});
-                rowArray.push({text:'',border: [false, false, false, false]});
-                rowArray.push({text:'',border: [false, false, false, false]});
-                rowArray.push({text:'',border: [false, false, false, false]});
-                bodyArray.push(rowArray);            
-           
+                rowArray = [];
+                rowArray.push({text: '', border: [false, false, false, false]});
+                rowArray.push({text: '', border: [false, false, false, false]});
+                rowArray.push({text: '', border: [false, false, false, false]});
+                rowArray.push({text: '', border: [false, false, false, false]});
+                rowArray.push({text: '', border: [false, false, false, false]});
+                rowArray.push({text: '', border: [false, false, false, false]});
+                rowArray.push({text: '', border: [false, false, false, false]});
+                bodyArray.push(rowArray);
         }
 
-        this.pdf.get_ListDocDefinition(bodyArray, widthsArray, headerRowVisible, pdfTitle ,this.translate.instant("Produkt") + this.translate.instant("Liste") +'.pdf');
-    } 
+        this.pdf.get_ListDocDefinition(bodyArray,
+                                       widthsArray,
+                                       headerRowVisible,
+                                       pdfTitle,
+                                       this.translate.instant('Produkt') + this.translate.instant('Liste') + '.pdf');
+    }
 
     data_tree(nodes: TreeNode[]): any {
         for (let i = 0; i < nodes.length; i++) {
@@ -781,21 +807,21 @@ export class ProductListPage implements OnInit {
         if (!this.splitFilter) {
             this.cancel_filters(1);
         }
-        localStorage.setItem("split_filter_product", JSON.stringify(this.splitFilter));
+        localStorage.setItem('split_filter_product', JSON.stringify(this.splitFilter));
         this.funcHeightCalc();
     }
 
     async show_columns() {
-        let inputs: any[] = [];
+        const inputs: any[] = [];
         for (var i = 0; i < this.cols.length; i++) {
             inputs.push({
                 type: 'checkbox',
                 label: this.cols[i].header,
                 value: this.cols[i].field,
-                checked: this.selectedColumns.find(x => x.field == this.cols[i].field)
+                checked: this.selectedColumns.find(x => x.field === this.cols[i].field)
             });
         }
-        let alert = await this.alertCtrl.create({
+        const alert = await this.alertCtrl.create({
             header: this.translate.instant('Spalten Auswählen'), inputs: inputs,
             buttons: [{
                 text: this.translate.instant('dismiss'),
@@ -841,11 +867,11 @@ export class ProductListPage implements OnInit {
     }
 
     onNodeExpand(event) {
-        this.expendedNodes.push(event.node.data["id"]);
+        this.expendedNodes.push(event.node.data['id']);
         localStorage.setItem('expanded_nodes_product', JSON.stringify(this.expendedNodes));
     }
     onNodeCollapse(event) {
-        this.expendedNodes = this.expendedNodes.filter(function (element, index, array) { return element != event.node.data["id"] });
+        this.expendedNodes = this.expendedNodes.filter(function (element, index, array) { return element !== event.node.data['id'] });
         localStorage.setItem('expanded_nodes_product', JSON.stringify(this.expendedNodes));
     }
 }

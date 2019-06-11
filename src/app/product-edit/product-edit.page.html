@@ -211,7 +211,7 @@
                                     <ion-label position="floating" *ngIf="item.mandatory=='true'">{{item.title[lang]}} *</ion-label>
                                     <ion-label position="floating" *ngIf="item.mandatory=='false'">{{item.title[lang]}}</ion-label>
                                     <ion-textarea [(ngModel)]="item.value"
-                                                  max="{{item.options.max}}">
+                                                  maxlength="{{item.options.max}}">
                                   </ion-textarea> 
                                 </ion-item>
                             </ion-col> 

@@ -3,8 +3,8 @@ import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/timeout';
 import { UserdataService } from './userdata';
 
-//let apiURL = "http://localhost/pvs/api/";
-let apiURL = "http://testpvs.schaefer4u.de/api/";
+let apiURL = "http://localhost/pvs/api/";
+//let apiURL = "http://testpvs.schaefer4u.de/api/";
 //let apiURL =  "http://localhost/bruggpvs/api/";
 
 //let pvs4_apiURL = "http://localhost/BruggPVS4/pvs4-api/"; 

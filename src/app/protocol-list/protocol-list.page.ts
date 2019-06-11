@@ -1,4 +1,4 @@
-import { Component, ViewChild,OnInit } from '@angular/core';
+import { Component, ViewChild, OnInit } from '@angular/core';
 import { NavController, ModalController, AlertController, Events } from '@ionic/angular';
 import { ApiService } from '../services/api';
 import { TranslateService } from '@ngx-translate/core';
@@ -10,7 +10,7 @@ import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import { PdfExportService } from '../services/pdf-export';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
-import { ActivatedRoute,NavigationExtras } from '@angular/router';
+import { ActivatedRoute, NavigationExtras } from '@angular/router';
 
 @Component({
     selector: 'app-protocol-list',
@@ -25,16 +25,16 @@ export class ProtocolListPage implements OnInit {
     public allnodes: any[] = [];
     public selectedColumns: any[];
     public xlsHeader: any[];
-    public splitFilter: boolean = false;
-    public idCustomer: number = 0;
-    public columnFilterValues = { protocol_number: "", title: "", id: "", protocol_date: "", product: "", search_all: "" };
+    public splitFilter = false;
+    public idCustomer = 0;
+    public columnFilterValues = { protocol_number: '', title: '', id: '', protocol_date: '', product: '', search_all: '' };
     public filterCols: string[];
     public expendedNodes: string[] = [];
-    public rowRecords: number = 0;
-    public totalRecords: number = 0;
+    public rowRecords = 0;
+    public totalRecords = 0;
     public lang: string = localStorage.getItem('lang');
-    public company: string = "";
-    public heightCalc:any="700px";
+    public company = '';
+    public heightCalc: any = '700px';
 
     public menuItems: MenuItem[] = [
         {
@@ -119,7 +119,7 @@ export class ProtocolListPage implements OnInit {
         }];
     public popupMenu: MenuItem[] = [{
         label: this.translate.instant('Menü'),
-        icon: "fa fa-fw fa-list",
+        icon: 'fa fa-fw fa-list',
         items: this.menuItems
     }]
 
@@ -137,11 +137,10 @@ export class ProtocolListPage implements OnInit {
         private route: ActivatedRoute) {
     }
 
-    ngOnInit()
-    {
+    ngOnInit() {
         this.rowRecords = 0;
         this.totalRecords = 0;
-        this.events.publish("prozCustomer", 0);
+        this.events.publish('prozCustomer', 0);
         this.cols = [
             { field: 'protocol_number', header: this.translate.instant('Protokoll') },
             { field: 'title', header: this.translate.instant('Titel') },
@@ -152,7 +151,7 @@ export class ProtocolListPage implements OnInit {
             { field: 'product', header: this.translate.instant('Produkt') }
         ];
         this.route.queryParams.subscribe(params => {
-            this.idCustomer = params["idCustomer"];
+            this.idCustomer = params['idCustomer'];
            // this.company = params["company"];
         });
         console.log('ProtocolListPage idCustomer:', this.idCustomer);
@@ -163,21 +162,30 @@ export class ProtocolListPage implements OnInit {
             this.title_translate(this.protocolListAll);
 
             for (let index = 0; index < this.protocolListAll.length; index++) {
-                //console.log("data :", this.protocolListAll[index].data);
+                // console.log("data :", this.protocolListAll[index].data);
                 let options = JSON.parse(this.protocolListAll[index].data.items);
-                //console.log("options :", options);
-                if (options == null) options = [];
+                // console.log("options :", options);
+                if (options == null) { options = []; }
 
                 for (let i = 0; i < options.length; i++) {
-                    if (!this.cols.find(x => x.field == options[i].title[this.lang]))
+                    if (!this.cols.find(x => x.field == options[i].title[this.lang])) {
                         this.cols.push({ field: options[i].title[this.lang], header: options[i].title[this.lang] });
+                    }
                     this.protocolListAll[index].data[options[i].title[this.lang]] = options[i].value;
                 }
 
-                if (this.protocolListAll[index].data.result == 0) this.protocolListAll[index].data.result = this.translate.instant('betriebsbereit');
-                if (this.protocolListAll[index].data.result == 1) this.protocolListAll[index].data.result = this.translate.instant('reparieren');
-                if (this.protocolListAll[index].data.result == 3) this.protocolListAll[index].data.result = this.translate.instant('unauffindbar');
-                if (this.protocolListAll[index].data.result == 4) this.protocolListAll[index].data.result = this.translate.instant('ausmustern');
+                if (this.protocolListAll[index].data.result === 0) {
+                    this.protocolListAll[index].data.result = this.translate.instant('betriebsbereit');
+                }
+                if (this.protocolListAll[index].data.result === 1) {
+                    this.protocolListAll[index].data.result = this.translate.instant('reparieren');
+                }
+                if (this.protocolListAll[index].data.result === 3) {
+                    this.protocolListAll[index].data.result = this.translate.instant('unauffindbar');
+                }
+                if (this.protocolListAll[index].data.result === 4) {
+                    this.protocolListAll[index].data.result = this.translate.instant('ausmustern');
+                }
             }
 
             this.selectedColumns = JSON.parse(JSON.stringify(this.cols));
@@ -194,7 +202,7 @@ export class ProtocolListPage implements OnInit {
             }
 
             for (let k = 0; k < this.cols.length; k++) {
-                this.columnFilterValues[this.cols[k].field] = "";
+                this.columnFilterValues[this.cols[k].field] = '';
             }
 
             this.generate_protocolList();
@@ -203,30 +211,31 @@ export class ProtocolListPage implements OnInit {
     }
 
     onResize(event) {
-        console.log("onResize");
+        console.log('onResize');
         this.funcHeightCalc();
      }
 
     @ViewChild('divHeightCalc') divHeightCalc: any;
-    funcHeightCalc(){
-        var x = this.divHeightCalc.nativeElement.offsetHeight;
-        if(this.splitFilter) x= x - 51;
-        if(x<80) x = 80;
-        this.heightCalc = x+"px";
-        console.log("heightCalc:",x, this.heightCalc );
+    funcHeightCalc() {
+        let x = this.divHeightCalc.nativeElement.offsetHeight;
+        if (this.splitFilter) { x = x - 51; }
+        if (x < 80) { x = 80; }
+        this.heightCalc = x + 'px';
+        console.log('heightCalc:', x, this.heightCalc );
     }
 
 
     title_translate(nodes: TreeNode[]): any {
         for (let i = 0; i < nodes.length; i++) {
-            let title = JSON.parse(nodes[i].data.title);
+            const title = JSON.parse(nodes[i].data.title);
             let product = [];
             if (nodes[i].data.product) {
                 product = JSON.parse(nodes[i].data.product);
-                let productText = "";
+                let productText = '';
                 for (let index = 0; index < product.length; index++) {
-                    if (index != 0)
-                        productText += " , ";
+                    if (index != 0) {
+                        productText += ' , ';
+                    }
                     productText += product[index].id_number;
                 }
                 nodes[i].data.product = productText;
@@ -238,22 +247,29 @@ export class ProtocolListPage implements OnInit {
     try_filter(node: TreeNode): boolean {
         let ret: any = false;
         for (let i = 0; i < this.cols.length; i++) {
-            if (this.columnFilterValues["search_all"].trim().length > 0
-                && node.data[this.cols[i].field] != undefined
-                && node.data[this.cols[i].field].toString().toLowerCase().indexOf(this.columnFilterValues["search_all"].trim().toLowerCase()) >= 0)
+            if (this.columnFilterValues['search_all'].trim().length > 0
+                && node.data[this.cols[i].field] !== undefined
+                && node.data[this.cols[i].field].toString().
+                                                 toLowerCase().
+                                                 indexOf(this.columnFilterValues['search_all'].trim().toLowerCase()) >= 0) {
                 ret = true;
+            }
         }
 
-        if (this.columnFilterValues["search_all"].trim().length > 0 && !ret)
+        if (this.columnFilterValues['search_all'].trim().length > 0 && !ret) {
             return false;
-        else if (this.columnFilterValues["search_all"].trim().length == 0 && !ret)
+        } else if (this.columnFilterValues['search_all'].trim().length == 0 && !ret) {
             ret = true;
+             }
 
         for (let i = 0; i < this.cols.length; i++) {
             if (this.columnFilterValues[this.cols[i].field].trim().length > 0
                 && (node.data[this.cols[i].field] == undefined || (node.data[this.cols[i].field] != undefined
-                    && node.data[this.cols[i].field].toString().toLowerCase().indexOf(this.columnFilterValues[this.cols[i].field].trim().toLowerCase()) < 0)))
+                    && node.data[this.cols[i].field].toString().
+                                                     toLowerCase().
+                                                     indexOf(this.columnFilterValues[this.cols[i].field].trim().toLowerCase()) < 0))) {
                 ret = false;
+            }
         }
 
         return ret;
@@ -274,20 +290,19 @@ export class ProtocolListPage implements OnInit {
             this.menuItems[5].items[2]['disabled'] = true;
         }
         this.generate_protocolList();
-        localStorage.setItem("filter_values_protocol", JSON.stringify(this.columnFilterValues));
+        localStorage.setItem('filter_values_protocol', JSON.stringify(this.columnFilterValues));
     }
 
     cancel_filters(cancel_type) {
-        console.log("cancel_filters");
+        console.log('cancel_filters');
         this.menuItems[5].items[2]['disabled'] = true;
         if (cancel_type == 1) {
             for (let i = 0; i < this.cols.length; i++) {
-                this.columnFilterValues[this.cols[i].field] = "";
+                this.columnFilterValues[this.cols[i].field] = '';
             }
-        }
-        else {
-            let json = "{";
-            for (var j = 0; j < this.cols.length; j++) {
+        } else {
+            let json = '{';
+            for (let j = 0; j < this.cols.length; j++) {
                 json += '"' + this.cols[j].field + '":""';
                 json += ',';
             }
@@ -303,7 +318,7 @@ export class ProtocolListPage implements OnInit {
         if (!this.isFilterOn()) {
             this.protocolListView = JSON.parse(JSON.stringify(this.protocolListAll));
         } else {
-            let try_list = JSON.parse(JSON.stringify(this.protocolListAll));
+            const try_list = JSON.parse(JSON.stringify(this.protocolListAll));
             this.dir_try_filter(try_list);
             this.protocolListView = try_list;
         }
@@ -333,20 +348,20 @@ export class ProtocolListPage implements OnInit {
     menu_new() {
         console.log('menu_new', this.idCustomer);
 
-        let navigationExtras: NavigationExtras = {
+        const navigationExtras: NavigationExtras = {
             queryParams: { id: 0, idCustomer: this.idCustomer }
         };
-        this.navCtrl.navigateForward(["/protocol-edit"],navigationExtras);
+        this.navCtrl.navigateForward(['/protocol-edit'], navigationExtras);
     }
 
     menu_edit() {
         console.log('menu_edit', this.selectedNode);
         if (this.selectedNode) {
             if (this.selectedNode.data.id) {
-                let navigationExtras: NavigationExtras = {
-                    queryParams: { "id": this.selectedNode.data.id, idCustomer: this.idCustomer, parent: this.selectedNode.data.parent }
+                const navigationExtras: NavigationExtras = {
+                    queryParams: { 'id': this.selectedNode.data.id, idCustomer: this.idCustomer, parent: this.selectedNode.data.parent }
                 };
-                this.navCtrl.navigateForward(["/protocol-edit"], navigationExtras);
+                this.navCtrl.navigateForward(['/protocol-edit'], navigationExtras);
             }
         }
     }
@@ -355,39 +370,39 @@ export class ProtocolListPage implements OnInit {
         console.log('menu_view', this.selectedNode);
         if (this.selectedNode) {
             if (this.selectedNode.data.id) {
-                let id = parseInt(this.selectedNode.data.id);
+                const id = parseInt(this.selectedNode.data.id);
                 console.log('menu_view id', id);
-                let navigationExtras: NavigationExtras = {
+                const navigationExtras: NavigationExtras = {
                     queryParams: { idCustomer: this.idCustomer, idProtocol: id, protocol: JSON.stringify(this.selectedNode.data) }
                 };
-                this.navCtrl.navigateForward(["/protocol-details"], navigationExtras);
+                this.navCtrl.navigateForward(['/protocol-details/' + id], navigationExtras);
             }
         }
     }
 
     create_template() {
         console.log('create_template', this.selectedNode);
-        this.navCtrl.navigateForward(["/protocol-template/", this.idCustomer]);
+        this.navCtrl.navigateForward(['/protocol-template/', this.idCustomer]);
     }
 
     excel_all() {
-        console.log("excel_all");
-        let data: any = [];
+        console.log('excel_all');
+        const data: any = [];
         this.allnodes = [];
-        console.log("allnodes :", this.allnodes);
+        console.log('allnodes :', this.allnodes);
         this.data_tree(this.protocolListAll);
-        for (var i = 0, len = this.allnodes.length; i < len; i++) {
-            let obj = this.allnodes[i];
-            obj.items = obj.items.replace(/(\\r\\n|\\n|\\r)/gm, " ");
-            let json: any = {};
-            for (var j = 0; j < this.selectedColumns.length; j++) {
+        for (let i = 0, len = this.allnodes.length; i < len; i++) {
+            const obj = this.allnodes[i];
+            obj.items = obj.items.replace(/(\\r\\n|\\n|\\r)/gm, ' ');
+            const json: any = {};
+            for (let j = 0; j < this.selectedColumns.length; j++) {
                 if (obj[this.selectedColumns[j].field]) {
                     json[this.selectedColumns[j].header] = obj[this.selectedColumns[j].field];
                 } else {
-                    json[this.selectedColumns[j].header] = "";
+                    json[this.selectedColumns[j].header] = '';
                 }
             }
-            console.log(">>json :", json);
+            console.log('>>json :', json);
             data.push(json);
         }
         /* let json: string = "";
@@ -407,87 +422,91 @@ export class ProtocolListPage implements OnInit {
     }
 
     excel_view() {
-        console.log("excel_view");
-        let data: any = [];
+        console.log('excel_view');
+        const data: any = [];
         this.allnodes = [];
         this.data_tree(this.protocolListView);
-        for (var i = 0, len = this.allnodes.length; i < len; i++) {
-            let obj = this.allnodes[i];
-            obj.items = obj.items.replace(/(\\r\\n|\\n|\\r)/gm, " ");
-            let json: any = {};
-            for (var j = 0; j < this.selectedColumns.length; j++) {
+        for (let i = 0, len = this.allnodes.length; i < len; i++) {
+            const obj = this.allnodes[i];
+            obj.items = obj.items.replace(/(\\r\\n|\\n|\\r)/gm, ' ');
+            const json: any = {};
+            for (let j = 0; j < this.selectedColumns.length; j++) {
                 if (obj[this.selectedColumns[j].field]) {
                     json[this.selectedColumns[j].header] = obj[this.selectedColumns[j].field];
                 } else {
-                    json[this.selectedColumns[j].header] = "";
+                    json[this.selectedColumns[j].header] = '';
                 }
             }
-            console.log(">>json :", json);
+            console.log('>>json :', json);
             data.push(json);
         }
-        console.log("data :", data);
+        console.log('data :', data);
         this.excelService.exportAsExcelFile(data, 'product_view.xlsx');
     }
 
     printPdf() {
-        let pdfTitle: any = this.translate.instant("Protokolle") + " " + this.translate.instant("Liste");
+        const pdfTitle: any = this.translate.instant('Protokolle') + ' ' + this.translate.instant('Liste');
         let columns: any[] = [];
-        let widthsArray: string[] = [];
-        let bodyArray: any[] = [];
+        const widthsArray: string[] = [];
+        const bodyArray: any[] = [];
         this.allnodes = [];
         let rowArray: any[] = [];
         this.data_tree(this.protocolListView);
         let obj: any;
-        let headerRowVisible: any = 0;
-        widthsArray.push('*','auto','*','*','*','*','*');
-        
-        for (var i = 0, len = this.allnodes.length; i < len; i++) {
-            obj = this.allnodes[i];
-            obj.items = obj.items.replace(/(\\r\\n|\\n|\\r)/gm," ");
+        const headerRowVisible: any = 0;
+        widthsArray.push('*', 'auto', '*', '*', '*', '*', '*');
 
-            columns = [];           
-            for (var k = 0; k < 7; k++) {
+        for (let i = 0, len = this.allnodes.length; i < len; i++) {
+            obj = this.allnodes[i];
+            obj.items = obj.items.replace(/(\\r\\n|\\n|\\r)/gm, ' ');
+
+            columns = [];
+            for (let k = 0; k < 7; k++) {
                 columns.push({ text: this.selectedColumns[k].header, style: 'header' });
             } 
             bodyArray.push(columns);
 
             rowArray = [];
-            for (var j = 0; j < 7; j++) {
-                if (obj[this.selectedColumns[j].field])
+            for (let j = 0; j < 7; j++) {
+                if (obj[this.selectedColumns[j].field]) {
                     rowArray.push(obj[this.selectedColumns[j].field]);
-                else
+                } else {
                     rowArray.push('');
-            }            
+                }
+            }
             bodyArray.push(rowArray);
 
-            for (var l = 7; l < this.selectedColumns.length; l++) {
+            for (let l = 7; l < this.selectedColumns.length; l++) {
                 rowArray = [];
                 rowArray.push({ text: this.selectedColumns[l].header, style: 'header' });
-                if (obj[this.selectedColumns[l].field])
+                if (obj[this.selectedColumns[l].field]) {
                     rowArray.push(obj[this.selectedColumns[l].field]);
-                else
+                } else {
                     rowArray.push('');
-                rowArray.push({text:'',border: [false, false, false, false]});
-                rowArray.push({text:'',border: [false, false, false, false]});
-                rowArray.push({text:'',border: [false, false, false, false]});
-                rowArray.push({text:'',border: [false, false, false, false]});
-                rowArray.push({text:'',border: [false, false, false, false]});
+                }
+                rowArray.push({text: '', border: [false, false, false, false]});
+                rowArray.push({text: '', border: [false, false, false, false]});
+                rowArray.push({text: '', border: [false, false, false, false]});
+                rowArray.push({text: '', border: [false, false, false, false]});
+                rowArray.push({text: '', border: [false, false, false, false]});
                 bodyArray.push(rowArray);
             }
 
-                rowArray = [];           
-                rowArray.push({text:'',border: [false, false, false, false]});
-                rowArray.push({text:'',border: [false, false, false, false]});
-                rowArray.push({text:'',border: [false, false, false, false]});
-                rowArray.push({text:'',border: [false, false, false, false]});
-                rowArray.push({text:'',border: [false, false, false, false]});
-                rowArray.push({text:'',border: [false, false, false, false]});
-                rowArray.push({text:'',border: [false, false, false, false]});
-                bodyArray.push(rowArray);            
-           
+                rowArray = [];
+                rowArray.push({text: '', border: [false, false, false, false]});
+                rowArray.push({text: '', border: [false, false, false, false]});
+                rowArray.push({text: '', border: [false, false, false, false]});
+                rowArray.push({text: '', border: [false, false, false, false]});
+                rowArray.push({text: '', border: [false, false, false, false]});
+                rowArray.push({text: '', border: [false, false, false, false]});
+                rowArray.push({text: '', border: [false, false, false, false]});
+                bodyArray.push(rowArray);
         }
 
-        this.pdf.get_ListDocDefinition(bodyArray, widthsArray, headerRowVisible, pdfTitle, this.translate.instant("Protokolle") + this.translate.instant("Liste") +'.pdf');
+        this.pdf.get_ListDocDefinition(bodyArray, 
+                                       widthsArray, 
+                                       headerRowVisible, 
+                                       pdfTitle, this.translate.instant('Protokolle') + this.translate.instant('Liste') + '.pdf');
     } 
 
     data_tree(nodes: TreeNode[]): any {
@@ -504,13 +523,13 @@ export class ProtocolListPage implements OnInit {
         if (!this.splitFilter) {
             this.cancel_filters(1);
         }
-        localStorage.setItem("split_filter_protocol", JSON.stringify(this.splitFilter));
+        localStorage.setItem('split_filter_protocol', JSON.stringify(this.splitFilter));
         this.funcHeightCalc();
     }
 
     async show_columns() {
-        let inputs: any[] = [];
-        for (var i = 0; i < this.cols.length; i++) {
+        const inputs: any[] = [];
+        for (let i = 0; i < this.cols.length; i++) {
             inputs.push({
                 type: 'checkbox',
                 label: this.cols[i].header,
@@ -518,7 +537,7 @@ export class ProtocolListPage implements OnInit {
                 checked: this.selectedColumns.find(x => x.field == this.cols[i].field)
             });
         }
-        let alert = await this.alertCtrl.create({
+        const alert = await this.alertCtrl.create({
             header: this.translate.instant('Spalten Auswählen'), inputs: inputs,
             buttons: [{
                 text: this.translate.instant('dismiss'),
@@ -542,22 +561,24 @@ export class ProtocolListPage implements OnInit {
     isFilterOn(): any {
         let ret = false;
         for (let i = 0; i < this.cols.length; i++) {
-            if (this.columnFilterValues[this.cols[i].field].trim().length > 0)
+            if (this.columnFilterValues[this.cols[i].field].trim().length > 0) {
                 ret = true;
+            }
         }
-        if (this.columnFilterValues["search_all"].trim().length > 0)
+        if (this.columnFilterValues['search_all'].trim().length > 0) {
             ret = true;
+        }
         return ret;
     }
 
 
     protocolDeactivate() {
-        console.log("delete");
+        console.log('delete');
         this.showConfirmAlert(this.selectedNode.data.id);
     }
 
     showConfirmAlert(idProtocol) {
-        let alert = this.alertCtrl.create({
+        const alert = this.alertCtrl.create({
             header: this.translate.instant('Deaktivierung des Protokolls bestätigen'),
             message: this.translate.instant('Möchten Sie dieses Protokoll wirklich deaktivieren'),
             buttons: [
@@ -571,13 +592,13 @@ export class ProtocolListPage implements OnInit {
                     text: this.translate.instant('ja'),
                     handler: () => {
                         this.apiService.pvs4_get_protocol(idProtocol).then((result: any) => {
-                            let activProtocol = result.obj;
+                            const activProtocol = result.obj;
                             console.log('loadProtocol: ', activProtocol);
 
                             activProtocol.active = 0;
                             this.apiService.pvs4_set_protocol(activProtocol).then((setResult: any) => {
                                 console.log('result: ', setResult);
-                                this.navCtrl.navigateForward("/protocol-list/" + this.idCustomer);
+                                this.navCtrl.navigateForward('/protocol-list/' + this.idCustomer);
                             });
                         });
                     }
