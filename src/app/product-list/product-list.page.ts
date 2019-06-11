@@ -647,7 +647,8 @@ export class ProductListPage implements OnInit {
         if (this.selectedNode) {
             console.log('create_protocol', this.selectedNode);
             const navigationExtras: NavigationExtras = {
-                queryParams: { idCustomer: this.idCustomer, productList: JSON.stringify(this.selectedNode) }
+                queryParams: { idCustomer: this.idCustomer,
+                               productList: JSON.stringify(this.selectedNode) }
             };
             this.navCtrl.navigateForward(['/protocol-edit'], navigationExtras);
         }
