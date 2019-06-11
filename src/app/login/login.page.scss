@@ -191,7 +191,7 @@ p {
 	text-align: left;
 	max-width: 400px;
 	width: 100%;
-	margin-bottom: 40px;
+	margin-bottom: 10px;
 	h1 {
 		color: #FFF;
 		margin-top: 0px;
@@ -290,8 +290,9 @@ align-content: center;
 
 .pvs4-login-inner {
 	background: #FFF;
-	padding: 30px 45px;
-	max-width: 400px;
+	padding: 30px;
+	max-width: 368px;
+	width: 368px;
 	-webkit-border-radius: var(--global-radius);
 	        border-radius: var(--global-radius);
 }

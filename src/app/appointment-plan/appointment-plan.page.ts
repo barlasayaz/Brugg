@@ -27,10 +27,10 @@ export class AppointmentPlanPage {
     public mouseoverButton3: boolean;
     public mouseoverButton4: boolean;
     public mouseoverButton5: boolean;
-    public mobilePlatform: boolean = false;
-    public viewMode: number = 0;
-    public peopleFilter:string = "none";  
-    public typeFilter:number = 99;   
+    public mobilePlatform = false;
+    public viewMode = 0;
+    public peopleFilter = 'none';
+    public typeFilter = 99;
 
     @ViewChild('fullcalendar') fullcalendar: CalendarComponent;
 
@@ -40,16 +40,16 @@ export class AppointmentPlanPage {
         public modalCtrl: ModalController,
         private translate: TranslateService,
         public platform: Platform
-        //private datePipe: DatePipe
+        // private datePipe: DatePipe
     ) {
         this.calendarOptions = {
             timezone: 'local',
             editable: true,
             eventLimit: false,
-            timeFormat: "HH:mm",
-            slotLabelFormat: "HH:mm",
-            weekHeader: "dd",
-            dateFormat: "dd.mm.yy",
+            timeFormat: 'HH:mm',
+            slotLabelFormat: 'HH:mm',
+            weekHeader: 'dd',
+            dateFormat: 'dd.mm.yy',
             firstDay: 1,
             allDaySlot: false,
             businessHours: {
@@ -66,55 +66,61 @@ export class AppointmentPlanPage {
             },
             events: []
         };
-        let lang = localStorage.getItem('lang');
+        const lang = localStorage.getItem('lang');
         console.log(lang);
-        if (lang == 'fr') {
-            this.calendarOptions.monthNames = ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre"];
-            this.calendarOptions.monthNamesShort = ["janv.", "févr.", "mars", "avr.", "mai", "juin", "juil.", "août", "sept.", "oct.", "nov.", "déc."];
-            this.calendarOptions.dayNames = ["dimanche", "lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi"];
-            this.calendarOptions.dayNamesShort = ["dim.", "lun.", "mar.", "mer.", "jeu.", "ven.", "sam."];
-            this.calendarOptions.dayNamesMin = ["D", "L", "M", "M", "J", "V", "S"];
+        if (lang === 'fr') {
+            this.calendarOptions.monthNames = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin',
+                                               'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'];
+            this.calendarOptions.monthNamesShort = ['janv.', 'févr.', 'mars', 'avr.', 'mai', 'juin',
+                                                    'juil.', 'août', 'sept.', 'oct.', 'nov.', 'déc.'];
+            this.calendarOptions.dayNames = ['dimanche', 'lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi'];
+            this.calendarOptions.dayNamesShort = ['dim.', 'lun.', 'mar.', 'mer.', 'jeu.', 'ven.', 'sam.'];
+            this.calendarOptions.dayNamesMin = ['D', 'L', 'M', 'M', 'J', 'V', 'S'];
             this.calendarOptions.buttonText = {
-                year: "Année",
-                month: "Mois",
-                week: "Semaine",
-                day: "Jour",
-                list: "Mon planning",
-                today: "Aujourd'hui"
+                year: 'Année',
+                month: 'Mois',
+                week: 'Semaine',
+                day: 'Jour',
+                list: 'Mon planning',
+                today: 'Aujourd\'hui'
             };
         }
-        if (lang == 'de') {
-            this.calendarOptions.monthNames = ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"];
-            this.calendarOptions.monthNamesShort = ["Jan", "Feb", "Mär", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez"];
-            this.calendarOptions.dayNames = ["Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"];
-            this.calendarOptions.dayNamesShort = ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"];
-            this.calendarOptions.dayNamesMin = ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"];
+        if (lang === 'de') {
+            this.calendarOptions.monthNames = ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni',
+                                               'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'];
+            this.calendarOptions.monthNamesShort = ['Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul',
+                                                    'Aug', 'Sep', 'Okt', 'Nov', 'Dez'];
+            this.calendarOptions.dayNames = ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'];
+            this.calendarOptions.dayNamesShort = ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'];
+            this.calendarOptions.dayNamesMin = ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'];
             this.calendarOptions.buttonText = {
-                month: "Monat",
-                week: "Woche",
-                day: "Tag",
-                list: "Terminübersicht",
-                today: "Heute"
+                month: 'Monat',
+                week: 'Woche',
+                day: 'Tag',
+                list: 'Terminübersicht',
+                today: 'Heute'
             };
         }
-        if (lang == 'it') {
-            this.calendarOptions.monthNames = ["Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"];
-            this.calendarOptions.monthNamesShort = ["Gen", "Feb", "Mar", "Apr", "Mag", "Giu", "Lug", "Ago", "Set", "Ott", "Nov", "Dic"];
-            this.calendarOptions.dayNames = ["Domenica", "Lunedì", "Martedì", "Mercoledì", "Giovedì", "Venerdì", "Sabato"];
-            this.calendarOptions.dayNamesShort = ["Dom", "Lun", "Mar", "Mer", "Gio", "Ven", "Sab"];
-            this.calendarOptions.dayNamesMin = ["Do", "Lu", "Ma", "Me", "Gi", "Ve", "Sa"];
+        if (lang === 'it') {
+            this.calendarOptions.monthNames = ['Gennaio', 'Febbraio', 'Marzo', 'Aprile', 'Maggio', 'Giugno',
+                                               'Luglio', 'Agosto', 'Settembre', 'Ottobre', 'Novembre', 'Dicembre'];
+            this.calendarOptions.monthNamesShort = ['Gen', 'Feb', 'Mar', 'Apr', 'Mag', 'Giu',
+                                                    'Lug', 'Ago', 'Set', 'Ott', 'Nov', 'Dic'];
+            this.calendarOptions.dayNames = ['Domenica', 'Lunedì', 'Martedì', 'Mercoledì', 'Giovedì', 'Venerdì', 'Sabato'];
+            this.calendarOptions.dayNamesShort = ['Dom', 'Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab'];
+            this.calendarOptions.dayNamesMin = ['Do', 'Lu', 'Ma', 'Me', 'Gi', 'Ve', 'Sa'];
             this.calendarOptions.buttonText = {
-                month: "Mese",
-                week: "Settimana",
-                day: "Giorno",
-                list: "Agenda",
-                today: "Oggi"
+                month: 'Mese',
+                week: 'Settimana',
+                day: 'Giorno',
+                list: 'Agenda',
+                today: 'Oggi'
             };
         }
-        var today = new Date();
-        var newdate = new Date();
+        const today = new Date();
+        const newdate = new Date();
         newdate.setDate(today.getDate() + 30);
-        var newdate2 = new Date();
+        const newdate2 = new Date();
         newdate2.setDate(today.getDate() - 30);
         console.log(newdate + ' - ' + newdate2);
         this.peopleFilter = this.userdata.email;
@@ -129,10 +135,9 @@ export class AppointmentPlanPage {
               this.mouseoverButton2 = true;
               this.mouseoverButton3 = true;
               this.mouseoverButton4 = true;
-              console.log("platform mobile:", this.platform.platforms());
-            }
-            else {
-              console.log("platform not mobile:", this.platform.platforms());
+              console.log('platform mobile:', this.platform.platforms());
+            } else {
+              console.log('platform not mobile:', this.platform.platforms());
               this.mobilePlatform = false;
               this.mouseoverButton1 = false;
               this.mouseoverButton2 = false;
@@ -143,56 +148,58 @@ export class AppointmentPlanPage {
     }
 
     mouseover(buttonNumber) {
-        if (buttonNumber == 1)
+        if (buttonNumber === 1) {
             this.mouseoverButton1 = true;
-        else if (buttonNumber == 2)
+        } else if (buttonNumber === 2) {
             this.mouseoverButton2 = true;
-        else if (buttonNumber == 3)
+        } else if (buttonNumber === 3) {
             this.mouseoverButton3 = true;
-        else if (buttonNumber == 4)
+        } else if (buttonNumber === 4) {
             this.mouseoverButton4 = true;
-        else if (buttonNumber == 5)
+        } else if (buttonNumber === 5) {
             this.mouseoverButton5 = true;
-    }
-
-    mouseout(buttonNumber) {
-        if (this.mobilePlatform == false) {
-            if (buttonNumber == 1)
-            this.mouseoverButton1 = false;
-            else if (buttonNumber == 2)
-            this.mouseoverButton2 = false;
-            else if (buttonNumber == 3)
-            this.mouseoverButton3 = false;
-            else if (buttonNumber == 4)
-            this.mouseoverButton4 = false;
-            else if (buttonNumber == 5)
-            this.mouseoverButton5 = false;
         }
     }
 
-    changeFilter(){
-        console.log( "changeFilter()", this.peopleFilter, this.typeFilter );
-        for (let k = 0; k < this.events.length; k++) this.events.pop(); //clear
+    mouseout(buttonNumber) {
+        if (this.mobilePlatform === false) {
+            if (buttonNumber === 1) {
+                this.mouseoverButton1 = false;
+            } else if (buttonNumber === 2) {
+                this.mouseoverButton2 = false;
+            } else if (buttonNumber === 3) {
+                this.mouseoverButton3 = false;
+            } else if (buttonNumber === 4) {
+                this.mouseoverButton4 = false;
+            } else if (buttonNumber === 5) {
+                this.mouseoverButton5 = false;
+            }
+        }
+    }
+
+    changeFilter() {
+        console.log( 'changeFilter()', this.peopleFilter, this.typeFilter );
+        for (let k = 0; k < this.events.length; k++) { this.events.pop(); } // clear
         this.events = [];
-        let l = this.events.length;
+        const l = this.events.length;
         for (let k = 0; k < this.allEvents.length; k++) {  
-            if(this.peopleFilter=="none"){
-                if(this.typeFilter ==99 ) {
+            if(this.peopleFilter === 'none') {
+                if(this.typeFilter === 99 ) {
                     this.events.push( JSON.parse(JSON.stringify( this.allEvents[k] )) );
-                }else{
-                    if(this.typeFilter == this.allEvents[k].type){
+                } else {
+                    if(this.typeFilter === this.allEvents[k].type) {
                         this.events.push( JSON.parse(JSON.stringify( this.allEvents[k] )) );
                     }
-                }   
-            }else{                
-                if(this.allEvents[k].email == this.peopleFilter ) {
-                    if(this.typeFilter ==99 ) {
+                }
+            } else {
+                if(this.allEvents[k].email === this.peopleFilter ) {
+                    if(this.typeFilter === 99 ) {
                         this.events.push( JSON.parse(JSON.stringify( this.allEvents[k] )) );
-                    }else{
-                        if(this.typeFilter == this.allEvents[k].type){
+                    } else {
+                        if(this.typeFilter === this.allEvents[k].type) {
                             this.events.push( JSON.parse(JSON.stringify( this.allEvents[k] )) );
                         }
-                    }                    
+                    }
                 }
             }
         }  
@@ -202,22 +209,24 @@ export class AppointmentPlanPage {
         this.apiService.pvs4_get_appointment_list_ps(start, end).then((result: any) => {
             this.events = [];
             this.allEvents = []
-            let liste = [];
+            const liste = [];
             for (let i = 0; i < result.list.length; i++) {
-                let obj = result.list[i].data;
+                const obj = result.list[i].data;
                 liste.push(obj);
             }
-            this.people = [];  
-            for (let k = 0; k < liste.length; k++) {                      
-                let p = {"first_name":liste[k].first_name, "last_name":liste[k].last_name, "short_code":liste[k].short_code, "email":liste[k].email };
+            this.people = [];
+            for (let k = 0; k < liste.length; k++) {
+                const p = {'first_name': liste[k].first_name,
+                           'last_name': liste[k].last_name,
+                           'short_code': liste[k].short_code, 'email':liste[k].email };
                 let n = true;
                 for (let z = 0; z < this.people.length; z++) { 
-                    if(this.people[z].email == liste[k].email ) n = false;
+                    if(this.people[z].email === liste[k].email ) { n = false; }
                 }
-                if(n) this.people.push(p); //nur neue personen
+                if(n) { this.people.push(p); } // nur neue personen
 
-                let z1 = new Date(liste[k].appointment_date + ' ' + liste[k].start_time);
-                let z2 = new Date(liste[k].appointment_date + ' ' + liste[k].end_time);
+                const z1 = new Date(liste[k].appointment_date + ' ' + liste[k].start_time);
+                const z2 = new Date(liste[k].appointment_date + ' ' + liste[k].end_time);
                 if (z1.getHours() < 7) {
                     z1.setHours(7);
                     z1.setMinutes(0);
@@ -236,26 +245,35 @@ export class AppointmentPlanPage {
                 }
 
                 let title = liste[k].short_code;
-                if (liste[k].appointment_type == 2) {
-                    title +=' (' + this.translate.instant('Urlaub') + ')';
-                } else{
-                    title += ' '+liste[k].zip_code+' '+ liste[k].company;
+                if (liste[k].appointment_type === 2) {
+                    title += ' (' + this.translate.instant('Urlaub') + ')';
+                } else {
+                    title += ' ' + liste[k].zip_code+' '+ liste[k].company;
                 }
-                let t = { id: liste[k].id, email:liste[k].email, type:liste[k].appointment_type,  title: title, start: z1, end: z2, allDay: false, textColor: "#000", backgroundColor: liste[k].colour, borderColor: liste[k].colour };
+                const t = { id: liste[k].id,
+                            email: liste[k].email,
+                            type: liste[k].appointment_type,
+                            title: title,
+                            start: z1,
+                            end: z2,
+                            allDay: false,
+                            textColor: '#000',
+                            backgroundColor: liste[k].colour,
+                            borderColor: liste[k].colour };
                 t.id = parseInt(t.id);
                 this.events.push( JSON.parse(JSON.stringify(t)) );
                 this.allEvents.push( JSON.parse(JSON.stringify(t)));
             }
-            console.log("events: ", this.events, this.allEvents);
+            console.log('events: ', this.events, this.allEvents);
             this.changeFilter(); 
         });
     }
     loadEvents(model: any) {
-        console.log("loadEvents(): ", model);
-        let event_start = model.view.start.format("YYYY-MM-DD");
-        let event_end = model.view.end.format("YYYY-MM-DD");
-        console.log("event_start: ", event_start);
-        console.log("event_end: ", event_end);
+        console.log('loadEvents(): ', model);
+        const event_start = model.view.start.format('YYYY-MM-DD');
+        const event_end = model.view.end.format('YYYY-MM-DD');
+        console.log('event_start: ', event_start);
+        console.log('event_end: ', event_end);
         this.eventsFunc(event_start, event_end);
     }
      handleEventClick(model: any) {
@@ -276,9 +294,9 @@ export class AppointmentPlanPage {
 
     updateEvent(model: any) {
         console.log(model.event);
-        let event_date = model.event.start.format("YYYY-MM-DD");
-        let start_time = model.event.start.format('HH:mm');
-        let end_time = model.event.end.format('HH:mm');
+        const event_date = model.event.start.format('YYYY-MM-DD');
+        const start_time = model.event.start.format('HH:mm');
+        const end_time = model.event.end.format('HH:mm');
         this.apiService.pvs4_get_appointment(model.event.id).then((result: any) => {
             console.log(result);
             if (result && result.obj) {
@@ -291,7 +309,7 @@ export class AppointmentPlanPage {
     }
 
     async newAppointment() {
-        console.log("newAppointment");
+        console.log('newAppointment');
         const modal: HTMLIonModalElement =
         await this.modalCtrl.create({
           component: AppointmentEditComponent,
@@ -303,19 +321,19 @@ export class AppointmentPlanPage {
       modal.present();
     }
 
-    setView(nr:number){
-        console.log("setView():",nr);
+    setView(nr:number) {
+        console.log('setView():',nr);
         this.viewMode = nr;
-        if( nr==0 ) {
+        if( nr === 0 ) {
             this.peopleFilter = this.userdata.email;
             this.typeFilter = 99;
-        }else  {
-            this.peopleFilter = "none";
+        } else  {
+            this.peopleFilter = 'none';
         }
 
-        if( nr==1 ) this.typeFilter = 0;
-        if( nr==2 ) this.typeFilter = 1;
-        if( nr==3 ) this.typeFilter = 2;
+        if( nr === 1 ) { this.typeFilter = 0; }
+        if( nr === 2 ) { this.typeFilter = 1; }
+        if( nr === 3 ) { this.typeFilter = 2; }
 
         this.changeFilter();
     }

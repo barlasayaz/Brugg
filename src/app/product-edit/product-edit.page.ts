@@ -640,7 +640,7 @@ export class ProductEditPage implements OnInit {
         activTemplate: JSON.stringify(activTemplate)
       }
     };
-    this.navCtrl.navigateForward(["/product-template"], navigationExtras);
+    this.navCtrl.navigateForward(['/product-template'], navigationExtras);
   }
 
   /*async new_Option() {
