@@ -226,10 +226,7 @@ export class ProductListPage implements OnInit {
             { field: 'last_protocol_next', header: this.translate.instant('Termin') + '>>' },
             { field: 'check_interval', header: this.translate.instant('Intervall Prüfen') }
         ];
-        this.route.queryParams.subscribe(params => {
-            this.idCustomer = params['idCustomer'];
-        // this.company = params["company"];
-        });
+        this.idCustomer = parseInt(this.route.snapshot.paramMap.get('id'));
 
         console.log('ProductListPage idCustomer:', this.idCustomer);
         this.page_load();

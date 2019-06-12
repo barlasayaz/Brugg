@@ -76,16 +76,16 @@ export class MainNavComponent  implements OnInit {
           this.navCtrl.navigateRoot(['/customer-details',id]);
           break;
         case 'ProductList':
-          this.navCtrl.navigateRoot(['/product-list'],navigationExtras);
+          this.navCtrl.navigateRoot(['/product-list/'+id]);
           break;
         case 'ProtocolList':
-          this.navCtrl.navigateRoot(['/protocol-list'],navigationExtras);
+          this.navCtrl.navigateRoot(['/protocol-list/'+id]);
           break;
         case 'OrderFormNew':
           this.navCtrl.navigateRoot(['/order-form-new'],navigationExtras);
           break;
         case 'NoteList':
-          this.navCtrl.navigateRoot(['/note-list'],navigationExtras);
+          this.navCtrl.navigateRoot(['/note-list/'+id]);
           break;
       }
     }

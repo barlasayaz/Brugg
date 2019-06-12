@@ -328,10 +328,6 @@ export class ProtocolTemplatePage implements OnInit {
     this.selectedTemplate[this.template.length - 1] = 0;
   }
 
-  dismiss() {
-    this.modalCtrl.dismiss();
-  }
-
   loeschen() {
 
   }
