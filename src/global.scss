@@ -44,6 +44,7 @@ body .ui-widget select,
 body .ui-widget textarea, 
 body .ui-widget button {
   font-family: inherit !important;
+  font-size: 14px !important;
 }
 
 //FAB
@@ -590,6 +591,7 @@ ion-button.button,button.button {
 .pvs4-btn {
   height: 45px;
   width: auto;
+  // --background: var(--ion-color-green);
   -webkit-box-shadow: none !important;
           box-shadow: none !important;
   margin: 0px !important;
@@ -601,16 +603,16 @@ ion-button.button,button.button {
   }
 
   &-red {
-    background: var(--ion-color-red);
+    --background: var(--ion-color-red);
     &:hover, &:focus {
-      background: var(--ion-color-red-shade) !important;
+      --background: var(--ion-color-red-shade) !important;
     }
   }
 
   &-green {
-    background: var(--ion-color-green);
+    --background: var(--ion-color-green);
     &:hover, &:focus {
-      background: var(--ion-color-green-shade) !important;
+      --background: var(--ion-color-green-shade) !important;
     }
   }
 }
@@ -635,6 +637,7 @@ ion-modal {
 
 ion-label {
   color: var(--ion-color-grey);
+  padding-bottom: 5px !important;
 }
 
 ion-select {
@@ -1256,6 +1259,7 @@ tbody.ui-table-tbody {
     display: -webkit-flex;
     display: -ms-flexbox;
     display: flex;
+    padding: 0 !important;
     -webkit-box-pack: center;
     -moz-box-pack: center;
     -o-box-pack: center;
@@ -1277,35 +1281,35 @@ tbody.ui-table-tbody {
     width: 100% !important;
   }
   .btn-warning {
-    background: #8e9a9e !important;
+    --background: #8e9a9e !important;
   }
   .btn-fixed {
     border-radius: 0 !important;
   }
   .btn-success {
-    background: #4caf50 !important;
+    --background: #4caf50 !important;
   }
   .btn-success:hover {
-    background: #3d8c40 !important;
+    --background: #3d8c40 !important;
   }
   .btn-primary {
-    background: #009de0 !important;
+    --background: #009de0 !important;
   }
   .btn-primary:hover {
-    background: #007eb3 !important;
+    --background: #007eb3 !important;
   }
   .btn-danger {
-    background: #e74c3c !important;
+    --background: #e74c3c !important;
   }
   .btn-danger:hover {
-    background: #cf2b1a !important;
+    --background: #cf2b1a !important;
   }
   .btn-teal {
-    background: #1abc9c !important;
+    --background: #1abc9c !important;
     color: #fff;
   }
   .btn-teal:hover {
-    background: #15967d !important;
+    --background: #15967d !important;
     color: #fff;
   }
   .btn-spacing {

@@ -187,7 +187,11 @@
                     <div class="thead">
                       <div class="tr table-header">                        
                         <div class="th" style="max-width: 400px;">{{employees}} </div>
-                        <ion-button size="medium" (click)="set_employees()" style="padding-left: 0.2em; padding-right: 0.2em;"><ion-icon name="md-create"></ion-icon></ion-button>
+                        <ion-button size="medium" 
+                                    (click)="set_employees()" 
+                                    style="padding-left: 0.2em; padding-right: 0.2em;"
+                                    class="btn-assign">
+                          <ion-icon name="md-create"></ion-icon></ion-button>
                       </div>
                     </div>
                     <div class="tbody">
