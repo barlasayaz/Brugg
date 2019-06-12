@@ -387,10 +387,9 @@ ion-item.item-textarea {
   display: flex;
   ion-button {
     height: 100%;
-    padding: 0px 15px;
     margin: 0;
     font-size: 16px;
-    background: var(--ion-color-darkmain);
+    --background: var(--ion-color-darkmain);
   }
   ion-button + ion-button {
     margin-left: 10px;

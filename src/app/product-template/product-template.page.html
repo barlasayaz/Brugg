@@ -154,7 +154,7 @@
                         <ion-input style="margin-left:10px;" type="text" [(ngModel)]="templateTitleObj[lang]" readonly="true" (click)="promptTitel()"></ion-input>
                       </div>
                       <div class="table-subheader-buttons">
-                        <ion-button style="padding:15px" size="small" (click)="template_save();">
+                        <ion-button size="small" (click)="template_save();">
                           <ion-icon name="checkmark"></ion-icon>
                         </ion-button>
                         <ion-button class="btn-red" size="small" (click)="template_remove(selectedTmplt)" [disabled]="selectTemplate == 0">
