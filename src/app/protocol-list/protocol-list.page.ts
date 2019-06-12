@@ -381,8 +381,12 @@ export class ProtocolListPage implements OnInit {
     }
 
     create_template() {
-        console.log('create_template', this.selectedNode);
-        this.navCtrl.navigateForward(['/protocol-template/', this.idCustomer]);
+        //console.log('create_template', this.selectedNode);
+        const navigationExtras: NavigationExtras = {
+            queryParams:  { idCustomer: this.idCustomer }
+        };
+
+        this.navCtrl.navigateForward(['/protocol-template'], navigationExtras);
     }
 
     excel_all() {
