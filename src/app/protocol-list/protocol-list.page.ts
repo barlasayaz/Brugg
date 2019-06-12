@@ -150,10 +150,7 @@ export class ProtocolListPage implements OnInit {
             { field: 'protocol_date_next', header: this.translate.instant('nächste Prüfung') },
             { field: 'product', header: this.translate.instant('Produkt') }
         ];
-        this.route.queryParams.subscribe(params => {
-            this.idCustomer = params['idCustomer'];
-           // this.company = params["company"];
-        });
+        this.idCustomer = parseInt(this.route.snapshot.paramMap.get('id'));
         console.log('ProtocolListPage idCustomer:', this.idCustomer);
 
         this.apiService.pvs4_get_protocol_list(this.idCustomer).then((result: any) => {

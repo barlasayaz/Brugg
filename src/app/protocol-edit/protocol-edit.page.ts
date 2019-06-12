@@ -304,7 +304,7 @@ export class ProtocolEditPage implements OnInit {
 
   dismiss()
   {
-    this.modalCtrl.dismiss();
+    this.navCtrl.navigateBack("/protocol-list/" + this.idCustomer);
   }
 
   protocolDeactivate() {

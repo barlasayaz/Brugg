@@ -384,7 +384,7 @@ export class ProductEditPage implements OnInit {
   }
 
   dismiss() {
-    this.modalCtrl.dismiss();
+    this.navCtrl.navigateBack("/product-list/" + this.idCustomer);
   }
 
   productDeactivate() {
