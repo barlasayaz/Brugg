@@ -370,9 +370,7 @@ ion-item.item-textarea {
     display: flex;
     ion-button {
       height: 100%;
-      padding: 0px 15px;
       margin: 0;
-      font-size: 16px;
       &:hover
       &:focus {
         background: rgba(var(--ion-color-main-rgb), 0.6) !important;
@@ -439,20 +437,21 @@ ion-item.item-toggle {
 
 //BUTTONS
 .opt-add {
-  width: 25px;
-  height: 25px;
+  width: 40px;
+  height: 40px;
   margin-top: 10px;
+  --background: var(--ion-color-main-tint);
 }
 
 .opt-remove {
-  width: 25px;
-  height: 25px;
-  margin-top: 10px;
-  background: var(--ion-color-red);
+  width: 40px;
+  height: 40px;
+  margin-top: 5px;
+  --background: var(--ion-color-red);
 }
 
 .btn-red {
-  background: var(--ion-color-red) !important;
+  --background: var(--ion-color-red) !important;
 }
 
 body .ui-fileupload .ui-fileupload-buttonbar {
@@ -1339,7 +1338,7 @@ tbody.ui-table-tbody {
     background: #3d8c40 !important;
   }
   .btn-modal-success {
-    background: #4caf50 !important;
+    --background: #4caf50 !important;
     height: 45px;
     text-align: center;
     color: #fff;
@@ -1352,10 +1351,10 @@ tbody.ui-table-tbody {
   .btn-modal-success:hover,
   .btn-modal-success:focus {
     color: #fff;
-    background: #3d8c40 !important;
+    --background: #3d8c40 !important;
   }
   .btn-modal-dark-main {
-    background: #005e86 !important;
+    --background: #005e86 !important;
     height: 45px;
     text-align: center;
     color: #fff;
@@ -1368,10 +1367,10 @@ tbody.ui-table-tbody {
   .btn-modal-dark-main:hover,
   .btn-modal-dark-main:focus {
     color: #fff;
-    background: #004b6b;
+    --background: #004b6b;
   }
   .btn-modal-danger {
-    background: #e74c3c !important;
+    --background: #e74c3c !important;
     height: 45px;
     text-align: center;
     color: #fff;
@@ -1384,7 +1383,7 @@ tbody.ui-table-tbody {
   .btn-modal-danger:hover,
   .btn-modal-danger:focus {
     color: #fff;
-    background: #cf2b1a !important;
+    --background: #cf2b1a !important;
   }
   .btn-modal-teal {
     background: #1abc9c !important;

@@ -100,7 +100,7 @@
                       <div class="tr table-subheader table-subheader-fix">
                         <div class="th">{{'Lieferadresse' | translate}}</div>
                          <div>
-                          <ion-item style="max-height: 15px; height: 10px; margin-top: -25px; max-width: 325px;">
+                          <ion-item style="max-height: 15px; height: 10px; margin-top: -25px; max-width: 325px; --background: #005e86;">
                             <ion-select (ionChange)="changeContactPerson($event)"
                                         name="RE_Ansp"
                                         id="RE_Ansp"
@@ -313,7 +313,7 @@
                           <div class="th">{{'PVS ID' | translate}}</div>
                           <div class="th">{{'Artikel-Nr.' | translate}}</div>
                           <div class="th">{{'Bezeichnung' | translate}}</div>
-                          <ion-button (click)="addProduct()">
+                          <ion-button class="opt-add" (click)="addProduct()">
                             <ion-icon name="md-add"></ion-icon>
                           </ion-button>
                         </div>
