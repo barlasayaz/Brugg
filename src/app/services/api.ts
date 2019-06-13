@@ -459,6 +459,7 @@ export class ApiService {
   }
 
   pvs4_set_protocol_opt(obj: any) {
+    obj.author = this.userdata.first_name+' '+this.userdata.last_name;
     console.info("pvs4_set_protocol_opt():", obj);
     return new Promise((res, rej) => {
       this.pvs4_api_post("set_protocol_opt.php", obj).then((done: any) => {//return the result
@@ -594,6 +595,7 @@ export class ApiService {
   }
 
   pvs4_set_product(obj: any) {
+    obj.author = this.userdata.first_name+' '+this.userdata.last_name;
     console.info("pvs4_set_product():", obj);
     return new Promise((res, rej) => {
       this.pvs4_api_post("set_product.php", obj).then((done: any) => {//return the result

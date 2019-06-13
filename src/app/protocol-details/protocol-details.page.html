@@ -36,10 +36,10 @@
 											<div class="td">{{'nächste Prüfung' | translate}}</div>
 											<div class="td">{{activProtocol.protocol_date_next | date: 'dd.MM.yyyy'}}</div>
 										</div>
-		 								<!-- <div class="tr table-body">
-											<div class="td">{{'Produkt' | translate}}</div>
-											<div class="td">{{activProtocol.product}}</div>
-										</div>  -->
+										<div class="tr table-body">
+											<div class="td">{{'Autor' | translate}}</div>
+											<div class="td">{{activProtocol.author}}</div>
+									    </div>
 										<div class="tr table-body" *ngFor="let item of activProtocol.items">
 											<div class="td">{{item.title[lang]}}</div>
 											<div class="td">{{item.value}}</div> 
