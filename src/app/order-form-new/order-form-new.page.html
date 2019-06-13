@@ -181,14 +181,14 @@
                       </div>
                       <div class="tr table-body">                
                         <div class="td"><span class="strong">{{'Bestelldatum' | translate}}</span></div>  
-                          <div>
-                            <ion-item>   
+                        <div style="border: 1px solid  #ccc;">
+                          <ion-item>   
                             <ion-datetime [(ngModel)]="activOrderForm.order_date"
                                           id="order_date"
                                           required="true"
+                                          style="padding-left: 0px;"
                                           displayFormat="DD.MM.YYYY"
-                                          max = {{maxDate}}
-                                          style="border: 1px solid  #ccc;"
+                                          max = {{maxDate}}                                          
                                           doneText="{{translate.instant('okay')}}"
                                           cancelText="{{translate.instant('dismiss')}}">
                             </ion-datetime>
@@ -217,14 +217,14 @@
                       </div>
                       <div class="tr table-body">
                         <div class="td"><span class="strong">{{'Liefertermin' | translate}}</span></div>
-                        <div>
+                        <div style="border: 1px solid  #ccc;">
                           <ion-item>
                             <ion-datetime [(ngModel)]="activOrderForm.delivery_date"
                                           id="date_delivery"
-                                          required="true"
+                                          required="true"          
+                                          style="padding-left: 0px;"                                
                                           displayFormat="DD.MM.YYYY"
                                           max = {{maxDate}}
-                                          style="border: 1px solid  #ccc;"
                                           doneText="{{translate.instant('okay')}}"
                                           cancelText="{{translate.instant('dismiss')}}">
                             </ion-datetime>
@@ -313,9 +313,17 @@
                           <div class="th">{{'PVS ID' | translate}}</div>
                           <div class="th">{{'Artikel-Nr.' | translate}}</div>
                           <div class="th">{{'Bezeichnung' | translate}}</div>
-                          <ion-button class="opt-add" (click)="addProduct()">
+<!--                           <ion-button class="opt-add" (click)="addProduct()">
                             <ion-icon name="md-add"></ion-icon>
-                          </ion-button>
+                          </ion-button> -->
+                          <ion-item lines="none" style="--background: transparent;">
+                            <ion-button size="small"
+                                        class="opt-add"
+                                        (click)="addProduct()"
+                                        style="padding: 0px 0px 0px 0px;">
+                              <ion-icon name="add"></ion-icon>
+                            </ion-button>
+                          </ion-item>
                         </div>
                         <div class="tr table-subheader table-subheader-fix" 
                              style="background: white"
@@ -344,9 +352,17 @@
                                        [(ngModel)]="product.designation">
                             </ion-input>
                           </div>
-                          <ion-button class="opt-remove" (click)="remProduct(prdctInd)">
+<!--                           <ion-button class="opt-remove" (click)="remProduct(prdctInd)">
                             <ion-icon name="remove"></ion-icon>
-                          </ion-button>
+                          </ion-button> -->
+                            <ion-item lines="none">
+                              <ion-button size="small"
+                                          class="opt-remove"
+                                          (click)="remProduct(prdctInd)"
+                                          style="padding: 0px 0px 0px 0px;">
+                                <ion-icon name="remove"></ion-icon>
+                              </ion-button>
+                            </ion-item>
                         </div>
                       </div>
                     </div>
