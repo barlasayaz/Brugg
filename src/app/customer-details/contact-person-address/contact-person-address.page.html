@@ -36,9 +36,13 @@
                     </ion-item>
                   </ion-col>
                   <ion-col size="2" style="text-align: center;">
-                    <ion-button size="small" color="red" (click)="remAddress(indAdr)" style="margin-top: 22px;"> 
-                        <ion-icon class="footerIcon" name="remove"></ion-icon>
-                    </ion-button>
+                    <ion-item lines="none">
+                      <ion-button size="small" 
+                                  (click)="remAddress(indAdr)" 
+                                  style="margin-top: 22px; --background: red;"> 
+                          <ion-icon class="footerIcon" name="remove"></ion-icon>
+                      </ion-button>
+                    </ion-item>
                   </ion-col>
                 </ion-row>
                 <!-- Row 2 -->

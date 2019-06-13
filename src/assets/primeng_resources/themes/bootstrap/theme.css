@@ -903,7 +903,8 @@ body .ui-accordion .ui-accordion-header.ui-state-active {
     color: #ffffff;
 }
 body .ui-accordion .ui-accordion-header.ui-state-active a {
-    color: #ffffff;
+    /* color: #ffffff; */
+    color: mediumblue;
 }
 body .ui-accordion .ui-accordion-header.ui-tabview-outline {
     border: 0 none;
