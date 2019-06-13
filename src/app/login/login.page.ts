@@ -197,7 +197,7 @@ export class LoginPage {
               }
             
               localStorage.removeItem("login_logo");
-              if(this.system.platform===0) {
+              if(this.system.platform==0) {
                   //this.navCtrl.setRoot(DashboardPage);
                   this.navCtrl.setRoot(CustomerTablePage);
               }else{

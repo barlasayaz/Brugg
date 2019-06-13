@@ -289,14 +289,14 @@ export class CustomerDetailsPage implements OnInit {
   
     openBaan(x) {
       console.log('openBaan()', x, this.baan1_href, this.baan2_href);
-      if (this.system.platform === 0) {
-        if (x === 1) window.open(this.baan1_href, '_blank');
-        if (x === 2) window.open(this.baan2_href, '_blank');
+      if (this.system.platform == 0) {
+        if (x == 1) window.open(this.baan1_href, '_blank');
+        if (x == 2) window.open(this.baan2_href, '_blank');
       } else {
-        if (x === 1) {
+        if (x == 1) {
           this.inAppBrowser.create(this.baan1_href, '_system', 'location=yes');
         }
-        if (x === 2) {
+        if (x == 2) {
           this.inAppBrowser.create(this.baan2_href, '_system', 'location=yes');
         }
       }

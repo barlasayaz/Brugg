@@ -119,13 +119,13 @@ export class NfcScanComponent implements OnInit {
     }
     var art = this.nfc.bytesToString(nfcEvent.tag.ndefMessage[0].type);
     console.log('NFC art:', art);
-    if (art === "T") {
+    if (art == "T") {
       var text = this.ndef.textHelper.decodePayload(nfcEvent.tag.ndefMessage[0].payload);
       console.log("NFC text", text);
       var res = text.split(":");
       if (res.length >= 3) {
-        if (res[0] === "BruggPVS") {
-          if (res[1] === "ProductID") {
+        if (res[0] == "BruggPVS") {
+          if (res[1] == "ProductID") {
             let pid = parseInt(res[2]);
             console.log("NFC pid", pid);
             if (pid > 0) {
