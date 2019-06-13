@@ -277,6 +277,11 @@ export class ProtocolDetailsPage implements OnInit {
       else {
         bodyProduct.push([{ text: this.translate.instant('Articel No') },{ text: "" }]);       
       }
+      if (element.author != undefined) {
+        bodyProduct.push([{ text: this.translate.instant('Autor') }, { text: element.author }]);
+      } else {
+        bodyProduct.push([{ text: this.translate.instant('Autor') },{ text: "" }]);    
+      }
       if (element.check_interval != undefined) {
         bodyProduct.push([{ text: this.translate.instant('Intervall Prüfen') }, { text: element.check_interval }]);
       }

@@ -297,6 +297,11 @@ export class ProductDetailsPage implements OnInit {
       } else {
         productList.push({ 'title': this.translate.instant('Articel No'), 'value': ' ' });
       }
+      if (element.author != undefined) {
+         productList.push({ "title": this.translate.instant('Autor'), "value": element.author });
+      } else {
+         productList.push({ "title": this.translate.instant('Autor'), "value": ' ' });
+      }
       if (element.check_interval !== undefined) {
         productList.push({ 'title': this.translate.instant('Intervall Prüfen'), 'value': element.check_interval });
       } else {
