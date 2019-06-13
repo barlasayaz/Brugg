@@ -171,16 +171,16 @@ export class ProtocolListPage implements OnInit {
                     this.protocolListAll[index].data[options[i].title[this.lang]] = options[i].value;
                 }
 
-                if (this.protocolListAll[index].data.result === 0) {
+                if (this.protocolListAll[index].data.result == 0) {
                     this.protocolListAll[index].data.result = this.translate.instant('betriebsbereit');
                 }
-                if (this.protocolListAll[index].data.result === 1) {
+                if (this.protocolListAll[index].data.result == 1) {
                     this.protocolListAll[index].data.result = this.translate.instant('reparieren');
                 }
-                if (this.protocolListAll[index].data.result === 3) {
+                if (this.protocolListAll[index].data.result == 3) {
                     this.protocolListAll[index].data.result = this.translate.instant('unauffindbar');
                 }
-                if (this.protocolListAll[index].data.result === 4) {
+                if (this.protocolListAll[index].data.result == 4) {
                     this.protocolListAll[index].data.result = this.translate.instant('ausmustern');
                 }
             }
@@ -245,7 +245,7 @@ export class ProtocolListPage implements OnInit {
         let ret: any = false;
         for (let i = 0; i < this.cols.length; i++) {
             if (this.columnFilterValues['search_all'].trim().length > 0
-                && node.data[this.cols[i].field] !== undefined
+                && node.data[this.cols[i].field] != undefined
                 && node.data[this.cols[i].field].toString().
                                                  toLowerCase().
                                                  indexOf(this.columnFilterValues['search_all'].trim().toLowerCase()) >= 0) {

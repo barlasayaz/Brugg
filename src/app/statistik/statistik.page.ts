@@ -112,7 +112,7 @@ updateRowGroupMetaData() {
             else {
                 let previousRowData = this.rowData[i - 1];
                 let previousRowGroup = previousRowData.Name;
-                if (Name === previousRowGroup)
+                if (Name == previousRowGroup)
                     this.rowGroupMetadata[Name].size++;
                 else
                     this.rowGroupMetadata[Name] = { index: i, size: 1 };

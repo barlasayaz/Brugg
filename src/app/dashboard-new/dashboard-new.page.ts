@@ -340,7 +340,7 @@ export class DashboardNewPage implements OnInit {
 
     getEnterKeyboardClose(event) {
         console.log('getEnterKeyboardClose():', event.keyCode);
-        if (event.keyCode === 13) this.keyboard.hide();
+        if (event.keyCode == 13) this.keyboard.hide();
     }
 
     saveFilter() {

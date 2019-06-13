@@ -322,7 +322,7 @@ export class CustomerTablePage implements OnInit {
         this.events.publish('rowRecords', this.rowRecords);
         this.events.publish('totalRecords', this.totalRecords);
 
-        if (localStorage.getItem('expanded_nodes') !== undefined) {
+        if (localStorage.getItem('expanded_nodes') != undefined) {
             this.expandChildren(this.customerListView, JSON.parse(localStorage.getItem('expanded_nodes')));
         }
 
@@ -581,9 +581,9 @@ export class CustomerTablePage implements OnInit {
               type: 'checkbox',
               label: this.cols[i].header,
               value: this.cols[i].field,
-              checked: this.selectedColumns.find(x => x.field === this.cols[i].field)
+              checked: this.selectedColumns.find(x => x.field == this.cols[i].field)
           });
-      }
+      } 
           const alert = await this.alertCtrl.create({header: this.translate.instant('Spalten Auswählen'), inputs: inputs,
           buttons: [{
               text: this.translate.instant('dismiss'),
@@ -616,8 +616,8 @@ export class CustomerTablePage implements OnInit {
 
     expandChildren(nodes: TreeNode[], expended: string[]) {
         for (let i = 0; i < nodes.length; i++) {
-            if (expended !== null ) {
-                if (nodes[i].children && expended.find(x => x === nodes[i].data['id'])) {
+            if (expended != null ) {
+                if (nodes[i].children && expended.find(x => x == nodes[i].data['id'])) {
                     nodes[i].expanded = true;
                     this.expandChildren(nodes[i].children, expended);
                 }

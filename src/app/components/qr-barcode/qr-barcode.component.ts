@@ -1,6 +1,6 @@
 import { NavController, NavParams, AlertController, ModalController, ToastController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { BarcodeScanner, BarcodeScannerOptions } from '@ionic-native/barcode-scanner/ngx';
 import { ApiService } from '../../services/api';
 import { LoadingController } from '@ionic/angular';
@@ -17,7 +17,7 @@ import { NavigationExtras } from '@angular/router';
   templateUrl: './qr-barcode.component.html',
   styleUrls: ['./qr-barcode.component.scss']
 })
-export class QrBarcodeComponent {
+export class QrBarcodeComponent implements OnInit {
   public modalTitle: string;
   public readOnly: boolean = true;
   public qrText: string = "";
@@ -40,6 +40,9 @@ export class QrBarcodeComponent {
     public loadingCtrl: LoadingController,
     public navCtrl: NavController,
     private toastCtrl: ToastController) {
+  }
+
+  ngOnInit() {
     this.url = this.apiService.pvsApiURL;
     this.modalTitle = 'QR Code';
     this.readOnly = this.navParams.get("readOnly");
@@ -50,10 +53,11 @@ export class QrBarcodeComponent {
     }
     this.cols = [
       { field: 'id', header: 'ID' },
-      { field: 'title', header: translate.instant('Produkt') },
-      { field: 'customer', header: translate.instant('Kunden') }
+      { field: 'title', header: this.translate.instant('Produkt') },
+      { field: 'customer', header: this.translate.instant('Kunden') }
     ];
   }
+
   scanQr() {
     this.options = {
       prompt: this.translate.instant('QR-Code scannen')

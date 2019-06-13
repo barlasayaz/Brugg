@@ -64,7 +64,7 @@ export class ProtocolTemplatePage implements OnInit {
 
     this.dragulaService.createGroup('COLUMNS', {
       copy: (el, source) => {
-        return source.id === 'options';
+        return source.id == 'options';
       },
       copyItem: (optionsAll) => {
         this.selectedTemplate[this.tmpInd] = 0;
@@ -73,7 +73,7 @@ export class ProtocolTemplatePage implements OnInit {
       },
       accepts: (el, target, source, sibling) => {
         // To avoid dragging from right to left container
-        return target.id !== 'options';
+        return target.id != 'options';
       }
     });
     this.route.queryParams.subscribe(params => {
@@ -135,7 +135,7 @@ export class ProtocolTemplatePage implements OnInit {
             data.en = data.en.trim();
             data.fr = data.fr.trim();
             data.it = data.it.trim();
-            if ((data.de === '') || (data.en === '') || (data.fr === '') || (data.it === '')) {
+            if ((data.de == '') || (data.en == '') || (data.fr == '') || (data.it == '')) {
               return false;
             } else {
               this.templateTitleObj = data;
@@ -164,10 +164,10 @@ export class ProtocolTemplatePage implements OnInit {
   }
 
   onclickTemplate(tmpId) {
-    if (tmpId !== this.selectedTmplt) {
+    if (tmpId != this.selectedTmplt) {
       this.selectedTemplate[this.selectedTmplt] = 0;
     }
-    if (this.selectedTemplate[tmpId] === 0) {
+    if (this.selectedTemplate[tmpId] == 0) {
       this.selectedTemplate[tmpId] = 1;
       this.selectTemplate = 1;
     } else {
@@ -179,10 +179,10 @@ export class ProtocolTemplatePage implements OnInit {
 
   onclickOption(option) {
     this.editOption = option;
-    if (option.id !== this.selectedOptionId) {
+    if (option.id != this.selectedOptionId) {
       this.selectedOption[this.selectedOptionId] = 0;
     }
-    if (this.selectedOption[option.id] === 0) {
+    if (this.selectedOption[option.id] == 0) {
       this.selectedOption[option.id] = 1;
       this.selectOption = 1;
     } else {
@@ -208,8 +208,8 @@ export class ProtocolTemplatePage implements OnInit {
       result.list.forEach(element => {
         element.data.options = JSON.parse(element.data.options);
         element.data.title = JSON.parse(element.data.title);
-        if (element.data.mandatory === 0) { element.data.mandatory = 'false'; }
-        if (element.data.mandatory === 1) { element.data.mandatory = 'true'; }
+        if (element.data.mandatory == 0) { element.data.mandatory = 'false'; }
+        if (element.data.mandatory == 1) { element.data.mandatory = 'true'; }
         this.options.push(element.data);
         this.selectedOption[element.data.id] = 0;
         console.log('elemet data :', element.data.id, ' - ', element.data);
@@ -229,7 +229,7 @@ export class ProtocolTemplatePage implements OnInit {
       this.templateTitleObj = this.activTemplate.title;
 
       console.log('Template Title :', this.template);
-    } else if (this.itsNew === undefined) { this.promptTitel(); }
+    } else if (this.itsNew == undefined) { this.promptTitel(); }
   }
 
   async option_new() {
@@ -255,7 +255,7 @@ export class ProtocolTemplatePage implements OnInit {
       if (data['data']) {
         const optionData = data['data'];
         for (let index = 0; index < this.options.length; index++) {
-          if (option.id === this.options[index].id) {
+          if (option.id == this.options[index].id) {
             this.options[index] = optionData;
             this.editOption = optionData;
           }
@@ -274,7 +274,7 @@ export class ProtocolTemplatePage implements OnInit {
 
   template_save() {
     console.log('templateTitle : ', this.templateTitleObj[this.lang]);
-    if (this.templateTitleObj[this.lang] !== '') {
+    if (this.templateTitleObj[this.lang] != '') {
       const obj = {
         user: this.userdata.id,
         title: '',
@@ -315,7 +315,7 @@ export class ProtocolTemplatePage implements OnInit {
   }
 
   move_left() {
-    this.template.push(this.options.find(x => x.id === this.selectedOptionId));
+    this.template.push(this.options.find(x => x.id == this.selectedOptionId));
     this.selectedTemplate[this.template.length - 1] = 0;
   }
 

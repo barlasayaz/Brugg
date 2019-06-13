@@ -119,7 +119,7 @@
                 </tr>
               </ng-template>
               <ng-template pTemplate="body" let-item let-rowIndex="rowIndex" let-expanded="expanded">
-                <tr [pSelectableRow]="item" class="ui-widget-header" *ngIf="rowGroupMetadata[item.Name].index === rowIndex">
+                <tr [pSelectableRow]="item" class="ui-widget-header" *ngIf="rowGroupMetadata[item.Name].index == rowIndex">
                     <td colspan="5">
                         <a href="#" [pRowToggler]="item">
                             <i [ngClass]="expanded ? 'fa fa-fw fa-chevron-circle-down' : 'fa fa-fw fa-chevron-circle-right'"></i>

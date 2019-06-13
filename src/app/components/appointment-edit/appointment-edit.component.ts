@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NavController, NavParams, ModalController, AlertController } from '@ionic/angular';
 import { UserdataService } from '../../services/userdata';
 import { TranslateService } from '@ngx-translate/core';
@@ -11,7 +11,7 @@ import { TreeNode } from 'primeng/api';
   templateUrl: './appointment-edit.component.html',
   styleUrls: ['./appointment-edit.component.scss'],
 })
-export class AppointmentEditComponent {
+export class AppointmentEditComponent implements OnInit {
 
   public modalTitle: string;
   public listCustomer: any[] = [];
@@ -61,6 +61,9 @@ export class AppointmentEditComponent {
     public apiService: ApiService,
     public alertCtrl: AlertController) {
 
+  }
+
+  ngOnInit() {
     this.maxDate = this.apiService.maxDate;
 
     this.employeesList();
@@ -91,18 +94,17 @@ export class AppointmentEditComponent {
     }
     if (this.idAppointment > 0) {
       this.itsNew = false;
-      this.modalTitle = translate.instant('Termin bearbeiten');
+      this.modalTitle = this.translate.instant('Termin bearbeiten');
     } else {
       this.idAppointment = 0;
       this.itsNew = true;
-      this.modalTitle = translate.instant('Neuer Termin');
+      this.modalTitle = this.translate.instant('Neuer Termin');
     }
 
     if (this.idCustomer != 0) this.contactPersonDisabled = false;
 
     console.log("AppointmentEditComponent: ", this.activAppointment, this.userdata.licensee);
   }
-
   loadAppointment() {
     this.apiService.pvs4_get_appointment(this.idAppointment).then((result: any) => {
       this.activAppointment = result.obj;

@@ -68,7 +68,7 @@ export class AppointmentPlanPage {
         };
         const lang = localStorage.getItem('lang');
         console.log(lang);
-        if (lang === 'fr') {
+        if (lang == 'fr') {
             this.calendarOptions.monthNames = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin',
                                                'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'];
             this.calendarOptions.monthNamesShort = ['janv.', 'févr.', 'mars', 'avr.', 'mai', 'juin',
@@ -85,7 +85,7 @@ export class AppointmentPlanPage {
                 today: 'Aujourd\'hui'
             };
         }
-        if (lang === 'de') {
+        if (lang == 'de') {
             this.calendarOptions.monthNames = ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni',
                                                'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'];
             this.calendarOptions.monthNamesShort = ['Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul',
@@ -101,7 +101,7 @@ export class AppointmentPlanPage {
                 today: 'Heute'
             };
         }
-        if (lang === 'it') {
+        if (lang == 'it') {
             this.calendarOptions.monthNames = ['Gennaio', 'Febbraio', 'Marzo', 'Aprile', 'Maggio', 'Giugno',
                                                'Luglio', 'Agosto', 'Settembre', 'Ottobre', 'Novembre', 'Dicembre'];
             this.calendarOptions.monthNamesShort = ['Gen', 'Feb', 'Mar', 'Apr', 'Mag', 'Giu',
@@ -148,30 +148,30 @@ export class AppointmentPlanPage {
     }
 
     mouseover(buttonNumber) {
-        if (buttonNumber === 1) {
+        if (buttonNumber == 1) {
             this.mouseoverButton1 = true;
-        } else if (buttonNumber === 2) {
+        } else if (buttonNumber == 2) {
             this.mouseoverButton2 = true;
-        } else if (buttonNumber === 3) {
+        } else if (buttonNumber == 3) {
             this.mouseoverButton3 = true;
-        } else if (buttonNumber === 4) {
+        } else if (buttonNumber == 4) {
             this.mouseoverButton4 = true;
-        } else if (buttonNumber === 5) {
+        } else if (buttonNumber == 5) {
             this.mouseoverButton5 = true;
         }
     }
 
     mouseout(buttonNumber) {
-        if (this.mobilePlatform === false) {
-            if (buttonNumber === 1) {
+        if (this.mobilePlatform == false) {
+            if (buttonNumber == 1) {
                 this.mouseoverButton1 = false;
-            } else if (buttonNumber === 2) {
+            } else if (buttonNumber == 2) {
                 this.mouseoverButton2 = false;
-            } else if (buttonNumber === 3) {
+            } else if (buttonNumber == 3) {
                 this.mouseoverButton3 = false;
-            } else if (buttonNumber === 4) {
+            } else if (buttonNumber == 4) {
                 this.mouseoverButton4 = false;
-            } else if (buttonNumber === 5) {
+            } else if (buttonNumber == 5) {
                 this.mouseoverButton5 = false;
             }
         }
@@ -183,20 +183,20 @@ export class AppointmentPlanPage {
         this.events = [];
         const l = this.events.length;
         for (let k = 0; k < this.allEvents.length; k++) {  
-            if(this.peopleFilter === 'none') {
-                if(this.typeFilter === 99 ) {
+            if(this.peopleFilter == 'none') {
+                if(this.typeFilter == 99 ) {
                     this.events.push( JSON.parse(JSON.stringify( this.allEvents[k] )) );
                 } else {
-                    if(this.typeFilter === this.allEvents[k].type) {
+                    if(this.typeFilter == this.allEvents[k].type) {
                         this.events.push( JSON.parse(JSON.stringify( this.allEvents[k] )) );
                     }
                 }
             } else {
-                if(this.allEvents[k].email === this.peopleFilter ) {
-                    if(this.typeFilter === 99 ) {
+                if(this.allEvents[k].email == this.peopleFilter ) {
+                    if(this.typeFilter == 99 ) {
                         this.events.push( JSON.parse(JSON.stringify( this.allEvents[k] )) );
                     } else {
-                        if(this.typeFilter === this.allEvents[k].type) {
+                        if(this.typeFilter == this.allEvents[k].type) {
                             this.events.push( JSON.parse(JSON.stringify( this.allEvents[k] )) );
                         }
                     }
@@ -221,7 +221,7 @@ export class AppointmentPlanPage {
                            'short_code': liste[k].short_code, 'email':liste[k].email };
                 let n = true;
                 for (let z = 0; z < this.people.length; z++) { 
-                    if(this.people[z].email === liste[k].email ) { n = false; }
+                    if(this.people[z].email == liste[k].email ) { n = false; }
                 }
                 if(n) { this.people.push(p); } // nur neue personen
 
@@ -245,7 +245,7 @@ export class AppointmentPlanPage {
                 }
 
                 let title = liste[k].short_code;
-                if (liste[k].appointment_type === 2) {
+                if (liste[k].appointment_type == 2) {
                     title += ' (' + this.translate.instant('Urlaub') + ')';
                 } else {
                     title += ' ' + liste[k].zip_code+' '+ liste[k].company;
@@ -324,16 +324,16 @@ export class AppointmentPlanPage {
     setView(nr:number) {
         console.log('setView():',nr);
         this.viewMode = nr;
-        if( nr === 0 ) {
+        if( nr == 0 ) {
             this.peopleFilter = this.userdata.email;
             this.typeFilter = 99;
         } else  {
             this.peopleFilter = 'none';
         }
 
-        if( nr === 1 ) { this.typeFilter = 0; }
-        if( nr === 2 ) { this.typeFilter = 1; }
-        if( nr === 3 ) { this.typeFilter = 2; }
+        if( nr == 1 ) { this.typeFilter = 0; }
+        if( nr == 2 ) { this.typeFilter = 1; }
+        if( nr == 3 ) { this.typeFilter = 2; }
 
         this.changeFilter();
     }

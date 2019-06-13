@@ -56,7 +56,7 @@ export class ProductListPage implements OnInit {
         disabled: true,
         visible: this.userdata.role_set.edit_products,
         command: (event) => {
-            if (this.userdata.role_set.edit_products === false) { return; }
+            if (this.userdata.role_set.edit_products == false) { return; }
             console.log('command menuitem:', event.item);
             this.menu_edit();
         }
@@ -76,7 +76,7 @@ export class ProductListPage implements OnInit {
         visible:  this.userdata.role_set.edit_products,
         disabled: true,
         command: (event) => {
-            if (this.userdata.role_set.edit_products === false) { return; }
+            if (this.userdata.role_set.edit_products == false) { return; }
             console.log('command menuitem:', event.item);
             this.menu_move(1);
         }
@@ -88,7 +88,7 @@ export class ProductListPage implements OnInit {
         styleClass: 'move_now',
         disabled: false,
         command: (event) => {
-            if (this.userdata.role_set.edit_products === false) { return; }
+            if (this.userdata.role_set.edit_products == false) { return; }
             console.log('command menuitem:', event.item);
             this.menu_move(2);
         }
@@ -103,7 +103,7 @@ export class ProductListPage implements OnInit {
                 icon: 'pi pi-fw pi-plus',
                 visible:  this.userdata.role_set.edit_products,
                 command: (event) => {
-                    if (this.userdata.role_set.edit_products === false) { return; }
+                    if (this.userdata.role_set.edit_products == false) { return; }
                     console.log('command menuitem:', event.item);
                     this.create_template();
                 }
@@ -113,7 +113,7 @@ export class ProductListPage implements OnInit {
                 icon: 'pi pi-fw pi-plus',
                 visible:  this.userdata.role_set.edit_products,
                 command: (event) => {
-                    if (this.userdata.role_set.edit_products === false) { return; }
+                    if (this.userdata.role_set.edit_products == false) { return; }
                     console.log('command menuitem:', event.item);
                     this.menu_new();
                 }
@@ -124,7 +124,7 @@ export class ProductListPage implements OnInit {
                 visible:  this.userdata.role_set.check_products,
                 disabled: true,
                 command: (event) => {
-                    if (this.userdata.role_set.check_products === false) { return; }
+                    if (this.userdata.role_set.check_products == false) { return; }
                     console.log('command menuitem:', event.item);
                     this.create_protocol();
                 }
@@ -187,7 +187,7 @@ export class ProductListPage implements OnInit {
                 visible:  this.userdata.role_set.edit_products,
                 disabled: true,
                 command: (event) => {
-                    if (this.userdata.role_set.edit_products === false) { return; }
+                    if (this.userdata.role_set.edit_products == false) { return; }
                     console.log('command menuitem:', event.item);
                     this.product_migration();
                 }
@@ -257,14 +257,14 @@ export class ProductListPage implements OnInit {
             // console.log("ionViewDidLoad result :", result);
             this.productListAll = JSON.parse(JSON.stringify(result.list));
 
-            if (localStorage.getItem('filter_values_product') !== undefined) {
+            if (!localStorage.getItem('filter_values_product')) {
                 this.columnFilterValues = JSON.parse(localStorage.getItem('filter_values_product'));
             }
-            if (localStorage.getItem('split_filter_product') !== undefined) {
+            if (!localStorage.getItem('split_filter_product')) {
                 this.splitFilter = JSON.parse(localStorage.getItem('split_filter_product'));
                 this.funcHeightCalc();
             }
-            if (localStorage.getItem('show_columns_product') !== undefined) {
+            if (!localStorage.getItem('show_columns_product')) {
                 this.selectedColumns = JSON.parse(localStorage.getItem('show_columns_product'));
             }
 
@@ -284,13 +284,13 @@ export class ProductListPage implements OnInit {
                             this.productListAll[index].data.last_protocol_next = this.apiService.mysqlDate2view(pr.protocol_date_next);
                         }
                         if (pr.result) {
-                            if (pr.result === 1) {
+                            if (pr.result == 1) {
                                 this.productListAll[index].data.last_protocol_next = this.translate.instant('reparieren');
                             }
-                            if (pr.result === 3) {
+                            if (pr.result == 3) {
                                 this.productListAll[index].data.last_protocol_next = this.translate.instant('unauffindbar');
                             }
-                            if (pr.result === 4) {
+                            if (pr.result == 4) {
                                 this.productListAll[index].data.last_protocol_next = this.translate.instant('ausmustern');
                             }
                         }
@@ -301,17 +301,17 @@ export class ProductListPage implements OnInit {
                 let options = JSON.parse(this.productListAll[index].data.items);
                 console.log('options :', options);
 
-                if (options === null) { options = []; }
+                if (options == null) { options = []; }
 
                 for (let i = 0; i < options.length; i++) {
                     console.log('options :', options[i]);
                     console.log('options :', options[i].id);
                     console.log('options :', options[i].title);
 
-                    if (!this.cols.find(x => x.field === options[i].title[this.lang])) {  this.cols.push({ field: options[i].title[this.lang], header: options[i].title[this.lang] }); }
+                    if (!this.cols.find(x => x.field == options[i].title[this.lang])) {  this.cols.push({ field: options[i].title[this.lang], header: options[i].title[this.lang] }); }
                     const pipe = new DatePipe('en-US');
-                    if (options[i].type === 5) { this.productListAll[index].data[options[i].title[this.lang]] = pipe.transform(options[i].value, 'dd.MM.yyyy'); }
-                    if (options[i].type !== 5) { this.productListAll[index].data[options[i].title[this.lang]] = options[i].value; }
+                    if (options[i].type == 5) { this.productListAll[index].data[options[i].title[this.lang]] = pipe.transform(options[i].value, 'dd.MM.yyyy'); }
+                    if (options[i].type != 5) { this.productListAll[index].data[options[i].title[this.lang]] = options[i].value; }
                 }
                 // console.log("index :", index);
             }
@@ -351,7 +351,7 @@ export class ProductListPage implements OnInit {
         let ret: any = false;
         for (let i = 0; i < this.cols.length; i++) {
             if (this.columnFilterValues['search_all'].trim().length > 0
-                && node.data[this.cols[i].field] !== undefined
+                && node.data[this.cols[i].field] != undefined
                 && node.data[this.cols[i].field].toString().
                                                  toLowerCase().
                                                  indexOf(this.columnFilterValues['search_all'].trim().toLowerCase()) >= 0) {
@@ -361,13 +361,13 @@ export class ProductListPage implements OnInit {
 
         if (this.columnFilterValues['search_all'].trim().length > 0 && !ret) {
             return false;
-        } else if (this.columnFilterValues['search_all'].trim().length === 0 && !ret) {
+        } else if (this.columnFilterValues['search_all'].trim().length == 0 && !ret) {
             ret = true;
              }
 
         for (let i = 0; i < this.cols.length; i++) {
             if (this.columnFilterValues[this.cols[i].field].trim().length > 0
-                && (node.data[this.cols[i].field] === undefined || (node.data[this.cols[i].field] !== undefined
+                && (node.data[this.cols[i].field] == undefined || (node.data[this.cols[i].field] != undefined
                 && node.data[this.cols[i].field].toString().
                                                  toLowerCase().
                                                  indexOf(this.columnFilterValues[this.cols[i].field].trim().toLowerCase()) < 0))) {
@@ -383,18 +383,18 @@ export class ProductListPage implements OnInit {
         for (let i = 0; i < nodes.length; i++) {
             if (nodes[i].children) {
                 const ret = this.dir_try_filter(nodes[i].children);
-                if (ret === true) {
+                if (ret == true) {
                     del_ret = true;
                 }
                 if (nodes[i].children.length <= 0) {
                     delete nodes[i].children;
-                    if (this.try_filter(nodes[i]) === false) {
+                    if (this.try_filter(nodes[i]) == false) {
                         nodes.splice(i, 1);
                         i--;
                     }
                 }
             } else {
-                if (this.try_filter(nodes[i]) === false) {
+                if (this.try_filter(nodes[i]) == false) {
                     nodes.splice(i, 1);
                     i--;
                 }
@@ -416,7 +416,7 @@ export class ProductListPage implements OnInit {
     cancel_filters(cancel_type) {
         console.log('cancel_filters');
         this.menuItems[8].items[2]['disabled'] = true;
-        if (cancel_type === 1) {
+        if (cancel_type == 1) {
             for (let i = 0; i < this.cols.length; i++) {
                 this.columnFilterValues[this.cols[i].field] = '';
             }
@@ -451,7 +451,7 @@ export class ProductListPage implements OnInit {
         this.events.publish('rowRecords', this.rowRecords);
         this.events.publish('totalRecords', this.totalRecords);
 
-        if (localStorage.getItem('expanded_nodes_product') !== undefined) {
+        if (localStorage.getItem('expanded_nodes_product') != undefined) {
             this.expandChildren(this.productListView, JSON.parse(localStorage.getItem('expanded_nodes_product')));
         }
     }
@@ -477,14 +477,14 @@ export class ProductListPage implements OnInit {
         let id_sn = 0;
 
         console.log('selectedNodeLength :', selectedNodeLength);
-        if (selectedNodeLength === 1) {
+        if (selectedNodeLength == 1) {
 
             if (this.selectedNode) {
                 if (this.selectedNode.data.id) {
                     id_sn = this.selectedNode.data.id;
                 }
             }
-            if (id_sn === this.move_id) {
+            if (id_sn == this.move_id) {
                 this.menuItems[3].visible = this.userdata.role_set.edit_products;
                 this.menuItems[4].visible = false;
                 this.move_id = 0;
@@ -509,7 +509,7 @@ export class ProductListPage implements OnInit {
             this.menuItems[8].items[4]['disabled'] = true;
             this.move_id = 0;
         }
-        if (selectedNodeLength === 0) {
+        if (selectedNodeLength == 0) {
             this.menuItems[5].items[2]['disabled'] = true;
             this.menuItems[8].items[4]['disabled'] = true;
         } else {
@@ -591,7 +591,7 @@ export class ProductListPage implements OnInit {
 
     menu_move(n) {
         console.log('menu_move_up', this.selectedNode);
-        if (n === 1) {
+        if (n == 1) {
             if (this.selectedNode) {
                 if (this.selectedNode.data.id) {
                     this.move_id = parseInt(this.selectedNode.data.id);
@@ -601,7 +601,7 @@ export class ProductListPage implements OnInit {
             this.menuItems[3].visible = false;
             this.menuItems[4].visible = true;
             this.selectMulti = 0;
-        } else if (n === 2) {
+        } else if (n == 2) {
             // in Root
             this.move_obj.parent = 0;
             this.move_obj.title = JSON.stringify(this.move_obj.titleJson);
@@ -816,7 +816,7 @@ export class ProductListPage implements OnInit {
                 type: 'checkbox',
                 label: this.cols[i].header,
                 value: this.cols[i].field,
-                checked: this.selectedColumns.find(x => x.field === this.cols[i].field)
+                checked: this.selectedColumns.find(x => x.field == this.cols[i].field)
             });
         }
         const alert = await this.alertCtrl.create({
@@ -855,8 +855,8 @@ export class ProductListPage implements OnInit {
 
     expandChildren(nodes: TreeNode[], expended: string[]) {
         for (let i = 0; i < nodes.length; i++) {
-            if (expended !== null ) {
-                if (nodes[i].children && expended.find(x => x === nodes[i].data['id'])) {
+            if (expended != null ) {
+                if (nodes[i].children && expended.find(x => x == nodes[i].data['id'])) {
                     nodes[i].expanded = true;
                     this.expandChildren(nodes[i].children, expended);
                 }
@@ -869,7 +869,7 @@ export class ProductListPage implements OnInit {
         localStorage.setItem('expanded_nodes_product', JSON.stringify(this.expendedNodes));
     }
     onNodeCollapse(event) {
-        this.expendedNodes = this.expendedNodes.filter(function (element, index, array) { return element !== event.node.data['id'] });
+        this.expendedNodes = this.expendedNodes.filter(function (element, index, array) { return element != event.node.data['id'] });
         localStorage.setItem('expanded_nodes_product', JSON.stringify(this.expendedNodes));
     }
 }

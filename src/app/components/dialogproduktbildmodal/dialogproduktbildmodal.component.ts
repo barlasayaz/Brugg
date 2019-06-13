@@ -29,18 +29,19 @@ export class DialogproduktbildmodalPage {
               public translate: TranslateService,
               public modalCtrl: ModalController,
               private httpService: HttpClient) {
-
-      this.reDirect = this.navParams.get("reDirect");
-      if(this.reDirect == 1) {
-        this.modalTitle = this.translate.instant("Produktbild");
-      }
-      if(this.reDirect == 2) {
-        this.modalTitle = this.translate.instant("Protokollebild");
-      }
    
   }
 
   ngOnInit () {    
+    
+    this.reDirect = this.navParams.get("reDirect");
+    if(this.reDirect == 1) {
+      this.modalTitle = this.translate.instant("Produktbild");
+    }
+    if(this.reDirect == 2) {
+      this.modalTitle = this.translate.instant("Protokollebild");
+    }
+
     this.httpService.get('./assets/img/file_list.json').subscribe(
       data => {
         this.plist = data as object [];  

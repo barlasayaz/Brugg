@@ -128,18 +128,18 @@ export class OrderFormNewPage {
   }
 
   mouseover(buttonNumber) {
-    if (buttonNumber === 1) {
+    if (buttonNumber == 1) {
       this.mouseoverButton1 = true;
-    } else if (buttonNumber === 2) {
+    } else if (buttonNumber == 2) {
       this.mouseoverButton2 = true;
       }
   }
 
   mouseout(buttonNumber) {
-    if (this.mobilePlatform === false) {
-      if (buttonNumber === 1) {
+    if (this.mobilePlatform == false) {
+      if (buttonNumber == 1) {
         this.mouseoverButton1 = false;
-      } else if (buttonNumber === 2) {
+      } else if (buttonNumber == 2) {
         this.mouseoverButton2 = false;
         }
     }
@@ -925,7 +925,7 @@ export class OrderFormNewPage {
                   layout: {
                     hLineWidth: function (i, node) { return 1; },
                     vLineWidth: function (i, node) { return 1; },
-                    hLineColor: function (i, node) { return i === 1 ? 'black' : '#aaa'; },
+                    hLineColor: function (i, node) { return i == 1 ? 'black' : '#aaa'; },
                     vLineColor: function (i, node) { return '#cccccc'; },
                     paddingTop: function (i, node) { return 4; },
                     paddingBottom: function (i, node) { return 4; },

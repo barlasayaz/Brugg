@@ -109,17 +109,17 @@ export class ProductDetailsPage implements OnInit {
       this.activProduct.items = JSON.parse(this.activProduct.items);
       console.log('loadProduct', this.activProduct);
 
-      if (this.activProduct.images === '') {
+      if (this.activProduct.images == '') {
         this.activProduct.images = 'assets/imgs/product_img.jpg';
       }
 
       const str: string = this.activProduct.images;
-      if (str !== '') {
+      if (str != '') {
         console.log('images 1:', this.activProduct.images);
-        if (str.indexOf('img/') !== -1) {
+        if (str.indexOf('img/') != -1) {
           this.activProduct.images = 'assets/' + this.activProduct.images;
         }
-        if (str.indexOf('mobileimages/') !== -1) {
+        if (str.indexOf('mobileimages/') != -1) {
           this.activProduct.images = this.file_link + this.activProduct.images;
         }
         console.log('images 2:', this.activProduct.images);
@@ -224,7 +224,7 @@ export class ProductDetailsPage implements OnInit {
             urlList[index].dataURL = data;
           }
 
-          if (urlList.length === index + 1) {
+          if (urlList.length == index + 1) {
             callback(urlList);
           }
 
@@ -277,22 +277,22 @@ export class ProductDetailsPage implements OnInit {
     productList = [];
     product.forEach(element => {
       console.log('product element :', this.translate.instant('Titel'), element.title);
-      if (element.title !== undefined) {
+      if (element.title != undefined) {
         productList.push({ 'title': this.translate.instant('Titel'), 'value': element.title });
       } else {
         productList.push({ 'title': this.translate.instant('Titel'), 'value': ' ' });
       }
-      if (element.id !== undefined) {
+      if (element.id != undefined) {
         productList.push({ 'title': 'DB-ID', 'value': element.id });
       } else {
         productList.push({ 'title': 'DB-ID', 'value': ' ' });
       }
-      if (element.id_number !== undefined) {
+      if (element.id_number != undefined) {
         productList.push({ 'title': '#', 'value': element.id_number });
       } else {
         productList.push({ 'title': '#', 'value': ' ' });
       }
-      if (element.articel_no !== undefined) {
+      if (element.articel_no != undefined) {
         productList.push({ 'title': this.translate.instant('Articel No'), 'value': element.articel_no });
       } else {
         productList.push({ 'title': this.translate.instant('Articel No'), 'value': ' ' });
@@ -302,20 +302,20 @@ export class ProductDetailsPage implements OnInit {
       } else {
          productList.push({ "title": this.translate.instant('Autor'), "value": ' ' });
       }
-      if (element.check_interval !== undefined) {
+      if (element.check_interval != undefined) {
         productList.push({ 'title': this.translate.instant('Intervall Prüfen'), 'value': element.check_interval });
       } else {
         productList.push({ 'title': this.translate.instant('Intervall Prüfen'), 'value': ' ' });
       }
-      if (element.images !== undefined) {
+      if (element.images != undefined) {
         productImagePath = element.images;
       } else {
         productImagePath = '';
       }
       // product options
       element.items.forEach(elementItems => {
-        if (elementItems.title[this.lang] !== '' && elementItems.value !== undefined) {
-          if (elementItems.type === 5) {
+        if (elementItems.title[this.lang] != '' && elementItems.value != undefined) {
+          if (elementItems.type == 5) {
             productList.push({ 'title': elementItems.title[this.lang],
                                'value': this.datePipe.transform(elementItems.value, 'dd.MM.yyyy') });
           } else {
@@ -349,7 +349,7 @@ export class ProductDetailsPage implements OnInit {
     this.getProductUrlList(productImagePath, dataUrlList => {
       prdct_img = { 'image': dataUrlList[0].dataURL, 'margin': 0, 'fit': [300, 180], 'alignment': 'center' };
       let prdct_qr = {};
-      if (this.activProduct.qr_code && this.activProduct.qr_code !== '') {
+      if (this.activProduct.qr_code && this.activProduct.qr_code != '') {
         const x = document.getElementsByClassName('qrImage')[0];
         console.log('getElementsByClassName:', x);
         const y = x.getElementsByTagName('img');
@@ -425,7 +425,7 @@ export class ProductDetailsPage implements OnInit {
   }
 
   createProtocol() {
-    if (this.userdata.role_set.edit_products === false) { return; }
+    if (this.userdata.role_set.edit_products == false) { return; }
     if (this.selectedProduct) {
       const navigationExtras: NavigationExtras = {
         queryParams: {
@@ -438,26 +438,26 @@ export class ProductDetailsPage implements OnInit {
   }
 
   mouseover(buttonNumber) {
-    if (buttonNumber === 1) {
+    if (buttonNumber == 1) {
       this.mouseoverButton1 = true;
-    } else if (buttonNumber === 2) {
+    } else if (buttonNumber == 2) {
       this.mouseoverButton2 = true;
-         } else if (buttonNumber === 3) {
+         } else if (buttonNumber == 3) {
       this.mouseoverButton3 = true;
-         } else if (buttonNumber === 4) {
+         } else if (buttonNumber == 4) {
       this.mouseoverButton4 = true;
          }
   }
 
   mouseout(buttonNumber) {
-    if (this.mobilePlatform === false) {
-      if (buttonNumber === 1) {
+    if (this.mobilePlatform == false) {
+      if (buttonNumber == 1) {
         this.mouseoverButton1 = false;
-      } else if (buttonNumber === 2) {
+      } else if (buttonNumber == 2) {
         this.mouseoverButton2 = false;
-           } else if (buttonNumber === 3) {
+           } else if (buttonNumber == 3) {
         this.mouseoverButton3 = false;
-           } else if (buttonNumber === 4) {
+           } else if (buttonNumber == 4) {
         this.mouseoverButton4 = false;
            }
     }

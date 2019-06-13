@@ -11,10 +11,10 @@ export class FilterPipe implements PipeTransform {
     }
     // To search values only of "name" variable of your object(item)
     if (columnName!="") {
-      return items.filter(item => item[columnName].toLowerCase().indexOf(filter.toLowerCase()) !== -1);
+      return items.filter(item => item[columnName].toLowerCase().indexOf(filter.toLowerCase()) != -1);
     } else {  
     // To search in values of every variable of your object(item)
-      return items.filter(item => JSON.stringify(item).toLowerCase().indexOf(filter.toLowerCase()) !== -1);
+      return items.filter(item => JSON.stringify(item).toLowerCase().indexOf(filter.toLowerCase()) != -1);
     }
   }
 

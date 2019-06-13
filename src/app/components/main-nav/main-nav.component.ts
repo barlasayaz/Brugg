@@ -46,7 +46,7 @@ export class MainNavComponent  implements OnInit {
   ngOnInit() {}
 
   getClass(path) {
-    if (this.aktivPage === path) {
+    if (this.aktivPage == path) {
       return 'active';
     } else {
       return '';
@@ -61,7 +61,7 @@ export class MainNavComponent  implements OnInit {
           idCustomer: id
       }
   };
-    if (this.aktivPage !== action) {
+    if (this.aktivPage != action) {
       switch (action) {
         case 'StartscreenNew': // HOME
           this.navCtrl.navigateRoot('/startscreen-new');

@@ -64,7 +64,7 @@ export class ProductTemplatePage implements OnInit {
 
     this.dragulaService.createGroup('COLUMNS', {
       copy: (el, source) => {
-        return source.id === 'options';
+        return source.id == 'options';
       },
       copyItem: (optionsAll) => {
         this.selectedTemplate[this.tmpInd] = 0;
@@ -73,7 +73,7 @@ export class ProductTemplatePage implements OnInit {
       },
       accepts: (el, target, source, sibling) => {
         // To avoid dragging from right to left container
-        return target.id !== 'options';
+        return target.id != 'options';
       }
     });
     this.route.queryParams.subscribe(params => {
@@ -135,7 +135,7 @@ export class ProductTemplatePage implements OnInit {
             data.en = data.en.trim();
             data.fr = data.fr.trim();
             data.it = data.it.trim();
-            if ((data.de === '') || (data.en === '') || (data.fr === '') || (data.it === '')) {
+            if ((data.de == '') || (data.en == '') || (data.fr == '') || (data.it == '')) {
               return false;
             } else {
               this.templateTitleObj = data;
@@ -149,7 +149,7 @@ export class ProductTemplatePage implements OnInit {
   }
 
   down_click() {
-    if (this.downClick === 0) {
+    if (this.downClick == 0) {
       this.downClick = 1;
       this.options.sort(function (a, b) {
         if (a.title[localStorage.getItem('lang')].toLowerCase() < b.title[localStorage.getItem('lang')].toLowerCase()) { return -1; }
@@ -167,7 +167,7 @@ export class ProductTemplatePage implements OnInit {
     if (tmpId != this.selectedTmplt) {
       this.selectedTemplate[this.selectedTmplt] = 0;
     }
-    if (this.selectedTemplate[tmpId] === 0) {
+    if (this.selectedTemplate[tmpId] == 0) {
       this.selectedTemplate[tmpId] = 1;
       this.selectTemplate = 1;
     } else {
@@ -182,7 +182,7 @@ export class ProductTemplatePage implements OnInit {
     if (option.id != this.selectedOptionId) {
       this.selectedOption[this.selectedOptionId] = 0;
     }
-    if (this.selectedOption[option.id] === 0) {
+    if (this.selectedOption[option.id] == 0) {
       this.selectedOption[option.id] = 1;
       this.selectOption = 1;
     } else {
@@ -227,7 +227,7 @@ export class ProductTemplatePage implements OnInit {
       this.templateTitleObj = this.activTemplate.title;
 
       console.log('Template Title :', this.template);
-    } else if (this.itsNew === undefined) { this.promptTitel(); }
+    } else if (this.itsNew == undefined) { this.promptTitel(); }
   }
 
   async option_new() {
@@ -255,7 +255,7 @@ export class ProductTemplatePage implements OnInit {
     modal.onDidDismiss().then(data => {
       if (data['data']) {
         for (let index = 0; index < this.options.length; index++) {
-          if (option.id === this.options[index].id) {
+          if (option.id == this.options[index].id) {
             this.options[index] = data['data'];
             this.editOption = data['data'];
           }
@@ -275,7 +275,7 @@ export class ProductTemplatePage implements OnInit {
 
   template_save() {
     console.log('templateTitle : ', this.templateTitleObj[this.lang]);
-    if (this.templateTitleObj[this.lang] !== '') {
+    if (this.templateTitleObj[this.lang] != '') {
       const obj = {
         active: 1,
         user: this.userdata.id,
@@ -317,7 +317,7 @@ export class ProductTemplatePage implements OnInit {
   }
 
   move_left() {
-    this.template.push(this.options.find(x => x.id === this.selectedOptionId));
+    this.template.push(this.options.find(x => x.id == this.selectedOptionId));
     this.selectedTemplate[this.template.length - 1] = 0;
   }
 

@@ -1,4 +1,4 @@
-import { Component, NgZone } from '@angular/core';
+import { Component, NgZone,OnInit } from '@angular/core';
 import { NavParams, Platform, ModalController, AlertController, NavController } from '@ionic/angular';
 import { ToastController } from '@ionic/angular';
 import { NFC, Ndef } from '@ionic-native/nfc/ngx';
@@ -18,7 +18,7 @@ import { NavigationExtras } from '@angular/router';
   templateUrl: './nfc-scan.component.html',
   styleUrls: ['./nfc-scan.component.scss']
 })
-export class NfcScanComponent {
+export class NfcScanComponent implements OnInit {
   subscription: Subscription = new Subscription;
   ndeflistener: any;
   timeout: any;
@@ -46,26 +46,31 @@ export class NfcScanComponent {
     private navParams: NavParams,
     private apiService: ApiService,
     private navCtrl: NavController) {
+
+  }
+
+  ngOnInit()
+  {
     this.readonly = this.navParams.get("readOnly");
     this.pid = this.navParams.get("pid");
 
     this.cols = [
       { field: 'id', header: 'ID' },
-      { field: 'title', header: translate.instant('Produkt') },
-      { field: 'customer', header: translate.instant('Kunden') }
+      { field: 'title', header: this.translate.instant('Produkt') },
+      { field: 'customer', header: this.translate.instant('Kunden') }
     ];
     this.procedure = 0;
     this.isWritable = true;
     if (!this.readonly) this.listView = false;
 
-    platform.ready().then(() => {
+    this.platform.ready().then(() => {
       if (this.platform.is('ios') ||
         this.platform.is('android') ||
         this.platform.is('ipad') ||
         this.platform.is('iphone') ||
         this.platform.is('phablet') ||
         this.platform.is('tablet')) {
-        nfc.enabled().then((flag) => {
+          this.nfc.enabled().then((flag) => {
           this.subscribeNfc();
         }).catch(this.onFailure);;
       }
@@ -74,7 +79,6 @@ export class NfcScanComponent {
       }
     });
   }
-
 
   subscribeNfc() {
     console.log("subscribeNfc()");
