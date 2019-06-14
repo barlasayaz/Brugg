@@ -18,11 +18,17 @@
               <ion-label position="floating">{{translate.instant('E-Mail')}}</ion-label>
               <ion-input required class="clsinput" type="email" 
                          placeholder="" id="emailToFind"  
-                         [(ngModel)]="emailToFind"  ></ion-input>
+                         [(ngModel)]="emailToFind">
+              </ion-input>
             </ion-item>							
         </ion-col>
         <ion-col size-md="2" size-sm="2" size="2">
-            <ion-button style="margin-top:14px" [disabled]="emailToFind==''" class="btn btn-modal-teal" (click)="findEmail();"><ion-icon name="search"></ion-icon></ion-button>
+            <ion-button style="margin-top:14px"
+                        [disabled]="emailToFind==''"
+                        class="btn btn-modal-teal"
+                        (click)="findEmail();">
+              <ion-icon name="search"></ion-icon>
+            </ion-button>
         </ion-col>
       </ion-row> 
       <!-- Gefunden -->
@@ -30,64 +36,97 @@
         <ion-col size-md="4" size-sm="12" size="12">
           <ion-item>
             <ion-label position="floating"> {{translate.instant('Vorname')}}</ion-label>          
-              	<ion-input disabled class="clsinput" type="text" placeholder=""  [(ngModel)]="viewNewObj.first_name"  ></ion-input>  
+              	<ion-input disabled
+                           class="clsinput"
+                           type="text"
+                           placeholder="" 
+                           [(ngModel)]="viewNewObj.first_name">
+                </ion-input>  
           </ion-item>							
         </ion-col>
         <ion-col size-md="4" size-sm="12" size="12">
           <ion-item>
             <ion-label position="floating">{{translate.instant('Name')}}</ion-label>
-              	<ion-input disabled class="clsinput" type="text" placeholder=""  [(ngModel)]="viewNewObj.last_name"  ></ion-input>
+              	<ion-input disabled
+                           class="clsinput"
+                           type="text"
+                           placeholder=""
+                           [(ngModel)]="viewNewObj.last_name">
+                </ion-input>
           </ion-item>  						
         </ion-col>
         <ion-col size-md="4" size-sm="12" size="12">
           <ion-item>	
             <ion-label position="floating">{{translate.instant('KennungMitarbeiter')}}</ion-label>
-              	<ion-input disabled class="clsinput" type="text" placeholder=""  [(ngModel)]="viewNewObj.short_code"  ></ion-input>           
+              	<ion-input disabled
+                           class="clsinput"
+                           type="text"
+                           placeholder=""
+                           [(ngModel)]="viewNewObj.short_code">
+                </ion-input>           
           </ion-item> 						
         </ion-col>
       </ion-row>
       <ion-row *ngIf="viewNewMode==2">
         <ion-col size-md="6" size-sm="12" size="12">
             <ion-item no-lines class="item-trns " >
-                <ion-label  >{{translate.instant('edit_customer')}}</ion-label>
-                <ion-toggle     color="partic" [(ngModel)]="role_set.edit_customer" disabled="{{!setRights}}" ></ion-toggle>
+                <ion-label>{{translate.instant('edit_customer')}}</ion-label>
+                <ion-toggle [(ngModel)]="role_set.edit_customer"
+                            disabled="{{!setRights}}">
+                </ion-toggle>
             </ion-item>						
         </ion-col>
         <ion-col size-md="6" size-sm="12" size="12">
             <ion-item no-lines class="item-trns " >
-                <ion-label  >{{translate.instant('edit_membership')}}</ion-label>
-                <ion-toggle     color="partic" [(ngModel)]="role_set.edit_membership" disabled="{{!setRights}}" ></ion-toggle>
+                <ion-label>{{translate.instant('edit_membership')}}</ion-label>
+                <ion-toggle [(ngModel)]="role_set.edit_membership"
+                            disabled="{{!setRights}}">
+                </ion-toggle>
             </ion-item>						
         </ion-col>
         <ion-col size-md="6" size-sm="12" size="12">
             <ion-item no-lines class="item-trns " >
-                <ion-label  >{{translate.instant('edit_rights')}}</ion-label>
-                <ion-toggle     color="partic" [(ngModel)]="role_set.edit_rights" disabled="{{!setRights}}" ></ion-toggle>
+                <ion-label>{{translate.instant('edit_rights')}}</ion-label>
+                <ion-toggle [(ngModel)]="role_set.edit_rights"
+                            disabled="{{!setRights}}">
+                </ion-toggle>
             </ion-item>						
         </ion-col>
         <ion-col size-md="6" size-sm="12" size="12">
             <ion-item no-lines class="item-trns " >
-                <ion-label  >{{translate.instant('edit_products')}}</ion-label>
-                <ion-toggle     color="partic" [(ngModel)]="role_set.edit_products" disabled="{{!setRights}}" ></ion-toggle>
+                <ion-label>{{translate.instant('edit_products')}}</ion-label>
+                <ion-toggle [(ngModel)]="role_set.edit_products"
+                            disabled="{{!setRights}}">
+                </ion-toggle>
             </ion-item>						
         </ion-col>
         <ion-col size-md="6" size-sm="12" size="12">
             <ion-item no-lines class="item-trns " >
-                <ion-label  >{{translate.instant('check_products')}}</ion-label>
-                <ion-toggle     color="partic" [(ngModel)]="role_set.check_products" disabled="{{!setRights}}" ></ion-toggle>
+                <ion-label>{{translate.instant('check_products')}}</ion-label>
+                <ion-toggle [(ngModel)]="role_set.check_products"
+                            disabled="{{!setRights}}">
+                </ion-toggle>
             </ion-item>						
         </ion-col>
         <ion-col size-md="6" size-sm="12" size="12">
             <ion-item no-lines class="item-trns " >
-                <ion-label  >{{translate.instant('edit_contact_persons')}}</ion-label>
-                <ion-toggle     color="partic" [(ngModel)]="role_set.edit_contact_persons" disabled="{{!setRights}}" ></ion-toggle>
+                <ion-label>{{translate.instant('edit_contact_persons')}}</ion-label>
+                <ion-toggle [(ngModel)]="role_set.edit_contact_persons" 
+                            disabled="{{!setRights}}">
+                </ion-toggle>
             </ion-item>						
         </ion-col>
     </ion-row> 
       <ion-row style="margin-bottom: -10px;" *ngIf="viewNewMode==2">
         	<div class="modal-footer">
-              <ion-button class="btn btn-modal-danger footerIcon" (click)="dismiss()"><ion-icon name="close"></ion-icon></ion-button>
-              <ion-button class="btn btn-modal-success footerIcon" (click)="addUser();"><ion-icon name="checkmark"></ion-icon></ion-button>
+              <ion-button class="btn btn-modal-danger footerIcon" 
+                          (click)="dismiss()">
+                <ion-icon name="close"></ion-icon>
+              </ion-button>
+              <ion-button class="btn btn-modal-success footerIcon"
+                          (click)="addUser();">
+                <ion-icon name="checkmark"></ion-icon>
+              </ion-button>
           </div>
       </ion-row>
       <ion-row style="margin-bottom: -10px;" *ngIf="viewNewMode==1">
@@ -95,7 +134,10 @@
       </ion-row>
       <ion-row style="margin-bottom: -10px;" *ngIf="viewNewMode==1">
         	<div class="modal-footer">
-              <ion-button class="btn btn-modal-danger footerIcon" (click)="dismiss()"><ion-icon name="close"></ion-icon></ion-button>
+              <ion-button class="btn btn-modal-danger footerIcon"
+                          (click)="dismiss()">
+                  <ion-icon name="close"></ion-icon>
+              </ion-button>
               <!-- <button ion-button class="btn btn-modal-teal footerIcon" (click)="askUser();"><ion-icon name="send"></ion-icon></button> -->
           </div>
       </ion-row>
@@ -110,19 +152,40 @@
           <ion-col size-md="4" size-sm="12" size="12">
             <ion-item>
               <ion-label position="floating"> {{translate.instant('Vorname')}}</ion-label>          
-                	<ion-input disabled class="clsinput" type="text" placeholder="" id="Vorname" [(ngModel)]="edit.bid.first_name" [ngClass]="{'required':pfelder}"></ion-input>  
+                	<ion-input disabled 
+                             class="clsinput"
+                             type="text"
+                             placeholder=""
+                             id="Vorname"
+                             [(ngModel)]="edit.bid.first_name"
+                             [ngClass]="{'required':pfelder}">
+                  </ion-input>  
             </ion-item>							
           </ion-col>
           <ion-col size-md="4" size-sm="12" size="12">
             <ion-item>
               <ion-label position="floating">{{translate.instant('Name')}}</ion-label>
-                	<ion-input disabled class="clsinput" type="text" placeholder="" id="Name" [(ngModel)]="edit.bid.last_name" [ngClass]="{required:pfelder}"></ion-input>
+                	<ion-input disabled
+                             class="clsinput"
+                             type="text"
+                             placeholder=""
+                             id="Name"
+                             [(ngModel)]="edit.bid.last_name"
+                             [ngClass]="{required:pfelder}">
+                  </ion-input>
             </ion-item>  						
           </ion-col>
           <ion-col size-md="4" size-sm="12" size="12">
             <ion-item>	
               <ion-label position="floating">{{translate.instant('KennungMitarbeiter')}}</ion-label>
-                	<ion-input required class="clsinput" type="text" placeholder="" id="short_code" [(ngModel)]="edit.short_code" [ngClass]="{required:pfelder}"></ion-input>           
+                	<ion-input required
+                             class="clsinput"
+                             type="text"
+                             placeholder=""
+                             id="short_code"
+                             [(ngModel)]="edit.short_code"
+                             [ngClass]="{required:pfelder}">
+                  </ion-input>           
             </ion-item> 						
           </ion-col>
         </ion-row>
@@ -132,16 +195,28 @@
         <ion-col size-md="7" size-sm="12" size="12">
             <ion-item>
               <ion-label position="floating">{{translate.instant('Telefon')}}</ion-label>
-              <ion-input disabled class="clsinput" type="text" placeholder="" id="Telefon"  [(ngModel)]="edit.bid.phone" [ngClass]="{required:pfelder}"></ion-input>
+              <ion-input disabled
+                         class="clsinput"
+                         type="text"
+                         placeholder=""
+                         id="Telefon"
+                         [(ngModel)]="edit.bid.phone"
+                         [ngClass]="{required:pfelder}">
+              </ion-input>
             </ion-item>							
           </ion-col>
           <ion-col size-md="1" size-sm="2" size="2" style="padding-left:15px;padding-top:35px;">
-            <p-colorPicker [(ngModel)]="edit.colour" ></p-colorPicker>
+            <p-colorPicker [(ngModel)]="edit.colour"></p-colorPicker>
           </ion-col>
           <ion-col size-md="4" size-sm="10" size="10">				
             <ion-item>					
               <ion-label position="floating">{{translate.instant('Farbe')}}</ion-label>					
-              <ion-input [(ngModel)]="edit.colour" class="clsinput" type="text" placeholder="" readonly="true"></ion-input>
+              <ion-input [(ngModel)]="edit.colour" 
+                         class="clsinput"
+                         type="text"
+                         placeholder=""
+                         readonly="true">
+              </ion-input>
             </ion-item>  						
           </ion-col>			
         </ion-row>
@@ -151,7 +226,14 @@
           <ion-col size-md="12" size-sm="12" size="12">
               <ion-item>
                 <ion-label position="floating">{{translate.instant('E-Mail')}}</ion-label>
-                    <ion-input disabled class="clsinput" type="text" placeholder="" id="email"  [(ngModel)]="edit.email" [ngClass]="{required:pfelder}"></ion-input>
+                    <ion-input disabled
+                               class="clsinput"
+                               type="text"
+                               placeholder=""
+                               id="email"
+                               [(ngModel)]="edit.email"
+                               [ngClass]="{required:pfelder}">
+                    </ion-input>
               </ion-item>							
             </ion-col>
         </ion-row> 
@@ -159,38 +241,50 @@
         <ion-row >
             <ion-col size-md="6" size-sm="12" size="12">
                 <ion-item no-lines class="item-trns " >
-                    <ion-label  >{{translate.instant('edit_customer')}}</ion-label>
-                    <ion-toggle     color="partic" [(ngModel)]="edit.role_set.edit_customer" disabled="{{!setRights}}" ></ion-toggle>
+                    <ion-label>{{translate.instant('edit_customer')}}</ion-label>
+                    <ion-toggle [(ngModel)]="edit.role_set.edit_customer"
+                                disabled="{{!setRights}}">
+                    </ion-toggle>
                 </ion-item>						
             </ion-col>
             <ion-col size-md="6" size-sm="12" size="12">
                 <ion-item no-lines class="item-trns " >
-                    <ion-label  >{{translate.instant('edit_membership')}}</ion-label>
-                    <ion-toggle     color="partic" [(ngModel)]="edit.role_set.edit_membership" disabled="{{!setRights}}" ></ion-toggle>
+                    <ion-label>{{translate.instant('edit_membership')}}</ion-label>
+                    <ion-toggle [(ngModel)]="edit.role_set.edit_membership" 
+                                disabled="{{!setRights}}">
+                    </ion-toggle>
                 </ion-item>						
             </ion-col>
             <ion-col size-md="6" size-sm="12" size="12">
                 <ion-item no-lines class="item-trns " >
-                    <ion-label  >{{translate.instant('edit_rights')}}</ion-label>
-                    <ion-toggle     color="partic" [(ngModel)]="edit.role_set.edit_rights" disabled="{{!setRights}}" ></ion-toggle>
+                    <ion-label>{{translate.instant('edit_rights')}}</ion-label>
+                    <ion-toggle [(ngModel)]="edit.role_set.edit_rights"
+                                disabled="{{!setRights}}">
+                    </ion-toggle>
                 </ion-item>						
             </ion-col>
             <ion-col size-md="6" size-sm="12" size="12">
                 <ion-item no-lines class="item-trns " >
-                    <ion-label  >{{translate.instant('edit_products')}}</ion-label>
-                    <ion-toggle     color="partic" [(ngModel)]="edit.role_set.edit_products" disabled="{{!setRights}}" ></ion-toggle>
+                    <ion-label>{{translate.instant('edit_products')}}</ion-label>
+                    <ion-toggle [(ngModel)]="edit.role_set.edit_products"
+                                disabled="{{!setRights}}">
+                    </ion-toggle>
                 </ion-item>						
             </ion-col>
             <ion-col size-md="6" size-sm="12" size="12">
                 <ion-item no-lines class="item-trns " >
-                    <ion-label  >{{translate.instant('check_products')}}</ion-label>
-                    <ion-toggle     color="partic" [(ngModel)]="edit.role_set.check_products" disabled="{{!setRights}}" ></ion-toggle>
+                    <ion-label>{{translate.instant('check_products')}}</ion-label>
+                    <ion-toggle [(ngModel)]="edit.role_set.check_products"
+                                disabled="{{!setRights}}">
+                    </ion-toggle>
                 </ion-item>						
             </ion-col>
             <ion-col size-md="6" size-sm="12" size="12">
                 <ion-item no-lines class="item-trns " >
-                    <ion-label  >{{translate.instant('edit_contact_persons')}}</ion-label>
-                    <ion-toggle     color="partic" [(ngModel)]="edit.role_set.edit_contact_persons" disabled="{{!setRights}}" ></ion-toggle>
+                    <ion-label>{{translate.instant('edit_contact_persons')}}</ion-label>
+                    <ion-toggle [(ngModel)]="edit.role_set.edit_contact_persons"
+                                disabled="{{!setRights}}">
+                    </ion-toggle>
                 </ion-item>						
             </ion-col>
         </ion-row> 

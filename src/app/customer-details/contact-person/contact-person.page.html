@@ -52,7 +52,7 @@
         
           <div class="modal-footer">
            	<ion-button type="button" class="btn btn-modal-danger" (click)="dismiss()">
-              <ion-icon name="remove"></ion-icon>
+              <ion-icon name="close"></ion-icon>
             </ion-button>
           </div>
         </div>
@@ -127,13 +127,17 @@
                 <ion-col size-md="6" size-sm="12" size="12">
                     <ion-item no-lines class="item-trns " >
                         <ion-label>{{translate.instant('edit_products')}}</ion-label>
-                        <ion-toggle     color="partic" [(ngModel)]="contactPersonEdit.edit_products" disabled="{{!setRights}}" ></ion-toggle>
+                        <ion-toggle [(ngModel)]="contactPersonEdit.edit_products"
+                                    disabled="{{!setRights}}">
+                        </ion-toggle>
                     </ion-item>						
                 </ion-col>
                 <ion-col size-md="6" size-sm="12" size="12">
                     <ion-item no-lines class="item-trns " >
                         <ion-label>{{translate.instant('check_products')}}</ion-label>
-                        <ion-toggle     color="partic" [(ngModel)]="contactPersonEdit.check_products" disabled="{{!setRights}}" ></ion-toggle>
+                        <ion-toggle [(ngModel)]="contactPersonEdit.check_products"
+                                    disabled="{{!setRights}}">
+                        </ion-toggle>
                     </ion-item>						
                 </ion-col>
             </ion-row> 

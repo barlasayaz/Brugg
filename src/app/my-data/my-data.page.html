@@ -29,22 +29,22 @@
 				</div>
 			</div>
 
- 			<ion-grid>			
+			<ion-grid>			
 				<ion-row>
-<!--
-<button col-lg-2  ion-button (click)="mw_test_a(1);">
-	<span class="hidden-sm-down" style="font-size: 11px;">{{'Test 1' | translate}}</span>
-</button>
-<button col-lg-2  ion-button (click)="mw_test_a(2);">
-	<span class="hidden-sm-down" style="font-size: 11px;">{{'Test 2' | translate}}</span>
-</button>
-<button col-lg-2 ion-button (click)="mw_test_b(1);">
-	<span class="hidden-sm-down" style="font-size: 11px;">{{'Test 3 f' | translate}}</span>
-</button>
-<button col-lg-2  ion-button (click)="mw_test_b(2);">
-	<span class="hidden-sm-down" style="font-size: 11px;">{{'Test 4 f' | translate}}</span>
-</button>
--->											
+					<!--
+					<button col-lg-2  ion-button (click)="mw_test_a(1);">
+					<span class="hidden-sm-down" style="font-size: 11px;">{{'Test 1' | translate}}</span>
+					</button>
+					<button col-lg-2  ion-button (click)="mw_test_a(2);">
+					<span class="hidden-sm-down" style="font-size: 11px;">{{'Test 2' | translate}}</span>
+					</button>
+					<button col-lg-2 ion-button (click)="mw_test_b(1);">
+					<span class="hidden-sm-down" style="font-size: 11px;">{{'Test 3 f' | translate}}</span>
+					</button>
+					<button col-lg-2  ion-button (click)="mw_test_b(2);">
+					<span class="hidden-sm-down" style="font-size: 11px;">{{'Test 4 f' | translate}}</span>
+					</button>
+					-->											
 					<ion-col size-lg="7" size="12">
 						<!-- Meine Daten -->
 						<div class="table-responsive">
@@ -80,10 +80,10 @@
 									<div class="tr table-body">
 										<div class="td">{{'Farbe' | translate}}</div>
 										<div class="td"><div [ngStyle]="{'width':'15px',
-														 'height':'15px',
-														 'margin-right':'5px',
-														 'display':'inline-block',
-														 'background-color':userdata.colour}">
+															'height':'15px',
+															'margin-right':'5px',
+															'display':'inline-block',
+															'background-color':userdata.colour}">
 										</div> <span >{{userdata.colour}}</span></div>
 									</div>
 									<div class="tr table-body">
@@ -97,7 +97,7 @@
 									<!-- <div class="tr table-body">
 										<div class="td">{{'Sprache' | translate}}</div>
 										<div class="td"  style="margin-left: -7px;">
-											<ion-item no-lines class="pvs4-full-select">
+											<ion-item lines="none" class="pvs4-full-select">
 												<ion-select style="font-size: 14px; color:#009de0;"
 															[(ngModel)]="lang"
 															(ionChange)="changeLanguage()"
@@ -121,48 +121,60 @@
 									<div class="tr table-body">
 										<div class="td">{{'edit_customer' | translate}}</div>
 										<div class="td">
-											<ion-item no-lines class="item-trns " >
-												<ion-toggle disabled   color="partic" [ngModel]="userdata.role_set.edit_customer" ></ion-toggle>
+											<ion-item lines="none" class="item-trns " >
+												<ion-toggle disabled 
+															[ngModel]="userdata.role_set.edit_customer">
+												</ion-toggle>
 											</ion-item>
 										</div>
 									</div>
 									<div class="tr table-body">
 										<div class="td">{{'edit_membership' | translate}}</div>
 										<div class="td">
-											<ion-item no-lines  class="item-trns " >
-												<ion-toggle disabled  color="partic" [(ngModel)]="userdata.role_set.edit_membership" ></ion-toggle>
+											<ion-item lines="none"  class="item-trns " >
+												<ion-toggle disabled
+															[(ngModel)]="userdata.role_set.edit_membership">
+												</ion-toggle>
 											</ion-item>
 										</div>
 									</div>
 									<div class="tr table-body">
 										<div class="td">{{'edit_rights' | translate}}</div>
 										<div class="td">
-											<ion-item no-lines class="item-trns "  >
-												<ion-toggle disabled color="partic" [(ngModel)]="userdata.role_set.edit_rights" ></ion-toggle>
+											<ion-item lines="none" class="item-trns "  >
+												<ion-toggle disabled
+															[(ngModel)]="userdata.role_set.edit_rights">
+												</ion-toggle>
 											</ion-item>
 										</div>
 									</div>
 									<div class="tr table-body">
 										<div class="td">{{'edit_products' | translate}}</div>
 										<div class="td">
-											<ion-item no-lines class="item-trns "  >
-												<ion-toggle disabled color="partic" [(ngModel)]="userdata.role_set.edit_products" ></ion-toggle>
+											<ion-item lines="none" class="item-trns "  >
+												<ion-toggle disabled 
+															[(ngModel)]="userdata.role_set.edit_products">
+												</ion-toggle>
 											</ion-item>
 										</div>
 									</div>
 									<div class="tr table-body">
 										<div class="td">{{'check_products' | translate}}</div>
 										<div class="td">
-											<ion-item no-lines class="item-trns "   >
-												<ion-toggle disabled color="partic" [(ngModel)]="userdata.role_set.check_products" ></ion-toggle>
+											<ion-item lines="none" class="item-trns">
+												<ion-toggle disabled
+															[(ngModel)]="userdata.role_set.check_products">
+												</ion-toggle>
 											</ion-item>
 										</div>
 									</div>
 									<div class="tr table-body">
 										<div class="td">{{'edit_contact_persons' | translate}}</div>
 										<div class="td">
-											<ion-item no-lines class="item-trns " >
-												<ion-toggle disabled color="partic" [(ngModel)]="userdata.role_set.edit_contact_persons" ></ion-toggle>
+											<ion-item lines="none" class="item-trns " >
+												<ion-toggle disabled
+															[(ngModel)]="userdata.role_set.edit_contact_persons">
+												</ion-toggle>
 											</ion-item>
 										</div>
 									</div>
@@ -195,11 +207,11 @@
 								</div>
 								<div class="tbody">
 									<div class="tr table-subheader table-subheader-fix">
-										<div class="table-subheader-buttons"><ion-button size="small" 
-											        [disabled]="userdata.role_set.edit_membership==false"
-													(click)="open_mydataedit(0,0,0,1)" 
-													[ngClass]="{'not-allowed': userdata.role_set.edit_membership==false}"
-													>
+										<div class="table-subheader-buttons">
+											<ion-button size="small" 
+														[disabled]="userdata.role_set.edit_membership==false"
+														(click)="open_mydataedit(0,0,0,1)" 
+														[ngClass]="{'not-allowed': userdata.role_set.edit_membership==false}">
 												<ion-icon name="add"></ion-icon>
 											</ion-button> </div>
 									</div>
@@ -207,9 +219,9 @@
 										<div class="tr table-body" *ngIf="userdata.Type<20">
 											<div class="td" style="max-width: 100%">
 												<div (click)="open_mydataedit(coll.id,coll.role,coll.role_nr);" 
-												     [ngClass]="{'not-allowed': userdata.role_set.edit_membership==false}"
-												     style="display: flex; align-items: center; cursor:pointer;">
-													<div [ngStyle]="{'width':'15px', 'height':'15px', 'margin-right':'10px', 'display':'inline-block', 'background-color':coll.colour}"> &nbsp; </div>
+													 [ngClass]="{'not-allowed': userdata.role_set.edit_membership==false}"
+													 style="display: flex; align-items: center; cursor:pointer;">
+												<div [ngStyle]="{'width':'15px', 'height':'15px', 'margin-right':'10px', 'display':'inline-block', 'background-color':coll.colour}"> &nbsp; </div>
 													{{coll.first_name}} {{coll.last_name}} ({{coll.short_code}})
 												</div>
 											</div>			
