@@ -82,7 +82,7 @@
 				<ion-label style="color:#999;font-size:16px">{{translate.instant('Anzahl')}}</ion-label>
 			</ion-col>
 			<ion-col size="auto">				
-				<ion-button type="button" class="quant-rm" [disabled]="anzRebox<2" (click)="anzRebox=anzRebox-1">
+				<ion-button type="button" class="quant-rm" [disabled]="anzRebox<2" (click)="anzReboxMinus()">
 					<ion-icon name="remove"></ion-icon>
 				</ion-button>	
 			</ion-col>
@@ -90,7 +90,7 @@
 				<ion-input readonly text-center type="numbers" [(ngModel)]="anzRebox"></ion-input>
 			</ion-col>
 			<ion-col size="auto">				
-				<ion-button type="button" class="quant-add" (click)="anzRebox=anzRebox+1">
+				<ion-button type="button" class="quant-add" (click)="anzReboxAdd()">
 					<ion-icon name="add"></ion-icon>
 				</ion-button>		
 			</ion-col>

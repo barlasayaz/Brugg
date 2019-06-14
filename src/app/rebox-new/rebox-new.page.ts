@@ -57,6 +57,18 @@ export class ReboxNewPage {
     this.showConfirmAlert();    
   }
 
+  anzReboxMinus() {
+    if (this.anzRebox < 2) {
+      this.anzRebox = 1;
+    } else {
+      this.anzRebox--;
+    }
+  }
+
+  anzReboxAdd() {
+    this.anzRebox++;
+  }
+
   showConfirmAlert() {
     console.log("Rebox Alert");
     let alert = this.alertCtrl.create({
