@@ -206,6 +206,7 @@ export class ProtocolOptEditComponent implements OnInit {
 
       const alert = this.alertCtrl.create({
         header: myTitel,
+        cssClass: 'promptClass',
         inputs: [
           {
             name: 'de',

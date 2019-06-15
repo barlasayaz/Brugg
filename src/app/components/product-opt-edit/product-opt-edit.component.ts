@@ -205,6 +205,7 @@ export class ProductOptEditComponent implements OnInit {
 
       const alert = this.alertCtrl.create({
         header: myTitel,
+        cssClass: 'promptClass',
         inputs: [
           {
             name: 'de',

@@ -1,3 +1,6 @@
+/*
+* Deprecated: Use nova instead
+*/
 @charset "UTF-8";
 
 body .ui-widget,
@@ -903,8 +906,7 @@ body .ui-accordion .ui-accordion-header.ui-state-active {
     color: #ffffff;
 }
 body .ui-accordion .ui-accordion-header.ui-state-active a {
-    /* color: #ffffff; */
-    color: mediumblue;
+    color: #ffffff;
 }
 body .ui-accordion .ui-accordion-header.ui-tabview-outline {
     border: 0 none;
@@ -1196,7 +1198,7 @@ body .ui-paginator .ui-paginator-pages {
     padding: 0;
 }
 body .ui-paginator .ui-paginator-pages .ui-paginator-page {
-   /* padding: 0.5em 0.625em; */
+    padding: 0.5em 0.625em;
     min-width: 2em;
     color: #0275d8;
     -moz-transition: background-color 0.3s;

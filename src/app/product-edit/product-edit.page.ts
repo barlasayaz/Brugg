@@ -671,6 +671,7 @@ export class ProductEditPage implements OnInit {
 
     let alert = this.alertCtrl.create({
       header: myTitel,
+      cssClass: 'promptClass',
       inputs: [
         {
           name: 'de',

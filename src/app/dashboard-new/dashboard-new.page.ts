@@ -350,15 +350,23 @@ export class DashboardNewPage implements OnInit {
         // this.customerFilters();
     };
 
-    async newPrAppointment(row) {
-        console.log("newPrAppointment");
-        const modal =
+    async newPrAppointment(row:any) {
+        console.log("newPrAppointment", row); 
+        if(row) { 
             await this.modalCtrl.create({
                 component: AppointmentEditComponent,
                 componentProps: {
-                    appointment: row, redirect: 1
+                    idCustomer: row.idCustomer, appointmentType: 0, redirect: 3
                 }
             }).then(x => x.present());
+        }
+        else
+        {
+            await this.modalCtrl.create({
+                component: AppointmentEditComponent
+            }).then(x => x.present());
+        }
+
     }
 
     search_all() {

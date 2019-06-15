@@ -120,9 +120,18 @@ export class AppointmentEditComponent implements OnInit {
     this.apiService.pvs4_get_customer_list(0).then((result: any) => {
       this.listCustomer = [];
       this.data_tree(result.list);
-      if (this.listCustomer.filter(x => x.id == this.idCustomer).length >= 1)
-        this.customer = this.listCustomer.filter(x => x.id == this.idCustomer)[0];
-      if (this.idCustomer > 0) this.contactPersonsList(this.customer.id);
+      /*
+      if(this.listCustomer.filter(x=> x.id == this.idCustomer).length>=1){
+        this.customer = this.listCustomer.filter(x=> x.id == this.idCustomer)[0];
+      } 
+      */
+      for (let i = 0; i < this.listCustomer.length; i++) {
+        if(this.listCustomer[i].id == this.idCustomer) {
+          this.customer = this.listCustomer[i];
+          console.log('customer: ', this.customer);
+        }
+      }
+      if(this.idCustomer > 0) this.contactPersonsList(this.idCustomer);
     });
   }
 
