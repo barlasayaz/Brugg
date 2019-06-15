@@ -8,20 +8,19 @@
 					(eventClick)="handleEventClick($event.detail)"
 					(eventDrop)="updateEvent($event.detail)">
 		</ng-fullcalendar>
-		</div>
-		
+	</div>		
 </div>
 
-<ion-fab slot="fixed" vertical="bottom" right  >
+<ion-fab slot="fixed" horizontal="end" vertical="bottom">
 	<ion-item *ngIf="viewMode>0" class="peopleFilter">  
-			<ion-label position="floating">{{translate.instant('Filter')}}</ion-label>
-			<ion-select [(ngModel)]="peopleFilter" 
-									okText="{{translate.instant('okay')}}" 
-									(ionChange)="changeFilter()"
-									cancelText="{{translate.instant('dismiss')}}">
-			  <ion-select-option value="none">{{translate.instant('Alle Mitarbeiter')}}</ion-select-option>
-				<ion-select-option *ngFor="let p of people" [value]="p.email">{{p.first_name + " " + p.last_name}}</ion-select-option>
-			</ion-select>                  
+		<ion-label position="floating">{{translate.instant('Filter')}}</ion-label>
+		<ion-select [(ngModel)]="peopleFilter" 
+								okText="{{translate.instant('okay')}}" 
+								(ionChange)="changeFilter()"
+								cancelText="{{translate.instant('dismiss')}}">
+			<ion-select-option value="none">{{translate.instant('Alle Mitarbeiter')}}</ion-select-option>
+			<ion-select-option *ngFor="let p of people" [value]="p.email">{{p.first_name + " " + p.last_name}}</ion-select-option>
+		</ion-select>                  
 	</ion-item>
 	<ion-fab-button color="tertiary">
 		<ion-icon name="menu"></ion-icon>
@@ -29,8 +28,7 @@
 	<ion-fab-list side="top">
 		<ion-fab-button 
 				(click)="newAppointment()" 
-				class="btn-primary" 
-				style="color:white"
+				color="primary"
 				(mouseover)="mouseover(1)" 
 				(mouseout)="mouseout(1)">				
 			<ion-icon name="add"></ion-icon>
@@ -38,8 +36,7 @@
 		<ion-label [hidden]="!mouseoverButton1">{{'Termin hinzufügen' | translate}}</ion-label>
 		<ion-fab-button 
 				(click)="setView(0);" 
-				class="btn-primary" 
-				style="color:white"
+				color="primary"
 				(mouseover)="mouseover(2)"
 				(mouseout)="mouseout(2)">				
 			<ion-icon name="calendar"></ion-icon>
@@ -47,8 +44,7 @@
 		<ion-label [hidden]="!mouseoverButton2">{{'Meine Termine' | translate}}</ion-label>
 		<ion-fab-button 
 				(click)="setView(1);" 
-				class="btn-primary" 
-				style="color:white"
+				color="primary"
 				(mouseover)="mouseover(3)" 
 				(mouseout)="mouseout(3)">				
 			<ion-icon name="people"></ion-icon>
@@ -56,8 +52,7 @@
 		<ion-label [hidden]="!mouseoverButton3">{{'Kundenbesuch' | translate}}</ion-label>
 		<ion-fab-button 					
 				(click)="setView(2);" 
-				class="btn-primary" 
-				style="color:white"
+				color="primary"
 				(mouseover)="mouseover(4)" 
 				(mouseout)="mouseout(4)">				
 			<ion-icon name="eye"></ion-icon>
@@ -65,8 +60,7 @@
 		<ion-label [hidden]="!mouseoverButton4">{{'Prüfung' | translate}}</ion-label>
 		<ion-fab-button 					
 				(click)="setView(3);" 
-				class="btn-primary" 
-				style="color:white"
+				color="primary"
 				(mouseover)="mouseover(5)" 
 				(mouseout)="mouseout(5)">				
 			<ion-icon name="cafe"></ion-icon>

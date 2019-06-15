@@ -1,48 +1,78 @@
+.container-fix {
+  padding: 0px 8px !important;
+}
 
-    .container-fix {
-        padding: 0px 8px !important;
-    }
-
-    .calendar .fc-toolbar .fc-center {
-        -webkit-align-items: center;
-                align-items: center;
-    }
+.calendar .fc-toolbar .fc-center {
+  -webkit-align-items: center;
+          align-items: center;
+}
 
 .fc .fc-toolbar .fc-prev-button span:before {
-    content: "\02039" !important;
-    font-weight: 700;
-    font-size: 200%;
+  content: "\02039" !important;
+  font-weight: 700;
+  font-size: 200%;
 }
 .fc .fc-toolbar .fc-prev-button span {
-    top: 6px !important;
-    height: 100%;
+  top: 6px !important;
+  height: 100%;
 }
 .fc .fc-toolbar .fc-next-button span:before {
-    content: "\0203A" !important;
-    font-weight: 700;
-    font-size: 200%;
+  content: "\0203A" !important;
+  font-weight: 700;
+  font-size: 200%;
 }
 .fc .fc-toolbar .fc-next-button span {
-    top: 6px !important;
-    height: 100%;
+  top: 6px !important;
+  height: 100%;
+}
+.fc .fc-content {
+  //mix-blend-mode:  exclusion;
+  color: white;
 }
 
 .fc-myCustomButton-button {margin-left: 50px!important}
 
-ion-fab-button {
-    margin-left: 140px;
-    overflow: visible;
-    position: relative;
-  }
-  ion-fab-list {
-    ion-label {
-      position: relative;
-      top: 40px;
-      right: 25px;
-      color: white;
-      background-color: rgba(0,0,0,0.7);
+/* button[ion-fab] {
+  overflow: visible;
+  position: relative;
+
+  ion-label {
+      position: absolute;
+      top: -8px;
+      right: 40px;    
+      color: black;
+      background-color: rgba(139, 138, 138, 0.7);
       line-height: 24px;
       padding: 4px 8px;
       border-radius: 4px;
-    }
+      font-size: 14px;
+      font-family: Arial, Helvetica, sans-serif;
   }
+}    
+.fab{
+  contain: layout;
+} */
+
+ion-fab-button {
+  margin-left: 140px;
+  overflow: visible;
+  position: relative;
+}
+ion-fab-list {
+  ion-label {
+    position: relative !important;
+    top: 40px !important;
+    right: 25px !important;
+    color: white !important;
+    background-color: rgba(0,0,0,0.7);
+    line-height: 24px !important;
+    padding: 4px 8px !important;
+    border-radius: 4px !important;
+  }
+}
+
+.peopleFilter{
+  right: 80px;
+  position: absolute;
+  width: 180px;
+}

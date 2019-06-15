@@ -36,7 +36,7 @@
       <!-- Row 2 -->
       <ion-row>
         <ion-col size-xl="12" size-lg="12" size-md="12" size-sm="12" size="12">
-          <ion-item>
+          <ion-item lines="none">
             <ion-label position="floating">{{translate.instant('Ansprechpartner')}}</ion-label>
             <ionic-selectable item-content 
                               [ngClass]="{required:fehler}" 
@@ -46,8 +46,7 @@
                               itemTextField="name"
                               [canSearch]="true"
                               (onChange)="userChange($event)">
-            </ionic-selectable> 
-  
+            </ionic-selectable>   
           </ion-item>
         </ion-col>       
       </ion-row>
