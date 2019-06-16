@@ -1,4 +1,4 @@
-import { Component,OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NavController, AlertController, Platform, LoadingController, ModalController } from '@ionic/angular';
 import { CameraOptions, Camera } from '@ionic-native/camera/ngx';
 import { ApiService } from '../services/api';
@@ -28,7 +28,7 @@ export class ProtocolDetailsPage implements OnInit {
   public activProtocol: any = {};
   public idCustomer: number = 0;
   public lang: string = localStorage.getItem('lang');
-  public company: string = "";
+  public company: string = '';
   public activProduct: any = {};
   public listProduct: any[] = [];
   public uploadedFiles: any[] = [];
@@ -60,8 +60,7 @@ export class ProtocolDetailsPage implements OnInit {
 
   }
 
-  ngOnInit()
-  {
+  ngOnInit() {
 
     this.platform.ready().then(() => {
       if (this.platform.is('ios') ||
@@ -74,10 +73,9 @@ export class ProtocolDetailsPage implements OnInit {
         this.mobilePlatform = true;
         this.mouseoverButton1 = true;
         this.mouseoverButton2 = true;
-        console.log("platform mobile:", this.platform.platforms());
-      }
-      else {
-        console.log("platform not mobile:", this.platform.platforms());
+        console.log('platform mobile:', this.platform.platforms());
+      } else {
+        console.log('platform not mobile:', this.platform.platforms());
         this.mobilePlatform = false;
         this.mouseoverButton1 = false;
         this.mouseoverButton2 = false;
@@ -86,12 +84,12 @@ export class ProtocolDetailsPage implements OnInit {
 
     this.url = this.apiService.pvsApiURL;
     this.route.queryParams.subscribe(params => {
-      this.idCustomer = params["idCustomer"];
-      this.idProtocol = params["idProtocol"];
+      this.idCustomer = params['idCustomer'];
+      this.idProtocol = params['idProtocol'];
       //this.company = params["company"];
     });
 
-    console.log("idProtocol :", this.idProtocol);
+    console.log('idProtocol :', this.idProtocol);
     this.loadProtocol(this.idProtocol);
     this.dateiListe();
   }
@@ -102,13 +100,13 @@ export class ProtocolDetailsPage implements OnInit {
       this.activProtocol.items = JSON.parse(this.activProtocol.items);
       let productList = JSON.parse(this.activProtocol.product);
       productList.forEach(element => {
-        console.log("product list :", element);
+        console.log('product list :', element);
         this.loadProduct(element.id);
       });
-      if (this.activProtocol.result == 0) this.activProtocol.resultText = this.translate.instant('betriebsbereit');
-      if (this.activProtocol.result == 1) this.activProtocol.resultText = this.translate.instant('reparieren');
-      if (this.activProtocol.result == 3) this.activProtocol.resultText = this.translate.instant('unauffindbar');
-      if (this.activProtocol.result == 4) this.activProtocol.resultText = this.translate.instant('ausmustern');
+      if (this.activProtocol.result == 0) { this.activProtocol.resultText = this.translate.instant('betriebsbereit'); }
+      if (this.activProtocol.result == 1) { this.activProtocol.resultText = this.translate.instant('reparieren'); }
+      if (this.activProtocol.result == 3) { this.activProtocol.resultText = this.translate.instant('unauffindbar'); }
+      if (this.activProtocol.result == 4) { this.activProtocol.resultText = this.translate.instant('ausmustern'); }
       console.log('loadProtocol :', this.activProtocol);
       console.log('loadProduct : ', this.listProduct);
     });
@@ -138,7 +136,7 @@ export class ProtocolDetailsPage implements OnInit {
   }
 
   protocolDeactivate() {
-    console.log("delete");
+    console.log('delete');
     this.showConfirmAlert(this.activProtocol);
   }
 
@@ -158,13 +156,13 @@ export class ProtocolDetailsPage implements OnInit {
           handler: () => {
             activProtocol.active = 0;
             let obj = JSON.parse(JSON.stringify(this.activProtocol));
-            obj["items"] = JSON.stringify(this.activProtocol["items"]);
-            obj["title"] = JSON.stringify(this.activProtocol["title"]);
+            obj['items'] = JSON.stringify(this.activProtocol['items']);
+            obj['title'] = JSON.stringify(this.activProtocol['title']);
             let pipe = new DatePipe('en-US');
-            if (obj.protocol_date) obj.protocol_date = pipe.transform(this.activProtocol["protocol_date"], 'yyyy-MM-dd HH:mm:ss');
+            if (obj.protocol_date) { obj.protocol_date = pipe.transform(this.activProtocol['protocol_date'], 'yyyy-MM-dd HH:mm:ss'); }
             this.apiService.pvs4_set_protocol(obj).then((result: any) => {
               console.log('result: ', result);
-              this.navCtrl.navigateBack("/protocol-list/" + this.idCustomer);
+              this.navCtrl.navigateBack('/protocol-list/' + this.idCustomer);
             });
           }
         }
@@ -173,7 +171,7 @@ export class ProtocolDetailsPage implements OnInit {
   }
 
   printPdf() {
-    var src = 'assets/imgs/banner_'+this.userdata.licensee+'.jpg';
+    var src = 'assets/imgs/banner_' + this.userdata.licensee + '.jpg';
     let pipe = new DatePipe('en-US');
     let protocolList = [];
     let columns = ['title', 'value'];
@@ -192,7 +190,7 @@ export class ProtocolDetailsPage implements OnInit {
                         alignment: 'center'
                       },
                       {
-                        text: "",
+                        text: '',
                         color: '#ffffff',
                         fillColor: '#009de0',
                         colSpan: 2,
@@ -201,17 +199,16 @@ export class ProtocolDetailsPage implements OnInit {
     ];
     bodyProtocol.push(prtclTitle);
 
-    protocolList.push({ "title": this.translate.instant('Protokoll Nummer'), "value": protocol.protocol_number});
-    protocolList.push({ "title": this.translate.instant('Datum'), "value": pipe.transform(protocol.protocol_date, 'dd.MM.yyyy')});
-    protocolList.push({ "title": this.translate.instant('Prüfergebnis'), "value": protocol.resultText});
-    protocolList.push({ "title": this.translate.instant('nächste Prüfung'), "value": pipe.transform(protocol.protocol_date_next, 'dd.MM.yyyy')});
+    protocolList.push({ 'title': this.translate.instant('Protokoll Nummer'), 'value': protocol.protocol_number});
+    protocolList.push({ 'title': this.translate.instant('Datum'), 'value': pipe.transform(protocol.protocol_date, 'dd.MM.yyyy')});
+    protocolList.push({ 'title': this.translate.instant('Prüfergebnis'), 'value': protocol.resultText});
+    protocolList.push({ 'title': this.translate.instant('nächste Prüfung'), 'value': pipe.transform(protocol.protocol_date_next, 'dd.MM.yyyy')});
 
     protocolItems.forEach(elementItems => {
       if (elementItems.title[this.lang] != '' && elementItems.value != undefined) {
-        protocolList.push({ "title": elementItems.title[this.lang], "value": elementItems.value });
-      }
-      else {
-        protocolList.push({ "title": elementItems.title[this.lang], "value": ' ' });
+        protocolList.push({ 'title': elementItems.title[this.lang], 'value': elementItems.value });
+      } else {
+        protocolList.push({ 'title': elementItems.title[this.lang], 'value': ' ' });
       }
     });
 
@@ -226,7 +223,7 @@ export class ProtocolDetailsPage implements OnInit {
     });
   
     let prtclBody = bodyProtocol;
-    console.log("protocol body :", prtclBody);
+    console.log('protocol body :', prtclBody);
     
     // Product
     var bodyProduct = [];
@@ -239,7 +236,7 @@ export class ProtocolDetailsPage implements OnInit {
                         alignment: 'center'
                       },
                       {
-                        text: "",
+                        text: '',
                         color: '#ffffff',
                         fillColor: '#009de0',
                         colSpan: 2,
@@ -249,54 +246,48 @@ export class ProtocolDetailsPage implements OnInit {
     bodyProduct.push(prdctTitle);
 
     product.forEach(element => {
-      console.log("product element :", this.translate.instant('Titel'), element.title);
+      console.log('product element :', this.translate.instant('Titel'), element.title);
 
       if (element.title != undefined) {
         bodyProduct.push([{ text: this.translate.instant('Titel'), color: '#000000', fillColor: '#8bd8f9' },
                           { text: element.title, color: '#000000', fillColor: '#8bd8f9' }]);
-      }
-      else {
+      } else {
         bodyProduct.push([{ text: this.translate.instant('Titel'), color: '#000000', fillColor: '#8bd8f9' },
-                          { text: "", color: '#000000', fillColor: '#8bd8f9' }]);       
+                          { text: '', color: '#000000', fillColor: '#8bd8f9' }]);       
       }
       if (element.id != undefined) {
         bodyProduct.push([{ text: 'DB-ID' }, { text: element.id }]);
-      }
-      else {
-        bodyProduct.push([{ text: 'DB-ID' },{ text: "" }]);       
+      } else {
+        bodyProduct.push([{ text: 'DB-ID' }, { text: '' }]);       
       }
       if (element.id_number != undefined) {
         bodyProduct.push([{ text: '#' }, { text: element.id_number }]);
-      }
-      else {
-        bodyProduct.push([{ text: '#' },{ text: "" }]);       
+      } else {
+        bodyProduct.push([{ text: '#' }, { text: '' }]);       
       }
       if (element.articel_no != undefined) {
         bodyProduct.push([{ text: this.translate.instant('Articel No') }, { text: element.articel_no }]);
-      }
-      else {
-        bodyProduct.push([{ text: this.translate.instant('Articel No') },{ text: "" }]);       
+      } else {
+        bodyProduct.push([{ text: this.translate.instant('Articel No') }, { text: '' }]);       
       }
       if (element.author != undefined) {
         bodyProduct.push([{ text: this.translate.instant('Autor') }, { text: element.author }]);
       } else {
-        bodyProduct.push([{ text: this.translate.instant('Autor') },{ text: "" }]);    
+        bodyProduct.push([{ text: this.translate.instant('Autor') }, { text: '' }]);    
       }
       if (element.check_interval != undefined) {
         bodyProduct.push([{ text: this.translate.instant('Intervall Prüfen') }, { text: element.check_interval }]);
+      } else {
+        bodyProduct.push([{ text: this.translate.instant('Intervall Prüfen') }, { text: '' }]);       
       }
-      else {
-        bodyProduct.push([{ text: this.translate.instant('Intervall Prüfen') },{ text: "" }]);       
-      }
-     
+
       // product oprtions
       element.items.forEach(elementItems => {
-        console.log("product oprtions :", elementItems.title, '- ', elementItems.title[this.lang], ' - ', elementItems.value);
+        console.log('product oprtions :', elementItems.title, '- ', elementItems.title[this.lang], ' - ', elementItems.value);
         if (elementItems.title[this.lang] != '' && elementItems.value != undefined) {
           bodyProduct.push([{ text: elementItems.title[this.lang]}, {text: elementItems.value }]);
-        }
-        else {
-          bodyProduct.push([{ text: elementItems.title[this.lang]}, {text: "" }]);
+        } else {
+          bodyProduct.push([{ text: elementItems.title[this.lang]}, {text: '' }]);
         }
       });
 
@@ -304,9 +295,9 @@ export class ProtocolDetailsPage implements OnInit {
 
     let prdctBody = bodyProduct;  
 
-    console.log("product body :", prdctBody);
+    console.log('product body :', prdctBody);
 
-    this.pdf.toDataURL(src,resDataURL => {
+    this.pdf.toDataURL(src, resDataURL => {
       var docDefinition = {
         pageSize: 'A4',
         pageOrientation: 'landscape',
@@ -314,7 +305,7 @@ export class ProtocolDetailsPage implements OnInit {
         header: {
           columns: [
             {
-              "image": resDataURL, "width": 800, margin: 20
+              'image': resDataURL, 'width': 800, margin: 20
             }
           ]
         },
@@ -361,7 +352,7 @@ export class ProtocolDetailsPage implements OnInit {
         ]
       };
       
-      this.pdf.createPdf(docDefinition,'download',this.translate.instant("Protokoll Details".replace(/\s/g, "")) + ".pdf");
+      this.pdf.createPdf(docDefinition, 'download', this.translate.instant('Protokoll Details'.replace(/\s/g, '')) + '.pdf');
 
     });  
   }
@@ -373,9 +364,9 @@ export class ProtocolDetailsPage implements OnInit {
   }
 
   onUpload(event) {
-    console.log("setFile event :", event);
+    console.log('setFile event :', event);
     for (let file of event.files) {
-      console.log("file", file);
+      console.log('file', file);
       this.uploadedFiles.push(file);
     }
 
@@ -397,9 +388,9 @@ export class ProtocolDetailsPage implements OnInit {
         {
           text: this.translate.instant('ja'),
           handler: () => {
-            this.params = { "id": this.idProtocol, "type": 'protocol', 'dateiname': datei };
+            this.params = { 'id': this.idProtocol, 'type': 'protocol', 'dateiname': datei };
             this.apiService.pvs4_del_file(this.params).then((result) => {
-              console.log("result :", result);
+              console.log('result :', result);
               this.dateiListe();
             });
           }
@@ -411,26 +402,28 @@ export class ProtocolDetailsPage implements OnInit {
 
   dateiListe() {
     this.apiService.pvs4_get_file(this.idProtocol, 'protocol').then((result) => {
-      console.log("dateiliste", result);
-      this.dateien = result["files"];
-      this.link = result["link"];
-      this.file_link = result["file_link"];
+      console.log('dateiliste', result);
+      this.dateien = result['files'];
+      this.link = result['link'];
+      this.file_link = result['file_link'];
     });
   }
 
   mouseover(buttonNumber) {
-    if(buttonNumber == 1) 
+    if (buttonNumber == 1) { 
       this.mouseoverButton1 = true;
-    else if(buttonNumber == 2)
+    } else if (buttonNumber == 2) {
       this.mouseoverButton2 = true;
+         }
   }
 
   mouseout(buttonNumber) {
-    if(this.mobilePlatform == false) {
-      if(buttonNumber == 1) 
+    if (this.mobilePlatform == false) {
+      if (buttonNumber == 1) { 
         this.mouseoverButton1 = false;
-      else if(buttonNumber == 2)
+      } else if (buttonNumber == 2) {
         this.mouseoverButton2 = false;
+           }
     }
   }
 
@@ -456,30 +449,30 @@ export class ProtocolDetailsPage implements OnInit {
 
   async uploadFile() {
     let loader = await this.loadingCtrl.create({
-      message: "Uploading..."
+      message: 'Uploading...'
     });
     loader.present();
     const fileTransfer: FileTransferObject = this.transfer.create();
 
-    let imageName = this.imageURI.substr(this.imageURI.indexOf('/cache/')+7);
+    let imageName = this.imageURI.substr(this.imageURI.indexOf('/cache/') + 7);
     let options: FileUploadOptions = {
       fileKey: 'file',
       fileName: 'protocol_' + imageName,
       chunkedMode: false,
-      mimeType: "image/jpeg",
+      mimeType: 'image/jpeg',
       httpMethod: 'POST',
       params: {
         'dir': 'protocol_' + this.idProtocol,
         'token': window.localStorage['access_token']
       }
     }
-    
-    console.log("imageURI :", this.imageURI);
-    console.log("upload :", this.url + 'upload.php');
+
+    console.log('imageURI :', this.imageURI);
+    console.log('upload :', this.url + 'upload.php');
 
     fileTransfer.upload(this.imageURI, this.url + 'upload.php', options)
       .then((data) => {
-        console.log("Uploaded Successfully :", data);
+        console.log('Uploaded Successfully :', data);
         this.dateiListe();
         loader.dismiss();
       }, (err) => {

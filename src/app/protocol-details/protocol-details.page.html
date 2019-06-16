@@ -53,6 +53,13 @@
 									<div class="thead">
 										<div class="tr table-header">
 											<div class="th">{{'Dateianhänge' | translate}}</div>
+											<div *ngIf="userdata.role_set.check_products" class="header-buttons">
+												<ion-button small
+															(click)="getCamera()"
+															[disabled]="!mobilePlatform">
+													<ion-icon name="camera"></ion-icon>
+												</ion-button>
+											</div>  
 										</div>
 									</div>
 									<div class="tbody">
