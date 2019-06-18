@@ -23,7 +23,7 @@
         border: 1px solid #ccc !important;
     }
 
-    button[ion-fab] {
+     /*ion-fab-button {
         overflow: visible;
         position: relative;
     
@@ -42,9 +42,9 @@
     }    
     .fab{
         contain: layout;
-    }
+    }*/
 
-    ion-fab-button {
+   ion-fab-button {
         margin-left: 140px;
         overflow: visible;
         position: relative;

@@ -1,11 +1,36 @@
-    .container-fix {
-		padding: 10px 0px 19px !important;
+
+	.settings-delete {
+		ion-button.btn-danger {
+			position: relative;
+			margin-top: -3px;
+		}
 	}
 
-	.settings-delete button {
-		right: 0 !important;
+	.pvs4-full-select{
+		width: auto !important;
+		display: flex;
+		margin-top: 0 !important;
+		margin-right: 10px;
+		ion-select {
+			margin-top: -3px;
+			position: relative;
+			button {
+				position: absolute;
+			}
+		}
+	}
+
+	.settings-delete-inner {
+		display: flex;
+		-webkit-justify-content: flex-end;
+				justify-content: flex-end;
 	}
 
 	.item-trns {
-		--background: transparent !important;
+		background: transparent !important;
+	}
+
+	.tr.table-body {
+		-webkit-align-items: center;
+		        align-items: center;
 	}
