@@ -73,8 +73,9 @@
 										<div class="tr table-header">
 											<div class="th">{{'Dateianhänge' | translate}}</div>
 											<div *ngIf="(userdata.role==1)||(userdata.role==2)" class="header-buttons">
-												<ion-button size="small" (click)="getCamera()"
-													[disabled]="!mobilePlatform">
+												<ion-button size="small" 
+															(click)="getCamera()"
+															[disabled]="!mobilePlatform">
 													<ion-icon name="camera"></ion-icon>
 												</ion-button>
 											</div>

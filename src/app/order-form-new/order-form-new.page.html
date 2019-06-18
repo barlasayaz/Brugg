@@ -289,7 +289,7 @@
                   <div class="kunden-col" style="border:2px solid #ccc;">
                     <div class="table-info"> 
                       <div class="tbody">
-                        <div class="tr table-body" >
+                        <div class="tr table-body">
                           <ion-label>
                               {{'ID-Nummer beibehalten' | translate}}
                           </ion-label>
@@ -302,66 +302,91 @@
                   </div>  
                 </ion-col>             
               </ion-row>
-              <ion-row>
-                <ion-col size-xl="12" size-lg="12" size-md="12" size-sm="12" size="12">  
-                <!-- Product Info -->
-                  <div class="kunden-col" style="border:2px solid #ccc;">
-                    <div class="table-info">      
-                      <div class="thead">
-                        <div class="tr table-subheader table-subheader-fix">
-                          <div class="th">{{'Menge' | translate}}</div>
-                          <div class="th">{{'PVS ID' | translate}}</div>
-                          <div class="th">{{'Artikel-Nr.' | translate}}</div>
-                          <div class="th">{{'Bezeichnung' | translate}}</div>
-                          <ion-item lines="none" style="--background: transparent;">
-                            <ion-button size="small"
-                                        class="opt-add"
-                                        (click)="addProduct()"
-                                        style="padding: 0px 0px 0px 0px;">
-                              <ion-icon name="add"></ion-icon>
-                            </ion-button>
-                          </ion-item>
-                        </div>
-                        <div class="tr table-subheader table-subheader-fix" 
-                             style="background: white"
-                             *ngFor="let product of products; let prdctInd = index">
-                          <div class="th">
-                            <ion-input type="text" 
-                                       style="color: black"
-                                       [(ngModel)]="product.quantity">
-                            </ion-input>
-                          </div>
-                          <div class="th">
-                            <ion-input type="text" 
-                                       style="color: black"
-                                       [(ngModel)]="product.pvsid">
-                            </ion-input>
-                          </div>
-                          <div class="th">
-                            <ion-input type="text" 
-                                       style="color: black"
-                                       [(ngModel)]="product.articleno">
-                            </ion-input>
-                          </div>
-                          <div class="th">
-                            <ion-input type="text" 
-                                       style="color: black"
-                                       [(ngModel)]="product.designation">
-                            </ion-input>
-                          </div>
-                            <ion-item lines="none">
-                              <ion-button size="small"
-                                          class="opt-remove"
-                                          (click)="remProduct(prdctInd)"
-                                          style="padding: 0px 0px 0px 0px;">
-                                <ion-icon name="remove"></ion-icon>
-                              </ion-button>
-                            </ion-item>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+              <!-- Product Info -->
+              <ion-row style="padding-left: 5px; padding-right: 5px; font-size: 13px;">
+                <ion-col size-xl="2" size-lg="2" size-md="2" size-sm="2" size="2"
+                         style="border:1px solid #ccc; 
+                                background: #005e86; 
+                                color: white;
+                                padding: 10px;">
+                  <div>{{'Menge' | translate}}</div>
                 </ion-col>
+                <ion-col size-xl="2" size-lg="2" size-md="2" size-sm="2" size="2" 
+                         style="border:1px solid #ccc; 
+                                background: #005e86; 
+                                color: white;
+                                padding: 10px;">
+                  <div>{{'PVS ID' | translate}}</div>
+                </ion-col>
+                <ion-col size-xl="2" size-lg="2" size-md="2" size-sm="2" size="2" 
+                         style="border:1px solid #ccc; 
+                               background: #005e86; 
+                               color: white;
+                               padding: 10px;">
+                  <div>{{'Artikel-Nr.' | translate}}</div>
+                </ion-col>
+                <ion-col size-xl="5" size-lg="5" size-md="5" size-sm="5" size="5" 
+                         style="border:1px solid #ccc;
+                               background: #005e86; 
+                               color: white; 
+                               padding: 10px;">
+                  <div>{{'Bezeichnung' | translate}}</div>
+                </ion-col>   
+                <ion-col size-xl="1" size-lg="1" size-md="1" size-sm="1" size="1" 
+                         style="border:1px solid #ccc; 
+                               background: #005e86; 
+                               color: white;
+                               text-align: center;
+                               padding: 5px 0px 5px 0px;">
+                  <ion-button size="small"
+                              style="font-size: 0.7em;"
+                              (click)="addProduct()">
+                    <ion-icon name="md-add"></ion-icon>
+                  </ion-button>
+                </ion-col>   
+              </ion-row>
+              <ion-row style="padding-left: 5px; padding-right: 5px; font-size: 13px;"
+                       *ngFor="let product of products; let prdctInd = index">
+                <ion-col size-xl="2" size-lg="2" size-md="2" size-sm="2" size="2" 
+                        style="border:1px solid #ccc;
+                               padding-top: 20px;">
+                  <ion-input type="text" 
+                            style="color: black"
+                            [(ngModel)]="product.quantity">
+                  </ion-input>
+                </ion-col>
+                <ion-col size-xl="2" size-lg="2" size-md="2" size-sm="2" size="2" 
+                        style="border:1px solid #ccc; 
+                               padding-top: 20px;">
+                  <ion-input type="text" 
+                            style="color: black"
+                            [(ngModel)]="product.pvsid">
+                  </ion-input>
+                </ion-col>
+                <ion-col size-xl="2" size-lg="2" size-md="2" size-sm="2" size="2" 
+                        style="border:1px solid #ccc;
+                               padding-top: 20px;">
+                  <ion-input type="text" 
+                            style="color: black"
+                            [(ngModel)]="product.articleno">
+                  </ion-input>
+                </ion-col>
+                <ion-col size-xl="5" size-lg="5" size-md="5" size-sm="5" size="5" 
+                        style="border:1px solid #ccc;
+                               padding: 0px 5px 10px 5px;">
+                  <ion-textarea type="text" 
+                                style="color: black; border:1px solid #ccc;"
+                                [(ngModel)]="product.designation">
+                  </ion-textarea>
+                </ion-col>   
+                <ion-col size-xl="1" size-lg="1" size-md="1" size-sm="1" size="1"
+                         style="border:1px solid #ccc; text-align: center; padding: 18px 0px 5px 0px;">
+                  <ion-button size="small"
+                              style="font-size: 0.7em; --background: red;"
+                              (click)="remProduct(prdctInd)">
+                    <ion-icon name="remove"></ion-icon>
+                  </ion-button>
+                </ion-col>   
               </ion-row>
               <!-- Notes -->
               <ion-row>

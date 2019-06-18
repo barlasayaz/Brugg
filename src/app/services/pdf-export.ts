@@ -7,7 +7,7 @@ import pdfFonts from 'pdfmake/build/vfs_fonts';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 import { File } from '@ionic-native/file/ngx';
 import { FileOpener } from '@ionic-native/file-opener/ngx';
-
+import { TranslateService } from '@ngx-translate/core';
 
 /*
   Generated class for the PdfExportProvider provider.
@@ -25,6 +25,7 @@ export class PdfExportService {
         public apiProvider: ApiService,
         public platform: Platform,
         private file: File,
+        public translate: TranslateService,
         private fileOpener: FileOpener) {
             this.specialCustomer = [
               {
@@ -56,6 +57,7 @@ export class PdfExportService {
                             fileName: string) {
                                 
           let src = 'assets/imgs/banner_'+this.userdata.licensee+'.jpg';
+          let pageDesc: string = this.translate.instant('Seite');
   /*         let addr1 = 'Brugg Drahtseil AG';
           let addr2 = 'Wydenstrasse 36';
           let addr3 = 'CH-5242 Birr';
@@ -107,6 +109,9 @@ export class PdfExportService {
                           fontSize: 10
                       }
                       ],
+                      footer: function (currentPage, pageCount) {
+                        return { text: pageDesc + ' ' + currentPage.toString() + ' / ' + pageCount, alignment: 'center' }
+                      },
                       styles: {
                           title: {
                               fontSize: 16,
