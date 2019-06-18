@@ -239,6 +239,7 @@ export class ProductDetailsPage implements OnInit {
   }
 
   printPdf() {
+    let pageDesc: string = this.translate.instant('Seite');
     let productList = [];
     const columns = ['title', 'value'];
     const product = this.listProduct;
@@ -416,7 +417,10 @@ export class ProductDetailsPage implements OnInit {
             ],
             columnGap: 10
           }
-        ]
+        ],
+        footer: function (currentPage, pageCount) {
+          return { text: pageDesc + ' ' + currentPage.toString() + ' / ' + pageCount, alignment: 'center' }
+        }
       };
 
       this.pdf.createPdf(docDefinition, 'download', this.translate.instant('Produkt Details'.replace(/\s/g, '')) + '.pdf');

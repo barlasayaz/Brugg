@@ -241,7 +241,7 @@ export class OrderFormNewPage {
       tmpProducts.push(this.products[i]);
     }
     this.activOrderForm.products = tmpProducts;
-    
+
     this.printPdf('base64').then(async (result:string) => {
       console.log("pdf result :", result);
       let modalPage = await this.modalCtrl.create({
@@ -262,7 +262,8 @@ export class OrderFormNewPage {
     });     
   }
 
-  async printPdf(pdfMethod: any) {  
+  async printPdf(pdfMethod: any) {
+    let pageDesc: string = this.translate.instant('Seite');
     let loader = await this.loadingCtrl.create({
       message: this.translate.instant("Bitte warten")
     });
@@ -932,7 +933,7 @@ export class OrderFormNewPage {
                   },
                   table: {
                     headerRows: 1,
-                    widths: ['*','*','*','*'],
+                    widths: [50, 80, 80, '*'],
                     body: bodyTableValue
                   }
                 }
@@ -983,7 +984,10 @@ export class OrderFormNewPage {
               ],
               columnGap: 10
             }
-          ]
+          ],
+          footer: function (currentPage, pageCount) {
+            return { text: pageDesc + ' ' + currentPage.toString() + ' / ' + pageCount, alignment: 'center' }
+          }
         };
         
         this.pdf.createPdf(docDefinition, pdfMethod, this.translate.instant("Bestellformular".replace(/\s/g, "")) + ".pdf").then((result) => {

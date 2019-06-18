@@ -171,6 +171,7 @@ export class ProtocolDetailsPage implements OnInit {
   }
 
   printPdf() {
+    let pageDesc: string = this.translate.instant('Seite');
     var src = 'assets/imgs/banner_' + this.userdata.licensee + '.jpg';
     let pipe = new DatePipe('en-US');
     let protocolList = [];
@@ -349,7 +350,10 @@ export class ProtocolDetailsPage implements OnInit {
             ],
             columnGap: 10
           }
-        ]
+        ],
+        footer: function (currentPage, pageCount) {
+          return { text: pageDesc + ' ' + currentPage.toString() + ' / ' + pageCount, alignment: 'center' }
+        }
       };
       
       this.pdf.createPdf(docDefinition, 'download', this.translate.instant('Protokoll Details'.replace(/\s/g, '')) + '.pdf');
