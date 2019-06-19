@@ -254,18 +254,26 @@ export class ProductListPage implements OnInit {
 
         this.events.publish('prozCustomer', 0);
         this.apiService.pvs4_get_product_list(this.idCustomer).then((result: any) => {
-            // console.log("ionViewDidLoad result :", result);
-            this.productListAll = JSON.parse(JSON.stringify(result.list));
+            try {
+                let list = JSON.parse(JSON.stringify(result.list));
+                this.productListAll = list;
+            } catch (e) {
+                console.log('JSON.parse err :', e);
+            }
 
-            if (!localStorage.getItem('filter_values_product')) {
-                this.columnFilterValues = JSON.parse(localStorage.getItem('filter_values_product'));
-            }
-            if (!localStorage.getItem('split_filter_product')) {
-                this.splitFilter = JSON.parse(localStorage.getItem('split_filter_product'));
-                this.funcHeightCalc();
-            }
-            if (!localStorage.getItem('show_columns_product')) {
-                this.selectedColumns = JSON.parse(localStorage.getItem('show_columns_product'));
+            try {
+                if (localStorage.getItem('filter_values_product') != undefined) {
+                    this.columnFilterValues = JSON.parse(localStorage.getItem('filter_values_product'));
+                }
+                if (localStorage.getItem('split_filter_product') != undefined) {
+                    this.splitFilter = JSON.parse(localStorage.getItem('split_filter_product'));
+                    this.funcHeightCalc();
+                }
+                if (localStorage.getItem('show_columns_product') != undefined) {
+                    this.selectedColumns = JSON.parse(localStorage.getItem('show_columns_product'));
+                }
+            } catch (e) {
+                console.log('JSON.parse filter err :', e);
             }
 
             this.title_translate(this.productListAll);
@@ -276,29 +284,35 @@ export class ProductListPage implements OnInit {
                 if (pr) {
                     if (pr.length > 0) {
                         // console.log("pr :", pr);
-                        pr = JSON.parse(pr);
-                        if (pr.protocol_date) {
-                            this.productListAll[index].data.last_protocol_date = this.apiService.mysqlDate2view(pr.protocol_date);
-                        }
-                        if (pr.protocol_date_next) {
-                            this.productListAll[index].data.last_protocol_next = this.apiService.mysqlDate2view(pr.protocol_date_next);
-                        }
-                        if (pr.result) {
-                            if (pr.result == 1) {
-                                this.productListAll[index].data.last_protocol_next = this.translate.instant('reparieren');
+                        try {
+                            pr = JSON.parse(pr);
+                            if(pr.protocol_date) this.productListAll[index].data.last_protocol_date = this.apiService.mysqlDate2view(pr.protocol_date) ;
+                            if(pr.protocol_date_next) this.productListAll[index].data.last_protocol_next = this.apiService.mysqlDate2view(pr.protocol_date_next) ;
+                            if(pr.result) {
+                                if(pr.result==1) this.productListAll[index].data.last_protocol_next =this.translate.instant('reparieren');
+                                if(pr.result==3) this.productListAll[index].data.last_protocol_next =this.translate.instant('unauffindbar');
+                                if(pr.result==4) this.productListAll[index].data.last_protocol_next =this.translate.instant('ausmustern');
                             }
-                            if (pr.result == 3) {
-                                this.productListAll[index].data.last_protocol_next = this.translate.instant('unauffindbar');
-                            }
-                            if (pr.result == 4) {
-                                this.productListAll[index].data.last_protocol_next = this.translate.instant('ausmustern');
-                            }
+                        } catch (e) {
+                            console.log('JSON.parse(pr) err :', e);
                         }
                     }
                 }
                 // options
 
-                let options = JSON.parse(this.productListAll[index].data.items);
+                let options = [];
+
+                if(this.productListAll[index].data.items){
+                    //console.log("items :", this.productListAll[index].data.items);
+                    try {
+                        options = JSON.parse(this.productListAll[index].data.items);
+                        //console.log("options :", options);
+                    } catch (e) {
+                    console.error("JSON.parse options err :", e);
+                    console.log("options :", this.productListAll[index].data);
+                    }
+                }
+
                 console.log('options :', options);
 
                 if (options == null) { options = []; }
