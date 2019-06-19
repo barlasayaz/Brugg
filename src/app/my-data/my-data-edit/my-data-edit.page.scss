@@ -1,3 +1,14 @@
  div.modal-wrapper {
         height: 635px !important;
 }
+.MyDataEdit  {
+        div.modal-wrapper {
+            height: 635px !important;
+        }
+}
+    
+.align-center-fix {
+        display: flex;
+        -webkit-align-items: center;
+                align-items: center;
+}

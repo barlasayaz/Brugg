@@ -1,36 +1,35 @@
-
-	.settings-delete {
-		ion-button.btn-danger {
-			position: relative;
-			margin-top: -3px;
+.pvs4-full-select{
+	width: auto !important;
+	display: flex;
+	margin-top: 0 !important;
+	margin-right: 10px;
+	ion-select {
+		margin-top: -3px;
+		position: relative;
+		button {
+			position: absolute;
 		}
 	}
+}
 
-	.pvs4-full-select{
-		width: auto !important;
-		display: flex;
-		margin-top: 0 !important;
-		margin-right: 10px;
-		ion-select {
-			margin-top: -3px;
-			position: relative;
-			button {
-				position: absolute;
-			}
-		}
+.settings-delete {
+	ion-button.btn-danger {
+		position: relative;
+		margin-top: -3px;
 	}
+}
 
-	.settings-delete-inner {
-		display: flex;
-		-webkit-justify-content: flex-end;
-				justify-content: flex-end;
-	}
+.settings-delete-inner {
+	display: flex;
+	-webkit-justify-content: flex-end;
+			justify-content: flex-end;
+}
 
-	.item-trns {
-		background: transparent !important;
-	}
+.item-trns {
+	background: transparent !important;
+}
 
-	.tr.table-body {
-		-webkit-align-items: center;
-		        align-items: center;
-	}
+.tr.table-body {
+	-webkit-align-items: center;
+			align-items: center;
+}
