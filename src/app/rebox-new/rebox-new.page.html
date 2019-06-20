@@ -49,8 +49,8 @@
 					<ion-label position="floating">{{translate.instant('PLZ')}} {{translate.instant('Ort')}}</ion-label>
 					<ion-input type="text" id="Ort" [(ngModel)]="rebox.Ort"></ion-input> 
 					<ion-button [hidden]="platform_version==0" (click)="setGPS(1);">
-						<ion-icon class="headerIcon" name="location_on"></ion-icon>
-					</ion-button>              
+						<ion-icon class="headerIcon" name="pin"></ion-icon>
+					</ion-button>
 				</ion-item>
 			</ion-col>
 		</ion-row>
@@ -60,7 +60,7 @@
 					<ion-label position="floating">{{translate.instant('Position')}}</ion-label>
 					<ion-input type="text" readonly id="Ort" [(ngModel)]="rebox.latitude" (click)="goPos();"></ion-input> 
 					<ion-button (click)="setGPS(0);">
-						<ion-icon class="headerIcon" name="location_on"></ion-icon>
+						<ion-icon class="headerIcon" name="pin"></ion-icon>
 					</ion-button>              
 				</ion-item>
 			</ion-col>
@@ -77,26 +77,25 @@
 		</ion-row>
 
 		<!-- Row 4 -->
-		<ion-row style="margin-top:20px">
-			<ion-col size="auto">
-				<ion-label style="color:#999;font-size:16px">{{translate.instant('Anzahl')}}</ion-label>
+		<ion-row style="margin-top:20px; margin-left: 18px;">
+			<ion-col size="auto" style="margin-top: 5px;">
+				<ion-label style="color:#999;font-size:14px;">{{translate.instant('Anzahl')}}</ion-label>
 			</ion-col>
 			<ion-col size="auto">				
-				<ion-button type="button" class="quant-rm" [disabled]="anzRebox<2" (click)="anzReboxMinus()">
+				<ion-button size="small" class="quant-rm" [disabled]="anzRebox<2" (click)="anzReboxMinus()">
 					<ion-icon name="remove"></ion-icon>
 				</ion-button>	
 			</ion-col>
-			<ion-col size="2">							
+			<ion-col size="1" style="margin-top: -3px;">							
 				<ion-input readonly text-center type="numbers" [(ngModel)]="anzRebox"></ion-input>
 			</ion-col>
 			<ion-col size="auto">				
-				<ion-button type="button" class="quant-add" (click)="anzReboxAdd()">
+				<ion-button size="small" class="quant-add" (click)="anzReboxAdd()">
 					<ion-icon name="add"></ion-icon>
 				</ion-button>		
 			</ion-col>
 		</ion-row>  
 	</ion-grid>
-
 
 	<div class="modal-footer">
      	<ion-button type="button" class="btn btn-modal-danger footerIcon" (click)="dismiss()">

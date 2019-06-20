@@ -1,9 +1,10 @@
 /* import { Component, ɵConsole } from '@angular/core'; --DP-- */
 import { Component } from '@angular/core';
-import { NavController, NavParams, ModalController,AlertController } from '@ionic/angular';
+import { NavController, NavParams, ModalController, AlertController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { ApiService } from '../services/api';
 import { UserdataService } from '../services/userdata';
+import { SystemService } from '../services/system';
 
 /**
  * Generated class for the ReboxNewPage page.
@@ -17,31 +18,35 @@ import { UserdataService } from '../services/userdata';
   templateUrl: './rebox-new.page.html',
   styleUrls: ['./rebox-new.page.scss'],
 })
+
 export class ReboxNewPage {
   public params: any;
   public edit: any = [];
   public anzRebox: any = 1;
-  public Empfaenger: any = "info.lifting@brugg.com";
-  public Copy: any = "";
+  public Empfaenger: any = 'info.lifting@brugg.com';
+  public Copy: any = '';
   public GPS: any = 0;
   public rebox: any = [];
-  public MsgHTML: any = "";
+  public MsgHTML: any = '';
   public latitude: any;
   public longitude: any;
   public maxDate: string;
+  public platform_version: number;
 
   constructor(public navCtrl: NavController, 
               public navParams: NavParams,
               public translate: TranslateService,
               public userdata: UserdataService,
+              public system: SystemService,
               private apiService: ApiService,
               public viewCtrl: ModalController,
-              public alertCtrl : AlertController) {
+              public alertCtrl: AlertController) {
 
+                this.platform_version = this.system.platform;
                 this.maxDate = this.apiService.maxDate;
-                //this.translate.use(this.translate.defaultLang);
+                // this.translate.use(this.translate.defaultLang);
 
-                //this.editMeine();  TODO
+                // this.editMeine();  TODO
                 this.rebox.ReBoxDate = new Date().toISOString().substring(0, 10);
   }
 
@@ -54,7 +59,7 @@ export class ReboxNewPage {
   }
 
   sendRebox() {
-    this.showConfirmAlert();    
+    this.showConfirmAlert();
   }
 
   anzReboxMinus() {
@@ -70,7 +75,7 @@ export class ReboxNewPage {
   }
 
   showConfirmAlert() {
-    console.log("Rebox Alert");
+    console.log('Rebox Alert');
     let alert = this.alertCtrl.create({
         header: '',
         message: this.translate.instant('Möchten Sie eine ReBox verbindlich bestellen?'),
@@ -88,18 +93,20 @@ export class ReboxNewPage {
                 }
             }
         ]
-    }).then(x=> x.present());
+    }).then(x => x.present());
   }
 
   send() {
-    console.log("send()");
-    localStorage.setItem("ReBox_Str", this.rebox.Str);
-    localStorage.setItem("ReBox_Ort", this.rebox.Ort);
+    console.log('send()');
+    localStorage.setItem('ReBox_Str', this.rebox.Str);
+    localStorage.setItem('ReBox_Ort', this.rebox.Ort);
 
-    if(!this.latitude)
-      this.latitude = "";
-    if(!this.longitude)
-      this.longitude = "";
+    if (!this.latitude) {
+      this.latitude = '';
+    }
+    if (!this.longitude) {
+      this.longitude = '';
+    }
     this.MsgHTML = '<h2>pvs2go.com - ReBox - Abholung</h2>';
     if (this.userdata.Type < 20) {
       this.MsgHTML += '<p>Beauftragt vom Brugg-Mitarbeiter: ' + this.userdata.Name + ', ' + this.userdata.Vorname + ' (' + this.userdata.eMail + ')</p>';
@@ -119,13 +126,13 @@ export class ReboxNewPage {
       this.MsgHTML += '<p>Position: <a href="http://www.google.com/maps/place/' + this.latitude + ',' + this.longitude + '">' + this.latitude + ',' + this.longitude + '</a><br>';
       this.MsgHTML += 'Anzahl: ' + this.rebox.anzRebox + '<br></p>';
     }
-    let userInfo = {"Begrenzt": this.userdata.Begrenzt,"eMail":this.userdata.eMail,"Extras":this.userdata.Extras,"id":this.userdata.id,"Name": this.userdata.Name,"OpcUa": this.userdata.OpcUa,"Prueferservice": this.userdata.Prueferservice ,"token": this.userdata.token,"Type":this.userdata.Type,"Vorname":this.userdata.Vorname};
-    this.params = {"MsgHTML":this.MsgHTML,"latitude": this.latitude,"longitude": this.longitude,"UserInfo": JSON.stringify(userInfo),"Betreff":"pvs2go.com - ReBox - Abholung","ReBoxDate":this.rebox.ReBoxDate,"Copy": this.Copy,"Empfaenger": this.Empfaenger};
+    let userInfo = {'Begrenzt': this.userdata.Begrenzt, 'eMail': this.userdata.eMail, 'Extras': this.userdata.Extras, 'id': this.userdata.id, 'Name': this.userdata.Name, 'OpcUa': this.userdata.OpcUa, 'Prueferservice': this.userdata.Prueferservice , 'token': this.userdata.token, 'Type': this.userdata.Type, 'Vorname': this.userdata.Vorname};
+    this.params = {'MsgHTML': this.MsgHTML, 'latitude': this.latitude, 'longitude': this.longitude, 'UserInfo': JSON.stringify(userInfo), 'Betreff': 'pvs2go.com - ReBox - Abholung', 'ReBoxDate': this.rebox.ReBoxDate, 'Copy': this.Copy, 'Empfaenger': this.Empfaenger};
 
     this.apiService.pvs4_set_rebox_pickup(this.params).then((result: any) => {
 
           if (result == 1) {
-            //OK
+            // OK
             let alert = this.alertCtrl.create({
               header: '',
               message: this.translate.instant('Die Nachricht wurde erfolgreich versendet.'),
@@ -137,9 +144,9 @@ export class ReboxNewPage {
                       }
                   }
               ]
-          }).then(x=> x.present());
+          }).then(x => x.present());
           } else {
-            //NOK
+            // NOK
             let alert = this.alertCtrl.create({
               header: '',
               message: this.translate.instant('Die Nachricht konnte nicht versandt werden!'),
@@ -151,9 +158,9 @@ export class ReboxNewPage {
                       }
                   }
               ]
-          }).then(x=> x.present());
-           
-          } 
+          }).then(x => x.present());
+
+          }
       this.dismiss();
     });
   }

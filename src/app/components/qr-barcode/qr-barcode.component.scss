@@ -8,3 +8,35 @@ align-self: auto;
 .green {
     background-color: green;
 }
+
+.schalter {
+    padding: 2px;
+    margin: 0 10px 0 20px;
+}
+.headerText {
+    margin: 0;
+    color: #ddd;
+    text-align: left!important;
+}
+.scanList td, .scanList th  {
+    text-align: left;
+    padding: 7px 9px;
+}
+.scanList th {
+    color: #ddd;
+}
+.scanHeader {
+    padding-left: 20px;
+}
+.scanList tr:nth-child(even) {
+    background: #ddd
+}
+.ek-login-switch {
+    width: 150px;
+}
+.button-larger {
+    width: 140px!important;
+}
+.modal-header {
+    display: inline-flex !important;
+}
