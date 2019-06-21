@@ -1336,13 +1336,13 @@ tbody.ui-table-tbody {
   }
   .intable-icon {
     font-size: 16px;
-    background: #4caf50;
+    --background: #4caf50;
     border-radius: 500px;
     color: #fff;
   }
   .intable-icon:hover {
     color: #fff;
-    background: #3d8c40 !important;
+    --background: #3d8c40 !important;
   }
   .btn-modal-success {
     --background: #4caf50 !important;
@@ -1393,7 +1393,7 @@ tbody.ui-table-tbody {
     --background: #cf2b1a !important;
   }
   .btn-modal-teal {
-    background: #1abc9c !important;
+    --background: #1abc9c !important;
     height: 45px;
     text-align: center;
     color: #fff;
@@ -1406,10 +1406,10 @@ tbody.ui-table-tbody {
   .btn-modal-teal:hover,
   .btn-modal-teal:focus {
     color: #fff;
-    background: #15967d !important;
+    --background: #15967d !important;
   }
   .btn-modal-main {
-    background: #009de0 !important;
+    --background: #009de0 !important;
     height: 45px;
     text-align: center;
     color: #fff;
@@ -1422,10 +1422,10 @@ tbody.ui-table-tbody {
   .btn-modal-main:hover,
   .btn-modal-main:focus {
     color: #fff;
-    background: #007eb3 !important;
+    --background: #007eb3 !important;
   }
   .table-btn-danger {
-    background: #e74c3c !important;
+    --background: #e74c3c !important;
     height: 100%;
     width: 45px;
     position: relative;
@@ -1440,7 +1440,7 @@ tbody.ui-table-tbody {
     text-shadow: none !important;
   }
   .table-btn-primary {
-    background: #009de0 !important;
+    --background: #009de0 !important;
     height: 100%;
     width: 45px;
     position: relative;
@@ -1458,7 +1458,7 @@ tbody.ui-table-tbody {
     color: #fff;
     width: 50px;
     height: 50px;
-    background: #4caf50;
+    --background: #4caf50;
     border-radius: 500px;
     text-align: center;
     cursor: pointer;
@@ -1469,13 +1469,13 @@ tbody.ui-table-tbody {
   .btn-round-green:hover,
   .btn-round-green:focus {
     color: #fff;
-    background: #3d8c40;
+    --background: #3d8c40;
   }
   .btn-little-green {
     color: #fff;
     width: 20px;
     height: 20px;
-    background: #4caf50;
+    --background: #4caf50;
     border-radius: 500px;
     text-align: center;
     cursor: pointer;
@@ -1490,7 +1490,7 @@ tbody.ui-table-tbody {
     color: #fff;
     width: 50px;
     height: 50px;
-    background: #009de0;
+    --background: #009de0;
     border-radius: 500px;
     text-align: center;
     cursor: pointer;
@@ -1501,13 +1501,13 @@ tbody.ui-table-tbody {
   .btn-round-blue:hover,
   .btn-round-blue:focus {
     color: #fff;
-    background: #007eb3;
+    --background: #007eb3;
   }
   .btn-little-blue {
     color: #fff;
     width: 20px;
     height: 20px;
-    background: #005e86;
+    --background: #005e86;
     border-radius: 500px;
     text-align: center;
     cursor: pointer;
@@ -1522,7 +1522,7 @@ tbody.ui-table-tbody {
     color: #fff;
     width: 50px;
     height: 50px;
-    background: #e74c3c;
+    --background: #e74c3c;
     border-radius: 500px;
     text-align: center;
     cursor: pointer;
@@ -1533,13 +1533,13 @@ tbody.ui-table-tbody {
   .btn-round-red:hover,
   .btn-round-red:focus {
     color: #fff;
-    background: #cf2b1a;
+    --background: #cf2b1a;
   }
   .btn-little-red {
     color: #fff;
     width: 20px;
     height: 20px;
-    background: #e74c3c;
+    --background: #e74c3c;
     border-radius: 500px;
     text-align: center;
     cursor: pointer;
@@ -1554,7 +1554,7 @@ tbody.ui-table-tbody {
     color: #fff;
     width: 50px;
     height: 50px;
-    background: #1abc9c;
+    --background: #1abc9c;
     border-radius: 500px;
     text-align: center;
     cursor: pointer;
@@ -1565,13 +1565,13 @@ tbody.ui-table-tbody {
   .btn-round-teal:hover,
   .btn-round-teal:focus {
     color: #fff;
-    background: #15967d;
+    --background: #15967d;
   }
   .btn-little-teal {
     color: #fff;
     width: 20px;
     height: 20px;
-    background: #1abc9c;
+    --background: #1abc9c;
     border-radius: 500px;
     text-align: center;
     cursor: pointer;
@@ -1586,7 +1586,7 @@ tbody.ui-table-tbody {
     color: #fff;
     width: 50px;
     height: 50px;
-    background: #005e86;
+    --background: #005e86;
     border-radius: 500px;
     text-align: center;
     cursor: pointer;
@@ -1597,13 +1597,13 @@ tbody.ui-table-tbody {
   .btn-round-dark-blue:hover,
   .btn-round-dark-blue:focus {
     color: #fff;
-    background: #004b6b;
+    --background: #004b6b;
   }
   .btn-little-dark-blue {
     color: #fff;
     width: 20px;
     height: 20px;
-    background: #005e86;
+    --background: #005e86;
     border-radius: 500px;
     text-align: center;
     cursor: pointer;
@@ -1618,7 +1618,7 @@ tbody.ui-table-tbody {
     color: #fff;
     width: 50px;
     height: 50px;
-    background: #b3baba;
+    --background: #b3baba;
     border-radius: 500px;
     text-align: center;
     cursor: pointer;
@@ -1629,7 +1629,7 @@ tbody.ui-table-tbody {
   .btn-round-grey:hover,
   .btn-round-grey:focus {
     color: #fff;
-    background: #9aa2a2;
+    --background: #9aa2a2;
   }
   @-webkit-keyframes moveToLeftFade {
     to {
@@ -17170,11 +17170,11 @@ tbody.ui-table-tbody {
     }
   }
   .btn-time-add {
-    background: #005e86 !important;
+    --background: #005e86 !important;
   }
   .btn-time-add:hover,
   .btn-time-add:focus {
-    background: #004b6b !important;
+    --background: #004b6b !important;
   }
   .modal {
     overflow-y: scroll !important;
@@ -17182,7 +17182,7 @@ tbody.ui-table-tbody {
   .btn-del-fix {
     height: 30px;
     width: 30px;
-    background: #e74c3c;
+    --background: #e74c3c;
     color: #fff;
     font-size: 14px;
     border-radius: 500px;
@@ -17206,7 +17206,7 @@ tbody.ui-table-tbody {
     padding: 15px 25px !important;
   }
   .btn-table-nfc {
-    background: none !important;
+    --background: none !important;
     border: none !important;
     padding: 10px;
     color: #009de0;

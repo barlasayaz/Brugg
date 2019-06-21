@@ -1619,9 +1619,10 @@ body .fc .fc-toolbar .fc-prev-button span {
     -moz-osx-font-smoothing: grayscale;
     text-indent: 0px !important;
     text-align: center;
+    height: auto !important;
 }
 body .fc .fc-toolbar .fc-prev-button span::before {
-    content: "";
+    /* content: ""; */
 }
 body .fc .fc-toolbar .fc-prev-button .ui-icon {
     position: relative;
@@ -1638,9 +1639,10 @@ body .fc .fc-toolbar .fc-next-button span {
     -moz-osx-font-smoothing: grayscale;
     text-indent: 0px !important;
     text-align: center;
+    height: auto !important;
 }
 body .fc .fc-toolbar .fc-next-button span::before {
-    content: "";
+   /*  content: ""; */
 }
 body .fc .fc-toolbar .fc-next-button .ui-icon {
     position: relative;
