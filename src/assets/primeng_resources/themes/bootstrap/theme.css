@@ -896,13 +896,13 @@ body .ui-accordion .ui-accordion-header a {
 }
 
 body .ui-accordion .ui-accordion-header:not(.ui-state-active):not(.ui-state-disabled):hover {
-    --background-color: #f4f3f4;
+    background-color: #f4f3f4;
 }
 body .ui-accordion .ui-accordion-header:not(.ui-state-active):not(.ui-state-disabled):hover .ui-icon {
     color: #2d353c;
 }
 body .ui-accordion .ui-accordion-header.ui-state-active {
-    --background-color: #0275d8;
+    background-color: #0275d8;
     color: #ffffff;
 }
 body .ui-accordion .ui-accordion-header.ui-state-active a {
@@ -911,14 +911,13 @@ body .ui-accordion .ui-accordion-header.ui-state-active a {
 body .ui-accordion .ui-accordion-header.ui-tabview-outline {
     border: 0 none;
     outline: 0 none;
-    --background-color: #e6e6e6;
+    background-color: #e6e6e6;
 }
 body .ui-accordion .ui-accordion-header.ui-tabview-outline.ui-state-active {
-    --background-color: #0283f1;
+    background-color: #0283f1;
 }
 body .ui-accordion .ui-accordion-content {
-    /* padding: 1.25em; */
-    padding: 0px;
+    padding: 1.25em;
 }
 body .ui-tabview {
     padding: 0;
@@ -1620,10 +1619,9 @@ body .fc .fc-toolbar .fc-prev-button span {
     -moz-osx-font-smoothing: grayscale;
     text-indent: 0px !important;
     text-align: center;
-    height: auto !important;
 }
 body .fc .fc-toolbar .fc-prev-button span::before {
-    /* content: ""; */
+    content: "";
 }
 body .fc .fc-toolbar .fc-prev-button .ui-icon {
     position: relative;
@@ -1640,10 +1638,9 @@ body .fc .fc-toolbar .fc-next-button span {
     -moz-osx-font-smoothing: grayscale;
     text-indent: 0px !important;
     text-align: center;
-    height: auto !important;
 }
 body .fc .fc-toolbar .fc-next-button span::before {
-   /*  content: ""; */
+    content: "";
 }
 body .fc .fc-toolbar .fc-next-button .ui-icon {
     position: relative;

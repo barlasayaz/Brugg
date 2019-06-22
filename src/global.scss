@@ -19479,7 +19479,65 @@ body .ui-state-active, body .ui-state-highlight {
   cursor: not-allowed !important;
 }
 
+body .fc .fc-toolbar .fc-prev-button span {
+  line-height: inherit;
+  background: none !important;
+  display: inline-block;
+  font: normal normal normal 14px/1 FontAwesome;
+  font-size: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-indent: 0px !important;
+  text-align: center;
+  height: auto !important;
+}
+body .fc .fc-toolbar .fc-prev-button span::before {
+  content: "" !important;
+}
+
+body .fc .fc-toolbar .fc-next-button span {
+  line-height: inherit;
+  background: none !important;
+  display: inline-block;
+  font: normal normal normal 14px/1 FontAwesome;
+  font-size: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-indent: 0px !important;
+  text-align: center;
+  height: auto !important;
+}
+body .fc .fc-toolbar .fc-next-button span::before {
+  content: "" !important; 
+}
+
 body .ui-paginator .ui-paginator-pages .ui-paginator-page {
 padding: 0!important;
 }
 
+body .ui-accordion .ui-accordion-header:not(.ui-state-active):not(.ui-state-disabled):hover {
+  --background-color: #f4f3f4 !important;
+}
+body .ui-accordion .ui-accordion-header:not(.ui-state-active):not(.ui-state-disabled):hover .ui-icon {
+  color: #2d353c;
+}
+body .ui-accordion .ui-accordion-header.ui-state-active {
+  --background-color: #0275d8 !important;
+  color: #ffffff;
+}
+body .ui-accordion .ui-accordion-header.ui-state-active a {
+  color: #ffffff;
+}
+body .ui-accordion .ui-accordion-header.ui-tabview-outline {
+  border: 0 none;
+  outline: 0 none;
+  --background-color: #e6e6e6 !important;
+}
+body .ui-accordion .ui-accordion-header.ui-tabview-outline.ui-state-active {
+  --background-color: #0283f1;
+}
+body .ui-accordion .ui-accordion-content {
+  padding: 0px !important;
+}

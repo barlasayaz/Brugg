@@ -134,11 +134,11 @@
                         </div>
                     </div>
                     <div style="max-height: 518px; overflow-x: auto;">
-                      <div class="container" style="padding: 0px 20px 20px 20px">
+                      <div class="container" style="padding: 0px 10px 10px 10px">
                         <!-- Row 1 -->
                         <ion-row>
-                            <ion-col size="12">
-                              <ion-item>
+                            <ion-col size="12">                                
+                              <ion-item>                                
                                 <ion-label position="floating">{{'Titel' | translate}} *</ion-label>
                                 <ion-input type="text"                                              
                                           [(ngModel)]="activProduct.title[lang]"
@@ -167,18 +167,18 @@
                                   </ion-input>
                               </ion-item>
                           </ion-col>    
-                          <ion-col size="12" size-md="4">
+                          <ion-col size="12" size-md="4" style="margin-top: auto;">
                             <ion-item>
                               <ion-label position="floating">{{'Intervall Prüfen' | translate}} *</ion-label>
                               <ion-select [(ngModel)]="activProduct.check_interval"
                                           okText="{{translate.instant('okay')}}"
                                           cancelText="{{translate.instant('dismiss')}}">
-                                          <ion-select-option value = 0> {{translate.instant('kein Intervall')}} </ion-select-option>
-                                          <ion-select-option value = 3> 3 {{translate.instant('Monate')}} </ion-select-option>
-                                          <ion-select-option value = 6> 6 {{translate.instant('Monate')}}</ion-select-option>
-                                          <ion-select-option value = 12> 12 {{translate.instant('Monate')}}</ion-select-option>
-                                          <ion-select-option value = 24> 24 {{translate.instant('Monate')}}</ion-select-option>
-                                          <ion-select-option value = 36> 36 {{translate.instant('Monate')}}</ion-select-option>
+                                <ion-select-option value = 0> {{translate.instant('kein Intervall')}} </ion-select-option>
+                                <ion-select-option value = 3> 3 {{translate.instant('Monate')}} </ion-select-option>
+                                <ion-select-option value = 6> 6 {{translate.instant('Monate')}}</ion-select-option>
+                                <ion-select-option value = 12> 12 {{translate.instant('Monate')}}</ion-select-option>
+                                <ion-select-option value = 24> 24 {{translate.instant('Monate')}}</ion-select-option>
+                                <ion-select-option value = 36> 36 {{translate.instant('Monate')}}</ion-select-option>
                               </ion-select> 
                             </ion-item>
                           </ion-col>       
@@ -202,7 +202,7 @@
                                                 [(ngModel)]="item.value"
                                                 okText="{{translate.instant('okay')}}"
                                                 cancelText="{{translate.instant('dismiss')}}">
-                                                <ion-select-option *ngFor="let option of item.options" >{{option[lang]}}</ion-select-option>
+                                      <ion-select-option *ngFor="let option of item.options" >{{option[lang]}}</ion-select-option>
                                     </ion-select> 
                                 </ion-item>
                             </ion-col>  
