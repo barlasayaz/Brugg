@@ -48,6 +48,10 @@ export class ProductDetailsPage implements OnInit {
   public mouseoverButton2: boolean;
   public mouseoverButton3: boolean;
   public mouseoverButton4: boolean;
+  public fabListButtonLabel1: string;
+  public fabListButtonLabel2: string;
+  public fabListButtonLabel3: string;
+  public fabListButtonLabel4: string;
 
   constructor(public navCtrl: NavController,
     public userdata: UserdataService,
@@ -65,6 +69,10 @@ export class ProductDetailsPage implements OnInit {
 
   }
   ngOnInit() {
+    this.fabListButtonLabel1 = this.translate.instant('Neues Protokoll');
+    this.fabListButtonLabel2 = this.translate.instant('PDF Ansicht');
+    this.fabListButtonLabel3 = this.translate.instant('NFC Scan');
+    this.fabListButtonLabel4 = this.translate.instant('QR-Code scannen');
 
     this.platform.ready().then(() => {
       if ( this.platform.is('ios') ||

@@ -1,4 +1,4 @@
-import { Component,OnInit} from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { NavController, ModalController, Platform, AlertController } from '@ionic/angular';
 import { ActivatedRoute } from '@angular/router';
 import { ApiService } from '../services/api';
@@ -12,8 +12,6 @@ import { CustomerEditComponent } from '../components/customer-edit/customer-edit
 import { NoteEditComponent } from '../components/note-edit/note-edit.component';
 import { AppointmentEditComponent } from '../components/appointment-edit/appointment-edit.component';
 import { AssignmentPage } from './assignment/assignment.page';
-
-
 
 /**
  * Generated class for the CustomerDetailsPage page.
@@ -39,6 +37,10 @@ export class CustomerDetailsPage implements OnInit {
   public mouseoverButton2: boolean;
   public mouseoverButton3: boolean;
   public mouseoverButton4: boolean;
+  public fabListButtonLabel1: string;
+  public fabListButtonLabel2: string;
+  public fabListButtonLabel3: string;
+  public fabListButtonLabel4: string;
   public aktive_products: number = 0;
   public inspection_service: number = 0;
   public contactPersonList: any = [];
@@ -48,7 +50,7 @@ export class CustomerDetailsPage implements OnInit {
   public pageCount: any = 0;
   public pageTotalCount: any = 0;
   public contactPersonCount: any = 0;
-  public employees:string = "";
+  public employees: string = '';
   public last_visit: any;
   public last_inspection: any;
   public next_visit: any;
@@ -64,11 +66,16 @@ export class CustomerDetailsPage implements OnInit {
     public alertCtrl: AlertController,
     public modalCtrl: ModalController,
     private route: ActivatedRoute) {
-      
+
+      this.fabListButtonLabel1 = this.translate.instant('Neuer Termin');
+      this.fabListButtonLabel2 = this.translate.instant('Ansprechpartner');
+      this.fabListButtonLabel3 = this.translate.instant('Neue Notiz');
+      this.fabListButtonLabel4 = this.translate.instant('Kundendaten bearbeiten');
+
       this.idCustomer = parseInt(this.route.snapshot.paramMap.get('id'));
       this.loadCustomer(this.idCustomer);
       this.getContactList();
-  
+
       platform.ready().then(() => {
         if (this.platform.is('ios') ||
           this.platform.is('android')) {
@@ -77,10 +84,9 @@ export class CustomerDetailsPage implements OnInit {
           this.mouseoverButton2 = true;
           this.mouseoverButton3 = true;
           this.mouseoverButton4 = true;
-          console.log("platform mobile:", this.platform.platforms());
-        }
-        else {
-          console.log("platform not mobile:", this.platform.platforms());
+          console.log('platform mobile:', this.platform.platforms());
+        } else {
+          console.log('platform not mobile:', this.platform.platforms());
           this.mobilePlatform = false;
           this.mouseoverButton1 = false;
           this.mouseoverButton2 = false;
@@ -88,45 +94,51 @@ export class CustomerDetailsPage implements OnInit {
           this.mouseoverButton4 = false;
         }
       });
-  
+
     }
-  
+
     ngOnInit() {
       console.log('ionViewDidLoad CustomerDetailsPage',  this.userdata); 
-      if(this.userdata.role==3){
+      if (this.userdata.role == 3) {
         for (var i = 0, len = this.userdata.all_role_set.length; i < len; i++) {
           let c = parseInt( this.userdata.all_role_set[i].customer);
           if ( c == this.idCustomer) {
             this.userdata.all_role_set[i].check_products = parseInt(this.userdata.all_role_set[i].check_products);
-            if(this.userdata.all_role_set[i].check_products>=1) this.userdata.role_set.check_products = true;
-            else this.userdata.role_set.check_products = false;
-  
+            if (this.userdata.all_role_set[i].check_products >= 1) {
+              this.userdata.role_set.check_products = true;
+            } else {
+              this.userdata.role_set.check_products = false;
+            }
+
             this.userdata.all_role_set[i].edit_products = parseInt(this.userdata.all_role_set[i].edit_products);
-            if(this.userdata.all_role_set[i].edit_products>=1) this.userdata.role_set.edit_products = true;
-            else this.userdata.role_set.edit_products = false;
+            if (this.userdata.all_role_set[i].edit_products >= 1) {
+              this.userdata.role_set.edit_products = true;
+            } else {
+              this.userdata.role_set.edit_products = false;
+            }
           }
         }
       }
       console.log('ionViewDidLoad CustomerDetailsPage',  this.userdata); 
     }
-  
+
    loadCustomer(id) {
       this.apiService.pvs4_get_customer(id).then((result: any) => {
         this.activCustomer = result.obj;
         this.aktive_products = parseInt(result.aktive_products);
         this.inspection_service = parseInt(result.inspection_service);
-        //Zuweisungen
+        // Zuweisungen
         this.apiService.pvs4_get_profile(this.activCustomer.sales_email, 1).then((done: any) => {
-          if(done.amount!=0){
-            this.employees = done.bid.first_name+" "+done.bid.last_name;
-          }  
+          if (done.amount != 0) {
+            this.employees = done.bid.first_name + ' ' + done.bid.last_name;
+          }
           this.apiService.pvs4_get_profile(this.activCustomer.tester_email, 1).then((done: any) => {
-            if(done.amount!=0){
-              this.employees += " ("+done.bid.first_name+" "+done.bid.last_name+")";
-            }      
-          });    
+            if (done.amount != 0) {
+              this.employees += ' (' + done.bid.first_name + ' ' + done.bid.last_name + ')';
+            }
+          });
         });
-        if (this.activCustomer.note && this.activCustomer.note != "") {
+        if (this.activCustomer.note && this.activCustomer.note != '') {
           let alert = this.alertCtrl.create({
             header: this.translate.instant('Notiz'),
             message: this.activCustomer.note,
@@ -134,49 +146,49 @@ export class CustomerDetailsPage implements OnInit {
               {
                 text: this.translate.instant('Ja'),
                 handler: () => {
-  
+
                 }
               }
             ]
-          }).then(x=> x.present() );
+          }).then(x => x.present() );
 
         }
         // Appointment Date
         try {
           let sales_dates = JSON.parse( this.activCustomer.sales_dates);
-            if(sales_dates.last_date) this.last_visit = this.apiService.view2mysql(sales_dates.last_date) ;
-            if(sales_dates.next_date) this.next_visit = this.apiService.view2mysql(sales_dates.next_date);
+            if (sales_dates.last_date) { this.last_visit = this.apiService.view2mysql(sales_dates.last_date) ; }
+            if (sales_dates.next_date) { this.next_visit = this.apiService.view2mysql(sales_dates.next_date); }
         } catch (e) {
-            //nix
+            // nix
         }
   
         this.apiService.pvs4_get_appointment_date(id).then((done: any) => {
-          if(done.amount!=0){    
-            if(done.last_visit.length) this.last_visit = done.last_visit;  
-            if(done.next_visit.length) this.next_visit = done.next_visit;  
-            this.last_inspection = done.last_inspection;            
-            this.next_inspection = done.next_inspection;       
+          if (done.amount != 0) {    
+            if (done.last_visit.length) { this.last_visit = done.last_visit; }
+            if (done.next_visit.length) { this.next_visit = done.next_visit; }
+            this.last_inspection = done.last_inspection;
+            this.next_inspection = done.next_inspection;
           }
         });
-        if(this.userdata.role==3){
+        if (this.userdata.role == 3) {
           this.userdata.licensee = this.activCustomer.licensee;
         }
         console.log('loadCustomer', this.activCustomer);
       });
-  
-      //get BAAN and NAV
-      console.log("idCustomer :", id);
+
+      // get BAAN and NAV
+      console.log('idCustomer :', id);
       if (((this.userdata.role == 1) || (this.userdata.role == 2)) && (this.userdata.licensee == 1)) {
         this.apiService.pvs4_get_baan(id).then((baan_nav: any) => {
-          console.log("baan_nav :", baan_nav);
+          console.log('baan_nav :', baan_nav);
           if (baan_nav.baan1) {
-            if (baan_nav.baan1 != "") {
+            if (baan_nav.baan1 != '') {
               this.baan1_aktiv = true;
               this.baan1_href = baan_nav.baan1;
             }
           }
           if (baan_nav.baan2) {
-            if (baan_nav.baan2 != "") {
+            if (baan_nav.baan2 != '') {
               this.baan2_aktiv = true;
               this.baan2_href = baan_nav.baan2;
             }
@@ -184,9 +196,9 @@ export class CustomerDetailsPage implements OnInit {
         });
       }
     }
-  
+
     getContactList() {
-      console.log("getPointContact :", this.idCustomer);
+      console.log('getPointContact :', this.idCustomer);
       this.contactPersonAddresses = [];
       this.contactPersonAddr = [];
       this.pageCount = 0;
@@ -209,12 +221,12 @@ export class CustomerDetailsPage implements OnInit {
             }
           }
         }
-  
-        console.log("pageBack pageCount1 pageTotalCount :", this.pageCount, '-', this.pageTotalCount, '-', this.contactPersonAddresses, '-', this.contactPersonAddr);
+
+        console.log('pageBack pageCount1 pageTotalCount :', this.pageCount, '-', this.pageTotalCount, '-', this.contactPersonAddresses, '-', this.contactPersonAddr);
       });
-  
+
     }
-  
+
     async contactPersonPage() {
       const modal =
         await this.modalCtrl.create({
@@ -223,7 +235,7 @@ export class CustomerDetailsPage implements OnInit {
             idCustomer: this.idCustomer
           }
         });
-  
+
         modal.onDidDismiss().then((data) => {
         if (data) {
           const contact = data['data'];
@@ -247,14 +259,14 @@ export class CustomerDetailsPage implements OnInit {
       });
       modal.present();
     }
-  
+
     async addAddress() {
       let contactPersonAddrTmp = JSON.parse(JSON.stringify(this.contactPersonAddr));
       const modal =
         await this.modalCtrl.create({
           component: ContactPersonAddressPage,
           componentProps: {
-            "idCustomer": this.idCustomer, "contactPerson": this.contactPerson, "contactPersonAddresses": this.contactPersonAddr
+            'idCustomer': this.idCustomer, 'contactPerson': this.contactPerson, 'contactPersonAddresses': this.contactPersonAddr
           }
         });
         modal.onDidDismiss().then(data => {
@@ -265,33 +277,34 @@ export class CustomerDetailsPage implements OnInit {
       });
       modal.present();
     }
-  
+
     pageBack() {
       if (this.pageCount > 0) {
         this.pageCount--;
         this.contactPersonAddresses = [];
-        if (this.contactPersonAddr)
+        if (this.contactPersonAddr) {
           this.contactPersonAddresses.push(this.contactPersonAddr[this.pageCount]);
-        console.log("pageBack pageCount pageTotalCount :", this.pageCount, '-', this.pageTotalCount);
+        }
+        console.log('pageBack pageCount pageTotalCount :', this.pageCount, '-', this.pageTotalCount);
       }
     }
-  
+
     pageForward() {
       if (this.pageCount < this.pageTotalCount - 1) {
         this.pageCount++;
         this.contactPersonAddresses = [];
-        if (this.contactPersonAddr)
+        if (this.contactPersonAddr) {
           this.contactPersonAddresses.push(this.contactPersonAddr[this.pageCount]);
-        console.log("pageForward pageCount pageTotalCount :", this.pageCount, '-', this.pageTotalCount, '-', this.contactPersonAddr);
+        }
+        console.log('pageForward pageCount pageTotalCount :', this.pageCount, '-', this.pageTotalCount, '-', this.contactPersonAddr);
       }
     }
-  
-  
+
     openBaan(x) {
       console.log('openBaan()', x, this.baan1_href, this.baan2_href);
       if (this.system.platform == 0) {
-        if (x == 1) window.open(this.baan1_href, '_blank');
-        if (x == 2) window.open(this.baan2_href, '_blank');
+        if (x == 1) { window.open(this.baan1_href, '_blank'); }
+        if (x == 2) { window.open(this.baan2_href, '_blank'); }
       } else {
         if (x == 1) {
           this.inAppBrowser.create(this.baan1_href, '_system', 'location=yes');
@@ -301,35 +314,37 @@ export class CustomerDetailsPage implements OnInit {
         }
       }
     }
-  
+
     mouseover(buttonNumber) {
-      if (buttonNumber == 1)
+      if (buttonNumber == 1) {
         this.mouseoverButton1 = true;
-      else if (buttonNumber == 2)
+      } else if (buttonNumber == 2) {
         this.mouseoverButton2 = true;
-      else if (buttonNumber == 3)
+           } else if (buttonNumber == 3) {
         this.mouseoverButton3 = true;
-      else if (buttonNumber == 4)
+           } else if (buttonNumber == 4) {
         this.mouseoverButton4 = true;
+           }
     }
-  
+
     mouseout(buttonNumber) {
       if (this.mobilePlatform == false) {
-        if (buttonNumber == 1)
+        if (buttonNumber == 1) {
           this.mouseoverButton1 = false;
-        else if (buttonNumber == 2)
+        } else if (buttonNumber == 2) {
           this.mouseoverButton2 = false;
-        else if (buttonNumber == 3)
+             } else if (buttonNumber == 3) {
           this.mouseoverButton3 = false;
-        else if (buttonNumber == 4)
+             } else if (buttonNumber == 4) {
           this.mouseoverButton4 = false;
+             }
       }
     }
-  
+
     setProductSrv(mode: number) {
       let titel = this.translate.instant('Prüfservice');
       let msg = this.translate.instant('disable_service_produkte');
-      if (mode == 1) this.translate.instant('enable_service_produkte');
+      if (mode == 1) { this.translate.instant('enable_service_produkte'); }
       let alert = this.alertCtrl.create({
         header: titel,
         message: msg,
@@ -354,18 +369,18 @@ export class CustomerDetailsPage implements OnInit {
         ]
       }).then(x => x.present());
     }
-  
+
     async appointmentEdit() {
-      console.log("appointmentEdit -> idCustomer :", this.idCustomer);
+      console.log('appointmentEdit -> idCustomer :', this.idCustomer);
       const modal =
         await this.modalCtrl.create({
           component: AppointmentEditComponent,
           componentProps: {
             idCustomer: this.idCustomer, appointmentType: 0, redirect: 3
           }
-        }).then(x=> x.present());
+        }).then(x => x.present());
     }
-  
+
     async noteEdit() {
       console.log('newNotes -> idCustomer :', this.idCustomer);
       const modal =
@@ -374,11 +389,11 @@ export class CustomerDetailsPage implements OnInit {
           componentProps: {
             id: 0, idCustomer: this.idCustomer, redirect: 2
           }
-        }).then(x=> x.present());
+        }).then(x => x.present());
     }
-  
+
     async customerEdit() {
-      console.log("customerEdit -> idCustomer :", this.idCustomer);
+      console.log('customerEdit -> idCustomer :', this.idCustomer);
       const modal =
         await this.modalCtrl.create({
           component: CustomerEditComponent,
@@ -395,39 +410,37 @@ export class CustomerDetailsPage implements OnInit {
       });
       modal.present();
     }
-  
+
     async set_employees() {
-      console.log("set_employees activCustomer",this.activCustomer);
+      console.log('set_employees activCustomer', this.activCustomer);
       const modal =
       await this.modalCtrl.create({
         component: AssignmentPage,
         componentProps: {
-          "activCustomer":JSON.stringify(this.activCustomer)
+          'activCustomer': JSON.stringify(this.activCustomer)
         }
       });
       modal.onDidDismiss().then(data => {
-        console.log('AssignmentPage onDidDismiss:',data);
+        console.log('AssignmentPage onDidDismiss:', data);
         this.loadCustomer(this.activCustomer.id) ;
       });
       modal.present();
 
     }
-  
+
     async newAppointment(appointmentType: any) {
-      console.log("newAppointment");
+      console.log('newAppointment');
       const modal =
       await this.modalCtrl.create({
         component: AppointmentEditComponent,
         componentProps: {
-          idCustomer: this.idCustomer, appointmentType: appointmentType, redirect: 4 
+          idCustomer: this.idCustomer, appointmentType: appointmentType, redirect: 4
         }
       });
       modal.onDidDismiss().then(data => {
-        console.log('AssignmentPage onDidDismiss:',data);
+        console.log('AssignmentPage onDidDismiss:', data);
         this.loadCustomer(this.activCustomer.id) ;
       });
       modal.present();
     }
-  
   }
-  

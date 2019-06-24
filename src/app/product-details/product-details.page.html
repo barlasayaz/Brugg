@@ -158,27 +158,35 @@
 		<ion-fab-button color="primary"
 						(click)="createProtocol()"
 						[disabled]="userdata.role_set.check_products==false"
-						(mouseover)="mouseover(1)" [class.mouse-over]="mouseoverButton1"
-						(mouseout)="mouseout(1)" [labelFab]="'Neues Protokoll'">
+						(mouseover)="mouseover(1)"
+						(mouseout)="mouseout(1)"
+						[class.mouse-over]="mouseoverButton1"
+						[labelFab]="fabListButtonLabel1">
 			<ion-icon name="clipboard"></ion-icon>
 		</ion-fab-button>
 		<ion-fab-button color="primary"
 						(click)="printPdf()"
-						(mouseover)="mouseover(2)" [class.mouse-over]="mouseoverButton2"
-						(mouseout)="mouseout(2)" [labelFab]="'PDF Ansicht'">
+						(mouseover)="mouseover(2)"
+						(mouseout)="mouseout(2)"
+						[class.mouse-over]="mouseoverButton2"
+						[labelFab]="fabListButtonLabel2">
 			<ion-icon name="document"></ion-icon>
 		</ion-fab-button>
 		<ion-fab-button color="primary"						
 						(click)="nfc_scan()"
 						[disabled]="!mobilePlatform"
-						(mouseover)="mouseover(3)" [class.mouse-over]="mouseoverButton3"
-						(mouseout)="mouseout(3)" [labelFab]="'NFC Scan'">
+						(mouseover)="mouseover(3)"
+						(mouseout)="mouseout(3)"
+						[class.mouse-over]="mouseoverButton3"
+						[labelFab]="fabListButtonLabel3">
 			<ion-icon name="wifi"></ion-icon>
 		</ion-fab-button>
 		<ion-fab-button color="primary"
 						(click)="qr_code()"
-						(mouseover)="mouseover(4)" [class.mouse-over]="mouseoverButton4"
-						(mouseout)="mouseout(4)" [labelFab]="'QR-Code scannen'">
+						(mouseover)="mouseover(4)"
+						(mouseout)="mouseout(4)"
+						[class.mouse-over]="mouseoverButton4"
+						[labelFab]="fabListButtonLabel4">
 			<ion-icon name="qr-scanner"></ion-icon>
 		</ion-fab-button>
 	</ion-fab-list>

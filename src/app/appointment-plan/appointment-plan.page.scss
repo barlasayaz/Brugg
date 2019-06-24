@@ -32,45 +32,6 @@
 
 .fc-myCustomButton-button {margin-left: 50px!important}
 
-/* button[ion-fab] {
-  overflow: visible;
-  position: relative;
-
-  ion-label {
-      position: absolute;
-      top: -8px;
-      right: 40px;    
-      color: black;
-      background-color: rgba(139, 138, 138, 0.7);
-      line-height: 24px;
-      padding: 4px 8px;
-      border-radius: 4px;
-      font-size: 14px;
-      font-family: Arial, Helvetica, sans-serif;
-  }
-}    
-.fab{
-  contain: layout;
-} */
-
-ion-fab-button {
-  margin-left: 140px;
-  overflow: visible;
-  position: relative;
-}
-ion-fab-list {
-  ion-label {
-    position: relative !important;
-    top: 40px !important;
-    right: 25px !important;
-    color: white !important;
-    background-color: rgba(0,0,0,0.7);
-    line-height: 24px !important;
-    padding: 4px 8px !important;
-    border-radius: 4px !important;
-  }
-}
-
 .peopleFilter{
   right: 80px;
   position: absolute;
