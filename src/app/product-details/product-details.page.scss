@@ -32,24 +32,7 @@
     .btn-primary:disabled {
         background-color: rgb(136, 177, 221) !important;
     }
-    
-    ion-fab-button {
-        margin-left: 140px;
-        overflow: visible;
-        position: relative;
-      }
-      ion-fab-list {
-        ion-label {
-          position: relative;
-          top: 40px;
-          right: 25px;
-          color: white;
-          --background-color: rgba(0,0,0,0.7);
-          line-height: 24px;
-          padding: 4px 8px;
-          border-radius: 4px;
-        }
-      }
+
 
       .header-buttons {
         height: 100%;

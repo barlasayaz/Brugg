@@ -19541,3 +19541,20 @@ body .ui-accordion .ui-accordion-header.ui-tabview-outline.ui-state-active {
 body .ui-accordion .ui-accordion-content {
   padding: 0px !important;
 }
+
+ion-fab-button[label-fab].mouse-over {
+  position: relative;
+}
+
+ion-fab-button[label-fab].mouse-over::after {
+  position: absolute;
+  content: attr(label-fab);
+  z-index: 1;
+  right: 55px;
+  bottom: 4px;
+  background-color: var(--ion-color-primary);
+  padding: 9px;
+  border-radius: 15px;
+  color: white;
+  box-shadow: 0 3px 5px -1px rgba(0,0,0,0.2), 0 6px 10px 0 rgba(0,0,0,0.14), 0 1px 18px 0 rgba(0,0,0,0.12);
+}

@@ -13,9 +13,10 @@ import { ColorPickerModule } from 'primeng/primeng';
 import { AccordionModule } from 'primeng/accordion';
 import { FileUploadModule } from 'primeng/fileupload';
 import { DragulaModule } from 'ng2-dragula';
+import { FabDirective } from '../directives/fab.directive';
 
 @NgModule({
-    declarations: [MainNavComponent],
+    declarations: [MainNavComponent,FabDirective],
     imports: [IonicModule, TranslateModule,
         CommonModule, RoundProgressModule,
         MenubarModule, TreeTableModule,
@@ -31,7 +32,8 @@ import { DragulaModule } from 'ng2-dragula';
         TreeTableModule,
         IonicSelectableModule,NgxQRCodeModule,
         ColorPickerModule,AccordionModule,
-        FileUploadModule,DragulaModule
+        FileUploadModule,DragulaModule,
+        FabDirective
     ]
 })
 export class ComponentsModule { }

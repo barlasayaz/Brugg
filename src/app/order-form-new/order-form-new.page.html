@@ -435,19 +435,17 @@
       <ion-icon name="menu"></ion-icon>
     </ion-fab-button>
     <ion-fab-list side="top">
-      <ion-fab-button color="primary"
+      <ion-fab-button color="primary" [labelFab]="'Bestellung Abschicken'" [class.mouse-over]="mouseoverButton1"
                       (click)="ordersSend()" 
                       (mouseover)="mouseover(1)" 
                       (mouseout)="mouseout(1)">
         <ion-icon name="send"></ion-icon>        
       </ion-fab-button>
-      <ion-label [hidden]="!mouseoverButton1">{{'Bestellung Abschicken' | translate}}</ion-label>
-      <ion-fab-button color="primary" 
+      <ion-fab-button color="primary" [labelFab]="'PDF Ansicht'" [class.mouse-over]="mouseoverButton2"
                       (click)="printPdf('download')"
                       (mouseover)="mouseover(2)" 
                       (mouseout)="mouseout(2)">
         <ion-icon name="document"></ion-icon>        
       </ion-fab-button>
-      <ion-label [hidden]="!mouseoverButton2">{{'PDF Ansicht' | translate}}</ion-label>
     </ion-fab-list>
   </ion-fab>
