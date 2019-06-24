@@ -154,17 +154,19 @@
 		<ion-fab-button  color="primary"
 				(click)="protocolDeactivate()" 
 				[disabled]="userdata.role_set.check_products==false" 
-				(mouseover)="mouseover(1)" [class.mouse-over]="mouseoverButton1"
-				(mouseout)="mouseout(1)" [labelFab]="'Protokoll Löschen'">
+				(mouseover)="mouseover(1)"
+				(mouseout)="mouseout(1)"
+				[class.mouse-over]="mouseoverButton1"
+				[labelFab]="fabListButtonLabel1">
 			<ion-icon name="trash"></ion-icon>
 		</ion-fab-button>
-		<ion-label [hidden]="!mouseoverButton1">{{'' | translate}}</ion-label>
 		<ion-fab-button  color="primary"
 				(click)="printPdf()" 
-				(mouseover)="mouseover(2)" [class.mouse-over]="mouseoverButton2" 
-				(mouseout)="mouseout(2)" [labelFab]="'QR-Code scannen'">
+				(mouseover)="mouseover(2)" 
+				(mouseout)="mouseout(2)"
+				[class.mouse-over]="mouseoverButton2"
+				[labelFab]="fabListButtonLabel2">
 			<ion-icon name="document"></ion-icon>
 		</ion-fab-button>
-		<ion-label [hidden]="!mouseoverButton2">{{'PDF Ansicht' | translate}}</ion-label>
 	</ion-fab-list>
 </ion-fab>

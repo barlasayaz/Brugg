@@ -29,43 +29,48 @@
 		<ion-fab-button 
 				(click)="newAppointment()" 
 				color="primary"
-				(mouseover)="mouseover(1)" 
-				(mouseout)="mouseout(1)">				
+				(mouseover)="mouseover(1)"
+				(mouseout)="mouseout(1)"
+				[class.mouse-over]="mouseoverButton1"
+				[labelFab]="fabListButtonLabel1">				
 			<ion-icon name="add"></ion-icon>
 		</ion-fab-button>
-		<ion-label [hidden]="!mouseoverButton1">{{'Termin hinzufügen' | translate}}</ion-label>
 		<ion-fab-button 
 				(click)="setView(0);" 
 				color="primary"
 				(mouseover)="mouseover(2)"
-				(mouseout)="mouseout(2)">				
+				(mouseout)="mouseout(2)"
+				[class.mouse-over]="mouseoverButton2"
+				[labelFab]="fabListButtonLabel2">  				
 			<ion-icon name="calendar"></ion-icon>
 		</ion-fab-button>
-		<ion-label [hidden]="!mouseoverButton2">{{'Meine Termine' | translate}}</ion-label>
 		<ion-fab-button 
 				(click)="setView(1);" 
 				color="primary"
-				(mouseover)="mouseover(3)" 
-				(mouseout)="mouseout(3)">				
+				(mouseover)="mouseover(3)"
+				(mouseout)="mouseout(3)"
+				[class.mouse-over]="mouseoverButton3"
+				[labelFab]="fabListButtonLabel3">				
 			<ion-icon name="people"></ion-icon>
 		</ion-fab-button>
-		<ion-label [hidden]="!mouseoverButton3">{{'Kundenbesuch' | translate}}</ion-label>
 		<ion-fab-button 					
 				(click)="setView(2);" 
 				color="primary"
-				(mouseover)="mouseover(4)" 
-				(mouseout)="mouseout(4)">				
+				(mouseover)="mouseover(4)"
+				(mouseout)="mouseout(4)"
+				[class.mouse-over]="mouseoverButton4"
+				[labelFab]="fabListButtonLabel4">				
 			<ion-icon name="eye"></ion-icon>
 		</ion-fab-button>
-		<ion-label [hidden]="!mouseoverButton4">{{'Prüfung' | translate}}</ion-label>
 		<ion-fab-button 					
 				(click)="setView(3);" 
 				color="primary"
 				(mouseover)="mouseover(5)" 
-				(mouseout)="mouseout(5)">				
+				(mouseout)="mouseout(5)"
+				[class.mouse-over]="mouseoverButton5"
+				[labelFab]="fabListButtonLabel5">				
 			<ion-icon name="cafe"></ion-icon>
 		</ion-fab-button>
-		<ion-label [hidden]="!mouseoverButton5">{{'Urlaub' | translate}}</ion-label>
 	</ion-fab-list>
 </ion-fab>
 

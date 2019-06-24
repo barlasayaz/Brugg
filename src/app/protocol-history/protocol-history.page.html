@@ -59,15 +59,19 @@
       <ion-fab-button  color="primary"
               (click)="printExcel()" 
               [disabled]="pdfxlsButton" 
-              (mouseover)="mouseover(1)" [class.mouse-over]="mouseoverButton1" 
-              (mouseout)="mouseout(1)" [labelFab]="'ExportAllExcel'">
+              (mouseover)="mouseover(1)" 
+              (mouseout)="mouseout(1)"
+              [class.mouse-over]="mouseoverButton1"
+              [labelFab]="fabListButtonLabel1">
         <ion-icon name="podium"></ion-icon>
       </ion-fab-button>
       <ion-fab-button  color="primary"
               (click)="printPdf()" 
               [disabled]="pdfxlsButton" 
-              (mouseover)="mouseover(2)" [class.mouse-over]="mouseoverButton2" 
-              (mouseout)="mouseout(2)" [labelFab]="'PDF Ansicht'">
+              (mouseover)="mouseover(2)" 
+              (mouseout)="mouseout(2)"
+              [class.mouse-over]="mouseoverButton2"
+              [labelFab]="fabListButtonLabel2">
         <ion-icon name="document"></ion-icon>
       </ion-fab-button>
     </ion-fab-list>

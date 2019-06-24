@@ -39,6 +39,8 @@ export class ProtocolDetailsPage implements OnInit {
   public mobilePlatform: boolean;
   public mouseoverButton1: boolean;
   public mouseoverButton2: boolean;
+  public fabListButtonLabel1: string;
+  public fabListButtonLabel2: string;
   public index: number = -1;
   public imageURI: any;
   public file_link: any;
@@ -61,6 +63,8 @@ export class ProtocolDetailsPage implements OnInit {
   }
 
   ngOnInit() {
+    this.fabListButtonLabel1 = this.translate.instant('Protokoll Löschen');
+    this.fabListButtonLabel2 = this.translate.instant('PDF Ansicht');
 
     this.platform.ready().then(() => {
       if (this.platform.is('ios') ||
