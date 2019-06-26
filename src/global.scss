@@ -19541,6 +19541,9 @@ body .ui-accordion .ui-accordion-header.ui-tabview-outline.ui-state-active {
 }
 body .ui-accordion .ui-accordion-content {
   padding: 0px !important;
+  .tr:nth-child(2n) {
+    background: #f5f7f7;
+  }
 }
 
 ion-fab-button[label-fab].mouse-over {

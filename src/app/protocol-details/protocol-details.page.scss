@@ -53,17 +53,6 @@
   }
 }
 
-.ui-accordion-content {
-  .tr:nth-child(2n) {
-      --background: #f5f7f7;
-  }
-}
-
-.ui-accordion .ui-accordion-header.ui-state-active {
-  color: #7a7e81 !important;
-  --background: #8bd8f9 !important;
-} 
-
 .header-buttons {
   height: 100%;
   display: flex;
