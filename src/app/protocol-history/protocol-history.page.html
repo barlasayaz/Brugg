@@ -16,10 +16,10 @@
                             {{'Produkt ID' | translate}} : {{idProduct}} &nbsp;&nbsp; {{'Produkt Titel' | translate}} : {{titleProduct}}
                         </div> 
                         <div>
-                          <ion-button [disabled]="pageCount<=0" (click)="pageBack()">
+                          <ion-button [disabled]="pageCount<=0" (click)="pageBack()" style="--background: var(--ion-color-tertiary,#3880ff);">
                             <ion-icon name="arrow-back"></ion-icon>
                           </ion-button>
-                          <ion-button [disabled]="pageCount>pageTotalCount-5" (click)="pageForward()">
+                          <ion-button [disabled]="pageCount>pageTotalCount-5" (click)="pageForward()" style="--background: var(--ion-color-tertiary,#3880ff);">
                             <ion-icon name="arrow-forward"></ion-icon>
                           </ion-button>
                         </div>
