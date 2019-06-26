@@ -27,11 +27,6 @@ export class AppointmentPlanPage {
     public mouseoverButton3: boolean;
     public mouseoverButton4: boolean;
     public mouseoverButton5: boolean;
-    public fabListButtonLabel1: string;
-    public fabListButtonLabel2: string;
-    public fabListButtonLabel3: string;
-    public fabListButtonLabel4: string;
-    public fabListButtonLabel5: string;
     public mobilePlatform = false;
     public viewMode = 0;
     public peopleFilter = 'none';
@@ -47,12 +42,6 @@ export class AppointmentPlanPage {
         public platform: Platform
         // private datePipe: DatePipe
     ) {
-        this.fabListButtonLabel1 = this.translate.instant('Termin hinzufügen');
-        this.fabListButtonLabel2 = this.translate.instant('Meine Termine');
-        this.fabListButtonLabel3 = this.translate.instant('Kundenbesuch');
-        this.fabListButtonLabel4 = this.translate.instant('Prüfung');
-        this.fabListButtonLabel5 = this.translate.instant('Urlaub');
-
         this.calendarOptions = {
             timezone: 'local',
             editable: true,

@@ -292,7 +292,7 @@
               (mouseover)="mouseover(1)"
               (mouseout)="mouseout(1)"
               [class.mouse-over]="mouseoverButton1"
-              [labelFab]="fabListButtonLabel1">
+              [labelFab]="'Neuer Termin'">
         <ion-icon name="time"></ion-icon>
       </ion-fab-button>
       <ion-fab-button  color="primary"
@@ -300,7 +300,7 @@
               (mouseover)="mouseover(2)"
               (mouseout)="mouseout(2)"
               [class.mouse-over]="mouseoverButton2"
-              [labelFab]="fabListButtonLabel2">
+              [labelFab]="'Ansprechpartner'">
         <ion-icon name="people"></ion-icon>
       </ion-fab-button>
       <ion-fab-button color="primary" *ngIf="userdata.Type<20" 
@@ -308,7 +308,7 @@
               (mouseover)="mouseover(3)"
               (mouseout)="mouseout(3)"
               [class.mouse-over]="mouseoverButton3"
-              [labelFab]="fabListButtonLabel3">
+              [labelFab]="'Neue Notiz'">
         <ion-icon name="chatbubbles"></ion-icon>
       </ion-fab-button>
       <ion-fab-button color="success" *ngIf="(userdata.role==1)||(userdata.role==2)"
@@ -316,7 +316,7 @@
               (mouseover)="mouseover(4)"
               (mouseout)="mouseout(4)"
               [class.mouse-over]="mouseoverButton4"
-              [labelFab]="fabListButtonLabel4">
+              [labelFab]="'Kundendaten bearbeiten'">
         <ion-icon name="md-create"></ion-icon>
       </ion-fab-button>
   </ion-fab-list>

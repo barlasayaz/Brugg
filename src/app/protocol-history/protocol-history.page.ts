@@ -46,8 +46,6 @@ export class ProtocolHistoryPage implements OnInit {
     public mobilePlatform: boolean;
     public mouseoverButton1: boolean;
     public mouseoverButton2: boolean;
-    public fabListButtonLabel1: string;
-    public fabListButtonLabel2: string;
 
     constructor(public navCtrl: NavController,
                 public route: ActivatedRoute,
@@ -62,9 +60,6 @@ export class ProtocolHistoryPage implements OnInit {
     }
 
     ngOnInit() {
-        this.fabListButtonLabel1 = this.translate.instant('ExportAllExcel');
-        this.fabListButtonLabel2 = this.translate.instant('PDF Ansicht');
-
         this.platform.ready().then(() => {
             if (this.platform.is('ios') ||
                 this.platform.is('android') ||

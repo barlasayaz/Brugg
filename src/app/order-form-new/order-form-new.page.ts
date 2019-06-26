@@ -29,8 +29,6 @@ export class OrderFormNewPage {
   public deliveryDate: any;
   public mouseoverButton1: boolean;
   public mouseoverButton2: boolean;
-  public fabListButtonLabel1: string;
-  public fabListButtonLabel2: string;
   public mobilePlatform: boolean = false;
   public activCustomer: any = [];
   public contactPersonList: any = [];
@@ -102,9 +100,6 @@ export class OrderFormNewPage {
               public datePipe: DatePipe,
               public loadingCtrl: LoadingController,
               private route: ActivatedRoute) {
-
-                this.fabListButtonLabel1 = this.translate.instant('Bestellung Abschicken');
-                this.fabListButtonLabel2 = this.translate.instant('PDF Ansicht');
 
                 platform.ready().then(() => {
                   if ( this.platform.is('ios') ||

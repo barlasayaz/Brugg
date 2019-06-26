@@ -37,10 +37,6 @@ export class CustomerDetailsPage implements OnInit {
   public mouseoverButton2: boolean;
   public mouseoverButton3: boolean;
   public mouseoverButton4: boolean;
-  public fabListButtonLabel1: string;
-  public fabListButtonLabel2: string;
-  public fabListButtonLabel3: string;
-  public fabListButtonLabel4: string;
   public aktive_products: number = 0;
   public inspection_service: number = 0;
   public contactPersonList: any = [];
@@ -66,11 +62,6 @@ export class CustomerDetailsPage implements OnInit {
     public alertCtrl: AlertController,
     public modalCtrl: ModalController,
     private route: ActivatedRoute) {
-
-      this.fabListButtonLabel1 = this.translate.instant('Neuer Termin');
-      this.fabListButtonLabel2 = this.translate.instant('Ansprechpartner');
-      this.fabListButtonLabel3 = this.translate.instant('Neue Notiz');
-      this.fabListButtonLabel4 = this.translate.instant('Kundendaten bearbeiten');
 
       this.idCustomer = parseInt(this.route.snapshot.paramMap.get('id'));
       this.loadCustomer(this.idCustomer);
