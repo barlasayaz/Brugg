@@ -19,15 +19,15 @@
                       <div class="tbody">
                         <div class="tr table-body" style="border:2px solid #ccc;">
                             <div class="td" style="max-width: 30px;"><ion-checkbox [(ngModel)]="activOrderForm.orderCheckBox"></ion-checkbox></div>
-                            <div class="td" style="font-weight: bolder; font-size: 20px; color: rgba(17, 238, 17, 0.658); text-transform: uppercase;">{{'Bestellen' | translate}}</div>
+                            <div class="td" style="font-weight: bolder; font-size: 20px; margin-top: -6px; color: rgba(17, 238, 17, 0.658); text-transform: uppercase;">{{'Bestellen' | translate}}</div>
                             <div class="td" style="max-width: 30px;"><ion-checkbox [(ngModel)]="activOrderForm.offerCheckBox"></ion-checkbox></div>
-                            <div class="td" style="font-weight: bolder; font-size: 20px; color: rgba(255, 166, 0, 0.719); text-transform: uppercase;">{{'Offerte' | translate}}</div>
+                            <div class="td" style="font-weight: bolder; font-size: 20px; margin-top: -6px; color: rgba(255, 166, 0, 0.719); text-transform: uppercase;">{{'Offerte' | translate}}</div>
                             <div class="td" style="max-width: 30px;"><ion-checkbox [(ngModel)]="activOrderForm.repairCheckBox"></ion-checkbox></div>
-                            <div class="td" style="font-weight: bolder; font-size: 20px; color: rgba(0, 0, 255, 0.63); text-transform: uppercase;">{{'Reparatur' | translate}}</div>
+                            <div class="td" style="font-weight: bolder; font-size: 20px; margin-top: -6px; color: rgba(0, 0, 255, 0.63); text-transform: uppercase;">{{'Reparatur' | translate}}</div>
                             <div class="td" style="max-width: 30px;"><ion-checkbox [(ngModel)]="activOrderForm.inspectionCheckBox"></ion-checkbox></div>
-                            <div class="td" style="font-weight: bolder; font-size: 20px; color: rgba(128, 128, 128, 0.678); text-transform: uppercase;">{{'Prüfung' | translate}}</div>
+                            <div class="td" style="font-weight: bolder; font-size: 20px; margin-top: -6px; color: rgba(128, 128, 128, 0.678); text-transform: uppercase;">{{'Prüfung' | translate}}</div>
                             <div class="td" style="max-width: 30px;"><ion-checkbox [(ngModel)]="activOrderForm.rentCheckBox"></ion-checkbox></div>
-                            <div class="td" style="font-weight: bolder; font-size: 20px; color: rgba(207, 207, 26, 0.753); text-transform: uppercase;">{{'Miete' | translate}}</div> 
+                            <div class="td" style="font-weight: bolder; font-size: 20px; margin-top: -6px; color: rgba(207, 207, 26, 0.753); text-transform: uppercase;">{{'Miete' | translate}}</div> 
                         </div>
                       </div>
                     </div>
@@ -190,7 +190,8 @@
                                           displayFormat="DD.MM.YYYY"
                                           max = {{maxDate}}                                          
                                           doneText="{{translate.instant('okay')}}"
-                                          cancelText="{{translate.instant('dismiss')}}">
+                                          cancelText="{{translate.instant('dismiss')}}"
+                                          style="padding-left: 0px; padding-top: 10px;">
                             </ion-datetime>
                           </ion-item>
                         </div>                            
@@ -226,7 +227,8 @@
                                           displayFormat="DD.MM.YYYY"
                                           max = {{maxDate}}
                                           doneText="{{translate.instant('okay')}}"
-                                          cancelText="{{translate.instant('dismiss')}}">
+                                          cancelText="{{translate.instant('dismiss')}}"
+                                          style="padding-left: 0px; padding-top: 10px;">
                             </ion-datetime>
                           </ion-item>
                         </div>
@@ -245,13 +247,13 @@
                         <div class="tbody">
                           <div class="tr table-body" style="border:2px solid #ccc;">
                               <div class="td" style="max-width: 30px; width: 30px;"><ion-checkbox [(ngModel)]="activOrderForm.sampleDeliveryCheckBox"></ion-checkbox></div>
-                              <div class="td" style="font-size: 15px;">{{'Musterlieferung' | translate}}</div>
+                              <div class="td" style="font-size: 15px; margin-top: -6px;">{{'Musterlieferung' | translate}}</div>
                               <div class="td" style="max-width: 30px; width: 30px;"><ion-checkbox [(ngModel)]="activOrderForm.creditCheckBox"></ion-checkbox></div>
-                              <div class="td" style="font-size: 15px;">{{'Gutschrift' | translate}}</div>
+                              <div class="td" style="font-size: 15px; margin-top: -6px;">{{'Gutschrift' | translate}}</div>
                               <div class="td" style="max-width: 30px; width: 30px;"><ion-checkbox [(ngModel)]="activOrderForm.confOrderCheckBox"></ion-checkbox></div>
-                              <div class="td" style="font-size: 15px;">{{'Auftragsbestätigung' | translate}}</div>
+                              <div class="td" style="font-size: 15px; margin-top: -6px;">{{'Auftragsbestätigung' | translate}}</div>
                               <div class="td" style="max-width: 30px; width: 30px;"><ion-checkbox [(ngModel)]="activOrderForm.afterLoadingCheckBox"></ion-checkbox></div>
-                              <div class="td" style="font-size: 15px;">{{'Nach belastung' | translate}}</div>
+                              <div class="td" style="font-size: 15px; margin-top: -6px;">{{'Nach belastung' | translate}}</div>
                           </div>
                         </div>
                       </div>
@@ -268,15 +270,15 @@
                         <div class="tbody">
                           <div class="tr table-body" style="border:2px solid #ccc;">
                               <div class="td" style="max-width: 30px; width: 30px;"><ion-checkbox [(ngModel)]="activOrderForm.postCheckBox"></ion-checkbox></div>
-                              <div class="td" style="font-size: 15px;">{{'Post' | translate}}</div>
+                              <div class="td" style="font-size: 15px; margin-top: -6px;">{{'Post' | translate}}</div>
                               <div class="td" style="max-width: 30px; width: 30px;"><ion-checkbox [(ngModel)]="activOrderForm.expressCheckBox"></ion-checkbox></div>
-                              <div class="td" style="font-size: 15px;">{{'Express' | translate}}</div>
+                              <div class="td" style="font-size: 15px; margin-top: -6px;">{{'Express' | translate}}</div>
                               <div class="td" style="max-width: 30px; width: 30px;"><ion-checkbox [(ngModel)]="activOrderForm.aboutBrachtCheckBox"></ion-checkbox></div>
-                              <div class="td" style="font-size: 15px;">{{'Überbracht' | translate}}</div>
+                              <div class="td" style="font-size: 15px; margin-top: -6px;">{{'Überbracht' | translate}}</div>
                               <div class="td" style="max-width: 30px; width: 30px;"><ion-checkbox [(ngModel)]="activOrderForm.lkwCheckBox"></ion-checkbox></div>
-                              <div class="td" style="font-size: 15px;">{{'LKW' | translate}}</div>
+                              <div class="td" style="font-size: 15px; margin-top: -6px;">{{'LKW' | translate}}</div>
                               <div class="td" style="max-width: 30px; width: 30px;"><ion-checkbox [(ngModel)]="activOrderForm.evenPickupCheckBox"></ion-checkbox></div>
-                              <div class="td" style="font-size: 15px;">{{'Selbst Abholer' | translate}}</div>
+                              <div class="td" style="font-size: 15px; margin-top: -6px;">{{'Selbst Abholer' | translate}}</div>
                           </div>
                         </div>
                       </div>
