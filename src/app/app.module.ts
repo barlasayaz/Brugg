@@ -76,6 +76,8 @@ import { Keyboard } from '@ionic-native/keyboard/ngx';
 import { AccordionModule } from 'primeng/accordion';
 import { ServiceWorkerModule } from '@angular/service-worker'; 
 import { environment } from '../environments/environment';
+import { HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
+import { MyHammerGestureConfig } from '../hammer.config';
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, "assets/lang/");
 }
@@ -154,6 +156,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     SplashScreen,
     { provide: ErrorHandler, useClass: ErrorHandler },
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    { provide: HAMMER_GESTURE_CONFIG, useClass: MyHammerGestureConfig },
     SystemService,
     ApiService,
     UserdataService,
