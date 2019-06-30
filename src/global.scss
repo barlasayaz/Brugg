@@ -162,6 +162,7 @@ ion-fab-button ion-label {
   }
 }
  */
+
  ion-item.item-input {
 
 	&.ng-invalid.ng-touched:not(.input-has-focus):not(.item-input-has-focus) .item-inner {
@@ -256,8 +257,10 @@ ion-item.item-select, ion-item.item-ionic-selectable {
   ion-label {
     margin-bottom: -4px !important;
     margin-left: 5px !important;
-    margin-top: 0px !important;
-    padding: 5px 10px 5px 5px !important;
+    margin-top: 4px !important;
+    padding-left: 5px !important;
+    padding-right: 5px !important;
+   // padding: 5px 10px 5px 5px !important;
     background: #FFF !important;
     width: auto !important;
     align-self: baseline !important;
@@ -268,7 +271,7 @@ ion-item.item-select, ion-item.item-ionic-selectable {
   ion-select, ionic-selectable {
     border: 1px solid var(--ion-color-lightgrey);
     border-radius: 3px;
-    padding: 12px !important;
+    padding: 12px 12px 8px 12px !important;
     -webkit-box-sizing: border-box;
        -moz-box-sizing: border-box;
             box-sizing: border-box;
@@ -318,9 +321,7 @@ ion-item.item-datetime {
   ion-datetime {
     border: 1px solid var(--ion-color-lightgrey) !important;
     border-radius: 3px !important;
-    padding-top: 10px !important;
-    padding-bottom: 10px !important;
-    padding-left: 10px;
+    padding: 10px 10px 10px 10px !important;
   }
 
   .datetime-text {
@@ -638,6 +639,8 @@ ion-content {
 }
 
 ion-item {
+  margin-left: -16px !important;
+  margin-right: -16px !important;
   padding-left: 0 !important;
   color: var(--ion-color-grey);
   .item-inner {
@@ -1572,7 +1575,7 @@ tbody.ui-table-tbody {
     color: #fff;
     width: 50px;
     height: 50px;
-    --background: #009de0;
+    background: #009de0;
     border-radius: 500px;
     text-align: center;
     cursor: pointer;
@@ -1583,7 +1586,7 @@ tbody.ui-table-tbody {
   .btn-round-blue:hover,
   .btn-round-blue:focus {
     color: #fff;
-    --background: #007eb3;
+    background: #007eb3;
   }
   .btn-little-blue {
     color: #fff;
@@ -1604,7 +1607,7 @@ tbody.ui-table-tbody {
     color: #fff;
     width: 50px;
     height: 50px;
-    --background: #e74c3c;
+    background: #e74c3c;
     border-radius: 500px;
     text-align: center;
     cursor: pointer;
@@ -1615,7 +1618,7 @@ tbody.ui-table-tbody {
   .btn-round-red:hover,
   .btn-round-red:focus {
     color: #fff;
-    --background: #cf2b1a;
+    background: #cf2b1a;
   }
   .btn-little-red {
     color: #fff;

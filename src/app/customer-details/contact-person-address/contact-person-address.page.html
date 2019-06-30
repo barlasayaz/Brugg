@@ -22,7 +22,7 @@
                 <div class="tbody">
                 <ion-row>
                   <ion-col size="10">
-                    <ion-item no-lines style="padding-left: 0px;">
+                    <ion-item lines="none" style="padding-left: 0px;">
                       <ion-label position="floating">{{translate.instant('Adresstyp')}} *</ion-label>
                       <ion-select id="ansp_address_type" 
                                   [ngClass]="{required:inputError}"
@@ -35,7 +35,7 @@
                       </ion-select>            
                     </ion-item>
                   </ion-col>
-                  <ion-col size="2" style="text-align: center;">
+                  <ion-col size="2" style="text-align: center; margin-top: 10px;">
                     <ion-item lines="none">
                       <ion-button size="small" 
                                   (click)="remAddress(indAdr)" 
@@ -48,7 +48,7 @@
                 <!-- Row 2 -->
                 <ion-row>
                   <ion-col size="12">
-                    <ion-item no-lines style="padding-left: 0px;">
+                    <ion-item lines="none" style="padding-left: 0px;">
                       <ion-label position="floating">{{translate.instant('Strasse')}} *</ion-label>
                       <ion-input type="text" 
                                   id="ansp_street" 
@@ -61,7 +61,7 @@
                 <!-- Row 3 -->
                 <ion-row>
                   <ion-col size="12">
-                    <ion-item no-lines style="padding-left: 0px;">
+                    <ion-item lines="none" style="padding-left: 0px;">
                       <ion-label position="floating">{{translate.instant('PLZ')}} - {{translate.instant('Ort')}} *</ion-label>
                       <ion-input type="text" 
                                   id="ansp_zip_code" 
@@ -74,7 +74,7 @@
                 <!-- Row 3 -->
                 <ion-row>
                   <ion-col size="12">
-                    <ion-item no-lines style="padding-left: 0px;">
+                    <ion-item lines="none" style="padding-left: 0px;">
                       <ion-label position="floating">{{translate.instant('Abteilung')}}</ion-label>
                       <ion-input type="text" 
                                   id="ansp_department" 
@@ -87,7 +87,7 @@
                 <!-- Row 4 -->
                 <ion-row>
                   <ion-col size="12">
-                    <ion-item no-lines style="padding-left: 0px;">
+                    <ion-item lines="none" style="padding-left: 0px;">
                       <ion-label position="floating">{{translate.instant('E-Mail')}}</ion-label>
                       <ion-input type="text" 
                                   id="ansp_email" 
@@ -100,7 +100,7 @@
                 <!-- Row 5 -->
                 <ion-row>
                   <ion-col size="12">
-                    <ion-item no-lines style="padding-left: 0px;">
+                    <ion-item lines="none" style="padding-left: 0px;">
                       <ion-label position="floating">{{translate.instant('Telefon')}}</ion-label>
                       <ion-input type="text" 
                                   id="ansp_phone" 
@@ -113,7 +113,7 @@
                 <!-- Row 6 -->
                 <ion-row>
                   <ion-col size="12">
-                    <ion-item no-lines style="padding-left: 0px;">
+                    <ion-item lines="none" style="padding-left: 0px;">
                       <ion-label position="floating">{{translate.instant('Mobiltelefon')}}</ion-label>
                       <ion-input type="text" 
                                   id="ansp_mobile" 

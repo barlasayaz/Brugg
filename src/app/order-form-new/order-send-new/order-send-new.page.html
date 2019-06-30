@@ -13,7 +13,7 @@
   <ion-grid>
       <ion-row>
           <ion-col size="12">
-              <ion-item>
+              <ion-item lines="none">
                 <ion-label position="floating">{{translate.instant('Ziel')}}</ion-label>
                   <ion-select (ionChange)="changeAim()"
                               name="Ziel_DropDown"
@@ -31,7 +31,7 @@
       <div *ngIf="Ziel_DropDown==2">
           <ion-row>
             <ion-col size="12">
-              <ion-item>
+              <ion-item lines="none">
                 <ion-label position="floating">{{translate.instant('Ansprechpartner')}}</ion-label>
                   <ion-select (ionChange)="changeAnsp()"
                               name="RE_Ansp"
@@ -45,12 +45,10 @@
             </ion-col>
           </ion-row>
       </div>
-        
-      <br><br>
 
       <ion-row>
         <ion-col size="12" size-md="6">
-            <ion-item>
+            <ion-item lines="none">
               <ion-label position="floating">{{translate.instant('Betreff')}}</ion-label>
               <ion-input
                          type="text"
@@ -61,7 +59,7 @@
             </ion-item>
         </ion-col>
         <ion-col size="12" size-md="6">
-          <ion-item>
+          <ion-item lines="none">
             <ion-label position="floating">{{translate.instant('Empfänger')}}</ion-label>
             <ion-input
                         type="text"
@@ -74,7 +72,7 @@
       </ion-row>
       <ion-row>
         <ion-col size="12" size-md="6" offset-md="6">
-            <ion-item>
+            <ion-item lines="none">
               <ion-label position="floating">{{translate.instant('Cc')}}</ion-label>
               <ion-input
                          type="text"

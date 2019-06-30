@@ -14,7 +14,7 @@
       <!-- Row 1 -->
       <ion-row>
           <ion-col size-xl="8" size-lg="8" size-md="8" size-sm="12" size="12">
-            <ion-item>
+            <ion-item lines="none">
                 <ion-label position="floating">{{translate.instant('Titel')}}</ion-label>
                 <ion-input type="text" (ionChange)="checkInvalidForm()" required
                            [ngClass]="{required:inputError}" 
@@ -23,7 +23,7 @@
             </ion-item>
           </ion-col>
           <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12">
-            <ion-item>
+            <ion-item lines="none">
                 <ion-label position="floating">{{translate.instant('Firma')}}</ion-label>
                 <ion-input type="text" (ionChange)="checkInvalidForm()" 
                            readonly 
@@ -53,7 +53,7 @@
       <!-- Row 3 -->
       <ion-row>
         <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12">
-          <ion-item>
+          <ion-item lines="none">
               <ion-label position="floating">{{translate.instant('Datum')}}</ion-label>
               <ion-datetime [ngClass]="{required:inputError}" 
                             (ionChange)="checkInvalidForm()" 
@@ -66,7 +66,7 @@
           </ion-item>
         </ion-col>  
         <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12">
-          <ion-item>
+          <ion-item lines="none">
               <ion-label position="floating">{{translate.instant('Uhrzeit')}}</ion-label>
               <ion-datetime [ngClass]="{required:inputError}" 
                             (ionChange)="checkInvalidForm()" 
@@ -79,7 +79,7 @@
           </ion-item>
         </ion-col> 
         <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12">
-          <ion-item>
+          <ion-item lines="none">
             <ion-label position="floating">{{translate.instant('Notizkategorie')}}</ion-label>
             <ion-select
                         [(ngModel)]="activNote.category" 
@@ -97,7 +97,7 @@
       <!-- Row 4 -->
       <ion-row>
         <ion-col size-xl="12" size-lg="12" size-md="12" size-sm="12" size="12">
-          <ion-item>
+          <ion-item lines="none">
               <ion-label position="floating">{{translate.instant('Notes')}}</ion-label>     
               <ion-textarea type="text" 
                             (ionChange)="checkInvalidForm()"

@@ -14,7 +14,7 @@
         <!-- Row 1 -->
         <ion-row>
             <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="12" size-xs="12">
-                <ion-item>
+                <ion-item lines="none">
                     <ion-label position="floating">{{translate.instant('Titel')}} </ion-label>
                     <ion-input type="text" [ngClass]="{required:inputError}" [(ngModel)]="activOption.title[lang]"
                         readonly="true" (click)="promptOptionTitle(activOption.title,1,0)">
@@ -22,7 +22,7 @@
                 </ion-item>
             </ion-col>
             <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="12" size-xs="12" style="align-items:center; margin-top:18px">
-                <ion-item>
+                <ion-item lines="none">
                     <ion-label *ngIf="mandatoryToogle==true">
                         {{translate.instant('Verpflichtend')}}:
                         {{translate.instant('Wahr')}}
@@ -38,7 +38,7 @@
         <!-- Row 2-->
         <ion-row>
             <ion-col size-xl="7" size-lg="7" size-md="7" size-sm="10" size-xs="10">
-                <ion-item>
+                <ion-item lines="none">
                     <ion-label position="floating">{{translate.instant('Art')}}</ion-label>
                     <ion-select style="margin-bottom: 10px;" 
                                 [ngClass]="{required:inputError}" 
@@ -70,7 +70,7 @@
         <!-- Toggle -->
         <ion-row *ngIf="activOption.type==0" style="align-items: center;margin-top:15px">
             <ion-col size-xl="7" size-lg="7" size-md="7" size-sm="7" size-xs="7">
-                <ion-item>
+                <ion-item lines="none">
                     <ion-label *ngIf="defaultToggle==true">
                         {{translate.instant('Standard')}}:
                         {{translate.instant('Wahr')}}
@@ -86,7 +86,7 @@
                 <p-colorPicker [(ngModel)]="inputColor" [inline]="false" ></p-colorPicker>
             </ion-col>
             <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="4" size-xs="4" style="margin-top:-15px">
-                <ion-item>
+                <ion-item lines="none">
                     <ion-label position="floating">{{translate.instant('Farbe')}}</ion-label>
                     <ion-input [(ngModel)]="inputColor" class="clsinput" type="text" placeholder="" readonly="true"></ion-input>
                 </ion-item>
@@ -97,7 +97,7 @@
         <div *ngIf="activOption.type==1">
             <ion-row *ngFor="let option of options; let opdInd = index" style="margin-top: -7px">
                 <ion-col size-xl="7" size-lg="7" size-md="7" size-sm="10" size-xs="10">
-                    <ion-item>
+                    <ion-item lines="none">
                         <ion-label position="floating">{{translate.instant('Optionen')+' '+(opdInd+1)}} </ion-label>
                         <ion-input type="text" [ngClass]="{required:inputError}" [(ngModel)]="option[lang]" readonly="true"
                             (click)="promptOptionTitle(option,2,opdInd)">
@@ -118,7 +118,7 @@
         <!-- Textarea -->
         <ion-row *ngIf="activOption.type==2">
             <ion-col size-xl="7" size-lg="7" size-md="7" size-sm="10" size-xs="10">
-                <ion-item>
+                <ion-item lines="none">
                     <ion-label position="floating">{{translate.instant('Max')}} {{translate.instant('Charakter')}}</ion-label>
                     <ion-input type="Number" [ngClass]="{required:inputError}" [(ngModel)]="maxChar">
                     </ion-input>
@@ -129,14 +129,14 @@
         <!-- Number -->
         <ion-row *ngIf="activOption.type==3">
             <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="6" size-xs="6">
-                <ion-item>
+                <ion-item lines="none">
                     <ion-label position="floating">{{translate.instant('Min')}}</ion-label>
                     <ion-input type="Number" [ngClass]="{required:inputError}" [(ngModel)]="minNumber">
                     </ion-input>
                 </ion-item>
             </ion-col>
             <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="6" size-xs="6">
-                <ion-item>
+                <ion-item lines="none">
                     <ion-label position="floating">{{translate.instant('Max')}}</ion-label>
                     <ion-input type="Number" [ngClass]="{required:inputError}" [(ngModel)]="maxNumber">
                     </ion-input>
@@ -147,7 +147,7 @@
          <!-- Date -->
        <!-- <ion-row style="margin-top:-5px;" *ngIf="activOption.type==4">
           <ion-col col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12>
-            <ion-item>
+            <ion-item lines="none">
                 <ion-label floating>{{translate.instant('Datum')}}</ion-label>
                 <ion-datetime [ngClass]="{required:inputError}" 
                               [(ngModel)]="default_date"
@@ -162,7 +162,7 @@
          <!-- Time -->
         <ion-row *ngIf="activOption.type==4">
           <ion-col size-xl="7" size-lg="7" size-md="7" size-sm="10" size-xs="10">
-            <ion-item>
+            <ion-item lines="none">
               <ion-label position="floating">{{translate.instant('Standard')}}</ion-label>
               <ion-datetime [ngClass]="{required:fehler}"
                             type="time"

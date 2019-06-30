@@ -20,15 +20,14 @@
               <ion-input type="text" 
                          [ngClass]="{required:inputError}" 
                          [(ngModel)]="activCustomer.company"
-                         [disabled] = customerDisabled>
+                         [readonly] = customerDisabled>
               </ion-input>
           </ion-item>
         </ion-col>
         <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12">
           <ion-item lines="none">
               <ion-label position="floating" >{{translate.instant('Wertung')}}</ion-label>
-              <ion-select style="margin-bottom: 4px;"
-                          [ngClass]="{required:inputError}"
+              <ion-select [ngClass]="{required:inputError}"
                           [disabled]="!this.userdata.role_set.edit_customer" 
                           name="Wertung"
                           [(ngModel)]="activCustomer.rating"
@@ -111,8 +110,7 @@
       <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12">
         <ion-item lines="none"s>
           <ion-label position="floating" >{{translate.instant('AD-Mitarbeiter')}}</ion-label>
-          <ion-select style="margin-bottom: 4px;"
-                      [ngClass]="{required:inputError}"
+          <ion-select [ngClass]="{required:inputError}"
                       [disabled]="!this.userdata.role_set.edit_customer"
                       name="selectSales" 
                       id="selectSales"
@@ -126,8 +124,7 @@
       <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12">
         <ion-item lines="none">
           <ion-label position="floating" >{{translate.instant('Prüfer')}}</ion-label>
-          <ion-select style="margin-bottom: 4px;"
-                      [ngClass]="{required:inputError}"
+          <ion-select [ngClass]="{required:inputError}"
                       [disabled]="!this.userdata.role_set.edit_customer"
                       name="selectTester" 
                       id="selectTester"
@@ -144,8 +141,7 @@
       <ion-col size="12">
         <ion-item lines="none">
           <ion-label position="floating" >{{translate.instant('Branche')}}</ion-label>
-          <ion-select style="margin-bottom: 4px;"
-                      [ngClass]="{required:inputError}"
+          <ion-select [ngClass]="{required:inputError}"
                       [disabled]="!this.userdata.role_set.edit_customer"
                       name="selectBranche" 
                       id="selectBranche"
