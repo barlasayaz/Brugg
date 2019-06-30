@@ -1,4 +1,4 @@
-import { Component,OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NavController, NavParams, ModalController, AlertController } from '@ionic/angular';
 import { UserdataService } from '../../services/userdata';
 import { TranslateService } from '@ngx-translate/core';
@@ -40,8 +40,8 @@ export class ProtocolOptEditComponent implements OnInit {
   public maxChar = 100;
   public minNumber = 0;
   public maxNumber = 10;
-  public defaultToggle = true;
-  public defaultTime = '';
+  public defaultToggle: boolean;
+  public defaultTime: string;
   public opdInd: any = 0;
   public lang = '';
   public mandatoryToogle = false;
@@ -53,10 +53,12 @@ export class ProtocolOptEditComponent implements OnInit {
     public viewCtrl: ModalController,
     public apiService: ApiService,
     public alertCtrl: AlertController) {
+
     }
 
-    ngOnInit()
-    {
+    ngOnInit() {
+      this.defaultTime = '';
+      this.defaultToggle = false;
       this.activOption.licensee = this.userdata.licensee;
       const op = this.navParams.get('option');
       if (op) { this.activOption = JSON.parse(JSON.stringify(op)); }

@@ -13,7 +13,7 @@
     <ion-grid>
         <!-- Row 1 -->
         <ion-row>
-            <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="12" size-xs="12">
+            <ion-col size-xl="12" size-lg="12" size-md="12" size-sm="12" size-xs="12">
                 <ion-item lines="none">
                     <ion-label position="floating">{{translate.instant('Titel')}} </ion-label>
                     <ion-input type="text" [ngClass]="{required:inputError}" [(ngModel)]="activOption.title[lang]"
@@ -21,23 +21,10 @@
                     </ion-input>
                 </ion-item>
             </ion-col>
-            <ion-col ssize-xl="6" size-lg="6" size-md="6" size-sm="12" size-xs="12" style="align-items:center; margin-top:18px">
-                <ion-item lines="none">
-                    <ion-label *ngIf="mandatoryToogle==true">
-                        {{translate.instant('Verpflichtend')}}:
-                        {{translate.instant('Wahr')}}
-                    </ion-label>
-                    <ion-label *ngIf="mandatoryToogle==false">
-                        {{translate.instant('Verpflichtend')}}:
-                        {{translate.instant('Falsch')}}
-                    </ion-label>
-                        <ion-toggle [(ngModel)]="mandatoryToogle" checked="false"></ion-toggle>
-                </ion-item>
-            </ion-col>
         </ion-row>
         <!-- Row 2-->
         <ion-row>
-            <ion-col size-xl="7" size-lg="7" size-md="7" size-sm="10" size-xs="10">
+            <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="10" size-xs="10">
                 <ion-item lines="none">
                     <ion-label position="floating">{{translate.instant('Art')}}</ion-label>
                     <ion-select style="margin-bottom: 10px;"
@@ -55,8 +42,8 @@
                     </ion-select>
                 </ion-item>
             </ion-col>
-            <ion-col size-xl="2" size-lg="2" size-md="2" size-sm="2" size-xs="2">
-                <ion-item lines="none" style="margin-top: 15px;">
+            <ion-col size-xl="1" size-lg="1" size-md="1" size-sm="2" size-xs="2" style="margin-top: 22px;">
+                <ion-item lines="none">
                     <ion-button size="small"
                                 class="opt-add"
                                 (click)="add_option()"
@@ -65,11 +52,24 @@
                     </ion-button>
                 </ion-item>
             </ion-col>
+            <ion-col size-xl="5" size-lg="5" size-md="5" size-sm="12" size-xs="12" style="align-items:center; margin-top:25px">
+                <ion-item lines="none">
+                    <ion-label *ngIf="mandatoryToogle==true">
+                        {{translate.instant('Verpflichtend')}}:
+                        {{translate.instant('Wahr')}}
+                    </ion-label>
+                    <ion-label *ngIf="mandatoryToogle==false">
+                        {{translate.instant('Verpflichtend')}}:
+                        {{translate.instant('Falsch')}}
+                    </ion-label>
+                        <ion-toggle [(ngModel)]="mandatoryToogle" checked="false"></ion-toggle>
+                </ion-item>
+            </ion-col>
         </ion-row>
 
         <!-- Toggle -->
         <ion-row *ngIf="activOption.type==0" style="align-items:center; margin-top:15px">
-            <ion-col size-xl="7" size-lg="7" size-md="7" size-sm="7" size-xs="7">
+            <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="6" size-xs="6" style="margin-top: 12px;">
                 <ion-item lines="none">
                     <ion-label *ngIf="defaultToggle==true">
                         {{translate.instant('Standard')}}:
@@ -82,7 +82,7 @@
                     <ion-toggle [(ngModel)]="defaultToggle" checked="true"></ion-toggle>
                 </ion-item>
             </ion-col>
-            <ion-col size-xl="1" size-lg="1" size-md="1" size-sm="1" size-xs="1" style="text-align: right;">
+            <ion-col size-xl="2" size-lg="2" size-md="2" size-sm="2" size-xs="2" style="text-align: right; margin-top: 12px; padding-right: 12px;">
                 <p-colorPicker [(ngModel)]="inputColor" [inline]="false" ></p-colorPicker>
             </ion-col>
             <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="4" size-xs="4" style="margin-top:-15px">
@@ -96,7 +96,7 @@
         <!-- Select -->
         <div *ngIf="activOption.type==1">
             <ion-row *ngFor="let option of options; let opdInd = index" style="margin-top: -7px">
-                <ion-col size-xl="7" size-lg="7" size-md="7" size-sm="10" size-xs="10">
+                <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="10" size-xs="10">
                     <ion-item lines="none">
                         <ion-label position="floating">{{translate.instant('Optionen')+' '+(opdInd+1)}} </ion-label>
                         <ion-input type="text" [ngClass]="{required:inputError}" [(ngModel)]="option[lang]" readonly="true"
@@ -104,7 +104,7 @@
                         </ion-input>
                     </ion-item>
                 </ion-col>
-                <ion-col size-xl="2" size-lg="2" size-md="2" size-sm="2" size-xs="2">
+                <ion-col size-xl="1" size-lg="1" size-md="1" size-sm="2" size-xs="2" style="margin-top: auto">
                     <ion-item lines="none" style="margin-top: 15px;">
                         <ion-button size="small" class="opt-remove" (click)="remove_option(opdInd)">
                             <ion-icon name="remove"></ion-icon>
@@ -116,7 +116,7 @@
 
         <!-- Textarea -->
         <ion-row *ngIf="activOption.type==2">
-            <ion-col size-xl="7" size-lg="7" size-md="7" size-sm="10" size-xs="10">
+            <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="10" size-xs="10">
                 <ion-item lines="none">
                     <ion-label position="floating">{{translate.instant('Max')}} {{translate.instant('Charakter')}}</ion-label>
                     <ion-input type="Number" [ngClass]="{required:inputError}" [(ngModel)]="maxChar">
@@ -158,21 +158,20 @@
             </ion-col>  
         </ion-row>-->
 
-            <!-- Time -->
+        <!-- Time -->
         <ion-row *ngIf="activOption.type==4">
-            <ion-col size-xl="7" size-lg="7" size-md="7" size-sm="10" size-xs="10">
-            <ion-item lines="none">
-                <ion-label position="floating">{{translate.instant('Standard')}}</ion-label>
-                <ion-datetime [ngClass]="{required:fehler}"
-                              type="time"
-                              [(ngModel)]="defaultTime"
-                              name="start_time" 
-                              required="true"
-                              displayFormat="HH:mm"
-                              doneText="{{translate.instant('okay')}}" 
-                             cancelText="{{translate.instant('dismiss')}}">
-                </ion-datetime>  
-            </ion-item>
+            <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="10" size-xs="10">
+                <ion-item lines="none">
+                    <ion-label position="floating">{{translate.instant('Standard')}}</ion-label>
+                    <ion-datetime [ngClass]="{required:fehler}"
+                                type="time"
+                                [(ngModel)]="defaultTime"
+                                name="start_time" 
+                                displayFormat="HH:mm"
+                                doneText="{{translate.instant('okay')}}" 
+                                cancelText="{{translate.instant('dismiss')}}">
+                    </ion-datetime>  
+                </ion-item>
             </ion-col>
         </ion-row>
 

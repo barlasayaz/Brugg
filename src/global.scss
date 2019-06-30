@@ -260,7 +260,6 @@ ion-item.item-select, ion-item.item-ionic-selectable {
     margin-top: 4px !important;
     padding-left: 5px !important;
     padding-right: 5px !important;
-   // padding: 5px 10px 5px 5px !important;
     background: #FFF !important;
     width: auto !important;
     align-self: baseline !important;
@@ -271,7 +270,7 @@ ion-item.item-select, ion-item.item-ionic-selectable {
   ion-select, ionic-selectable {
     border: 1px solid var(--ion-color-lightgrey);
     border-radius: 3px;
-    padding: 12px 12px 8px 12px !important;
+    padding: 12px 10px 12px 4px !important;
     -webkit-box-sizing: border-box;
        -moz-box-sizing: border-box;
             box-sizing: border-box;
