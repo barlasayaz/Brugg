@@ -16,7 +16,7 @@
              </div>
             </ion-col>
             <ion-col size="6">
-              <ion-item class="pvs4-full-select">
+              <ion-item lines="none" class="pvs4-full-select">
                 <ion-label position="floating">{{'Sprache' | translate}}</ion-label>
                 <ion-select [(ngModel)]="lang"
                             (ionChange)="changeLanguage()"
@@ -41,7 +41,7 @@
         <form (ngSubmit)="signIn()" [formGroup]="authForm">
           <ion-row>
             <ion-col>
-              <ion-item>
+              <ion-item lines="none">
                 <ion-label position="floating">{{ "E-Mail" | translate }}</ion-label>
                 <ion-input type="text" formControlName="pvs4_username" required></ion-input>
               </ion-item>
@@ -49,11 +49,11 @@
           </ion-row>
     
           <ion-row>
-            <ion-col>
-              <ion-item>
+            <ion-col>              
+              <ion-item lines="none" style="padding-left: 0px; padding-right: 0px;">
                 <ion-label position="floating">{{ "Passwort" | translate }}</ion-label>
-                <ion-input type="password" formControlName="pvs4_password" required ></ion-input>
-              </ion-item>
+                <ion-input type="password" formControlName="pvs4_password" required></ion-input>
+              </ion-item>            
             </ion-col>
           </ion-row>
     

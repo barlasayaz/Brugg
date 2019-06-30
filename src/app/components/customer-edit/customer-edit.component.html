@@ -15,7 +15,7 @@
     <!-- Row 1 -->
     <ion-row>
         <ion-col size-xl="8" size-lg="8" size-md="8" size-sm="12" size="12">
-          <ion-item>
+          <ion-item lines="none">
               <ion-label position="floating" >{{translate.instant('Firma')}}</ion-label>
               <ion-input type="text" 
                          [ngClass]="{required:inputError}" 
@@ -25,7 +25,7 @@
           </ion-item>
         </ion-col>
         <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12">
-          <ion-item>
+          <ion-item lines="none">
               <ion-label position="floating" >{{translate.instant('Wertung')}}</ion-label>
               <ion-select style="margin-bottom: 4px;"
                           [ngClass]="{required:inputError}"
@@ -46,7 +46,7 @@
     <!-- Row 2 -->
     <ion-row>
         <ion-col size-xl="8" size-lg="8" size-md="8" size-sm="12" size="12">
-          <ion-item>
+          <ion-item lines="none">
               <ion-label position="floating" >{{translate.instant('Strasse')}}</ion-label>
               <ion-input type="text" 
                          [ngClass]="{required:inputError}" 
@@ -56,7 +56,7 @@
           </ion-item>
         </ion-col>
         <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12">
-          <ion-item>
+          <ion-item lines="none">
               <ion-label position="floating" >{{translate.instant('Postfach')}}</ion-label>
               <ion-input type="text" 
                          [disabled]="!this.userdata.role_set.edit_customer"
@@ -68,7 +68,7 @@
     <!-- Row 3 -->
     <ion-row>
       <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12">
-        <ion-item>
+        <ion-item lines="none">
             <ion-label position="floating" >{{translate.instant('PLZ')}}</ion-label>
             <ion-input type="text" 
                        [ngClass]="{required:inputError}" 
@@ -78,7 +78,7 @@
         </ion-item>
       </ion-col>
       <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12">
-        <ion-item>
+        <ion-item lines="none">
             <ion-label position="floating" >{{translate.instant('Ort')}}</ion-label>
             <ion-input type="text" 
                        [ngClass]="{required:inputError}"
@@ -88,7 +88,7 @@
         </ion-item>
       </ion-col>
       <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12">
-          <ion-item>
+          <ion-item lines="none">
               <ion-label position="floating" >{{translate.instant('Land')}}</ion-label>
               <ion-input type="text" 
                          [disabled]="!this.userdata.role_set.edit_customer"
@@ -100,7 +100,7 @@
     <!-- Row 4 -->
     <ion-row>
       <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12">
-        <ion-item>
+        <ion-item lines="none">
           <ion-label position="floating" >{{translate.instant('Kundennummer')}}</ion-label>
           <ion-input type="text" 
                      [disabled]="!this.userdata.role_set.edit_customer"
@@ -109,7 +109,7 @@
         </ion-item>
       </ion-col>
       <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12">
-        <ion-item no-lines>
+        <ion-item lines="none"s>
           <ion-label position="floating" >{{translate.instant('AD-Mitarbeiter')}}</ion-label>
           <ion-select style="margin-bottom: 4px;"
                       [ngClass]="{required:inputError}"
@@ -124,7 +124,7 @@
         </ion-item>
       </ion-col>
       <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12">
-        <ion-item no-lines>
+        <ion-item lines="none">
           <ion-label position="floating" >{{translate.instant('Prüfer')}}</ion-label>
           <ion-select style="margin-bottom: 4px;"
                       [ngClass]="{required:inputError}"
@@ -142,7 +142,7 @@
     <!-- Row 5 -->
     <ion-row>
       <ion-col size="12">
-        <ion-item>
+        <ion-item lines="none">
           <ion-label position="floating" >{{translate.instant('Branche')}}</ion-label>
           <ion-select style="margin-bottom: 4px;"
                       [ngClass]="{required:inputError}"
@@ -160,7 +160,7 @@
     <!-- Row 6 -->
     <ion-row>
       <ion-col size="12">
-        <ion-item>
+        <ion-item lines="none">
           <ion-label position="floating" >{{translate.instant('Telefon')}}</ion-label>
           <ion-input type="text"
                      [disabled]="!this.userdata.role_set.edit_customer"
@@ -172,7 +172,7 @@
     <!-- Row 7 -->
     <ion-row>
       <ion-col size="12">
-        <ion-item>
+        <ion-item lines="none">
           <ion-label position="floating" >{{translate.instant('E-Mail')}}</ion-label>
           <ion-input type="text"
                      [disabled]="!this.userdata.role_set.edit_customer"
@@ -184,7 +184,7 @@
     <!-- Row 8 -->
     <ion-row>
       <ion-col size="12">
-        <ion-item>
+        <ion-item lines="none">
           <ion-label position="floating" >{{translate.instant('Internet')}}</ion-label>
           <ion-input type="text"
                      [disabled]="!this.userdata.role_set.edit_customer"
@@ -195,7 +195,7 @@
 
     <ion-row>
       <ion-col size="12">
-        <ion-item>
+        <ion-item lines="none">
           <ion-label position="floating" >{{translate.instant('Notiz')}}</ion-label>
           <ion-textarea type="text" 
                         rows="5" 

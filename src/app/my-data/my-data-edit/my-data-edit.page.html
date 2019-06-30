@@ -14,10 +14,9 @@
     <ion-grid>
       <ion-row class="align-center-fix">
         <ion-col size-md="10" size-sm="10" size="10">
-            <ion-item>
+            <ion-item lines="none">
               <ion-label position="floating">{{translate.instant('E-Mail')}}</ion-label>
               <ion-input required 
-                         class="clsinput"
                          type="email" 
                          placeholder=""
                          id="emailToFind"  
@@ -37,10 +36,9 @@
       <!-- Gefunden -->
       <ion-row *ngIf="viewNewMode==2">
         <ion-col size-md="4" size-sm="12" size="12">
-          <ion-item>
+          <ion-item lines="none">
             <ion-label position="floating"> {{translate.instant('Vorname')}}</ion-label>          
           	<ion-input disabled
-                        class="clsinput"
                         type="text"
                         placeholder="" 
                         [(ngModel)]="viewNewObj.first_name">
@@ -48,10 +46,9 @@
           </ion-item>							
         </ion-col>
         <ion-col size-md="4" size-sm="12" size="12">
-          <ion-item>
+          <ion-item lines="none">
             <ion-label position="floating">{{translate.instant('Name')}}</ion-label>
           	<ion-input disabled
-                        class="clsinput"
                         type="text"
                         placeholder=""
                         [(ngModel)]="viewNewObj.last_name">
@@ -59,10 +56,9 @@
           </ion-item>  						
         </ion-col>
         <ion-col size-md="4" size-sm="12" size="12">
-          <ion-item>	
+          <ion-item lines="none">	
             <ion-label position="floating">{{translate.instant('KennungMitarbeiter')}}</ion-label>
           	<ion-input disabled
-                        class="clsinput"
                         type="text"
                         placeholder=""
                         [(ngModel)]="viewNewObj.short_code">
@@ -153,11 +149,10 @@
       <!-- Row 1-->
         <ion-row>
           <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size-xs="12">
-            <ion-item>
+            <ion-item lines="none">
               <ion-label position="floating"> {{translate.instant('Vorname')}}</ion-label>          
             	<ion-input disabled 
                           type="text"
-                          class="clsinput"
                           id="Vorname"
                           [(ngModel)]="edit.bid.first_name"
                           [ngClass]="{'required':pfelder}">
@@ -165,11 +160,10 @@
             </ion-item>							
           </ion-col>
           <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size-xs="12">
-            <ion-item>
+            <ion-item lines="none">
               <ion-label position="floating">{{translate.instant('Name')}}</ion-label>
             	<ion-input disabled
                           type="text"
-                          class="clsinput"
                           id="Name"
                           [(ngModel)]="edit.bid.last_name"
                           [ngClass]="{required:pfelder}">
@@ -177,11 +171,10 @@
             </ion-item>  						
           </ion-col>
           <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size-xs="12">
-            <ion-item>	
+            <ion-item lines="none">	
               <ion-label position="floating">{{translate.instant('KennungMitarbeiter')}}</ion-label>
             	<ion-input required
                           type="text"
-                          class="clsinput" 
                           id="short_code"
                           [(ngModel)]="edit.short_code"
                           [ngClass]="{required:pfelder}">
@@ -193,39 +186,36 @@
         <!-- Row 2-->
         <ion-row>
         <ion-col size-xl="7" size-lg="7" size-md="7" size-sm="12" size="12">
-          <ion-item>
+          <ion-item lines="none">
             <ion-label position="floating">{{translate.instant('Telefon')}}</ion-label>
             <ion-input disabled
-                        class="clsinput"
                         type="text"
                         id="Telefon"
                         [(ngModel)]="edit.bid.phone"
                         [ngClass]="{required:pfelder}">
             </ion-input>
           </ion-item>							
-          </ion-col>
-          <ion-col size-xl="1" size-lg="1" size-md="1" size-sm="2" size="2" style="padding-left:15px;padding-top:35px;">
-            <p-colorPicker [(ngModel)]="edit.colour"></p-colorPicker>
-          </ion-col>
-          <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="10" size="10">				
-            <ion-item>					
-              <ion-label position="floating">{{translate.instant('Farbe')}}</ion-label>					
-              <ion-input [(ngModel)]="edit.colour" 
-                         class="clsinput"
-                         type="text"
-                         readonly="true">
-              </ion-input>
-            </ion-item>  						
+        </ion-col>
+        <ion-col size-xl="1" size-lg="1" size-md="1" size-sm="2" size="2">
+          <p-colorPicker [(ngModel)]="edit.colour"></p-colorPicker>
+        </ion-col>
+        <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="10" size="10">				
+          <ion-item lines="none">					
+            <ion-label position="floating">{{translate.instant('Farbe')}}</ion-label>					
+            <ion-input [(ngModel)]="edit.colour" 
+                        type="text"
+                        readonly="true">
+            </ion-input>
+          </ion-item>  						
           </ion-col>			
         </ion-row>
     
         <!-- Row 3-->
         <ion-row >
           <ion-col size-xl="12" size-lg="12" size-md="12" size-sm="12" size="12">
-            <ion-item>
+            <ion-item lines="none">
               <ion-label position="floating">{{translate.instant('E-Mail')}}</ion-label>
                   <ion-input disabled
-                              class="clsinput"
                               type="text"
                               id="email"
                               [(ngModel)]="edit.email"
