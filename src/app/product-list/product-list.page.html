@@ -1,20 +1,16 @@
 <main-nav aktivPage="ProductList" [idCustomer]="idCustomer" autoDisplay="true" ></main-nav>
 
 <div class="ek-content" (window:resize)="onResize($event)" > 
-    <p-menubar [model]="popupMenu" [autoDisplay]="false" id="menuMin"> 
+    <button #btn type="button" pButton icon="fa fa-list" label="Menu" id="btnMenu" (click)="menu.toggle($event)"></button> 
+    <p-slideMenu [model]="menuItems" popup="false" id="menuMin" #menu> 
         <div class="ui-inputgroup search-search">
             <input type="text" 
                    pInputText 
                    placeholder="{{'Suche' |translate }}" 
                    [(ngModel)]="columnFilterValues['search_all']" 
-                   (input)="search_all()">   
-            <!-- <button (click)="search_all()" 
-                    pButton type="button" 
-                    icon="fa fa-search" 
-                    class="ui-button-warn">
-            </button>  -->     
+                   (input)="search_all()">      
         </div>   
-    </p-menubar>
+    </p-slideMenu>
     <p-menubar [model]="menuItems" [autoDisplay]="false" id="menuMax"> 
         <div class="ui-inputgroup search-search">
             <input type="text" 

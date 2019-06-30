@@ -6,6 +6,7 @@ import { IonicModule } from '@ionic/angular';
 import { TranslateModule } from '@ngx-translate/core';
 import { RoundProgressModule } from 'angular-svg-round-progressbar';
 import { MenubarModule } from 'primeng/menubar';
+import { SlideMenuModule } from 'primeng/slideMenu';
 import { TreeTableModule } from 'primeng/treetable';
 import { IonicSelectableModule } from 'ionic-selectable';
 import { NgxQRCodeModule } from 'ngx-qrcode2';
@@ -22,7 +23,8 @@ import { FabDirective } from '../directives/fab.directive';
         MenubarModule, TreeTableModule,
         IonicSelectableModule, NgxQRCodeModule,
         ColorPickerModule,AccordionModule,
-        FileUploadModule,DragulaModule],
+        FileUploadModule,DragulaModule,
+        SlideMenuModule],
     exports: [
         //IonicModule,
         MainNavComponent,
@@ -33,7 +35,7 @@ import { FabDirective } from '../directives/fab.directive';
         IonicSelectableModule,NgxQRCodeModule,
         ColorPickerModule,AccordionModule,
         FileUploadModule,DragulaModule,
-        FabDirective
+        FabDirective,SlideMenuModule
     ]
 })
 export class ComponentsModule { }

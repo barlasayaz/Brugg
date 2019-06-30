@@ -13,6 +13,7 @@ import { PdfExportService } from '../services/pdf-export';
 import { DatePipe } from '@angular/common';
 import { ProductMigrationPage } from '../product-migration/product-migration.page';
 import { ActivatedRoute, NavigationExtras } from '@angular/router';
+import { SlideMenu } from 'primeng/primeng';
 
 @Component({
     selector: 'app-product-list',
@@ -40,6 +41,7 @@ export class ProductListPage implements OnInit {
     public lang: string = localStorage.getItem('lang');
     public company = '';
     public selectMulti: number;
+
 
     public menuItems: MenuItem[] = [{
         label: this.translate.instant('Ansicht'),
@@ -73,7 +75,7 @@ export class ProductListPage implements OnInit {
     {
         label: this.translate.instant('Bewegen'),
         icon: 'pi pi-fw pi-arrow-up',
-        visible:  this.userdata.role_set.edit_products,
+        visible: this.userdata.role_set.edit_products,
         disabled: true,
         command: (event) => {
             if (this.userdata.role_set.edit_products == false) { return; }
@@ -96,12 +98,12 @@ export class ProductListPage implements OnInit {
     {
         label: this.translate.instant('Neu'),
         icon: 'pi pi-fw pi-plus',
-        visible:  (this.userdata.role_set.edit_products || this.userdata.role_set.check_products),
+        visible: (this.userdata.role_set.edit_products || this.userdata.role_set.check_products),
         items: [
             {
                 label: this.translate.instant('Neue Produktvorlage'),
                 icon: 'pi pi-fw pi-plus',
-                visible:  this.userdata.role_set.edit_products,
+                visible: this.userdata.role_set.edit_products,
                 command: (event) => {
                     if (this.userdata.role_set.edit_products == false) { return; }
                     console.log('command menuitem:', event.item);
@@ -111,7 +113,7 @@ export class ProductListPage implements OnInit {
             {
                 label: this.translate.instant('Neues Produkt'),
                 icon: 'pi pi-fw pi-plus',
-                visible:  this.userdata.role_set.edit_products,
+                visible: this.userdata.role_set.edit_products,
                 command: (event) => {
                     if (this.userdata.role_set.edit_products == false) { return; }
                     console.log('command menuitem:', event.item);
@@ -121,7 +123,7 @@ export class ProductListPage implements OnInit {
             {
                 label: this.translate.instant('Neues Protokoll'),
                 icon: 'pi pi-fw pi-plus',
-                visible:  this.userdata.role_set.check_products,
+                visible: this.userdata.role_set.check_products,
                 disabled: true,
                 command: (event) => {
                     if (this.userdata.role_set.check_products == false) { return; }
@@ -184,7 +186,7 @@ export class ProductListPage implements OnInit {
             {
                 label: this.translate.instant('Produkt Migration'),
                 icon: 'pi pi-fw pi-arrow-right',
-                visible:  this.userdata.role_set.edit_products,
+                visible: this.userdata.role_set.edit_products,
                 disabled: true,
                 command: (event) => {
                     if (this.userdata.role_set.edit_products == false) { return; }
@@ -235,7 +237,7 @@ export class ProductListPage implements OnInit {
     onResize(event) {
         console.log('onResize');
         this.funcHeightCalc();
-     }
+    }
 
     @ViewChild('divHeightCalc') divHeightCalc: any;
     funcHeightCalc() {
@@ -243,8 +245,10 @@ export class ProductListPage implements OnInit {
         if (this.splitFilter) { x = x - 51; }
         if (x < 80) { x = 80; }
         this.heightCalc = x + 'px';
-        console.log('heightCalc:', x, this.heightCalc );
+        console.log('heightCalc:', x, this.heightCalc);
     }
+
+    @ViewChild('menu') menu: SlideMenu;
 
     page_load() {
         console.log('ionViewDidLoad ProductListPage');
@@ -286,12 +290,12 @@ export class ProductListPage implements OnInit {
                         // console.log("pr :", pr);
                         try {
                             pr = JSON.parse(pr);
-                            if(pr.protocol_date) this.productListAll[index].data.last_protocol_date = this.apiService.mysqlDate2view(pr.protocol_date) ;
-                            if(pr.protocol_date_next) this.productListAll[index].data.last_protocol_next = this.apiService.mysqlDate2view(pr.protocol_date_next) ;
-                            if(pr.result) {
-                                if(pr.result==1) this.productListAll[index].data.last_protocol_next =this.translate.instant('reparieren');
-                                if(pr.result==3) this.productListAll[index].data.last_protocol_next =this.translate.instant('unauffindbar');
-                                if(pr.result==4) this.productListAll[index].data.last_protocol_next =this.translate.instant('ausmustern');
+                            if (pr.protocol_date) this.productListAll[index].data.last_protocol_date = this.apiService.mysqlDate2view(pr.protocol_date);
+                            if (pr.protocol_date_next) this.productListAll[index].data.last_protocol_next = this.apiService.mysqlDate2view(pr.protocol_date_next);
+                            if (pr.result) {
+                                if (pr.result == 1) this.productListAll[index].data.last_protocol_next = this.translate.instant('reparieren');
+                                if (pr.result == 3) this.productListAll[index].data.last_protocol_next = this.translate.instant('unauffindbar');
+                                if (pr.result == 4) this.productListAll[index].data.last_protocol_next = this.translate.instant('ausmustern');
                             }
                         } catch (e) {
                             console.log('JSON.parse(pr) err :', e);
@@ -302,14 +306,14 @@ export class ProductListPage implements OnInit {
 
                 let options = [];
 
-                if(this.productListAll[index].data.items){
+                if (this.productListAll[index].data.items) {
                     //console.log("items :", this.productListAll[index].data.items);
                     try {
                         options = JSON.parse(this.productListAll[index].data.items);
                         //console.log("options :", options);
                     } catch (e) {
-                    console.error("JSON.parse options err :", e);
-                    console.log("options :", this.productListAll[index].data);
+                        console.error("JSON.parse options err :", e);
+                        console.log("options :", this.productListAll[index].data);
                     }
                 }
 
@@ -322,7 +326,7 @@ export class ProductListPage implements OnInit {
                     console.log('options :', options[i].id);
                     console.log('options :', options[i].title);
 
-                    if (!this.cols.find(x => x.field == options[i].title[this.lang])) {  this.cols.push({ field: options[i].title[this.lang], header: options[i].title[this.lang] }); }
+                    if (!this.cols.find(x => x.field == options[i].title[this.lang])) { this.cols.push({ field: options[i].title[this.lang], header: options[i].title[this.lang] }); }
                     const pipe = new DatePipe('en-US');
                     if (options[i].type == 5) { this.productListAll[index].data[options[i].title[this.lang]] = pipe.transform(options[i].value, 'dd.MM.yyyy'); }
                     if (options[i].type != 5) { this.productListAll[index].data[options[i].title[this.lang]] = options[i].value; }
@@ -337,7 +341,7 @@ export class ProductListPage implements OnInit {
                 json += ',';
             }
             json += '"search_all":""}';
-            console.log('columnFilterValues :', json );
+            console.log('columnFilterValues :', json);
             this.columnFilterValues = JSON.parse(json);
 
             this.generate_productList();
@@ -367,8 +371,8 @@ export class ProductListPage implements OnInit {
             if (this.columnFilterValues['search_all'].trim().length > 0
                 && node.data[this.cols[i].field] != undefined
                 && node.data[this.cols[i].field].toString().
-                                                 toLowerCase().
-                                                 indexOf(this.columnFilterValues['search_all'].trim().toLowerCase()) >= 0) {
+                    toLowerCase().
+                    indexOf(this.columnFilterValues['search_all'].trim().toLowerCase()) >= 0) {
                 ret = true;
             }
         }
@@ -377,14 +381,14 @@ export class ProductListPage implements OnInit {
             return false;
         } else if (this.columnFilterValues['search_all'].trim().length == 0 && !ret) {
             ret = true;
-             }
+        }
 
         for (let i = 0; i < this.cols.length; i++) {
             if (this.columnFilterValues[this.cols[i].field].trim().length > 0
                 && (node.data[this.cols[i].field] == undefined || (node.data[this.cols[i].field] != undefined
-                && node.data[this.cols[i].field].toString().
-                                                 toLowerCase().
-                                                 indexOf(this.columnFilterValues[this.cols[i].field].trim().toLowerCase()) < 0))) {
+                    && node.data[this.cols[i].field].toString().
+                        toLowerCase().
+                        indexOf(this.columnFilterValues[this.cols[i].field].trim().toLowerCase()) < 0))) {
                 ret = false;
             }
         }
@@ -460,7 +464,7 @@ export class ProductListPage implements OnInit {
         this.rowRecords = this.productListView.length;
         this.totalRecords = this.productListAll.length;
         let progressBar = 100;
-        if (this.totalRecords > 0 ) { progressBar = Math.round(this.rowRecords * 100 / this.totalRecords); }
+        if (this.totalRecords > 0) { progressBar = Math.round(this.rowRecords * 100 / this.totalRecords); }
         this.events.publish('progressBar', progressBar);
         this.events.publish('rowRecords', this.rowRecords);
         this.events.publish('totalRecords', this.totalRecords);
@@ -531,8 +535,8 @@ export class ProductListPage implements OnInit {
             this.menuItems[8].items[4]['disabled'] = false;
         }
         if (selectedNodeLength >= 2) {
-            this.menuItems[5].items[0]['disabled']  = true;
-            this.menuItems[5].items[1]['disabled']  = true;
+            this.menuItems[5].items[0]['disabled'] = true;
+            this.menuItems[5].items[1]['disabled'] = true;
         }
     }
 
@@ -547,17 +551,19 @@ export class ProductListPage implements OnInit {
         const navigationExtras: NavigationExtras = {
             queryParams: obj
         };
-        this.navCtrl.navigateForward(['/product-edit'], navigationExtras);    }
+        this.navCtrl.navigateForward(['/product-edit'], navigationExtras);
+    }
 
     menu_edit() {
         console.log('menu_edit', this.selectedNode);
         if (this.selectedNode) {
             if (this.selectedNode.data.id) {
                 const navigationExtras: NavigationExtras = {
-                    queryParams: { id: this.selectedNode.data.id, 
-                                   idCustomer: this.idCustomer, 
-                                   parent: this.selectedNode.data.parent, 
-                                   company: this.company
+                    queryParams: {
+                        id: this.selectedNode.data.id,
+                        idCustomer: this.idCustomer,
+                        parent: this.selectedNode.data.parent,
+                        company: this.company
                     }
                 };
                 this.navCtrl.navigateForward(['/product-edit'], navigationExtras);
@@ -572,10 +578,11 @@ export class ProductListPage implements OnInit {
                 const id = parseInt(this.selectedNode.data.id);
                 console.log('menu_history id', id);
                 const navigationExtras: NavigationExtras = {
-                    queryParams: { idCustomer: this.idCustomer,
-                                   idProduct: id,
-                                   titleProduct: this.selectedNode.data.title,
-                                   company: this.company
+                    queryParams: {
+                        idCustomer: this.idCustomer,
+                        idProduct: id,
+                        titleProduct: this.selectedNode.data.title,
+                        company: this.company
                     }
                 };
                 this.navCtrl.navigateForward(['/protocol-history'], navigationExtras);
@@ -639,7 +646,7 @@ export class ProductListPage implements OnInit {
                 const id = parseInt(this.selectedNode.data.id);
                 console.log('menu_view id', id);
                 const navigationExtras: NavigationExtras = {
-                    queryParams:  { idCustomer: this.idCustomer, idProduct: id,  productList: JSON.stringify(this.selectedNode) }
+                    queryParams: { idCustomer: this.idCustomer, idProduct: id, productList: JSON.stringify(this.selectedNode) }
                 };
                 this.navCtrl.navigateForward(['/product-details/' + id], navigationExtras);
             }
@@ -649,7 +656,7 @@ export class ProductListPage implements OnInit {
     create_template() {
         console.log('create_template', this.selectedNode);
         const navigationExtras: NavigationExtras = {
-            queryParams:  { idCustomer: this.idCustomer }
+            queryParams: { idCustomer: this.idCustomer }
         };
         this.navCtrl.navigateForward(['/product-template'], navigationExtras);
     }
@@ -658,8 +665,10 @@ export class ProductListPage implements OnInit {
         if (this.selectedNode) {
             console.log('create_protocol', this.selectedNode);
             const navigationExtras: NavigationExtras = {
-                queryParams: { idCustomer: this.idCustomer,
-                               productList: JSON.stringify(this.selectedNode) }
+                queryParams: {
+                    idCustomer: this.idCustomer,
+                    productList: JSON.stringify(this.selectedNode)
+                }
             };
             this.navCtrl.navigateForward(['/protocol-edit'], navigationExtras);
         }
@@ -711,33 +720,33 @@ export class ProductListPage implements OnInit {
         this.excelService.exportAsExcelFile(data, 'product_view.xlsx');
     }
 
-/*     printPdf() {
-        let columns: any[] = [];
-        let widthsArray: string[] = [];
-        for (var k = 0; k < this.selectedColumns.length; k++) {
-            columns.push({ text: this.selectedColumns[k].header, style: 'header' });
-            widthsArray.push("*");
-        }
-        let bodyArray: any[] = [];
-        bodyArray.push(columns);
-        this.allnodes = [];
-        this.data_tree(this.productListView);
-        let obj: any;
-        let rowArray: any[] = [];
-        for (var i = 0, len = this.allnodes.length; i < len; i++) {
-            obj = this.allnodes[i];
-            obj.items = obj.items.replace(/(\\r\\n|\\n|\\r)/gm," ");
-            rowArray = [];
-            for (var j = 0; j < this.selectedColumns.length; j++) {
-                if (obj[this.selectedColumns[j].field])
-                    rowArray.push(obj[this.selectedColumns[j].field]);
-                else
-                    rowArray.push('');
+    /*     printPdf() {
+            let columns: any[] = [];
+            let widthsArray: string[] = [];
+            for (var k = 0; k < this.selectedColumns.length; k++) {
+                columns.push({ text: this.selectedColumns[k].header, style: 'header' });
+                widthsArray.push("*");
             }
-            bodyArray.push(rowArray);
-        }
-        this.pdf.get_ListDocDefinition(bodyArray, widthsArray, this.translate.instant("Produkt") + " " + this.translate.instant("Liste"),this.translate.instant("Produkt") + this.translate.instant("Liste") +'.pdf');
-    } */
+            let bodyArray: any[] = [];
+            bodyArray.push(columns);
+            this.allnodes = [];
+            this.data_tree(this.productListView);
+            let obj: any;
+            let rowArray: any[] = [];
+            for (var i = 0, len = this.allnodes.length; i < len; i++) {
+                obj = this.allnodes[i];
+                obj.items = obj.items.replace(/(\\r\\n|\\n|\\r)/gm," ");
+                rowArray = [];
+                for (var j = 0; j < this.selectedColumns.length; j++) {
+                    if (obj[this.selectedColumns[j].field])
+                        rowArray.push(obj[this.selectedColumns[j].field]);
+                    else
+                        rowArray.push('');
+                }
+                bodyArray.push(rowArray);
+            }
+            this.pdf.get_ListDocDefinition(bodyArray, widthsArray, this.translate.instant("Produkt") + " " + this.translate.instant("Liste"),this.translate.instant("Produkt") + this.translate.instant("Liste") +'.pdf');
+        } */
 
     printPdf() {
         const pdfTitle: any = this.translate.instant('Produkt') + ' ' + this.translate.instant('Liste');
@@ -779,30 +788,30 @@ export class ProductListPage implements OnInit {
                 } else {
                     rowArray.push('');
                 }
-                rowArray.push({text: '', border: [false, false, false, false]});
-                rowArray.push({text: '', border: [false, false, false, false]});
-                rowArray.push({text: '', border: [false, false, false, false]});
-                rowArray.push({text: '', border: [false, false, false, false]});
-                rowArray.push({text: '', border: [false, false, false, false]});
+                rowArray.push({ text: '', border: [false, false, false, false] });
+                rowArray.push({ text: '', border: [false, false, false, false] });
+                rowArray.push({ text: '', border: [false, false, false, false] });
+                rowArray.push({ text: '', border: [false, false, false, false] });
+                rowArray.push({ text: '', border: [false, false, false, false] });
                 bodyArray.push(rowArray);
             }
 
-                rowArray = [];
-                rowArray.push({text: '', border: [false, false, false, false]});
-                rowArray.push({text: '', border: [false, false, false, false]});
-                rowArray.push({text: '', border: [false, false, false, false]});
-                rowArray.push({text: '', border: [false, false, false, false]});
-                rowArray.push({text: '', border: [false, false, false, false]});
-                rowArray.push({text: '', border: [false, false, false, false]});
-                rowArray.push({text: '', border: [false, false, false, false]});
-                bodyArray.push(rowArray);
+            rowArray = [];
+            rowArray.push({ text: '', border: [false, false, false, false] });
+            rowArray.push({ text: '', border: [false, false, false, false] });
+            rowArray.push({ text: '', border: [false, false, false, false] });
+            rowArray.push({ text: '', border: [false, false, false, false] });
+            rowArray.push({ text: '', border: [false, false, false, false] });
+            rowArray.push({ text: '', border: [false, false, false, false] });
+            rowArray.push({ text: '', border: [false, false, false, false] });
+            bodyArray.push(rowArray);
         }
 
         this.pdf.get_ListDocDefinition(bodyArray,
-                                       widthsArray,
-                                       headerRowVisible,
-                                       pdfTitle,
-                                       this.translate.instant('Produkt') + this.translate.instant('Liste') + '.pdf');
+            widthsArray,
+            headerRowVisible,
+            pdfTitle,
+            this.translate.instant('Produkt') + this.translate.instant('Liste') + '.pdf');
     }
 
     data_tree(nodes: TreeNode[]): any {
@@ -869,7 +878,7 @@ export class ProductListPage implements OnInit {
 
     expandChildren(nodes: TreeNode[], expended: string[]) {
         for (let i = 0; i < nodes.length; i++) {
-            if (expended != null ) {
+            if (expended != null) {
                 if (nodes[i].children && expended.find(x => x == nodes[i].data['id'])) {
                     nodes[i].expanded = true;
                     this.expandChildren(nodes[i].children, expended);
