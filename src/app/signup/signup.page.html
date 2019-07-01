@@ -15,7 +15,7 @@
 
         <ion-row>
           <ion-col>
-            <ion-item>
+            <ion-item lines="none">
                 <ion-label position="floating">{{ "Firma" |  translate }}
                   <div *ngIf="!signupForm.controls.company.valid && show_hide_err">
                     <p class="form_error_text" >{{ "Bitte geben Sie einen gültigen Firma ein." | translate }}</p> 
@@ -28,7 +28,7 @@
 
         <ion-row>
           <ion-col>
-            <ion-item>
+            <ion-item lines="none">
               <ion-label position="floating">{{ "Name" |  translate }}
                 <div *ngIf="!signupForm.controls.fname.valid && show_hide_err">
                   <p class="form_error_text" >{{ "Bitte geben Sie einen gültigen Name ein." |  translate }}</p> 
@@ -41,7 +41,7 @@
 
         <ion-row>
           <ion-col>
-            <ion-item>
+            <ion-item lines="none">
                 <ion-label position="floating">{{ "Telefon" |  translate }}
                   <div *ngIf="!signupForm.controls.phone.valid && show_hide_err">
                     <p class="form_error_text" >{{ "Bitte geben Sie einen gültigen Telefon ein." |  translate }}</p> 
@@ -54,7 +54,7 @@
 
         <ion-row>
           <ion-col>
-            <ion-item>
+            <ion-item lines="none">
               <ion-label position="floating">{{ "E-Mail" |  translate }}
                 <div *ngIf="!signupForm.controls.email.valid && show_hide_err">
                   <p class="form_error_text" >{{ "Bitte geben Sie eine gültige E-Mail-Adresse ein." |  translate }}</p>

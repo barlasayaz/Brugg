@@ -108,7 +108,7 @@
                         <!-- Row 1 -->
                         <!--                           <ion-row>
                             <ion-col col-12 col-xl-12 col-lg-12 col-md-12 col-sm-12>
-                              <ion-item>
+                              <ion-item lines="none">
                                 <ion-label floating>{{'Titel' | translate}}</ion-label>
                                 <ion-input readonly type="text" [ngClass]="{required:inputError}" [(ngModel)]="activProtocol.title[lang]"></ion-input>
                             </ion-item>
@@ -118,7 +118,7 @@
                         <!-- Row 2 -->
                         <ion-row>
                           <ion-col size="7">
-                            <ion-item>
+                            <ion-item lines="none">
                               <ion-label position="stacked">{{translate.instant('Protokoll Nummer')}}</ion-label>
                               <ion-input *ngIf="activProtocol.protocol_number != 0" 
                                          readonly 
@@ -134,7 +134,7 @@
                             </ion-item>
                           </ion-col>
                           <ion-col size="5"> 
-                            <ion-item>
+                            <ion-item lines="none">
                               <ion-label position="floating">{{translate.instant('Datum')}}</ion-label>
                               <ion-datetime [(ngModel)]="activProtocol.protocol_date" 
                                             displayFormat="DD.MM.YYYY"
@@ -146,7 +146,7 @@
                           </ion-col>
                         </ion-row><ion-row>
                           <ion-col size="7">
-                            <ion-item>
+                            <ion-item lines="none">
                               <ion-label position="stacked">{{translate.instant('Ergebniss der Prüfung')}}</ion-label>
                               <ion-select class="form-control" 
                                           [(ngModel)]="activProtocol.result"
@@ -160,7 +160,7 @@
                             </ion-item>
                           </ion-col>
                           <ion-col size="5">
-                            <ion-item>
+                            <ion-item lines="none">
                               <ion-label position="stacked">{{translate.instant('nächster Prüftermin')}}</ion-label>
                               <ion-datetime [(ngModel)]="activProtocol.protocol_date_next" 
                                             displayFormat="DD.MM.YYYY"
@@ -174,7 +174,7 @@
 
                         <ion-row *ngFor="let item of productList" style="margin-bottom: 10px;">
                           <ion-col size="7">
-                            <ion-item>
+                            <ion-item lines="none">
                               <ion-label position="floating">{{translate.instant('Produkt')}}</ion-label>
                               <ion-input readonly type="text"
                                          [(ngModel)]="item.data.title">
@@ -182,7 +182,7 @@
                             </ion-item>
                           </ion-col>
                           <ion-col size="5">
-                            <ion-item>
+                            <ion-item lines="none">
                               <ion-label position="stacked">{{translate.instant('Produktnummer')}}</ion-label>
                               <ion-input readonly type="text"
                                          [(ngModel)]="item.data.id_number">
@@ -194,7 +194,7 @@
                         <!-- Row 3 -->
                         <ion-row *ngFor="let item of activProtocol.items">
                           <ion-col size="12" size-md="7" *ngIf="item.type == 0">
-                            <ion-item>
+                            <ion-item lines="none">
                               <ion-label *ngIf="item.mandatory=='true'">{{item.title[lang]}} *</ion-label>
                               <ion-label *ngIf="item.mandatory=='false'">{{item.title[lang]}}</ion-label>
                               <ion-toggle [(ngModel)]="item.value" 
@@ -203,7 +203,7 @@
                             </ion-item>
                           </ion-col>
                           <ion-col size="12" size-md="7" *ngIf="item.type == 1">
-                            <ion-item>
+                            <ion-item lines="none">
                               <ion-label position="floating" *ngIf="item.mandatory=='true'">{{item.title[lang]}} *</ion-label>
                               <ion-label position="floating" *ngIf="item.mandatory=='false'">{{item.title[lang]}}</ion-label>
                               <ion-select class="form-control" 
@@ -216,7 +216,7 @@
                             </ion-item>
                           </ion-col>
                           <ion-col size="12" size-md="7" *ngIf="item.type == 2">
-                            <ion-item>
+                            <ion-item lines="none">
                               <ion-label position="floating" *ngIf="item.mandatory=='true'">{{item.title[lang]}} *</ion-label>
                               <ion-label position="floating" *ngIf="item.mandatory=='false'">{{item.title[lang]}}</ion-label>
                               <ion-textarea [(ngModel)]="item.value"
@@ -225,7 +225,7 @@
                             </ion-item>
                           </ion-col>
                           <ion-col size="12" size-md="7" *ngIf="item.type == 3">
-                            <ion-item>
+                            <ion-item lines="none">
                               <ion-label position="floating" *ngIf="item.mandatory=='true'">{{item.title[lang]}} *</ion-label>
                               <ion-label position="floating" *ngIf="item.mandatory=='false'">{{item.title[lang]}}</ion-label>
                               <ion-input type="text" 
@@ -237,7 +237,7 @@
                             </ion-item>
                           </ion-col>
                           <ion-col size="12" size-md="7" *ngIf="item.type == 4">
-                            <ion-item>
+                            <ion-item lines="none">
                               <ion-label position="floating" *ngIf="item.mandatory=='true'">{{item.title[lang]}} *</ion-label>
                               <ion-label position="floating" *ngIf="item.mandatory=='false'">{{item.title[lang]}}</ion-label>
                               <ion-datetime [ngClass]="{required:fehler}" 
@@ -251,7 +251,7 @@
                             </ion-item>
                           </ion-col>
                           <ion-col size="12" size-md="7" *ngIf="item.type == 5">
-                            <ion-item>
+                            <ion-item lines="none">
                               <ion-label position="floating" *ngIf="item.mandatory=='true'">{{item.title[lang]}} *</ion-label>
                               <ion-label position="floating" *ngIf="item.mandatory=='false'">{{item.title[lang]}}</ion-label>
                               <ion-datetime [(ngModel)]="item.value"
