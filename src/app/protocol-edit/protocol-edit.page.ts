@@ -167,7 +167,7 @@ export class ProtocolEditPage implements OnInit {
       let interval:number = 36;
       this.productList.forEach(element => {
         let obj = element;
-        if(element.data) obj = element.data;
+        if(element) obj = element;
         //obj.id = parseInt( obj.id ); //have to be a string
         this.products.push({"id":obj.id,"id_number":obj.id_number});
         obj.check_interval = parseInt(obj.check_interval);

@@ -1,5 +1,5 @@
 import { Component,OnInit } from '@angular/core';
-import { NavController, ModalController, AlertController } from '@ionic/angular';
+import { NavController, ModalController, AlertController,NavParams } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { UserdataService } from '../services/userdata';
 import { ApiService } from '../services/api';
@@ -37,7 +37,7 @@ export class ProductMigrationPage implements OnInit {
               public userdata: UserdataService,
               public apiService: ApiService,
               public alertCtrl: AlertController,
-              private route: ActivatedRoute,
+              private navParams: NavParams,
               public file: File) {
 
   }
@@ -45,12 +45,10 @@ export class ProductMigrationPage implements OnInit {
    ngOnInit()
    {
       this.url = this.apiService.pvsApiURL;
-      this.route.queryParams.subscribe(params => {
-        this.idCustomer = params["idCustomer"];
-        let list = params["productList"];
-        if (list)
-          this.productList = JSON.parse(list);
-      });
+      this.navParams.get("idCustomer");
+      let list = this.navParams.get("productList");
+      if (list)
+        this.productList = JSON.parse(list);
 
       console.log('ProductMigrationPage productList:', this.productList); 
       this.loadSourceCustomer();
@@ -117,9 +115,9 @@ export class ProductMigrationPage implements OnInit {
 
   productMigration() {
     this.productList.forEach(element => { 
-      this.apiService.pvs4_get_product(element.data.id).then((resultProduct:any)=>{
+      this.apiService.pvs4_get_product(element.id).then((resultProduct:any)=>{
         let oldObj = {                      
-          id:               element.data.id,
+          id:               element.id,
           title:            resultProduct.obj.title,
           customer:         resultProduct.obj.customer,
           id_number:        resultProduct.obj.id_number,
@@ -138,7 +136,7 @@ export class ProductMigrationPage implements OnInit {
           console.log('deactive product result: ', result);
         });  
 
-        this.apiService.pvs4_get_product_parrent(element.data.id).then((resultParent: any) => {
+        this.apiService.pvs4_get_product_parrent(element.id).then((resultParent: any) => {
           if(resultParent.obj) {
             let parentObj = {                      
               id:               resultParent.obj.id,
@@ -188,19 +186,19 @@ export class ProductMigrationPage implements OnInit {
               }
               if (resultProduct.obj.images.indexOf('mobileimages/') != -1) {
                 newImgPath = 'mobileimages/productimage_'+result.id+'.jpg';                
-                this.copyFile('mobileimages/productimage_'+element.data.id+'.jpg', 'mobileimages/productimage_'+result.id+'.jpg');
+                this.copyFile('mobileimages/productimage_'+element.id+'.jpg', 'mobileimages/productimage_'+result.id+'.jpg');
               }
             }
             else {
               newImgPath = "";
             }
 
-            this.apiService.pvs4_get_file(element.data.id, 'product').then((result2) => {
+            this.apiService.pvs4_get_file(element.id, 'product').then((result2) => {
               console.log("dateiliste :", result2);
               this.attachmentsFileCount = result2["files"].length;
               console.log("attachmentsFileCount :", this.attachmentsFileCount);
               if(this.attachmentsFileCount > 0) {
-                this.copyFile('product_'+ element.data.id, 'product_'+ result.id);
+                this.copyFile('product_'+ element.id, 'product_'+ result.id);
               }
           });
 

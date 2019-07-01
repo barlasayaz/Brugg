@@ -24,7 +24,7 @@ export class ProductListPage implements OnInit {
     public productListAll: TreeNode[] = [];
     public productListView: TreeNode[] = [];
     public cols: any[] = [];
-    public selectedNode: TreeNode;
+    public selectedNode: any;
     public allnodes: any[] = [];
     public selectedColumns: any[];
     public xlsHeader: any[];
@@ -593,11 +593,16 @@ export class ProductListPage implements OnInit {
     async product_migration() {
         console.log('product_migration', this.selectedNode);
         if (this.selectedNode) {
+            let nodeList : string[]  = [];
+            for (let index = 0; index < this.selectedNode.length; index++) {
+                const element = this.selectedNode[index];
+                nodeList.push(element.data);
+            }
             const modal =
                 await this.modalCtrl.create({
                     component: ProductMigrationPage,
                     componentProps: {
-                        'idCustomer': this.idCustomer, productList: this.selectedNode
+                        'idCustomer': this.idCustomer, productList: JSON.stringify(nodeList)
                     }
                 });
 
@@ -646,7 +651,7 @@ export class ProductListPage implements OnInit {
                 const id = parseInt(this.selectedNode.data.id);
                 console.log('menu_view id', id);
                 const navigationExtras: NavigationExtras = {
-                    queryParams: { idCustomer: this.idCustomer, idProduct: id, productList: JSON.stringify(this.selectedNode) }
+                    queryParams: { idCustomer: this.idCustomer, idProduct: id, productList: JSON.stringify(this.selectedNode.data) }
                 };
                 this.navCtrl.navigateForward(['/product-details/' + id], navigationExtras);
             }
@@ -664,10 +669,15 @@ export class ProductListPage implements OnInit {
     create_protocol() {
         if (this.selectedNode) {
             console.log('create_protocol', this.selectedNode);
+            let nodeList : string[]  = [];
+            for (let index = 0; index < this.selectedNode.length; index++) {
+                const element = this.selectedNode[index];
+                nodeList.push(element.data);
+            }
             const navigationExtras: NavigationExtras = {
                 queryParams: {
                     idCustomer: this.idCustomer,
-                    productList: JSON.stringify(this.selectedNode)
+                    productList: JSON.stringify(nodeList)
                 }
             };
             this.navCtrl.navigateForward(['/protocol-edit'], navigationExtras);
