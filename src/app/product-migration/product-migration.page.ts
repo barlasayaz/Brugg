@@ -1,5 +1,5 @@
 import { Component,OnInit } from '@angular/core';
-import { NavController, ModalController, AlertController } from '@ionic/angular';
+import { NavController, ModalController, AlertController,NavParams } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { UserdataService } from '../services/userdata';
 import { ApiService } from '../services/api';
@@ -37,7 +37,7 @@ export class ProductMigrationPage implements OnInit {
               public userdata: UserdataService,
               public apiService: ApiService,
               public alertCtrl: AlertController,
-              private route: ActivatedRoute,
+              private navParams: NavParams,
               public file: File) {
 
   }
@@ -45,12 +45,10 @@ export class ProductMigrationPage implements OnInit {
    ngOnInit()
    {
       this.url = this.apiService.pvsApiURL;
-      this.route.queryParams.subscribe(params => {
-        this.idCustomer = params["idCustomer"];
-        let list = params["productList"];
-        if (list)
-          this.productList = JSON.parse(list);
-      });
+      this.navParams.get("idCustomer");
+      let list = this.navParams.get("productList");
+      if (list)
+        this.productList = JSON.parse(list);
 
       console.log('ProductMigrationPage productList:', this.productList); 
       this.loadSourceCustomer();
