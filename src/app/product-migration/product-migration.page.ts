@@ -117,9 +117,9 @@ export class ProductMigrationPage implements OnInit {
 
   productMigration() {
     this.productList.forEach(element => { 
-      this.apiService.pvs4_get_product(element.data.id).then((resultProduct:any)=>{
+      this.apiService.pvs4_get_product(element.id).then((resultProduct:any)=>{
         let oldObj = {                      
-          id:               element.data.id,
+          id:               element.id,
           title:            resultProduct.obj.title,
           customer:         resultProduct.obj.customer,
           id_number:        resultProduct.obj.id_number,
@@ -138,7 +138,7 @@ export class ProductMigrationPage implements OnInit {
           console.log('deactive product result: ', result);
         });  
 
-        this.apiService.pvs4_get_product_parrent(element.data.id).then((resultParent: any) => {
+        this.apiService.pvs4_get_product_parrent(element.id).then((resultParent: any) => {
           if(resultParent.obj) {
             let parentObj = {                      
               id:               resultParent.obj.id,
@@ -188,19 +188,19 @@ export class ProductMigrationPage implements OnInit {
               }
               if (resultProduct.obj.images.indexOf('mobileimages/') != -1) {
                 newImgPath = 'mobileimages/productimage_'+result.id+'.jpg';                
-                this.copyFile('mobileimages/productimage_'+element.data.id+'.jpg', 'mobileimages/productimage_'+result.id+'.jpg');
+                this.copyFile('mobileimages/productimage_'+element.id+'.jpg', 'mobileimages/productimage_'+result.id+'.jpg');
               }
             }
             else {
               newImgPath = "";
             }
 
-            this.apiService.pvs4_get_file(element.data.id, 'product').then((result2) => {
+            this.apiService.pvs4_get_file(element.id, 'product').then((result2) => {
               console.log("dateiliste :", result2);
               this.attachmentsFileCount = result2["files"].length;
               console.log("attachmentsFileCount :", this.attachmentsFileCount);
               if(this.attachmentsFileCount > 0) {
-                this.copyFile('product_'+ element.data.id, 'product_'+ result.id);
+                this.copyFile('product_'+ element.id, 'product_'+ result.id);
               }
           });
 
