@@ -88,6 +88,18 @@
                                     [(ngModel)]="activOrderForm.billing.internet">
                         </ion-input>
                       </div>
+                      <div class="tr table-body">
+                        <div class="td"><span class="strong">{{'Kundennummer' | translate}}</span></div>
+                        <ion-input type="text"
+                                    [(ngModel)]="activOrderForm.customerNumber">
+                        </ion-input>
+                      </div>
+                      <div class="tr table-body">
+                        <div class="td"><span class="strong">{{'DB-ID' | translate}}</span></div>
+                        <ion-input type="text"
+                                    [(ngModel)]="activOrderForm.dbId">
+                        </ion-input>
+                      </div>
                     </div>
                   </div>
                 </div>  

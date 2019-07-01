@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, ModalController, Events, Platform,LoadingController } from '@ionic/angular';
+import { NavController, ModalController, Events, Platform, LoadingController } from '@ionic/angular';
 import { ApiService } from '../services/api';
 import { TranslateService } from '@ngx-translate/core';
 import { UserdataService } from '../services/userdata';
@@ -10,6 +10,7 @@ import { PdfExportService } from '../services/pdf-export';
 import { OrderSendNewPage } from './order-send-new/order-send-new.page';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 import { NavigationExtras, ActivatedRoute } from '@angular/router';
+
 /**
  * Generated class for the OrderFormNewPage page.
  *
@@ -23,22 +24,22 @@ import { NavigationExtras, ActivatedRoute } from '@angular/router';
 })
 
 export class OrderFormNewPage {
-  public idCustomer: number = 0;
-  public company: string = "";
+  public idCustomer: number;
+  public company: string;
   public maxDate: string;
   public deliveryDate: any;
   public mouseoverButton1: boolean;
   public mouseoverButton2: boolean;
-  public mobilePlatform: boolean = false;
+  public mobilePlatform: boolean;
   public activCustomer: any = [];
   public contactPersonList: any = [];
   public listProduct: any[] = [];
   public lang: string = localStorage.getItem('lang');
   public products: any = [{
-    quantity: "",
-    pvsid: "",
-    articleno: "",
-    designation: ""
+    quantity: '',
+    pvsid: '',
+    articleno: '',
+    designation: ''
   }];
   public activOrderForm: any = {
     orderCheckBox: false,
@@ -47,29 +48,29 @@ export class OrderFormNewPage {
     inspectionCheckBox: false,
     rentCheckBox: false,
     billing: {
-      company: "",
-      street: "",
-      zip_code: "",
-      sector: "",
-      email: "",
-      phone: "",
-      internet: ""
+      company: '',
+      street: '',
+      zip_code: '',
+      sector: '',
+      email: '',
+      phone: '',
+      internet: ''
     },
     shipping: {
-      name: "",
-      street: "",
-      zip_code: "",
-      department: "",
-      email: "",
-      phone: "",
-      mobile: ""
+      name: '',
+      street: '',
+      zip_code: '',
+      department: '',
+      email: '',
+      phone: '',
+      mobile: ''
     },
-    order_nr: "",
-    contract_nr: "",
-    pvs_order_nr: "",
-    commission: "",
-    order_date: "",
-    delivery_date: "",
+    order_nr: '',
+    contract_nr: '',
+    pvs_order_nr: '',
+    commission: '',
+    order_date: '',
+    delivery_date: '',
     sampleDeliveryCheckBox: false,
     creditCheckBox: false,
     confOrderCheckBox: false,
@@ -81,25 +82,31 @@ export class OrderFormNewPage {
     evenPickupCheckBox: false,
     keepIdNumber: false,
     products: {
-      quantity: "",
-      pvsid: "",
-      articleno: "",
-      designation: ""},
-    note: "",
-    commissioned: ""
+      quantity: '',
+      pvsid: '',
+      articleno: '',
+      designation: ''},
+    note: '',
+    commissioned: '',
+    customerNumber: '',
+    dbId: ''
   };
 
-  constructor(public navCtrl: NavController, 
-              public apiProvider : ApiService,
+  constructor(public navCtrl: NavController,
+              public apiProvider: ApiService,
               public userdata: UserdataService,
-              public translate : TranslateService,
-              public modalCtrl : ModalController,
-              public events:Events,
+              public translate: TranslateService,
+              public modalCtrl: ModalController,
+              public events: Events,
               public platform: Platform,
               public pdf: PdfExportService,
               public datePipe: DatePipe,
               public loadingCtrl: LoadingController,
               private route: ActivatedRoute) {
+
+                this.idCustomer = 0;
+                this.company = '';
+                this.mobilePlatform = false;
 
                 platform.ready().then(() => {
                   if ( this.platform.is('ios') ||
@@ -107,10 +114,9 @@ export class OrderFormNewPage {
                     this.mobilePlatform = true;
                     this.mouseoverButton1 = true;
                     this.mouseoverButton2 = true;
-                    console.log("platform mobile:", this.platform.platforms());
-                  }
-                  else {
-                    console.log("platform not mobile:", this.platform.platforms());
+                    console.log('platform mobile:', this.platform.platforms());
+                  } else {
+                    console.log('platform not mobile:', this.platform.platforms());
                     this.mobilePlatform = false;
                     this.mouseoverButton1 = false;
                     this.mouseoverButton2 = false;
@@ -118,13 +124,14 @@ export class OrderFormNewPage {
                 });
 
                 this.route.queryParams.subscribe(params => {
-                  this.idCustomer = params["idCustomer"];
-                 // this.company = params["company"];
-                 this.getContactList(); 
-                 this.loadCustomer(this.idCustomer);
+                this.idCustomer = params['idCustomer'];
+                this.getContactList();
+                this.loadCustomer(this.idCustomer);
               });
-                this.maxDate = this.apiProvider.maxDate; 
-                this.activOrderForm.commissioned = this.userdata.first_name+' '+this.userdata.last_name+' ('+this.userdata.email+')';                
+                this.maxDate = this.apiProvider.maxDate;
+                this.activOrderForm.commissioned = this.userdata.first_name + ' ' +
+                                                   this.userdata.last_name + ' (' +
+                                                   this.userdata.email + ')';
   }
 
   mouseover(buttonNumber) {
@@ -147,22 +154,22 @@ export class OrderFormNewPage {
 
   loadCustomer(id: number) {
     this.apiProvider.pvs4_get_customer(id).then((result: any) => {
-      console.log("loadCustomer :", result.obj);
-      this.activCustomer = result.obj;   
+      console.log('loadCustomer :', result.obj);
+      this.activCustomer = result.obj;
       this.loadOrderForm(this.activCustomer);
-    });    
+    });
   }
 
   loadOrderForm(activCustomer) {
-    console.log("activCustomer :", activCustomer);
-    this.activOrderForm.billing.company = activCustomer.company;  
+    console.log('activCustomer :', activCustomer);
+    this.activOrderForm.billing.company = activCustomer.company;
     this.activOrderForm.billing.street = activCustomer.street;
     this.activOrderForm.billing.zip_code = activCustomer.zip_code;
     this.activOrderForm.billing.sector = activCustomer.sector;
     this.activOrderForm.billing.email = activCustomer.email;
     this.activOrderForm.billing.phone = activCustomer.phone;
     this.activOrderForm.billing.internet = activCustomer.website;
-    
+
     this.activOrderForm.shipping.street = activCustomer.street;
     this.activOrderForm.shipping.zip_code = activCustomer.zip_code;
     this.activOrderForm.shipping.email = activCustomer.email;
@@ -172,173 +179,175 @@ export class OrderFormNewPage {
     this.deliveryDate = new Date();
     this.deliveryDate.setDate(this.deliveryDate.getDate() + 7);
     this.activOrderForm.delivery_date = this.deliveryDate.toISOString();
+    this.activOrderForm.customerNumber = activCustomer.customer_number;
+    this.activOrderForm.dbId = activCustomer.id;
   }
 
   getContactList() {
-    console.log("getContactList :", this.idCustomer);
-    this.apiProvider.pvs4_get_contact_person(this.idCustomer).then((result: any) => {  
+    console.log('getContactList :', this.idCustomer);
+    this.apiProvider.pvs4_get_contact_person(this.idCustomer).then((result: any) => {
       console.log('getPointContact result', result.list);
-      for (var i = 0, len = result.list.length; i < len; i++) {
-        var item = result.list[i].data;
+      for (let i = 0, len = result.list.length; i < len; i++) {
+        let item = result.list[i].data;
         item.addresses = JSON.parse(item.addresses);
-        this.contactPersonList.push(item);        
+        this.contactPersonList.push(item);
       }
     });
   }
 
   changeContactPerson(contactPerson) {
-    console.log("contactPerson :", contactPerson, contactPerson.addresses);
-    this.activOrderForm.shipping.name = contactPerson.first_name + ' ' + contactPerson.last_name;
+    console.log('contactPerson :', contactPerson, contactPerson.detail.value.addresses);
+    this.activOrderForm.shipping.name = contactPerson.detail.value.first_name + ' ' + contactPerson.detail.value.last_name;
     this.activOrderForm.shipping.street = '';
     this.activOrderForm.shipping.zip_code = '';
     this.activOrderForm.shipping.department = '';
     this.activOrderForm.shipping.email = '';
     this.activOrderForm.shipping.phone = '';
-    this.activOrderForm.shipping.mobile = ''; 
-    for (var i = 0, len = contactPerson.addresses.length; i < len; i++) {
-      if(contactPerson.addresses[i].address_type == 'Lieferadresse') {
-        this.activOrderForm.shipping.street = contactPerson.addresses[i].street;
-        this.activOrderForm.shipping.zip_code = contactPerson.addresses[i].zip_code;
-        this.activOrderForm.shipping.department = contactPerson.addresses[i].department;
-        this.activOrderForm.shipping.email = contactPerson.addresses[i].email;
-        this.activOrderForm.shipping.phone = contactPerson.addresses[i].phone;
-        this.activOrderForm.shipping.mobile = contactPerson.addresses[i].mobile;
-        return;    
+    this.activOrderForm.shipping.mobile = '';
+    for (let i = 0, len = contactPerson.detail.value.addresses.length; i < len; i++) {
+      if (contactPerson.detail.value.addresses[i].address_type == 'Lieferadresse') {
+        this.activOrderForm.shipping.street = contactPerson.detail.value.addresses[i].street;
+        this.activOrderForm.shipping.zip_code = contactPerson.detail.value.addresses[i].zip_code;
+        this.activOrderForm.shipping.department = contactPerson.detail.value.addresses[i].department;
+        this.activOrderForm.shipping.email = contactPerson.detail.value.addresses[i].email;
+        this.activOrderForm.shipping.phone = contactPerson.detail.value.addresses[i].phone;
+        this.activOrderForm.shipping.mobile = contactPerson.detail.value.addresses[i].mobile;
+        return;
       }
     }
   }
 
   addProduct() {
     this.products.push({
-      quantity: "",
-      pvsid: "",
-      articleno: "",
-      designation: ""
+      quantity: '',
+      pvsid: '',
+      articleno: '',
+      designation: ''
     });
-    console.log("addProduct :", this.products);
+    console.log('addProduct :', this.products);
   }
 
   remProduct(index) {
-    this.products.splice(index, 1); 
-    if(this.products.length==0) {
+    this.products.splice(index, 1);
+    if (this.products.length == 0) {
       this.products.push({
-        quantity: "",
-        pvsid: "",
-        articleno: "",
-        designation: ""
+        quantity: '',
+        pvsid: '',
+        articleno: '',
+        designation: ''
       });
-    }          
+    }
   }
 
    ordersSend() {
-    this.activOrderForm.products = {quantity: "",
-                                    pvsid: "",
-                                    articleno: "",
-                                    designation: ""
+    this.activOrderForm.products = {quantity: '',
+                                    pvsid: '',
+                                    articleno: '',
+                                    designation: ''
                                    };
-    let tmpProducts: any = [];
-    for (var i = 0, len = this.products.length; i < len; i++) {
+    const tmpProducts: any = [];
+    for (let i = 0, len = this.products.length; i < len; i++) {
       tmpProducts.push(this.products[i]);
     }
     this.activOrderForm.products = tmpProducts;
 
-    this.printPdf('base64').then(async (result:string) => {
-      console.log("pdf result :", result);
-      let modalPage = await this.modalCtrl.create({
+    this.printPdf('base64').then(async (result: string) => {
+      console.log('pdf result :', result);
+      const modalPage = await this.modalCtrl.create({
         component: OrderSendNewPage,
         componentProps: {
-          "idCustomer": this.idCustomer, 
-          "company": this.company,
-          "activOrderForm": this.activOrderForm,
-          "pdfRetVal": result
+          'idCustomer': this.idCustomer,
+          'company': this.company,
+          'activOrderForm': this.activOrderForm,
+          'pdfRetVal': result
         }
-      });    
-      modalPage.onDidDismiss().then(ret => {      
+      });
+      modalPage.onDidDismiss().then(ret => {
         if (ret) {
           console.log('OrderSendNewPage ret', ret);
         }
       });
-      modalPage.present(); 
-    });     
+      modalPage.present();
+    });
   }
 
   async printPdf(pdfMethod: any) {
-    let pageDesc: string = this.translate.instant('Seite');
-    let loader = await this.loadingCtrl.create({
-      message: this.translate.instant("Bitte warten")
+    const pageDesc: string = this.translate.instant('Seite');
+    const loader = await this.loadingCtrl.create({
+      message: this.translate.instant('Bitte warten')
     });
     loader.present();
-    return new Promise((res) => {  
-      this.activOrderForm.products = {quantity: "",
-                                      pvsid: "",
-                                      articleno: "",
-                                      designation: ""
+    return new Promise((res) => {
+      this.activOrderForm.products = {quantity: '',
+                                      pvsid: '',
+                                      articleno: '',
+                                      designation: ''
                                     };
-      let tmpProducts: any = [];
-      for (var i = 0, len = this.products.length; i < len; i++) {
+      const tmpProducts: any = [];
+      for (let i = 0, len = this.products.length; i < len; i++) {
         tmpProducts.push(this.products[i]);
       }
       this.activOrderForm.products = tmpProducts;
 
-      var src = 'assets/imgs/banner_'+this.userdata.licensee+'.jpg';
-      let pipe = new DatePipe('en-US');
+      let src = 'assets/imgs/banner_' + this.userdata.licensee + '.jpg';
+      const pipe = new DatePipe('en-US');
 
-      /* Check Box 1 */                
-      var checkBoxBody1 = [];
-      if(this.activOrderForm.orderCheckBox) {
+      /* Check Box 1 */
+      let checkBoxBody1 = [];
+      if (this.activOrderForm.orderCheckBox) {
         checkBoxBody1.push([ { text: this.translate.instant('Bestellen'), color: '#000000', fillColor: '#ffffff' },
                             { text: '√', color: '#000000', fillColor: '#ffffff', alignment: 'center', fontSize: 14, bold: true} ]);
       } else {
         checkBoxBody1.push([ { text: this.translate.instant('Bestellen'), color: '#000000', fillColor: '#ffffff' },
                             { text: ' ', color: '#000000', fillColor: '#ffffff', alignment: 'center', fontSize: 14, bold: true } ]);
       }
-      checkBoxBody1.push([ { text: "", color: '#ffffff', fillColor: '#ffffff', colSpan: 2, alignment: 'center', fontSize: 12, border: [false, false, false, false] },
-                          { text: "", color: '#ffffff', fillColor: '#ffffff', colSpan: 2, alignment: 'center' } ]);
-      var checkBoxBody2 = [];
-      if(this.activOrderForm.offerCheckBox) {
+      checkBoxBody1.push([ { text: '', color: '#ffffff', fillColor: '#ffffff', colSpan: 2, alignment: 'center', fontSize: 12, border: [false, false, false, false] },
+                          { text: '', color: '#ffffff', fillColor: '#ffffff', colSpan: 2, alignment: 'center' } ]);
+      let checkBoxBody2 = [];
+      if (this.activOrderForm.offerCheckBox) {
         checkBoxBody2.push([ { text: this.translate.instant('Offerte'), color: '#000000', fillColor: '#ffffff' },
                             { text: '√', color: '#000000', fillColor: '#ffffff', alignment: 'center', fontSize: 14, bold: true} ]);
       } else {
         checkBoxBody2.push([ { text: this.translate.instant('Offerte'), color: '#000000', fillColor: '#ffffff' },
                             { text: ' ', color: '#000000', fillColor: '#ffffff', alignment: 'center', fontSize: 14, bold: true } ]);
       }
-      checkBoxBody2.push([ { text: "", color: '#ffffff', fillColor: '#ffffff', colSpan: 2, alignment: 'center', fontSize: 12, border: [false, false, false, false] },
-                          { text: "", color: '#ffffff', fillColor: '#ffffff', colSpan: 2, alignment: 'center' } ]);
-      var checkBoxBody3 = [];
-      if(this.activOrderForm.repairCheckBox) {
+      checkBoxBody2.push([ { text: '', color: '#ffffff', fillColor: '#ffffff', colSpan: 2, alignment: 'center', fontSize: 12, border: [false, false, false, false] },
+                          { text: '', color: '#ffffff', fillColor: '#ffffff', colSpan: 2, alignment: 'center' } ]);
+      let checkBoxBody3 = [];
+      if (this.activOrderForm.repairCheckBox) {
         checkBoxBody3.push([ { text: this.translate.instant('Reparatur'), color: '#000000', fillColor: '#ffffff' },
                             { text: '√', color: '#000000', fillColor: '#ffffff', alignment: 'center', fontSize: 14, bold: true} ]);
       } else {
         checkBoxBody3.push([ { text: this.translate.instant('Reparatur'), color: '#000000', fillColor: '#ffffff' },
                             { text: ' ', color: '#000000', fillColor: '#ffffff', alignment: 'center', fontSize: 14, bold: true } ]);
       }
-      checkBoxBody3.push([ { text: "", color: '#ffffff', fillColor: '#ffffff', colSpan: 2, alignment: 'center', fontSize: 12, border: [false, false, false, false] },
-                          { text: "", color: '#ffffff', fillColor: '#ffffff', colSpan: 2, alignment: 'center' } ]);                  
-      var checkBoxBody4 = [];
-      if(this.activOrderForm.inspectionCheckBox) {
+      checkBoxBody3.push([ { text: '', color: '#ffffff', fillColor: '#ffffff', colSpan: 2, alignment: 'center', fontSize: 12, border: [false, false, false, false] },
+                          { text: '', color: '#ffffff', fillColor: '#ffffff', colSpan: 2, alignment: 'center' } ]);
+      let checkBoxBody4 = [];
+      if (this.activOrderForm.inspectionCheckBox) {
         checkBoxBody4.push([ { text: this.translate.instant('Prüfung'), color: '#000000', fillColor: '#ffffff' },
                             { text: '√', color: '#000000', fillColor: '#ffffff', alignment: 'center', fontSize: 14, bold: true} ]);
       } else {
         checkBoxBody4.push([ { text: this.translate.instant('Prüfung'), color: '#000000', fillColor: '#ffffff' },
                             { text: ' ', color: '#000000', fillColor: '#ffffff', alignment: 'center', fontSize: 14, bold: true } ]);
       }
-      checkBoxBody4.push([ { text: "", color: '#ffffff', fillColor: '#ffffff', colSpan: 2, alignment: 'center', fontSize: 12, border: [false, false, false, false] },
-                          { text: "", color: '#ffffff', fillColor: '#ffffff', colSpan: 2, alignment: 'center' } ]);
-      var checkBoxBody5 = [];
-      if(this.activOrderForm.rentCheckBox) {
+      checkBoxBody4.push([ { text: '', color: '#ffffff', fillColor: '#ffffff', colSpan: 2, alignment: 'center', fontSize: 12, border: [false, false, false, false] },
+                          { text: '', color: '#ffffff', fillColor: '#ffffff', colSpan: 2, alignment: 'center' } ]);
+      let checkBoxBody5 = [];
+      if (this.activOrderForm.rentCheckBox) {
         checkBoxBody5.push([ { text: this.translate.instant('Miete'), color: '#000000', fillColor: '#ffffff' },
                             { text: '√', color: '#000000', fillColor: '#ffffff', alignment: 'center', fontSize: 14, bold: true} ]);
       } else {
         checkBoxBody5.push([ { text: this.translate.instant('Miete'), color: '#000000', fillColor: '#ffffff' },
                             { text: ' ', color: '#000000', fillColor: '#ffffff', alignment: 'center', fontSize: 14, bold: true } ]);
       }
-      checkBoxBody5.push([ { text: "", color: '#ffffff', fillColor: '#ffffff', colSpan: 2, alignment: 'center', fontSize: 12, border: [false, false, false, false] },
-                          { text: "", color: '#ffffff', fillColor: '#ffffff', colSpan: 2, alignment: 'center' } ]);
+      checkBoxBody5.push([ { text: '', color: '#ffffff', fillColor: '#ffffff', colSpan: 2, alignment: 'center', fontSize: 12, border: [false, false, false, false] },
+                          { text: '', color: '#ffffff', fillColor: '#ffffff', colSpan: 2, alignment: 'center' } ]);
 
       /* Invoice Address */
-      var bodyInvoiceAddress = [];
+      let bodyInvoiceAddress = [];
       bodyInvoiceAddress.push([ { text: this.translate.instant('Rechnungsadresse'), color: '#ffffff', fillColor: '#005e86', colSpan: 2, alignment: 'center', fontSize: 12 },
-                                { text: "", color: '#ffffff', fillColor: '#005e86', colSpan: 2, alignment: 'center' } ]);
+                                { text: '', color: '#ffffff', fillColor: '#005e86', colSpan: 2, alignment: 'center' } ]);
       bodyInvoiceAddress.push([ { text: this.translate.instant('Firma'), color: '#000000', fillColor: '#f5f7f7' },
                                 { text: this.activOrderForm.billing.company, color: '#000000', fillColor: '#f5f7f7' } ]);
       bodyInvoiceAddress.push([ { text: this.translate.instant('Strasse'), color: '#000000', fillColor: '#ffffff' },
@@ -353,13 +362,17 @@ export class OrderFormNewPage {
                                 { text: this.activOrderForm.billing.phone, color: '#000000', fillColor: '#ffffff' } ]);
       bodyInvoiceAddress.push([ { text: this.translate.instant('Internet'), color: '#000000', fillColor: '#f5f7f7' },
                                 { text: this.activOrderForm.billing.internet, color: '#000000', fillColor: '#f5f7f7' } ]);
-      bodyInvoiceAddress.push([ { text: "", color: '#ffffff', fillColor: '#ffffff', colSpan: 2, alignment: 'center', fontSize: 12, border: [false, false, false, false] },
-                                { text: "", color: '#ffffff', fillColor: '#ffffff', colSpan: 2, alignment: 'center' } ]);
+      bodyInvoiceAddress.push([ { text: this.translate.instant('Kundennummer'), color: '#000000', fillColor: '#ffffff' },
+                                { text: this.activOrderForm.customerNumber, color: '#000000', fillColor: '#ffffff' } ]);
+      bodyInvoiceAddress.push([ { text: this.translate.instant('DB-ID'), color: '#000000', fillColor: '#f5f7f7' },
+                                { text: this.activOrderForm.dbId, color: '#000000', fillColor: '#f5f7f7' } ]);
+      bodyInvoiceAddress.push([ { text: '', color: '#ffffff', fillColor: '#ffffff', colSpan: 2, alignment: 'center', fontSize: 12, border: [false, false, false, false] },
+                                { text: '', color: '#ffffff', fillColor: '#ffffff', colSpan: 2, alignment: 'center' } ]);
 
       /* Shipping Address */
-      var bodyShippingAddress = [];
+      let bodyShippingAddress = [];
       bodyShippingAddress.push([ { text: this.translate.instant('Lieferadresse'), color: '#ffffff', fillColor: '#005e86', colSpan: 2, alignment: 'center', fontSize: 12 },
-                                { text: "", color: '#ffffff', fillColor: '#005e86', colSpan: 2, alignment: 'center' } ]);
+                                { text: '', color: '#ffffff', fillColor: '#005e86', colSpan: 2, alignment: 'center' } ]);
       bodyShippingAddress.push([ { text: this.translate.instant('Name'), color: '#000000', fillColor: '#f5f7f7' },
                                 { text: this.activOrderForm.shipping.name, color: '#000000', fillColor: '#f5f7f7' } ]);
       bodyShippingAddress.push([ { text: this.translate.instant('Strasse'), color: '#000000', fillColor: '#ffffff' },
@@ -374,190 +387,190 @@ export class OrderFormNewPage {
                                 { text: this.activOrderForm.shipping.phone, color: '#000000', fillColor: '#ffffff' } ]);
       bodyShippingAddress.push([ { text: this.translate.instant('Mobiltelefon'), color: '#000000', fillColor: '#f5f7f7' },
                                 { text: this.activOrderForm.shipping.mobile, color: '#000000', fillColor: '#f5f7f7' } ]);
-      bodyShippingAddress.push([ { text: "", color: '#ffffff', fillColor: '#ffffff', colSpan: 2, alignment: 'center', fontSize: 12, border: [false, false, false, false] },
-                                { text: "", color: '#ffffff', fillColor: '#ffffff', colSpan: 2, alignment: 'center' } ]);
-  
+      bodyShippingAddress.push([ { text: '', color: '#ffffff', fillColor: '#ffffff', colSpan: 2, alignment: 'center', fontSize: 12, border: [false, false, false, false] },
+                                { text: '', color: '#ffffff', fillColor: '#ffffff', colSpan: 2, alignment: 'center' } ]);
+
       /* Group A */
-      var bodyGroupA = [];
+      let bodyGroupA = [];
       bodyGroupA.push([ { text: this.translate.instant('Bestell Nr.'), color: '#000000', fillColor: '#f5f7f7' },
                         { text: this.activOrderForm.order_nr, color: '#000000', fillColor: '#f5f7f7' } ]);
       bodyGroupA.push([ { text: this.translate.instant('PVS Bestellungs Nr.'), color: '#000000', fillColor: '#ffffff' },
                         { text: this.activOrderForm.pvs_order_nr, color: '#000000', fillColor: '#ffffff' } ]);
       bodyGroupA.push([ { text: this.translate.instant('Bestelldatum'), color: '#000000', fillColor: '#f5f7f7' },
                         { text: pipe.transform(this.activOrderForm.order_date, 'dd.MM.yyyy'), color: '#000000', fillColor: '#f5f7f7' } ]);
-      bodyGroupA.push([ { text: "", color: '#ffffff', fillColor: '#ffffff', colSpan: 2, alignment: 'center', fontSize: 12, border: [false, false, false, false] },
-                        { text: "", color: '#ffffff', fillColor: '#ffffff', colSpan: 2, alignment: 'center' } ]);
+      bodyGroupA.push([ { text: '', color: '#ffffff', fillColor: '#ffffff', colSpan: 2, alignment: 'center', fontSize: 12, border: [false, false, false, false] },
+                        { text: '', color: '#ffffff', fillColor: '#ffffff', colSpan: 2, alignment: 'center' } ]);
 
       /* Group B */
-      var bodyGroupB = [];
+      let bodyGroupB = [];
       bodyGroupB.push([ { text: this.translate.instant('Auftrags Nr.'), color: '#000000', fillColor: '#f5f7f7' },
                         { text: this.activOrderForm.contract_nr, color: '#000000', fillColor: '#f5f7f7' } ]);
       bodyGroupB.push([ { text: this.translate.instant('Komission'), color: '#000000', fillColor: '#ffffff' },
                         { text: this.activOrderForm.commission, color: '#000000', fillColor: '#ffffff' } ]);
       bodyGroupB.push([ { text: this.translate.instant('Liefertermin'), color: '#000000', fillColor: '#f5f7f7' },
                         { text: pipe.transform(this.activOrderForm.delivery_date, 'dd.MM.yyyy'), color: '#000000', fillColor: '#f5f7f7' } ]);
-      bodyGroupB.push([ { text: "", color: '#ffffff', fillColor: '#ffffff', colSpan: 2, alignment: 'center', fontSize: 12, border: [false, false, false, false] },
-                        { text: "", color: '#ffffff', fillColor: '#ffffff', colSpan: 2, alignment: 'center' } ]);
+      bodyGroupB.push([ { text: '', color: '#ffffff', fillColor: '#ffffff', colSpan: 2, alignment: 'center', fontSize: 12, border: [false, false, false, false] },
+                        { text: '', color: '#ffffff', fillColor: '#ffffff', colSpan: 2, alignment: 'center' } ]);
 
-      /* Check Box 2 */                
-      var checkBoxBody6 = [];
-      if(this.activOrderForm.sampleDeliveryCheckBox) {
+      /* Check Box 2 */
+      let checkBoxBody6 = [];
+      if (this.activOrderForm.sampleDeliveryCheckBox) {
         checkBoxBody6.push([ { text: this.translate.instant('Musterlieferung'), color: '#000000', fillColor: '#ffffff' },
                             { text: '√', color: '#000000', fillColor: '#ffffff', alignment: 'center', fontSize: 14, bold: true} ]);
       } else {
         checkBoxBody6.push([ { text: this.translate.instant('Musterlieferung'), color: '#000000', fillColor: '#ffffff' },
                             { text: ' ', color: '#000000', fillColor: '#ffffff', alignment: 'center', fontSize: 14, bold: true } ]);
       }
-      checkBoxBody6.push([ { text: "", color: '#ffffff', fillColor: '#ffffff', colSpan: 2, alignment: 'center', fontSize: 12, border: [false, false, false, false] },
-                          { text: "", color: '#ffffff', fillColor: '#ffffff', colSpan: 2, alignment: 'center' } ]);
-      var checkBoxBody7 = [];
-      if(this.activOrderForm.creditCheckBox) {
+      checkBoxBody6.push([ { text: '', color: '#ffffff', fillColor: '#ffffff', colSpan: 2, alignment: 'center', fontSize: 12, border: [false, false, false, false] },
+                          { text: '', color: '#ffffff', fillColor: '#ffffff', colSpan: 2, alignment: 'center' } ]);
+      let checkBoxBody7 = [];
+      if (this.activOrderForm.creditCheckBox) {
         checkBoxBody7.push([ { text: this.translate.instant('Gutschrift'), color: '#000000', fillColor: '#ffffff' },
                             { text: '√', color: '#000000', fillColor: '#ffffff', alignment: 'center', fontSize: 14, bold: true} ]);
       } else {
         checkBoxBody7.push([ { text: this.translate.instant('Gutschrift'), color: '#000000', fillColor: '#ffffff' },
                             { text: ' ', color: '#000000', fillColor: '#ffffff', alignment: 'center', fontSize: 14, bold: true } ]);
       }
-      checkBoxBody7.push([ { text: "", color: '#ffffff', fillColor: '#ffffff', colSpan: 2, alignment: 'center', fontSize: 12, border: [false, false, false, false] },
-                          { text: "", color: '#ffffff', fillColor: '#ffffff', colSpan: 2, alignment: 'center' } ]);
-      var checkBoxBody8 = [];
-      if(this.activOrderForm.confOrderCheckBox) {
+      checkBoxBody7.push([ { text: '', color: '#ffffff', fillColor: '#ffffff', colSpan: 2, alignment: 'center', fontSize: 12, border: [false, false, false, false] },
+                          { text: '', color: '#ffffff', fillColor: '#ffffff', colSpan: 2, alignment: 'center' } ]);
+      let checkBoxBody8 = [];
+      if (this.activOrderForm.confOrderCheckBox) {
         checkBoxBody8.push([ { text: this.translate.instant('Auftragsbestätigung'), color: '#000000', fillColor: '#ffffff' },
                             { text: '√', color: '#000000', fillColor: '#ffffff', alignment: 'center', fontSize: 14, bold: true} ]);
       } else {
         checkBoxBody8.push([ { text: this.translate.instant('Auftragsbestätigung'), color: '#000000', fillColor: '#ffffff' },
                             { text: ' ', color: '#000000', fillColor: '#ffffff', alignment: 'center', fontSize: 14, bold: true } ]);
       }
-      checkBoxBody8.push([ { text: "", color: '#ffffff', fillColor: '#ffffff', colSpan: 2, alignment: 'center', fontSize: 12, border: [false, false, false, false] },
-                          { text: "", color: '#ffffff', fillColor: '#ffffff', colSpan: 2, alignment: 'center' } ]);                     
-      var checkBoxBody9 = [];
-      if(this.activOrderForm.afterLoadingCheckBox) {
+      checkBoxBody8.push([ { text: '', color: '#ffffff', fillColor: '#ffffff', colSpan: 2, alignment: 'center', fontSize: 12, border: [false, false, false, false] },
+                          { text: '', color: '#ffffff', fillColor: '#ffffff', colSpan: 2, alignment: 'center' } ]);
+      let checkBoxBody9 = [];
+      if (this.activOrderForm.afterLoadingCheckBox) {
         checkBoxBody9.push([ { text: this.translate.instant('Nach belastung'), color: '#000000', fillColor: '#ffffff' },
                             { text: '√', color: '#000000', fillColor: '#ffffff', alignment: 'center', fontSize: 14, bold: true} ]);
       } else {
         checkBoxBody9.push([ { text: this.translate.instant('Nach belastung'), color: '#000000', fillColor: '#ffffff' },
                             { text: ' ', color: '#000000', fillColor: '#ffffff', alignment: 'center', fontSize: 14, bold: true } ]);
       }
-      checkBoxBody9.push([ { text: "", color: '#ffffff', fillColor: '#ffffff', colSpan: 2, alignment: 'center', fontSize: 12, border: [false, false, false, false] },
-                          { text: "", color: '#ffffff', fillColor: '#ffffff', colSpan: 2, alignment: 'center' } ]);
+      checkBoxBody9.push([ { text: '', color: '#ffffff', fillColor: '#ffffff', colSpan: 2, alignment: 'center', fontSize: 12, border: [false, false, false, false] },
+                          { text: '', color: '#ffffff', fillColor: '#ffffff', colSpan: 2, alignment: 'center' } ]);
 
-      /* Check Box 3 */                
-      var checkBoxBody10 = [];
-      if(this.activOrderForm.postCheckBox) {
+      /* Check Box 3 */
+      let checkBoxBody10 = [];
+      if (this.activOrderForm.postCheckBox) {
         checkBoxBody10.push([ { text: this.translate.instant('Post'), color: '#000000', fillColor: '#ffffff' },
                             { text: '√', color: '#000000', fillColor: '#ffffff', alignment: 'center', fontSize: 14, bold: true} ]);
       } else {
         checkBoxBody10.push([ { text: this.translate.instant('Post'), color: '#000000', fillColor: '#ffffff' },
                             { text: ' ', color: '#000000', fillColor: '#ffffff', alignment: 'center', fontSize: 14, bold: true } ]);
       }
-      checkBoxBody10.push([ { text: "", color: '#ffffff', fillColor: '#ffffff', colSpan: 2, alignment: 'center', fontSize: 12, border: [false, false, false, false] },
-                            { text: "", color: '#ffffff', fillColor: '#ffffff', colSpan: 2, alignment: 'center' } ]);  
-      var checkBoxBody11 = [];
-      if(this.activOrderForm.expressCheckBox) {
+      checkBoxBody10.push([ { text: '', color: '#ffffff', fillColor: '#ffffff', colSpan: 2, alignment: 'center', fontSize: 12, border: [false, false, false, false] },
+                            { text: '', color: '#ffffff', fillColor: '#ffffff', colSpan: 2, alignment: 'center' } ]);
+      let checkBoxBody11 = [];
+      if (this.activOrderForm.expressCheckBox) {
         checkBoxBody11.push([ { text: this.translate.instant('Express'), color: '#000000', fillColor: '#ffffff' },
                             { text: '√', color: '#000000', fillColor: '#ffffff', alignment: 'center', fontSize: 14, bold: true} ]);
       } else {
         checkBoxBody11.push([ { text: this.translate.instant('Express'), color: '#000000', fillColor: '#ffffff' },
                             { text: ' ', color: '#000000', fillColor: '#ffffff', alignment: 'center', fontSize: 14, bold: true } ]);
       }
-      checkBoxBody11.push([ { text: "", color: '#ffffff', fillColor: '#ffffff', colSpan: 2, alignment: 'center', fontSize: 12, border: [false, false, false, false] },
-                            { text: "", color: '#ffffff', fillColor: '#ffffff', colSpan: 2, alignment: 'center' } ]);  
-      var checkBoxBody12 = [];
-      if(this.activOrderForm.aboutBrachtCheckBox) {
+      checkBoxBody11.push([ { text: '', color: '#ffffff', fillColor: '#ffffff', colSpan: 2, alignment: 'center', fontSize: 12, border: [false, false, false, false] },
+                            { text: '', color: '#ffffff', fillColor: '#ffffff', colSpan: 2, alignment: 'center' } ]);
+      let checkBoxBody12 = [];
+      if (this.activOrderForm.aboutBrachtCheckBox) {
         checkBoxBody12.push([ { text: this.translate.instant('Überbracht'), color: '#000000', fillColor: '#ffffff' },
                             { text: '√', color: '#000000', fillColor: '#ffffff', alignment: 'center', fontSize: 14, bold: true} ]);
       } else {
         checkBoxBody12.push([ { text: this.translate.instant('Überbracht'), color: '#000000', fillColor: '#ffffff' },
                             { text: ' ', color: '#000000', fillColor: '#ffffff', alignment: 'center', fontSize: 14, bold: true } ]);
-      } 
-      checkBoxBody12.push([ { text: "", color: '#ffffff', fillColor: '#ffffff', colSpan: 2, alignment: 'center', fontSize: 12, border: [false, false, false, false] },
-                            { text: "", color: '#ffffff', fillColor: '#ffffff', colSpan: 2, alignment: 'center' } ]);                     
-      var checkBoxBody13 = [];
-      if(this.activOrderForm.lkwCheckBox) {
+      }
+      checkBoxBody12.push([ { text: '', color: '#ffffff', fillColor: '#ffffff', colSpan: 2, alignment: 'center', fontSize: 12, border: [false, false, false, false] },
+                            { text: '', color: '#ffffff', fillColor: '#ffffff', colSpan: 2, alignment: 'center' } ]);
+      let checkBoxBody13 = [];
+      if (this.activOrderForm.lkwCheckBox) {
         checkBoxBody13.push([ { text: this.translate.instant('LKW'), color: '#000000', fillColor: '#ffffff' },
                             { text: '√', color: '#000000', fillColor: '#ffffff', alignment: 'center', fontSize: 14, bold: true} ]);
       } else {
         checkBoxBody13.push([ { text: this.translate.instant('BesteLKWllen'), color: '#000000', fillColor: '#ffffff' },
                             { text: ' ', color: '#000000', fillColor: '#ffffff', alignment: 'center', fontSize: 14, bold: true } ]);
       }
-      checkBoxBody13.push([ { text: "", color: '#ffffff', fillColor: '#ffffff', colSpan: 2, alignment: 'center', fontSize: 12, border: [false, false, false, false] },
-                            { text: "", color: '#ffffff', fillColor: '#ffffff', colSpan: 2, alignment: 'center' } ]);  
-      var checkBoxBody14 = [];
-      if(this.activOrderForm.evenPickupCheckBox) {
+      checkBoxBody13.push([ { text: '', color: '#ffffff', fillColor: '#ffffff', colSpan: 2, alignment: 'center', fontSize: 12, border: [false, false, false, false] },
+                            { text: '', color: '#ffffff', fillColor: '#ffffff', colSpan: 2, alignment: 'center' } ]);
+      let checkBoxBody14 = [];
+      if (this.activOrderForm.evenPickupCheckBox) {
         checkBoxBody14.push([ { text: this.translate.instant('Selbst Abholer'), color: '#000000', fillColor: '#ffffff' },
                             { text: '√', color: '#000000', fillColor: '#ffffff', alignment: 'center', fontSize: 14, bold: true} ]);
       } else {
         checkBoxBody14.push([ { text: this.translate.instant('Selbst Abholer'), color: '#000000', fillColor: '#ffffff' },
                             { text: ' ', color: '#000000', fillColor: '#ffffff', alignment: 'center', fontSize: 14, bold: true } ]);
       }
-      checkBoxBody14.push([ { text: "", color: '#ffffff', fillColor: '#ffffff', colSpan: 2, alignment: 'center', fontSize: 12, border: [false, false, false, false] },
-                            { text: "", color: '#ffffff', fillColor: '#ffffff', colSpan: 2, alignment: 'center' } ]);  
+      checkBoxBody14.push([ { text: '', color: '#ffffff', fillColor: '#ffffff', colSpan: 2, alignment: 'center', fontSize: 12, border: [false, false, false, false] },
+                            { text: '', color: '#ffffff', fillColor: '#ffffff', colSpan: 2, alignment: 'center' } ]);
 
       /* Retain ID Number */
-      var bodyRetain = [];
-      if(this.activOrderForm.keepIdNumber) {
+      let bodyRetain = [];
+      if (this.activOrderForm.keepIdNumber) {
         bodyRetain.push([ { text: this.translate.instant('ID-Nummer beibehalten'), color: '#000000', fillColor: '#ffffff' },
                             { text: '√', color: '#000000', fillColor: '#ffffff', alignment: 'center', fontSize: 14, bold: true} ]);
       } else {
         bodyRetain.push([ { text: this.translate.instant('ID-Nummer beibehalten'), color: '#000000', fillColor: '#ffffff' },
                             { text: ' ', color: '#000000', fillColor: '#ffffff', alignment: 'center', fontSize: 14, bold: true } ]);
       }
-      bodyRetain.push([ { text: "", color: '#ffffff', fillColor: '#ffffff', colSpan: 2, alignment: 'center', fontSize: 12, border: [false, false, false, false] },
-                        { text: "", color: '#ffffff', fillColor: '#ffffff', colSpan: 2, alignment: 'center' } ]);  
+      bodyRetain.push([ { text: '', color: '#ffffff', fillColor: '#ffffff', colSpan: 2, alignment: 'center', fontSize: 12, border: [false, false, false, false] },
+                        { text: '', color: '#ffffff', fillColor: '#ffffff', colSpan: 2, alignment: 'center' } ]);
 
-      /* Table */                
-      var bodyTableHeader = []; 
-      var bodyTableValue = [];
-      var bodyTableValueTmp = [];
-      var bodyTableFooter = [];   
+      /* Table */
+      let bodyTableHeader = [];
+      let bodyTableValue = [];
+      let bodyTableValueTmp = [];
+      let bodyTableFooter = [];
       bodyTableHeader.push( { text: this.translate.instant('Menge'), color: '#ffffff', fillColor: '#005e86', fontSize: 12 },
                             { text: this.translate.instant('PVS ID'), color: '#ffffff', fillColor: '#005e86', fontSize: 12 },
                             { text: this.translate.instant('Artikel-Nr.'), color: '#ffffff', fillColor: '#005e86', fontSize: 12 },
                             { text: this.translate.instant('Bezeichnung'), color: '#ffffff', fillColor: '#005e86', fontSize: 12 } );
-      bodyTableValue.push(bodyTableHeader);   
+      bodyTableValue.push(bodyTableHeader);
       let ind: any;
       ind = 0;
       this.activOrderForm.products.forEach(element => {
         bodyTableValueTmp = [];
-        if(ind == 0) bodyTableValueTmp.push({ text: element.quantity, color: '#000000', fillColor: '#f5f7f7', fontSize: 10 });
-        if(ind == 1) bodyTableValueTmp.push({ text: element.quantity, color: '#000000', fillColor: '#ffffff', fontSize: 10 });
-        if(ind == 0) bodyTableValueTmp.push({ text: element.pvsid, color: '#000000', fillColor: '#f5f7f7', fontSize: 10 });
-        if(ind == 1) bodyTableValueTmp.push({ text: element.pvsid, color: '#000000', fillColor: '#ffffff', fontSize: 10 });
-        if(ind == 0) bodyTableValueTmp.push({ text: element.articleno, color: '#000000', fillColor: '#f5f7f7', fontSize: 10 });
-        if(ind == 1) bodyTableValueTmp.push({ text: element.articleno, color: '#000000', fillColor: '#ffffff', fontSize: 10 });
-        if(ind == 0) bodyTableValueTmp.push({ text: element.designation, color: '#000000', fillColor: '#f5f7f7', fontSize: 10 });
-        if(ind == 1) bodyTableValueTmp.push({ text: element.designation, color: '#000000', fillColor: '#ffffff', fontSize: 10 });
+        if (ind == 0) { bodyTableValueTmp.push({ text: element.quantity, color: '#000000', fillColor: '#f5f7f7', fontSize: 10 }); }
+        if (ind == 1) { bodyTableValueTmp.push({ text: element.quantity, color: '#000000', fillColor: '#ffffff', fontSize: 10 }); }
+        if (ind == 0) { bodyTableValueTmp.push({ text: element.pvsid, color: '#000000', fillColor: '#f5f7f7', fontSize: 10 }); }
+        if (ind == 1) { bodyTableValueTmp.push({ text: element.pvsid, color: '#000000', fillColor: '#ffffff', fontSize: 10 }); }
+        if (ind == 0) { bodyTableValueTmp.push({ text: element.articleno, color: '#000000', fillColor: '#f5f7f7', fontSize: 10 }); }
+        if (ind == 1) { bodyTableValueTmp.push({ text: element.articleno, color: '#000000', fillColor: '#ffffff', fontSize: 10 }); }
+        if (ind == 0) { bodyTableValueTmp.push({ text: element.designation, color: '#000000', fillColor: '#f5f7f7', fontSize: 10 }); }
+        if (ind == 1) { bodyTableValueTmp.push({ text: element.designation, color: '#000000', fillColor: '#ffffff', fontSize: 10 }); }
         bodyTableValue.push(bodyTableValueTmp);
         ind++;
-        if(ind > 1) ind = 0; 
-      });          
-      bodyTableFooter.push( { text: "", color: '#ffffff', fillColor: '#ffffff', fontSize: 10, border: [false, false, false, false] },
-                            { text: "", color: '#ffffff', fillColor: '#ffffff', fontSize: 10, border: [false, false, false, false] },
-                            { text: "", color: '#ffffff', fillColor: '#ffffff', fontSize: 10, border: [false, false, false, false] },
-                            { text: "", color: '#ffffff', fillColor: '#ffffff', fontSize: 10, border: [false, false, false, false] } );
+        if (ind > 1) { ind = 0; }
+      });
+      bodyTableFooter.push( { text: '', color: '#ffffff', fillColor: '#ffffff', fontSize: 10, border: [false, false, false, false] },
+                            { text: '', color: '#ffffff', fillColor: '#ffffff', fontSize: 10, border: [false, false, false, false] },
+                            { text: '', color: '#ffffff', fillColor: '#ffffff', fontSize: 10, border: [false, false, false, false] },
+                            { text: '', color: '#ffffff', fillColor: '#ffffff', fontSize: 10, border: [false, false, false, false] } );
       bodyTableValue.push(bodyTableFooter);
-  
+
       /* Notes */
-      var bodyNotesHeader = [];
+      let bodyNotesHeader = [];
       bodyNotesHeader.push([ { text: this.translate.instant('Notizen'), color: '#ffffff', fillColor: '#005e86', fontSize: 12 } ]);
       bodyNotesHeader.push([ { text: this.activOrderForm.note, color: '#000000', fillColor: '#ffffff', fontSize: 10 } ]);
-      bodyNotesHeader.push([ { text: "", color: '#ffffff', fillColor: '#ffffff', fontSize: 12 , border: [false, false, false, false]} ]);
+      bodyNotesHeader.push([ { text: '', color: '#ffffff', fillColor: '#ffffff', fontSize: 12 , border: [false, false, false, false]} ]);
 
       /* Commissioned */
-      var bodyCommissionedHeader = [];
+      let bodyCommissionedHeader = [];
       bodyCommissionedHeader.push([ { text: this.translate.instant('Beauftragt'), color: '#ffffff', fillColor: '#005e86', fontSize: 12 } ]);
       bodyCommissionedHeader.push([ { text: this.activOrderForm.commissioned, color: '#000000', fillColor: '#ffffff', fontSize: 10 } ]);
-      bodyCommissionedHeader.push([ { text: "", color: '#ffffff', fillColor: '#ffffff', fontSize: 12, border: [false, false, false, false] } ]);
+      bodyCommissionedHeader.push([ { text: '', color: '#ffffff', fillColor: '#ffffff', fontSize: 12, border: [false, false, false, false] } ]);
 
-      this.pdf.toDataURL(src,resDataURL => {
-        var docDefinition = {
+      this.pdf.toDataURL(src, resDataURL => {
+        let docDefinition = {
           pageSize: 'A4',
           pageOrientation: 'portrait',
           pageMargins: [20, 140, 20, 20],
           header: {
             columns: [
               {
-                "image": resDataURL, "width": 550, "height": 80,  margin: 20
+                'image': resDataURL, 'width': 550, 'height': 80,  margin: 20
               }
             ]
           },
@@ -575,7 +588,7 @@ export class OrderFormNewPage {
                     vLineColor: function (i, node) { return '#cccccc'; },
                     paddingTop: function (i, node) { return 4; },
                     paddingBottom: function (i, node) { return 4; },
-                  }, 
+                  },
                   table: {
                     headerRows: 1,
                     widths: ['*', 20],
@@ -744,7 +757,7 @@ export class OrderFormNewPage {
                     vLineColor: function (i, node) { return '#cccccc'; },
                     paddingTop: function (i, node) { return 4; },
                     paddingBottom: function (i, node) { return 4; },
-                  }, 
+                  },
                   table: {
                     headerRows: 1,
                     widths: ['*', 20],
@@ -818,7 +831,7 @@ export class OrderFormNewPage {
                     vLineColor: function (i, node) { return '#cccccc'; },
                     paddingTop: function (i, node) { return 4; },
                     paddingBottom: function (i, node) { return 4; },
-                  }, 
+                  },
                   table: {
                     headerRows: 1,
                     widths: ['*', 20],
@@ -939,7 +952,7 @@ export class OrderFormNewPage {
                 }
               ],
               columnGap: 10
-            }, 
+            },
             {
               columns: [
                 {
@@ -986,18 +999,18 @@ export class OrderFormNewPage {
             }
           ],
           footer: function (currentPage, pageCount) {
-            return { text: pageDesc + ' ' + currentPage.toString() + ' / ' + pageCount, alignment: 'center' }
+            return { text: pageDesc + ' ' + currentPage.toString() + ' / ' + pageCount, alignment: 'center' };
           }
         };
-        
-        this.pdf.createPdf(docDefinition, pdfMethod, this.translate.instant("Bestellformular".replace(/\s/g, "")) + ".pdf").then((result) => {
-          console.log("pdf result :", result);
+
+        this.pdf.createPdf(docDefinition, pdfMethod, this.translate.instant('Bestellformular'.replace(/\s/g, '')) + '.pdf').then((result) => {
+          console.log('pdf result :', result);
           loader.dismiss();
           res(result);
         });
-        
-      });  
-      
+
+      });
+
     });
   }
 
