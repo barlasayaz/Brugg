@@ -113,8 +113,12 @@
 												<p-accordionTab styleClass="ui-accordion-header" header="{{'Titel' | translate}} &nbsp;&nbsp;&nbsp;&nbsp; {{item.title}}">
 													<div class="tbody">
 														<div class="tr table-body">
-															<div class="td-lbl">DB-ID</div>
-															<div class="td">{{item.id}}</div>
+															<div class="td-lbl">{{'Kunde' | translate}} DB-ID</div>
+															<div class="td">{{item.customer}}</div>
+														</div>
+														<div class="tr table-body">
+															<div class="td-lbl">{{'Kundennummer' | translate}}</div>
+															<div class="td">{{item.customer_number}}</div>
 														</div>
 														<div class="tr table-body">
 															<div class="td-lbl">#</div>

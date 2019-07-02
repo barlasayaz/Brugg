@@ -35,6 +35,8 @@ export class ProtocolListPage implements OnInit {
     public lang: string = localStorage.getItem('lang');
     public company = '';
     public heightCalc: any = '700px';
+    public activCustomer: any = {};
+    public customer_number: any;
 
     public menuItems: MenuItem[] = [
         {
@@ -151,10 +153,15 @@ export class ProtocolListPage implements OnInit {
             { field: 'product', header: this.translate.instant('Produkt') }
         ];
         this.idCustomer = parseInt(this.route.snapshot.paramMap.get('id'));
+        this.apiService.pvs4_get_customer(this.idCustomer).then((result: any) => {
+            this.activCustomer = result.obj;
+            this.customer_number = this.activCustomer.customer_number;
+        });
         console.log('ProtocolListPage idCustomer:', this.idCustomer);
 
         this.apiService.pvs4_get_protocol_list(this.idCustomer).then((result: any) => {
             this.protocolListAll = JSON.parse(JSON.stringify(result.list));
+            console.log('protocolListAll :', this.protocolListAll);
 
             this.title_translate(this.protocolListAll);
 
@@ -346,7 +353,7 @@ export class ProtocolListPage implements OnInit {
         console.log('menu_new', this.idCustomer);
 
         const navigationExtras: NavigationExtras = {
-            queryParams: { id: 0, idCustomer: this.idCustomer }
+            queryParams: { id: 0, idCustomer: this.idCustomer, customer_number: this.customer_number }
         };
         this.navCtrl.navigateForward(['/protocol-edit'], navigationExtras);
     }
@@ -356,7 +363,7 @@ export class ProtocolListPage implements OnInit {
         if (this.selectedNode) {
             if (this.selectedNode.data.id) {
                 const navigationExtras: NavigationExtras = {
-                    queryParams: { 'id': this.selectedNode.data.id, idCustomer: this.idCustomer, parent: this.selectedNode.data.parent }
+                    queryParams: { 'id': this.selectedNode.data.id, idCustomer: this.idCustomer, customer_number: this.customer_number, parent: this.selectedNode.data.parent }
                 };
                 this.navCtrl.navigateForward(['/protocol-edit'], navigationExtras);
             }
@@ -370,7 +377,7 @@ export class ProtocolListPage implements OnInit {
                 const id = parseInt(this.selectedNode.data.id);
                 console.log('menu_view id', id);
                 const navigationExtras: NavigationExtras = {
-                    queryParams: { idCustomer: this.idCustomer, idProtocol: id, protocol: JSON.stringify(this.selectedNode.data) }
+                    queryParams: { idCustomer: this.idCustomer, customer_number: this.customer_number, idProtocol: id, protocol: JSON.stringify(this.selectedNode.data) }
                 };
                 this.navCtrl.navigateForward(['/protocol-details/' + id], navigationExtras);
             }
