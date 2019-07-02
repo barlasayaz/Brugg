@@ -22,7 +22,7 @@ export class ApiService {
   ud: any;
   isLoggedIn: any;
   public pvsApiURL = pvs4_apiURL;
-  public maxDate: any = '2024-12-31';
+  public maxDate: any = '2050-12-31';
   public appointmentStartTime: string = '08:00';
   public appointmentEndTime: string = '16:59';
   public appointmentMinTime: string = '07:00';
