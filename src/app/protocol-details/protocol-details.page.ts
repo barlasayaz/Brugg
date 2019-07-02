@@ -43,6 +43,7 @@ export class ProtocolDetailsPage implements OnInit {
   public imageURI: any;
   public file_link: any;
   public nocache: any;
+  public customer_number: any;
 
   constructor(public navCtrl: NavController,
     public route: ActivatedRoute,
@@ -84,6 +85,7 @@ export class ProtocolDetailsPage implements OnInit {
     this.url = this.apiService.pvsApiURL;
     this.route.queryParams.subscribe(params => {
       this.idCustomer = params['idCustomer'];
+      this.customer_number = params['customer_number'];
       this.idProtocol = params['idProtocol'];
       //this.company = params["company"];
     });
@@ -114,9 +116,12 @@ export class ProtocolDetailsPage implements OnInit {
   loadProduct(id: any) {
     this.apiService.pvs4_get_product(id).then((result: any) => {
       this.activProduct = result.obj;
+      console.log('activProduct :', this.activProduct);
       let title = JSON.parse(this.activProduct.title);
       this.activProduct.title = title[this.lang];
       this.activProduct.items = JSON.parse(this.activProduct.items);
+      this.activProduct.idCustomer = this.idCustomer;
+      this.activProduct.customer_number = this.customer_number;
       let i: any = 0;
       this.activProduct.items.forEach(event => {
         if (event.type == 5) {
@@ -254,32 +259,37 @@ export class ProtocolDetailsPage implements OnInit {
                           { text: element.title, color: '#000000', fillColor: '#8bd8f9' }]);
       } else {
         bodyProduct.push([{ text: this.translate.instant('Titel'), color: '#000000', fillColor: '#8bd8f9' },
-                          { text: '', color: '#000000', fillColor: '#8bd8f9' }]);       
+                          { text: '', color: '#000000', fillColor: '#8bd8f9' }]);
       }
-      if (element.id != undefined) {
-        bodyProduct.push([{ text: 'DB-ID' }, { text: element.id }]);
+      if (element.idCustomer != undefined) {
+        bodyProduct.push([{ text: this.translate.instant('Kunde') + ' ' + 'DB-ID' }, { text: element.idCustomer }]);
       } else {
-        bodyProduct.push([{ text: 'DB-ID' }, { text: '' }]);       
+        bodyProduct.push([{ text: this.translate.instant('Kunde') + ' ' + 'DB-ID'}, { text: '' }]);
+      }
+      if (element.customer_number != undefined) {
+        bodyProduct.push([{ text: this.translate.instant('Kundennummer') }, { text: element.customer_number }]);
+      } else {
+        bodyProduct.push([{ text: this.translate.instant('Kundennummer') }, { text: '' }]);
       }
       if (element.id_number != undefined) {
         bodyProduct.push([{ text: '#' }, { text: element.id_number }]);
       } else {
-        bodyProduct.push([{ text: '#' }, { text: '' }]);       
+        bodyProduct.push([{ text: '#' }, { text: '' }]);
       }
       if (element.articel_no != undefined) {
         bodyProduct.push([{ text: this.translate.instant('Articel No') }, { text: element.articel_no }]);
       } else {
-        bodyProduct.push([{ text: this.translate.instant('Articel No') }, { text: '' }]);       
+        bodyProduct.push([{ text: this.translate.instant('Articel No') }, { text: '' }]);
       }
       if (element.author != undefined) {
         bodyProduct.push([{ text: this.translate.instant('Autor') }, { text: element.author }]);
       } else {
-        bodyProduct.push([{ text: this.translate.instant('Autor') }, { text: '' }]);    
+        bodyProduct.push([{ text: this.translate.instant('Autor') }, { text: '' }]);
       }
       if (element.check_interval != undefined) {
         bodyProduct.push([{ text: this.translate.instant('Intervall Prüfen') }, { text: element.check_interval }]);
       } else {
-        bodyProduct.push([{ text: this.translate.instant('Intervall Prüfen') }, { text: '' }]);       
+        bodyProduct.push([{ text: this.translate.instant('Intervall Prüfen') }, { text: '' }]);
       }
 
       // product oprtions
