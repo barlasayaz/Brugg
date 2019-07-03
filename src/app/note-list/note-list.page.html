@@ -3,23 +3,38 @@
 <div class="ek-content" (window:resize)="onResize($event)">
     <p-menubar id="menuMin" class="wideMenu">
         <div style="width: 100%">
-            <button type="button" pButton icon="fa fa-fw fa-list" label="Menu" id="btnMenu"
-                (click)="menu.toggle($event)">
+            <button type="button"
+                    pButton 
+                    icon="fa fa-fw fa-list"
+                    label="Menu"
+                    id="btnMenu"
+                    (click)="menu.toggle($event)">
                 <span class="ui-submenu-icon pi pi-fw pi-caret-down slide-caret"></span>
             </button>
         </div>
         <div class="ui-inputgroup search-search">
-            <input type="text" pInputText placeholder="{{'Suche' |translate }}"
-                [(ngModel)]="columnFilterValues['search_all']" (input)="search_all()">
+            <input type="text"
+                   pInputText
+                   placeholder="{{'Suche' |translate }}"
+                   [(ngModel)]="columnFilterValues['search_all']"
+                   (input)="search_all()">
         </div>
     </p-menubar>
-    <p-slideMenu [model]="menuItems" popup="false" [viewportHeight]="220" [style]="{'width':'180px'}" [menuWidth]="180"
-        #menu>
+    <p-slideMenu [model]="menuItems"
+                 popup="false"
+                 [viewportHeight]="220"
+                 [style]="{'width':'200px'}"
+                 #menu>
     </p-slideMenu>
-    <p-menubar [model]="menuItems" [autoDisplay]="false" id="menuMax">
+    <p-menubar [model]="menuItems"
+               [autoDisplay]="false"
+               id="menuMax">
         <div class="ui-inputgroup search-search">
-            <input type="text" pInputText placeholder="{{'Suche' |translate }}"
-                [(ngModel)]="columnFilterValues['search_all']" (input)="search_all()">
+            <input type="text"
+                   pInputText
+                   placeholder="{{'Suche' |translate }}"
+                   [(ngModel)]="columnFilterValues['search_all']"
+                   (input)="search_all()">
             <!-- <button (click)="search_all()" 
                     pButton type="button" 
                     icon="fa fa-search" 
@@ -28,11 +43,23 @@
         </div>
     </p-menubar>
 
-    <div id="heightCalc" class="heightCalc" #divHeightCalc></div>
-    <p-treeTable [value]="noteListView" [columns]="cols" selectionMode="single" [(selection)]="selectedNode"
-        (onNodeSelect)="nodeSelect($event)" (onNodeUnselect)="nodeUnselect()" dataKey="id"
-        (onNodeExpand)="onNodeExpand($event)" (onNodeCollapse)="onNodeCollapse($event)" [scrollable]="true"
-        [scrollHeight]="heightCalc" [rows]="25" [paginator]="true">
+    <div id="heightCalc" 
+         class="heightCalc"
+         #divHeightCalc>
+    </div>
+    <p-treeTable [value]="noteListView"
+                 [columns]="cols"
+                 selectionMode="single"
+                 [(selection)]="selectedNode"
+                 (onNodeSelect)="nodeSelect($event)"
+                 (onNodeUnselect)="nodeUnselect()"
+                 dataKey="id"
+                 (onNodeExpand)="onNodeExpand($event)"
+                 (onNodeCollapse)="onNodeCollapse($event)"
+                 [scrollable]="true"
+                 [scrollHeight]="heightCalc"
+                 [rows]="25"
+                 [paginator]="true">
         <ng-template pTemplate="header" let-columns>
             <tr>
                 <th *ngFor="let col of selectedColumns" [ttSortableColumn]="col.field">
@@ -42,8 +69,11 @@
             </tr>
             <tr [hidden]="!splitFilter">
                 <th *ngFor="let col of selectedColumns" [ngSwitch]="col.field" class="p-table-filter">
-                    <input pInputText type="text" class="filter-search" (input)="search_all()"
-                        [(ngModel)]="columnFilterValues[col.field]">
+                    <input pInputText
+                           type="text"
+                           class="filter-search"
+                           (input)="search_all()"
+                           [(ngModel)]="columnFilterValues[col.field]">
                 </th>
             </tr>
         </ng-template>

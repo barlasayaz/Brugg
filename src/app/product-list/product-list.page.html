@@ -21,7 +21,7 @@
     <p-slideMenu [model]="menuItems"
                  popup="false"
                  [viewportHeight]="280" 
-                 [style]="{'width':'180px'}" [menuWidth]="180" 
+                 [style]="{'width':'200px'}" 
                  #menu>
     </p-slideMenu>
     <p-menubar [model]="menuItems" [autoDisplay]="false" id="menuMax">
@@ -36,11 +36,24 @@
         </div>
     </p-menubar>
 
-    <div id="heightCalc" class="heightCalc" #divHeightCalc></div>
-    <p-treeTable [value]="productListView" [columns]="cols" selectionMode="multiple" [(selection)]="selectedNode"
-        (onNodeSelect)="nodeSelect($event, selectedNode)" (onNodeUnselect)="nodeSelect($event, selectedNode)"
-        dataKey="id" (onNodeExpand)="onNodeExpand($event)" (onNodeCollapse)="onNodeCollapse($event)" [scrollable]="true"
-        [scrollHeight]="heightCalc" [rows]="25" [paginator]="true" [resizableColumns]="true">
+    <div id="heightCalc" 
+         class="heightCalc"
+         #divHeightCalc>
+    </div>
+    <p-treeTable [value]="productListView"
+                 [columns]="cols"
+                 selectionMode="multiple"
+                 [(selection)]="selectedNode"
+                 (onNodeSelect)="nodeSelect($event, selectedNode)"
+                 (onNodeUnselect)="nodeSelect($event, selectedNode)"
+                 dataKey="id"
+                 (onNodeExpand)="onNodeExpand($event)"
+                 (onNodeCollapse)="onNodeCollapse($event)"
+                 [scrollable]="true"
+                 [scrollHeight]="heightCalc"
+                 [rows]="25"
+                 [paginator]="true"
+                 [resizableColumns]="true">
         <ng-template pTemplate="colgroup" let-columns>
             <colgroup>
                 <col *ngFor="let col of selectedColumns" style="width:200px">

@@ -3,25 +3,37 @@
 <div class="ek-content" (window:resize)="onResize($event)">
     <p-menubar id="menuMin" class="wideMenu">
         <div style="width: 100%" >
-            <button type="button" pButton icon="fa fa-fw fa-list" label="Menu" id="btnMenu"
-                (click)="menu.toggle($event)">
+            <button type="button"
+                    pButton 
+                    icon="fa fa-fw fa-list"
+                    label="Menu"
+                    id="btnMenu"
+                    (click)="menu.toggle($event)">
                 <span class="ui-submenu-icon pi pi-fw pi-caret-down slide-caret"></span>
             </button>
         </div>
         <div class="ui-inputgroup search-search">
-            <input type="text" pInputText placeholder="{{'Suche' |translate }}"
-                [(ngModel)]="columnFilterValues['search_all']" (input)="search_all()">
+            <input type="text"
+                   pInputText placeholder="{{'Suche' |translate }}"
+                   [(ngModel)]="columnFilterValues['search_all']"
+                   (input)="search_all()">
         </div>
     </p-menubar>
-    <p-slideMenu [model]="menuItems" popup="false" [viewportHeight]="250" [style]="{'width':'180px'}" [menuWidth]="180"
-        #menu>
+    <p-slideMenu [model]="menuItems"
+                 popup="false"
+                 [viewportHeight]="250"
+                 [style]="{'width':'200px'}"
+                 #menu>
     </p-slideMenu>
-
-
-    <p-menubar [model]="menuItems" [autoDisplay]="false" id="menuMax">
+    <p-menubar [model]="menuItems"
+               [autoDisplay]="false"
+               id="menuMax">
         <div class="ui-inputgroup search-search">
-            <input type="text" pInputText placeholder="{{'Suche' |translate }}"
-                [(ngModel)]="columnFilterValues['search_all']" (input)="search_all()">
+            <input type="text" 
+                   pInputText
+                   placeholder="{{'Suche' |translate }}"
+                   [(ngModel)]="columnFilterValues['search_all']"
+                   (input)="search_all()">
             <!-- <button (click)="search_all()" 
                     pButton type="button" 
                     icon="fa fa-search" 
@@ -30,12 +42,25 @@
         </div>
     </p-menubar>
 
-    <div id="heightCalc" class="heightCalc" #divHeightCalc></div>
-    <p-treeTable [value]="customerListView" [columns]="cols" selectionMode="single" [(selection)]="selectedNode"
-        (onNodeSelect)="nodeSelect($event)" (onNodeUnselect)="nodeUnselect()" dataKey="id"
-        (onNodeExpand)="onNodeExpand($event)" (onNodeCollapse)="onNodeCollapse($event)"
-        styleClass="ui-treetable-scrollable-body" [resizableColumns]="true" [scrollable]="true"
-        [scrollHeight]="heightCalc" [rows]="25" [paginator]="true">
+    <div id="heightCalc" 
+         class="heightCalc"
+         #divHeightCalc>
+    </div>
+    <p-treeTable [value]="customerListView"
+                 [columns]="cols"
+                 selectionMode="single"
+                 [(selection)]="selectedNode"
+                 (onNodeSelect)="nodeSelect($event)"
+                 (onNodeUnselect)="nodeUnselect()"
+                 dataKey="id"
+                 (onNodeExpand)="onNodeExpand($event)"
+                 (onNodeCollapse)="onNodeCollapse($event)"
+                 styleClass="ui-treetable-scrollable-body"
+                 [resizableColumns]="true"
+                 [scrollable]="true"
+                 [scrollHeight]="heightCalc"
+                 [rows]="25"
+                 [paginator]="true">
         <ng-template pTemplate="colgroup" let-columns>
             <colgroup>
                 <col *ngFor="let col of selectedColumns" style="width:200px">
@@ -50,13 +75,18 @@
             </tr>
             <tr [hidden]="!splitFilter">
                 <th *ngFor="let col of selectedColumns" [ngSwitch]="col.field" class="p-table-filter">
-                    <input pInputText type="text" class="filter-search" (input)="search_all()"
-                        [(ngModel)]="columnFilterValues[col.field]">
+                    <input pInputText type="text"
+                           class="filter-search"
+                           (input)="search_all()"
+                          [(ngModel)]="columnFilterValues[col.field]">
                 </th>
             </tr>
         </ng-template>
 
-        <ng-template pTemplate="body" let-rowNode let-rowData="rowData" let-columns="columns">
+        <ng-template pTemplate="body"
+                     let-rowNode
+                     let-rowData="rowData"
+                     let-columns="columns">
             <tr [ttSelectableRow]="rowNode">
                 <td *ngFor="let col of selectedColumns; let i = index">
                     <p-treeTableToggler [rowNode]="rowNode" *ngIf="i == 0"></p-treeTableToggler>
@@ -69,44 +99,5 @@
         </ng-template>
 
     </p-treeTable>
-
-
-    <!--     Bu kısımdaki kod deneme amaçlı yapıldı.
-    başlığı sabit tutuyor ama bu seferde sort etmiyor. -->
-
-    <!--  <p-treeTable [value]="[]">
-        <ng-template pTemplate="header" let-columns>
-            <tr>
-                <th *ngFor="let col of selectedColumns" [ttSortableColumn]="col.field">
-                    {{col.header}}
-                    <p-treeTableSortIcon [field]="col.field"></p-treeTableSortIcon>
-                </th>
-            </tr>
-            <tr [hidden]="!splitFilter">
-                <th *ngFor="let col of selectedColumns" [ngSwitch]="col.field" class="p-table-filter"> 
-                    <input pInputText type="text" style="color: #000; width: 100%; border:1px solid #ccc; border-radius: 3px;" (input)="search_all()" [(ngModel)]="columnFilterValues[col.field]" >
-                </th>
-            </tr>
-        </ng-template>
-    </p-treeTable>
-
-    <p-treeTable [value]="customerListView" 
-                 selectionMode="single"
-                 [(selection)]="selectedNode" 
-                 (onNodeSelect)="nodeSelect($event)" 
-                 (onNodeUnselect)="nodeUnselect()"
-                 dataKey="id" 
-                 (onNodeExpand)="onNodeExpand($event)" 
-                 (onNodeCollapse)="onNodeCollapse($event)"
-                 styleClass="ui-treetable-scrollable-body">
-        <ng-template pTemplate="body" let-rowNode let-rowData="rowData" let-columns="columns">
-            <tr [ttSelectableRow]="rowNode">
-                <td *ngFor="let col of selectedColumns; let i = index">
-                    <p-treeTableToggler [rowNode]="rowNode" *ngIf="i == 0"></p-treeTableToggler>
-                    {{rowData[col.field]}}
-                </td>
-            </tr>
-        </ng-template>
-    </p-treeTable>  -->
 
 </div>
