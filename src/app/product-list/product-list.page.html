@@ -8,6 +8,7 @@
                     label="Menu"
                     id="btnMenu"
                     (click)="menu.toggle($event)">
+                    <span class="ui-submenu-icon pi pi-fw pi-caret-down slide-caret"></span>
             </button>            
         </div>
         <div class="ui-inputgroup search-search">
@@ -20,6 +21,7 @@
     <p-slideMenu [model]="menuItems"
                  popup="false"
                  [viewportHeight]="280" 
+                 [style]="{'width':'180px'}" [menuWidth]="180" 
                  #menu>
     </p-slideMenu>
     <p-menubar [model]="menuItems" [autoDisplay]="false" id="menuMax">

@@ -558,7 +558,7 @@ body .ui-fileupload .ui-fileupload-buttonbar {
 
 body .ui-button {
   background: var(--ion-color-darkmain) !important;
-  padding: 7px !important;
+  padding: 7px 0px 7px 0px!important;
 }
 
 body .ui-widget-content {
@@ -19647,4 +19647,21 @@ ion-fab-button[label-fab].mouse-over::after {
 
 .wideMenu .ui-menubar-custom{
   width: 100%;
+}
+
+.wideMenu button:hover {
+  opacity: .7;
+}
+
+.slide-caret{
+  color: white!important;
+  float:right;
+  padding:5px 0px;
+}
+
+.ui-button .ui-button-text{
+  display:flex!important
+}
+.ui-button-text-icon-left .ui-button-text {
+  padding-right:0.2px!important
 }
