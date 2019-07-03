@@ -558,7 +558,7 @@ body .ui-fileupload .ui-fileupload-buttonbar {
 
 body .ui-button {
   background: var(--ion-color-darkmain) !important;
-  padding: 10px !important;
+  padding: 7px !important;
 }
 
 body .ui-widget-content {
@@ -19470,7 +19470,6 @@ ion-select {
   border: none !important;
   -webkit-border-radius: 0px !important;
           border-radius: 0px !important;
-  padding: 10px !important;
   a.ui-menuitem-link {
     color: #FFF !important;
   }
@@ -19482,7 +19481,7 @@ ion-select {
   }
 
   .ui-button {
-    background: #005E86 !important;
+    background: transparent !important;
   }
 
   a:hover {
