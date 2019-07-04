@@ -825,8 +825,9 @@
   "Überbracht": "A propos Bracht",
   "Selbst Abholer": "Même Ramassage",
   "Bestellung Abschicken": "Soumettre Ordre",
-
   "Bitte warten": "S'il vous plaît attendrez...",
   "Bitte eine Vorlage wählen!": "Veuillez sélectionner un modèle!",
-  "Autor":"Auteur"
+  "Autor": "Auteur",
+  "Produktbild löschen": "Supprimer l'image du produit",
+  "Das Produktbild wird gelöscht. Sind Sie sicher?": "L'image du produit veut être supprimée, êtes-vous sûr?"
 }

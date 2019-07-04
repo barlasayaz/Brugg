@@ -819,8 +819,9 @@
   "Überbracht": "About Bracht",
   "Selbst Abholer": "Even Pickup",
   "Bestellung Abschicken": "Send Order",
-
   "Bitte warten": "Please wait...",
   "Bitte eine Vorlage wählen!": "Please select a template!",
-  "Autor":"Author"
+  "Autor": "Author",
+  "Produktbild löschen": "Delete product image",
+  "Das Produktbild wird gelöscht. Sind Sie sicher?": "Product image will be deleted, Are you sure?"
 }
