@@ -56,13 +56,16 @@
                  dataKey="id"
                  (onNodeExpand)="onNodeExpand($event)"
                  (onNodeCollapse)="onNodeCollapse($event)"
+                 styleClass="ui-treetable-scrollable-body"
+                 [resizableColumns]="true"
                  [scrollable]="true"
                  [scrollHeight]="heightCalc"
                  [rows]="25"
-                 [paginator]="true">
+                 [paginator]="true"
+                 [reorderableColumns]="true">
         <ng-template pTemplate="header" let-columns>
             <tr>
-                <th *ngFor="let col of selectedColumns" [ttSortableColumn]="col.field">
+                <th *ngFor="let col of selectedColumns" ttResizableColumn [ttSortableColumn]="col.field" ttReorderableColumn >
                     {{col.header}}
                     <p-treeTableSortIcon [field]="col.field"></p-treeTableSortIcon>
                 </th>
@@ -77,7 +80,7 @@
                 </th>
             </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-rowNode let-rowData="rowData" let-columns="columns">
+        <ng-template pTemplate="body" let-rowNode let-rowData="rowData" let-columns="selectedColumns">
             <tr [ttSelectableRow]="rowNode">
                 <td *ngFor="let col of selectedColumns; let i = index" style="text-align: justify;">
                     <p-treeTableToggler [rowNode]="rowNode" *ngIf="i == 0"></p-treeTableToggler>
