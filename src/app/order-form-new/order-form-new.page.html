@@ -48,7 +48,7 @@
                     <div class="tbody">
                       <div class="tr table-body">
                         <div class="td"><span class="strong">{{'Firma' | translate}}</span></div>
-                        <ion-input type="text" 
+                        <ion-input type="text"
                                     [(ngModel)]="activOrderForm.billing.company">
                         </ion-input>
                       </div>
@@ -116,7 +116,6 @@
                             <ion-select (ionChange)="changeContactPerson($event)"
                                         name="RE_Ansp"
                                         id="RE_Ansp"
-                                        [(ngModel)]="RE_Ansp"
                                         style="background-color: white; border: 1px solid #ccc; width: 306px;"
                                         okText="{{translate.instant('okay')}}"
                                         cancelText="{{translate.instant('dismiss')}}">

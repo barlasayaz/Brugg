@@ -145,7 +145,7 @@
             <ion-item lines="none">
               <ion-label position="floating">{{translate.instant('Standard')}}</ion-label>
               <ion-datetime 
-                            [ngClass]="{required:fehler}"
+                            [ngClass]="{required:inputError}"
                             type="time"
                             [(ngModel)]="defaultTime"
                             name="start_time" 
@@ -178,7 +178,7 @@
                 <ion-button class="btn btn-modal-danger footerIcon" (click)="dismiss()">
                     <ion-icon name="close"></ion-icon>
                 </ion-button>
-                <ion-button class="btn btn-modal-success footerIcon" (click)="productOptionsEdit();">
+                <ion-button class="btn btn-modal-success footerIcon" (click)="productOption();">
                     <ion-icon name="checkmark"></ion-icon>
                 </ion-button>
             </div>

@@ -8,7 +8,7 @@
           <ion-grid>
             <ion-row>
                 <ion-col size-xl="7" size-lg="7" size-md="7" size-sm="12" size="12">
-                <div class="kunden-wrap">
+                <div class="kunden-wrap" style="padding-bottom: 12px;">
                   <!-- COMPANY -->
                   <div class="kunden-col">
                     <div class="table-info">
@@ -16,7 +16,7 @@
                         <div class="tr table-header">
                           <div class="th" style="max-width: 200px;">{{'Firma' | translate}}</div>
                           <div class="th">
-                            <div [hidden]="kundenSelect">
+                            <div>
                               {{activCustomer.company}}
                             </div>
                             <div class="icon"
@@ -93,7 +93,7 @@
                     </div>
                   </div>
                 </div>
-  
+                
                 <!-- POINT of contact -->
                 <div class="kunden-col">
                     <div class="table-info">
@@ -182,7 +182,7 @@
   
               </ion-col>            
               <ion-col size-xl="5" size-lg="5" size-md="5" size-sm="12" size="12">
-              <div class="kunden-col">
+              <div class="kunden-col" style="padding-bottom: 12px;">
                   <div class="table-info">
                     <div class="thead">
                       <div class="tr table-header">                        
@@ -221,13 +221,13 @@
                   </div>
                 </div>
                 <!-- Active Product   -->
-                <div class="kunden-col">
+                <div class="kunden-col" style="padding-bottom: 12px;">
                   <div class="table-info">
                     <div class="thead">
                       <div class="tr table-header">
                         <div class="th" style="max-width: 200px;">{{'Aktive Produkte' | translate}}</div>
                         <div class="th">
-                          <div [hidden]="kundenSelect"> {{aktive_products}} </div>
+                          <div> {{aktive_products}} </div>
                         </div>
                       </div>
                     </div>
@@ -257,9 +257,32 @@
                     </div>
                   </div>
                 </div>
+
+                <!-- Uncomming Inspections -->
+                <div class="kunden-col" style="padding-bottom: 12px;" *ngIf="isLoaded">
+                  <div class="table-info">
+                    <div class="thead">
+                      <div class="tr table-header">
+                        <div class="th" style="max-width: 200px;">{{'Anstehende Prüfungen' | translate}}</div>
+                      </div>
+                    </div>
+                    <div class="tbody">
+                      <div class="tr table-body">
+                        <div class="td" style="max-width: 200px;">10 {{'Tage' | translate}}</div>
+                        <div class="td" style="max-width: 200px;">30 {{'Tage' | translate}}</div>
+                        <div class="td" style="max-width: 200px;">90 {{'Tage' | translate}}</div> 
+                      </div>
+                      <div class="tr table-body">
+                        <div class="td" style="max-width: 200px;">{{activCustomer.days.days10}}</div>
+                        <div class="td" style="max-width: 200px;">{{activCustomer.days.days30}}</div>
+                        <div class="td" style="max-width: 200px;">{{activCustomer.days.days90}}</div> 
+                      </div>
+                    </div>
+                  </div>
+                </div>    
   
                 <!-- COMPANY NOTE -->
-                <div class="kunden-col">
+                <div class="kunden-col" style="padding-bottom: 12px;">
                   <div class="table-info">
                     <div class="thead">
                       <div class="tr table-header">

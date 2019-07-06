@@ -51,6 +51,7 @@ export class CustomerDetailsPage implements OnInit {
   public last_inspection: any;
   public next_visit: any;
   public next_inspection: any;
+  public isLoaded = false;
 
   constructor(public navCtrl: NavController,
     public userdata: UserdataService,
@@ -63,11 +64,15 @@ export class CustomerDetailsPage implements OnInit {
     public modalCtrl: ModalController,
     private route: ActivatedRoute) {
 
+    }
+
+    ngOnInit() {
+
       this.idCustomer = parseInt(this.route.snapshot.paramMap.get('id'));
       this.loadCustomer(this.idCustomer);
       this.getContactList();
 
-      platform.ready().then(() => {
+      this.platform.ready().then(() => {
         if (this.platform.is('ios') ||
           this.platform.is('android')) {
           this.mobilePlatform = true;
@@ -85,10 +90,6 @@ export class CustomerDetailsPage implements OnInit {
           this.mouseoverButton4 = false;
         }
       });
-
-    }
-
-    ngOnInit() {
       console.log('ionViewDidLoad CustomerDetailsPage',  this.userdata); 
       if (this.userdata.role == 3) {
         for (var i = 0, len = this.userdata.all_role_set.length; i < len; i++) {
@@ -152,9 +153,9 @@ export class CustomerDetailsPage implements OnInit {
         } catch (e) {
             // nix
         }
-  
+
         this.apiService.pvs4_get_appointment_date(id).then((done: any) => {
-          if (done.amount != 0) {    
+          if (done.amount != 0) {
             if (done.last_visit.length) { this.last_visit = done.last_visit; }
             if (done.next_visit.length) { this.next_visit = done.next_visit; }
             this.last_inspection = done.last_inspection;
@@ -164,6 +165,23 @@ export class CustomerDetailsPage implements OnInit {
         if (this.userdata.role == 3) {
           this.userdata.licensee = this.activCustomer.licensee;
         }
+        // ******************* days 10 30 90 ******************
+        try {
+          let days = JSON.parse( this.activCustomer.days);
+          this.activCustomer.days = days;
+          this.isLoaded = true;
+        } catch (e) {
+          this.activCustomer.days = {'days10': 0, 'days30': 0, 'days90': 0 };
+        }
+        // get new
+        this.apiService.pvs4_api_post('job_days.php', {id: id}).then((days: any) => {
+              console.log('ok job_days.php ', days);
+              this.activCustomer.days = {'days10': days.days10 , 'days30': days.days30  , 'days90': days.days90  };
+        },
+        err => { // return the error
+              console.log('error job_days.php ', err);
+        });
+        // **********************************
         console.log('loadCustomer', this.activCustomer);
       });
 

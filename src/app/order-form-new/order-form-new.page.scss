@@ -14,8 +14,31 @@
         flex: 1 !important;
         border: 1px solid #ccc !important;
         width: 100% !important;
-        font-size: 14px !important;
+        font-size: 14px !important;        
     }
+
+    .has-focus {
+        border-color: var(--ion-color-main) !important;
+        ion-label {
+          color: var(--ion-color-main) !important;
+        }
+        }
+    
+      .ion-invalid:not(.has-focus) {
+        border-color: var(--ion-color-red) !important;
+        ion-label {
+          color: var(--ion-color-red) !important;
+        }
+      } 
+    
+      .ion-valid {
+        border-color: var(--ion-color-green) !important;
+        ion-label {
+          color: var(--ion-color-green) !important;
+        }
+      } 
+
+    
 
     textarea.text-input {
         padding: 5px !important;

@@ -24,7 +24,7 @@ export class ContactPersonPage {
     public contactPersonList: any = [];
     public params: any;
     public pfelder: any = 0;
-    public fehler: boolean = false;
+    public inputError: boolean = false;
     public email_felder: any = 0;
     public pw_felder: any = 0;
     public setRights: boolean = false;
@@ -77,7 +77,7 @@ export class ContactPersonPage {
     
        updateData(recType) {
           this.pfelder = 0;
-          this.fehler = true;
+          this.inputError = true;
           this.email_felder = 0;
           this.pw_felder = 1;
           console.log("contactPersonEdit :", this.contactPersonEdit);
@@ -101,7 +101,7 @@ export class ContactPersonPage {
             if (this.contactPersonEdit.email) {
                 this.pw_felder = 0;
                 if (this.validateEmail(this.contactPersonEdit.email) == false) {
-                    this.fehler = true;
+                    this.inputError = true;
                     this.email_felder = 1;
                     return;
                 }            
