@@ -152,9 +152,9 @@ export class CustomerDetailsPage implements OnInit {
         } catch (e) {
             // nix
         }
-  
+
         this.apiService.pvs4_get_appointment_date(id).then((done: any) => {
-          if (done.amount != 0) {    
+          if (done.amount != 0) {
             if (done.last_visit.length) { this.last_visit = done.last_visit; }
             if (done.next_visit.length) { this.next_visit = done.next_visit; }
             this.last_inspection = done.last_inspection;
@@ -164,6 +164,22 @@ export class CustomerDetailsPage implements OnInit {
         if (this.userdata.role == 3) {
           this.userdata.licensee = this.activCustomer.licensee;
         }
+        // ******************* days 10 30 90 ******************
+        try {
+          let days = JSON.parse( this.activCustomer.days);
+          this.activCustomer.days = days;
+        } catch (e) {
+          this.activCustomer.days = {'days10': 0, 'days30': 0, 'days90': 0 };
+        }
+        // get new
+        this.apiService.pvs4_api_post('job_days.php', {id: id}).then((days: any) => {
+              console.log('ok job_days.php ', days);
+              this.activCustomer.days = {'days10': days.days10 , 'days30': days.days30  , 'days90': days.days90  };
+        },
+        err => { // return the error
+              console.log('error job_days.php ', err);
+        });
+        // **********************************
         console.log('loadCustomer', this.activCustomer);
       });
 

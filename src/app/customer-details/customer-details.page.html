@@ -257,6 +257,29 @@
                     </div>
                   </div>
                 </div>
+
+                <!-- Uncomming Inspections -->
+                <div class="kunden-col" style="padding-bottom: 12px;">
+                  <div class="table-info">
+                    <div class="thead">
+                      <div class="tr table-header">
+                        <div class="th" style="max-width: 200px;">{{'Anstehende Prüfungen' | translate}}</div>
+                      </div>
+                    </div>
+                    <div class="tbody">
+                      <div class="tr table-body">
+                        <div class="td" style="max-width: 200px;">10 {{'Tage' | translate}}</div>
+                        <div class="td" style="max-width: 200px;">30 {{'Tage' | translate}}</div>
+                        <div class="td" style="max-width: 200px;">90 {{'Tage' | translate}}</div> 
+                      </div>
+                      <div class="tr table-body">
+                        <div class="td" style="max-width: 200px;">{{activCustomer.days.days10}}</div>
+                        <div class="td" style="max-width: 200px;">{{activCustomer.days.days30}}</div>
+                        <div class="td" style="max-width: 200px;">{{activCustomer.days.days90}}</div> 
+                      </div>
+                    </div>
+                  </div>
+                </div>    
   
                 <!-- COMPANY NOTE -->
                 <div class="kunden-col" style="padding-bottom: 12px;">
