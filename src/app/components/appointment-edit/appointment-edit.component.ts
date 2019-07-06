@@ -202,6 +202,12 @@ export class AppointmentEditComponent implements OnInit {
 
   appointmentSave() {
     if (this.customer.id == undefined) {
+      this.inputError = true;
+      return;
+    }
+    console.log('notes :', this.customer.notes);
+    if (this.customer.notes == undefined) {
+      this.inputError = true;
       return;
     }
 

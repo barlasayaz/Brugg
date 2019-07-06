@@ -41,11 +41,6 @@
     </ion-row>
 
     <!-- Error -->
-    <div [hidden]="inputError" class="pfehler">
-      <div>
-          &nbsp;
-      </div>
-    </div>
     <div [hidden]="!inputError" class="pfehler" style="margin-top: 15px; margin-left: 5px;">
       <div class="highlightFehler">
         {{translate.instant('Bitte füllen Sie alle Pflichtfelder aus.')}}
