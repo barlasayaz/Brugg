@@ -51,6 +51,7 @@ export class CustomerDetailsPage implements OnInit {
   public last_inspection: any;
   public next_visit: any;
   public next_inspection: any;
+  public isLoaded = false;
 
   constructor(public navCtrl: NavController,
     public userdata: UserdataService,
@@ -63,11 +64,15 @@ export class CustomerDetailsPage implements OnInit {
     public modalCtrl: ModalController,
     private route: ActivatedRoute) {
 
+    }
+
+    ngOnInit() {
+
       this.idCustomer = parseInt(this.route.snapshot.paramMap.get('id'));
       this.loadCustomer(this.idCustomer);
       this.getContactList();
 
-      platform.ready().then(() => {
+      this.platform.ready().then(() => {
         if (this.platform.is('ios') ||
           this.platform.is('android')) {
           this.mobilePlatform = true;
@@ -85,10 +90,6 @@ export class CustomerDetailsPage implements OnInit {
           this.mouseoverButton4 = false;
         }
       });
-
-    }
-
-    ngOnInit() {
       console.log('ionViewDidLoad CustomerDetailsPage',  this.userdata); 
       if (this.userdata.role == 3) {
         for (var i = 0, len = this.userdata.all_role_set.length; i < len; i++) {
@@ -168,6 +169,7 @@ export class CustomerDetailsPage implements OnInit {
         try {
           let days = JSON.parse( this.activCustomer.days);
           this.activCustomer.days = days;
+          this.isLoaded = true;
         } catch (e) {
           this.activCustomer.days = {'days10': 0, 'days30': 0, 'days90': 0 };
         }
