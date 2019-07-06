@@ -291,8 +291,12 @@ export class NoteListPage implements OnInit {
 
         this.rowRecords = this.noteListView.length;
         this.totalRecords = this.noteListAll.length;
-        let progressBar = 100;
-        if (this.totalRecords > 0 ) { progressBar = Math.round(this.rowRecords * 100 / this.totalRecords); }
+        let progressBar;
+        if (this.totalRecords > 0 ) {
+            progressBar = Math.round(this.rowRecords * 100 / this.totalRecords);
+        } else {
+            progressBar = 0;
+        }
         this.events.publish('progressBar', progressBar);
         this.events.publish('rowRecords', this.rowRecords);
         this.events.publish('totalRecords', this.totalRecords);

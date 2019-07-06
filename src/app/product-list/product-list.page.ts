@@ -473,8 +473,12 @@ export class ProductListPage implements OnInit {
 
         this.rowRecords = this.productListView.length;
         this.totalRecords = this.productListAll.length;
-        let progressBar = 100;
-        if (this.totalRecords > 0) { progressBar = Math.round(this.rowRecords * 100 / this.totalRecords); }
+        let progressBar;
+        if (this.totalRecords > 0 ) {
+            progressBar = Math.round(this.rowRecords * 100 / this.totalRecords);
+        } else {
+            progressBar = 0;
+        }
         this.events.publish('progressBar', progressBar);
         this.events.publish('rowRecords', this.rowRecords);
         this.events.publish('totalRecords', this.totalRecords);
