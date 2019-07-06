@@ -39,7 +39,7 @@
           <ion-item lines="none">
             <ion-label position="floating">{{translate.instant('Ansprechpartner')}}</ion-label>
             <ionic-selectable item-content 
-                              [ngClass]="{required:fehler}" 
+                              [ngClass]="{required:inputError}" 
                               [(ngModel)]="selectedContact"
                               [(items)]="userList"
                               itemValueField="id"
@@ -111,7 +111,7 @@
       </ion-row>      
      
       <!-- Error -->
-      <div [hidden]="inputError" class="fehler">
+      <div [hidden]="inputError" class="pfehler">
         <div>
             &nbsp;
         </div>

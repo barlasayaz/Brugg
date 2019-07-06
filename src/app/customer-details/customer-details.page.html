@@ -16,7 +16,7 @@
                         <div class="tr table-header">
                           <div class="th" style="max-width: 200px;">{{'Firma' | translate}}</div>
                           <div class="th">
-                            <div [hidden]="kundenSelect">
+                            <div>
                               {{activCustomer.company}}
                             </div>
                             <div class="icon"
@@ -227,7 +227,7 @@
                       <div class="tr table-header">
                         <div class="th" style="max-width: 200px;">{{'Aktive Produkte' | translate}}</div>
                         <div class="th">
-                          <div [hidden]="kundenSelect"> {{aktive_products}} </div>
+                          <div> {{aktive_products}} </div>
                         </div>
                       </div>
                     </div>

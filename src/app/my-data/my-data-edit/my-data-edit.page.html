@@ -149,19 +149,19 @@
           <!-- ERROR -->
           <ion-row> 
             <ion-col size="12">
-              <div class="form-group" *ngIf="pfelder" class="fehler">
+              <div class="form-group" *ngIf="pfelder" class="pfehler">
                 <div class="text-center alert alert-danger">
                   {{translate.instant('Bitte füllen Sie alle Pflichtfelder aus.')}}
                 </div>
               </div>
       
-              <div class="form-group" *ngIf="pw_felder==1" class="fehler">
+              <div class="form-group" *ngIf="pw_felder==1" class="pfehler">
                 <div class="text-center alert alert-danger">
                   {{translate.instant('Passwörter stimmen nicht überein.')}} 
                 </div>
               </div>
       
-              <div class="form-group" *ngIf="pw_felder==2" class="fehler">
+              <div class="form-group" *ngIf="pw_felder==2" class="pfehler">
                 <div class="text-center alert alert-danger">
                   {{translate.instant('Passwort ist zu kurz, Mindestlänge ist 8 Zeichen.')}}
                 </div>

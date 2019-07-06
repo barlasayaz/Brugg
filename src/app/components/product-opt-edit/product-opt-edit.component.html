@@ -163,7 +163,7 @@
             <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="10" size-xs="10">
                 <ion-item lines="none">
                     <ion-label position="floating">{{translate.instant('Standard')}}</ion-label>
-                    <ion-datetime [ngClass]="{required:fehler}"
+                    <ion-datetime [ngClass]="{required:inputError}"
                                     type="time"
                                     [(ngModel)]="defaultTime"
                                     name="start_time" 
@@ -176,7 +176,7 @@
         </ion-row>
 
         <!-- Error -->
-        <div [hidden]="inputError" class="fehler">
+        <div [hidden]="inputError" class="pfehler">
             <div>
                 &nbsp;
             </div>
