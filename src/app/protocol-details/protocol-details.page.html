@@ -21,6 +21,18 @@
 											<div class="td">{{activProtocol.title}}</div>
 										</div> -->
 										<div class="tr table-body">
+											<div class="td">{{'Kunde' | translate}}</div>
+											<div class="td">{{activCustomer.company}}</div>
+										</div>
+										<div class="tr table-body">
+											<div class="td">{{'Kunde' | translate}} DB-ID</div>
+											<div class="td">{{activCustomer.id}}</div>
+										</div>
+										<div class="tr table-body">
+											<div class="td">{{'Kundennummer' | translate}}</div>
+											<div class="td">{{activCustomer.customer_number}}</div>
+										</div>
+										<div class="tr table-body">
 											<div class="td">{{'Protokoll Nummer' | translate}}</div>
 											<div class="td">{{activProtocol.protocol_number}}</div>
 										</div>
@@ -112,14 +124,6 @@
 											<div *ngFor="let item of listProduct">
 												<p-accordionTab styleClass="ui-accordion-header" header="{{'Titel' | translate}} &nbsp;&nbsp;&nbsp;&nbsp; {{item.title}}">
 													<div class="tbody">
-														<div class="tr table-body">
-															<div class="td-lbl">{{'Kunde' | translate}} DB-ID</div>
-															<div class="td">{{item.customer}}</div>
-														</div>
-														<div class="tr table-body">
-															<div class="td-lbl">{{'Kundennummer' | translate}}</div>
-															<div class="td">{{item.customer_number}}</div>
-														</div>
 														<div class="tr table-body">
 															<div class="td-lbl">#</div>
 															<div class="td">{{item.id_number}}</div>

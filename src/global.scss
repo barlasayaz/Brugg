@@ -51,14 +51,17 @@ body .ui-widget textarea,
 body .ui-widget button {
   font-family: inherit !important;
   font-size: 14px !important;
+  
+  .pi-arrow-up:before {
+    content: "";
+  }
+  .pi-arrow-down:before {
+    content: "";
+  }
+    
 }
 
-.pi-arrow-up:before {
-  content: '' !important;
-}
-.pi-arrow-down:before {
-	content: '' !important;
-}
+
 
 //FAB
 .fab-in-list.show {

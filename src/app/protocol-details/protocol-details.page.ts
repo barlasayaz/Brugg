@@ -26,9 +26,9 @@ import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-nati
 export class ProtocolDetailsPage implements OnInit {
   public idProtocol: number = 0;
   public activProtocol: any = {};
+  public activCustomer: any = {};
   public idCustomer: number = 0;
   public lang: string = localStorage.getItem('lang');
-  public company: string = '';
   public activProduct: any = {};
   public listProduct: any[] = [];
   public uploadedFiles: any[] = [];
@@ -87,12 +87,19 @@ export class ProtocolDetailsPage implements OnInit {
       this.idCustomer = params['idCustomer'];
       this.customer_number = params['customer_number'];
       this.idProtocol = params['idProtocol'];
-      //this.company = params["company"];
     });
 
     console.log('idProtocol :', this.idProtocol);
+    this.loadCustomer(this.idCustomer)
     this.loadProtocol(this.idProtocol);
     this.dateiListe();
+  }
+
+  loadCustomer(id) {
+    this.apiService.pvs4_get_customer(id).then((result: any) => {
+        this.activCustomer = result.obj;
+        console.log('customer :', this.activCustomer);
+    });
   }
 
   loadProtocol(id: any) {
@@ -120,8 +127,6 @@ export class ProtocolDetailsPage implements OnInit {
       let title = JSON.parse(this.activProduct.title);
       this.activProduct.title = title[this.lang];
       this.activProduct.items = JSON.parse(this.activProduct.items);
-      this.activProduct.idCustomer = this.idCustomer;
-      this.activProduct.customer_number = this.customer_number;
       let i: any = 0;
       this.activProduct.items.forEach(event => {
         if (event.type == 5) {
@@ -180,6 +185,7 @@ export class ProtocolDetailsPage implements OnInit {
     let pipe = new DatePipe('en-US');
     let protocolList = [];
     let columns = ['title', 'value'];
+    let customer = this.activCustomer;
     let protocol = this.activProtocol;
     let protocolItems = this.activProtocol.items;
     let product = this.listProduct;
@@ -204,6 +210,9 @@ export class ProtocolDetailsPage implements OnInit {
     ];
     bodyProtocol.push(prtclTitle);
 
+    protocolList.push({ 'title': this.translate.instant('Kunde'), 'value': customer.company});
+    protocolList.push({ 'title': this.translate.instant('Kunde') + ' DB-ID', 'value': customer.id});
+    protocolList.push({ 'title': this.translate.instant('Kundennummer'), 'value': customer.customer_number});
     protocolList.push({ 'title': this.translate.instant('Protokoll Nummer'), 'value': protocol.protocol_number});
     protocolList.push({ 'title': this.translate.instant('Datum'), 'value': pipe.transform(protocol.protocol_date, 'dd.MM.yyyy')});
     protocolList.push({ 'title': this.translate.instant('Prüfergebnis'), 'value': protocol.resultText});
@@ -227,10 +236,10 @@ export class ProtocolDetailsPage implements OnInit {
 
       bodyProtocol.push(dataRow);
     });
-  
+
     let prtclBody = bodyProtocol;
     console.log('protocol body :', prtclBody);
-    
+
     // Product
     var bodyProduct = [];
     var prdctTitle = [
@@ -260,21 +269,6 @@ export class ProtocolDetailsPage implements OnInit {
       } else {
         bodyProduct.push([{ text: this.translate.instant('Titel'), color: '#000000', fillColor: '#8bd8f9' },
                           { text: '', color: '#000000', fillColor: '#8bd8f9' }]);
-      }
-      if (element.company) {
-        bodyProduct.push([{ text: this.translate.instant('Kunde') }, { text: element.company }]);
-      } else {
-        bodyProduct.push([{ text: this.translate.instant('Kunde') }, { text: '' }]);
-      }
-      if (element.idCustomer) {
-        bodyProduct.push([{ text: this.translate.instant('Kunde') + ' ' + 'DB-ID' }, { text: element.idCustomer }]);
-      } else {
-        bodyProduct.push([{ text: this.translate.instant('Kunde') + ' ' + 'DB-ID'}, { text: '' }]);
-      }
-      if (element.customer_number) {
-        bodyProduct.push([{ text: this.translate.instant('Kundennummer') }, { text: element.customer_number }]);
-      } else {
-        bodyProduct.push([{ text: this.translate.instant('Kundennummer') }, { text: '' }]);
       }
       if (element.id_number) {
         bodyProduct.push([{ text: '#' }, { text: element.id_number }]);
@@ -309,7 +303,7 @@ export class ProtocolDetailsPage implements OnInit {
 
     });
 
-    let prdctBody = bodyProduct;  
+    let prdctBody = bodyProduct;
 
     console.log('product body :', prdctBody);
 
@@ -370,10 +364,10 @@ export class ProtocolDetailsPage implements OnInit {
           return { text: pageDesc + ' ' + currentPage.toString() + ' / ' + pageCount, alignment: 'center' }
         }
       };
-      
+
       this.pdf.createPdf(docDefinition, 'download', this.translate.instant('Protokoll Details'.replace(/\s/g, '')) + '.pdf');
 
-    });  
+    });
   }
 
   onBeforeUpload(event) {
@@ -458,7 +452,7 @@ export class ProtocolDetailsPage implements OnInit {
     this.camera.getPicture(options).then((imageData) => {
       // imageData is either a base64 encoded string or a file URI
       // If it's base64 (DATA_URL):
-      //this.activProtocol.images = 'data:image/jpeg;base64,' + imageData;
+      // this.activProtocol.images = 'data:image/jpeg;base64,' + imageData;
       this.imageURI = imageData;
       this.uploadFile();
     }, (err) => {
@@ -498,8 +492,8 @@ export class ProtocolDetailsPage implements OnInit {
         console.log('Uploaded Error :', err);
         this.activProtocol.images = '';
         loader.dismiss();
-      });      
-  }  
+      });
+  }
 
 }
 
