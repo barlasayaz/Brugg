@@ -327,10 +327,24 @@ export class ProtocolListPage implements OnInit {
             this.protocolListView = try_list;
         }
 
+        if (this.protocolListView.length > 0) {
+            this.menuItems[5].items[0]['disabled'] = false;
+            this.menuItems[5].items[1]['disabled'] = false;
+            this.menuItems[5].items[3]['disabled'] = false;
+        } else {
+            this.menuItems[5].items[0]['disabled'] = true;
+            this.menuItems[5].items[1]['disabled'] = true;
+            this.menuItems[5].items[3]['disabled'] = true;
+        }
+
         this.rowRecords = this.protocolListView.length;
         this.totalRecords = this.protocolListAll.length;
-        let progressBar = 100;
-        if (this.totalRecords > 0 ) { progressBar = Math.round(this.rowRecords * 100 / this.totalRecords); }
+        let progressBar;
+        if (this.totalRecords > 0 ) {
+            progressBar = Math.round(this.rowRecords * 100 / this.totalRecords);
+        } else {
+            progressBar = 0;
+        }
         this.events.publish('progressBar', progressBar);
         this.events.publish('rowRecords', this.rowRecords);
         this.events.publish('totalRecords', this.totalRecords);

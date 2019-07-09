@@ -19,7 +19,7 @@
 									<div class="tbody">
 										<div class="tr table-subheader table-subheader-fix">
 											<div class="table-subheader-buttons">
-												<ion-button size="small" (click)="newPrAppointment()">
+												<ion-button size="small" (click) = "newPrAppointment()">
 													<ion-icon name="add"></ion-icon>
 												</ion-button>	
 												<ion-button size="small" (click)="all_dates()" [ngClass]="{secondary: all_dates_view}">
@@ -123,7 +123,7 @@
 													<div class="before">#</div> 
 													<div class="after">{{row.customer_number}}</div>
 												</div>
-												<div class="td clickable name" (click)="newPrAppointment(row)">
+												<div class="td clickable name" (click)="editPrAppointment(row)">
 													<div class="before">{{'Firma' | translate}}</div>
 													<div class="after">{{row.company}}</div>
 												</div>
@@ -181,7 +181,7 @@
 									<div class="tbody">
 										<div class="tr table-subheader table-subheader-fix">
 											<div class="table-subheader-buttons">
-												<ion-button size="small" (click)="newPrAppointment()">
+												<ion-button size="small" (click) = "newPrAppointment()">
 													<ion-icon name="add"></ion-icon>
 												</ion-button>	
 												<ion-button size="small" (click)="all_dates()" [ngClass]="{secondary: all_dates_view}">
@@ -285,7 +285,7 @@
 													<div class="before">#</div> 
 													<div class="after">{{row.customer_number}}</div>
 												</div>
-												<div class="td clickable name" (click)="newPrAppointment(row)">
+												<div class="td clickable name" (click)="editPrAppointment(row)">
 													<div class="before">{{'Firma' | translate}}</div>
 													<div class="after">{{row.company}}</div>
 												</div>

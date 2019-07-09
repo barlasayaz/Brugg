@@ -14,8 +14,19 @@
         flex: 1 !important;
         border: 1px solid #ccc !important;
         width: 100% !important;
-        font-size: 14px !important;
+        font-size: 14px !important;        
     }
+
+    .ion-invalid:not(.ion-valid) {
+      border-color: var(--ion-color-green) !important;
+      &.has-focus {
+        border-color: var(--ion-color-red) !important;
+      }
+    } 
+   
+    .ion-valid:not(.ion-invalid) {
+      border-color: var(--ion-color-green) !important;
+    }     
 
     textarea.text-input {
         padding: 5px !important;

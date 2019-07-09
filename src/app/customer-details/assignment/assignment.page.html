@@ -16,7 +16,8 @@
             <ion-col size="12">
               <ion-item lines="none">  
                 <ion-label position="floating">{{translate.instant('AD-Mitarbeiter')}}</ion-label>
-                <ion-select [(ngModel)]="idSales"  required
+                <ion-select [(ngModel)]="idSales"
+                            required
                             okText="{{translate.instant('okay')}}" 
                             cancelText="{{translate.instant('dismiss')}}">
                   <ion-select-option *ngFor="let pr of salesListe" [value]="pr.id">{{pr.first_name + " " + pr.last_name}}</ion-select-option>
@@ -29,7 +30,8 @@
           <ion-col size="12">
             <ion-item lines="none">  
               <ion-label position="floating">{{translate.instant('Prüfer')}}</ion-label>
-              <ion-select [(ngModel)]="idTester" required
+              <ion-select [(ngModel)]="idTester"
+                          required
                           okText="{{translate.instant('okay')}}" 
                           cancelText="{{translate.instant('dismiss')}}">
                 <ion-select-option *ngFor="let pr of testerListe" [value]="pr.id">{{pr.first_name + " " + pr.last_name}}</ion-select-option>
@@ -40,10 +42,15 @@
     </ion-grid>
     
     <div class="modal-footer">
-      <ion-button type="button" class="btn btn-modal-danger footerIcon" (click)="dismiss()"  >
+      <ion-button type="button"
+                  class="btn btn-modal-danger footerIcon"
+                  (click)="dismiss()"  >
         <ion-icon name="close"></ion-icon>
       </ion-button>
-      <ion-button type="button" class="btn btn-modal-success footerIcon"  (click)="editAssignment();" [disabled]="((idSales==0) || (idTester==0))">
+      <ion-button type="button"
+                  class="btn btn-modal-success footerIcon"
+                  (click)="editAssignment();"
+                  [disabled]="((idSales==0) || (idTester==0))">
         <ion-icon name="checkmark"></ion-icon>
       </ion-button>
     </div>

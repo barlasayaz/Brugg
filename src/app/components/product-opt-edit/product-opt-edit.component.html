@@ -82,7 +82,7 @@
                     <ion-toggle [(ngModel)]="defaultToggle" checked="true"></ion-toggle>
                 </ion-item>
             </ion-col>
-            <ion-col size-xl="2" size-lg="2" size-md="2" size-sm="2" size-xs="2" style="text-align: right; margin-top: 12px; padding-right: 12px;">
+            <ion-col size-xl="2" size-lg="2" size-md="2" size-sm="2" size-xs="2" style="text-align: right; margin-top: 5px; padding-right: 12px;">
                 <p-colorPicker [(ngModel)]="inputColor" [inline]="false" ></p-colorPicker>
             </ion-col>
             <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="4" size-xs="4" style="margin-top:-15px">
@@ -163,7 +163,7 @@
             <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="10" size-xs="10">
                 <ion-item lines="none">
                     <ion-label position="floating">{{translate.instant('Standard')}}</ion-label>
-                    <ion-datetime [ngClass]="{required:fehler}"
+                    <ion-datetime [ngClass]="{required:inputError}"
                                     type="time"
                                     [(ngModel)]="defaultTime"
                                     name="start_time" 
@@ -176,11 +176,6 @@
         </ion-row>
 
         <!-- Error -->
-        <div [hidden]="inputError" class="fehler">
-            <div>
-                &nbsp;
-            </div>
-        </div>
         <div [hidden]="!inputError" class="pfehler" style="margin-top: 15px; margin-left: 5px;">
             <div class="highlightFehler">
                 {{translate.instant('Bitte füllen Sie alle Pflichtfelder aus.')}}

@@ -202,11 +202,6 @@
     </ion-row>
 
     <!-- Error -->
-    <div [hidden]="inputError" class="fehler">
-      <div>
-          &nbsp;
-      </div>
-    </div>
     <div [hidden]="!inputError" class="pfehler" style="margin-top: 15px; margin-left: 5px;">
       <div class="highlightFehler">
         {{translate.instant('Bitte füllen Sie alle Pflichtfelder aus.')}}
@@ -216,11 +211,11 @@
     <!-- Footer -->
     <ion-row style="margin-top:-18px;">
       <div class="modal-footer">
-          <ion-button 
-                  *ngIf="!itsNew" 
-                  [disabled]="!this.userdata.role_set.edit_customer"
-                  class="btn btn-modal-danger btn-del footerIcon" 
-                  (click)="customerDeactivate();">
+          <ion-button style="margin-top: -2px !important;"
+                      *ngIf="!itsNew" 
+                      [disabled]="!this.userdata.role_set.edit_customer"
+                      class="btn btn-modal-danger btn-del footerIcon" 
+                      (click)="customerDeactivate();">
             <ion-icon name="trash"></ion-icon>
           </ion-button>
           <ion-button 

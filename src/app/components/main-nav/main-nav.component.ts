@@ -30,7 +30,7 @@ export class MainNavComponent  implements OnInit {
 
     console.log('Hello MainNavComponent Component');
     this.events.subscribe('progressBar', (progressBar) => {      
-      if (progressBar > 0) {
+      if (progressBar >= 0) {
         this.progressBar = progressBar;
       }
     });

@@ -50,7 +50,8 @@
                   <ion-col size="12">
                     <ion-item lines="none" style="padding-left: 0px;">
                       <ion-label position="floating">{{translate.instant('Strasse')}} *</ion-label>
-                      <ion-input type="text" 
+                      <ion-input type="text"
+                                  required
                                   id="ansp_street" 
                                   [ngClass]="{required:pfelder}" 
                                   [(ngModel)]="contactPersonAddress.street">
@@ -63,7 +64,8 @@
                   <ion-col size="12">
                     <ion-item lines="none" style="padding-left: 0px;">
                       <ion-label position="floating">{{translate.instant('PLZ')}} - {{translate.instant('Ort')}} *</ion-label>
-                      <ion-input type="text" 
+                      <ion-input type="text"
+                                  required
                                   id="ansp_zip_code" 
                                   [ngClass]="{required:pfelder}" 
                                   [(ngModel)]="contactPersonAddress.zip_code">

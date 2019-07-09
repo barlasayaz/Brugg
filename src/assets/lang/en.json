@@ -823,5 +823,7 @@
   "Bitte eine Vorlage wählen!": "Please select a template!",
   "Autor": "Author",
   "Produktbild löschen": "Delete product image",
-  "Das Produktbild wird gelöscht. Sind Sie sicher?": "Product image will be deleted, Are you sure?"
+  "Das Produktbild wird gelöscht. Sind Sie sicher?": "Product image will be deleted, Are you sure?",
+  "Benutzer nicht gefunden!" : "User not found!",
+  "Benutzer hinzufügen": "Add user"
 }

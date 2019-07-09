@@ -32,7 +32,7 @@ export class ProtocolTemplatePage implements OnInit {
   public selectedTemplate: any[] = [];
   public selectedTmplt: any = 0;
   public selectTemplate: any = 0;
-  public editOption: any[];
+  public editOption: any = {};
   public selectedOption: any[] = [];
   public selectedOptionId: any = 0;
   public selectOption: any = 0;

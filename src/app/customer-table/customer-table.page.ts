@@ -1,4 +1,4 @@
-import { Component, ViewChild,OnInit } from '@angular/core';
+import { Component, ViewChild, OnInit } from '@angular/core';
 import { NavController, ModalController, Events } from '@ionic/angular';
 import { ApiService } from '../services/api';
 import { TranslateService } from '@ngx-translate/core';
@@ -30,16 +30,15 @@ export class CustomerTablePage implements OnInit {
     public customerList: any[];
     public splitFilter: boolean = false;
     public idCustomer: number = 0;
-    public heightCalc:any="700px";
+    public heightCalc: any = '700px';
     public move_id: number = 0;
     public move_obj: any = {};
-    public columnFilterValues = { company: "", id: "", customer_number: "", rating: "", zip_code: "", place: "", employees:"", last_date: "", next_date: "", inspector: "", search_all: "" };
+    public columnFilterValues = { company: '', id: '', customer_number: '', rating: '', zip_code: '', place: '', employees: '', last_date: '', next_date: '', inspector: '', search_all: '' };
     public filterCols: string[];
     public expendedNodes: string[] = [];
     public rowRecords: number = 0;
     public totalRecords: number = 0;
 
-   
     public menuItems: MenuItem[] = [{
         label: this.translate.instant('Ansicht'),
         icon: 'pi pi-fw pi-eye',
@@ -55,7 +54,7 @@ export class CustomerTablePage implements OnInit {
         disabled: true,
         visible: this.userdata.role_set.edit_customer,
         command: (event) => {
-            if(this.userdata.role_set.edit_customer!=true) return;
+            if (this.userdata.role_set.edit_customer != true) { return; }
             console.log('command menuitem:', event);
             this.menu_edit();
         }
@@ -66,7 +65,7 @@ export class CustomerTablePage implements OnInit {
         visible: this.userdata.role_set.edit_customer,
         disabled: true,
         command: (event) => {
-            if(this.userdata.role_set.edit_customer!=true) return;
+            if (this.userdata.role_set.edit_customer != true) { return; }
             console.log('command menuitem:', event);
             this.menu_move(1);
         }
@@ -75,7 +74,7 @@ export class CustomerTablePage implements OnInit {
         label: this.translate.instant('Stammordner'),
         icon: 'pi pi-fw pi-arrow-down',
         visible: false,
-        styleClass: "move_now",
+        styleClass: 'move_now',
         disabled: false,
         command: (event) => {
             console.log('command menuitem:', event);
@@ -87,7 +86,7 @@ export class CustomerTablePage implements OnInit {
         icon: 'pi pi-fw pi-plus',
         visible: this.userdata.role_set.edit_customer,
         command: (event) => {
-            if(this.userdata.role_set.edit_customer!=true) return;
+            if (this.userdata.role_set.edit_customer != true) { return; }
             console.log('command menuitem:', event);
             this.menu_new();
         }
@@ -147,7 +146,7 @@ export class CustomerTablePage implements OnInit {
 
     public popupMenu: MenuItem[] = [{
         label: this.translate.instant('Menü'),
-        icon: "fa fa-fw fa-list",
+        icon: 'fa fa-fw fa-list',
         items: this.menuItems
     }];
 
@@ -172,8 +171,8 @@ export class CustomerTablePage implements OnInit {
             { field: 'zip_code', header: this.translate.instant('PLZ') },
             { field: 'place', header: this.translate.instant('Ort') },
             { field: 'employees', header: this.translate.instant('Mitarbeiter') },
-            { field: 'last_date', header: '<< '+this.translate.instant('Termin') },
-            { field: 'next_date', header: '>> '+this.translate.instant('Termin') },
+            { field: 'last_date', header: '<< ' + this.translate.instant('Termin') },
+            { field: 'next_date', header: '>> ' + this.translate.instant('Termin') },
             { field: 'inspector', header: this.translate.instant('Prüfer') }
         ];
 
@@ -185,29 +184,30 @@ export class CustomerTablePage implements OnInit {
         this.page_load();
     }
     onResize(event) {
-        console.log("onResize");
+        console.log('onResize');
         this.funcHeightCalc();
      }
 
     @ViewChild('divHeightCalc') divHeightCalc: any;
-    funcHeightCalc(){
+    funcHeightCalc() {
         var x = this.divHeightCalc.nativeElement.offsetHeight;
-        if(this.splitFilter) x= x - 51;
-        if(x<80) x = 80;
-        this.heightCalc = x+"px";
-        console.log("heightCalc:",x, this.heightCalc );
+        if (this.splitFilter) { x = x - 51; }
+        if (x < 80) { x = 80; }
+        this.heightCalc = x + 'px';
+        console.log('heightCalc:', x, this.heightCalc );
     }
 
     page_load() {
         console.log('ionViewDidLoad CustomerTablePage');
         this.rowRecords = 0;
         this.totalRecords = 0;
-        this.events.publish("prozCustomer", 0);
+        this.events.publish('prozCustomer', 0);
         this.apiService.pvs4_get_customer_list(0).then((result: any) => {
-            console.log("ionViewDidLoad result :", result);
+            console.log('ionViewDidLoad result :', result);
 
             this.customerListAll = result.list;
-            console.log(' customerListAll ', this.customerListAll );       
+
+            console.log(' customerListAll ', this.customerListAll );
             if (localStorage.getItem('filter_values') != undefined) {
                 this.columnFilterValues = JSON.parse(localStorage.getItem('filter_values'));
             }
@@ -228,33 +228,35 @@ export class CustomerTablePage implements OnInit {
         let ret: any = false;
 
         for (let i = 0; i < this.cols.length; i++) {
-            if (this.columnFilterValues["search_all"].trim().length > 0 && node.data[this.cols[i].field] != undefined
-                && node.data[this.cols[i].field].toLowerCase().indexOf(this.columnFilterValues["search_all"].trim().toLowerCase()) >= 0)
+            if (this.columnFilterValues['search_all'].trim().length > 0 && node.data[this.cols[i].field] != undefined
+                && node.data[this.cols[i].field].toLowerCase().indexOf(this.columnFilterValues['search_all'].trim().toLowerCase()) >= 0) {
                 ret = true;
+            }
         }
 
-        if (this.columnFilterValues["search_all"].trim().length > 0 && !ret)
+        if (this.columnFilterValues['search_all'].trim().length > 0 && !ret) {
             return false;
-        else if (this.columnFilterValues["search_all"].trim().length == 0 && !ret)
+        } else if (this.columnFilterValues['search_all'].trim().length == 0 && !ret) {
             ret = true;
+             }
 
         for (let i = 0; i < this.cols.length; i++) { 
-            let fx = "";
-            if(this.columnFilterValues[this.cols[i].field]) {
+            let fx = '';
+            if (this.columnFilterValues[this.cols[i].field]) {
                 fx = this.columnFilterValues[this.cols[i].field].trim();
             }
             console.log('node.data[this.cols[i].field]', node.data[this.cols[i].field] );
             if  (fx.length > 0) {
-                if(node.data[this.cols[i].field]){
-                    if ( (node.data[this.cols[i].field].toLowerCase().indexOf(fx.toLowerCase()) < 0) ) return false;
-                }else{
+                if (node.data[this.cols[i].field]) {
+                    if ( (node.data[this.cols[i].field].toLowerCase().indexOf(fx.toLowerCase()) < 0) ) { return false; }
+                } else {
                     return false;
                 }
-            }     
+            }
         }
 
         return ret;
-    } 
+    }
 
     dir_try_filter(nodes: TreeNode[]): any {
         console.log('dir_try_filter', nodes, nodes.length);
@@ -289,19 +291,29 @@ export class CustomerTablePage implements OnInit {
             this.menuItems[7].items[2]['disabled'] = true;
         }
         this.generate_customerList();
-        localStorage.setItem("filter_values", JSON.stringify(this.columnFilterValues));
+        localStorage.setItem('filter_values', JSON.stringify(this.columnFilterValues));
     }
 
     cancel_filters(cancel_type) {
-        console.log("cancel_filters");
+        console.log('cancel_filters');
         this.menuItems[7].items[2]['disabled'] = true;
         if (cancel_type == 1) {
             for (let i = 0; i < this.cols.length; i++) {
-                this.columnFilterValues[this.cols[i].field] = "";
+                this.columnFilterValues[this.cols[i].field] = '';
             }
+        } else {
+            this.columnFilterValues = { company: '',
+                                        id: '',
+                                        customer_number: '',
+                                        rating: '',
+                                        zip_code: '',
+                                        place: '',
+                                        employees: '',
+                                        last_date: '',
+                                        next_date: '',
+                                        inspector: '',
+                                        search_all: '' };
         }
-        else
-            this.columnFilterValues = { company: "", id: "", customer_number: "", rating: "", zip_code: "", place: "", employees: "", last_date: "", next_date: "", inspector: "", search_all: "" };
         this.generate_customerList();
     }
 
@@ -314,10 +326,24 @@ export class CustomerTablePage implements OnInit {
             this.customerListView = try_list;
         }
 
+        if (this.customerListView.length > 0) {
+            this.menuItems[7].items[0]['disabled'] = false;
+            this.menuItems[7].items[1]['disabled'] = false;
+            this.menuItems[7].items[3]['disabled'] = false;
+        } else {
+            this.menuItems[7].items[0]['disabled'] = true;
+            this.menuItems[7].items[1]['disabled'] = true;
+            this.menuItems[7].items[3]['disabled'] = true;
+        }
+
         this.rowRecords = this.customerListView.length;
         this.totalRecords = this.customerListAll.length;
-        let progressBar = 100;
-        if (this.totalRecords > 0 ) { progressBar = Math.round(this.rowRecords * 100 / this.totalRecords); }
+        let progressBar;
+        if (this.totalRecords > 0 ) {
+            progressBar = Math.round(this.rowRecords * 100 / this.totalRecords);
+        } else {
+            progressBar = 0;
+        }
         this.events.publish('progressBar', progressBar);
         this.events.publish('rowRecords', this.rowRecords);
         this.events.publish('totalRecords', this.totalRecords);
@@ -380,7 +406,7 @@ export class CustomerTablePage implements OnInit {
           componentProps: {
             obj: obj
           }
-        }).then(x=> x.present());
+        }).then(x => x.present());
     }
 
     async menu_edit() {
@@ -419,7 +445,7 @@ export class CustomerTablePage implements OnInit {
             this.menuItems[2].visible = false;
             this.menuItems[3].visible = true;
         } else if (n == 2) {
-            //in Stammordner
+            // in Stammordner
             console.log('move item :', this.move_id, this.move_obj);
             this.move_obj.parent = 0;
             this.apiService.pvs4_set_customer(this.move_obj).then((result: any) => {
@@ -436,7 +462,7 @@ export class CustomerTablePage implements OnInit {
     }
 
     customer_list(num) {
-        console.log("customer_list");
+        console.log('customer_list');
         let data: any = [];
         this.allnodes = [];
         this.data_tree(this.customerListAll);
@@ -471,56 +497,56 @@ export class CustomerTablePage implements OnInit {
     }
 
     excel_all() {
-        console.log("excel_all");
+        console.log('excel_all');
         let data: any = [];
         this.allnodes = [];
-        console.log("allnodes :", this.allnodes);
+        console.log('allnodes :', this.allnodes);
         this.data_tree(this.customerListAll);
         for (var i = 0, len = this.allnodes.length; i < len; i++) {
             let obj = this.allnodes[i];
-            obj.company = obj.company.replace(/(\\r\\n|\\n|\\r)/gm," ");
-            obj.country = obj.country.replace(/(\\r\\n|\\n|\\r)/gm," ");
-            obj.place   = obj.place.replace(/(\\r\\n|\\n|\\r)/gm," ");
-            obj.po_box  = obj.po_box.replace(/(\\r\\n|\\n|\\r)/gm," ");
-            obj.sector  = obj.sector.replace(/(\\r\\n|\\n|\\r)/gm," ");
-            obj.street  = obj.street.replace(/(\\r\\n|\\n|\\r)/gm," ");
-            console.log("obj >>> ", obj);
+            obj.company = obj.company.replace(/(\\r\\n|\\n|\\r)/gm, ' ');
+            obj.country = obj.country.replace(/(\\r\\n|\\n|\\r)/gm, ' ');
+            obj.place   = obj.place.replace(/(\\r\\n|\\n|\\r)/gm, ' ');
+            obj.po_box  = obj.po_box.replace(/(\\r\\n|\\n|\\r)/gm, ' ');
+            obj.sector  = obj.sector.replace(/(\\r\\n|\\n|\\r)/gm, ' ');
+            obj.street  = obj.street.replace(/(\\r\\n|\\n|\\r)/gm, ' ');
+            console.log('obj >>> ', obj);
             let json: any = {};
             for (var j = 0; j < this.selectedColumns.length; j++) {
-                if(obj[this.selectedColumns[j].field]) {
+                if (obj[this.selectedColumns[j].field]) {
                     json[this.selectedColumns[j].header] = obj[this.selectedColumns[j].field];
-                }else{
-                    json[this.selectedColumns[j].header] = "";
-                }                
+                } else {
+                    json[this.selectedColumns[j].header] = '';
+                }
             }
-            console.log(">>json :", json);
+            console.log('>>json :', json);
             data.push(json);
         }
         this.excelService.exportAsExcelFile(data, 'customer_all.xlsx');
     }
 
     excel_view() {
-        console.log("excel_view");
+        console.log('excel_view');
         let data: any = [];
         this.allnodes = [];
         this.data_tree(this.customerListView);
         for (var i = 0, len = this.allnodes.length; i < len; i++) {
             let obj = this.allnodes[i];
-            obj.company = obj.company.replace(/(\\r\\n|\\n|\\r)/gm," ");
-            obj.country = obj.country.replace(/(\\r\\n|\\n|\\r)/gm," ");
-            obj.place   = obj.place.replace(/(\\r\\n|\\n|\\r)/gm," ");
-            obj.po_box  = obj.po_box.replace(/(\\r\\n|\\n|\\r)/gm," ");
-            obj.sector  = obj.sector.replace(/(\\r\\n|\\n|\\r)/gm," ");
-            obj.street  = obj.street.replace(/(\\r\\n|\\n|\\r)/gm," ");
+            obj.company = obj.company.replace(/(\\r\\n|\\n|\\r)/gm, ' ');
+            obj.country = obj.country.replace(/(\\r\\n|\\n|\\r)/gm, ' ');
+            obj.place   = obj.place.replace(/(\\r\\n|\\n|\\r)/gm, ' ');
+            obj.po_box  = obj.po_box.replace(/(\\r\\n|\\n|\\r)/gm, ' ');
+            obj.sector  = obj.sector.replace(/(\\r\\n|\\n|\\r)/gm, ' ');
+            obj.street  = obj.street.replace(/(\\r\\n|\\n|\\r)/gm, ' ');
             let json: any = {};
             for (var j = 0; j < this.selectedColumns.length; j++) {
-                if(obj[this.selectedColumns[j].field]) {
+                if (obj[this.selectedColumns[j].field]) {
                     json[this.selectedColumns[j].header] = obj[this.selectedColumns[j].field];
-                }else{
-                    json[this.selectedColumns[j].header] = "";
-                }                
+                } else {
+                    json[this.selectedColumns[j].header] = '';
+                }
             }
-            console.log(">>json :", json);
+            console.log('>>json :', json);
             data.push(json);
         }
         this.excelService.exportAsExcelFile(data, 'customer_view.xlsx');
@@ -532,7 +558,7 @@ export class CustomerTablePage implements OnInit {
         let headerRowVisible: any = 1;
         for (var k = 0; k < this.selectedColumns.length; k++) {
             columns.push({ text: this.selectedColumns[k].header, style: 'header' });
-            widthsArray.push("*");
+            widthsArray.push('*');
         }
         let bodyArray: any[] = [];
         bodyArray.push(columns);
@@ -544,15 +570,20 @@ export class CustomerTablePage implements OnInit {
             obj = this.allnodes[i];
             rowArray = [];
             for (var j = 0; j < this.selectedColumns.length; j++) {
-                if (obj[this.selectedColumns[j].field])
+                if (obj[this.selectedColumns[j].field]) {
                    rowArray.push(obj[this.selectedColumns[j].field]);
-                else
+                } else {
                    rowArray.push('');
+                }
             }
             bodyArray.push(rowArray);
         }
 
-        this.pdf.get_ListDocDefinition(bodyArray, widthsArray, headerRowVisible, this.translate.instant("Kunde") + " " + this.translate.instant("Liste"),this.translate.instant("Kunde")+this.translate.instant("Liste")+'.pdf');
+        this.pdf.get_ListDocDefinition(bodyArray,
+                                       widthsArray,
+                                       headerRowVisible,
+                                       this.translate.instant('Kunde') + ' ' + this.translate.instant('Liste'),
+                                       this.translate.instant('Kunde') + this.translate.instant('Liste') + '.pdf');
     }
 
     data_tree(nodes: TreeNode[]): any {
@@ -565,12 +596,12 @@ export class CustomerTablePage implements OnInit {
     }
 
     menu_filter() {
-        console.log("menu_filter()");
+        console.log('menu_filter()');
         this.splitFilter = !this.splitFilter;
         if (!this.splitFilter) {
             this.cancel_filters(1);
         }
-        localStorage.setItem("split_filter", JSON.stringify(this.splitFilter));
+        localStorage.setItem('split_filter', JSON.stringify(this.splitFilter));
         this.funcHeightCalc();
     }
 
@@ -600,16 +631,16 @@ export class CustomerTablePage implements OnInit {
               }
           }
       ] });
-  
-  
+
           await alert.present();
     }
 
     isFilterOn(): any {
         let ret = false;
         for (let i = 0; i < this.filterCols.length; i++) {
-            if (this.columnFilterValues[this.filterCols[i]].trim().length > 0)
+            if (this.columnFilterValues[this.filterCols[i]].trim().length > 0) {
                 ret = true;
+            }
         }
         return ret;
     }
@@ -626,14 +657,12 @@ export class CustomerTablePage implements OnInit {
     }
 
     onNodeExpand(event) {
-        this.expendedNodes.push(event.node.data["id"]);
+        this.expendedNodes.push(event.node.data['id']);
         localStorage.setItem('expanded_nodes', JSON.stringify(this.expendedNodes));
     }
     onNodeCollapse(event) {
-        this.expendedNodes = this.expendedNodes.filter(function (element, index, array) { return element != event.node.data["id"] });
+        this.expendedNodes = this.expendedNodes.filter(function (element, index, array) { return element != event.node.data['id'] });
         localStorage.setItem('expanded_nodes', JSON.stringify(this.expendedNodes));
     }
-
-    
 
 }

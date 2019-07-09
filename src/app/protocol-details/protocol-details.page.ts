@@ -254,39 +254,44 @@ export class ProtocolDetailsPage implements OnInit {
     product.forEach(element => {
       console.log('product element :', this.translate.instant('Titel'), element.title);
 
-      if (element.title != undefined) {
+      if (element.title) {
         bodyProduct.push([{ text: this.translate.instant('Titel'), color: '#000000', fillColor: '#8bd8f9' },
                           { text: element.title, color: '#000000', fillColor: '#8bd8f9' }]);
       } else {
         bodyProduct.push([{ text: this.translate.instant('Titel'), color: '#000000', fillColor: '#8bd8f9' },
                           { text: '', color: '#000000', fillColor: '#8bd8f9' }]);
       }
-      if (element.idCustomer != undefined) {
+      if (element.company) {
+        bodyProduct.push([{ text: this.translate.instant('Kunde') }, { text: element.company }]);
+      } else {
+        bodyProduct.push([{ text: this.translate.instant('Kunde') }, { text: '' }]);
+      }
+      if (element.idCustomer) {
         bodyProduct.push([{ text: this.translate.instant('Kunde') + ' ' + 'DB-ID' }, { text: element.idCustomer }]);
       } else {
         bodyProduct.push([{ text: this.translate.instant('Kunde') + ' ' + 'DB-ID'}, { text: '' }]);
       }
-      if (element.customer_number != undefined) {
+      if (element.customer_number) {
         bodyProduct.push([{ text: this.translate.instant('Kundennummer') }, { text: element.customer_number }]);
       } else {
         bodyProduct.push([{ text: this.translate.instant('Kundennummer') }, { text: '' }]);
       }
-      if (element.id_number != undefined) {
+      if (element.id_number) {
         bodyProduct.push([{ text: '#' }, { text: element.id_number }]);
       } else {
         bodyProduct.push([{ text: '#' }, { text: '' }]);
       }
-      if (element.articel_no != undefined) {
+      if (element.articel_no) {
         bodyProduct.push([{ text: this.translate.instant('Articel No') }, { text: element.articel_no }]);
       } else {
         bodyProduct.push([{ text: this.translate.instant('Articel No') }, { text: '' }]);
       }
-      if (element.author != undefined) {
+      if (element.author) {
         bodyProduct.push([{ text: this.translate.instant('Autor') }, { text: element.author }]);
       } else {
         bodyProduct.push([{ text: this.translate.instant('Autor') }, { text: '' }]);
       }
-      if (element.check_interval != undefined) {
+      if (element.check_interval) {
         bodyProduct.push([{ text: this.translate.instant('Intervall Prüfen') }, { text: element.check_interval }]);
       } else {
         bodyProduct.push([{ text: this.translate.instant('Intervall Prüfen') }, { text: '' }]);
