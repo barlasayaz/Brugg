@@ -17723,6 +17723,8 @@ tbody.ui-table-tbody {
     display: -ms-flexbox;
     display: flex;
     width: 100%;
+    padding-left: 10px;
+    padding-right: 10px;
   }
   @media only screen and (max-width: 767px) {
     div.table div.tbody div.tr.table-body {
