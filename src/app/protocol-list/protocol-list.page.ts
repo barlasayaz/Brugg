@@ -343,7 +343,7 @@ export class ProtocolListPage implements OnInit {
         if (this.totalRecords > 0 ) {
             progressBar = Math.round(this.rowRecords * 100 / this.totalRecords);
         } else {
-            progressBar = 0;
+            progressBar = 100;
         }
         this.events.publish('progressBar', progressBar);
         this.events.publish('rowRecords', this.rowRecords);

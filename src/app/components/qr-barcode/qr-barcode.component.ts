@@ -153,7 +153,7 @@ export class QrBarcodeComponent implements OnInit {
     this.apiService.pvs4_set_product_tag(obj).then((done: any) => {
       console.log('pvs4_set_product_tag() ok:', done);
       const toast = this.toastCtrl.create({
-        message: this.translate.instant('Speichern Sie erfolgreich'),
+        message: this.translate.instant('Speichern erfolgreich'),
         duration: 2000
       }).then(x => x.present());
 

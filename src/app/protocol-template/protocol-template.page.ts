@@ -299,7 +299,7 @@ export class ProtocolTemplatePage implements OnInit {
       this.apiService.pvs4_set_protocol_tem(obj).then((result: any) => {
         this.idTemplate = result.id;
         const alert = this.alertCtrl.create({
-          header: this.translate.instant('Speichern Sie erfolgreich'),
+          header: this.translate.instant('Speichern erfolgreich'),
           message: this.translate.instant('Vorlage wurde erfolgreich gespeichert'),
           buttons: [
             {

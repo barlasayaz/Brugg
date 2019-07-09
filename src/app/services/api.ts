@@ -28,7 +28,7 @@ export class ApiService {
   public appointmentMinTime: string = '07:00';
   public appointmentMaxTime: string = '17:59';
 
-  version: any = '4.4';
+  version: any = '4.4.1';
   
   constructor(public http: HttpClient, public userdata: UserdataService) {
     console.log('Start ApiProvider Provider');
