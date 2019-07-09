@@ -1,4 +1,4 @@
-import { NavController, NavParams, AlertController, ModalController, ToastController } from '@ionic/angular';
+import { NavController, NavParams, AlertController, ModalController, ToastController, Platform } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { Component, OnInit } from '@angular/core';
 import { BarcodeScanner, BarcodeScannerOptions } from '@ionic-native/barcode-scanner/ngx';
@@ -31,6 +31,7 @@ export class QrBarcodeComponent implements OnInit {
   options: BarcodeScannerOptions;
   public url: any;
   public lang: string = localStorage.getItem('lang');
+  public mobilePlatform = false;
 
   constructor(public translate: TranslateService,
     public apiService: ApiService,
@@ -41,10 +42,22 @@ export class QrBarcodeComponent implements OnInit {
     public transfer: FileTransfer,
     public loadingCtrl: LoadingController,
     public navCtrl: NavController,
-    private toastCtrl: ToastController) {
+    private toastCtrl: ToastController,
+    public platform: Platform) {
   }
 
   ngOnInit() {
+    this.platform.ready().then(() => {
+      if ( this.platform.is('ios') ||
+        this.platform.is('android') ) {
+        this.mobilePlatform = true;
+        console.log('platform mobile:', this.platform.platforms());
+      } else {
+        console.log('platform not mobile:', this.platform.platforms());
+        this.mobilePlatform = false;
+      }
+    });
+
     this.readOnly = true;
     this.qrText = '';
     this.qrCodeText = '';
