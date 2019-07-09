@@ -7,27 +7,13 @@
         <ion-grid>
           <ion-row>
             <!-- Templates -->
-            <ion-col size="12" size-md="4">
+            <ion-col size-xl="5" size-lg="5" size-md="12" size-sm="12" size="12">
               <div class="table-responsive" id="ps_protocol-template">
                 <div class="table table-striped" id="protocol-template">
                   <div class="thead">
                     <div class="tr table-header">
                       <div class="th">
                         {{'Protokollvorlage' | translate}}
-                      </div>
-                      <div class="table-header-buttons">
-                        <ion-button 
-                                size="small" 
-                                (click)="down_click()"
-                                [disabled]="downClick == 1">
-                          <i class="fas fa-sort-alpha-down"></i>
-                        </ion-button>
-                        <ion-button 
-                                size="small" 
-                                (click)="down_click()"
-                                [disabled]="downClick == 0">
-                          <i class="fas fa-sort-alpha-up"></i>
-                        </ion-button>
                       </div>
                     </div>
                     <div class="tbody">
@@ -45,8 +31,20 @@
                                   [disabled]="selectTemplate == 0">
                             <ion-icon name="arrow-round-forward"></ion-icon>
                           </ion-button>
+                          <ion-button 
+                                  size="small" 
+                                  (click)="down_click()"
+                                  [disabled]="downClick == 1">
+                            <i class="fas fa-sort-alpha-down"></i>
+                          </ion-button>
+                          <ion-button 
+                                  size="small" 
+                                  (click)="down_click()"
+                                  [disabled]="downClick == 0"
+                                  style="padding-right: 10px;">
+                            <i class="fas fa-sort-alpha-up"></i>
+                          </ion-button>
                         </div>
-
                         <div class="search-search">
                           <ion-input type="text" 
                                      placeholder="{{'Suche' |translate }}" 
@@ -78,7 +76,7 @@
             </ion-col>
 
             <!-- Protocol -->
-            <ion-col size="12" size-md="8">
+            <ion-col size-xl="7" size-lg="7" size-md="12" size-sm="12" size="12">
               <div class="table-responsive" id="ps_protocol">
                 <div class="table table-striped" id="protocol-template">
                   <div class="thead">
