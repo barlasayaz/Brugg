@@ -80,6 +80,7 @@ export class QrBarcodeComponent implements OnInit {
               }
             };
             this.navCtrl.navigateForward(['/product-details'], navigationExtras);
+            this.viewCtrl.dismiss();
           } else if (result.list.length > 1) {
             let buttons: any[] = [];
 
@@ -94,6 +95,7 @@ export class QrBarcodeComponent implements OnInit {
                     }
                   };
                   this.navCtrl.navigateForward(['/product-details'], navigationExtras);
+                  this.viewCtrl.dismiss();
                 }
               });
             });
@@ -187,6 +189,7 @@ export class QrBarcodeComponent implements OnInit {
       }
     };
     this.navCtrl.navigateForward(['/protocol-edit'], navigationExtras);
+    this.viewCtrl.dismiss();
   }
 
   scanQrToList() {

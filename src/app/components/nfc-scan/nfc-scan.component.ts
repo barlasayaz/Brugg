@@ -155,6 +155,7 @@ export class NfcScanComponent implements OnInit {
                     }
                   };
                   this.navCtrl.navigateForward(["/product-details"], navigationExtras);
+                  this.viewCtrl.dismiss();
                 }
                 else {
                   let rein = true;
@@ -272,6 +273,7 @@ export class NfcScanComponent implements OnInit {
         }
       }
       this.navCtrl.navigateForward(["/protocol-edit"], navigationExtras);
+      this.viewCtrl.dismiss();
     }
   }
 
