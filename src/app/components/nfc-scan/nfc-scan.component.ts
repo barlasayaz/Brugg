@@ -146,7 +146,7 @@ export class NfcScanComponent implements OnInit {
                     id_number: result.obj.id_number,
                     title: result.obj.title[this.lang],
                   }
-                  hilf.push({ data: data });
+                  hilf.push(data);
                   let navigationExtras: NavigationExtras = {
                     queryParams: {
                       idCustomer: result.obj.customer,
@@ -263,7 +263,7 @@ export class NfcScanComponent implements OnInit {
       var hilf = [];
       for (var i = 0; i < this.scanList.length; i++) {
         let data = this.scanList[i];
-        hilf.push({ data: data });
+        hilf.push(data);
       }
       let navigationExtras: NavigationExtras = {
         queryParams: {
