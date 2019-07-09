@@ -11,102 +11,102 @@
   </ion-header>	
 
   <ion-content *ngIf="editType==0">  
-      <ion-grid>
+      <ion-grid style="padding-top: 15px; padding-bottom: 15px; padding-left: 15px; padding-right: 15px;">
         <!-- Row 1-->
           <ion-row>
             <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12">
               <ion-item lines="none">
-                <ion-label position="floating">{{translate.instant('Vorname')}}</ion-label>          
-              	<ion-input disabled 
+                <ion-label position="floating">{{translate.instant('Vorname')}}</ion-label>
+                  <ion-input [disabled]="true" 
                             type="text"
                             id="Vorname"
                             [(ngModel)]="edit.bid.first_name"
                             [ngClass]="{'required':pfelder}">
-                </ion-input>  
-              </ion-item>							
+                </ion-input>
+              </ion-item>					
             </ion-col>
             <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12">
               <ion-item lines="none">
                 <ion-label position="floating">{{translate.instant('Name')}}</ion-label>
-              	<ion-input disabled
+                  <ion-input [disabled]="true"
                             type="text"
                             id="Name"
                             [(ngModel)]="edit.bid.last_name"
                             [ngClass]="{required:pfelder}">
                 </ion-input>
-              </ion-item>  						
+              </ion-item>
             </ion-col>
             <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12">
-              <ion-item lines="none">	
+              <ion-item lines="none">
                 <ion-label position="floating">{{translate.instant('KennungMitarbeiter')}}</ion-label>
-              	<ion-input required
+                  <ion-input required
                             type="text"
                             id="short_code"
                             [(ngModel)]="edit.short_code"
                             [ngClass]="{required:pfelder}">
-                </ion-input>           
-              </ion-item> 						
+                </ion-input>
+              </ion-item>
             </ion-col>
           </ion-row>
-      
+
           <!-- Row 2-->
           <ion-row>
           <ion-col size-xl="7" size-lg="7" size-md="7" size-sm="12" size="12">
             <ion-item lines="none">
               <ion-label position="floating">{{translate.instant('Telefon')}}</ion-label>
-              <ion-input disabled
+                <ion-input [disabled]="true"
                           type="text"
                           id="Telefon"
                           [(ngModel)]="edit.bid.phone"
                           [ngClass]="{required:pfelder}">
               </ion-input>
-            </ion-item>							
+            </ion-item>
           </ion-col>
-          <ion-col size-xl="1" size-lg="1" size-md="1" size-sm="2" size="2">
+          <ion-col size-xl="1" size-lg="1" size-md="1" size-sm="2" size="2" style="text-align: center; padding-top: 32px;">
             <p-colorPicker [(ngModel)]="edit.colour"></p-colorPicker>
           </ion-col>
-          <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="10" size="10">				
-            <ion-item lines="none">					
-              <ion-label position="floating">{{translate.instant('Farbe')}}</ion-label>					
-              <ion-input [(ngModel)]="edit.colour" 
+          <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="10" size="10">
+            <ion-item lines="none">
+              <ion-label position="floating">{{translate.instant('Farbe')}}</ion-label>
+              <ion-input [(ngModel)]="edit.colour"
                           type="text"
-                          readonly="true">
+                          [disabled]="true">
               </ion-input>
-            </ion-item>  						
-            </ion-col>			
+            </ion-item>
+            </ion-col>
           </ion-row>
-      
+
           <!-- Row 3-->
-          <ion-row >
+          <ion-row>
             <ion-col size-xl="12" size-lg="12" size-md="12" size-sm="12" size="12">
               <ion-item lines="none">
                 <ion-label position="floating">{{translate.instant('E-Mail')}}</ion-label>
-                    <ion-input disabled
+                  <ion-input [disabled]="true"
                                 type="text"
                                 id="email"
                                 [(ngModel)]="edit.email"
                                 [ngClass]="{required:pfelder}">
                     </ion-input>
-              </ion-item>							
+              </ion-item>
               </ion-col>
           </ion-row> 
           <!-- Row 4-->
           <ion-row>
             <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="12" size="12">
-              <ion-item lines="none" class="item-trns" >
+              <ion-item lines="none" class="item-trns">
                   <ion-label>{{translate.instant('edit_customer')}}</ion-label>
                   <ion-toggle [(ngModel)]="edit.role_set.edit_customer"
                               disabled="{{!setRights}}">
                   </ion-toggle>
-              </ion-item>						
+              </ion-item>
             </ion-col>
             <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="12" size="12">
               <ion-item lines="none" class="item-trns">
                   <ion-label>{{translate.instant('edit_membership')}}</ion-label>
-                  <ion-toggle [(ngModel)]="edit.role_set.edit_membership" 
+                  <ion-toggle [(ngModel)]="edit.role_set.edit_membership"
                               disabled="{{!setRights}}">
                   </ion-toggle>
-              </ion-item>						
+              </ion-item>
             </ion-col>
           </ion-row>
           <ion-row>
@@ -116,7 +116,7 @@
                   <ion-toggle [(ngModel)]="edit.role_set.edit_rights"
                               disabled="{{!setRights}}">
                   </ion-toggle>
-              </ion-item>						
+              </ion-item>
             </ion-col>
             <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="12" size="12">
               <ion-item lines="none" class="item-trns">
@@ -124,7 +124,7 @@
                   <ion-toggle [(ngModel)]="edit.role_set.edit_products"
                               disabled="{{!setRights}}">
                   </ion-toggle>
-              </ion-item>						
+              </ion-item>
             </ion-col>
           </ion-row>
           <ion-row>
@@ -134,7 +134,7 @@
                   <ion-toggle [(ngModel)]="edit.role_set.check_products"
                               disabled="{{!setRights}}">
                   </ion-toggle>
-              </ion-item>						
+              </ion-item>
             </ion-col>
             <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="12" size="12">
               <ion-item lines="none" class="item-trns">
@@ -142,25 +142,25 @@
                 <ion-toggle [(ngModel)]="edit.role_set.edit_contact_persons"
                             disabled="{{!setRights}}">
                 </ion-toggle>
-              </ion-item>						
+              </ion-item>
             </ion-col>
-          </ion-row> 
-      
+          </ion-row>
+
           <!-- ERROR -->
-          <ion-row> 
+          <ion-row>
             <ion-col size="12">
               <div class="form-group" *ngIf="pfelder" class="pfehler">
                 <div class="text-center alert alert-danger">
                   {{translate.instant('Bitte füllen Sie alle Pflichtfelder aus.')}}
                 </div>
               </div>
-      
+
               <div class="form-group" *ngIf="pw_felder==1" class="pfehler">
                 <div class="text-center alert alert-danger">
-                  {{translate.instant('Passwörter stimmen nicht überein.')}} 
+                  {{translate.instant('Passwörter stimmen nicht überein.')}}
                 </div>
               </div>
-      
+
               <div class="form-group" *ngIf="pw_felder==2" class="pfehler">
                 <div class="text-center alert alert-danger">
                   {{translate.instant('Passwort ist zu kurz, Mindestlänge ist 8 Zeichen.')}}
@@ -168,14 +168,14 @@
               </div>
             </ion-col>
           </ion-row>
-      
+
           <ion-row style="margin-bottom: -10px;">
-          	<div class="modal-footer">
-              <ion-button class="btn btn-modal-danger footerIcon" 
+            <div class="modal-footer">
+              <ion-button class="btn btn-modal-danger footerIcon"
                           (click)="dismiss()">
                 <ion-icon name="close"></ion-icon>
               </ion-button>
-              <ion-button class="btn btn-modal-success footerIcon"
+                <ion-button class="btn btn-modal-success footerIcon"
                           (click)="updateData();">
                 <ion-icon name="checkmark"></ion-icon>
               </ion-button>
@@ -183,120 +183,120 @@
           </ion-row>
       </ion-grid>
     </ion-content>
-    
-  <ion-content *ngIf="editType==1">  
+
+  <ion-content *ngIf="editType==1">
     <ion-grid>
       <ion-row class="align-center-fix">
         <ion-col size-md="10" size-sm="10" size="10">
             <ion-item lines="none">
               <ion-label position="floating">{{translate.instant('E-Mail')}}</ion-label>
-              <ion-input required 
-                         type="email" 
+                <ion-input required
+                         type="email"
                          placeholder=""
-                         id="emailToFind"  
+                         id="emailToFind"
                          [(ngModel)]="emailToFind">
               </ion-input>
-            </ion-item>							
+            </ion-item>
         </ion-col>
         <ion-col size-md="2" size-sm="2" size="2">
-          <ion-button style="margin-top:14px"
+          <ion-button style="margin-top: 18px"
                       [disabled]="emailToFind==''"
                       class="btn btn-modal-teal"
                       (click)="findEmail();">
             <ion-icon name="search"></ion-icon>
           </ion-button>
         </ion-col>
-      </ion-row> 
+      </ion-row>
       <!-- Gefunden -->
       <ion-row *ngIf="viewNewMode==2">
         <ion-col size-md="4" size-sm="12" size="12">
           <ion-item lines="none">
-            <ion-label position="floating"> {{translate.instant('Vorname')}}</ion-label>          
-          	<ion-input disabled
+            <ion-label position="floating"> {{translate.instant('Vorname')}}</ion-label>
+              <ion-input [disabled]="true"
                         type="text"
-                        placeholder="" 
+                        placeholder=""
                         [(ngModel)]="viewNewObj.first_name">
-            </ion-input>  
-          </ion-item>							
+            </ion-input>
+          </ion-item>
         </ion-col>
         <ion-col size-md="4" size-sm="12" size="12">
           <ion-item lines="none">
             <ion-label position="floating">{{translate.instant('Name')}}</ion-label>
-          	<ion-input disabled
+              <ion-input [disabled]="true"
                         type="text"
                         placeholder=""
                         [(ngModel)]="viewNewObj.last_name">
             </ion-input>
-          </ion-item>  						
+          </ion-item>
         </ion-col>
         <ion-col size-md="4" size-sm="12" size="12">
-          <ion-item lines="none">	
+          <ion-item lines="none">
             <ion-label position="floating">{{translate.instant('KennungMitarbeiter')}}</ion-label>
-          	<ion-input disabled
+              <ion-input [disabled]="true"
                         type="text"
                         placeholder=""
                         [(ngModel)]="viewNewObj.short_code">
-            </ion-input>           
-          </ion-item> 						
+            </ion-input>
+          </ion-item>
         </ion-col>
       </ion-row>
       <ion-row *ngIf="viewNewMode==2">
         <ion-col size-md="6" size-sm="12" size="12">
-          <ion-item lines="none" class="item-trns " >
+          <ion-item lines="none" class="item-trns">
             <ion-label>{{translate.instant('edit_customer')}}</ion-label>
             <ion-toggle [(ngModel)]="role_set.edit_customer"
                         disabled="{{!setRights}}">
             </ion-toggle>
-          </ion-item>						
+          </ion-item>
         </ion-col>
         <ion-col size-md="6" size-sm="12" size="12">
-          <ion-item lines="none" class="item-trns " >
+          <ion-item lines="none" class="item-trns">
             <ion-label>{{translate.instant('edit_membership')}}</ion-label>
             <ion-toggle [(ngModel)]="role_set.edit_membership"
                         disabled="{{!setRights}}">
             </ion-toggle>
-          </ion-item>						
+          </ion-item>
         </ion-col>
         <ion-col size-md="6" size-sm="12" size="12">
-          <ion-item lines="none" class="item-trns " >
+          <ion-item lines="none" class="item-trns">
             <ion-label>{{translate.instant('edit_rights')}}</ion-label>
             <ion-toggle [(ngModel)]="role_set.edit_rights"
                         disabled="{{!setRights}}">
             </ion-toggle>
-          </ion-item>						
+          </ion-item>
         </ion-col>
         <ion-col size-md="6" size-sm="12" size="12">
-          <ion-item lines="none" class="item-trns " >
+          <ion-item lines="none" class="item-trns">
             <ion-label>{{translate.instant('edit_products')}}</ion-label>
             <ion-toggle [(ngModel)]="role_set.edit_products"
                         disabled="{{!setRights}}">
             </ion-toggle>
-          </ion-item>						
+          </ion-item>
         </ion-col>
         <ion-col size-md="6" size-sm="12" size="12">
-          <ion-item lines="none" class="item-trns " >
+          <ion-item lines="none" class="item-trns">
             <ion-label>{{translate.instant('check_products')}}</ion-label>
             <ion-toggle [(ngModel)]="role_set.check_products"
                         disabled="{{!setRights}}">
             </ion-toggle>
-          </ion-item>						
+          </ion-item>
         </ion-col>
         <ion-col size-md="6" size-sm="12" size="12">
-          <ion-item lines="none" class="item-trns " >
+          <ion-item lines="none" class="item-trns">
             <ion-label>{{translate.instant('edit_contact_persons')}}</ion-label>
-            <ion-toggle [(ngModel)]="role_set.edit_contact_persons" 
+            <ion-toggle [(ngModel)]="role_set.edit_contact_persons"
                         disabled="{{!setRights}}">
             </ion-toggle>
-          </ion-item>						
+          </ion-item>
         </ion-col>
-    </ion-row> 
+    </ion-row>
       <ion-row style="margin-bottom: -10px;" *ngIf="viewNewMode==2">
-      	<div class="modal-footer">
-            <ion-button class="btn btn-modal-danger footerIcon" 
+        <div class="modal-footer">
+            <ion-button class="btn btn-modal-danger footerIcon"
                         (click)="dismiss()">
               <ion-icon name="close"></ion-icon>
             </ion-button>
-            <ion-button class="btn btn-modal-success footerIcon"
+            <ion-button class="btn btn-modal-success footerIcon"
                         (click)="addUser();">
               <ion-icon name="checkmark"></ion-icon>
             </ion-button>
@@ -306,12 +306,12 @@
         <ion-col>{{translate.instant('Benutzer nicht gefunden!')}}</ion-col>
       </ion-row>
       <ion-row style="margin-bottom: -10px;" *ngIf="viewNewMode==1">
-      	<div class="modal-footer">
-            <ion-button class="btn btn-modal-danger footerIcon"
+        <div class="modal-footer">
+          <ion-button class="btn btn-modal-danger footerIcon"
                         (click)="dismiss()">
               <ion-icon name="close"></ion-icon>
             </ion-button>
-            <!-- <button ion-button class="btn btn-modal-teal footerIcon" (click)="askUser();"><ion-icon name="send"></ion-icon></button> -->
+            <!-- <button ion-button class="btn btn-modal-teal footerIcon" (click)="askUser();"><ion-icon name="send"></ion-icon></button> -->
         </div>
       </ion-row>
 

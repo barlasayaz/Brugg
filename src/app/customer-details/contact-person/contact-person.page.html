@@ -74,7 +74,8 @@
                 <ion-col size="12">
                   <ion-item lines="none" style="padding-left: 0px;">
                     <ion-label position="floating">{{translate.instant('Name')}} *</ion-label>
-                    <ion-input type="text" 
+                    <ion-input type="text"
+                                required
                                 id="ansp_name" 
                                 [ngClass]="{required:pfelder}" 
                                 id="ansp_name" 
@@ -88,7 +89,8 @@
                 <ion-col size="12">
                   <ion-item lines="none" style="padding-left: 0px;">
                     <ion-label  position="floating">{{translate.instant('Vorname')}} *</ion-label>
-                    <ion-input type="text" 
+                    <ion-input type="text"
+                                required
                                 id="ansp_vorname" 
                                 [ngClass]="{required:pfelder}" 
                                 [(ngModel)]="contactPersonEdit.first_name">
@@ -101,7 +103,8 @@
                 <ion-col size="12">
                   <ion-item lines="none" style="padding-left: 0px;">
                     <ion-label position="floating">{{translate.instant('E-Mail')}} *</ion-label>
-                    <ion-input type="text" 
+                    <ion-input type="text"
+                                required
                                 id="ansp_eMail" 
                                 [ngClass]="{required:pfelder}" 
                                 [(ngModel)]="contactPersonEdit.email">
@@ -125,7 +128,7 @@
               <!-- -->
               <ion-row *ngIf="true">
                 <ion-col size-md="6" size-sm="12" size="12">
-                    <ion-item lines="none" class="item-trns " >
+                    <ion-item lines="none" class="item-trns">
                         <ion-label>{{translate.instant('edit_products')}}</ion-label>
                         <ion-toggle [(ngModel)]="contactPersonEdit.edit_products"
                                     disabled="{{!setRights}}">
@@ -133,7 +136,7 @@
                     </ion-item>						
                 </ion-col>
                 <ion-col size-md="6" size-sm="12" size="12">
-                    <ion-item lines="none" class="item-trns " >
+                    <ion-item lines="none" class="item-trns">
                         <ion-label>{{translate.instant('check_products')}}</ion-label>
                         <ion-toggle [(ngModel)]="contactPersonEdit.check_products"
                                     disabled="{{!setRights}}">

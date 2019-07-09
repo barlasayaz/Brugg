@@ -9,7 +9,6 @@
   </ion-toolbar>
 </ion-header>
 
-
 <ion-content>
   <ion-grid>
     <!-- Row 1 -->
@@ -545,18 +544,26 @@
   </ion-grid>
 
   <!-- Footer -->
-    <div class="modal-footer">
-    <ion-button *ngIf="(addDate <= 8)" class="btn btn-modal-success btn-time-add" (click)="plusDate();">
+  <div class="modal-footer">
+    <ion-button *ngIf="(addDate <= 8)" 
+                class="btn btn-modal-success btn-time-add"
+                (click)="plusDate();"
+                style="margin-top: -2px !important;">
       <ion-icon name="alarm"></ion-icon>
     </ion-button>
-    <ion-button class="btn btn-modal-danger" (click)="dismiss()">
+    <ion-button class="btn btn-modal-danger"
+                (click)="dismiss()">
       <ion-icon name="close"></ion-icon>
     </ion-button>
-    <ion-button *ngIf="!itsNew" class="btn btn-modal-teal" (click)="appointmentDeactivate();">
+    <ion-button *ngIf="!itsNew"
+                class="btn btn-modal-teal"
+                (click)="appointmentDeactivate();">
       <ion-icon name="trash"></ion-icon>
     </ion-button>
-    <ion-button class="btn btn-modal-success" (click)="appointmentEdit();">
+    <ion-button class="btn btn-modal-success"
+                (click)="appointmentEdit();">
       <ion-icon name="checkmark"></ion-icon>
     </ion-button>
   </div>
+
 </ion-content>

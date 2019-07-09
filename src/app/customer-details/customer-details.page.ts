@@ -25,6 +25,7 @@ import { AssignmentPage } from './assignment/assignment.page';
   templateUrl: './customer-details.page.html',
   styleUrls: ['./customer-details.page.scss'],
 })
+
 export class CustomerDetailsPage implements OnInit {
   public idCustomer: number = 0;
   public activCustomer: any = {};
@@ -246,26 +247,27 @@ export class CustomerDetailsPage implements OnInit {
         });
 
         modal.onDidDismiss().then((data) => {
-        if (data) {
-          const contact = data['data'];
-          this.contactPersonAddresses = [];
-          this.contactPersonAddr = [];
-          this.pageCount = 0;
-          this.pageTotalCount = 0;
-          this.contactPerson = [];
-          this.contactPerson.push(contact);
-          localStorage.setItem('ContactPerson' + this.idCustomer, contact.id);
-          this.pageTotalCount = contact.addresses.length;
-          for (var i = 0, len = this.pageTotalCount; i < len; i++) {
-            if (i == 0) {
-              this.contactPersonAddresses.push(contact.addresses[i]);
-              for (var j = 0, ln = this.pageTotalCount; j < ln; j++) {
-                this.contactPersonAddr.push(contact.addresses[j]);
+          console.log('onDidDismiss Data :', data);
+          if (data.data != undefined) {
+            const contact = data['data'];
+            this.contactPersonAddresses = [];
+            this.contactPersonAddr = [];
+            this.pageCount = 0;
+            this.pageTotalCount = 0;
+            this.contactPerson = [];
+            this.contactPerson.push(contact);
+            localStorage.setItem('ContactPerson' + this.idCustomer, contact.id);
+            this.pageTotalCount = contact.addresses.length;
+            for (var i = 0, len = this.pageTotalCount; i < len; i++) {
+              if (i == 0) {
+                this.contactPersonAddresses.push(contact.addresses[i]);
+                for (var j = 0, ln = this.pageTotalCount; j < ln; j++) {
+                  this.contactPersonAddr.push(contact.addresses[j]);
+                }
               }
             }
           }
-        }
-      });
+        });
       modal.present();
     }
 

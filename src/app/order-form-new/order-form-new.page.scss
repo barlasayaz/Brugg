@@ -17,28 +17,16 @@
         font-size: 14px !important;        
     }
 
-    .has-focus {
-        border-color: var(--ion-color-main) !important;
-        ion-label {
-          color: var(--ion-color-main) !important;
-        }
-        }
-    
-      .ion-invalid:not(.has-focus) {
+    .ion-invalid:not(.ion-valid) {
+      border-color: var(--ion-color-green) !important;
+      &.has-focus {
         border-color: var(--ion-color-red) !important;
-        ion-label {
-          color: var(--ion-color-red) !important;
-        }
-      } 
-    
-      .ion-valid {
-        border-color: var(--ion-color-green) !important;
-        ion-label {
-          color: var(--ion-color-green) !important;
-        }
-      } 
-
-    
+      }
+    } 
+   
+    .ion-valid:not(.ion-invalid) {
+      border-color: var(--ion-color-green) !important;
+    }     
 
     textarea.text-input {
         padding: 5px !important;

@@ -211,11 +211,11 @@
     <!-- Footer -->
     <ion-row style="margin-top:-18px;">
       <div class="modal-footer">
-          <ion-button 
-                  *ngIf="!itsNew" 
-                  [disabled]="!this.userdata.role_set.edit_customer"
-                  class="btn btn-modal-danger btn-del footerIcon" 
-                  (click)="customerDeactivate();">
+          <ion-button style="margin-top: -2px !important;"
+                      *ngIf="!itsNew" 
+                      [disabled]="!this.userdata.role_set.edit_customer"
+                      class="btn btn-modal-danger btn-del footerIcon" 
+                      (click)="customerDeactivate();">
             <ion-icon name="trash"></ion-icon>
           </ion-button>
           <ion-button 
