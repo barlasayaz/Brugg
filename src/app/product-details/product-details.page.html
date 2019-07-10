@@ -7,24 +7,7 @@
 				<ion-grid>
 					<ion-row>
 						<!-- Product Details -->
-						<ion-col size-lg="7" size="12">
-
-							<div *ngIf="activProduct.images" class="table-responsive hidden-lg-up" id="ps_product"
-								style="margin-bottom:10px">
-								<div class="table-info table-striped" id="product-template">
-									<div class="thead">
-										<div class="tr table-header">
-											<div class="th">{{'Produktbild' | translate}}</div>
-										</div>
-									</div>
-									<div class="tbody">
-										<div class="whitebox-image">
-											<img *ngIf="activProduct.images" src="{{activProduct.images}}?{{nocache}}">
-										</div>
-									</div>
-								</div>
-							</div>
-
+						<ion-col size-xl="7" size-lg="7" size-md="7" size-sm="12" size="12">
 							<div class="table-responsive" id="ps_product" style="margin-bottom:10px">
 								<div class="table-info table-striped" id="product_details">
 									<div class="thead">
@@ -110,15 +93,15 @@
 							</div>
 						</ion-col>
 						<!-- Product Image -->
-						<ion-col size-lg="5" size="12">
-							<div class="table-responsive hidden-md-down" id="ps_product">
-								<div class="table-info table-striped" id="product-template">
+						<ion-col size-xl="5" size-lg="5" size-md="5" size-sm="12" size="12">
+							<div class="table-responsive" id="ps_product">
+								<div class="table table-striped" id="product-template">
 									<div class="thead">
 										<div class="tr table-header">
 											<div class="th">{{'Produktbild' | translate}}</div>
 										</div>
 									</div>
-									<div class="tbody">
+									<div class="tbody1">
 										<div class="whitebox-image">
 											<img *ngIf="activProduct.images" src="{{activProduct.images}}?{{nocache}}">
 										</div>
@@ -126,8 +109,7 @@
 								</div>
 							</div>
 							<!-- Product QR -->
-							<div *ngIf="activProduct.qr_code" class="table-responsive" id="ps_product"
-								style="margin-top:10px">
+							<div *ngIf="activProduct.qr_code" class="table-responsive" id="ps_product">
 								<div class="table-info table-striped" id="product-template">
 									<div class="thead">
 										<div class="tr table-header">
