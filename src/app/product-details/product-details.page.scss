@@ -29,10 +29,15 @@
       text-align: center;
   }
 
+  img {
+    max-width: 100% !important;
+    border: 0 !important;
+    max-height: 300px !important;
+  }
+
     .btn-primary:disabled {
         background-color: rgb(136, 177, 221) !important;
     }
-
 
       .header-buttons {
         height: 100%;
