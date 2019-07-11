@@ -669,7 +669,7 @@ export class ProductListPage implements OnInit {
                 const navigationExtras: NavigationExtras = {
                     queryParams: { idCustomer: this.idCustomer, idProduct: id, productList: JSON.stringify(this.selectedNode.data) }
                 };
-                this.navCtrl.navigateForward(['/product-details/' + id], navigationExtras);
+                this.navCtrl.navigateForward(['/product-details'], navigationExtras);
             }
         }
     }

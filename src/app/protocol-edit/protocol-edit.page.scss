@@ -28,3 +28,9 @@
         position: relative;
         text-align: center;
       }
+
+      img {
+        max-width: 100% !important;
+        border: 0 !important;
+        max-height: 300px !important;
+      }

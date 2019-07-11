@@ -27,6 +27,12 @@
         padding-bottom: 8px;
       }
 
+      img {
+        max-width: 100% !important;
+        border: 0 !important;
+        max-height: 300px !important;
+      }
+
       .itemIcon {
         font-size: 2.2em !important;
         padding-top: 0px !important;
