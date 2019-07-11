@@ -57,6 +57,11 @@ input:-webkit-autofill:active  {
   }
 }
 
+.alert-wrapper.sc-ion-alert-md {
+  max-width: 500px !important;
+  width: 450px !important;
+}
+
 .heightCalc {
   display: block;
   position: absolute;
