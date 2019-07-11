@@ -88,7 +88,7 @@ function processing($id) {
     // escape the uemailid to prevent sql injection
     $id   = trim( mysqli_escape_string($con,$id) );
     
-    $sql    = "SELECT products.*, customer.company FROM products LEFT JOIN customer ON products.customer = customer.id  WHERE  `id`=$id;";
+    $sql    = "SELECT * FROM `products` WHERE  `id`=$id;";
     $ret_sql= mysqli_query( $con, $sql );
 
     $liste = [];
