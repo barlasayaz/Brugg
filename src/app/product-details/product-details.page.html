@@ -42,7 +42,7 @@
 										</div>
 										<div class="tr table-body" *ngFor="let item of activProduct.items">
 											<div class="td td-lbl">{{item.title[lang]}}</div>
-											<div *ngIf="item.type != 5" class="td">{{item.value}}</div>
+											<div *ngIf="item.type != 5" class="td">{{item.value}}</div>											
 											<div *ngIf="item.type == 5" class="td">{{item.value | date : 'dd.MM.yyyy'}}
 											</div>
 										</div>

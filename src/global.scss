@@ -24,8 +24,37 @@ input:-webkit-autofill:active  {
 }
 
 .promptClass .alert-wrapper{
-  width: 350px !important;
+  max-width: 500px !important;
+  width: 100% !important;
   min-width: 350px !important;
+}
+
+.alert-head.sc-ion-alert-md {
+  background: var(--ion-color-primary) !important; 
+}
+
+.alert-sub-title.sc-ion-alert-md, .alert-title.sc-ion-alert-md {
+  color: var(--ion-text-color,#fff) !important;
+}
+
+.alert-title.sc-ion-alert-md {
+  font-size: 20px !important;
+  font-weight: 300 !important;
+  line-height: 15px !important;
+}
+
+.alert-input-wrapper {
+  input.alert-input {
+    border: 1px solid var(--ion-color-green) !important;
+    border-radius: 3px;
+    padding: 10px;
+    font-size: 14px;
+    color: var(--ion-color-grey);
+    margin-bottom: 10px;
+    &:focus {
+      margin-bottom: 10px;
+    }
+  }
 }
 
 .heightCalc {
@@ -336,20 +365,6 @@ ion-select {
   cursor: default !important;
   opacity: 1 !important;
   pointer-events: none !important;
-}
-
-.alert-input-wrapper {
-  input.alert-input {
-    border: 1px solid var(--ion-color-lightgrey) !important;
-    border-radius: 3px;
-    padding: 10px;
-    font-size: 14px;
-    color: var(--ion-color-grey);
-    margin-bottom: 10px;
-    &:focus {
-      margin-bottom: 10px;
-    }
-  }
 }
 
 //STACKED LABEL

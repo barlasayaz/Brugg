@@ -412,7 +412,7 @@ export class ProductEditPage implements OnInit {
       await this.modalCtrl.create({
         component: DialogproduktbildmodalPage,
         componentProps: {
-          'Bild': this.activProduct.images, redDirect: 1
+          'redDirect': 1
         }
       });
 

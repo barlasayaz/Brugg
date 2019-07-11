@@ -1,13 +1,12 @@
 <main-nav aktivPage="ProductTemplate" [idCustomer]="idCustomer" ></main-nav>
 
 <ion-content> 
-
   <div class="ek-content">
     <div class="container">
       <div class="mt20 content-sm">
         <ion-grid>
           <ion-row>
-            <ion-col size="12" size-md="5">
+            <ion-col size-xl="6" size-lg="6" size-md="7" size-sm="12" size="12">
               <div class="table-responsive" id="ps_product-template">
                 <div class="table table-striped" id="product-template">
                   <div class="thead">
@@ -26,17 +25,25 @@
                             [disabled]="selectOption == 0">
                             <ion-icon name="create"></ion-icon>
                           </ion-button>
+                          <ion-button (click)="move_left()" [disabled]="selectOption == 0">
+                            <ion-icon name="arrow-round-forward"></ion-icon>
+                          </ion-button>
                           <ion-button size="small" (click)="down_click()"
                                       [disabled]="downClick == 1">
                             <i class="fas fa-sort-alpha-down"></i>
                           </ion-button>
                           <ion-button size="small" (click)="down_click()"
-                                      [disabled]="downClick == 0" style="padding-right: 10px;">
+                                      [disabled]="downClick == 0" style="padding-right: 10px;"
+                                      style="padding-right: 10px;">
                             <i class="fas fa-sort-alpha-up"></i>
                           </ion-button>
                         </div>
                         <div class="search-search">
-                          <ion-input type="text" placeholder="{{'Suche' |translate }}" [(ngModel)]="searchText" (input)="search_all()"></ion-input>
+                          <ion-input type="text" 
+                                     placeholder="{{'Suche' |translate }}"
+                                     [(ngModel)]="searchText"
+                                     (input)="search_all()">
+                          </ion-input>
                           <!-- <button ion-button small (click)="search_all()">
                             <ion-icon name="search"></ion-icon>
                           </button> -->
@@ -47,8 +54,8 @@
                           <div style="padding: 10px; background: white;">
                             <div dragula="COLUMNS" [(dragulaModel)]="options" id="options">
                               <div *ngFor="let group of options; let opdInd = index"
-                                (click)="onclickOption(group)" [ngClass]="selectedOption[group.id]!=0 ? 'selectOption' : 'unselectOption'">
-                                
+                                   (click)="onclickOption(group)"
+                                   [ngClass]="selectedOption[group.id]!=0 ? 'selectOption' : 'unselectOption'">                                
                                 <div class="product-temp-item" *ngIf="group.type == 0">
                                   <p-accordionTab styleClass="ui-accordion-header" header="{{group.title[lang]}}">
                                     <div class="product-temp-content">
@@ -58,8 +65,7 @@
                                       <div><div class="temp-content-title">Color</div>{{group.options.color}}</div>
                                     </div>
                                   </p-accordionTab>
-                                </div>
-                                
+                                </div>                                
                                 <div class="product-temp-item" *ngIf="group.type == 1">
                                   <p-accordionTab styleClass="ui-accordion-header" header="{{group.title[lang]}}">
                                     <div class="product-temp-content">
@@ -76,7 +82,6 @@
                                     </div>
                                   </p-accordionTab>
                                 </div>
-
                                 <div class="product-temp-item" *ngIf="group.type == 2">
                                   <p-accordionTab styleClass="ui-accordion-header" header="{{group.title[lang]}}">
                                     <div class="product-temp-content">
@@ -85,8 +90,7 @@
                                       <div><div class="temp-content-title">Max Char.</div>{{group.options.max}}</div>
                                     </div>
                                   </p-accordionTab>
-                                </div>
-                                
+                                </div>                                
                                 <div class="product-temp-item" *ngIf="group.type == 3">
                                   <p-accordionTab styleClass="ui-accordion-header" header="{{group.title[lang]}}">
                                     <div class="product-temp-content">
@@ -97,7 +101,6 @@
                                     </div>
                                   </p-accordionTab>
                                 </div>
-
                                 <div class="product-temp-item" *ngIf="group.type == 4">
                                   <p-accordionTab styleClass="ui-accordion-header" header="{{group.title[lang]}}">
                                     <div class="product-temp-content">
@@ -107,7 +110,6 @@
                                     </div>
                                   </p-accordionTab>
                                 </div>
-
                                 <div class="product-temp-item" *ngIf="group.type == 5">
                                   <p-accordionTab styleClass="ui-accordion-header" header="{{group.title[lang]}}">
                                     <div class="product-temp-content">
@@ -115,8 +117,7 @@
                                       <div><div class="temp-content-title">Mandatory</div>{{group.mandatory}}</div>
                                     </div>
                                   </p-accordionTab>
-                                </div>
-                                
+                                </div>                                
                               </div>
                               <span class="group-handle" style="display: block; height:40px;width: 100%"></span>
                             </div>
@@ -128,14 +129,7 @@
                 </div>
               </div>
             </ion-col>
-
-            <ion-col size-md="2" style="display: flex;align-items: center;justify-content: center">
-              <ion-button (click)="move_left()" [disabled]="selectOption == 0">
-                {{'Hinzufügen'}} &nbsp; <ion-icon name="arrow-round-forward"></ion-icon>
-              </ion-button>
-            </ion-col>
-
-            <ion-col size="12" size-md="5">
+            <ion-col size-xl="6" size-lg="6" size-md="5" size-sm="12" size="12">
               <div class="table-responsive" id="ps_product-template">
                 <div class="table table-striped" id="product-template">
                   <div class="thead">
@@ -149,13 +143,21 @@
                     <div class="tr table-subheader table-subheader-fix">
                       <div class="search-search">
                         {{'Titel' | translate}}
-                        <ion-input style="margin-left:10px;" type="text" [(ngModel)]="templateTitleObj[lang]" readonly="true" (click)="promptTitel()"></ion-input>
+                        <ion-input style="margin-left:10px;"
+                                   type="text"
+                                   [(ngModel)]="templateTitleObj[lang]"
+                                   readonly="true"
+                                   (click)="promptTitel()">
+                        </ion-input>
                       </div>
                       <div class="table-subheader-buttons">
                         <ion-button size="small" (click)="template_save();">
                           <ion-icon name="checkmark"></ion-icon>
                         </ion-button>
-                        <ion-button class="btn-red" size="small" (click)="template_remove(selectedTmplt)" [disabled]="selectTemplate == 0">
+                        <ion-button class="btn-red"
+                                    size="small"
+                                    (click)="template_remove(selectedTmplt)"
+                                    [disabled]="selectTemplate == 0">
                           <ion-icon name="trash"></ion-icon>
                         </ion-button>
                       </div>
@@ -165,8 +167,8 @@
                         <div style="padding: 10px; background: white;">
                           <div dragula="COLUMNS" [(dragulaModel)]="template" class="drag-drop" id="template">
                             <div *ngFor="let group of template; let tmpInd = index"
-                              (click)="onclickTemplate(tmpInd)" [ngClass]="selectedTemplate[tmpInd]!=0 ? 'selectTemplate' : 'unselectTemplate'">
-
+                                 (click)="onclickTemplate(tmpInd)"
+                                 [ngClass]="selectedTemplate[tmpInd]!=0 ? 'selectTemplate' : 'unselectTemplate'">
                               <div class="product-temp-item" *ngIf="group.type == 0">
                                   <p-accordionTab styleClass="ui-accordion-header" header="{{group.title[lang]}}">
                                     <div class="product-temp-content">
@@ -176,8 +178,7 @@
                                       <div><div class="temp-content-title">Color</div>{{group.options.color}}</div>
                                     </div>
                                   </p-accordionTab>
-                                </div>
-                                
+                                </div>                                
                                 <div class="product-temp-item" *ngIf="group.type == 1">
                                   <p-accordionTab styleClass="ui-accordion-header" header="{{group.title[lang]}}">
                                     <div class="product-temp-content">
@@ -194,7 +195,6 @@
                                     </div>
                                   </p-accordionTab>
                                 </div>
-
                                 <div class="product-temp-item" *ngIf="group.type == 2">
                                   <p-accordionTab styleClass="ui-accordion-header" header="{{group.title[lang]}}">
                                     <div class="product-temp-content">
@@ -203,8 +203,7 @@
                                       <div><div class="temp-content-title">Max Char.</div>{{group.options.max}}</div>
                                     </div>
                                   </p-accordionTab>
-                                </div>
-                                
+                                </div>                                
                                 <div class="product-temp-item" *ngIf="group.type == 3">
                                   <p-accordionTab styleClass="ui-accordion-header" header="{{group.title[lang]}}">
                                     <div class="product-temp-content">
@@ -215,7 +214,6 @@
                                     </div>
                                   </p-accordionTab>
                                 </div>
-
                                 <div class="product-temp-item" *ngIf="group.type == 4">
                                   <p-accordionTab styleClass="ui-accordion-header" header="{{group.title[lang]}}">
                                     <div class="product-temp-content">
@@ -225,7 +223,6 @@
                                     </div>
                                   </p-accordionTab>
                                 </div>
-
                                 <div class="product-temp-item" *ngIf="group.type == 5">
                                   <p-accordionTab styleClass="ui-accordion-header" header="{{group.title[lang]}}">
                                     <div class="product-temp-content">
@@ -234,16 +231,13 @@
                                     </div>
                                   </p-accordionTab>
                                 </div>
-
                             </div>
-
                             <span class="group-handle">
                               <span class="drag-drop-inner">
                                 {{'Ziehen Sie Ihre Optionen in dieses Feld.' | translate}}
                                 <ion-icon name="copy"></ion-icon>
                               </span>
                             </span>
-
                           </div>
                         </div>
                       </div>
@@ -252,12 +246,9 @@
                 </div>
               </div>
             </ion-col>
-
-
           </ion-row>
         </ion-grid>
       </div>
     </div>
   </div>
-
 </ion-content>
