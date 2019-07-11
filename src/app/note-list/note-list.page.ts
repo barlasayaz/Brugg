@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef,OnInit } from '@angular/core';
+import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
 import { NavController, ModalController, AlertController, Events } from '@ionic/angular';
 import { ApiService } from '../services/api';
 import { TranslateService } from '@ngx-translate/core';
@@ -35,14 +35,14 @@ export class NoteListPage implements OnInit {
     public xlsHeader: any[];
     public splitFilter: boolean = false;
     public idCustomer: number = 0;
-    public columnFilterValues = { title: "", notes: "", notes_date: "", category: "", name_user: "", name_contact: "", search_all: "" };
-    public categoryNames: string[] = ["Besuchsberichte", "Kundenpotential", "Kundenbeziehung", "Mitbewerber", "Dokumentation", "Werbegeschenke", "Jahreswechsel", "Dienstleistungen", "Sonstiges", "Disposition",  "Neukundenakquise"];
+    public columnFilterValues = { title: '', notes: '', notes_date: '', category: '', name_user: '', name_contact: '', search_all: '' };
+    public categoryNames: string[] = ['Besuchsberichte', 'Kundenpotential', 'Kundenbeziehung', 'Mitbewerber', 'Dokumentation', 'Werbegeschenke', 'Jahreswechsel', 'Dienstleistungen', 'Sonstiges', 'Disposition',  'Neukundenakquise'];
     public filterCols: string[];
     public expendedNodes: string[] = [];
     public rowRecords: number = 0;
     public totalRecords: number = 0;
-    public company: string = "";
-    public heightCalc:any="700px";
+    public company: string = '';
+    public heightCalc: any = '700px';
     public authorList: any = [];
     public pointofContactList: any = [];
 
@@ -126,12 +126,12 @@ export class NoteListPage implements OnInit {
     }];
     public popupMenu: MenuItem[] = [{
         label: this.translate.instant('Menü'),
-        icon: "fa fa-fw fa-list",
+        icon: 'fa fa-fw fa-list',
         items: this.menuItems
     }]
 
     @ViewChild('tt') dataTable: TreeTable;
-    @ViewChild("divHeightCalc") divHeightCalc: ElementRef;
+    @ViewChild('divHeightCalc') divHeightCalc: ElementRef;
 
     constructor(public navCtrl: NavController,
         public userdata: UserdataService,
@@ -159,7 +159,7 @@ export class NoteListPage implements OnInit {
             'title', 'notes', 'notes_date', 'category', 'name_user', 'name_contact', 'search_all'
         ];
         this.selectedColumns = JSON.parse(JSON.stringify(this.cols));
-    
+
         this.idCustomer = parseInt(this.route.snapshot.paramMap.get('id'));
        // this.company = params["company"];
        console.log('NoteListPage idCustomer:', this.idCustomer);
@@ -167,23 +167,23 @@ export class NoteListPage implements OnInit {
 
     }
     onResize(event) {
-        console.log("onResize");
+        console.log('onResize');
         this.funcHeightCalc();
      }
 
-    funcHeightCalc(){
-        var x = this.divHeightCalc.nativeElement.offsetHeight;
-        if(this.splitFilter) x= x - 51;
-        if(x<80) x = 80;
-        this.heightCalc = x+"px";
-        console.log("heightCalc:",x, this.heightCalc );
+    funcHeightCalc() {
+        let x = this.divHeightCalc.nativeElement.scrollHeight;
+        if (x == 0) { x = 550; }
+        if (this.splitFilter) { x = x - 51; }
+        // if (x < 80) { x = 80; }
+        this.heightCalc = x + 'px';
+        console.log('heightCalc 4 :', x, this.heightCalc );
     }
-
 
     page_load() {
         this.rowRecords = 0;
         this.totalRecords = 0;
-        this.events.publish("prozCustomer", 0);
+        this.events.publish('prozCustomer', 0);
         this.apiService.pvs4_get_note_list(this.idCustomer).then((result: any) => {
             this.noteListAll = JSON.parse(JSON.stringify(result.list));
             if (localStorage.getItem('filter_values_note') != undefined) {
@@ -200,7 +200,7 @@ export class NoteListPage implements OnInit {
 
             for (let i = 0; i < this.noteListAll.length; i++) {
                 let ci = parseInt(this.noteListAll[i].data.category) - 1 ;
-                if (ci < 0) ci=8;
+                if (ci < 0) { ci = 8; }
                 let cn = this.categoryNames[ci];
                 console.log('categoryName:', cn, ci, this.noteListAll[i]);
                 this.noteListAll[i].data.category = this.translate.instant(cn); 
@@ -215,22 +215,25 @@ export class NoteListPage implements OnInit {
     try_filter(node: TreeNode): boolean {
         let ret: any = false;
         for (let i = 0; i < this.cols.length; i++) {
-            if (this.columnFilterValues["search_all"].trim().length > 0 && node.data[this.cols[i].field] != undefined && node.data[this.cols[i].field].toLowerCase().indexOf(this.columnFilterValues["search_all"].trim().toLowerCase()) >= 0)
+            if (this.columnFilterValues['search_all'].trim().length > 0 && node.data[this.cols[i].field] != undefined && node.data[this.cols[i].field].toLowerCase().indexOf(this.columnFilterValues['search_all'].trim().toLowerCase()) >= 0) {
                 ret = true;
+            }
         }
 
-        if (this.columnFilterValues["search_all"].trim().length > 0 && !ret)
+        if (this.columnFilterValues['search_all'].trim().length > 0 && !ret) {
             return false;
-        else if (this.columnFilterValues["search_all"].trim().length == 0 && !ret)
+        } else if (this.columnFilterValues['search_all'].trim().length == 0 && !ret) {
             ret = true;
+             }
 
         for (let i = 0; i < this.cols.length; i++) {
-            let fx = "";
-            if(this.columnFilterValues[this.cols[i].field]) {
+            let fx = '';
+            if (this.columnFilterValues[this.cols[i].field]) {
                 fx = this.columnFilterValues[this.cols[i].field].trim();
             }
-            if (fx.length > 0 && node.data[this.cols[i].field] != undefined && node.data[this.cols[i].field].toLowerCase().indexOf(fx.toLowerCase()) < 0)
+            if (fx.length > 0 && node.data[this.cols[i].field] != undefined && node.data[this.cols[i].field].toLowerCase().indexOf(fx.toLowerCase()) < 0) {
                 ret = false;
+            }
         }
 
         return ret;
@@ -252,19 +255,19 @@ export class NoteListPage implements OnInit {
             this.menuItems[5].items[2]['disabled'] = true;
         }
         this.generate_noteList();
-        localStorage.setItem("filter_values_note", JSON.stringify(this.columnFilterValues));
+        localStorage.setItem('filter_values_note', JSON.stringify(this.columnFilterValues));
     }
 
     cancel_filters(cancel_type) {
-        console.log("cancel_filters");
+        console.log('cancel_filters');
         this.menuItems[5].items[2]['disabled'] = true;
         if (cancel_type == 1) {
             for (let i = 0; i < this.cols.length; i++) {
-                this.columnFilterValues[this.cols[i].field] = "";
+                this.columnFilterValues[this.cols[i].field] = '';
             }
+        } else {
+            this.columnFilterValues = { title: '', notes: '', notes_date: '', category: '', name_user: '', name_contact: '', search_all: '' };
         }
-        else
-            this.columnFilterValues = { title: "", notes: "", notes_date: "", category: "", name_user: "", name_contact: "", search_all: "" };
         this.generate_noteList();
     }
 
@@ -338,7 +341,7 @@ export class NoteListPage implements OnInit {
                     await this.modalCtrl.create({
                         component: NoteEditComponent,
                         componentProps: {
-                            "id": id, idCustomer: this.idCustomer
+                            'id': id, idCustomer: this.idCustomer
                         }
                     });
                 modal.onDidDismiss().then(data => {
@@ -358,51 +361,51 @@ export class NoteListPage implements OnInit {
             if (this.selectedNode.data.id) {
                 let id = parseInt(this.selectedNode.data.id);
                 console.log('menu_view id', id);
-                this.navCtrl.navigateForward(["/note-details/"+id]);
+                this.navCtrl.navigateForward(['/note-details/' + id]);
             }
         }
     }
 
     excel_all() {
-        console.log("note-list excel_all");
+        console.log('note-list excel_all');
         let data: any = [];
         this.allnodes = [];
-        console.log("allnodes :", this.allnodes);
+        console.log('allnodes :', this.allnodes);
         this.data_tree(this.noteListAll);
         for (var i = 0, len = this.allnodes.length; i < len; i++) {
             let obj = this.allnodes[i];
-            obj.notes = obj.notes.replace(/(\\r\\n|\\n|\\r)/gm," ");
+            obj.notes = obj.notes.replace(/(\\r\\n|\\n|\\r)/gm, ' ');
             let json: any = {};
             for (var j = 0; j < this.selectedColumns.length; j++) {
-                if(obj[this.selectedColumns[j].field]) {
+                if (obj[this.selectedColumns[j].field]) {
                     json[this.selectedColumns[j].header] = obj[this.selectedColumns[j].field];
-                }else{
-                    json[this.selectedColumns[j].header] = "";
+                } else {
+                    json[this.selectedColumns[j].header] = '';
                 }
             }
-            console.log(">>json :", json);
+            console.log('>>json :', json);
             data.push(json); 
         }
         this.excelService.exportAsExcelFile(data, 'note_all.xlsx');
     }
 
     excel_view() {
-        console.log("excel_view");
+        console.log('excel_view');
         let data: any = [];
         this.allnodes = [];
         this.data_tree(this.noteListView);
         for (var i = 0, len = this.allnodes.length; i < len; i++) {
             let obj = this.allnodes[i];
-            obj.notes = obj.notes.replace(/(\\r\\n|\\n|\\r)/gm," ");
+            obj.notes = obj.notes.replace(/(\\r\\n|\\n|\\r)/gm, ' ');
             let json: any = {};
             for (var j = 0; j < this.selectedColumns.length; j++) {
-                if(obj[this.selectedColumns[j].field]) {
+                if (obj[this.selectedColumns[j].field]) {
                     json[this.selectedColumns[j].header] = obj[this.selectedColumns[j].field];
-                }else{
-                    json[this.selectedColumns[j].header] = "";
-                }                
+                } else {
+                    json[this.selectedColumns[j].header] = '';
+                }
             }
-            console.log(">>json :", json);
+            console.log('>>json :', json);
             data.push(json);
         }
         this.excelService.exportAsExcelFile(data, 'note_view.xlsx');
@@ -414,7 +417,7 @@ export class NoteListPage implements OnInit {
         let headerRowVisible: any = 1;
         for (var k = 0; k < this.selectedColumns.length; k++) {
             columns.push({ text: this.selectedColumns[k].header, style: 'header' });
-            widthsArray.push("*"); 
+            widthsArray.push('*'); 
         }
         let bodyArray: any[] = [];
         bodyArray.push(columns);
@@ -424,18 +427,23 @@ export class NoteListPage implements OnInit {
         let rowArray: any[] = [];
         for (var i = 0, len = this.allnodes.length; i < len; i++) {
             obj = this.allnodes[i];
-            obj.notes = obj.notes.replace(/(\\r\\n|\\n|\\r)/gm," ");
+            obj.notes = obj.notes.replace(/(\\r\\n|\\n|\\r)/gm, ' ');
             rowArray = [];
             for (var j = 0; j < this.selectedColumns.length; j++) {
-                if (obj[this.selectedColumns[j].field])
+                if (obj[this.selectedColumns[j].field]) {
                     rowArray.push(obj[this.selectedColumns[j].field]);
-                else
+                } else {
                     rowArray.push('');
+                }
             }
             bodyArray.push(rowArray);
         }
 
-        this.pdf.get_ListDocDefinition(bodyArray, widthsArray, headerRowVisible, this.translate.instant("Notiz") + " " + this.translate.instant("Liste"),this.translate.instant("Notiz")+this.translate.instant("Liste")+'.pdf');
+        this.pdf.get_ListDocDefinition(bodyArray,
+                                       widthsArray,
+                                       headerRowVisible,
+                                       this.translate.instant('Notiz') + ' ' + this.translate.instant('Liste'),
+                                       this.translate.instant('Notiz') + this.translate.instant('Liste') + '.pdf');
     }
 
     data_tree(nodes: TreeNode[]): any {
@@ -449,7 +457,7 @@ export class NoteListPage implements OnInit {
         if (!this.splitFilter) {
             this.cancel_filters(1);
         }
-        localStorage.setItem("split_filter_note", JSON.stringify(this.splitFilter));
+        localStorage.setItem('split_filter_note', JSON.stringify(this.splitFilter));
         this.funcHeightCalc();
     }
 
@@ -487,8 +495,9 @@ export class NoteListPage implements OnInit {
     isFilterOn(): any {
         let ret = false;
         for (let i = 0; i < this.filterCols.length; i++) {
-            if (this.columnFilterValues[this.filterCols[i]].trim().length > 0)
+            if (this.columnFilterValues[this.filterCols[i]].trim().length > 0) {
                 ret = true;
+            }
         }
         return ret;
     }

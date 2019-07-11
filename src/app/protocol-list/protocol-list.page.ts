@@ -126,6 +126,7 @@ export class ProtocolListPage implements OnInit {
     }]
 
     @ViewChild('tt') dataTable: TreeTable;
+    @ViewChild('divHeightCalc') divHeightCalc: any;
 
     constructor(public navCtrl: NavController,
         public userdata: UserdataService,
@@ -219,13 +220,13 @@ export class ProtocolListPage implements OnInit {
         this.funcHeightCalc();
      }
 
-    @ViewChild('divHeightCalc') divHeightCalc: any;
     funcHeightCalc() {
-        let x = this.divHeightCalc.nativeElement.offsetHeight;
+        let x = this.divHeightCalc.nativeElement.scrollHeight;
+        if (x == 0) { x = 550; }
         if (this.splitFilter) { x = x - 51; }
-        if (x < 80) { x = 80; }
+        // if (x < 80) { x = 80; }
         this.heightCalc = x + 'px';
-        console.log('heightCalc:', x, this.heightCalc );
+        console.log('heightCalc 3 :', x, this.heightCalc );
     }
 
 

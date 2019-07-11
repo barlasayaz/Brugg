@@ -20,6 +20,17 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
 })
 
 export class CustomerTablePage implements OnInit {
+
+    constructor(public navCtrl: NavController,
+        public userdata: UserdataService,
+        public apiService: ApiService,
+        public translate: TranslateService,
+        public modalCtrl: ModalController,
+        public excelService: ExcelService,
+        public alertCtrl: AlertController,
+        public pdf: PdfExportService,
+        public events: Events) {
+    }
     public customerListAll: TreeNode[] = [];
     public customerListView: TreeNode[] = [];
     public cols: any[] = [];
@@ -151,17 +162,8 @@ export class CustomerTablePage implements OnInit {
     }];
 
     @ViewChild('tt') dataTable: TreeTable;
+    @ViewChild('divHeightCalc') divHeightCalc: any;
 
-    constructor(public navCtrl: NavController,
-        public userdata: UserdataService,
-        public apiService: ApiService,
-        public translate: TranslateService,
-        public modalCtrl: ModalController,
-        public excelService: ExcelService,
-        public alertCtrl: AlertController,
-        public pdf: PdfExportService,
-        public events: Events) {
-    }
     ngOnInit(): void {
         this.cols = [
             { field: 'company', header: this.translate.instant('Firma') },
@@ -188,13 +190,13 @@ export class CustomerTablePage implements OnInit {
         this.funcHeightCalc();
      }
 
-    @ViewChild('divHeightCalc') divHeightCalc: any;
     funcHeightCalc() {
-        var x = this.divHeightCalc.nativeElement.offsetHeight;
+        let x = this.divHeightCalc.nativeElement.scrollHeight;
+        if (x == 0) { x = 550; }
         if (this.splitFilter) { x = x - 51; }
-        if (x < 80) { x = 80; }
+        // if (x < 80) { x = 80; }
         this.heightCalc = x + 'px';
-        console.log('heightCalc:', x, this.heightCalc );
+        console.log('heightCalc 1 :', x, this.heightCalc );
     }
 
     page_load() {

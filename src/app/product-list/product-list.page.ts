@@ -204,6 +204,8 @@ export class ProductListPage implements OnInit {
     }];
 
     @ViewChild('tt') dataTable: TreeTable;
+    @ViewChild('divHeightCalc') divHeightCalc: any;
+    @ViewChild('menu') menu: SlideMenu;
 
     constructor(public navCtrl: NavController,
         public userdata: UserdataService,
@@ -239,16 +241,14 @@ export class ProductListPage implements OnInit {
         this.funcHeightCalc();
     }
 
-    @ViewChild('divHeightCalc') divHeightCalc: any;
     funcHeightCalc() {
-        var x = this.divHeightCalc.nativeElement.offsetHeight;
+        let x = this.divHeightCalc.nativeElement.scrollHeight;
+        if (x == 0) { x = 550; }
         if (this.splitFilter) { x = x - 51; }
-        if (x < 80) { x = 80; }
+        // if (x < 80) { x = 80; }
         this.heightCalc = x + 'px';
-        console.log('heightCalc:', x, this.heightCalc);
+        console.log('heightCalc 2 :', x, this.heightCalc);
     }
-
-    @ViewChild('menu') menu: SlideMenu;
 
     page_load() {
         console.log('ionViewDidLoad ProductListPage');
@@ -307,10 +307,10 @@ export class ProductListPage implements OnInit {
                 let options = [];
 
                 if (this.productListAll[index].data.items) {
-                    //console.log("items :", this.productListAll[index].data.items);
+                    // console.log("items :", this.productListAll[index].data.items);
                     try {
                         options = JSON.parse(this.productListAll[index].data.items);
-                        //console.log("options :", options);
+                        // console.log("options :", options);
                     } catch (e) {
                         console.error("JSON.parse options err :", e);
                         console.log("options :", this.productListAll[index].data);

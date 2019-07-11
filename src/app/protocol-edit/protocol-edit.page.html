@@ -194,7 +194,8 @@
                             <ion-item lines="none">
                               <ion-label *ngIf="item.mandatory=='true'">{{item.title[lang]}} *</ion-label>
                               <ion-label *ngIf="item.mandatory=='false'">{{item.title[lang]}}</ion-label>
-                              <ion-toggle [(ngModel)]="item.value" 
+                              <ion-toggle required="item.mandatory"
+                                          [(ngModel)]="item.value" 
                                           color="{{item.options.color}}">
                               </ion-toggle>
                             </ion-item>
@@ -203,7 +204,8 @@
                             <ion-item lines="none">
                               <ion-label position="floating" *ngIf="item.mandatory=='true'">{{item.title[lang]}} *</ion-label>
                               <ion-label position="floating" *ngIf="item.mandatory=='false'">{{item.title[lang]}}</ion-label>
-                              <ion-select class="form-control" 
+                              <ion-select required="item.mandatory"
+                                          class="form-control" 
                                           [(ngModel)]="item.value"
                                           okText="{{translate.instant('okay')}}" 
                                           cancelText="{{translate.instant('dismiss')}}">
@@ -216,8 +218,9 @@
                             <ion-item lines="none">
                               <ion-label position="floating" *ngIf="item.mandatory=='true'">{{item.title[lang]}} *</ion-label>
                               <ion-label position="floating" *ngIf="item.mandatory=='false'">{{item.title[lang]}}</ion-label>
-                              <ion-textarea [(ngModel)]="item.value"
-                                    maxlength="{{item.options.max}}">
+                              <ion-textarea required="item.mandatory"
+                                            [(ngModel)]="item.value"
+                                            maxlength="{{item.options.max}}">
                               </ion-textarea>
                             </ion-item>
                           </ion-col>
@@ -225,7 +228,8 @@
                             <ion-item lines="none">
                               <ion-label position="floating" *ngIf="item.mandatory=='true'">{{item.title[lang]}} *</ion-label>
                               <ion-label position="floating" *ngIf="item.mandatory=='false'">{{item.title[lang]}}</ion-label>
-                              <ion-input type="text" 
+                              <ion-input required="item.mandatory"
+                                         type="text" 
                                          (keydown)="keyDown($event)" 
                                          [(ngModel)]="item.value" 
                                          min="{{item.options.min}}"
@@ -237,7 +241,8 @@
                             <ion-item lines="none">
                               <ion-label position="floating" *ngIf="item.mandatory=='true'">{{item.title[lang]}} *</ion-label>
                               <ion-label position="floating" *ngIf="item.mandatory=='false'">{{item.title[lang]}}</ion-label>
-                              <ion-datetime [ngClass]="{required:fehler}" 
+                              <ion-datetime required="item.mandatory"
+                                            [ngClass]="{required:fehler}" 
                                             type="time" 
                                             [(ngModel)]="item.value"
                                             name="time" required="true" 
@@ -251,7 +256,8 @@
                             <ion-item lines="none">
                               <ion-label position="floating" *ngIf="item.mandatory=='true'">{{item.title[lang]}} *</ion-label>
                               <ion-label position="floating" *ngIf="item.mandatory=='false'">{{item.title[lang]}}</ion-label>
-                              <ion-datetime [(ngModel)]="item.value"
+                              <ion-datetime required="item.mandatory"
+                                            [(ngModel)]="item.value"
                                             displayFormat="DD.MM.YYYY" 
                                             max = {{maxDate}}
                                             doneText="{{translate.instant('okay')}}"
