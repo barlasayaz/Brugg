@@ -258,6 +258,7 @@ export class ProductListPage implements OnInit {
 
         this.events.publish('prozCustomer', 0);
         this.apiService.pvs4_get_product_list(this.idCustomer).then((result: any) => {
+            console.log('pvs4_get_product_list ok');
             try {
                 let list = JSON.parse(JSON.stringify(result.list));
                 this.productListAll = list;
@@ -281,6 +282,7 @@ export class ProductListPage implements OnInit {
             }
 
             this.title_translate(this.productListAll);
+            console.log('title_translate ok');
 
             for (let index = 0; index < this.productListAll.length; index++) {
                 // last_protocol & last_protocol_next
@@ -322,9 +324,9 @@ export class ProductListPage implements OnInit {
                 if (options == null) { options = []; }
 
                 for (let i = 0; i < options.length; i++) {
-                    console.log('options :', options[i]);
-                    console.log('options :', options[i].id);
-                    console.log('options :', options[i].title);
+                    //console.log('options :', options[i]);
+                    //console.log('options :', options[i].id);
+                    //console.log('options :', options[i].title);
 
                     if (!this.cols.find(x => x.field == options[i].title[this.lang])) { this.cols.push({ field: options[i].title[this.lang], header: options[i].title[this.lang] }); }
                     const pipe = new DatePipe('en-US');
@@ -333,7 +335,7 @@ export class ProductListPage implements OnInit {
                 }
                 // console.log("index :", index);
             }
-            // console.log("selectedColumns :", this.cols);
+            console.log("selectedColumns");
             this.selectedColumns = JSON.parse(JSON.stringify(this.cols));
             let json = '{';
             for (var j = 0; j < this.cols.length; j++) {
