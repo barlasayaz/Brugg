@@ -69,12 +69,15 @@ export class ProtocolEditPage implements OnInit {
         this.productList = JSON.parse(list);
       }
     });
+    console.log('productList :', this.productList);
 
     if (this.idProtocol > 0) {
+      console.log('protocol new');
       this.itsNew = false;
       this.pageTitle = this.translate.instant('Protokoll bearbeiten');
       this.loadProtocol();
     } else {
+      console.log('protocol edit');
       this.idProtocol = 0;
       this.itsNew = true;
       this.pageTitle = this.translate.instant('Neues Protokoll');
@@ -135,15 +138,15 @@ export class ProtocolEditPage implements OnInit {
     } else {
       this.selectedTemplate[tmpId] = 0;
       this.selectTemplate = 0;
-    } 
+    }
     this.selectedTmplt = tmpId;
-  }  
+  }
 
   loadProtocol() {
     this.apiService.pvs4_get_protocol(this.idProtocol).then((result: any) => {
       this.activProtocol = result.obj;
       this.activProtocol.title = JSON.parse(this.activProtocol.title);
-      this.activProtocol.items = JSON.parse(result.obj.items);  
+      this.activProtocol.items = JSON.parse(result.obj.items);
       if (result.obj.protocol_date && result.obj.protocol_date != null && new Date(result.obj.protocol_date) >= new Date(1970, 0, 1)) {
           this.activProtocol.protocol_date = new Date(result.obj.protocol_date).toISOString();
           this.activProtocol.protocol_date_next = new Date(result.obj.protocol_date_next).toISOString();
@@ -167,32 +170,40 @@ export class ProtocolEditPage implements OnInit {
   }
 
   loadProduct() {
+    console.log('loadProduct() productList:', this.productList);
+    let interval: number = 36;
+    this.productList.forEach(element => {
+      let obj = element;
+      if (element.data) { obj = element.data; }
+      //obj.id = parseInt( obj.id ); //have to be a string
+      this.products.push({'id': obj.id, 'id_number': obj.id_number});
+      obj.check_interval = parseInt(obj.check_interval);
+      if ((obj.check_interval  < interval) && (obj.check_interval > 1)) { interval = obj.check_interval; }
+    });
+    let date = new Date(this.activProtocol.protocol_date);
 
-      console.log('loadProduct() productList:', this.productList); 
-      let interval: number = 36;
-      this.productList.forEach(element => {   
-        if (element) { 
-          let obj = element;
-        // obj.id = parseInt( obj.id ); //have to be a string
-          this.products.push({'id': obj.id, 'id_number': obj.id_number});
-          obj.check_interval = parseInt(obj.check_interval);
-          if ((obj.check_interval  < interval) && (obj.check_interval > 1)) { interval = obj.check_interval; }
-         }
-      });
-      let date = new Date(this.activProtocol.protocol_date);
-       date.setDate(date.getDate() + (30 * interval));
+    if (interval == 12) {
+       date.setDate(date.getDate() + (365) );
+    } else if (interval == 24) {
+      date.setDate(date.getDate() + (2 * 365) );
+    } else if (interval == 36) {
+      date.setDate(date.getDate() + (3 * 365) );
+    } else {
+      date.setDate(date.getDate() + (30 * interval) );
+    }
     this.activProtocol.protocol_date_next = date.toISOString();
     this.activProtocol.product = this.products;
-    console.log('products :', this.products, interval);
-  } 
+    this.activProtocol.result = '0';
+    console.log('products :', this.products, interval, this.activProtocol);
+  }
 
-  search_all() { 
+  search_all() {
     this.templates = JSON.parse(JSON.stringify(this.templateAll));
     for (let i = this.templates.length - 1; i >= 0; i--) {
         if (this.templates[i].title[this.lang].toLowerCase().indexOf(this.searchText.toLowerCase()) < 0) {
            this.templates.splice(i, 1);
-        } 
-    } 
+        }
+    }
   }
 
   move_left() {
@@ -420,5 +431,6 @@ export class ProtocolEditPage implements OnInit {
     let navigationExtras: NavigationExtras = {
       queryParams: { 'idTemplate': this.selectedTmplt, 'idCustomer': this.idCustomer, 'activTemplate': JSON.stringify(activTemplate)}
     };
-    this.navCtrl.navigateForward(['/protocol-template'], navigationExtras);  }
+    this.navCtrl.navigateForward(['/protocol-template'], navigationExtras);
+  }
 }

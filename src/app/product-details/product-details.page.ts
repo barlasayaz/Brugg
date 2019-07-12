@@ -90,10 +90,10 @@ export class ProductDetailsPage implements OnInit {
         this.idCustomer = params['idCustomer'];
         // this.company = params["company"];
         this.selectedProduct = params['productList'];
-
+        console.log('selectedProduct param :', this.selectedProduct);
         this.activProduct.product = null;
     });
-
+      
       this.dateiListe();
       this.nocache = new Date().getTime();
   }

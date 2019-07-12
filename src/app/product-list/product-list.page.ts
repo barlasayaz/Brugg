@@ -665,9 +665,12 @@ export class ProductListPage implements OnInit {
         if (this.selectedNode) {
             if (this.selectedNode.data.id) {
                 const id = parseInt(this.selectedNode.data.id);
-                console.log('menu_view id', id);
+                console.log('menu_view :', id, JSON.stringify(this.selectedNode.data));
                 const navigationExtras: NavigationExtras = {
-                    queryParams: { idCustomer: this.idCustomer, idProduct: id, productList: JSON.stringify(this.selectedNode.data) }
+                    /* queryParams: { idCustomer: this.idCustomer, idProduct: id, productList: JSON.stringify(this.selectedNode.data) } */
+                    queryParams: { idCustomer: this.idCustomer,
+                                   idProduct: id,
+                                   productList: JSON.stringify(this.selectedNode.data.id) }
                 };
                 this.navCtrl.navigateForward(['/product-details'], navigationExtras);
             }
@@ -685,17 +688,23 @@ export class ProductListPage implements OnInit {
     create_protocol() {
         if (this.selectedNode) {
             console.log('create_protocol', this.selectedNode);
-            let nodeList : string[]  = [];
+            let nodeList = [];
             for (let index = 0; index < this.selectedNode.length; index++) {
                 const element = this.selectedNode[index];
-                nodeList.push(element.data);
+                nodeList.push({
+                    'id': element.data.id,
+                    'title': element.data.title,
+                    'id_number': element.data.id_number,
+                    'check_interval': element.data.check_interval
+                });
+                // nodeList.push(element.data);
             }
             const navigationExtras: NavigationExtras = {
-                queryParams: {
-                    idCustomer: this.idCustomer,
-                    productList: JSON.stringify(nodeList)
+                queryParams: { idCustomer: this.idCustomer,
+                               productList: JSON.stringify(nodeList)
                 }
             };
+            console.log('navigationExtras :', navigationExtras);
             this.navCtrl.navigateForward(['/protocol-edit'], navigationExtras);
         }
     }
