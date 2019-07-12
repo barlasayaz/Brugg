@@ -92,13 +92,22 @@ export class ProductDetailsPage implements OnInit {
         this.selectedProduct = params['productList'];
 
         this.activProduct.product = null;
-        this.loadProduct(this.idProduct);
-        this.dateiListe();
     });
 
+      this.dateiListe();
       this.nocache = new Date().getTime();
   }
 
+  dateiListe() {
+    this.apiService.pvs4_get_file(this.idProduct, 'product').then((result) => {
+      console.log('dateiliste', result);
+      this.dateien = result['files'];
+      this.link = result['link'];
+      this.file_link = result['file_link'];
+      this.loadProduct(this.idProduct);
+    });
+  }
+  
   loadProduct(id) {
     this.activProduct.images = '';
     this.apiService.pvs4_get_product(id).then((result: any) => {
@@ -156,6 +165,7 @@ export class ProductDetailsPage implements OnInit {
 
     modal.present();
   }
+
   async qr_code() {
     const obj = {};
     const modal =
@@ -168,6 +178,7 @@ export class ProductDetailsPage implements OnInit {
 
     modal.present();
   }
+
   delFile(datei) {
     const alert = this.alertCtrl.create({
       header: '',
@@ -194,16 +205,7 @@ export class ProductDetailsPage implements OnInit {
 
   }
 
-  dateiListe() {
-    this.apiService.pvs4_get_file(this.idProduct, 'product').then((result) => {
-      console.log('dateiliste', result);
-      this.dateien = result['files'];
-      this.link = result['link'];
-      this.file_link = result['file_link'];
-    });
-  }
   getProductUrlList(productImagePath, callback) {
-
     const urlList: any = [];
     urlList.push({
       link: productImagePath
