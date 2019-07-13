@@ -20,10 +20,10 @@ export class AppointmentEditComponent implements OnInit {
   public itsNew: boolean = false;
   public activAppointment: any = {
     active: 1,
-    appointment_type: 0,
+    appointment_type: '0',
     idCustomer: this.idCustomer,
     idUser: this.userdata.id,
-    notes: "",
+    notes: '',
     appointment_date: new Date().toISOString(),
     id: 0,
     start_time: this.apiService.appointmentStartTime,
@@ -69,25 +69,29 @@ export class AppointmentEditComponent implements OnInit {
     this.employeesList();
     this.loadCustomer();
 
-    if (this.navParams.get("appointment")) {
-      this.activAppointment = this.navParams.get("appointment");
+    if (this.navParams.get('appointment')) {
+      this.activAppointment = this.navParams.get('appointment');
       this.idAppointment = this.activAppointment.id;
       this.idCustomer = this.activAppointment.idCustomer;
-      if (this.activAppointment.idUser == null) this.activAppointment.idUser = this.userdata.id;
-      if (this.activAppointment.appointment_date == null) this.activAppointment.appointment_date = new Date().toISOString();
-      if (this.activAppointment.start_time == null) this.activAppointment.start_time = this.apiService.appointmentStartTime;
-      if (this.activAppointment.end_time == null) this.activAppointment.end_time = this.apiService.appointmentEndTime;;
+      if (this.activAppointment.idUser == null) {
+        this.activAppointment.idUser = this.userdata.id;
+      } else {
+        this.activAppointment.idUser = parseInt(this.activAppointment.idUser);
+      }
+      if (this.activAppointment.appointment_date == null) { this.activAppointment.appointment_date = new Date().toISOString(); }
+      if (this.activAppointment.start_time == null) { this.activAppointment.start_time = this.apiService.appointmentStartTime; }
+      if (this.activAppointment.end_time == null) { this.activAppointment.end_time = this.apiService.appointmentEndTime; }
     }
 
-    if (this.navParams.get("redirect")) {
-      this.redirect = this.navParams.get("redirect");
+    if (this.navParams.get('redirect')) {
+      this.redirect = this.navParams.get('redirect');
       if (this.redirect == 3) {
-        this.idCustomer = this.navParams.get("idCustomer");
+        this.idCustomer = this.navParams.get('idCustomer');
         this.customerDisabled = true;
       }
       if (this.redirect == 4) {
-        this.idCustomer = this.navParams.get("idCustomer");
-        this.activAppointment.appointment_type = this.navParams.get("appointmentType");
+        this.idCustomer = this.navParams.get('idCustomer');
+        this.activAppointment.appointment_type = this.navParams.get('appointmentType');
         this.customerDisabled = true;
         this.appointmentTypeDisabled = true;
       }
@@ -101,10 +105,11 @@ export class AppointmentEditComponent implements OnInit {
       this.modalTitle = this.translate.instant('Neuer Termin');
     }
 
-    if (this.idCustomer != 0) this.contactPersonDisabled = false;
+    if (this.idCustomer != 0) { this.contactPersonDisabled = false; }
 
-    console.log("AppointmentEditComponent: ", this.activAppointment, this.userdata.licensee);
+    console.log('AppointmentEditComponent: ', this.activAppointment, this.userdata.licensee);
   }
+
   loadAppointment() {
     this.apiService.pvs4_get_appointment(this.idAppointment).then((result: any) => {
       this.activAppointment = result.obj;
@@ -126,12 +131,12 @@ export class AppointmentEditComponent implements OnInit {
       } 
       */
       for (let i = 0; i < this.listCustomer.length; i++) {
-        if(this.listCustomer[i].id == this.idCustomer) {
+        if (this.listCustomer[i].id == this.idCustomer) {
           this.customer = this.listCustomer[i];
           console.log('customer: ', this.customer);
         }
       }
-      if(this.idCustomer > 0) this.contactPersonsList(this.idCustomer);
+      if (this.idCustomer > 0) { this.contactPersonsList(this.idCustomer); }
     });
   }
 
@@ -211,7 +216,7 @@ export class AppointmentEditComponent implements OnInit {
       return;
     }
 
-    console.log("appointmentEdit()");
+    console.log('appointmentEdit()');
     let obj = {
       active: 1,
       appointment_type: 0,
@@ -219,28 +224,28 @@ export class AppointmentEditComponent implements OnInit {
       idContactPerson: 0,
       idUser: 0,
       licensee: this.userdata.licensee,
-      notes: "",
-      appointment_date: "",
+      notes: '',
+      appointment_date: '',
       id: 0,
-      start_time: "",
-      end_time: ""
+      start_time: '',
+      end_time: ''
     };
 
-    if (this.activAppointment["licensee"]) obj.licensee = this.activAppointment["licensee"];
-    if (this.activAppointment["active"]) obj.active = this.activAppointment["active"];
-    if (this.activAppointment["appointment_type"]) obj.appointment_type = this.activAppointment["appointment_type"];
-    if (this.activAppointment["idUser"]) obj.idUser = this.activAppointment["idUser"];
-    if (this.activAppointment["idContactPerson"]) obj.idContactPerson = this.activAppointment["idContactPerson"];
-    if (this.activAppointment["notes"]) obj.notes = this.activAppointment["notes"];
+    if (this.activAppointment['licensee']) { obj.licensee = this.activAppointment['licensee']; }
+    if (this.activAppointment['active']) { obj.active = this.activAppointment['active']; }
+    if (this.activAppointment['appointment_type']) { obj.appointment_type = this.activAppointment['appointment_type']; }
+    if (this.activAppointment['idUser']) { obj.idUser = this.activAppointment['idUser']; }
+    if (this.activAppointment['idContactPerson']) { obj.idContactPerson = this.activAppointment['idContactPerson']; }
+    if (this.activAppointment['notes']) { obj.notes = this.activAppointment['notes']; }
     let pipe = new DatePipe('en-US');
-    if (this.activAppointment["appointment_date"]) obj.appointment_date = pipe.transform(this.activAppointment["appointment_date"], 'yyyy-MM-dd HH:mm:ss');
-    if (this.activAppointment["start_time"]) obj.start_time = this.activAppointment["start_time"];
-    if (this.activAppointment["end_time"]) obj.end_time = this.activAppointment["end_time"];
+    if (this.activAppointment['appointment_date']) { obj.appointment_date = pipe.transform(this.activAppointment['appointment_date'], 'yyyy-MM-dd HH:mm:ss'); }
+    if (this.activAppointment['start_time']) { obj.start_time = this.activAppointment['start_time']; }
+    if (this.activAppointment['end_time']) { obj.end_time = this.activAppointment['end_time']; }
 
-    console.log("obj :", obj);
+    console.log('obj :', obj);
     if (!this.itsNew) {
-      obj.id = this.activAppointment["id"];
-      this.idAppointment = this.activAppointment["id"];
+      obj.id = this.activAppointment['id'];
+      this.idAppointment = this.activAppointment['id'];
     } else {
       this.activAppointment.active = 1;
     }
@@ -252,21 +257,23 @@ export class AppointmentEditComponent implements OnInit {
       obj.end_time = this.apiService.appointmentEndTime;
     }
 
-    console.log("appointmentEdit obj :", obj, this.redirect, this.activAppointment.appointment_date);
+    console.log('appointmentEdit obj :', obj, this.redirect, this.activAppointment.appointment_date);
     this.apiService.pvs4_set_appointment(obj).then((result: any) => {
       console.log('result: ', result);
     });
-    if (this.redirect == 1)
-      this.navCtrl.navigateRoot("/dashboard-new");
-    if (this.redirect == 2)
-      this.navCtrl.navigateRoot("/appointment-plan");
+    if (this.redirect == 1) {
+      this.navCtrl.navigateRoot('/dashboard-new');
+    }
+    if (this.redirect == 2) {
+      this.navCtrl.navigateRoot('/appointment-plan');
+    }
     if (this.redirect == 3 || this.redirect == 4) {
       this.dismiss();
     }
   }
 
   appointmentDeactivate() {
-    console.log("delete");
+    console.log('delete');
     this.showConfirmAlert(this.activAppointment);
   }
 
@@ -274,9 +281,9 @@ export class AppointmentEditComponent implements OnInit {
     for (let i = 0; i < nodes.length; i++) {
       let obj = nodes[i].data;
       obj['listText'] = obj['company'];
-      if (obj['zip_code'].length) obj['listText'] += ", " + obj['zip_code'];
-      if (obj['place'].length) obj['listText'] += " " + obj['place'];
-      if (obj['customer_number'].length) obj['listText'] += ", #" + obj['customer_number'];
+      if (obj['zip_code'].length) { obj['listText'] += ', ' + obj['zip_code']; }
+      if (obj['place'].length) { obj['listText'] += ' ' + obj['place']; }
+      if (obj['customer_number'].length) { obj['listText'] += ', #' + obj['customer_number']; }
       this.listCustomer.push(obj);
       if (nodes[i].children && nodes[i].children.length > 0) {
         this.data_tree(nodes[i].children);
@@ -300,14 +307,16 @@ export class AppointmentEditComponent implements OnInit {
           handler: () => {
             activAppointment.active = 0;
             let pipe = new DatePipe('en-US');
-            if (this.activAppointment["appointment_date"]) this.activAppointment["appointment_date"] = pipe.transform(this.activAppointment["appointment_date"], 'yyyy-MM-dd HH:mm:ss');
+            if (this.activAppointment['appointment_date']) { this.activAppointment['appointment_date'] = pipe.transform(this.activAppointment['appointment_date'], 'yyyy-MM-dd HH:mm:ss'); }
 
             this.apiService.pvs4_set_appointment(activAppointment).then((result: any) => {
               console.log('result: ', result);
-              if (this.redirect == 1)
-                this.navCtrl.navigateRoot("/dashboard-new");
-              else
-                this.navCtrl.navigateRoot("/appointment-plan");
+              if (this.redirect == 1) {
+                this.navCtrl.navigateRoot('/dashboard-new');
+              }
+              else {
+                this.navCtrl.navigateRoot('/appointment-plan');
+              }
 
             });
           }
@@ -320,7 +329,7 @@ export class AppointmentEditComponent implements OnInit {
     console.log('customerChange:', event.value);
     let idCstmr: any;
     idCstmr = parseInt(event.value.id);
-    if (idCstmr != 0) this.contactPersonDisabled = false;
+    if (idCstmr != 0) { this.contactPersonDisabled = false; }
     this.contactPersonsList(idCstmr);
   }
 
@@ -331,10 +340,10 @@ export class AppointmentEditComponent implements OnInit {
   employeesList() {
     this.apiService.pvs4_get_colleagues_list(this.userdata.role, this.userdata.role_set, this.userdata.licensee)
       .then((result: any) => {
-        console.log("pvs4_get_colleagues_list result:", result);
-        let k = result["obj"];
-        result["amount"] = parseInt(result["amount"]);
-        if (result["amount"] > 0) {
+        console.log('pvs4_get_colleagues_list result:', result);
+        let k = result['obj'];
+        result['amount'] = parseInt(result['amount']);
+        if (result['amount'] > 0) {
           for (var i = 0, len = k.length; i < len; i++) {
             let item = k[i];
             item.id = parseInt(item.id);
@@ -342,11 +351,11 @@ export class AppointmentEditComponent implements OnInit {
           }
         }
       });
-    console.log("salesListe :", this.employeeList);
+    console.log('salesListe :', this.employeeList);
   }
 
   contactPersonsList(idCustomer) {
-    console.log("contactPersonsList :", idCustomer);
+    console.log('contactPersonsList :', idCustomer);
     this.contactPersonList = [];
     this.apiService.pvs4_get_contact_person(idCustomer).then((result: any) => {
       console.log('contactPersonsList result', result.list);

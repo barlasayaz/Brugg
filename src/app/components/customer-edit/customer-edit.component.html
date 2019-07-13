@@ -148,7 +148,7 @@
                       [(ngModel)]="activCustomer.sector"
                       okText="{{translate.instant('okay')}}"
                       cancelText="{{translate.instant('dismiss')}}">
-            <ion-select-option *ngFor="let s of Branches" value="{{s.value}}">{{translate.instant(s.value)}}</ion-select-option>
+            <ion-select-option *ngFor="let s of Branches" [value]="s.value">{{translate.instant(s.value)}}</ion-select-option>
           </ion-select>
         </ion-item>
       </ion-col>
