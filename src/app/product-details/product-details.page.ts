@@ -107,7 +107,7 @@ export class ProductDetailsPage implements OnInit {
       this.loadProduct(this.idProduct);
     });
   }
-  
+
   loadProduct(id) {
     this.activProduct.images = '';
     this.apiService.pvs4_get_product(id).then((result: any) => {
@@ -431,11 +431,20 @@ export class ProductDetailsPage implements OnInit {
 
   createProtocol() {
     if (this.userdata.role_set.edit_products == false) { return; }
-    if (this.selectedProduct) {
+    console.log('select product :', this.activProduct);
+    if (this.activProduct.id > 0) {
+      const nodeList = [];
+          nodeList.push({
+            'id': this.activProduct.id,
+            'title': this.activProduct.title,
+            'id_number': this.activProduct.id_number,
+            'check_interval': this.activProduct.check_interval
+        });
+
       const navigationExtras: NavigationExtras = {
         queryParams: {
           idCustomer: this.idCustomer,
-          productList: this.selectedProduct
+          productList: JSON.stringify(nodeList)
         }
     };
       this.navCtrl.navigateForward(['/protocol-edit'], navigationExtras);
