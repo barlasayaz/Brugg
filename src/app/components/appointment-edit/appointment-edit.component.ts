@@ -130,6 +130,7 @@ export class AppointmentEditComponent implements OnInit {
         this.customer = this.listCustomer.filter(x=> x.id == this.idCustomer)[0];
       } 
       */
+      this.customer = null;
       for (let i = 0; i < this.listCustomer.length; i++) {
         if (this.listCustomer[i].id == this.idCustomer) {
           this.customer = this.listCustomer[i];

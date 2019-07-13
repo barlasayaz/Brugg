@@ -141,7 +141,9 @@ ion-item {
   --padding-start: 0;
   --padding-end: 0px;
   --inner-padding-end: 0px;
+  --background-focused: var(--ion-color-transparent) !important;
 }
+
 
 //INPUT
 /* ion-item.item-input {
@@ -216,8 +218,8 @@ ion-item {
  */
 
 .label-floating.sc-ion-label-md-h, .label-stacked.sc-ion-label-md-h {    
-  margin-left: 5px !important;  
-  padding: 0px 10px 0px 5px !important;
+  margin: 1px 5px -3px 5px;
+  padding: 0px 5px 0px 5px !important;
   background: #FFF !important;
   width: auto !important;
   align-self: baseline !important;
@@ -226,17 +228,8 @@ ion-item {
 } 
 
 ion-item.item-input {
-
-  .label-floating.sc-ion-label-md-h, .label-stacked.sc-ion-label-md-h {
-    margin-top: 0 !important;
-    margin-right: 0 !important;
-    margin-bottom: -3px !important;
-    margin-left: 5px !important;    
-    font-size: 14px !important;
-  }  
-
   ion-input {
-    border: 1px solid var(--ion-color-lightgrey);
+    border: 1px solid var(--ion-color-green);
     border-radius: 3px !important;
     padding-top: 10px !important;
     padding-left: 10px !important;
@@ -246,10 +239,7 @@ ion-item.item-input {
     font-size: 14px !important;
 
     &.ion-invalid:not(.ion-valid) {
-      border-color: var(--ion-color-green) !important;
-      &.has-focus {
-        border-color: var(--ion-color-red) !important;
-      }
+      border-color: var(--ion-color-red) !important;
     } 
   
     &.ion-valid:not(.ion-invalid) {
@@ -261,24 +251,11 @@ ion-item.item-input {
     }
 
   }
-
 } 
 
 ion-item.item-textarea {
-  .sc-ion-textarea-md-h {
-    margin-top: 0px !important;
-  }
-
-  .label-floating.sc-ion-label-md-h, .label-stacked.sc-ion-label-md-h {
-    margin-top: 0 !important;
-    margin-right: 0 !important;
-    margin-bottom: -3px !important;
-    margin-left: 5px !important;    
-    font-size: 14px !important;
-  }  
-
   ion-textarea {
-    border: 1px solid var(--ion-color-lightgrey) !important;
+    border: 1px solid var(--ion-color-green) !important;
     border-radius: 3px !important;
     padding: 10px !important;
     width: 100% !important;
@@ -286,10 +263,7 @@ ion-item.item-textarea {
     color: var(--ion-color-grey) !important;    
 
     &.ion-invalid:not(.ion-valid) {
-      border-color: var(--ion-color-green) !important;
-      &.has-focus {
-        border-color: var(--ion-color-red) !important;
-      }
+      border-color: var(--ion-color-red) !important;
     } 
   
     &.ion-valid:not(.ion-invalid) {
@@ -297,12 +271,16 @@ ion-item.item-textarea {
     } 
 
   }
+
+  .sc-ion-textarea-md-h {
+    margin-top: 0px !important;
+  }
 }
 
 ion-datetime {
-  border: 1px solid var(--ion-color-lightgrey) !important;
+  border: 1px solid var(--ion-color-green) !important;
   border-radius: 3px !important;
-  margin-top: -4px !important;
+  margin-top: 0px !important;
   padding: 15px 10px 5px 10px !important;
   width: 100% !important;
   font-size: 14px !important;
@@ -310,10 +288,7 @@ ion-datetime {
   height: 52px !important;
 
   &.ion-invalid:not(.ion-valid) {
-    border-color: var(--ion-color-green) !important;
-    &.has-focus {
-      border-color: var(--ion-color-red) !important;
-    }
+    border-color: var(--ion-color-red) !important;
   } 
  
   &.ion-valid:not(.ion-invalid) {
@@ -322,9 +297,9 @@ ion-datetime {
 }
 
 ion-select {
-  border: 1px solid var(--ion-color-lightgrey) !important;
+  border: 1px solid var(--ion-color-green) !important;
   border-radius: 3px !important;
-  margin-top: -3px !important;
+  margin-top: 0px !important;
   padding: 15px 10px 5px 10px !important;
   width: 100% !important;
   font-size: 14px !important;
@@ -332,10 +307,7 @@ ion-select {
   height: 52px !important;
 
   &.ion-invalid:not(.ion-valid) {
-    border-color: var(--ion-color-green) !important;
-    &.has-focus {
-      border-color: var(--ion-color-red) !important;
-    }
+    border-color: var(--ion-color-red) !important;
   } 
  
   &.ion-valid:not(.ion-invalid) {
@@ -355,9 +327,9 @@ ion-select {
 }
 
 .ionic-selectable {
-  border: 1px solid var(--ion-color-lightgrey) !important;
+  border: 1px solid var(--ion-color-green) !important;
   border-radius: 3px !important;
-  margin-top: -4px !important;
+  margin-top: 0px !important;
   padding: 15px 10px 5px 10px !important;
   width: 100% !important;
   font-size: 14px !important;

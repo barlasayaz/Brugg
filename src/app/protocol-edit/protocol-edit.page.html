@@ -190,21 +190,19 @@
 
                         <!-- Row 3 -->
                         <ion-row *ngFor="let item of activProtocol.items">
-                          <ion-col size="12" size-md="7" *ngIf="item.type == 0">
+                          <ion-col size="12" size-md="10" *ngIf="item.type == 0">
                             <ion-item lines="none">
-                              <ion-label *ngIf="item.mandatory=='true'">{{item.title[lang]}} *</ion-label>
-                              <ion-label *ngIf="item.mandatory=='false'">{{item.title[lang]}}</ion-label>
-                              <ion-toggle required="item.mandatory"
+                              <ion-label style="padding-left: 10px;">{{item.title[lang]}}</ion-label>
+                              <ion-toggle required="{{item.mandatory}}"
                                           [(ngModel)]="item.value" 
                                           color="{{item.options.color}}">
                               </ion-toggle>
                             </ion-item>
                           </ion-col>
-                          <ion-col size="12" size-md="7" *ngIf="item.type == 1">
+                          <ion-col size="12" size-md="10" *ngIf="item.type == 1">
                             <ion-item lines="none">
-                              <ion-label position="floating" *ngIf="item.mandatory=='true'">{{item.title[lang]}} *</ion-label>
-                              <ion-label position="floating" *ngIf="item.mandatory=='false'">{{item.title[lang]}}</ion-label>
-                              <ion-select required="item.mandatory"
+                             <ion-label position="floating">{{item.title[lang]}}</ion-label>
+                              <ion-select required="{{item.mandatory}}"
                                           class="form-control" 
                                           [(ngModel)]="item.value"
                                           okText="{{translate.instant('okay')}}" 
@@ -214,21 +212,19 @@
                               </ion-select>
                             </ion-item>
                           </ion-col>
-                          <ion-col size="12" size-md="7" *ngIf="item.type == 2">
+                          <ion-col size="12" size-md="10" *ngIf="item.type == 2">
                             <ion-item lines="none">
-                              <ion-label position="floating" *ngIf="item.mandatory=='true'">{{item.title[lang]}} *</ion-label>
-                              <ion-label position="floating" *ngIf="item.mandatory=='false'">{{item.title[lang]}}</ion-label>
-                              <ion-textarea required="item.mandatory"
+                              <ion-label position="floating">{{item.title[lang]}}</ion-label>
+                              <ion-textarea required="{{item.mandatory}}"
                                             [(ngModel)]="item.value"
                                             maxlength="{{item.options.max}}">
                               </ion-textarea>
                             </ion-item>
                           </ion-col>
-                          <ion-col size="12" size-md="7" *ngIf="item.type == 3">
+                          <ion-col size="12" size-md="10" *ngIf="item.type == 3">
                             <ion-item lines="none">
-                              <ion-label position="floating" *ngIf="item.mandatory=='true'">{{item.title[lang]}} *</ion-label>
-                              <ion-label position="floating" *ngIf="item.mandatory=='false'">{{item.title[lang]}}</ion-label>
-                              <ion-input required="item.mandatory"
+                              <ion-label position="floating">{{item.title[lang]}}</ion-label>
+                              <ion-input required="{{item.mandatory}}"
                                          type="text" 
                                          (keydown)="keyDown($event)" 
                                          [(ngModel)]="item.value" 
@@ -237,11 +233,10 @@
                               </ion-input>
                             </ion-item>
                           </ion-col>
-                          <ion-col size="12" size-md="7" *ngIf="item.type == 4">
+                          <ion-col size="12" size-md="10" *ngIf="item.type == 4">
                             <ion-item lines="none">
-                              <ion-label position="floating" *ngIf="item.mandatory=='true'">{{item.title[lang]}} *</ion-label>
-                              <ion-label position="floating" *ngIf="item.mandatory=='false'">{{item.title[lang]}}</ion-label>
-                              <ion-datetime required="item.mandatory"
+                              <ion-label position="floating">{{item.title[lang]}}</ion-label>
+                              <ion-datetime required="{{item.mandatory}}"
                                             [ngClass]="{required:fehler}" 
                                             type="time" 
                                             [(ngModel)]="item.value"
@@ -252,11 +247,10 @@
                               </ion-datetime>
                             </ion-item>
                           </ion-col>
-                          <ion-col size="12" size-md="7" *ngIf="item.type == 5">
+                          <ion-col size="12" size-md="10" *ngIf="item.type == 5">
                             <ion-item lines="none">
-                              <ion-label position="floating" *ngIf="item.mandatory=='true'">{{item.title[lang]}} *</ion-label>
-                              <ion-label position="floating" *ngIf="item.mandatory=='false'">{{item.title[lang]}}</ion-label>
-                              <ion-datetime required="item.mandatory"
+                              <ion-label position="floating">{{item.title[lang]}}</ion-label>
+                              <ion-datetime required="{{item.mandatory}}"
                                             [(ngModel)]="item.value"
                                             displayFormat="DD.MM.YYYY" 
                                             max = {{maxDate}}

@@ -191,6 +191,7 @@ export class NoteEditComponent {
     this.userList = [];
     this.apiService.pvs4_get_contact_person(this.idCustomer).then((result: any) => {
       console.log('loadUserList result', result.list);
+      this.selectedContact = null;
       for (var i = 0, len = result.list.length; i < len; i++) {
         var item = result.list[i].data;
         item.id = parseInt(item.id);

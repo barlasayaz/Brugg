@@ -55,6 +55,7 @@
                             [(ngModel)]="customer"
                             [(items)]="listCustomer"
                             itemValueField="id"
+                            required
                             itemTextField="company"
                             [canSearch]="true"
                             (onChange)="customerChange($event)"
