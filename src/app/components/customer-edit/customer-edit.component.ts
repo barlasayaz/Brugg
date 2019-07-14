@@ -150,13 +150,8 @@ export class CustomerEditComponent implements OnInit {
     }
     this.apiService.pvs4_set_customer(obj).then((result: any) => {
       console.log('result: ', result, obj);
-      if (this.redirect == 3) {
         this.viewCtrl.dismiss(obj);
-      }
-      else {
-        this.dismiss();
-        //this.navCtrl.navigateBack("/customer-table");
-      }
+  
     });
 
   }
@@ -183,17 +178,14 @@ export class CustomerEditComponent implements OnInit {
             activeCustomer.active = 0;
             this.apiService.pvs4_set_customer(activeCustomer).then((result: any) => {
               console.log('result: ', result);
-              this.navCtrl.navigateBack("/customer-table");;
+              this.dismiss();
+              this.navCtrl.navigateBack("/customer-table");
             });
 
           }
         }
       ]
     }).then(x => x.present());
-  }
-
-  closeModal() {
-    this.viewCtrl.dismiss(false);
   }
 
   salesTesterList() {

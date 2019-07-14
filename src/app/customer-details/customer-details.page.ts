@@ -414,8 +414,8 @@ export class CustomerDetailsPage implements OnInit {
         });
         modal.onDidDismiss().then(data => {
         if (data['data']) {
-          this.activCustomer = data['data'];
-          this.activCustomer = data;
+          //this.activCustomer = data['data'];
+        //  this.activCustomer = data;
           this.loadCustomer(this.activCustomer.id);
         }
       });

@@ -408,7 +408,13 @@ export class CustomerTablePage implements OnInit {
           componentProps: {
             obj: obj
           }
-        }).then(x => x.present());
+        });
+        modal.onDidDismiss().then(data => {
+            if (data['data']) {
+              this.page_load();
+            }
+          }); 
+          modal.present();
     }
 
     async menu_edit() {
