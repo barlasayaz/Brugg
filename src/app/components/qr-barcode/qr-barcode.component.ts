@@ -86,13 +86,7 @@ export class QrBarcodeComponent implements OnInit {
       if (barcodeData.text != '') {
         this.apiService.pvs4_get_qr_product_list(barcodeData.text).then(async (result: any) => {
           if (result.list.length == 1) {
-            let navigationExtras: NavigationExtras = {
-              queryParams: {
-                idCustomer: result.list[0].customer,
-                idProduct: result.list[0].id
-              }
-            };
-            this.navCtrl.navigateForward(['/product-details'], navigationExtras);
+            this.navCtrl.navigateForward(['/product-details',result.list[0].id]);
             this.viewCtrl.dismiss();
           } else if (result.list.length > 1) {
             let buttons: any[] = [];
@@ -101,13 +95,7 @@ export class QrBarcodeComponent implements OnInit {
               buttons.push({
                 text: JSON.parse(product.title)[this.lang] + ' - ' + product.id_number,
                 handler: id => {
-                  let navigationExtras: NavigationExtras = {
-                    queryParams: {
-                      idCustomer: product.customer,
-                      idProduct: product.id
-                    }
-                  };
-                  this.navCtrl.navigateForward(['/product-details'], navigationExtras);
+                  this.navCtrl.navigateForward(['/product-details', product.id] );
                   this.viewCtrl.dismiss();
                 }
               });
