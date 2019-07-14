@@ -264,9 +264,11 @@ export class AppointmentEditComponent implements OnInit {
     });
     if (this.redirect == 1) {
       this.navCtrl.navigateRoot('/dashboard-new');
+      this.dismiss();
     }
     if (this.redirect == 2) {
       this.navCtrl.navigateRoot('/appointment-plan');
+      this.dismiss();
     }
     if (this.redirect == 3 || this.redirect == 4) {
       this.dismiss();
@@ -314,9 +316,11 @@ export class AppointmentEditComponent implements OnInit {
               console.log('result: ', result);
               if (this.redirect == 1) {
                 this.navCtrl.navigateRoot('/dashboard-new');
+                this.dismiss();
               }
               else {
                 this.navCtrl.navigateRoot('/appointment-plan');
+                this.dismiss();
               }
 
             });

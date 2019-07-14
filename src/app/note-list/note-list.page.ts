@@ -329,7 +329,13 @@ export class NoteListPage implements OnInit {
                 }
             });
 
-        modal.present();
+            modal.onDidDismiss().then(data => {
+                console.log('menu_new ret:', data['data']);
+                if (data['data']) {
+                    this.page_load();
+                }
+            });
+            modal.present();
     }
     async menu_edit() {
         console.log('menu_edit', this.selectedNode);
