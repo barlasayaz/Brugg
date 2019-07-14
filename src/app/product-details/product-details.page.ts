@@ -90,13 +90,22 @@ export class ProductDetailsPage implements OnInit {
         this.idCustomer = params['idCustomer'];
         // this.company = params["company"];
         this.selectedProduct = params['productList'];
-
+        console.log('selectedProduct param :', this.selectedProduct);
         this.activProduct.product = null;
-        this.loadProduct(this.idProduct);
-        this.dateiListe();
     });
-
+      
+      this.dateiListe();
       this.nocache = new Date().getTime();
+  }
+
+  dateiListe() {
+    this.apiService.pvs4_get_file(this.idProduct, 'product').then((result) => {
+      console.log('dateiliste', result);
+      this.dateien = result['files'];
+      this.link = result['link'];
+      this.file_link = result['file_link'];
+      this.loadProduct(this.idProduct);
+    });
   }
 
   loadProduct(id) {
@@ -156,6 +165,7 @@ export class ProductDetailsPage implements OnInit {
 
     modal.present();
   }
+
   async qr_code() {
     const obj = {};
     const modal =
@@ -168,6 +178,7 @@ export class ProductDetailsPage implements OnInit {
 
     modal.present();
   }
+
   delFile(datei) {
     const alert = this.alertCtrl.create({
       header: '',
@@ -194,16 +205,7 @@ export class ProductDetailsPage implements OnInit {
 
   }
 
-  dateiListe() {
-    this.apiService.pvs4_get_file(this.idProduct, 'product').then((result) => {
-      console.log('dateiliste', result);
-      this.dateien = result['files'];
-      this.link = result['link'];
-      this.file_link = result['file_link'];
-    });
-  }
   getProductUrlList(productImagePath, callback) {
-
     const urlList: any = [];
     urlList.push({
       link: productImagePath
@@ -429,11 +431,20 @@ export class ProductDetailsPage implements OnInit {
 
   createProtocol() {
     if (this.userdata.role_set.edit_products == false) { return; }
-    if (this.selectedProduct) {
+    console.log('select product :', this.activProduct);
+    if (this.activProduct.id > 0) {
+      const nodeList = [];
+          nodeList.push({
+            'id': this.activProduct.id,
+            'title': this.activProduct.title,
+            'id_number': this.activProduct.id_number,
+            'check_interval': this.activProduct.check_interval
+        });
+
       const navigationExtras: NavigationExtras = {
         queryParams: {
           idCustomer: this.idCustomer,
-          productList: this.selectedProduct
+          productList: JSON.stringify(nodeList)
         }
     };
       this.navCtrl.navigateForward(['/protocol-edit'], navigationExtras);

@@ -24,8 +24,7 @@
                       [(ngModel)]="activAppointment.idUser"
                       okText="{{translate.instant('okay')}}"
                       cancelText="{{translate.instant('dismiss')}}">
-            <ion-select-option *ngFor="let pr of employeeList" [value]="pr.id">{{pr.first_name + " " + pr.last_name}}
-            </ion-select-option>
+            <ion-select-option *ngFor="let pr of employeeList" [value]="pr.id">{{pr.first_name + " " + pr.last_name}}</ion-select-option>
           </ion-select>
         </ion-item>
       </ion-col>
@@ -56,6 +55,7 @@
                             [(ngModel)]="customer"
                             [(items)]="listCustomer"
                             itemValueField="id"
+                            required
                             itemTextField="company"
                             [canSearch]="true"
                             (onChange)="customerChange($event)"

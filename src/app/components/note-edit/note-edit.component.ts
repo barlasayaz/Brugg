@@ -38,8 +38,7 @@ export class NoteEditComponent {
                 public userdata: UserdataService,
                 public viewCtrl: ModalController,
                 public apiService: ApiService,
-                public alertCtrl: AlertController) 
-  {
+                public alertCtrl: AlertController) {
     this.maxDate = this.apiService.maxDate;
     this.idNote = this.navParams.get('id'); 
     this.idCustomer = this.navParams.get('idCustomer');
@@ -56,19 +55,18 @@ export class NoteEditComponent {
       this.activNote.notes_date = new Date().toISOString();
       this.loadUserList(0);
     }
-    this.loadCustomer(this.idCustomer);
     console.log('NoteEditComponent: ' , this.idNote);
   }
 
-  loadNote(){
+  loadNote() {
     this.apiService.pvs4_get_note(this.idNote).then((result: any) => {
-      this.activNote = result.obj;  
+      this.activNote = result.obj;
       this.activNote.contact_person = parseInt(this.activNote.contact_person);
       console.log('activeNote :', this.activNote);
       if (result.obj.notes_date && result.obj.notes_date != null && new Date(result.obj.notes_date) >= new Date(1970, 0, 1)) {
          this.activNote.notes_date = new Date(result.obj.notes_date).toISOString();
       }
-      console.log('loadNote: ' , this.activNote); 
+      console.log('loadNote: ' , this.activNote);
       this.loadUserList(this.activNote.contact_person);
     });
   }
@@ -117,7 +115,7 @@ export class NoteEditComponent {
     obj.contact_person = parseInt(this.selectedContact.id);
     if (this.activNote['notes']) { obj.notes = this.activNote['notes']; }
     if (this.activNote['category']) { obj.category = parseInt(this.activNote['category'] ); }
-    let pipe = new DatePipe('en-US'); 
+    let pipe = new DatePipe('en-US');
     if (this.activNote['notes_date']) { obj.notes_date = pipe.transform(this.activNote['notes_date'], 'yyyy-MM-dd HH:mm'); } 
     console.log(obj);
     if (!this.itsNew) {
@@ -131,6 +129,7 @@ export class NoteEditComponent {
       console.log('result - redirect: ', result, '- ', this.redirect);
       if (this.redirect == 1) {
       this.navCtrl.navigateForward('/note-list/' + this.idCustomer);
+      this.dismiss();
       }
       if (this.redirect == 2) {
         this.dismiss();
@@ -139,7 +138,7 @@ export class NoteEditComponent {
 
   }
 
-  checkInvalidForm(){
+  checkInvalidForm() {
     let t1 = this.activNote.title.trim();
     let t2 = this.activNote.notes.trim();
     let t3 = this.selectedContact.id;
@@ -192,6 +191,7 @@ export class NoteEditComponent {
     this.userList = [];
     this.apiService.pvs4_get_contact_person(this.idCustomer).then((result: any) => {
       console.log('loadUserList result', result.list);
+      this.selectedContact = null;
       for (var i = 0, len = result.list.length; i < len; i++) {
         var item = result.list[i].data;
         item.id = parseInt(item.id);
@@ -202,6 +202,7 @@ export class NoteEditComponent {
           this.selectedContact = contactPersonList;
         }
       }
+      this.loadCustomer(this.idCustomer);
     });
   }
 

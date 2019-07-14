@@ -341,7 +341,7 @@ export class NoteListPage implements OnInit {
                     await this.modalCtrl.create({
                         component: NoteEditComponent,
                         componentProps: {
-                            'id': id, idCustomer: this.idCustomer
+                            id: id, idCustomer: this.idCustomer, redirect: 1
                         }
                     });
                 modal.onDidDismiss().then(data => {

@@ -81,8 +81,7 @@
         <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12">
           <ion-item lines="none">
             <ion-label position="floating">{{translate.instant('Notizkategorie')}}</ion-label>
-            <ion-select
-                        [(ngModel)]="activNote.category" 
+            <ion-select [(ngModel)]="activNote.category" 
                         required 
                         (ionChange)="checkInvalidForm()" 
                         okText="{{translate.instant('okay')}}"

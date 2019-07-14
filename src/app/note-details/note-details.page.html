@@ -16,23 +16,38 @@
 										</div>
 									</div>
 									<div class="tbody">
-										<div class="tr table-body">
-											<div class="td">{{'Titel' | translate}}</div>
-											<div class="td">{{activNote.title}}</div>
-										</div>
-										<div class="tr table-body">
-											<div class="td">{{'Notiz' | translate}}</div>
-											<div class="td">{{activNote.notes}}</div>
-										</div>
-										<div class="tr table-body">
-											<div class="td">{{'Datum' | translate}}</div>
-											<div class="td">{{activNote.notes_date | date: 'dd.MM.yyyy'}}</div>
-										</div>
-										<div class="tr table-body">
-											<div class="td">{{'Kategorie' | translate}}</div>
-											<div class="td">{{activNote.category}}</div>
-										</div>
-
+											<div class="tr table-body">
+												<div class="td">{{'Titel' | translate}}</div>
+												<div class="td">{{activNote.title}}</div>
+											</div>
+											<div class="tr table-body">
+												<div class="td">{{'Firma' | translate}}</div>
+												<div class="td">{{activNote.company}}</div>
+											</div>
+											<div class="tr table-body">
+												<div class="td">{{'Verfasser' | translate}}</div>
+												<div class="td">{{activNote.name_user}}</div>
+											</div>
+											<div class="tr table-body">
+												<div class="td">{{'Ansprechpartner' | translate}}</div>
+												<div class="td">{{activNote.name_contact}}</div>
+											</div>
+											<div class="tr table-body">
+												<div class="td">{{'Datum' | translate}}</div>
+												<div class="td">{{activNote.notes_date | date: 'dd.MM.yyyy'}}</div>
+											</div>
+											<div class="tr table-body">
+												<div class="td">{{'Uhrzeit' | translate}}</div>
+												<div class="td">{{activNote.notes_date | date: 'HH:mm'}}</div>
+											</div>
+											<div class="tr table-body">
+												<div class="td">{{'Kategorie' | translate}}</div>
+												<div class="td">{{activNote.category}}</div>
+											</div>
+											<div class="tr table-body">
+												<div class="td">{{'Notiz' | translate}}</div>
+												<div class="td" style="text-align: justify;">{{activNote.notes}}</div>
+											</div>
 									</div>
 								</div>
 							</div>			

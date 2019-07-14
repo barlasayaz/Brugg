@@ -167,7 +167,7 @@ export class ProductEditPage implements OnInit {
       this.activProduct = result.obj;
       this.activProduct.title = JSON.parse(result.obj.title);
       this.activProduct.items = JSON.parse(result.obj.items);
-      console.log('loadProduct: ', this.activProduct);
+      console.log('loadProduct: ', this.activProduct, this.activProduct.items);
       this.imagesSave = this.activProduct.images;
       var str: string = this.activProduct.images;
       if (str) {
@@ -412,7 +412,7 @@ export class ProductEditPage implements OnInit {
       await this.modalCtrl.create({
         component: DialogproduktbildmodalPage,
         componentProps: {
-          'Bild': this.activProduct.images, redDirect: 1
+          'redDirect': 1
         }
       });
 

@@ -50,7 +50,8 @@ export class ProductMigrationPage implements OnInit {
       if (list)
         this.productList = JSON.parse(list);
 
-      console.log('ProductMigrationPage productList:', this.productList); 
+      console.log('ProductMigrationPage productList:', this.productList);
+      this.targetCustomer = null;
       this.loadSourceCustomer();
       this.loadTargetCustomer();
    }
