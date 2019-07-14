@@ -19,7 +19,7 @@ export class OrderSendNewPage {
   public Ziel_DropDown: any = "0";
   public Empfaenger: string = "";
   public idCustomer: number;
-  public RE_Ansp: any ;
+  public RE_Ansp: any = {};
   public Betreff: string = "";
   public params: any = [];
   public Copy:string = "";
@@ -50,7 +50,6 @@ export class OrderSendNewPage {
                 console.log("activOrderForm :", this.activOrderForm);
                 console.log("order-send-new pdfRetVal :", this.pdfRetVal);
   }
-
 
   dismiss() {
     this.modalCtrl.dismiss(false);
@@ -170,5 +169,4 @@ export class OrderSendNewPage {
       }
     });    
   }
-
 }

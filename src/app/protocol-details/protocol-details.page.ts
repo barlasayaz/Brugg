@@ -87,18 +87,18 @@ export class ProtocolDetailsPage implements OnInit {
       this.idCustomer = params['idCustomer'];
       this.customer_number = params['customer_number'];
       this.idProtocol = params['idProtocol'];
-    });
 
-    console.log('idProtocol :', this.idProtocol);
-    this.loadCustomer(this.idCustomer)
-    this.loadProtocol(this.idProtocol);
-    this.dateiListe();
+      console.log('idProtocol :', this.idProtocol);
+      this.loadCustomer(this.idCustomer);
+      
+    });    
   }
 
   loadCustomer(id) {
     this.apiService.pvs4_get_customer(id).then((result: any) => {
         this.activCustomer = result.obj;
         console.log('customer :', this.activCustomer);
+        this.loadProtocol(this.idProtocol);
     });
   }
 
@@ -116,7 +116,7 @@ export class ProtocolDetailsPage implements OnInit {
       if (this.activProtocol.result == 3) { this.activProtocol.resultText = this.translate.instant('unauffindbar'); }
       if (this.activProtocol.result == 4) { this.activProtocol.resultText = this.translate.instant('ausmustern'); }
       console.log('loadProtocol :', this.activProtocol);
-      console.log('loadProduct : ', this.listProduct);
+      this.dateiListe();
     });
   }
 
@@ -135,12 +135,6 @@ export class ProtocolDetailsPage implements OnInit {
         i++;
       });
       this.listProduct.push(this.activProduct);
-
-      /*         var str: string = this.activProduct.images;
-              if(str) {
-                this.activProduct.images = (str.indexOf('assets/')) ? 'assets/' + this.activProduct.images : this.activProduct.images;
-              }
-              console.log("images :", this.activProduct.images);  */
     });
   }
 

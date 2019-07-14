@@ -276,7 +276,6 @@ export class ProtocolListPage implements OnInit {
                 ret = false;
             }
         }
-
         return ret;
     }
 
@@ -392,7 +391,7 @@ export class ProtocolListPage implements OnInit {
                 const id = parseInt(this.selectedNode.data.id);
                 console.log('menu_view id', id);
                 const navigationExtras: NavigationExtras = {
-                    queryParams: { idCustomer: this.idCustomer, customer_number: this.customer_number, idProtocol: id, protocol: JSON.stringify(this.selectedNode.data) }
+                    queryParams: { idCustomer: this.idCustomer, customer_number: this.customer_number, idProtocol: id }
                 };
                 this.navCtrl.navigateForward(['/protocol-details/' + id], navigationExtras);
             }

@@ -319,7 +319,7 @@ export class ProductListPage implements OnInit {
                     }
                 }
 
-                console.log('options :', options);
+                //console.log('options :', options);
 
                 if (options == null) { options = []; }
 
@@ -343,7 +343,7 @@ export class ProductListPage implements OnInit {
                 json += ',';
             }
             json += '"search_all":""}';
-            console.log('columnFilterValues :', json);
+            //console.log('columnFilterValues :', json);
             this.columnFilterValues = JSON.parse(json);
 
             this.generate_productList();
@@ -499,7 +499,8 @@ export class ProductListPage implements OnInit {
             this.selectMulti = 1;
         }
 
-        console.log('nodeSelect:', event, this.menuItems, selectedNodeLength);
+        console.log('nodeSelect event:', event  );
+        console.log('nodeSelect selectedNodeLength:',  selectedNodeLength);
         this.selectedNode.data = event.node.data;
         this.menuItems[0].disabled = false;
         this.menuItems[1].disabled = false;
@@ -512,7 +513,7 @@ export class ProductListPage implements OnInit {
 
         console.log('selectedNodeLength :', selectedNodeLength);
         if (selectedNodeLength == 1) {
-
+            this.selectedNode.data = this.selectedNode[0].data;
             if (this.selectedNode) {
                 if (this.selectedNode.data.id) {
                     id_sn = this.selectedNode.data.id;
@@ -661,7 +662,7 @@ export class ProductListPage implements OnInit {
     }
 
     menu_view() {
-        console.log('menu_view', this.selectedNode);
+        console.log('menu_view', this.selectedNode[0]);
         if (this.selectedNode) {
             if (this.selectedNode.data.id) {
                 const id = parseInt(this.selectedNode.data.id);
@@ -754,34 +755,6 @@ export class ProductListPage implements OnInit {
         }
         this.excelService.exportAsExcelFile(data, 'product_view.xlsx');
     }
-
-    /*     printPdf() {
-            let columns: any[] = [];
-            let widthsArray: string[] = [];
-            for (var k = 0; k < this.selectedColumns.length; k++) {
-                columns.push({ text: this.selectedColumns[k].header, style: 'header' });
-                widthsArray.push("*");
-            }
-            let bodyArray: any[] = [];
-            bodyArray.push(columns);
-            this.allnodes = [];
-            this.data_tree(this.productListView);
-            let obj: any;
-            let rowArray: any[] = [];
-            for (var i = 0, len = this.allnodes.length; i < len; i++) {
-                obj = this.allnodes[i];
-                obj.items = obj.items.replace(/(\\r\\n|\\n|\\r)/gm," ");
-                rowArray = [];
-                for (var j = 0; j < this.selectedColumns.length; j++) {
-                    if (obj[this.selectedColumns[j].field])
-                        rowArray.push(obj[this.selectedColumns[j].field]);
-                    else
-                        rowArray.push('');
-                }
-                bodyArray.push(rowArray);
-            }
-            this.pdf.get_ListDocDefinition(bodyArray, widthsArray, this.translate.instant("Produkt") + " " + this.translate.instant("Liste"),this.translate.instant("Produkt") + this.translate.instant("Liste") +'.pdf');
-        } */
 
     printPdf() {
         const pdfTitle: any = this.translate.instant('Produkt') + ' ' + this.translate.instant('Liste');
