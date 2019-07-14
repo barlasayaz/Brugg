@@ -154,8 +154,8 @@ export class CustomerEditComponent implements OnInit {
         this.viewCtrl.dismiss(obj);
       }
       else {
-        this.navCtrl.navigateBack("/customer-table");
         this.dismiss();
+        //this.navCtrl.navigateBack("/customer-table");
       }
     });
 
