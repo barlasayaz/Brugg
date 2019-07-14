@@ -46,6 +46,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
 }
 
 function processing($id) {
+
     global $brugg_id_api,$database_location,$database_username,$database_password,$database_name;
     $con=mysqli_connect($database_location,$database_username,$database_password,$database_name);
     mysqli_query($con,"SET NAMES 'utf8'");
@@ -87,7 +88,7 @@ function processing($id) {
 
     // escape the uemailid to prevent sql injection
     $id   = trim( mysqli_escape_string($con,$id) );
-    
+    $id   = intval($id);
     $sql    = "SELECT * FROM `products` WHERE  `id`=$id;";
     $ret_sql= mysqli_query( $con, $sql );
 
@@ -96,8 +97,13 @@ function processing($id) {
     if($ret_sql) {
         http_response_code(200);
         $ok = new \stdClass();
-        $ok->amount = 1;
-        $ok->obj = mysqli_fetch_assoc($ret_sql);
+        if(mysqli_num_rows($ret_sql) > 0){
+            $ok->amount = 1;
+            $ok->obj = mysqli_fetch_assoc($ret_sql);
+        }else{
+            $ok->amount = 0;
+            $ok->obj = [];
+        }
         echo json_encode($ok);
         mysqli_close($con);
         die;
@@ -105,6 +111,7 @@ function processing($id) {
         // return 500 problem with query.
         http_response_code(500);
         $error = new \stdClass();
+        $error->error = 6;
         $error->message = 'Internal Server Error';
         echo json_encode($error);
         mysqli_close($con);

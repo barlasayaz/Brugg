@@ -674,11 +674,15 @@ export class ApiService {
         id: productID
       }
       this.pvs4_api_post('get_product.php', data).then((done: any) => {// return the result
-        done.obj.id = parseInt(done.obj.id);
-        done.obj.active = parseInt(done.obj.active);
-        done.obj.parent = parseInt(done.obj.parent);
-        done.obj.customer = parseInt(done.obj.customer);
-        done.obj.check_interval = parseInt(done.obj.check_interval);
+        if(done.amount){
+          if(done.amount>0){
+            done.obj.id = parseInt(done.obj.id);
+            done.obj.active = parseInt(done.obj.active);
+            done.obj.parent = parseInt(done.obj.parent);
+            done.obj.customer = parseInt(done.obj.customer);
+            done.obj.check_interval = parseInt(done.obj.check_interval);
+          }
+        }
         res(done);
       },
         err => { // return the error
