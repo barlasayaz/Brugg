@@ -825,5 +825,6 @@
   "Produktbild löschen": "Delete product image",
   "Das Produktbild wird gelöscht. Sind Sie sicher?": "Product image will be deleted, Are you sure?",
   "Benutzer nicht gefunden!" : "User not found!",
-  "Benutzer hinzufügen": "Add user"
+  "Benutzer hinzufügen": "Add user",
+  "Passwort vergessen?": "Forgot your password?"
 }

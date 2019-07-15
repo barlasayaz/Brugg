@@ -66,7 +66,12 @@
     
           <ion-row>
             <ion-col text-center class="pvs4-register-text">
-              <!-- <a (click)="signUp()" class="signup-btn">{{ "Sie haben noch kein Account? Jetzt registrieren!" |  translate }}</a> -->
+              <a href="https://www.bruggdigital.com/bid_pw_new.php" target="_blank" rel="noopener" class="signup-btn">{{ "Passwort vergessen?" |  translate }}</a>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col text-center class="pvs4-register-text">
               <a href="https://www.bruggdigital.com/bid_reg.php" target="_blank" rel="noopener" class="signup-btn">{{ "Sie haben noch kein Account? Jetzt registrieren!" |  translate }}</a>
             </ion-col>
           </ion-row>
@@ -105,28 +110,25 @@
     <div class="pvs4-info-wrapper">
       <div class="login-log-container">
         <h1 style="margin-top: 40px">PVS – {{'Die Produktverwaltungssoftware' | translate}}</h1>
-        <p>
+        <p style="font-size: 80%">
           <strong>{{'WAS IST PVS?' | translate}}</strong><br>
           {{'was-ist-pvs-text' | translate}}
         </p>
         <div class="intro-img">
           <img src="assets/imgs/pvs2login-intro.jpg" alt="PVS2Go">
         </div>
-        <div class="featuers">
-          <div class="feat">
-            <h2>PVS.BASIC</h2>
-            <p>{{'Im BASIC-Modul verwalten Brugg Lifting Kunden die eigenen Zurrmittel, Hebemittel und Produktprüfungen' | translate}}</p>
-          </div>
-          <div class="feat">
-            <h2>PVS.PLUS</h2>
-            <p>{{'Im PLUS-Modul verwalten und prüfen Unternehmen beliebige Produkt' | translate}}</p>
-          </div>
-          <div class="feat">
-            <h2>PVS.PRO</h2>
-            <p>{{'Mit dem PRO-Modul vertreiben Dienstleister und Produkthersteller die PVS-Software an eigene Kunden' | translate}}</p>
-          </div>
-          <span>{{'Mehr unter' | translate}} <a href="http://pvs.brugglifting.com" target="_blank" title="pvs" alt="pvs">pvs.brugglifting.com</a></span>
+        
+
+        <div class="brugg-digital-wrapper">
+          <h2>{{'Was ist BRUGG Digital?' | translate}}</h2>
+          <p>
+            {{'was-ist-brugg-digital-text' | translate}} 
+          </p>
+          <p>
+            <a href="https://www.bruggdigital.com/bid_reg.php" target="_blank" rel="noopener">{{'Registrieren Sie sich also zur Nutzung von PVS für Ihre persönliche Brugg-ID.' | translate}}</a>
+          </p>
         </div>
+
         <div class="vorteile">
           <h2>{{'Ihre Vorteile mit PVS' | translate}}</h2>
           <div class="vorteil">
@@ -144,15 +146,23 @@
             </div>
           </div>
         </div>
-        <div class="brugg-digital-wrapper">
-          <h2>{{'Was ist BRUGG Digital?' | translate}}</h2>
-          <p>
-            {{'was-ist-brugg-digital-text' | translate}} 
-          </p>
-          <p>
-            <a href="https://www.bruggdigital.com/bid_reg.php" target="_blank" rel="noopener">{{'Registrieren Sie sich also zur Nutzung von PVS für Ihre persönliche Brugg-ID.' | translate}}</a>
-          </p>
+
+        <div class="featuers">
+          <div class="feat">
+            <h2>PVS.BASIC</h2> 
+            <p style="font-size: 80%">{{'Im BASIC-Modul verwalten Brugg Lifting Kunden die eigenen Zurrmittel, Hebemittel und Produktprüfungen' | translate}}</p>
+          </div>
+          <div class="feat">
+            <h2>PVS.PLUS</h2>
+            <p style="font-size: 80%">{{'Im PLUS-Modul verwalten und prüfen Unternehmen beliebige Produkt' | translate}}</p>
+          </div>
+          <div class="feat">
+            <h2>PVS.PRO</h2>
+            <p style="font-size: 80%">{{'Mit dem PRO-Modul vertreiben Dienstleister und Produkthersteller die PVS-Software an eigene Kunden' | translate}}</p>
+          </div>
+          <span>{{'Mehr unter' | translate}} <a href="http://pvs.brugglifting.com" target="_blank" title="pvs" alt="pvs">pvs.brugglifting.com</a></span>
         </div>
+        
       </div>
     </div>
   </div>

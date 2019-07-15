@@ -87,7 +87,14 @@ ion-content {
 }
 
 .brugg-digital-wrapper {
-	margin: 60px 0px;
+	margin-left: -40px;
+	margin-right: -40px;
+	margin-top: 30px;
+	-webkit-border-radius: 3px;
+			border-radius: 3px;
+	padding: 10px 20px;
+	border: 1px  solid  #009de0;
+	background-color: #d4eaff;
 }
 
 h1 {
@@ -180,8 +187,8 @@ p {
 .intro-img {
 	padding: 20px;
 	margin-top: -20px;
-	width: 100%;
-	margin-bottom: -150px;
+	width: 80%;
+	margin-bottom: -25px;
 	@media screen and (max-width: 1000px) {
 		margin-bottom: -50px;
 		margin-top: 0;
