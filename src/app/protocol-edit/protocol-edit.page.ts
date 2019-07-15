@@ -63,7 +63,6 @@ export class ProtocolEditPage implements OnInit {
     this.route.queryParams.subscribe(params => {
       this.idCustomer = params['idCustomer'];
       this.idProtocol = params['id'];
-      // this.company = params["company"];
       let list = params['productList'];
       if (list) {
         this.productList = JSON.parse(list);

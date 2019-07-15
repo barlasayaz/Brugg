@@ -123,11 +123,10 @@ export class OrderFormNewPage {
                   }
                 });
 
-                this.route.queryParams.subscribe(params => {
-                this.idCustomer = params['idCustomer'];
+                this.idCustomer = parseInt(this.route.snapshot.paramMap.get('id'));
                 this.getContactList();
                 this.loadCustomer(this.idCustomer);
-              });
+
                 this.maxDate = this.apiProvider.maxDate;
                 this.activOrderForm.commissioned = this.userdata.first_name + ' ' +
                                                    this.userdata.last_name + ' (' +

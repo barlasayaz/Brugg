@@ -139,22 +139,8 @@ export class NfcScanComponent implements OnInit {
                   return;
                 }
                 if (!this.listView) {
-                  var hilf = [];
                   result.obj.title = JSON.parse(result.obj.title);
-                  let data = {
-                    id: result.obj.id,
-                    id_number: result.obj.id_number,
-                    title: result.obj.title[this.lang],
-                  }
-                  hilf.push(data);
-                  let navigationExtras: NavigationExtras = {
-                    queryParams: {
-                      idCustomer: result.obj.customer,
-                      idProduct: result.obj.id,
-                      productList: JSON.stringify(hilf)
-                    }
-                  };
-                  this.navCtrl.navigateForward(["/product-details"], navigationExtras);
+                  this.navCtrl.navigateForward(["/product-details", { id: result.obj.id }] );
                   this.viewCtrl.dismiss();
                 }
                 else {
@@ -268,8 +254,8 @@ export class NfcScanComponent implements OnInit {
       }
       let navigationExtras: NavigationExtras = {
         queryParams: {
-          idCustomer: this.scanList[0].idCustomer,
-          productList: JSON.stringify(hilf)
+            idCustomer: this.scanList[0].idCustomer,
+            productList: JSON.stringify(hilf)
         }
       }
       this.navCtrl.navigateForward(["/protocol-edit"], navigationExtras);

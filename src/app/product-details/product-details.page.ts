@@ -30,7 +30,6 @@ import { NavigationExtras, ActivatedRoute } from '@angular/router';
 export class ProductDetailsPage implements OnInit {
   public idProduct = 0;
   public activProduct: any = {};
-  private selectedProduct: string;
   public idCustomer = 0;
   public company = '';
   public lang: string = localStorage.getItem('lang');
@@ -85,14 +84,7 @@ export class ProductDetailsPage implements OnInit {
     });
 
       this.url = this.apiService.pvsApiURL;
-      this.route.queryParams.subscribe(params => {
-        this.idProduct = params['idProduct'];
-        this.idCustomer = params['idCustomer'];
-        // this.company = params["company"];
-        this.selectedProduct = params['productList'];
-        console.log('selectedProduct param :', this.selectedProduct);
-        this.activProduct.product = null;
-    });
+      this.idProduct = parseInt(this.route.snapshot.paramMap.get('id'));
       
       this.dateiListe();
       this.nocache = new Date().getTime();
@@ -112,9 +104,28 @@ export class ProductDetailsPage implements OnInit {
     this.activProduct.images = '';
     this.apiService.pvs4_get_product(id).then((result: any) => {
       this.activProduct = result.obj;
-      const title = JSON.parse(this.activProduct.title);
+      this.idCustomer = this.activProduct.customer;
+      let title = JSON.parse(this.activProduct.title);
+      try{
+        title = JSON.parse(this.activProduct.title);
+      }catch{
+        console.log('loadProduct title JSON.parse:', this.activProduct.title);
+        title = JSON.parse(this.activProduct.title);       
+      } 
+
       this.activProduct.title = title[this.lang];
-      this.activProduct.items = JSON.parse(this.activProduct.items);
+
+      if(this.activProduct.items){
+        try{
+          this.activProduct.items = JSON.parse(this.activProduct.items);
+        }catch{
+          console.log('loadProduct items JSON.parse:', this.activProduct.items);
+          this.activProduct.items = [];          
+        }        
+      }else{
+        this.activProduct.items = [];
+      }
+
       console.log('loadProduct', this.activProduct);
 
       if (this.activProduct.images == '') {

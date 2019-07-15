@@ -667,13 +667,8 @@ export class ProductListPage implements OnInit {
             if (this.selectedNode.data.id) {
                 const id = parseInt(this.selectedNode.data.id);
                 console.log('menu_view :', id, JSON.stringify(this.selectedNode.data));
-                const navigationExtras: NavigationExtras = {
-                    /* queryParams: { idCustomer: this.idCustomer, idProduct: id, productList: JSON.stringify(this.selectedNode.data) } */
-                    queryParams: { idCustomer: this.idCustomer,
-                                   idProduct: id,
-                                   productList: JSON.stringify(this.selectedNode.data.id) }
-                };
-                this.navCtrl.navigateForward(['/product-details'], navigationExtras);
+     
+                this.navCtrl.navigateForward(['/product-details',id] );
             }
         }
     }

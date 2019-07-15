@@ -620,7 +620,7 @@ export class ProtocolListPage implements OnInit {
                             activProtocol.active = 0;
                             this.apiService.pvs4_set_protocol(activProtocol).then((setResult: any) => {
                                 console.log('result: ', setResult);
-                                this.navCtrl.navigateForward('/protocol-list/' + this.idCustomer);
+                                this.ngOnInit();
                             });
                         });
                     }

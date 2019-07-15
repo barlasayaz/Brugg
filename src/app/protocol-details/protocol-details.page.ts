@@ -105,6 +105,7 @@ export class ProtocolDetailsPage implements OnInit {
   loadProtocol(id: any) {
     this.apiService.pvs4_get_protocol(id).then((result: any) => {
       this.activProtocol = result.obj;
+      console.log('loadProtocol :', this.activProtocol);
       this.activProtocol.items = JSON.parse(this.activProtocol.items);
       let productList = JSON.parse(this.activProtocol.product);
       productList.forEach(element => {
@@ -115,18 +116,34 @@ export class ProtocolDetailsPage implements OnInit {
       if (this.activProtocol.result == 1) { this.activProtocol.resultText = this.translate.instant('reparieren'); }
       if (this.activProtocol.result == 3) { this.activProtocol.resultText = this.translate.instant('unauffindbar'); }
       if (this.activProtocol.result == 4) { this.activProtocol.resultText = this.translate.instant('ausmustern'); }
-      console.log('loadProtocol :', this.activProtocol);
+      
       this.dateiListe();
     });
   }
 
   loadProduct(id: any) {
     this.apiService.pvs4_get_product(id).then((result: any) => {
-      this.activProduct = result.obj;
-      console.log('activProduct :', this.activProduct);
+      console.log('result :', result);
+      this.activProduct = result.obj;      
       let title = JSON.parse(this.activProduct.title);
+      try{
+        title = JSON.parse(this.activProduct.title);
+      }catch{
+        console.log('loadProduct title JSON.parse:', this.activProduct.title);
+        title = JSON.parse(this.activProduct.title);       
+      } 
       this.activProduct.title = title[this.lang];
-      this.activProduct.items = JSON.parse(this.activProduct.items);
+      if(this.activProduct.items){
+        try{
+          this.activProduct.items = JSON.parse(this.activProduct.items);
+        }catch{
+          console.log('loadProduct items JSON.parse:', this.activProduct.items);
+          this.activProduct.items = [];          
+        }        
+      }else{
+        this.activProduct.items = [];
+      }
+      
       let i: any = 0;
       this.activProduct.items.forEach(event => {
         if (event.type == 5) {

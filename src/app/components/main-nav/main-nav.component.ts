@@ -2,7 +2,6 @@ import { Component,OnInit, Input } from '@angular/core';
 import { UserdataService } from '../../services/userdata';
 import { NavController, Events } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
-import { NavigationExtras } from '@angular/router';
 /**
  * Generated class for the MainNavComponent component.
  *
@@ -17,7 +16,7 @@ import { NavigationExtras } from '@angular/router';
 export class MainNavComponent  implements OnInit {
   @Input() aktivPage: string;
   @Input() idCustomer: number;
-  // @Input() company: string;
+
   public progressBar: any = 0;
   public rowRecords: any = 0;
   public totalRecords: any = 0;
@@ -56,11 +55,7 @@ export class MainNavComponent  implements OnInit {
   go(action: any, id: number = 0) {
     // Navigation
     console.info('app.go: ', action, id, this.aktivPage);
-    const navigationExtras: NavigationExtras = {
-      queryParams: {
-          idCustomer: id
-      }
-  };
+
     if (this.aktivPage != action) {
       switch (action) {
         case 'StartscreenNew': // HOME
@@ -82,7 +77,7 @@ export class MainNavComponent  implements OnInit {
           this.navCtrl.navigateRoot(['/protocol-list/'+id]);
           break;
         case 'OrderFormNew':
-          this.navCtrl.navigateRoot(['/order-form-new'],navigationExtras);
+          this.navCtrl.navigateRoot(['/order-form-new',id]);
           break;
         case 'NoteList':
           this.navCtrl.navigateRoot(['/note-list/'+id]);
