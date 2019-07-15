@@ -40,23 +40,28 @@ export class CustomerEditComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.idCustomer = this.navParams.get("id");
-    this.redirect = this.navParams.get("redirect");
-    this.parentCustomer = this.navParams.get("parent");
-    if (!this.parentCustomer) this.parentCustomer = 0;
+    this.idCustomer = this.navParams.get('id');
+    this.redirect = this.navParams.get('redirect');
+    this.parentCustomer = this.navParams.get('parent');
+    this.salesTesterList();
+    this.activCustomer.company = '';
+    this.activCustomer.rating = 'C';
+    this.activCustomer.customer_number = '';
+    this.activCustomer.sales = '';
+    this.activCustomer.tester = '';
+    this.activCustomer.sector = '';
+    if (!this.parentCustomer) { this.parentCustomer = 0; }
     if (this.idCustomer > 0) {
-      this.itsNew = false;
       this.modalTitle = this.translate.instant('Kundendaten bearbeiten');
-      this.activCustomer.rating = "C";
+      this.itsNew = false;
       this.loadCustomer(this.idCustomer);
     } else {
-      this.idCustomer = 0;
-      this.itsNew = true;
       this.modalTitle = this.translate.instant('Neuer Kunde');
-      this.activCustomer.rating = "C";
+      this.itsNew = true;
+      this.idCustomer = 0;
     }
 
-    this.salesTesterList();
+    // this.salesTesterList();
 
     this.Branches = [
       { value: 'Baukran', text: 'Baukran' },
@@ -81,15 +86,18 @@ export class CustomerEditComponent implements OnInit {
       { value: 'Veranstaltungstechnik', text: 'Veranstaltungstechnik' },
       { value: 'Sonstige', text: 'Sonstige' }
     ];
-    console.log("CustomerEditComponent: ", this.idCustomer);
+    console.log('CustomerEditComponent: ', this.idCustomer);
 
-    if (this.redirect == 3)
+    if (this.redirect == 3) {
       this.customerDisabled = true;
+    }
   }
 
   loadCustomer(id) {
     this.apiService.pvs4_get_customer(id).then((result: any) => {
       this.activCustomer = result.obj;
+      if (this.activCustomer.sales == 0) { this.activCustomer.sales = ''; }
+      if (this.activCustomer.tester == 0) { this.activCustomer.tester = ''; }
       console.log('loadCustomer: ', this.activCustomer);
     });
   }
@@ -99,52 +107,79 @@ export class CustomerEditComponent implements OnInit {
   }
 
   customerEdit() {
-    console.log("customerEdit()");
+    console.log('customerEdit()', this.activCustomer);
+
+    this.inputError = false;
+    if (this.activCustomer.company == '') {
+      this.inputError = true;
+      return;
+    }
+    if (this.activCustomer.rating == '') {
+      this.inputError = true;
+      return;
+    }
+    if (this.activCustomer.customer_number == '') {
+      this.inputError = true;
+      return;
+    }
+    if (this.activCustomer.sales == '') {
+      this.inputError = true;
+      return;
+    }
+    if (this.activCustomer.tester == '') {
+      this.inputError = true;
+      return;
+    }
+    if (this.activCustomer.sector == '') {
+      this.inputError = true;
+      return;
+    }
+
     let obj = {
       active: 1,
-      company: "",
-      country: "",
-      customer_number: "",
-      email: "",
+      company: '',
+      country: '',
+      customer_number: '',
+      email: '',
       licensee: this.userdata.licensee,
       parent: this.parentCustomer,
-      phone: "",
-      place: "",
-      po_box: "",
-      rating: "C",
-      sector: "",
-      street: "",
-      website: "",
-      zip_code: "",
+      phone: '',
+      place: '',
+      po_box: '',
+      rating: 'C',
+      sector: '',
+      street: '',
+      website: '',
+      zip_code: '',
       id: 0,
-      note: "",
-      sales: "",
-      tester: ""
+      note: '',
+      sales: '',
+      tester: ''
     };
 
-    if (this.activCustomer["active"]) obj.active = this.activCustomer["active"];
-    if (this.activCustomer["company"]) obj.company = this.activCustomer["company"];
-    if (this.activCustomer["country"]) obj.country = this.activCustomer["country"];
-    if (this.activCustomer["customer_number"]) obj.customer_number = this.activCustomer["customer_number"];
-    if (this.activCustomer["email"]) obj.email = this.activCustomer["email"];
-    if (this.activCustomer["licensee"]) obj.licensee = this.activCustomer["licensee"];
-    if (this.activCustomer["parent"]) obj.parent = this.activCustomer["parent"];
-    if (this.activCustomer["phone"]) obj.phone = this.activCustomer["phone"];
-    if (this.activCustomer["place"]) obj.place = this.activCustomer["place"];
-    if (this.activCustomer["po_box"]) obj.po_box = this.activCustomer["po_box"];
-    if (this.activCustomer["rating"]) obj.rating = this.activCustomer["rating"];
-    if (this.activCustomer["sector"]) obj.sector = this.activCustomer["sector"];
-    if (this.activCustomer["street"]) obj.street = this.activCustomer["street"];
-    if (this.activCustomer["website"]) obj.website = this.activCustomer["website"];
-    if (this.activCustomer["zip_code"]) obj.zip_code = this.activCustomer["zip_code"];
-    if (this.activCustomer["note"]) obj.note = this.activCustomer["note"];
-    if (this.activCustomer["sales"]) obj.sales = this.activCustomer["sales"];
-    if (this.activCustomer["tester"]) obj.tester = this.activCustomer["tester"];
+    if (this.activCustomer['active']) { obj.active = this.activCustomer['active']; }
+    if (this.activCustomer['company']) { obj.company = this.activCustomer['company']; }
+    if (this.activCustomer['country']) { obj.country = this.activCustomer['country']; }
+    if (this.activCustomer['customer_number']) { obj.customer_number = this.activCustomer['customer_number']; }
+    if (this.activCustomer['email']) { obj.email = this.activCustomer['email']; }
+    if (this.activCustomer['licensee']) { obj.licensee = this.activCustomer['licensee']; }
+    if (this.activCustomer['parent']) { obj.parent = this.activCustomer['parent']; }
+    if (this.activCustomer['phone']) { obj.phone = this.activCustomer['phone']; }
+    if (this.activCustomer['place']) { obj.place = this.activCustomer['place']; }
+    if (this.activCustomer['po_box']) { obj.po_box = this.activCustomer['po_box']; }
+    if (this.activCustomer['rating']) { obj.rating = this.activCustomer['rating']; }
+    if (this.activCustomer['sector']) { obj.sector = this.activCustomer['sector']; }
+    if (this.activCustomer['street']) { obj.street = this.activCustomer['street']; }
+    if (this.activCustomer['website']) { obj.website = this.activCustomer['website']; }
+    if (this.activCustomer['zip_code']) { obj.zip_code = this.activCustomer['zip_code']; }
+    if (this.activCustomer['note']) { obj.note = this.activCustomer['note']; }
+    if (this.activCustomer['sales']) { obj.sales = this.activCustomer['sales']; }
+    if (this.activCustomer['tester']) { obj.tester = this.activCustomer['tester']; }
 
     console.log(obj);
     if (!this.itsNew) {
-      obj.id = this.activCustomer["id"];
-      this.idCustomer = this.activCustomer["id"];
+      obj.id = this.activCustomer['id'];
+      this.idCustomer = this.activCustomer['id'];
     } else {
       this.activCustomer.active = 1;
     }
@@ -157,7 +192,7 @@ export class CustomerEditComponent implements OnInit {
   }
 
   customerDeactivate() {
-    console.log("delete");
+    console.log('delete');
     this.showConfirmAlert(this.activCustomer);
   }
 
@@ -179,7 +214,7 @@ export class CustomerEditComponent implements OnInit {
             this.apiService.pvs4_set_customer(activeCustomer).then((result: any) => {
               console.log('result: ', result);
               this.dismiss();
-              this.navCtrl.navigateBack("/customer-table");
+              this.navCtrl.navigateBack('/customer-table');
             });
 
           }
@@ -191,10 +226,10 @@ export class CustomerEditComponent implements OnInit {
   salesTesterList() {
     this.apiService.pvs4_get_colleagues_list(this.userdata.role, this.userdata.role_set, this.userdata.licensee)
       .then((result: any) => {
-        console.log("pvs4_get_colleagues_list result:", result);
-        let k = result["obj"];
-        result["amount"] = parseInt(result["amount"]);
-        if (result["amount"] > 0) {
+        console.log('pvs4_get_colleagues_list result:', result);
+        let k = result['obj'];
+        result['amount'] = parseInt(result['amount']);
+        if (result['amount'] > 0) {
           for (var i = 0, len = k.length; i < len; i++) {
             let item = k[i];
             item.id = parseInt(item.id);
@@ -205,8 +240,8 @@ export class CustomerEditComponent implements OnInit {
           }
         }
       });
-    console.log("salesListe :", this.salesListe);
-    console.log("testerListe :", this.testerListe);
+    console.log('salesListe :', this.salesListe);
+    console.log('testerListe :', this.testerListe);
   }
 
 }

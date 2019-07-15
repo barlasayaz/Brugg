@@ -28,7 +28,7 @@ export class ApiService {
   public appointmentMinTime: string = '07:00';
   public appointmentMaxTime: string = '17:59';
 
-  version: any = '4.4.2';
+  version: any = '4.4.3';
   
   constructor(public http: HttpClient, public userdata: UserdataService) {
     console.log('Start ApiProvider Provider');
@@ -546,6 +546,7 @@ export class ApiService {
   }
 
   pvs4_set_protocol(obj: any) {
+    obj.author = this.userdata.first_name + ' ' + this.userdata.last_name;
     console.info('pvs4_set_protocol():', obj);
     return new Promise((res, rej) => {
       this.pvs4_api_post('set_protocol.php', obj).then((done: any) => {// return the result
@@ -595,7 +596,7 @@ export class ApiService {
   }
 
   pvs4_set_product(obj: any) {
-    obj.author = this.userdata.first_name+' '+this.userdata.last_name;
+    obj.author = this.userdata.first_name + ' ' + this.userdata.last_name;
     console.info('pvs4_set_product():', obj);
     return new Promise((res, rej) => {
       this.pvs4_api_post('set_product.php', obj).then((done: any) => {// return the result

@@ -159,7 +159,7 @@ export class AppointmentEditComponent implements OnInit {
       this.inputError = true;
       return;
     }
-    if (this.activAppointment.idContactPerson == undefined) {
+    if (this.activAppointment.idContactPerson == '') {
       this.inputError = true;
       return;
     }
@@ -179,7 +179,7 @@ export class AppointmentEditComponent implements OnInit {
       this.inputError = true;
       return;
     }
-    
+
     if (this.activAppointment.appointment_date) {
       this.appointmentSave();
     }
@@ -287,17 +287,17 @@ export class AppointmentEditComponent implements OnInit {
     this.apiService.pvs4_set_appointment(obj).then((result: any) => {
       console.log('result: ', result);
     });
-    if (this.redirect == 1) {
-      this.navCtrl.navigateRoot('/dashboard-new');
-      this.dismiss();
-    }
-    if (this.redirect == 2) {
-      this.navCtrl.navigateRoot('/appointment-plan');
-      this.dismiss();
-    }
-    if (this.redirect == 3 || this.redirect == 4) {
-      this.dismiss();
-    }
+      if (this.redirect == 1) {
+       this.navCtrl.navigateRoot('/dashboard-new');
+       this.dismiss();
+      }
+      if (this.redirect == 2) {
+        this.navCtrl.navigateRoot('/appointment-plan');
+        this.dismiss();
+      }
+      if (this.redirect == 3 || this.redirect == 4) {
+        this.dismiss();
+      }
   }
 
   appointmentDeactivate() {
@@ -339,7 +339,7 @@ export class AppointmentEditComponent implements OnInit {
 
             this.apiService.pvs4_set_appointment(activAppointment).then((result: any) => {
               console.log('result: ', result);
-              if (this.redirect == 1) {
+              if (this.redirect == 1) {                
                 this.navCtrl.navigateRoot('/dashboard-new');
                 this.dismiss();
               }
@@ -361,6 +361,7 @@ export class AppointmentEditComponent implements OnInit {
     idCstmr = parseInt(event.value.id);
     if (idCstmr != 0) { this.contactPersonDisabled = false; }
     this.contactPersonsList(idCstmr);
+    this.activAppointment.idContactPerson = '';
   }
 
   appointmentTypeChange() {
