@@ -674,6 +674,7 @@ export class ApiService {
         id: productID
       }
       this.pvs4_api_post('get_product.php', data).then((done: any) => {// return the result
+        //console.log('get_product :', done);
         if(done.amount){
           if(done.amount>0){
             done.obj.id = parseInt(done.obj.id);
