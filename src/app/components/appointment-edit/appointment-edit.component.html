@@ -9,561 +9,578 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <ion-grid>
-    <!-- Row 1 -->
-    <ion-row>
-      <ion-col size-xl="8" size-lg="8" size-md="8" size-sm="12" size="12">
-        <ion-item lines="none">
-          <ion-label position="floating">{{translate.instant('Mitarbeiter')}}</ion-label>
-          <ion-select style="margin-bottom: 4px;" 
-                      [ngClass]="{required:inputError}"
-                      [disabled]="!this.userdata.role_set.edit_customer"
-                      name="selectEmployee"
-                      id="selectEmployee"
-                      [(ngModel)]="activAppointment.idUser"
-                      okText="{{translate.instant('okay')}}"
-                      cancelText="{{translate.instant('dismiss')}}">
-            <ion-select-option *ngFor="let pr of employeeList" [value]="pr.id">{{pr.first_name + " " + pr.last_name}}</ion-select-option>
-          </ion-select>
-        </ion-item>
-      </ion-col>
-
-      <!-- Terminart -->
-      <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12">
-        <ion-item lines="none">
-          <ion-label position="floating">{{translate.instant('Terminart')}}</ion-label>
-          <ion-select [ngClass]="{required:inputError}"
-                      [(ngModel)]="activAppointment.appointment_type"
-                      [disabled]=appointmentTypeDisabled 
-                      okText="{{translate.instant('okay')}}"
-                      cancelText="{{translate.instant('dismiss')}}">
-            <ion-select-option value="0" selected>{{translate.instant('Kundenbesuch')}}</ion-select-option>
-            <ion-select-option value="1">{{translate.instant('Prüfung')}}</ion-select-option>
-            <ion-select-option value="2">{{translate.instant('Urlaub')}}</ion-select-option>
-          </ion-select>
-        </ion-item>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col size-xl="12" size-lg="12" size-md="12" size-sm="12" size="12"
-        *ngIf="activAppointment.appointment_type<2">
-        <ion-item lines="none">
-          <ion-label position="floating">{{translate.instant('Kunden')}}</ion-label>
-          <ionic-selectable item-content
-                            [ngClass]="{required:inputError}"
-                            [(ngModel)]="customer"
-                            [(items)]="listCustomer"
-                            itemValueField="id"
-                            required
-                            itemTextField="company"
-                            [canSearch]="true"
-                            (onChange)="customerChange($event)"
-                            [disabled]=customerDisabled>
-          </ionic-selectable>
-        </ion-item>
-      </ion-col>
-    </ion-row>
-    <!-- Row 2 -->
-    <ion-row>
-      <!-- Point of Contact -->
-      <ion-col size-xl="8" size-lg="8" size-md="8" size-sm="12" size="12" *ngIf="activAppointment.appointment_type<2">
-        <ion-item lines="none">
-          <ion-label position="floating">{{translate.instant('Ansprechpartner')}}</ion-label>
-          <ion-select style="margin-bottom: 4px;"
-                      [ngClass]="{required:inputError}"
-                      name="selectContactPerson"
-                      id="selectContactPerson"
-                      [disabled]="contactPersonDisabled"
-                      [(ngModel)]="activAppointment.idContactPerson"
-                      okText="{{translate.instant('okay')}}" 
-                      cancelText="{{translate.instant('dismiss')}}">
-            <ion-select-option *ngFor="let pr of contactPersonList" [value]="pr.id">
-              {{pr.first_name + " " + pr.last_name}}</ion-select-option>
-          </ion-select>
-        </ion-item>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <!-- Date -->
-      <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12">
-        <ion-item lines="none">
-          <ion-label position="floating">{{translate.instant('Datum')}}</ion-label>
-          <ion-datetime [ngClass]="{required:inputError}"
-                        [(ngModel)]="activAppointment.appointment_date"
-                        displayFormat="DD.MM.YYYY"
-                        max={{maxDate}}
-                        doneText="{{translate.instant('okay')}}"
-                        cancelText="{{translate.instant('dismiss')}}">
-          </ion-datetime>
-        </ion-item>
-      </ion-col>
-      <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12" *ngIf="activAppointment.appointment_type<2">
-        <!-- Start Time -->
-        <ion-item lines="none">
-          <ion-label position="floating">{{translate.instant('Startzeit')}}</ion-label>
-          <ion-datetime [ngClass]="{required:inputError}"
-                        type="time"
-                        id="start_time"
-                        [(ngModel)]="activAppointment.start_time"
-                        name="start_time"
-                        required="true"
-                        displayFormat="HH:mm"
-                        min={{minTime}}
-                        max={{maxTime}}
-                        doneText="{{translate.instant('okay')}}"
-                        cancelText="{{translate.instant('dismiss')}}">
-          </ion-datetime>
-        </ion-item>
-      </ion-col>
-      <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12" *ngIf="activAppointment.appointment_type<2">
-        <!-- End Time -->
-        <ion-item lines="none">
-          <ion-label position="floating">{{translate.instant('Endzeit')}}</ion-label>
-          <ion-datetime [ngClass]="{required:inputError}"
-                        type="time"
-                        id="end_time"
-                        [(ngModel)]="activAppointment.end_time"
-                        name="end_time"
-                        required="true"
-                        displayFormat="HH:mm"
-                        min={{minTime}}
-                        max={{maxTime}}
-                        doneText="{{translate.instant('okay')}}"
-                        cancelText="{{translate.instant('dismiss')}}">
-          </ion-datetime>
-        </ion-item>
-      </ion-col>
-    </ion-row>
-    <!-- # 2 -->
-    <ion-row>
-      <!-- Date -->
-      <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12" *ngIf="addDate>=2">
-        <ion-item lines="none">
-          <ion-label position="floating">{{translate.instant('Datum')}}</ion-label>
-          <ion-datetime [ngClass]="{required:inputError}"
-                        [(ngModel)]="activAppointment.appointment_date2"
-                        displayFormat="DD.MM.YYYY"
-                        max={{maxDate}}
-                        doneText="{{translate.instant('okay')}}"
-                        cancelText="{{translate.instant('dismiss')}}">
-          </ion-datetime>
-        </ion-item>
-      </ion-col>
-      <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12" *ngIf="activAppointment.appointment_type<2 && addDate>=2">
-        <!-- Start Time -->
-        <ion-item lines="none">
-          <ion-label position="floating">{{translate.instant('Startzeit')}}</ion-label>
-          <ion-datetime [ngClass]="{required:inputError}"
-                        type="time"
-                        id="start_time"
-                        [(ngModel)]="activAppointment.start_time2"
-                        name="start_time"
-                        required="true"
-                        displayFormat="HH:mm"
-                        doneText="{{translate.instant('okay')}}"
-                        cancelText="{{translate.instant('dismiss')}}">
-          </ion-datetime>
-        </ion-item>
-      </ion-col>
-      <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12" *ngIf="activAppointment.appointment_type<2 && addDate>=2">
-        <!-- End Time -->
-        <ion-item lines="none">
-          <ion-label position="floating">{{translate.instant('Endzeit')}}</ion-label>
-          <ion-datetime [ngClass]="{required:inputError}"
-                        type="time"
-                        id="end_time"
-                        [(ngModel)]="activAppointment.end_time2"
-                        name="end_time"
-                        required="true"
-                        displayFormat="HH:mm"
-                        doneText="{{translate.instant('okay')}}"
-                        cancelText="{{translate.instant('dismiss')}}">
-          </ion-datetime>
-        </ion-item>
-      </ion-col>
-    </ion-row>
-    <!-- # 3 -->
-    <ion-row>
-      <!-- Date -->
-      <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12" *ngIf="addDate>=3">
-        <ion-item lines="none">
-          <ion-label position="floating">{{translate.instant('Datum')}}</ion-label>
-          <ion-datetime [ngClass]="{required:inputError}"
-                        [(ngModel)]="activAppointment.appointment_date3"
-                        displayFormat="DD.MM.YYYY"
-                        max={{maxDate}}
-                        doneText="{{translate.instant('okay')}}"
-                        cancelText="{{translate.instant('dismiss')}}">
-          </ion-datetime>
-        </ion-item>
-      </ion-col>
-      <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12" *ngIf="activAppointment.appointment_type<2 && addDate>=3">
-        <!-- Start Time -->
-        <ion-item lines="none">
-          <ion-label position="floating">{{translate.instant('Startzeit')}}</ion-label>
-          <ion-datetime [ngClass]="{required:inputError}"
-                        type="time"
-                        id="start_time"
-                        [(ngModel)]="activAppointment.start_time3"
-                        name="start_time"
-                        required="true"
-                        displayFormat="HH:mm"
-                        doneText="{{translate.instant('okay')}}"
-                        cancelText="{{translate.instant('dismiss')}}">
-          </ion-datetime>
-        </ion-item>
-      </ion-col>
-      <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12" *ngIf="activAppointment.appointment_type<2 && addDate>=3">
-        <!-- End Time -->
-        <ion-item lines="none">
-          <ion-label position="floating">{{translate.instant('Endzeit')}}</ion-label>
-          <ion-datetime [ngClass]="{required:inputError}"
-                        type="time"
-                        id="end_time"
-                        [(ngModel)]="activAppointment.end_time3"
-                        name="end_time"
-                        required="true"
-                        displayFormat="HH:mm"
-                        doneText="{{translate.instant('okay')}}"
-                        cancelText="{{translate.instant('dismiss')}}">
-          </ion-datetime>
-        </ion-item>
-      </ion-col>
-    </ion-row>
-    <!-- # 4 -->
-    <ion-row>
-      <!-- Date -->
-      <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12" *ngIf="addDate>=4">
-        <ion-item lines="none">
-          <ion-label position="floating">{{translate.instant('Datum')}}</ion-label>
-          <ion-datetime [ngClass]="{required:inputError}"
-                        [(ngModel)]="activAppointment.appointment_date4"
-                        displayFormat="DD.MM.YYYY"
-                        max={{maxDate}}
-                        doneText="{{translate.instant('okay')}}"
-                        cancelText="{{translate.instant('dismiss')}}">
-          </ion-datetime>
-        </ion-item>
-      </ion-col>
-      <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12" *ngIf="activAppointment.appointment_type<2 && addDate>=4">
-        <!-- Start Time -->
-        <ion-item lines="none">
-          <ion-label position="floating">{{translate.instant('Startzeit')}}</ion-label>
-          <ion-datetime [ngClass]="{required:inputError}"
-                        type="time"
-                        id="start_time"
-                        [(ngModel)]="activAppointment.start_time4"
-                        name="start_time"
-                        required="true"
-                        displayFormat="HH:mm"
-                        doneText="{{translate.instant('okay')}}"
-                        cancelText="{{translate.instant('dismiss')}}">
-          </ion-datetime>
-        </ion-item>
-      </ion-col>
-      <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12" *ngIf="activAppointment.appointment_type<2 && addDate>=4">
-        <!-- End Time -->
-        <ion-item lines="none">
-          <ion-label position="floating">{{translate.instant('Endzeit')}}</ion-label>
-          <ion-datetime [ngClass]="{required:inputError}"
-                        type="time"
-                        id="end_time"
-                        [(ngModel)]="activAppointment.end_time4"
-                        name="end_time"
-                        required="true"
-                        displayFormat="HH:mm"
-                        doneText="{{translate.instant('okay')}}"
-            cancelText="{{translate.instant('dismiss')}}">
-          </ion-datetime>
-        </ion-item>
-      </ion-col>
-    </ion-row>
-    <!-- # 5 -->
-    <ion-row>
-      <!-- Date -->
-      <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12" *ngIf="addDate>=5">
-        <ion-item lines="none">
-          <ion-label position="floating">{{translate.instant('Datum')}}</ion-label>
-          <ion-datetime [ngClass]="{required:inputError}"
-                        [(ngModel)]="activAppointment.appointment_date5"
-                        displayFormat="DD.MM.YYYY"
-                        max={{maxDate}}
-                        doneText="{{translate.instant('okay')}}"
-                        cancelText="{{translate.instant('dismiss')}}">
-          </ion-datetime>
-        </ion-item>
-      </ion-col>
-      <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12" *ngIf="activAppointment.appointment_type<2 && addDate>=5">
-        <!-- Start Time -->
-        <ion-item lines="none">
-          <ion-label position="floating">{{translate.instant('Startzeit')}}</ion-label>
-          <ion-datetime [ngClass]="{required:inputError}"
-                        type="time"
-                        id="start_time"
-                        [(ngModel)]="activAppointment.start_time5"
-                        name="start_time"
-                        required="true"
-                        displayFormat="HH:mm"
-                        doneText="{{translate.instant('okay')}}"
-                        cancelText="{{translate.instant('dismiss')}}">
-          </ion-datetime>
-        </ion-item>
-      </ion-col>
-      <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12" *ngIf="activAppointment.appointment_type<2 && addDate>=5">
-        <!-- End Time -->
-        <ion-item lines="none">
-          <ion-label position="floating">{{translate.instant('Endzeit')}}</ion-label>
-          <ion-datetime [ngClass]="{required:inputError}"
-                        type="time"
-                        id="end_time"
-                        [(ngModel)]="activAppointment.end_time5"
-                        name="end_time"
-                        required="true"
-                        displayFormat="HH:mm"
-                        doneText="{{translate.instant('okay')}}"
-                        cancelText="{{translate.instant('dismiss')}}">
-          </ion-datetime>
-        </ion-item>
-      </ion-col>
-    </ion-row>
-    <!-- # 6 -->
-    <ion-row>
-      <!-- Date -->
-      <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12" *ngIf="addDate>=6">
-        <ion-item lines="none">
-          <ion-label position="floating">{{translate.instant('Datum')}}</ion-label>
-          <ion-datetime [ngClass]="{required:inputError}"
-                        [(ngModel)]="activAppointment.appointment_date6"
-                        displayFormat="DD.MM.YYYY"
-                        max={{maxDate}}
-                        doneText="{{translate.instant('okay')}}"
-                        cancelText="{{translate.instant('dismiss')}}">
-          </ion-datetime>
-        </ion-item>
-      </ion-col>
-      <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12" *ngIf="activAppointment.appointment_type<2 && addDate>=6">
-        <!-- Start Time -->
-        <ion-item lines="none">
-          <ion-label position="floating">{{translate.instant('Startzeit')}}</ion-label>
-          <ion-datetime [ngClass]="{required:inputError}"
-                        type="time"
-                        id="start_time"
-                        [(ngModel)]="activAppointment.start_time6"
-                        name="start_time"
-                        required="true"
-                        displayFormat="HH:mm"
-                        doneText="{{translate.instant('okay')}}"
-                        cancelText="{{translate.instant('dismiss')}}">
-          </ion-datetime>
-        </ion-item>
-      </ion-col>
-      <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12" *ngIf="activAppointment.appointment_type<2 && addDate>=6">
-        <!-- End Time -->
-        <ion-item lines="none">
-          <ion-label position="floating">{{translate.instant('Endzeit')}}</ion-label>
-          <ion-datetime [ngClass]="{required:inputError}"
-                        type="time"
-                        id="end_time"
-                        [(ngModel)]="activAppointment.end_time6"
-                        name="end_time"
-                        required="true"
-                        displayFormat="HH:mm"
-                        doneText="{{translate.instant('okay')}}"
-                        cancelText="{{translate.instant('dismiss')}}">
-          </ion-datetime>
-        </ion-item>
-      </ion-col>
-    </ion-row>
-    <!-- # 7 -->
-    <ion-row>
-      <!-- Date -->
-      <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12" *ngIf="addDate>=7">
-        <ion-item lines="none">
-          <ion-label position="floating">{{translate.instant('Datum')}}</ion-label>
-          <ion-datetime [ngClass]="{required:inputError}"
-                        [(ngModel)]="activAppointment.appointment_date7"
-                        displayFormat="DD.MM.YYYY"
-                        max={{maxDate}}
-                        doneText="{{translate.instant('okay')}}"
-                        cancelText="{{translate.instant('dismiss')}}">
-          </ion-datetime>
-        </ion-item>
-      </ion-col>
-      <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12" *ngIf="activAppointment.appointment_type<2 && addDate>=7">
-        <!-- Start Time -->
-        <ion-item lines="none">
-          <ion-label position="floating">{{translate.instant('Startzeit')}}</ion-label>
-          <ion-datetime [ngClass]="{required:inputError}"
-                        type="time"
-                        id="start_time"
-                        [(ngModel)]="activAppointment.start_time7"
-                        name="start_time"
-                        required="true"
-                        displayFormat="HH:mm"
-            doneText="{{translate.instant('okay')}}" cancelText="{{translate.instant('dismiss')}}">
-          </ion-datetime>
-        </ion-item>
-      </ion-col>
-      <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12" *ngIf="activAppointment.appointment_type<2 && addDate>=7">
-        <!-- End Time -->
-        <ion-item lines="none">
-          <ion-label position="floating">{{translate.instant('Endzeit')}}</ion-label>
-          <ion-datetime [ngClass]="{required:inputError}"
-                        type="time"
-                        id="end_time"
-                        [(ngModel)]="activAppointment.end_time7"
-                        name="end_time"
-                        required="true"
-                        displayFormat="HH:mm"
-                        doneText="{{translate.instant('okay')}}"
-            cancelText="{{translate.instant('dismiss')}}">
-          </ion-datetime>
-        </ion-item>
-      </ion-col>
-    </ion-row>
-    <!-- # 8 -->
-    <ion-row>
-      <!-- Date -->
-      <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12" *ngIf="addDate>=8">
-        <ion-item lines="none">
-          <ion-label position="floating">{{translate.instant('Datum')}}</ion-label>
-          <ion-datetime [ngClass]="{required:inputError}"
-                        [(ngModel)]="activAppointment.appointment_date8"
-                        displayFormat="DD.MM.YYYY"
-                        max={{maxDate}}
-                        doneText="{{translate.instant('okay')}}"
-                        cancelText="{{translate.instant('dismiss')}}">
-          </ion-datetime>
-        </ion-item>
-      </ion-col>
-      <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12" *ngIf="activAppointment.appointment_type<2 && addDate>=8">
-        <!-- Start Time -->
-        <ion-item lines="none">
-          <ion-label position="floating">{{translate.instant('Startzeit')}}</ion-label>
-          <ion-datetime [ngClass]="{required:inputError}"
-                        type="time"
-                        id="start_time"
-                        [(ngModel)]="activAppointment.start_time8"
-                        name="start_time"
-                        required="true"
-                        displayFormat="HH:mm"
-                        doneText="{{translate.instant('okay')}}"
-                        cancelText="{{translate.instant('dismiss')}}">
-          </ion-datetime>
-        </ion-item>
-      </ion-col>
-      <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12" *ngIf="activAppointment.appointment_type<2 && addDate>=8">
-        <!-- End Time -->
-        <ion-item lines="none">
-          <ion-label position="floating">{{translate.instant('Endzeit')}}</ion-label>
-          <ion-datetime [ngClass]="{required:inputError}"
-                        type="time"
-                        id="end_time"
-                        [(ngModel)]="activAppointment.end_time8"
-                        name="end_time"
-                        required="true"
-                        displayFormat="HH:mm"
-                        doneText="{{translate.instant('okay')}}"
-            cancelText="{{translate.instant('dismiss')}}">
-          </ion-datetime>
-        </ion-item>
-      </ion-col>
-    </ion-row>
-    <!-- # 9 -->
-    <ion-row>
-      <!-- Date -->
-      <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12" *ngIf="addDate>=9">
-        <ion-item lines="none">
-          <ion-label position="floating">{{translate.instant('Datum')}}</ion-label>
-          <ion-datetime [ngClass]="{required:inputError}"
-                        [(ngModel)]="activAppointment.appointment_date9"
-                        displayFormat="DD.MM.YYYY"
-                        max={{maxDate}}
-                        doneText="{{translate.instant('okay')}}"
-                        cancelText="{{translate.instant('dismiss')}}">
-          </ion-datetime>
-        </ion-item>
-      </ion-col>
-      <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12" *ngIf="activAppointment.appointment_type<2 && addDate>=9">
-        <!-- Start Time -->
-        <ion-item lines="none">
-          <ion-label position="floating">{{translate.instant('Startzeit')}}</ion-label>
-          <ion-datetime [ngClass]="{required:inputError}"
-                        type="time"
-                        id="start_time"
-                        [(ngModel)]="activAppointment.start_time9"
-                        name="start_time"
-                        required="true"
-                        displayFormat="HH:mm"
-                        doneText="{{translate.instant('okay')}}"
-                        cancelText="{{translate.instant('dismiss')}}">
-          </ion-datetime>
-        </ion-item>
-      </ion-col>
-      <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12" *ngIf="activAppointment.appointment_type<2 && addDate>=9">
-        <!-- End Time -->
-        <ion-item lines="none">
-          <ion-label position="floating">{{translate.instant('Endzeit')}}</ion-label>
-          <ion-datetime [ngClass]="{required:inputError}"
-                        type="time"
-                        id="end_time"
-                        [(ngModel)]="activAppointment.end_time9"
-                        name="end_time"
-                        required="true"
-                        displayFormat="HH:mm"
-                        doneText="{{translate.instant('okay')}}"
-            cancelText="{{translate.instant('dismiss')}}">
-          </ion-datetime>
-        </ion-item>
-      </ion-col>
-    </ion-row>
-    <!-- Row 5 -->
-    <ion-row>
-      <!-- Notes -->
-      <ion-col size-xl="12" size-lg="12" size-md="12" size-sm="12" size="12">
-        <ion-item lines="none">
-          <ion-label position="floating">{{translate.instant('Notes')}} *</ion-label>
-          <ion-textarea type="text" 
-                        rows="5"
-                        id="Notiztext"
+  <ion-content>
+    <ion-grid>
+      <!-- Row 1 -->
+      <ion-row>
+        <ion-col size-xl="8" size-lg="8" size-md="8" size-sm="12" size="12">
+          <ion-item lines="none">
+            <ion-label position="floating">{{translate.instant('Mitarbeiter')}}</ion-label>
+            <ion-select style="margin-bottom: 4px;"
+                        required
                         [ngClass]="{required:inputError}"
-                        [(ngModel)]="activAppointment.notes">
-          </ion-textarea>
-        </ion-item>
-      </ion-col>
-    </ion-row>
+                        [disabled]="!this.userdata.role_set.edit_customer"
+                        name="Employee"
+                        id="selectEmployee"
+                        [(ngModel)]="activAppointment.idUser"
+                        okText="{{translate.instant('okay')}}"
+                        cancelText="{{translate.instant('dismiss')}}">
+              <ion-select-option *ngFor="let pr of employeeList" [value]="pr.id">{{pr.first_name + " " + pr.last_name}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
 
-    <!-- Error -->
-    <div [hidden]="!inputError" class="pfehler" style="margin-top: 15px; margin-left: 5px;">
-      <div class="highlightFehler">
-        {{translate.instant('Bitte füllen Sie alle Pflichtfelder aus.')}}
+        <!-- Terminart -->
+        <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12">
+          <ion-item lines="none">
+            <ion-label position="floating">{{translate.instant('Terminart')}}</ion-label>
+            <ion-select required
+                        [ngClass]="{required:inputError}"
+                        name="AppointmentType"
+                        [(ngModel)]="activAppointment.appointment_type"
+                        [disabled]=appointmentTypeDisabled 
+                        okText="{{translate.instant('okay')}}"
+                        cancelText="{{translate.instant('dismiss')}}">
+              <ion-select-option value="0" selected>{{translate.instant('Kundenbesuch')}}</ion-select-option>
+              <ion-select-option value="1">{{translate.instant('Prüfung')}}</ion-select-option>
+              <ion-select-option value="2">{{translate.instant('Urlaub')}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size-xl="12" size-lg="12" size-md="12" size-sm="12" size="12"
+          *ngIf="activAppointment.appointment_type<2">
+          <ion-item lines="none">
+            <ion-label position="floating">{{translate.instant('Kunden')}}</ion-label>
+            <ionic-selectable item-content
+                              required
+                              [ngClass]="{required:inputError}"
+                              name="Customer"
+                              [(ngModel)]="customer"
+                              [(items)]="listCustomer"
+                              itemValueField="id"
+                              itemTextField="company"
+                              [canSearch]="true"
+                              (onChange)="customerChange($event)"
+                              [disabled]=customerDisabled>
+            </ionic-selectable>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <!-- Row 2 -->
+      <ion-row>
+        <!-- Point of Contact -->
+        <ion-col size-xl="8" size-lg="8" size-md="8" size-sm="12" size="12" *ngIf="activAppointment.appointment_type<2">
+          <ion-item lines="none">
+            <ion-label position="floating">{{translate.instant('Ansprechpartner')}}</ion-label>
+            <ion-select style="margin-bottom: 4px;"
+                        required
+                        [ngClass]="{required:inputError}"
+                        name="PointofContact"
+                        id="selectContactPerson"
+                        [disabled]="contactPersonDisabled"
+                        [(ngModel)]="activAppointment.idContactPerson"
+                        okText="{{translate.instant('okay')}}" 
+                        cancelText="{{translate.instant('dismiss')}}">
+              <ion-select-option *ngFor="let pr of contactPersonList" [value]="pr.id">
+                {{pr.first_name + " " + pr.last_name}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <!-- Date -->
+        <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12">
+          <ion-item lines="none">
+            <ion-label position="floating">{{translate.instant('Datum')}}</ion-label>
+            <ion-datetime required
+                          [ngClass]="{required:inputError}"
+                          name="Date1"
+                          [(ngModel)]="activAppointment.appointment_date"
+                          displayFormat="DD.MM.YYYY"
+                          max={{maxDate}}
+                          doneText="{{translate.instant('okay')}}"
+                          cancelText="{{translate.instant('dismiss')}}">
+            </ion-datetime>
+          </ion-item>
+        </ion-col>
+        <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12" *ngIf="activAppointment.appointment_type<2">
+          <!-- Start Time -->
+          <ion-item lines="none">
+            <ion-label position="floating">{{translate.instant('Startzeit')}}</ion-label>
+            <ion-datetime required
+                          [ngClass]="{required:inputError}"
+                          name="StartTime1"
+                          type="time"
+                          id="start_time"
+                          [(ngModel)]="activAppointment.start_time"                          
+                          displayFormat="HH:mm"
+                          min={{minTime}}
+                          max={{maxTime}}
+                          doneText="{{translate.instant('okay')}}"
+                          cancelText="{{translate.instant('dismiss')}}">
+            </ion-datetime>
+          </ion-item>
+        </ion-col>
+        <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12" *ngIf="activAppointment.appointment_type<2">
+          <!-- End Time -->
+          <ion-item lines="none">
+            <ion-label position="floating">{{translate.instant('Endzeit')}}</ion-label>
+            <ion-datetime required
+                          [ngClass]="{required:inputError}"
+                          name="EndTime1"
+                          type="time"
+                          id="end_time"
+                          [(ngModel)]="activAppointment.end_time"
+                          displayFormat="HH:mm"
+                          min={{minTime}}
+                          max={{maxTime}}
+                          doneText="{{translate.instant('okay')}}"
+                          cancelText="{{translate.instant('dismiss')}}">
+            </ion-datetime>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <!-- # 2 -->
+      <ion-row>
+        <!-- Date -->
+        <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12" *ngIf="addDate>=2">
+          <ion-item lines="none">
+            <ion-label position="floating">{{translate.instant('Datum')}}</ion-label>
+            <ion-datetime required
+                          [ngClass]="{required:inputError}"
+                          [(ngModel)]="activAppointment.appointment_date2"
+                          displayFormat="DD.MM.YYYY"
+                          max={{maxDate}}
+                          doneText="{{translate.instant('okay')}}"
+                          cancelText="{{translate.instant('dismiss')}}">
+            </ion-datetime>
+          </ion-item>
+        </ion-col>
+        <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12" *ngIf="activAppointment.appointment_type<2 && addDate>=2">
+          <!-- Start Time -->
+          <ion-item lines="none">
+            <ion-label position="floating">{{translate.instant('Startzeit')}}</ion-label>
+            <ion-datetime required
+                          [ngClass]="{required:inputError}"
+                          type="time"
+                          id="start_time"
+                          [(ngModel)]="activAppointment.start_time2"
+                          name="start_time"
+                          displayFormat="HH:mm"
+                          doneText="{{translate.instant('okay')}}"
+                          cancelText="{{translate.instant('dismiss')}}">
+            </ion-datetime>
+          </ion-item>
+        </ion-col>
+        <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12" *ngIf="activAppointment.appointment_type<2 && addDate>=2">
+          <!-- End Time -->
+          <ion-item lines="none">
+            <ion-label position="floating">{{translate.instant('Endzeit')}}</ion-label>
+            <ion-datetime required
+                          [ngClass]="{required:inputError}"
+                          type="time"
+                          id="end_time"
+                          [(ngModel)]="activAppointment.end_time2"
+                          name="end_time"
+                          displayFormat="HH:mm"
+                          doneText="{{translate.instant('okay')}}"
+                          cancelText="{{translate.instant('dismiss')}}">
+            </ion-datetime>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <!-- # 3 -->
+      <ion-row>
+        <!-- Date -->
+        <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12" *ngIf="addDate>=3">
+          <ion-item lines="none">
+            <ion-label position="floating">{{translate.instant('Datum')}}</ion-label>
+            <ion-datetime required
+                          [ngClass]="{required:inputError}"
+                          [(ngModel)]="activAppointment.appointment_date3"
+                          displayFormat="DD.MM.YYYY"
+                          max={{maxDate}}
+                          doneText="{{translate.instant('okay')}}"
+                          cancelText="{{translate.instant('dismiss')}}">
+            </ion-datetime>
+          </ion-item>
+        </ion-col>
+        <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12" *ngIf="activAppointment.appointment_type<2 && addDate>=3">
+          <!-- Start Time -->
+          <ion-item lines="none">
+            <ion-label position="floating">{{translate.instant('Startzeit')}}</ion-label>
+            <ion-datetime required
+                          [ngClass]="{required:inputError}"
+                          type="time"
+                          id="start_time"
+                          [(ngModel)]="activAppointment.start_time3"
+                          name="start_time"
+                          displayFormat="HH:mm"
+                          doneText="{{translate.instant('okay')}}"
+                          cancelText="{{translate.instant('dismiss')}}">
+            </ion-datetime>
+          </ion-item>
+        </ion-col>
+        <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12" *ngIf="activAppointment.appointment_type<2 && addDate>=3">
+          <!-- End Time -->
+          <ion-item lines="none">
+            <ion-label position="floating">{{translate.instant('Endzeit')}}</ion-label>
+            <ion-datetime required
+                          [ngClass]="{required:inputError}"
+                          type="time"
+                          id="end_time"
+                          [(ngModel)]="activAppointment.end_time3"
+                          name="end_time"
+                          displayFormat="HH:mm"
+                          doneText="{{translate.instant('okay')}}"
+                          cancelText="{{translate.instant('dismiss')}}">
+            </ion-datetime>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <!-- # 4 -->
+      <ion-row>
+        <!-- Date -->
+        <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12" *ngIf="addDate>=4">
+          <ion-item lines="none">
+            <ion-label position="floating">{{translate.instant('Datum')}}</ion-label>
+            <ion-datetime required
+                          [ngClass]="{required:inputError}"
+                          [(ngModel)]="activAppointment.appointment_date4"
+                          displayFormat="DD.MM.YYYY"
+                          max={{maxDate}}
+                          doneText="{{translate.instant('okay')}}"
+                          cancelText="{{translate.instant('dismiss')}}">
+            </ion-datetime>
+          </ion-item>
+        </ion-col>
+        <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12" *ngIf="activAppointment.appointment_type<2 && addDate>=4">
+          <!-- Start Time -->
+          <ion-item lines="none">
+            <ion-label position="floating">{{translate.instant('Startzeit')}}</ion-label>
+            <ion-datetime required
+                          [ngClass]="{required:inputError}"
+                          type="time"
+                          id="start_time"
+                          [(ngModel)]="activAppointment.start_time4"
+                          name="start_time"
+                          displayFormat="HH:mm"
+                          doneText="{{translate.instant('okay')}}"
+                          cancelText="{{translate.instant('dismiss')}}">
+            </ion-datetime>
+          </ion-item>
+        </ion-col>
+        <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12" *ngIf="activAppointment.appointment_type<2 && addDate>=4">
+          <!-- End Time -->
+          <ion-item lines="none">
+            <ion-label position="floating">{{translate.instant('Endzeit')}}</ion-label>
+            <ion-datetime required
+                          [ngClass]="{required:inputError}"
+                          type="time"
+                          id="end_time"
+                          [(ngModel)]="activAppointment.end_time4"
+                          name="end_time"
+                          displayFormat="HH:mm"
+                          doneText="{{translate.instant('okay')}}"
+              cancelText="{{translate.instant('dismiss')}}">
+            </ion-datetime>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <!-- # 5 -->
+      <ion-row>
+        <!-- Date -->
+        <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12" *ngIf="addDate>=5">
+          <ion-item lines="none">
+            <ion-label position="floating">{{translate.instant('Datum')}}</ion-label>
+            <ion-datetime required
+                          [ngClass]="{required:inputError}"
+                          [(ngModel)]="activAppointment.appointment_date5"
+                          displayFormat="DD.MM.YYYY"
+                          max={{maxDate}}
+                          doneText="{{translate.instant('okay')}}"
+                          cancelText="{{translate.instant('dismiss')}}">
+            </ion-datetime>
+          </ion-item>
+        </ion-col>
+        <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12" *ngIf="activAppointment.appointment_type<2 && addDate>=5">
+          <!-- Start Time -->
+          <ion-item lines="none">
+            <ion-label position="floating">{{translate.instant('Startzeit')}}</ion-label>
+            <ion-datetime required
+                          [ngClass]="{required:inputError}"
+                          type="time"
+                          id="start_time"
+                          [(ngModel)]="activAppointment.start_time5"
+                          name="start_time"
+                          displayFormat="HH:mm"
+                          doneText="{{translate.instant('okay')}}"
+                          cancelText="{{translate.instant('dismiss')}}">
+            </ion-datetime>
+          </ion-item>
+        </ion-col>
+        <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12" *ngIf="activAppointment.appointment_type<2 && addDate>=5">
+          <!-- End Time -->
+          <ion-item lines="none">
+            <ion-label position="floating">{{translate.instant('Endzeit')}}</ion-label>
+            <ion-datetime required
+                          [ngClass]="{required:inputError}"
+                          type="time"
+                          id="end_time"
+                          [(ngModel)]="activAppointment.end_time5"
+                          name="end_time"
+                          displayFormat="HH:mm"
+                          doneText="{{translate.instant('okay')}}"
+                          cancelText="{{translate.instant('dismiss')}}">
+            </ion-datetime>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <!-- # 6 -->
+      <ion-row>
+        <!-- Date -->
+        <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12" *ngIf="addDate>=6">
+          <ion-item lines="none">
+            <ion-label position="floating">{{translate.instant('Datum')}}</ion-label>
+            <ion-datetime required
+                          [ngClass]="{required:inputError}"
+                          [(ngModel)]="activAppointment.appointment_date6"
+                          displayFormat="DD.MM.YYYY"
+                          max={{maxDate}}
+                          doneText="{{translate.instant('okay')}}"
+                          cancelText="{{translate.instant('dismiss')}}">
+            </ion-datetime>
+          </ion-item>
+        </ion-col>
+        <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12" *ngIf="activAppointment.appointment_type<2 && addDate>=6">
+          <!-- Start Time -->
+          <ion-item lines="none">
+            <ion-label position="floating">{{translate.instant('Startzeit')}}</ion-label>
+            <ion-datetime required
+                          [ngClass]="{required:inputError}"
+                          type="time"
+                          id="start_time"
+                          [(ngModel)]="activAppointment.start_time6"
+                          name="start_time"
+                          displayFormat="HH:mm"
+                          doneText="{{translate.instant('okay')}}"
+                          cancelText="{{translate.instant('dismiss')}}">
+            </ion-datetime>
+          </ion-item>
+        </ion-col>
+        <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12" *ngIf="activAppointment.appointment_type<2 && addDate>=6">
+          <!-- End Time -->
+          <ion-item lines="none">
+            <ion-label position="floating">{{translate.instant('Endzeit')}}</ion-label>
+            <ion-datetime required
+                          [ngClass]="{required:inputError}"
+                          type="time"
+                          id="end_time"
+                          [(ngModel)]="activAppointment.end_time6"
+                          name="end_time"
+                          displayFormat="HH:mm"
+                          doneText="{{translate.instant('okay')}}"
+                          cancelText="{{translate.instant('dismiss')}}">
+            </ion-datetime>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <!-- # 7 -->
+      <ion-row>
+        <!-- Date -->
+        <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12" *ngIf="addDate>=7">
+          <ion-item lines="none">
+            <ion-label position="floating">{{translate.instant('Datum')}}</ion-label>
+            <ion-datetime required
+                          [ngClass]="{required:inputError}"
+                          [(ngModel)]="activAppointment.appointment_date7"
+                          displayFormat="DD.MM.YYYY"
+                          max={{maxDate}}
+                          doneText="{{translate.instant('okay')}}"
+                          cancelText="{{translate.instant('dismiss')}}">
+            </ion-datetime>
+          </ion-item>
+        </ion-col>
+        <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12" *ngIf="activAppointment.appointment_type<2 && addDate>=7">
+          <!-- Start Time -->
+          <ion-item lines="none">
+            <ion-label position="floating">{{translate.instant('Startzeit')}}</ion-label>
+            <ion-datetime required
+                          [ngClass]="{required:inputError}"
+                          type="time"
+                          id="start_time"
+                          [(ngModel)]="activAppointment.start_time7"
+                          name="start_time"
+                          displayFormat="HH:mm"
+              doneText="{{translate.instant('okay')}}" cancelText="{{translate.instant('dismiss')}}">
+            </ion-datetime>
+          </ion-item>
+        </ion-col>
+        <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12" *ngIf="activAppointment.appointment_type<2 && addDate>=7">
+          <!-- End Time -->
+          <ion-item lines="none">
+            <ion-label position="floating">{{translate.instant('Endzeit')}}</ion-label>
+            <ion-datetime required
+                          [ngClass]="{required:inputError}"
+                          type="time"
+                          id="end_time"
+                          [(ngModel)]="activAppointment.end_time7"
+                          name="end_time"
+                          displayFormat="HH:mm"
+                          doneText="{{translate.instant('okay')}}"
+              cancelText="{{translate.instant('dismiss')}}">
+            </ion-datetime>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <!-- # 8 -->
+      <ion-row>
+        <!-- Date -->
+        <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12" *ngIf="addDate>=8">
+          <ion-item lines="none">
+            <ion-label position="floating">{{translate.instant('Datum')}}</ion-label>
+            <ion-datetime required
+                          [ngClass]="{required:inputError}"
+                          [(ngModel)]="activAppointment.appointment_date8"
+                          displayFormat="DD.MM.YYYY"
+                          max={{maxDate}}
+                          doneText="{{translate.instant('okay')}}"
+                          cancelText="{{translate.instant('dismiss')}}">
+            </ion-datetime>
+          </ion-item>
+        </ion-col>
+        <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12" *ngIf="activAppointment.appointment_type<2 && addDate>=8">
+          <!-- Start Time -->
+          <ion-item lines="none">
+            <ion-label position="floating">{{translate.instant('Startzeit')}}</ion-label>
+            <ion-datetime required
+                          [ngClass]="{required:inputError}"
+                          type="time"
+                          id="start_time"
+                          [(ngModel)]="activAppointment.start_time8"
+                          name="start_time"
+                          displayFormat="HH:mm"
+                          doneText="{{translate.instant('okay')}}"
+                          cancelText="{{translate.instant('dismiss')}}">
+            </ion-datetime>
+          </ion-item>
+        </ion-col>
+        <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12" *ngIf="activAppointment.appointment_type<2 && addDate>=8">
+          <!-- End Time -->
+          <ion-item lines="none">
+            <ion-label position="floating">{{translate.instant('Endzeit')}}</ion-label>
+            <ion-datetime required
+                          [ngClass]="{required:inputError}"
+                          type="time"
+                          id="end_time"
+                          [(ngModel)]="activAppointment.end_time8"
+                          name="end_time"
+                          displayFormat="HH:mm"
+                          doneText="{{translate.instant('okay')}}"
+              cancelText="{{translate.instant('dismiss')}}">
+            </ion-datetime>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <!-- # 9 -->
+      <ion-row>
+        <!-- Date -->
+        <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12" *ngIf="addDate>=9">
+          <ion-item lines="none">
+            <ion-label position="floating">{{translate.instant('Datum')}}</ion-label>
+            <ion-datetime required
+                          [ngClass]="{required:inputError}"
+                          [(ngModel)]="activAppointment.appointment_date9"
+                          displayFormat="DD.MM.YYYY"
+                          max={{maxDate}}
+                          doneText="{{translate.instant('okay')}}"
+                          cancelText="{{translate.instant('dismiss')}}">
+            </ion-datetime>
+          </ion-item>
+        </ion-col>
+        <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12" *ngIf="activAppointment.appointment_type<2 && addDate>=9">
+          <!-- Start Time -->
+          <ion-item lines="none">
+            <ion-label position="floating">{{translate.instant('Startzeit')}}</ion-label>
+            <ion-datetime required
+                          [ngClass]="{required:inputError}"
+                          type="time"
+                          id="start_time"
+                          [(ngModel)]="activAppointment.start_time9"
+                          name="start_time"
+                          displayFormat="HH:mm"
+                          doneText="{{translate.instant('okay')}}"
+                          cancelText="{{translate.instant('dismiss')}}">
+            </ion-datetime>
+          </ion-item>
+        </ion-col>
+        <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12" *ngIf="activAppointment.appointment_type<2 && addDate>=9">
+          <!-- End Time -->
+          <ion-item lines="none">
+            <ion-label position="floating">{{translate.instant('Endzeit')}}</ion-label>
+            <ion-datetime required
+                          [ngClass]="{required:inputError}"
+                          type="time"
+                          id="end_time"
+                          [(ngModel)]="activAppointment.end_time9"
+                          name="Notes"
+                          displayFormat="HH:mm"
+                          doneText="{{translate.instant('okay')}}"
+              cancelText="{{translate.instant('dismiss')}}">
+            </ion-datetime>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <!-- Row 5 -->
+      <ion-row>
+        <!-- Notes -->
+        <ion-col size-xl="12" size-lg="12" size-md="12" size-sm="12" size="12">
+          <ion-item lines="none">
+            <ion-label position="floating">{{translate.instant('Notes')}} *</ion-label>
+            <ion-textarea type="text" 
+                          rows="5"
+                          id="Notiztext"
+                          required
+                          [ngClass]="{required:inputError}"
+                          name="Notes"
+                          [(ngModel)]="activAppointment.notes">
+            </ion-textarea>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <!-- Error -->
+      <div [hidden]="!inputError" class="pfehler" style="margin-top: 15px; margin-left: 5px;">
+        <div class="highlightFehler">
+          {{translate.instant('Bitte füllen Sie alle Pflichtfelder aus.')}}
+        </div>
       </div>
+
+    </ion-grid>
+
+    <!-- Footer -->
+    <div class="modal-footer">
+      <ion-button *ngIf="(addDate <= 8)" 
+                  class="btn btn-modal-success btn-time-add"
+                  (click)="plusDate();"
+                  style="margin-top: -2px !important;">
+        <ion-icon name="alarm"></ion-icon>
+      </ion-button>
+      <ion-button class="btn btn-modal-danger"
+                  (click)="dismiss()">
+        <ion-icon name="close"></ion-icon>
+      </ion-button>
+      <ion-button *ngIf="!itsNew"
+                  class="btn btn-modal-teal"
+                  (click)="appointmentDeactivate();">
+        <ion-icon name="trash"></ion-icon>
+      </ion-button>
+      <ion-button class="btn btn-modal-success"
+                  (click)="appointmentEdit();">
+        <ion-icon name="checkmark"></ion-icon>
+      </ion-button>
     </div>
 
-  </ion-grid>
-
-  <!-- Footer -->
-  <div class="modal-footer">
-    <ion-button *ngIf="(addDate <= 8)" 
-                class="btn btn-modal-success btn-time-add"
-                (click)="plusDate();"
-                style="margin-top: -2px !important;">
-      <ion-icon name="alarm"></ion-icon>
-    </ion-button>
-    <ion-button class="btn btn-modal-danger"
-                (click)="dismiss()">
-      <ion-icon name="close"></ion-icon>
-    </ion-button>
-    <ion-button *ngIf="!itsNew"
-                class="btn btn-modal-teal"
-                (click)="appointmentDeactivate();">
-      <ion-icon name="trash"></ion-icon>
-    </ion-button>
-    <ion-button class="btn btn-modal-success"
-                (click)="appointmentEdit();">
-      <ion-icon name="checkmark"></ion-icon>
-    </ion-button>
-  </div>
-
-</ion-content>
+  </ion-content>

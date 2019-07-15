@@ -146,6 +146,40 @@ export class AppointmentEditComponent implements OnInit {
   }
 
   appointmentEdit() {
+    this.inputError = false;
+    if (this.activAppointment.idUser == '') {
+      this.inputError = true;
+      return;
+    }
+    if (this.activAppointment.appointment_type == '') {
+      this.inputError = true;
+      return;
+    }
+    if (this.customer == null) {
+      this.inputError = true;
+      return;
+    }
+    if (this.activAppointment.idContactPerson == undefined) {
+      this.inputError = true;
+      return;
+    }
+    if (this.activAppointment.appointment_date == '') {
+      this.inputError = true;
+      return;
+    }
+    if (this.activAppointment.start_time == '') {
+      this.inputError = true;
+      return;
+    }
+    if (this.activAppointment.end_time == '') {
+      this.inputError = true;
+      return;
+    }
+    if (this.activAppointment.notes == '') {
+      this.inputError = true;
+      return;
+    }
+    
     if (this.activAppointment.appointment_date) {
       this.appointmentSave();
     }
@@ -207,17 +241,8 @@ export class AppointmentEditComponent implements OnInit {
   }
 
   appointmentSave() {
-    if (this.customer.id == undefined) {
-      this.inputError = true;
-      return;
-    }
-    console.log('notes :', this.customer.notes);
-    if (this.customer.notes == undefined) {
-      this.inputError = true;
-      return;
-    }
+    console.log('appointmentEdit()', this.activAppointment);
 
-    console.log('appointmentEdit()');
     let obj = {
       active: 1,
       appointment_type: 0,

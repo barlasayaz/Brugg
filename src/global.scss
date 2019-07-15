@@ -144,6 +144,12 @@ ion-item {
   --background-focused: var(--ion-color-transparent) !important;
 }
 
+.required {
+  outline: none !important;
+  // display: block;
+  position: relative;
+  border-radius: 3px !important;
+}
 
 //INPUT
 /* ion-item.item-input {
@@ -239,8 +245,8 @@ ion-item.item-input {
     font-size: 14px !important;
 
     &.ion-invalid:not(.ion-valid) {
-      border-color: var(--ion-color-red) !important;
-    } 
+        border-color: var(--ion-color-red) !important;
+      }
   
     &.ion-valid:not(.ion-invalid) {
       border-color: var(--ion-color-green) !important;
@@ -263,8 +269,8 @@ ion-item.item-textarea {
     color: var(--ion-color-grey) !important;    
 
     &.ion-invalid:not(.ion-valid) {
-      border-color: var(--ion-color-red) !important;
-    } 
+        border-color: var(--ion-color-red) !important;
+      }
   
     &.ion-valid:not(.ion-invalid) {
       border-color: var(--ion-color-green) !important;
@@ -327,6 +333,7 @@ ion-select {
 }
 
 .ionic-selectable {
+  display: block !important;
   border: 1px solid var(--ion-color-green) !important;
   border-radius: 3px !important;
   margin-top: 0px !important;
@@ -336,6 +343,15 @@ ion-select {
   color: var(--ion-color-grey) !important; 
   height: 53px !important;
   border-color: var(--ion-color-green) !important;
+
+  &.ng-invalid:not(.ng-valid) {
+    border-color: var(--ion-color-red) !important;
+  } 
+ 
+  &.ng-valid:not(.ng-invalid) {
+    border-color: var(--ion-color-green) !important;
+  } 
+
 }
 
 .item-interactive-disabled.sc-ion-label-md-h, .item-interactive-disabled .sc-ion-label-md-h {
@@ -1047,12 +1063,6 @@ tbody.ui-table-tbody {
     position: absolute;
     top: -7px;
     right: -10px;
-  }
-  .required {
-    outline: none !important;
-    display: block;
-    position: relative;
-    border-radius: 3px !important;
   }
   div.required,
   input.required,
