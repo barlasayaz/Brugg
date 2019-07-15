@@ -139,9 +139,9 @@ export class NfcScanComponent implements OnInit {
                   return;
                 }
                 if (!this.listView) {
-                  result.obj.title = JSON.parse(result.obj.title);
-                  this.navCtrl.navigateForward(["/product-details", { id: result.obj.id }] );
+                  //result.obj.title = JSON.parse(result.obj.title);
                   this.viewCtrl.dismiss();
+                  this.navCtrl.navigateForward(['/product-details', result.obj.id ] );                  
                 }
                 else {
                   let rein = true;
