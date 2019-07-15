@@ -14,6 +14,7 @@ import { DatePipe } from '@angular/common';
 import { ProductMigrationPage } from '../product-migration/product-migration.page';
 import { ActivatedRoute, NavigationExtras } from '@angular/router';
 import { SlideMenu } from 'primeng/primeng';
+import { DataService } from '../services/data.service';
 
 @Component({
     selector: 'app-product-list',
@@ -216,6 +217,7 @@ export class ProductListPage implements OnInit {
         public alertCtrl: AlertController,
         public pdf: PdfExportService,
         public events: Events,
+        private dataService: DataService,
         private route: ActivatedRoute) {
     }
 
@@ -695,13 +697,14 @@ export class ProductListPage implements OnInit {
                 });
                 // nodeList.push(element.data);
             }
-            const navigationExtras: NavigationExtras = {
-                queryParams: { idCustomer: this.idCustomer,
-                               productList: JSON.stringify(nodeList)
-                }
-            };
-            console.log('navigationExtras :', navigationExtras);
-            this.navCtrl.navigateForward(['/protocol-edit'], navigationExtras);
+              
+        let data = {
+            id: 0, 
+            idCustomer: this.idCustomer,
+            productList: JSON.stringify(nodeList)
+        }
+            this.dataService.setData(data);
+            this.navCtrl.navigateForward(['/protocol-edit']);
         }
     }
 

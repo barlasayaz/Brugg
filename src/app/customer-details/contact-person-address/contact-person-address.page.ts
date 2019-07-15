@@ -116,7 +116,7 @@ export class ContactPersonAddressPage {
 
       this.apiService.pvs4_set_contact_person(obj).then((result: any) => {
         console.log('result: ', result);
-        this.navCtrl.navigateRoot(["customer-details", { id: this.idCustomer }]);
+        this.navCtrl.navigateRoot(["customer-details", this.idCustomer ]);
       });  
     }
   }

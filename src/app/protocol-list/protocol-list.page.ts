@@ -11,6 +11,7 @@ import pdfFonts from 'pdfmake/build/vfs_fonts';
 import { PdfExportService } from '../services/pdf-export';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 import { ActivatedRoute, NavigationExtras } from '@angular/router';
+import { DataService } from '../services/data.service';
 
 @Component({
     selector: 'app-protocol-list',
@@ -137,6 +138,7 @@ export class ProtocolListPage implements OnInit {
         public alertCtrl: AlertController,
         public pdf: PdfExportService,
         public events: Events,
+        private dataService: DataService,
         private route: ActivatedRoute) {
     }
 
@@ -365,21 +367,24 @@ export class ProtocolListPage implements OnInit {
 
     menu_new() {
         console.log('menu_new', this.idCustomer);
-
-        const navigationExtras: NavigationExtras = {
-            queryParams: { id: 0, idCustomer: this.idCustomer, customer_number: this.customer_number }
-        };
-        this.navCtrl.navigateForward(['/protocol-edit'], navigationExtras);
+        let data = {
+            id: 0, 
+            idCustomer: this.idCustomer
+        }
+        this.dataService.setData(data);
+        this.navCtrl.navigateForward(['/protocol-edit']);
     }
 
     menu_edit() {
         console.log('menu_edit', this.selectedNode);
         if (this.selectedNode) {
             if (this.selectedNode.data.id) {
-                const navigationExtras: NavigationExtras = {
-                    queryParams: { 'id': this.selectedNode.data.id, idCustomer: this.idCustomer, customer_number: this.customer_number, parent: this.selectedNode.data.parent }
-                };
-                this.navCtrl.navigateForward(['/protocol-edit'], navigationExtras);
+                let data = {
+                    id: this.selectedNode.data.id, 
+                    idCustomer: this.idCustomer
+                }
+                this.dataService.setData(data);
+                this.navCtrl.navigateForward(['/protocol-edit']);
             }
         }
     }
@@ -390,6 +395,7 @@ export class ProtocolListPage implements OnInit {
             if (this.selectedNode.data.id) {
                 const id = parseInt(this.selectedNode.data.id);
                 console.log('menu_view id', id);
+                
                 const navigationExtras: NavigationExtras = {
                     queryParams: { idCustomer: this.idCustomer, customer_number: this.customer_number, idProtocol: id }
                 };

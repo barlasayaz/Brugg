@@ -5,7 +5,7 @@ import { BarcodeScanner, BarcodeScannerOptions } from '@ionic-native/barcode-sca
 import { ApiService } from '../../services/api';
 import { LoadingController } from '@ionic/angular';
 import { FileTransfer } from '@ionic-native/file-transfer/ngx';
-import { NavigationExtras } from '@angular/router';
+import { DataService } from '../../services/data.service';
 
 /**
  * Generated class for the QrBarcodeComponent component.
@@ -43,6 +43,7 @@ export class QrBarcodeComponent implements OnInit {
     public loadingCtrl: LoadingController,
     public navCtrl: NavController,
     private toastCtrl: ToastController,
+    private dataService: DataService,
     public platform: Platform) {
   }
 
@@ -183,13 +184,14 @@ export class QrBarcodeComponent implements OnInit {
 
   createProtocol() {
     console.log('scanList :', this.scanList);
-    let navigationExtras: NavigationExtras = {
-      queryParams: {
-        idCustomer: this.scanList[0].idCustomer,
-        productList: JSON.stringify(this.scanList)
-      }
-    };
-    this.navCtrl.navigateForward(['/protocol-edit'], navigationExtras);
+ 
+    let data = {
+      id: 0, 
+      idCustomer: this.scanList[0].idCustomer,
+      productList: JSON.stringify(this.scanList)
+  }
+    this.dataService.setData(data);
+    this.navCtrl.navigateForward(['/protocol-edit']);
     this.viewCtrl.dismiss();
   }
 

@@ -2,6 +2,7 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { DataResolverService } from './services/data-resolver.service';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -26,7 +27,9 @@ const routes: Routes = [
   { path: 'product-new', loadChildren: './product-new/product-new.module#ProductNewPageModule' },
   { path: 'product-template', loadChildren: './product-template/product-template.module#ProductTemplatePageModule' },
   { path: 'protocol-details/:id', loadChildren: './protocol-details/protocol-details.module#ProtocolDetailsPageModule' },
-  { path: 'protocol-edit', loadChildren: './protocol-edit/protocol-edit.module#ProtocolEditPageModule' },
+  { path: 'protocol-edit',    resolve: {
+    special: DataResolverService
+  }, loadChildren: './protocol-edit/protocol-edit.module#ProtocolEditPageModule' },
   { path: 'protocol-history', loadChildren: './protocol-history/protocol-history.module#ProtocolHistoryPageModule' },
   { path: 'protocol-list/:id', loadChildren: './protocol-list/protocol-list.module#ProtocolListPageModule' },
   { path: 'protocol-template', loadChildren: './protocol-template/protocol-template.module#ProtocolTemplatePageModule' },

@@ -60,15 +60,16 @@ export class ProtocolEditPage implements OnInit {
 
   ngOnInit() {
     this.maxDate = this.apiService.maxDate;
-    this.route.queryParams.subscribe(params => {
+    if (this.route.snapshot.data['special']) {
+      let params = this.route.snapshot.data['special'];
       this.idCustomer = params['idCustomer'];
       this.idProtocol = params['id'];
       let list = params['productList'];
       if (list) {
         this.productList = JSON.parse(list);
+        console.log('productList :', this.productList);
       }
-    });
-    console.log('productList :', this.productList);
+    }
 
     if (this.idProtocol > 0) {
       console.log('protocol new');

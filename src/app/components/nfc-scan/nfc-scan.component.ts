@@ -5,7 +5,7 @@ import { NFC, Ndef } from '@ionic-native/nfc/ngx';
 import { Subscription } from 'rxjs/Subscription';
 import { TranslateService } from '@ngx-translate/core';
 import { ApiService } from '../../services/api';
-import { NavigationExtras } from '@angular/router';
+import { DataService } from '../../services/data.service';
 /**
  * Generated class for the NfcScanComponent component.
  *
@@ -39,6 +39,7 @@ export class NfcScanComponent implements OnInit {
     private toastCtrl: ToastController,
     private alertCtrl: AlertController,
     private viewCtrl: ModalController,
+    private dataService: DataService,
     public nfc: NFC,
     public zone: NgZone,
     public ndef: Ndef,
@@ -140,7 +141,7 @@ export class NfcScanComponent implements OnInit {
                 }
                 if (!this.listView) {
                   result.obj.title = JSON.parse(result.obj.title);
-                  this.navCtrl.navigateForward(["/product-details", { id: result.obj.id }] );
+                  this.navCtrl.navigateForward(["/product-details", result.obj.id] );
                   this.viewCtrl.dismiss();
                 }
                 else {
@@ -252,13 +253,14 @@ export class NfcScanComponent implements OnInit {
         let data = this.scanList[i];
         hilf.push(data);
       }
-      let navigationExtras: NavigationExtras = {
-        queryParams: {
+
+      let data = {
+            id: 0, 
             idCustomer: this.scanList[0].idCustomer,
             productList: JSON.stringify(hilf)
         }
-      }
-      this.navCtrl.navigateForward(["/protocol-edit"], navigationExtras);
+      this.dataService.setData(data);
+      this.navCtrl.navigateForward(["/protocol-edit"]);
       this.viewCtrl.dismiss();
     }
   }

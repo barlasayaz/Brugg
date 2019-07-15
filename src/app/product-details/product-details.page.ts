@@ -13,7 +13,8 @@ import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 import { PdfExportService } from '../services/pdf-export';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
-import { NavigationExtras, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
+import { DataService } from '../services/data.service';
 
 /**
  * Generated class for the ProductDetailsPage page.
@@ -60,6 +61,7 @@ export class ProductDetailsPage implements OnInit {
     public camera: Camera,
     public loadingCtrl: LoadingController,
     public transfer: FileTransfer,
+    private dataService: DataService,
     private route: ActivatedRoute) {
 
   }
@@ -452,13 +454,14 @@ export class ProductDetailsPage implements OnInit {
             'check_interval': this.activProduct.check_interval
         });
 
-      const navigationExtras: NavigationExtras = {
-        queryParams: {
-          idCustomer: this.idCustomer,
-          productList: JSON.stringify(nodeList)
-        }
-    };
-      this.navCtrl.navigateForward(['/protocol-edit'], navigationExtras);
+
+    let data = {
+      id: 0, 
+      idCustomer: this.idCustomer,
+      productList: JSON.stringify(nodeList)
+  }
+      this.dataService.setData(data);
+      this.navCtrl.navigateForward(['/protocol-edit']);
     }
   }
 
