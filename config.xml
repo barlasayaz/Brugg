@@ -20,6 +20,15 @@
     <preference name="SplashScreen" value="screen" />
     <preference name="SplashScreenDelay" value="3000" />
     <preference name="AndroidPersistentFileLocation" value="Compatibility" />
+    <platform name="browser">
+        <preference name="SplashScreen" value="/assets/imgs/screen.png" />
+        <preference name="AutoHideSplashScreen" value="true" />
+        <preference name="SplashScreenDelay" value="3000" />
+        <preference name="SplashScreenBackgroundColor" value="#009de0" />
+        <preference name="ShowSplashScreen" value="true" />
+        <preference name="SplashScreenWidth" value="480" />
+        <preference name="SplashScreenHeight" value="320" />
+    </platform>
     <platform name="android">
         <allow-intent href="market:*" />
         <icon density="ldpi" src="resources\android\icon\drawable-ldpi-icon.png" />
