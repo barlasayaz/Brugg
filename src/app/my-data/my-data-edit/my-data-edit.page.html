@@ -169,6 +169,13 @@
             </ion-col>
           </ion-row>
 
+          <!-- Error -->
+          <div [hidden]="!inputError" class="pfehler" style="margin-top: 15px; margin-left: 5px;">
+            <div class="highlightFehler">
+              {{translate.instant('Bitte füllen Sie alle Pflichtfelder aus.')}}
+            </div>
+          </div>
+
           <ion-row style="margin-bottom: -10px;">
             <div class="modal-footer">
               <ion-button class="btn btn-modal-danger footerIcon"
@@ -302,6 +309,14 @@
             </ion-button>
         </div>
       </ion-row>
+
+      <!-- Error -->
+      <div [hidden]="!inputError" class="pfehler" style="margin-top: 15px; margin-left: 5px;">
+        <div class="highlightFehler">
+          {{translate.instant('Bitte füllen Sie alle Pflichtfelder aus.')}}
+        </div>
+      </div>
+
       <ion-row style="margin-bottom: -10px;" *ngIf="viewNewMode==1">
         <ion-col>{{translate.instant('Benutzer nicht gefunden!')}}</ion-col>
       </ion-row>

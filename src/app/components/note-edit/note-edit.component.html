@@ -16,8 +16,8 @@
           <ion-col size-xl="8" size-lg="8" size-md="8" size-sm="12" size="12">
             <ion-item lines="none">
                 <ion-label position="floating">{{translate.instant('Titel')}}</ion-label>
-                <ion-input type="text" (ionChange)="checkInvalidForm()" required
-                           [ngClass]="{required:inputError}" 
+                <ion-input type="text"
+                           required
                            [(ngModel)]="activNote.title" >
                 </ion-input>
             </ion-item>
@@ -25,9 +25,8 @@
           <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12">
             <ion-item lines="none">
                 <ion-label position="floating">{{translate.instant('Firma')}}</ion-label>
-                <ion-input type="text" (ionChange)="checkInvalidForm()" 
-                           readonly 
-                           [ngClass]="{required:inputError}" 
+                <ion-input type="text"
+                           readonly
                            [(ngModel)]="activNote.company">
                 </ion-input>
             </ion-item>
@@ -38,8 +37,8 @@
         <ion-col size-xl="12" size-lg="12" size-md="12" size-sm="12" size="12">
           <ion-item lines="none">
             <ion-label position="floating">{{translate.instant('Ansprechpartner')}}</ion-label>
-            <ionic-selectable item-content 
-                              [ngClass]="{required:inputError}" 
+            <ionic-selectable item-content
+                              required
                               [(ngModel)]="selectedContact"
                               [(items)]="userList"
                               itemValueField="id"
@@ -55,9 +54,7 @@
         <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12">
           <ion-item lines="none">
               <ion-label position="floating">{{translate.instant('Datum')}}</ion-label>
-              <ion-datetime [ngClass]="{required:inputError}" 
-                            (ionChange)="checkInvalidForm()" 
-                            [(ngModel)]="activNote.notes_date"
+              <ion-datetime [(ngModel)]="activNote.notes_date"
                             displayFormat="DD.MM.YYYY"
                             max = {{maxDate}}
                             doneText="{{translate.instant('okay')}}"
@@ -68,9 +65,7 @@
         <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12">
           <ion-item lines="none">
               <ion-label position="floating">{{translate.instant('Uhrzeit')}}</ion-label>
-              <ion-datetime [ngClass]="{required:inputError}" 
-                            (ionChange)="checkInvalidForm()" 
-                            [(ngModel)]="activNote.notes_date"
+              <ion-datetime [(ngModel)]="activNote.notes_date"
                             displayFormat="HH:mm"
                             max = {{maxDate}}
                             doneText="{{translate.instant('okay')}}"
@@ -83,7 +78,6 @@
             <ion-label position="floating">{{translate.instant('Notizkategorie')}}</ion-label>
             <ion-select [(ngModel)]="activNote.category" 
                         required 
-                        (ionChange)="checkInvalidForm()" 
                         okText="{{translate.instant('okay')}}"
                         cancelText="{{translate.instant('dismiss')}}">
                 <ion-select-option value="1" selected>{{translate.instant('Besuchsberichte')}}</ion-select-option>
@@ -99,10 +93,9 @@
           <ion-item lines="none">
               <ion-label position="floating">{{translate.instant('Notes')}}</ion-label>     
               <ion-textarea type="text" 
-                            (ionChange)="checkInvalidForm()"
-                            rows="5" 
-                            id="Notiztext" 
-                            [ngClass]="{required:inputError}"
+                            required
+                            rows="5"
+                            id="Notiztext"
                             [(ngModel)]="activNote.notes">
               </ion-textarea>
           </ion-item>
@@ -125,7 +118,7 @@
             <ion-button class="btn btn-modal-danger footerIcon" (click)="dismiss()">
               <ion-icon name="close"></ion-icon>
             </ion-button>
-            <ion-button class="btn btn-modal-success footerIcon" (click)="noteEdit();" [disabled]="invalidForm">
+            <ion-button class="btn btn-modal-success footerIcon" (click)="noteEdit();">
               <ion-icon name="checkmark"></ion-icon>
             </ion-button>
         </div>
