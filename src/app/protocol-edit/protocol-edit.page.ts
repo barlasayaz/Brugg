@@ -4,7 +4,8 @@ import { UserdataService } from '../services/userdata';
 import { TranslateService } from '@ngx-translate/core';
 import { ApiService } from '../services/api';
 import { DatePipe } from '@angular/common';
-import { ActivatedRoute, NavigationExtras } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
+import { DataService } from '../services/data.service';
 
 /**
  * Generated class for the ProtocolEditPage page.
@@ -55,6 +56,7 @@ export class ProtocolEditPage implements OnInit {
     public userdata: UserdataService,
     public apiService: ApiService,
     public modalCtrl: ModalController,
+    public dataService: DataService,
     public alertCtrl: AlertController) {
   }
 
@@ -428,9 +430,12 @@ export class ProtocolEditPage implements OnInit {
   edit_template() {
     let activTemplate = this.templates.find(x => x.id == this.selectedTmplt);
     console.log('Active Template :', activTemplate);
-    let navigationExtras: NavigationExtras = {
-      queryParams: { 'idTemplate': this.selectedTmplt, 'idCustomer': this.idCustomer, 'activTemplate': JSON.stringify(activTemplate)}
-    };
-    this.navCtrl.navigateForward(['/protocol-template'], navigationExtras);
+    let data = { 
+      idTemplate: this.selectedTmplt, 
+      idCustomer: this.idCustomer,
+      activTemplate: JSON.stringify(activTemplate)
+    }
+    this.dataService.setData(data);
+    this.navCtrl.navigateForward(['/protocol-template']);
   }
 }

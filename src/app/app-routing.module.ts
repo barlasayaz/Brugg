@@ -21,18 +21,52 @@ const routes: Routes = [
   { path: 'note-list/:id', loadChildren: './note-list/note-list.module#NoteListPageModule' },
   { path: 'order-form-new/:id', loadChildren: './order-form-new/order-form-new.module#OrderFormNewPageModule' },
   { path: 'product-details/:id', loadChildren: './product-details/product-details.module#ProductDetailsPageModule' },
-  { path: 'product-edit', loadChildren: './product-edit/product-edit.module#ProductEditPageModule' },
+  {
+    path: 'product-edit',
+    resolve: {
+      special: DataResolverService
+    },
+    loadChildren: './product-edit/product-edit.module#ProductEditPageModule'
+  },
   { path: 'product-list/:id', loadChildren: './product-list/product-list.module#ProductListPageModule' },
   { path: 'product-migration', loadChildren: './product-migration/product-migration.module#ProductMigrationPageModule' },
   { path: 'product-new', loadChildren: './product-new/product-new.module#ProductNewPageModule' },
-  { path: 'product-template', loadChildren: './product-template/product-template.module#ProductTemplatePageModule' },
-  { path: 'protocol-details/:id', loadChildren: './protocol-details/protocol-details.module#ProtocolDetailsPageModule' },
-  { path: 'protocol-edit',    resolve: {
-    special: DataResolverService
-  }, loadChildren: './protocol-edit/protocol-edit.module#ProtocolEditPageModule' },
-  { path: 'protocol-history', loadChildren: './protocol-history/protocol-history.module#ProtocolHistoryPageModule' },
+  {
+    path: 'product-template',
+    resolve: {
+      special: DataResolverService
+    },
+    loadChildren: './product-template/product-template.module#ProductTemplatePageModule'
+  },
+  {
+    path: 'protocol-details/:id',
+    resolve: {
+      special: DataResolverService
+    },
+    loadChildren: './protocol-details/protocol-details.module#ProtocolDetailsPageModule'
+  },
+  {
+    path: 'protocol-edit',
+    resolve: {
+      special: DataResolverService
+    },
+    loadChildren: './protocol-edit/protocol-edit.module#ProtocolEditPageModule'
+  },
+  {
+    path: 'protocol-history',
+    resolve: {
+      special: DataResolverService
+    },
+    loadChildren: './protocol-history/protocol-history.module#ProtocolHistoryPageModule'
+  },
   { path: 'protocol-list/:id', loadChildren: './protocol-list/protocol-list.module#ProtocolListPageModule' },
-  { path: 'protocol-template', loadChildren: './protocol-template/protocol-template.module#ProtocolTemplatePageModule' },
+  {
+    path: 'protocol-template',
+    resolve: {
+      special: DataResolverService
+    },
+    loadChildren: './protocol-template/protocol-template.module#ProtocolTemplatePageModule'
+  },
   { path: 'rebox-new', loadChildren: './rebox-new/rebox-new.module#ReboxNewPageModule' },
   { path: 'signup', loadChildren: './signup/signup.module#SignupPageModule' },
   // ,{ path: 'appointment-edit', loadChildren: './components/appointment-edit/appointment-edit.module#AppointmentEditComponentModule' },
@@ -52,4 +86,4 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 
-export class AppRoutingModule {}
+export class AppRoutingModule { }

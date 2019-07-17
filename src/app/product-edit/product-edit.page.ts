@@ -4,11 +4,11 @@ import { UserdataService } from '../services/userdata';
 import { TranslateService } from '@ngx-translate/core';
 import { ApiService } from '../services/api';
 import { DialogproduktbildmodalPage } from '../components/dialogproduktbildmodal/dialogproduktbildmodal.component';
-import { ProductNewPage } from '../product-new/product-new.page';
 import { CameraOptions, Camera } from '@ionic-native/camera/ngx';
 import { LoadingController } from '@ionic/angular';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
-import { NavigationExtras, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
+import { DataService } from '../services/data.service';
 
 /**
  * Generated class for the ProductEditPage page.
@@ -76,6 +76,7 @@ export class ProductEditPage implements OnInit {
     public platform: Platform,
     public camera: Camera,
     public transfer: FileTransfer,
+    public dataService: DataService,
     public loadingCtrl: LoadingController) {
 
   }
@@ -83,12 +84,13 @@ export class ProductEditPage implements OnInit {
   ngOnInit() {
     this.url = this.apiService.pvsApiURL;
     this.maxDate = this.apiService.maxDate;
-    this.route.queryParams.subscribe(params => {
+
+    if (this.route.snapshot.data['special']) {
+      let params = this.route.snapshot.data['special'];
       this.idCustomer = params['idCustomer'];
-      // this.company = params["company"];
       this.idProduct = params['id'];
       this.parentProduct = params['parent'];
-    });
+    }
 
     this.dateiListe();
 
@@ -629,14 +631,14 @@ export class ProductEditPage implements OnInit {
   edit_template() {
     let activTemplate = this.templates.find(x => x.id == this.selectedTmplt);
     console.log('Active Template :', activTemplate);
-    let navigationExtras: NavigationExtras = {
-      queryParams: {
-        idTemplate: this.selectedTmplt,
-        idCustomer: this.idCustomer,
-        activTemplate: JSON.stringify(activTemplate)
-      }
-    };
-    this.navCtrl.navigateForward(['/product-template'], navigationExtras);
+
+    let data = {
+      idTemplate: this.selectedTmplt,
+      idCustomer: this.idCustomer,
+      activTemplate: JSON.stringify(activTemplate)
+  }
+    this.dataService.setData(data);
+    this.navCtrl.navigateForward(['/product-template']);
   }
 
   /*async new_Option() {

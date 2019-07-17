@@ -9,7 +9,7 @@ import pdfFonts from 'pdfmake/build/vfs_fonts';
 import { PdfExportService } from '../services/pdf-export';
 import { OrderSendNewPage } from './order-send-new/order-send-new.page';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
-import { NavigationExtras, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 /**
  * Generated class for the OrderFormNewPage page.

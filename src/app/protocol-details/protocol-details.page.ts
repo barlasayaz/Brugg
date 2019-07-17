@@ -83,15 +83,16 @@ export class ProtocolDetailsPage implements OnInit {
     });
 
     this.url = this.apiService.pvsApiURL;
-    this.route.queryParams.subscribe(params => {
+
+    if (this.route.snapshot.data['special']) {
+      let params = this.route.snapshot.data['special'];
       this.idCustomer = params['idCustomer'];
       this.customer_number = params['customer_number'];
       this.idProtocol = params['idProtocol'];
 
       console.log('idProtocol :', this.idProtocol);
       this.loadCustomer(this.idCustomer);
-      
-    });    
+    }   
   }
 
   loadCustomer(id) {

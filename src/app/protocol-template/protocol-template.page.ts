@@ -76,18 +76,19 @@ export class ProtocolTemplatePage implements OnInit {
         return target.id != 'options';
       }
     });
-    this.route.queryParams.subscribe(params => {
+
+    if (this.route.snapshot.data['special']) {
+      let params = this.route.snapshot.data['special'];
       this.idCustomer = params['idCustomer'];
-      // this.company = params["company"];
       this.idTemplate = params['idTemplate'];
       this.itsNew = params['itsNew'];
       this.activTemplate = params['activTemplate'];
       if (this.activTemplate) {
         this.activTemplate = JSON.parse(this.activTemplate);
       }
-        this.loadOption();
-        this.loadTemplate();
-    });
+      this.loadOption();
+      this.loadTemplate();
+    }
 
     this.lang = localStorage.getItem('lang');
     console.log('template: ', this.template);
