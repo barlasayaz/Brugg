@@ -105,7 +105,7 @@ export class ProtocolDetailsPage implements OnInit {
   loadProtocol(id: any) {
     this.apiService.pvs4_get_protocol(id).then((result: any) => {
       this.activProtocol = result.obj;
-      console.log('loadProtocol :', this.activProtocol);
+      //console.log('loadProtocol :', this.activProtocol);
       this.activProtocol.items = JSON.parse(this.activProtocol.items);
       let productList = JSON.parse(this.activProtocol.product);
       productList.forEach(element => {
