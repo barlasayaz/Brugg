@@ -1066,6 +1066,9 @@ tbody.ui-table-tbody {
   .pfehler,
   select.ng-invalid {
     border: 1px solid #e74c3c !important;
+    padding-left: 10px !important;
+    margin: 15px !important;
+    color: red !important;
   }
   @media only screen and (min-width: 767px) {
     .model-dialog {

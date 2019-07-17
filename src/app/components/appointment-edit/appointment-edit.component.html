@@ -538,7 +538,7 @@
         <!-- Notes -->
         <ion-col size-xl="12" size-lg="12" size-md="12" size-sm="12" size="12">
           <ion-item lines="none">
-            <ion-label position="floating">{{translate.instant('Notes')}} *</ion-label>
+            <ion-label position="floating">{{translate.instant('Notes')}}</ion-label>
             <ion-textarea type="text" 
                           rows="5"
                           id="Notiztext"
@@ -551,12 +551,10 @@
         </ion-col>
       </ion-row>
 
-      <!-- Error -->
-      <div [hidden]="!inputError" class="pfehler" style="margin-top: 15px; margin-left: 5px;">
-        <div class="highlightFehler">
-          {{translate.instant('Bitte füllen Sie alle Pflichtfelder aus.')}}
-        </div>
-      </div>
+    <!-- Error -->
+    <div [hidden]="!inputError" class="pfehler">
+      {{translate.instant('Bitte füllen Sie alle Pflichtfelder aus.')}}
+    </div>
 
     </ion-grid>
 
