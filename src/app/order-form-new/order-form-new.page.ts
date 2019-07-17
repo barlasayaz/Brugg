@@ -4,11 +4,8 @@ import { ApiService } from '../services/api';
 import { TranslateService } from '@ngx-translate/core';
 import { UserdataService } from '../services/userdata';
 import { DatePipe } from '@angular/common';
-import pdfMake from 'pdfmake/build/pdfmake';
-import pdfFonts from 'pdfmake/build/vfs_fonts';
 import { PdfExportService } from '../services/pdf-export';
 import { OrderSendNewPage } from './order-send-new/order-send-new.page';
-pdfMake.vfs = pdfFonts.pdfMake.vfs;
 import { ActivatedRoute } from '@angular/router';
 
 /**

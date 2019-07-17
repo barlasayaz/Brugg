@@ -7,10 +7,7 @@ import { TreeTable } from 'primeng/components/treetable/treetable';
 import { TreeNode, MenuItem } from 'primeng/api';
 import { ExcelService } from '../services/excel';
 import { NoteEditComponent } from '../components/note-edit/note-edit.component';
-import pdfMake from 'pdfmake/build/pdfmake';
-import pdfFonts from 'pdfmake/build/vfs_fonts';
 import { PdfExportService } from '../services/pdf-export';
-pdfMake.vfs = pdfFonts.pdfMake.vfs;
 import { ActivatedRoute } from '@angular/router';
 
 /**

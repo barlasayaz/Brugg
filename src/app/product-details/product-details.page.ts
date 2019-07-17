@@ -9,10 +9,7 @@ import { CameraOptions, Camera } from '@ionic-native/camera/ngx';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
 
 import { DatePipe } from '@angular/common';
-import pdfMake from 'pdfmake/build/pdfmake';
-import pdfFonts from 'pdfmake/build/vfs_fonts';
 import { PdfExportService } from '../services/pdf-export';
-pdfMake.vfs = pdfFonts.pdfMake.vfs;
 import { ActivatedRoute } from '@angular/router';
 import { DataService } from '../services/data.service';
 

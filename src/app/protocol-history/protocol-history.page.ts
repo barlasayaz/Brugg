@@ -6,10 +6,7 @@ import { UserdataService } from '../services/userdata';
 import { DatePipe } from '@angular/common';
 import { TreeNode } from 'primeng/api';
 import { ExcelService } from '../services/excel';
-import pdfMake from 'pdfmake/build/pdfmake';
-import pdfFonts from 'pdfmake/build/vfs_fonts';
 import { PdfExportService } from '../services/pdf-export';
-pdfMake.vfs = pdfFonts.pdfMake.vfs;
 import { ActivatedRoute } from '@angular/router';
 
 /**
