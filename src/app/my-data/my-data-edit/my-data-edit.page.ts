@@ -18,6 +18,7 @@ import { UserdataService } from '../../services/userdata';
 })
 
 export class MyDataEditPage {
+  public inputError: boolean = false;
   public params: any;
   public pid: number;
   public edit: any = {bid: {}, role_set: []};
@@ -142,6 +143,13 @@ export class MyDataEditPage {
 
   updateData( ) {
     console.log('updateData this.edit:', this.edit);
+
+    this.inputError = false;
+    if (this.edit.short_code == '') {
+      this.inputError = true;
+      return;
+    }
+
     this.api.pvs4_get_profile(this.edit.email).then((done: any) => {
       done = done.obj;
 
