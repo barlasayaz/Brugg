@@ -173,7 +173,8 @@
                           <ion-col size="12"  size-md="7">
                             <ion-item lines="none">
                               <ion-label position="floating">{{translate.instant('Produkt')}}</ion-label>
-                              <ion-input readonly type="text"
+                              <ion-input readonly="true"
+                                         type="text"
                                          [(ngModel)]="item.title">
                               </ion-input>
                             </ion-item>
@@ -237,10 +238,9 @@
                             <ion-item lines="none">
                               <ion-label position="floating">{{item.title[lang]}}</ion-label>
                               <ion-datetime required="{{item.mandatory}}"
-                                            [ngClass]="{required:fehler}" 
                                             type="time" 
                                             [(ngModel)]="item.value"
-                                            name="time" required="true" 
+                                            name="time" 
                                             displayFormat="HH:mm"
                                             doneText="{{translate.instant('okay')}}"
                                             cancelText="{{translate.instant('dismiss')}}">

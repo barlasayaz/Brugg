@@ -76,37 +76,40 @@ export class ContactPersonPage {
 
     updateData(recType) {
         this.pfelder = 0;
-        this.inputError = true;
+        this.inputError = false;
         this.email_felder = 0;
         this.pw_felder = 1;
         console.log('contactPersonEdit :', this.contactPersonEdit);
         if (this.contactPersonEdit) {
-        if (this.contactPersonEdit.last_name) {
-            this.pw_felder = 0;
-        } else {
-            this.pw_felder = 1;
-            this.pfelder = 1;
-            return;
-        }
-        if (this.contactPersonEdit.first_name) {
-            this.pw_felder = 0;
-        } else {
-            this.pw_felder = 1;
-            this.pfelder = 1;
-            return;
-        }
-        if (this.contactPersonEdit.email) {
-            this.pw_felder = 0;
-            if (this.validateEmail(this.contactPersonEdit.email) == false) {
+            if (this.contactPersonEdit.last_name) {
+                this.pw_felder = 0;
+            } else {
                 this.inputError = true;
-                this.email_felder = 1;
+                this.pw_felder = 1;
+                this.pfelder = 1;
                 return;
             }
-        } else {
-            this.pw_felder = 1;
-            this.pfelder = 1;
-            return;
-        }
+            if (this.contactPersonEdit.first_name) {
+                this.pw_felder = 0;
+            } else {
+                this.inputError = true;
+                this.pw_felder = 1;
+                this.pfelder = 1;
+                return;
+            }
+            if (this.contactPersonEdit.email) {
+                this.pw_felder = 0;
+                if (this.validateEmail(this.contactPersonEdit.email) == false) {
+                    this.inputError = true;
+                    this.email_felder = 1;
+                    return;
+                }
+            } else {
+                this.inputError = true;
+                this.pw_felder = 1;
+                this.pfelder = 1;
+                return;
+            }
         }
         if (this.pw_felder == 0) {
         let obj = {id: 0,

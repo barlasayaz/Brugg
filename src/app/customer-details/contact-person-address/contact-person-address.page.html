@@ -23,9 +23,8 @@
                 <ion-row>
                   <ion-col size="10">
                     <ion-item lines="none" style="padding-left: 0px;">
-                      <ion-label position="floating">{{translate.instant('Adresstyp')}} *</ion-label>
+                      <ion-label position="floating">{{translate.instant('Adresstyp')}}</ion-label>
                       <ion-select id="ansp_address_type" 
-                                  [ngClass]="{required:inputError}"
                                   [(ngModel)]="contactPersonAddress.address_type"
                                   required
                                   okText="{{translate.instant('okay')}}"
@@ -49,11 +48,10 @@
                 <ion-row>
                   <ion-col size="12">
                     <ion-item lines="none" style="padding-left: 0px;">
-                      <ion-label position="floating">{{translate.instant('Strasse')}} *</ion-label>
+                      <ion-label position="floating">{{translate.instant('Strasse')}}</ion-label>
                       <ion-input type="text"
                                   required
-                                  id="ansp_street" 
-                                  [ngClass]="{required:pfelder}" 
+                                  id="ansp_street"
                                   [(ngModel)]="contactPersonAddress.street">
                       </ion-input>                
                     </ion-item>
@@ -63,11 +61,10 @@
                 <ion-row>
                   <ion-col size="12">
                     <ion-item lines="none" style="padding-left: 0px;">
-                      <ion-label position="floating">{{translate.instant('PLZ')}} - {{translate.instant('Ort')}} *</ion-label>
+                      <ion-label position="floating">{{translate.instant('PLZ')}} - {{translate.instant('Ort')}}</ion-label>
                       <ion-input type="text"
                                   required
-                                  id="ansp_zip_code" 
-                                  [ngClass]="{required:pfelder}" 
+                                  id="ansp_zip_code"
                                   [(ngModel)]="contactPersonAddress.zip_code">
                       </ion-input>
                     </ion-item>
@@ -79,8 +76,7 @@
                     <ion-item lines="none" style="padding-left: 0px;">
                       <ion-label position="floating">{{translate.instant('Abteilung')}}</ion-label>
                       <ion-input type="text" 
-                                  id="ansp_department" 
-                                  [ngClass]="{required:pfelder}" 
+                                  id="ansp_department"
                                   [(ngModel)]="contactPersonAddress.department">
                       </ion-input>
                     </ion-item>
@@ -92,8 +88,7 @@
                     <ion-item lines="none" style="padding-left: 0px;">
                       <ion-label position="floating">{{translate.instant('E-Mail')}}</ion-label>
                       <ion-input type="text" 
-                                  id="ansp_email" 
-                                  [ngClass]="{required:pfelder}" 
+                                  id="ansp_email"
                                   [(ngModel)]="contactPersonAddress.email">
                       </ion-input>
                     </ion-item>
@@ -105,8 +100,7 @@
                     <ion-item lines="none" style="padding-left: 0px;">
                       <ion-label position="floating">{{translate.instant('Telefon')}}</ion-label>
                       <ion-input type="text" 
-                                  id="ansp_phone" 
-                                  [ngClass]="{required:pfelder}" 
+                                  id="ansp_phone"
                                   [(ngModel)]="contactPersonAddress.phone">
                       </ion-input>
                     </ion-item>
@@ -118,8 +112,7 @@
                     <ion-item lines="none" style="padding-left: 0px;">
                       <ion-label position="floating">{{translate.instant('Mobiltelefon')}}</ion-label>
                       <ion-input type="text" 
-                                  id="ansp_mobile" 
-                                  [ngClass]="{required:pfelder}" 
+                                  id="ansp_mobile"
                                   [(ngModel)]="contactPersonAddress.mobile">
                       </ion-input>
                     </ion-item>
@@ -132,29 +125,28 @@
         </ion-col>
       </ion-row>
     </ion-grid>
-  
-    <div class="highlightFehler" *ngIf="pfelder"> * {{translate.instant('Bitte füllen Sie alle Pflichtfelder aus.')}}</div>
-    <div class="highlightFehler" *ngIf="email_felder"> * {{translate.instant('E-Mail nicht standardkonform.')}}</div>
-  
-    <div class="modal-footer">    
-      <ion-button 
-      type="button" 
-      class="btn btn-modal-success"
-      (click)="addAddress()"
-      style="left: -150px; width: 50px;">
-      <ion-icon class="footerIcon" name="add"></ion-icon>
-    </ion-button>
-    <ion-button 
-      type="button" 
-      class="btn btn-modal-danger" 
-      (click)="dismiss()">
-<ion-icon class="footerIcon" name="close"></ion-icon>
-</ion-button>
-    <ion-button 
-      type="button" 
-      class="btn btn-modal-success" 
-      (click)="updateData();">
-<ion-icon class="footerIcon" name="checkmark"></ion-icon>
-</ion-button>
+
+    <!-- Error -->
+    <div [hidden]="!inputError" class="pfehler">
+      {{translate.instant('Bitte füllen Sie alle Pflichtfelder aus.')}}
+    </div>
+
+    <div class="modal-footer">
+      <ion-button type="button" 
+                  class="btn btn-modal-success"
+                  (click)="addAddress()"
+                  style="left: -150px; width: 50px;">
+        <ion-icon class="footerIcon" name="add"></ion-icon>
+      </ion-button>
+      <ion-button type="button" 
+                  class="btn btn-modal-danger" 
+                  (click)="dismiss()">
+          <ion-icon class="footerIcon" name="close"></ion-icon>
+      </ion-button>
+      <ion-button type="button" 
+                  class="btn btn-modal-success" 
+                  (click)="updateData();">
+        <ion-icon class="footerIcon" name="checkmark"></ion-icon>
+      </ion-button>
     </div>  
   </ion-content>  

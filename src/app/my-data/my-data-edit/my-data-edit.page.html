@@ -146,28 +146,10 @@
             </ion-col>
           </ion-row>
 
-          <!-- ERROR -->
-          <ion-row>
-            <ion-col size="12">
-              <div class="form-group" *ngIf="pfelder" class="pfehler">
-                <div class="text-center alert alert-danger">
-                  {{translate.instant('Bitte füllen Sie alle Pflichtfelder aus.')}}
-                </div>
-              </div>
-
-              <div class="form-group" *ngIf="pw_felder==1" class="pfehler">
-                <div class="text-center alert alert-danger">
-                  {{translate.instant('Passwörter stimmen nicht überein.')}}
-                </div>
-              </div>
-
-              <div class="form-group" *ngIf="pw_felder==2" class="pfehler">
-                <div class="text-center alert alert-danger">
-                  {{translate.instant('Passwort ist zu kurz, Mindestlänge ist 8 Zeichen.')}}
-                </div>
-              </div>
-            </ion-col>
-          </ion-row>
+          <!-- Error -->
+          <div [hidden]="!inputError" class="pfehler">
+            {{translate.instant('Bitte füllen Sie alle Pflichtfelder aus.')}}
+          </div>
 
           <ion-row style="margin-bottom: -10px;">
             <div class="modal-footer">
@@ -302,6 +284,12 @@
             </ion-button>
         </div>
       </ion-row>
+
+      <!-- Error -->
+      <div [hidden]="!inputError" class="pfehler">
+        {{translate.instant('Bitte füllen Sie alle Pflichtfelder aus.')}}
+      </div>
+
       <ion-row style="margin-bottom: -10px;" *ngIf="viewNewMode==1">
         <ion-col>{{translate.instant('Benutzer nicht gefunden!')}}</ion-col>
       </ion-row>

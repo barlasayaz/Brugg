@@ -16,7 +16,6 @@ export class NoteEditComponent {
   public modalTitle: string;
   public idCustomer: number = 0;
   public idNote: number = 0;
-  public invalidForm = true;
   public itsNew: boolean = false;
   public activNote: any = { user: this.userdata.id,
                             active: 1,
@@ -44,6 +43,8 @@ export class NoteEditComponent {
     this.idCustomer = this.navParams.get('idCustomer');
     this.redirect = this.navParams.get('redirect');
 
+    this.selectedContact = '';
+    this.activNote.category = '';
     if (this.idNote > 0) {
       this.itsNew = false;
       this.modalTitle = translate.instant('Bearbeiten Notiz');
@@ -83,15 +84,20 @@ export class NoteEditComponent {
 
   noteEdit() {
     console.log('noteEdit()');
-    if (this.activNote.title.trim() == undefined || this.activNote.title.trim() == '') {
+    this.inputError = false;
+    if (this.activNote.title == '') {
       this.inputError = true;
       return;
     }
-    if (this.activNote.notes.trim() == undefined || this.activNote.notes.trim() == '') {
+    if (this.selectedContact == null) {
       this.inputError = true;
       return;
     }
-    if (this.selectedContact.id == undefined || this.selectedContact.id == '') {
+    if (this.activNote.category == null) {
+      this.inputError = true;
+      return;
+    }
+    if (this.activNote.notes == '') {
       this.inputError = true;
       return;
     }
@@ -135,16 +141,6 @@ export class NoteEditComponent {
       }
     });
 
-  }
-
-  checkInvalidForm() {
-    let t1 = this.activNote.title.trim();
-    let t2 = this.activNote.notes.trim();
-    let t3 = this.selectedContact.id;
-    this.invalidForm = false;
-    if (t1 == '') { this.invalidForm = true; }
-    if (t2 == '') { this.invalidForm = true; }
-    if (t3 == undefined) { this.invalidForm = true; }
   }
 
   noteDeactivate() {
@@ -203,11 +199,6 @@ export class NoteEditComponent {
       }
       this.loadCustomer(this.idCustomer);
     });
-  }
-
-  userChange(event) {
-    console.log('port:', event.value);
-    this.checkInvalidForm()
   }
 
 }

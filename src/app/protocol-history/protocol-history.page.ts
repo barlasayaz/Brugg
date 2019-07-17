@@ -102,7 +102,7 @@ export class ProtocolHistoryPage implements OnInit {
 
     loadProtocol() {
         this.apiService.pvs4_get_protocol_history(this.idCustomer, this.idProduct).then((result: any) => {
-           console.log('loadProtocol pvs4_get_protocol_history :', result.list);
+           //console.log('loadProtocol pvs4_get_protocol_history :', result.list);
            const nodes: any[] = JSON.parse(JSON.stringify(result.list));
            for (let i = 0; i < nodes.length; i++) {
                 const prdct = JSON.parse(nodes[i].data.product);
