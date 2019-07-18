@@ -287,7 +287,18 @@ export class AppointmentPlanPage {
                 redirect: 2
               }
             });
-
+            modal.onDidDismiss().then((data) => {
+                if (data['data']) {
+                    const today = new Date();
+                    const newdate = new Date();
+                    newdate.setDate(today.getDate() + 30);
+                    const newdate2 = new Date();
+                    newdate2.setDate(today.getDate() - 30);
+                    console.log(newdate + ' - ' + newdate2);
+            
+                    this.eventsFunc(newdate2, newdate);
+                }
+            });
           modal.present();
         });
     }
@@ -317,7 +328,18 @@ export class AppointmentPlanPage {
             redirect: 2
           }
         });
-
+        modal.onDidDismiss().then((data) => {
+            if (data['data']) {
+                const today = new Date();
+                const newdate = new Date();
+                newdate.setDate(today.getDate() + 30);
+                const newdate2 = new Date();
+                newdate2.setDate(today.getDate() - 30);
+                console.log(newdate + ' - ' + newdate2);
+        
+                this.eventsFunc(newdate2, newdate);
+            }
+        });
       modal.present();
     }
 

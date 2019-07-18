@@ -330,7 +330,13 @@ export class DashboardNewPage implements OnInit {
                 componentProps: {
                     appointment: appointment, redirect: 1
                 }
-            }).then(x => x.present());
+            });
+            modal.onDidDismiss().then(data => {
+                if (data['data']) {
+                    this.loadTable();
+                }
+            });
+            modal.present();
         }
         
         go(rowID) {
@@ -351,20 +357,32 @@ export class DashboardNewPage implements OnInit {
         };
         
         async newPrAppointment() {
-            await this.modalCtrl.create({
+            const modal = await this.modalCtrl.create({
                 component: AppointmentEditComponent
-            }).then(x => x.present());
+            });
+            modal.onDidDismiss().then(data => {
+                if (data['data']) {
+                    this.loadTable();
+                }
+            });
+            modal.present();
         }
         
         async editPrAppointment(row:any) {
             console.log("editPrAppointment", row); 
             
-            await this.modalCtrl.create({
+            const modal = await this.modalCtrl.create({
                 component: AppointmentEditComponent,
                 componentProps: {
                     idCustomer: row.idCustomer, appointmentType: 0, redirect: 3
                 }
-            }).then(x => x.present());
+            });
+            modal.onDidDismiss().then(data => {
+                if (data['data']) {
+                    this.loadTable();
+                }
+            });
+            modal.present();
         }
         
         search_all() {

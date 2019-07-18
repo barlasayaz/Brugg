@@ -194,7 +194,9 @@ export class ProtocolListPage implements OnInit {
             }
 
             this.selectedColumns = JSON.parse(JSON.stringify(this.cols));
-
+            for (let k = 0; k < this.cols.length; k++) {
+                this.columnFilterValues[this.cols[k].field] = '';
+            }
             if (localStorage.getItem('filter_values_protocol') != undefined) {
                 this.columnFilterValues = JSON.parse(localStorage.getItem('filter_values_protocol'));
             }
@@ -204,10 +206,6 @@ export class ProtocolListPage implements OnInit {
             }
             if (localStorage.getItem('show_columns_protocol') != undefined) {
                 this.selectedColumns = JSON.parse(localStorage.getItem('show_columns_protocol'));
-            }
-
-            for (let k = 0; k < this.cols.length; k++) {
-                this.columnFilterValues[this.cols[k].field] = '';
             }
 
             this.generate_protocolList();
