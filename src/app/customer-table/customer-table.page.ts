@@ -350,7 +350,6 @@ export class CustomerTablePage implements OnInit {
         if (localStorage.getItem('expanded_nodes') != undefined) {
             this.expandChildren(this.customerListView, JSON.parse(localStorage.getItem('expanded_nodes')));
         }
-
     }
 
     nodeSelect() {

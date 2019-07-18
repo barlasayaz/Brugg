@@ -3,7 +3,7 @@
     <div class="pvs4-login-wrapper">
       
       <div class="login-intro-text">
-        <h1>{{'IHR PVS LOGIN' | translate}}</h1>
+        <!-- <h1>{{'IHR PVS LOGIN' | translate}}</h1>  -->
       </div>
 
       <ion-grid class="pvs4-login-inner">
@@ -32,7 +32,7 @@
           </div>
         </ion-row>
     
-        <ion-row style="margin-top:15px" *ngIf="login_nok">
+        <ion-row style="margin-top:10px" *ngIf="login_nok">
           <ion-col>
             <div class="text-center alert alert-danger wrong-log">{{'Ihre Zugangsdaten sind nicht korrekt.' | translate}}</div>
           </ion-col>
@@ -57,10 +57,10 @@
             </ion-col>
           </ion-row>
     
-          <ion-row style="margin-top: 10px;margin-bottom: 20px">
+          <ion-row style="margin-top: 10px;margin-bottom: 10px">
             <ion-col>
               <ion-button class="pvs4-btn pvs4-btn-full pvs4-btn-green" type="submit">{{ "Login" | translate }} </ion-button>
-              <button style="visibility: hidden" type="submit"></button>
+              <!-- <button style="visibility: hidden" type="submit"></button> -->
             </ion-col>
           </ion-row>
     

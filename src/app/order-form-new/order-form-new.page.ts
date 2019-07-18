@@ -253,7 +253,7 @@ export class OrderFormNewPage {
         component: OrderSendNewPage,
         componentProps: {
           'idCustomer': this.idCustomer,
-          'company': this.company,
+          'company': this.activOrderForm.billing.company ,
           'activOrderForm': this.activOrderForm,
           'pdfRetVal': result
         }
