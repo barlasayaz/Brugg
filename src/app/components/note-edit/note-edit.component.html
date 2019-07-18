@@ -43,8 +43,7 @@
                               [(items)]="userList"
                               itemValueField="id"
                               itemTextField="name"
-                              [canSearch]="true"
-                              (onChange)="userChange($event)">
+                              [canSearch]="true">
             </ionic-selectable>   
           </ion-item>
         </ion-col>       
@@ -102,23 +101,26 @@
         </ion-col>      
       </ion-row>      
      
-      <!-- Error -->
-      <div [hidden]="!inputError" class="pfehler" style="margin-top: 15px; margin-left: 5px;">
-        <div class="highlightFehler">
-          {{translate.instant('Bitte füllen Sie alle Pflichtfelder aus.')}}
-        </div>
-      </div>
+    <!-- Error -->
+    <div [hidden]="!inputError" class="pfehler">
+      {{translate.instant('Bitte füllen Sie alle Pflichtfelder aus.')}}
+    </div>
   
       <!-- Footer -->
       <ion-row style="margin-top:-18px;">
         <div class="modal-footer">
-            <ion-button *ngIf="!itsNew" class="btn btn-modal-danger btn-del footerIcon" (click)="noteDeactivate();">
+            <ion-button *ngIf="!itsNew"
+                        style="margin-top: -2px !important;"
+                        class="btn btn-modal-danger btn-del footerIcon"
+                        (click)="noteDeactivate();">
               <ion-icon name="trash"></ion-icon>
             </ion-button>
-            <ion-button class="btn btn-modal-danger footerIcon" (click)="dismiss()">
+            <ion-button class="btn btn-modal-danger footerIcon"
+                        (click)="dismiss()">
               <ion-icon name="close"></ion-icon>
             </ion-button>
-            <ion-button class="btn btn-modal-success footerIcon" (click)="noteEdit();">
+            <ion-button class="btn btn-modal-success footerIcon"
+                        (click)="noteEdit();">
               <ion-icon name="checkmark"></ion-icon>
             </ion-button>
         </div>

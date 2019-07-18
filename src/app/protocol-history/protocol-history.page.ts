@@ -6,11 +6,8 @@ import { UserdataService } from '../services/userdata';
 import { DatePipe } from '@angular/common';
 import { TreeNode } from 'primeng/api';
 import { ExcelService } from '../services/excel';
-import pdfMake from 'pdfmake/build/pdfmake';
-import pdfFonts from 'pdfmake/build/vfs_fonts';
 import { PdfExportService } from '../services/pdf-export';
-pdfMake.vfs = pdfFonts.pdfMake.vfs;
-import { ActivatedRoute, NavigationExtras } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 /**
  * Generated class for the ProtocolHistoryPage page.
@@ -91,15 +88,13 @@ export class ProtocolHistoryPage implements OnInit {
         ];
 
         this.url = this.apiService.pvsApiURL;
-        this.route.queryParams.subscribe(params => {
+        if (this.route.snapshot.data['special']) {
+            let params = this.route.snapshot.data['special'];
             this.idCustomer = params['idCustomer'];
-            // this.company = params["company"];
             this.idProduct = params['idProduct'];
             this.titleProduct = params['titleProduct'];
             this.loadProtocol();
-        });
-
-
+        }
     }
 
     loadProtocol() {

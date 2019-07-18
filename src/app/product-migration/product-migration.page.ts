@@ -4,7 +4,6 @@ import { TranslateService } from '@ngx-translate/core';
 import { UserdataService } from '../services/userdata';
 import { ApiService } from '../services/api';
 import { TreeNode } from 'primeng/api';
-import { ActivatedRoute,NavigationExtras } from '@angular/router';
 import { File } from '@ionic-native/file/ngx';
 /**
  * Generated class for the ProductMigrationPage page.

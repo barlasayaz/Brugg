@@ -8,10 +8,7 @@ import { TreeNode, MenuItem } from 'primeng/api';
 import { ExcelService } from '../services/excel';
 import { AlertController } from '@ionic/angular';
 import { CustomerEditComponent } from '../components/customer-edit/customer-edit.component';
-import pdfMake from 'pdfmake/build/pdfmake';
-import pdfFonts from 'pdfmake/build/vfs_fonts';
 import { PdfExportService } from '../services/pdf-export';
-pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
     selector: 'app-customer-table',

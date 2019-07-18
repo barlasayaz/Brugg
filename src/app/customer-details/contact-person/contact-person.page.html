@@ -142,17 +142,13 @@
       </ion-grid>  
 
       <!-- Error -->
-      <div *ngIf="email_felder" class="pfehler" style="margin-top: 15px; margin-left: 5px;">
-        <div class="highlightFehler">
+      <div *ngIf="email_felder" class="pfehler">
           {{translate.instant('E-Mail nicht standardkonform.')}}
-        </div>
       </div>
-      <div [hidden]="!inputError" *ngIf="!email_felder" class="pfehler" style="margin-top: 15px; margin-left: 5px;">
-        <div class="highlightFehler">
+      <div [hidden]="!inputError" *ngIf="!email_felder" class="pfehler">
           {{translate.instant('Bitte füllen Sie alle Pflichtfelder aus.')}}
-        </div>
       </div>
-
+      
       <div class="modal-footer">    
           <ion-button type="button" 
                     class="btn btn-modal-danger" 

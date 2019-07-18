@@ -16,7 +16,9 @@
             <ion-col size-xl="12" size-lg="12" size-md="12" size-sm="12" size-xs="12">
                 <ion-item lines="none">
                     <ion-label position="floating">{{translate.instant('Titel')}} </ion-label>
-                    <ion-input type="text" [ngClass]="{required:inputError}" [(ngModel)]="activOption.title[lang]"
+                    <ion-input type="text"
+                               required
+                               [(ngModel)]="activOption.title[lang]"
                         readonly="true" (click)="promptOptionTitle(activOption.title,1,0)">
                     </ion-input>
                 </ion-item>
@@ -27,10 +29,9 @@
             <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="10" size-xs="10">
                 <ion-item lines="none">
                     <ion-label position="floating">{{translate.instant('Art')}}</ion-label>
-                    <ion-select style="margin-bottom: 10px;" 
-                                [ngClass]="{required:inputError}" 
-                                [(ngModel)]="activOption.type"
+                    <ion-select style="margin-bottom: 10px;"
                                 required
+                                [(ngModel)]="activOption.type"
                                 okText="{{translate.instant('okay')}}" 
                                 cancelText="{{translate.instant('dismiss')}}">
                         <ion-select-option value="0">Toggle</ion-select-option>
@@ -46,6 +47,7 @@
                 <ion-item lines="none">
                     <ion-button size="small"
                                 class="opt-add"
+                                required
                                 (click)="add_option()"
                                 *ngIf="activOption.type==1">
                         <ion-icon name="add"></ion-icon>
@@ -88,7 +90,12 @@
             <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="4" size-xs="4" style="margin-top:-15px">
                 <ion-item lines="none">
                     <ion-label position="floating">{{translate.instant('Farbe')}}</ion-label>
-                    <ion-input [(ngModel)]="inputColor" class="clsinput" type="text" placeholder="" readonly="true"></ion-input>
+                    <ion-input [(ngModel)]="inputColor" 
+                               class="clsinput"
+                               type="text"
+                               placeholder=""
+                               [disabled]="true">
+                    </ion-input>
                 </ion-item>
             </ion-col>
         </ion-row>
@@ -99,14 +106,19 @@
                 <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="10" size-xs="10">
                     <ion-item lines="none">
                         <ion-label position="floating">{{translate.instant('Optionen')+' '+(opdInd+1)}} </ion-label>
-                        <ion-input type="text" [ngClass]="{required:inputError}" [(ngModel)]="option[lang]" readonly="true"
-                            (click)="promptOptionTitle(option,2,opdInd)">
+                        <ion-input type="text"
+                                   required
+                                   [(ngModel)]="option[lang]"
+                                   readonly="true"
+                                   (click)="promptOptionTitle(option,2,opdInd)">
                         </ion-input>
                     </ion-item>
                 </ion-col>
                 <ion-col size-xl="1" size-lg="1" size-md="1" size-sm="2" size-xs="2" style="margin-top: auto">
                     <ion-item lines="none" style="margin-top: 15px;">
-                        <ion-button size="small" class="opt-remove" (click)="remove_option(opdInd)">
+                        <ion-button size="small" 
+                                    class="opt-remove"
+                                    (click)="remove_option(opdInd)">
                             <ion-icon name="remove"></ion-icon>
                         </ion-button>
                     </ion-item>
@@ -119,7 +131,9 @@
             <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="10" size-xs="10">
                 <ion-item lines="none">
                     <ion-label position="floating">{{translate.instant('Max')}} {{translate.instant('Charakter')}}</ion-label>
-                    <ion-input type="Number" [ngClass]="{required:inputError}" [(ngModel)]="maxChar">
+                    <ion-input type="Number"
+                               required
+                               [(ngModel)]="maxChar">
                     </ion-input>
                 </ion-item>
             </ion-col>
@@ -130,14 +144,18 @@
             <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="6" size-xs="6">
                 <ion-item lines="none">
                     <ion-label position="floating">{{translate.instant('Min')}}</ion-label>
-                    <ion-input type="Number" [ngClass]="{required:inputError}" [(ngModel)]="minNumber">
+                    <ion-input type="Number"
+                               required
+                               [(ngModel)]="minNumber">
                     </ion-input>
                 </ion-item>
             </ion-col>
             <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="6" size-xs="6">
                 <ion-item lines="none">
                     <ion-label position="floating">{{translate.instant('Max')}}</ion-label>
-                    <ion-input type="Number" [ngClass]="{required:inputError}" [(ngModel)]="maxNumber">
+                    <ion-input type="Number"
+                               required
+                               [(ngModel)]="maxNumber">
                     </ion-input>
                 </ion-item>
             </ion-col>
@@ -163,35 +181,37 @@
             <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="10" size-xs="10">
                 <ion-item lines="none">
                     <ion-label position="floating">{{translate.instant('Standard')}}</ion-label>
-                    <ion-datetime [ngClass]="{required:inputError}"
-                                    type="time"
-                                    [(ngModel)]="defaultTime"
-                                    name="start_time" 
-                                    displayFormat="HH:mm"
-                                    doneText="{{translate.instant('okay')}}" 
-                                    cancelText="{{translate.instant('dismiss')}}">
+                    <ion-datetime type="time"
+                                  [(ngModel)]="defaultTime"
+                                  required  
+                                  name="start_time" 
+                                  displayFormat="HH:mm"
+                                  doneText="{{translate.instant('okay')}}" 
+                                  cancelText="{{translate.instant('dismiss')}}">
                     </ion-datetime>  
                 </ion-item>
             </ion-col>
         </ion-row>
 
         <!-- Error -->
-        <div [hidden]="!inputError" class="pfehler" style="margin-top: 15px; margin-left: 5px;">
-            <div class="highlightFehler">
-                {{translate.instant('Bitte füllen Sie alle Pflichtfelder aus.')}}
-            </div>
+        <div [hidden]="!inputError" class="pfehler">
+            {{translate.instant('Bitte füllen Sie alle Pflichtfelder aus.')}}
         </div>
 
         <!-- Footer -->
         <ion-row style="margin-top:-18px;">
             <div class="modal-footer">
-                <!--<button ion-button *ngIf="!itsNew" class="btn btn-modal-danger btn-del footerIcon" (click)="productOptionsDeactivate();">
-            <ion-icon name="trash"></ion-icon>
-          </button>-->
-                <ion-button class="btn btn-modal-danger footerIcon" (click)="dismiss()">
+                <!-- <ion-button *ngIf="!itsNew" 
+                            class="btn btn-modal-danger btn-del footerIcon"
+                            (click)="productOptionsDeactivate();">
+                    <ion-icon name="trash"></ion-icon>
+                </ion-button> -->
+                <ion-button class="btn btn-modal-danger footerIcon"
+                            (click)="dismiss()">
                     <ion-icon name="close"></ion-icon>
                 </ion-button>
-                <ion-button class="btn btn-modal-success footerIcon" (click)="productOptionsEdit();">
+                <ion-button class="btn btn-modal-success footerIcon"
+                            (click)="productOptionsEdit();">
                     <ion-icon name="checkmark"></ion-icon>
                 </ion-button>
             </div>

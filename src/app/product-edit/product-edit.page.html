@@ -8,8 +8,8 @@
           <ion-row>
             <!-- TEMPLATES -->
             <ion-col size-xl="6" size-lg="6" size-md="12" size-sm="12" size="12">              
-              <div class="table-responsive" id="ps_product-template">
-                <div class="table table-striped" id="product-template">
+              <div class="table-responsive" >
+                <div class="table table-striped" >
                   <div class="thead">
                     <div class="tr table-header">
                       <div class="th">
@@ -111,7 +111,7 @@
                         <ion-row>
                             <ion-col size="12">                                
                               <ion-item lines="none">                                
-                                <ion-label position="floating">{{'Titel' | translate}} *</ion-label>
+                                <ion-label position="floating">{{'Titel' | translate}}</ion-label>
                                 <ion-input type="text"                                              
                                            [(ngModel)]="activProduct.title[lang]"
                                            readonly="true" 
@@ -124,7 +124,7 @@
                         <ion-row>
                         <ion-col size="12" size-md="3">
                             <ion-item lines="none">
-                                <ion-label position="floating">ID Number *</ion-label>
+                                <ion-label position="floating">ID Number</ion-label>
                                 <ion-input required="true"
                                            type="text"                                                                             
                                            [(ngModel)]="activProduct.id_number">
@@ -141,7 +141,7 @@
                           </ion-col>    
                           <ion-col size="12" size-md="6">
                             <ion-item lines="none">
-                              <ion-label position="floating">{{'Intervall Prüfen' | translate}} *</ion-label>
+                              <ion-label position="floating">{{'Intervall Prüfen' | translate}}</ion-label>
                               <ion-select required="true"
                                           [(ngModel)]="activProduct.check_interval"
                                           okText="{{translate.instant('okay')}}"
@@ -232,8 +232,8 @@
                 </div>                
               </div>      
               <!-- Product Image -->
-              <div class="table-responsive" id="ps_product">
-                <div class="table table-striped" id="product-template">
+              <div class="table-responsive">
+                <div class="table table-striped">
                   <div class="thead">
                     <div class="tr table-header">
                         <div class="th">{{'Produktbild' | translate}}</div>

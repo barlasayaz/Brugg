@@ -1,8 +1,9 @@
-import { Component,OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NavController, NavParams, ModalController, AlertController } from '@ionic/angular';
 import { UserdataService } from '../../services/userdata';
 import { TranslateService } from '@ngx-translate/core';
 import { ApiService } from '../../services/api';
+import { element } from '@angular/core/src/render3';
 
 @Component({
   selector: 'app-product-opt-edit',
@@ -37,14 +38,14 @@ export class ProductOptEditComponent implements OnInit {
     fr: '',
     it: ''
   }];
-  public maxChar = 100;
-  public minNumber = 0;
-  public maxNumber = 10;
-  public defaultToggle = true;
-  public defaultTime = '';
+  public maxChar: any = 100;
+  public minNumber: any = 0;
+  public maxNumber: any = 10;
+  public defaultToggle: boolean = true;
+  public defaultTime: any = '';
   public opdInd: any = 0;
-  public lang = '';
-  public mandatoryToogle = false;
+  public lang: any = '';
+  public mandatoryToogle: boolean = false;
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
@@ -75,20 +76,20 @@ export class ProductOptEditComponent implements OnInit {
         // this.activOption.title = JSON.parse(this.activOption.title);
         // this.loadOption();
 
-        if (this.activOption.type == "0") {
+        if (this.activOption.type == '0') {
           this.defaultToggle = this.activOption.options.default;
           this.inputColor = this.activOption.options.color;
-        } else if (this.activOption.type == "1") {
+        } else if (this.activOption.type == '1') {
           this.options = this.activOption.options;
-        } else if (this.activOption.type == "2") {
+        } else if (this.activOption.type == '2') {
           this.maxChar = this.activOption.options.max;
-        } else if (this.activOption.type == "3") {
+        } else if (this.activOption.type == '3') {
           this.minNumber = this.activOption.options.min;
           this.maxNumber = this.activOption.options.max;
-        } else if (this.activOption.type == "4") {
+        } else if (this.activOption.type == '4') {
           this.defaultTime = this.activOption.options.default;
         }
-        if (this.activOption.mandatory == "1" || this.activOption.mandatory == 'true') {
+        if (this.activOption.mandatory == '1' || this.activOption.mandatory == 'true') {
           this.mandatoryToogle = true;
         } else {
           this.mandatoryToogle = false;
@@ -118,62 +119,109 @@ export class ProductOptEditComponent implements OnInit {
 
     productOptionsEdit() {
       console.log('productOptionsEdit()');
-
-      const obj = {
-        user: 1,
-        title: '',
-        mandatory: 0,
-        options: '',
-        licensee: this.userdata.licensee,
-        type: 0,
-        id: 0,
-        value: ''
-      };
-
-      if (this.activOption.type == "0") {
-        this.activOption.options = {
-          default: this.defaultToggle,
-          color: this.inputColor
-        };
-        this.activOption.value = this.defaultToggle;
-      } else if (this.activOption.type == "1") {
-        this.activOption.options = this.options;
-      } else if (this.activOption.type == "2") {
-        this.activOption.options = { max: this.maxChar };
-      } else if (this.activOption.type == "3") {
-        this.activOption.options = {
-          min: this.minNumber,
-          max: this.maxNumber
-        };
-           } else if (this.activOption.type == "4") {
-        this.activOption.options = { default: this.defaultTime };
-           }
-
-      this.activOption.mandatory = this.mandatoryToogle;
-
-      if (this.activOption['user']) { obj.user = this.activOption['user']; }
-      if (this.activOption['licensee']) { obj.licensee = this.activOption['licensee']; }
-      if (this.activOption['type']) { obj.type = this.activOption['type']; }
-      if (this.activOption['mandatory']) {
-        if (this.activOption['mandatory'] == true) { obj.mandatory = 1; }
-        if (this.activOption['mandatory'] == false) { obj.mandatory = 0; }
-      }
-      if (this.activOption['title']) { obj.title = JSON.stringify(this.activOption['title']); }
-      if (this.activOption['options']) { obj.options = JSON.stringify(this.activOption['options']); }
-
-      console.log(obj);
-      if (!this.itsNew) {
-        obj.id = this.activOption['id'];
-        this.idOption = this.activOption['id'];
-      } else {
-        this.activOption.active = 1;
+      this.inputError = false;
+      if (this.activOption.title['de'] == '') {
+        this.inputError = true;
+        return;
       }
 
-      this.apiService.pvs4_set_product_opt(obj).then((result: any) => {
-        console.log('result: ', result);
-        this.viewCtrl.dismiss(this.activOption);
-        // this.navCtrl.setRoot(ProductTemplatePage, { idCustomer: this.idCustomer, itsNew: false });
-      });
+      console.log('optionen :', this.activOption.type);
+
+      if (this.activOption.type == 1) {
+        this.options.forEach(element => {
+          console.log('element["de"] :', element["de"]);
+          if (element['de'] == '') {
+            this.inputError = true;
+            return;
+          }
+        });
+      }
+
+      if (this.activOption.type == 2) {
+        console.log('maxChar :', this.maxChar);
+        if (this.maxChar == null) {
+          this.inputError = true;
+          return;
+        }
+      }
+      if (this.activOption.type == 3) {
+        console.log('minNumber :', this.minNumber);
+        if (this.minNumber == null) {
+          this.inputError = true;
+          return;
+        }
+        console.log('maxNumber :', this.maxNumber);
+        if (this.maxNumber == null) {
+          this.inputError = true;
+          return;
+        }
+      }
+      if (this.activOption.type == 4) {
+        console.log('defaultTime :', this.defaultTime);
+        if (this.defaultTime == '') {
+          this.inputError = true;
+          return;
+        }
+      }
+
+      if (!this.inputError) {
+        const obj = {
+          user: 1,
+          title: '',
+          mandatory: 0,
+          options: '',
+          licensee: this.userdata.licensee,
+          type: 0,
+          id: 0,
+          value: ''
+        };
+
+        if (this.activOption.type == '0') {
+          this.activOption.options = {
+            default: this.defaultToggle,
+            color: this.inputColor
+          };
+          this.activOption.value = this.defaultToggle;
+        } else if (this.activOption.type == '1') {
+          this.activOption.options = this.options;
+        } else if (this.activOption.type == '2') {
+          this.activOption.options = { max: this.maxChar };
+        } else if (this.activOption.type == '3') {
+          this.activOption.options = {
+            min: this.minNumber,
+            max: this.maxNumber
+          };
+            } else if (this.activOption.type == '4') {
+          this.activOption.options = { default: this.defaultTime };
+            }
+
+        this.activOption.mandatory = this.mandatoryToogle;
+
+        if (this.activOption['user']) { obj.user = this.activOption['user']; }
+        if (this.activOption['licensee']) { obj.licensee = this.activOption['licensee']; }
+        if (this.activOption['type']) { obj.type = this.activOption['type']; }
+        if (this.activOption['mandatory']) {
+          if (this.activOption['mandatory'] == true) { obj.mandatory = 1; }
+          if (this.activOption['mandatory'] == false) { obj.mandatory = 0; }
+        }
+        if (this.activOption['title']) { obj.title = JSON.stringify(this.activOption['title']); }
+        if (this.activOption['options']) { obj.options = JSON.stringify(this.activOption['options']); }
+
+        console.log(obj);
+        if (!this.itsNew) {
+          obj.id = this.activOption['id'];
+          this.idOption = this.activOption['id'];
+        } else {
+          this.activOption.active = 1;
+        }
+
+        this.apiService.pvs4_set_product_opt(obj).then((result: any) => {
+          console.log('result: ', result);
+          this.viewCtrl.dismiss(this.activOption);
+          // this.navCtrl.setRoot(ProductTemplatePage, { idCustomer: this.idCustomer, itsNew: false });
+        });
+      }
+
     }
 
     add_option() {

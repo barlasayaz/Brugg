@@ -6,13 +6,10 @@ import { UserdataService } from '../services/userdata';
 import { TreeTable } from 'primeng/components/treetable/treetable';
 import { TreeNode, MenuItem } from 'primeng/api';
 import { ExcelService } from '../services/excel';
-import pdfMake from 'pdfmake/build/pdfmake';
-import pdfFonts from 'pdfmake/build/vfs_fonts';
-pdfMake.vfs = pdfFonts.pdfMake.vfs;
 import { PdfExportService } from '../services/pdf-export';
 import { DatePipe } from '@angular/common';
 import { ProductMigrationPage } from '../product-migration/product-migration.page';
-import { ActivatedRoute, NavigationExtras } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { SlideMenu } from 'primeng/primeng';
 import { DataService } from '../services/data.service';
 
@@ -567,25 +564,23 @@ export class ProductListPage implements OnInit {
                 obj.parent = this.selectedNode.data.id;
             }
         }
-        const navigationExtras: NavigationExtras = {
-            queryParams: obj
-        };
-        this.navCtrl.navigateForward(['/product-edit'], navigationExtras);
+ 
+        this.dataService.setData(obj);
+        this.navCtrl.navigateForward(['/product-edit']);
     }
 
     menu_edit() {
         console.log('menu_edit', this.selectedNode);
         if (this.selectedNode) {
-            if (this.selectedNode.data.id) {
-                const navigationExtras: NavigationExtras = {
-                    queryParams: {
-                        id: this.selectedNode.data.id,
-                        idCustomer: this.idCustomer,
-                        parent: this.selectedNode.data.parent,
-                        company: this.company
-                    }
-                };
-                this.navCtrl.navigateForward(['/product-edit'], navigationExtras);
+            if (this.selectedNode.data.id) {           
+                let data = {
+                    id: this.selectedNode.data.id,
+                    idCustomer: this.idCustomer,
+                    parent: this.selectedNode.data.parent,
+                    company: this.company
+                }
+                this.dataService.setData(data);
+                this.navCtrl.navigateForward(['/product-edit']);
             }
         }
     }
@@ -596,15 +591,15 @@ export class ProductListPage implements OnInit {
             if (this.selectedNode.data.id) {
                 const id = parseInt(this.selectedNode.data.id);
                 console.log('menu_history id', id);
-                const navigationExtras: NavigationExtras = {
-                    queryParams: {
-                        idCustomer: this.idCustomer,
-                        idProduct: id,
-                        titleProduct: this.selectedNode.data.title,
-                        company: this.company
-                    }
-                };
-                this.navCtrl.navigateForward(['/protocol-history'], navigationExtras);
+
+                let data = {
+                    idCustomer: this.idCustomer,
+                    idProduct: id,
+                    titleProduct: this.selectedNode.data.title,
+                    company: this.company
+                }
+                this.dataService.setData(data);
+                this.navCtrl.navigateForward(['/protocol-history']);
             }
         }
     }
@@ -677,10 +672,12 @@ export class ProductListPage implements OnInit {
 
     create_template() {
         console.log('create_template', this.selectedNode);
-        const navigationExtras: NavigationExtras = {
-            queryParams: { idCustomer: this.idCustomer }
-        };
-        this.navCtrl.navigateForward(['/product-template'], navigationExtras);
+    
+        let data = {
+            idCustomer: this.idCustomer
+        }
+        this.dataService.setData(data);
+        this.navCtrl.navigateForward(['/product-template']);
     }
 
     create_protocol() {
@@ -698,11 +695,11 @@ export class ProductListPage implements OnInit {
                 // nodeList.push(element.data);
             }
               
-        let data = {
-            id: 0, 
-            idCustomer: this.idCustomer,
-            productList: JSON.stringify(nodeList)
-        }
+            let data = {
+                id: 0, 
+                idCustomer: this.idCustomer,
+                productList: JSON.stringify(nodeList)
+            }
             this.dataService.setData(data);
             this.navCtrl.navigateForward(['/protocol-edit']);
         }

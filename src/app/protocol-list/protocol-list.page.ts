@@ -6,11 +6,8 @@ import { UserdataService } from '../services/userdata';
 import { TreeTable } from 'primeng/components/treetable/treetable';
 import { TreeNode, MenuItem } from 'primeng/api';
 import { ExcelService } from '../services/excel';
-import pdfMake from 'pdfmake/build/pdfmake';
-import pdfFonts from 'pdfmake/build/vfs_fonts';
 import { PdfExportService } from '../services/pdf-export';
-pdfMake.vfs = pdfFonts.pdfMake.vfs;
-import { ActivatedRoute, NavigationExtras } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { DataService } from '../services/data.service';
 
 @Component({
@@ -396,21 +393,23 @@ export class ProtocolListPage implements OnInit {
                 const id = parseInt(this.selectedNode.data.id);
                 console.log('menu_view id', id);
                 
-                const navigationExtras: NavigationExtras = {
-                    queryParams: { idCustomer: this.idCustomer, customer_number: this.customer_number, idProtocol: id }
-                };
-                this.navCtrl.navigateForward(['/protocol-details/' + id], navigationExtras);
+                let data = { 
+                    idCustomer: this.idCustomer, 
+                    customer_number: this.customer_number, 
+                    idProtocol: id 
+                  }
+                this.dataService.setData(data);
+                this.navCtrl.navigateForward(['/protocol-details/' + id]);
             }
         }
     }
 
     create_template() {
-        //console.log('create_template', this.selectedNode);
-        const navigationExtras: NavigationExtras = {
-            queryParams:  { idCustomer: this.idCustomer }
-        };
-
-        this.navCtrl.navigateForward(['/protocol-template'], navigationExtras);
+        let data = { 
+            idCustomer: this.idCustomer
+        }
+        this.dataService.setData(data);
+        this.navCtrl.navigateForward(['/protocol-template']);
     }
 
     excel_all() {
