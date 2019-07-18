@@ -224,6 +224,10 @@ export class ProductOptEditComponent implements OnInit {
 
     }
 
+    inputErrorMsg() {
+      this.inputError = false;
+    }
+
     add_option() {
       this.options.push({
         de: '',
@@ -247,7 +251,7 @@ export class ProductOptEditComponent implements OnInit {
 
     promptOptionTitle(title, type, index) {
       console.log('promptOptionTitle(): ', title, type, index);
-      console.log('this.activOption: ', this.activOption);
+      console.log('this.activOption: ', this.activOption);      
       let myTitel = this.translate.instant('Auswahlmöglichkeiten');
       if (type == 1) { myTitel = this.translate.instant('Titel'); }
 
@@ -296,6 +300,7 @@ export class ProductOptEditComponent implements OnInit {
                 return false;
               } else {
                 console.log('options:', this.options);
+                this.inputError = false;
                 if (type == 1) {
                   this.activOption.title = data;
                 } else {

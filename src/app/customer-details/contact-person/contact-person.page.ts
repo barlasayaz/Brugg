@@ -160,19 +160,23 @@ export class ContactPersonPage {
         }
     }
 
-      editContactPerson(contactPerson) {
+    inputErrorMsg() {
+        this.inputError = false;
+    }
+
+    editContactPerson(contactPerson) {
         console.log('editContactPerson 1 :', contactPerson);
         localStorage.setItem('KundenAnspListe', JSON.stringify(contactPerson));
         this.contactPersonEdit = contactPerson;
         this.contactPersonEditOderNeu = 0;
         this.kundendaten = 'create';
-      }
+    }
 
-      setContactPerson(contactPerson) {
+    setContactPerson(contactPerson) {
         this.viewCtrl.dismiss(contactPerson);
-      }
+    }
 
-      delContactPerson(contactPerson) {
+    delContactPerson(contactPerson) {
         let alert = this.alertCtrl.create({
             header: this.translate.instant('Datensatz Löschen'),
             message: this.translate.instant('Ansprechpartner wirklich deaktivieren?'),
@@ -216,9 +220,9 @@ export class ContactPersonPage {
             ]
         }).then(x => x.present());
 
-      }
+    }
 
-      SP_Ansp(type, nr) {
+    SP_Ansp(type, nr) {
           nr = parseInt(nr);
           let ret = '';
           if (type == 'Funktion_Nr') {

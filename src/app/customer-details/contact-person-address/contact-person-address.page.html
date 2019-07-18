@@ -24,9 +24,10 @@
                   <ion-col size="10">
                     <ion-item lines="none" style="padding-left: 0px;">
                       <ion-label position="floating">{{translate.instant('Adresstyp')}}</ion-label>
-                      <ion-select id="ansp_address_type" 
+                      <ion-select required
+                                  (ionChange)="inputErrorMsg()"
+                                  id="ansp_address_type" 
                                   [(ngModel)]="contactPersonAddress.address_type"
-                                  required
                                   okText="{{translate.instant('okay')}}"
                                   cancelText="{{translate.instant('dismiss')}}">
                         <ion-select-option value="Rechnungsadresse" selected>{{translate.instant('Rechnungsadresse')}}</ion-select-option>
@@ -49,10 +50,11 @@
                   <ion-col size="12">
                     <ion-item lines="none" style="padding-left: 0px;">
                       <ion-label position="floating">{{translate.instant('Strasse')}}</ion-label>
-                      <ion-input type="text"
-                                  required
-                                  id="ansp_street"
-                                  [(ngModel)]="contactPersonAddress.street">
+                      <ion-input required
+                                 (ionChange)="inputErrorMsg()"
+                                 type="text"
+                                 id="ansp_street"
+                                 [(ngModel)]="contactPersonAddress.street">
                       </ion-input>                
                     </ion-item>
                   </ion-col>
@@ -62,10 +64,11 @@
                   <ion-col size="12">
                     <ion-item lines="none" style="padding-left: 0px;">
                       <ion-label position="floating">{{translate.instant('PLZ')}} - {{translate.instant('Ort')}}</ion-label>
-                      <ion-input type="text"
-                                  required
-                                  id="ansp_zip_code"
-                                  [(ngModel)]="contactPersonAddress.zip_code">
+                      <ion-input required
+                                 (ionChange)="inputErrorMsg()"
+                                 type="text"
+                                 id="ansp_zip_code"
+                                 [(ngModel)]="contactPersonAddress.zip_code">
                       </ion-input>
                     </ion-item>
                   </ion-col>
@@ -127,8 +130,11 @@
     </ion-grid>
 
     <!-- Error -->
-    <div [hidden]="!inputError" class="pfehler">
-      {{translate.instant('Bitte füllen Sie alle Pflichtfelder aus.')}}
+    <div *ngIf="email_felder" class="pfehler">
+      {{translate.instant('E-Mail nicht standardkonform.')}}
+    </div>
+    <div [hidden]="!inputError" *ngIf="!email_felder" class="pfehler">
+        {{translate.instant('Bitte füllen Sie alle Pflichtfelder aus.')}}
     </div>
 
     <div class="modal-footer">

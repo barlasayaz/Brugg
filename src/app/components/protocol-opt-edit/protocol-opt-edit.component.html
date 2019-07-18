@@ -16,8 +16,9 @@
             <ion-col size-xl="12" size-lg="12" size-md="12" size-sm="12" size-xs="12">
                 <ion-item lines="none">
                     <ion-label position="floating">{{translate.instant('Titel')}} </ion-label>
-                    <ion-input type="text"
-                               required
+                    <ion-input required
+                               (ionChange)="inputErrorMsg()"
+                               type="text"
                                [(ngModel)]="activOption.title[lang]"
                                readonly="true"
                                (click)="promptOptionTitle(activOption.title,1,0)">
@@ -30,8 +31,9 @@
             <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="10" size-xs="10">
                 <ion-item lines="none">
                     <ion-label position="floating">{{translate.instant('Art')}}</ion-label>
-                    <ion-select style="margin-bottom: 10px;"
-                                required
+                    <ion-select required
+                                (ionChange)="inputErrorMsg()"
+                                style="margin-bottom: 10px;"
                                 [(ngModel)]="activOption.type"
                                 okText="{{translate.instant('okay')}}"
                                 cancelText="{{translate.instant('dismiss')}}">
@@ -106,8 +108,8 @@
                 <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="10" size-xs="10">
                     <ion-item lines="none">
                         <ion-label position="floating">{{translate.instant('Optionen')+' '+(opdInd+1)}} </ion-label>
-                        <ion-input type="text"
-                                   required
+                        <ion-input required
+                                   type="text"
                                    [(ngModel)]="option[lang]"
                                    readonly="true"
                                    (click)="promptOptionTitle(option,2,opdInd)">
@@ -131,8 +133,9 @@
             <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="10" size-xs="10">
                 <ion-item lines="none">
                     <ion-label position="floating">{{translate.instant('Max')}} {{translate.instant('Charakter')}}</ion-label>
-                    <ion-input type="Number"
-                               required
+                    <ion-input required
+                               (ionChange)="inputErrorMsg()"
+                               type="Number"
                                [(ngModel)]="maxChar">
                     </ion-input>
                 </ion-item>
@@ -144,8 +147,9 @@
             <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="6" size-xs="6">
                 <ion-item lines="none">
                     <ion-label position="floating">{{translate.instant('Min')}}</ion-label>
-                    <ion-input type="Number"
-                               required
+                    <ion-input required
+                               (ionChange)="inputErrorMsg()"
+                               type="Number"
                                [(ngModel)]="minNumber">
                     </ion-input>
                 </ion-item>
@@ -153,8 +157,9 @@
             <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="6" size-xs="6">
                 <ion-item lines="none">
                     <ion-label position="floating">{{translate.instant('Max')}}</ion-label>
-                    <ion-input type="Number" 
-                               required
+                    <ion-input required
+                               (ionChange)="inputErrorMsg()"
+                               type="Number"
                                [(ngModel)]="maxNumber">
                     </ion-input>
                 </ion-item>
@@ -166,11 +171,12 @@
             <ion-col col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12>
             <ion-item lines="none">
                 <ion-label floating>{{translate.instant('Datum')}}</ion-label>
-                <ion-datetime [ngClass]="{required:inputError}" 
-                                [(ngModel)]="default_date"
-                                displayFormat="DD.MM.YYYY"
-                                doneText="{{translate.instant('okay')}}"
-                                cancelText="{{translate.instant('dismiss')}}">
+                <ion-datetime required
+                              (ionChange)="inputErrorMsg()"
+                              [(ngModel)]="default_date"
+                              displayFormat="DD.MM.YYYY"
+                              doneText="{{translate.instant('okay')}}"
+                              cancelText="{{translate.instant('dismiss')}}">
                 </ion-datetime>
             </ion-item>
             </ion-col>  
@@ -181,9 +187,10 @@
             <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="10" size-xs="10">
                 <ion-item lines="none">
                     <ion-label position="floating">{{translate.instant('Standard')}}</ion-label>
-                    <ion-datetime type="time"
+                    <ion-datetime required
+                                  (ionChange)="inputErrorMsg()"
+                                  type="time"
                                   [(ngModel)]="defaultTime"
-                                  required
                                   name="start_time" 
                                   displayFormat="HH:mm"
                                   doneText="{{translate.instant('okay')}}" 

@@ -89,6 +89,10 @@ export class MyDataEditPage {
     }
   }
 
+  inputErrorMsg() {
+    this.inputError = false;
+  }
+
   findEmail() {
     console.log('findEmail emailToFind:', this.emailToFind);
     this.api.pvs4_get_profile(this.emailToFind, 1).then((done: any) => {

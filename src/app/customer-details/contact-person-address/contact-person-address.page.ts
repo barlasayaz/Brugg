@@ -19,8 +19,8 @@ import { ApiService } from '../../services/api';
 export class ContactPersonAddressPage {
   public idCustomer: any;
   public contactPerson: any = [];
-  public kundendaten: any = "person";
-  public contactPersonEditOderNeu = 1; // 0>bearbeiten 1>neu   
+  public kundendaten: any = 'person';
+  public contactPersonEditOderNeu = 1; // 0>bearbeiten 1>neu
   public contactPersonList: any = [];
   public params: any;
   public pfelder: any = 0;
@@ -37,12 +37,12 @@ export class ContactPersonAddressPage {
     public apiService: ApiService,
     public viewCtrl: ModalController) {
 
-    this.idCustomer = this.navParams.get("idCustomer");
-    this.contactPerson = this.navParams.get("contactPerson");
+    this.idCustomer = this.navParams.get('idCustomer');
+    this.contactPerson = this.navParams.get('contactPerson');
     this.contactPersonAddresses = [];
-    this.contactPersonAddresses = this.navParams.get("contactPersonAddresses");
-    this.contactPersonAddress = "Rechnung";
-    console.log("contactPersonAddresses :", this.contactPerson, this.contactPersonAddresses);
+    this.contactPersonAddresses = this.navParams.get('contactPersonAddresses');
+    this.contactPersonAddress = 'Rechnungsadresse';
+    console.log('contactPersonAddresses :', this.contactPerson, this.contactPersonAddresses);
 
   }
 
@@ -52,34 +52,34 @@ export class ContactPersonAddressPage {
 
   updateData() {
     this.pfelder = 0;
-    this.inputError = true;
     this.email_felder = 0;
     this.pw_felder = 1;
-    console.log("updateData contactPersonAddresses :", this.contactPersonAddresses, this.contactPersonAddresses.length);
+    this.inputError = false;
+    console.log('updateData contactPersonAddresses :', this.contactPersonAddresses, this.contactPersonAddresses.length);
     if (this.contactPersonAddresses.length > 0) {
-      for (var i = 0, len = this.contactPersonAddresses.length; i < len; i++) {  
+      for (var i = 0, len = this.contactPersonAddresses.length; i < len; i++) {
         if (this.contactPersonAddresses[i].address_type != undefined) {
           this.pw_felder = 0;
-        }
-        else {
+        } else {
             this.pw_felder = 1;
             this.pfelder = 1;
+            this.inputError = true;
             return;
         }
         if (this.contactPersonAddresses[i].street) {
             this.pw_felder = 0;
-        }
-        else {
+        } else {
             this.pw_felder = 1;
             this.pfelder = 1;
+            this.inputError = true;
             return;
         }
         if (this.contactPersonAddresses[i].zip_code) {
             this.pw_felder = 0;
-        }
-        else {
+        } else {
             this.pw_felder = 1;
             this.pfelder = 1;
+            this.inputError = true;
             return;
         }
         if (this.contactPersonAddresses[i].email) {
@@ -88,36 +88,37 @@ export class ContactPersonAddressPage {
                 this.inputError = true;
                 this.email_felder = 1;
                 return;
-            }            
+            }
         }
       }
     }
     if (this.pw_felder == 0) {
       let obj = {id: 0,
-                email: "",
-                first_name: "",
-                last_name: "",
+                email: '',
+                first_name: '',
+                last_name: '',
                 customer: this.idCustomer,
-                addresses: '[{"address_type":"Rechnung","street":"", "zip_code":"", "department":"", "email":"", "phone":"", "mobile":""}]',
-                department: "",
+                addresses: '[{"address_type":"Rechnungsadresse","street":"", "zip_code":"", "department":"", "email":"", "phone":"", "mobile":""}]',
+                department: '',
                 active: 1
-      };    
+      };
 
-      if (this.contactPerson[0].id) obj.id = this.contactPerson[0].id;
-      if (this.contactPerson[0].email) obj.email = this.contactPerson[0].email;
-      if (this.contactPerson[0].first_name) obj.first_name = this.contactPerson[0].first_name;
-      if (this.contactPerson[0].last_name) obj.last_name = this.contactPerson[0].last_name;
-      if (this.contactPerson[0].customer) obj.customer = this.contactPerson[0].customer; 
-      if (this.contactPerson[0].addresses) obj.addresses = JSON.stringify(this.contactPersonAddresses);
-      if (this.contactPerson[0].department) obj.department = this.contactPerson[0].department;
-      if (this.contactPerson[0].active) obj.active = 1;      
-         
-      console.log("updateData obj :", obj);
+      if (this.contactPerson[0].id) { obj.id = this.contactPerson[0].id; }
+      if (this.contactPerson[0].email) { obj.email = this.contactPerson[0].email; }
+      if (this.contactPerson[0].first_name) { obj.first_name = this.contactPerson[0].first_name; }
+      if (this.contactPerson[0].last_name) { obj.last_name = this.contactPerson[0].last_name; }
+      if (this.contactPerson[0].customer) { obj.customer = this.contactPerson[0].customer; } 
+      if (this.contactPerson[0].addresses) { obj.addresses = JSON.stringify(this.contactPersonAddresses); }
+      if (this.contactPerson[0].department) { obj.department = this.contactPerson[0].department; }
+      if (this.contactPerson[0].active) { obj.active = 1; }
+
+      console.log('updateData obj :', obj);
 
       this.apiService.pvs4_set_contact_person(obj).then((result: any) => {
         console.log('result: ', result);
-        this.navCtrl.navigateRoot(["customer-details", this.idCustomer ]);
-      });  
+        this.dismiss();
+        this.navCtrl.navigateRoot(['customer-details', this.idCustomer ]);
+      });
     }
   }
 
@@ -130,32 +131,36 @@ export class ContactPersonAddressPage {
       }
   }
 
+  inputErrorMsg() {
+    this.inputError = false;
+  }
+
   remAddress(indAdr) {
     this.contactPersonAddresses.splice(indAdr, 1); 
-    if(this.contactPersonAddresses.length==0) {
+    if (this.contactPersonAddresses.length == 0) {
       this.contactPersonAddresses.push({
-        address_type: "Rechnung",
-        street: "",
-        zip_code: "",
-        department: "",
-        email: "",
-        phone: "",
-        mobile: ""
+        address_type: 'Rechnungsadresse',
+        street: '',
+        zip_code: '',
+        department: '',
+        email: '',
+        phone: '',
+        mobile: ''
       }); 
-    }     
+    }
   }
-  
+
   addAddress() {
     this.contactPersonAddresses.push({
-      address_type: "Rechnung",
-      street: "",
-      zip_code: "",
-      department: "",
-      email: "",
-      phone: "",
-      mobile: ""
+      address_type: 'Rechnungsadresse',
+      street: '',
+      zip_code: '',
+      department: '',
+      email: '',
+      phone: '',
+      mobile: ''
     }); 
-    console.log("addAddress :", this.contactPersonAddresses);
+    console.log('addAddress :', this.contactPersonAddresses);
   }
- 
+
 }

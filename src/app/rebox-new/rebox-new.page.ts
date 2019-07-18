@@ -32,6 +32,7 @@ export class ReboxNewPage {
   public longitude: any;
   public maxDate: string;
   public platform_version: number;
+  public inputError: boolean = false;
 
   constructor(public navCtrl: NavController, 
               public navParams: NavParams,
@@ -47,6 +48,13 @@ export class ReboxNewPage {
                 // this.translate.use(this.translate.defaultLang);
 
                 // this.editMeine();  TODO
+                this.rebox.Firma = '';
+                this.rebox.ReBoxDate = '';
+                this.rebox.Str = '';
+                this.rebox.Ort = '';
+                this.rebox.latitude = '';
+                this.rebox.Notiz = '';
+                this.anzRebox = '';
                 this.rebox.ReBoxDate = new Date().toISOString().substring(0, 10);
   }
 
@@ -76,6 +84,32 @@ export class ReboxNewPage {
 
   showConfirmAlert() {
     console.log('Rebox Alert');
+   /*  this.inputError = false;
+    if (this.rebox.Firma == '') {
+      this.inputError = true;
+      return;
+    }
+    if (this.rebox.ReBoxDate == '') {
+      this.inputError = true;
+      return;
+    }
+    if (this.rebox.Str == '') {
+      this.inputError = true;
+      return;
+    }
+    if (this.rebox.Ort == '') {
+      this.inputError = true;
+      return;
+    }
+    if (this.rebox.latitude == '') {
+      this.inputError = true;
+      return;
+    }
+    if (this.rebox.Notiz == '') {
+      this.inputError = true;
+      return;
+    } */
+
     let alert = this.alertCtrl.create({
         header: '',
         message: this.translate.instant('Möchten Sie eine ReBox verbindlich bestellen?'),
@@ -164,5 +198,9 @@ export class ReboxNewPage {
       this.dismiss();
     });
   }
-  
+
+  inputErrorMsg() {
+    this.inputError = false;
+  }
+
 }

@@ -186,7 +186,6 @@ export class CustomerEditComponent implements OnInit {
     this.apiService.pvs4_set_customer(obj).then((result: any) => {
       console.log('result: ', result, obj);
         this.viewCtrl.dismiss(obj);
-  
     });
 
   }
@@ -196,6 +195,10 @@ export class CustomerEditComponent implements OnInit {
     this.showConfirmAlert(this.activCustomer);
   }
 
+  inputErrorMsg() {
+    this.inputError = false;
+  }
+  
   showConfirmAlert(activeCustomer) {
     let alert = this.alertCtrl.create({
       header: 'Confirm delete user',

@@ -357,11 +357,16 @@ export class AppointmentEditComponent implements OnInit {
 
   customerChange(event) {
     console.log('customerChange:', event.value);
+    this.inputError = false;
     let idCstmr: any;
     idCstmr = parseInt(event.value.id);
     if (idCstmr != 0) { this.contactPersonDisabled = false; }
     this.contactPersonsList(idCstmr);
     this.activAppointment.idContactPerson = '';
+  }
+
+  inputErrorMsg() {
+    this.inputError = false;
   }
 
   appointmentTypeChange() {

@@ -16,8 +16,9 @@
           <ion-col size-xl="8" size-lg="8" size-md="8" size-sm="12" size="12">
             <ion-item lines="none">
                 <ion-label position="floating">{{translate.instant('Titel')}}</ion-label>
-                <ion-input type="text"
-                           required
+                <ion-input required
+                           (ionChange)="inputErrorMsg()"
+                           type="text"
                            [(ngModel)]="activNote.title" >
                 </ion-input>
             </ion-item>
@@ -37,8 +38,9 @@
         <ion-col size-xl="12" size-lg="12" size-md="12" size-sm="12" size="12">
           <ion-item lines="none">
             <ion-label position="floating">{{translate.instant('Ansprechpartner')}}</ion-label>
-            <ionic-selectable item-content
-                              required
+            <ionic-selectable required
+                              (onChange)="inputErrorMsg()"
+                              item-content
                               [(ngModel)]="selectedContact"
                               [(items)]="userList"
                               itemValueField="id"
@@ -75,8 +77,9 @@
         <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12">
           <ion-item lines="none">
             <ion-label position="floating">{{translate.instant('Notizkategorie')}}</ion-label>
-            <ion-select [(ngModel)]="activNote.category" 
-                        required 
+            <ion-select required
+                        (ionChange)="inputErrorMsg()"
+                        [(ngModel)]="activNote.category" 
                         okText="{{translate.instant('okay')}}"
                         cancelText="{{translate.instant('dismiss')}}">
                 <ion-select-option value="1" selected>{{translate.instant('Besuchsberichte')}}</ion-select-option>
@@ -91,8 +94,9 @@
         <ion-col size-xl="12" size-lg="12" size-md="12" size-sm="12" size="12">
           <ion-item lines="none">
               <ion-label position="floating">{{translate.instant('Notes')}}</ion-label>     
-              <ion-textarea type="text" 
-                            required
+              <ion-textarea required
+                            (ionChange)="inputErrorMsg()"
+                            type="text"
                             rows="5"
                             id="Notiztext"
                             [(ngModel)]="activNote.notes">

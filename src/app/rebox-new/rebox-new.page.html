@@ -17,16 +17,21 @@
 			<ion-col size-xl="8" size-lg="8" size-md="8" size-sm="12" size="12">
 				<ion-item lines="none">
 					<ion-label position="floating">{{translate.instant('Firma')}}</ion-label>
-					<ion-input type="text" id="Firma" [(ngModel)]="rebox.Firma"></ion-input>                  
+					<ion-input (ionChange)="inputErrorMsg()"
+								type="text" 
+								id="Firma"
+								[(ngModel)]="rebox.Firma">
+					</ion-input>                  
 				</ion-item>
 			</ion-col>
 			<ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12">
 				<ion-item lines="none">
 					<ion-label position="floating">{{translate.instant('Datum')}}</ion-label> 
-					<ion-datetime name="rebox.ReBoxDate"
+					<ion-datetime required
+								  (ionChange)="inputErrorMsg()"
+								  name="rebox.ReBoxDate"
 								  [(ngModel)]="rebox.ReBoxDate"   
-								  id="ReBoxDate"                        
-								  required="true"
+								  id="ReBoxDate"  
 								  displayFormat="DD.MM.YYYY"
 								  max = {{maxDate}}
 								  doneText="{{translate.instant('okay')}}" 
@@ -41,13 +46,21 @@
 			<ion-col size-xl="8" size-lg="8" size-md="8" size-sm="12" size="12">
 				<ion-item lines="none">
 					<ion-label position="floating">{{translate.instant('Strasse')}}</ion-label>
-					<ion-input type="text" id="Str" [(ngModel)]="rebox.Str"></ion-input>                  
+					<ion-input (ionChange)="inputErrorMsg()"
+								type="text"
+								id="Str"
+								[(ngModel)]="rebox.Str">
+					</ion-input>                  
 				</ion-item>
 			</ion-col>
 			<ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12">
 				<ion-item lines="none">
 					<ion-label position="floating">{{translate.instant('PLZ')}} {{translate.instant('Ort')}}</ion-label>
-					<ion-input type="text" id="Ort" [(ngModel)]="rebox.Ort"></ion-input> 
+					<ion-input (ionChange)="inputErrorMsg()"
+								type="text"
+								id="Ort"
+								[(ngModel)]="rebox.Ort">
+					</ion-input> 
 					<ion-button [hidden]="platform_version==0" (click)="setGPS(1);">
 						<ion-icon class="headerIcon" name="pin"></ion-icon>
 					</ion-button>
@@ -58,7 +71,12 @@
 			<ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12">
 				<ion-item lines="none">
 					<ion-label position="floating">{{translate.instant('Position')}}</ion-label>
-					<ion-input type="text" readonly id="Ort" [(ngModel)]="rebox.latitude" (click)="goPos();"></ion-input> 
+					<ion-input (ionChange)="inputErrorMsg()"
+								type="text"
+								readonly
+								id="Ort"
+								[(ngModel)]="rebox.latitude"
+								(click)="goPos();"></ion-input> 
 					<ion-button (click)="setGPS(0);">
 						<ion-icon class="headerIcon" name="pin"></ion-icon>
 					</ion-button>              
@@ -71,7 +89,12 @@
 			<ion-col size="12">
 				<ion-item lines="none">
 					<ion-label position="floating">{{translate.instant('Notiz')}}</ion-label>
-					<ion-textarea name="Notiz" id="Notiz" [(ngModel)]="rebox.Notiz" rows="5"></ion-textarea>                  
+					<ion-textarea (ionChange)="inputErrorMsg()"
+									name="Notiz"
+									id="Notiz"
+									[(ngModel)]="rebox.Notiz"
+									rows="5">
+					</ion-textarea>                  
 				</ion-item>
 			</ion-col>
 		</ion-row>
@@ -87,7 +110,13 @@
 				</ion-button>	
 			</ion-col>
 			<ion-col size="1" style="margin-top: -3px;">							
-				<ion-input readonly text-center type="numbers" [(ngModel)]="anzRebox" style="color: #5a6468"></ion-input>
+				<ion-input (ionChange)="inputErrorMsg()"
+							readonly
+							text-center
+							type="numbers"
+							[(ngModel)]="anzRebox"
+							style="color: #5a6468">
+				</ion-input>
 			</ion-col>
 			<ion-col size="auto">				
 				<ion-button size="small" class="quant-add" (click)="anzReboxAdd()">
@@ -97,6 +126,11 @@
 		</ion-row>  
 	</ion-grid>
 
+	<!-- Error -->
+	<div [hidden]="!inputError" class="pfehler">
+		{{translate.instant('Bitte füllen Sie alle Pflichtfelder aus.')}}
+	</div>
+		
 	<div class="modal-footer">
      	<ion-button type="button" class="btn btn-modal-danger footerIcon" (click)="dismiss()">
 			<ion-icon name="close"></ion-icon>

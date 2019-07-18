@@ -17,9 +17,9 @@
         <ion-col size-xl="8" size-lg="8" size-md="8" size-sm="12" size="12">
           <ion-item lines="none">
               <ion-label position="floating" >{{translate.instant('Firma')}}</ion-label>
-              <ion-input type="text" 
-                         required
-                         [ngClass]="{required:inputError}" 
+              <ion-input required
+                         (ionChange)="inputErrorMsg()"
+                         type="text" 
                          [(ngModel)]="activCustomer.company"
                          [readonly] = customerDisabled>
               </ion-input>
@@ -28,9 +28,9 @@
         <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12">
           <ion-item lines="none">
               <ion-label position="floating" >{{translate.instant('Wertung')}}</ion-label>
-              <ion-select [ngClass]="{required:inputError}"
+              <ion-select required
+                          (ionChange)="inputErrorMsg()"
                           [disabled]="!this.userdata.role_set.edit_customer" 
-                          required
                           name="Wertung"
                           [(ngModel)]="activCustomer.rating"
                           okText="{{translate.instant('okay')}}"
@@ -100,8 +100,9 @@
       <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12">
         <ion-item lines="none">
           <ion-label position="floating" >{{translate.instant('Kundennummer')}}</ion-label>
-          <ion-input type="text"
-                     required
+          <ion-input required
+                     (ionChange)="inputErrorMsg()"
+                     type="text"
                      [disabled]="!this.userdata.role_set.edit_customer"
                      [(ngModel)]="activCustomer.customer_number">
           </ion-input>
@@ -110,8 +111,9 @@
       <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12">
         <ion-item lines="none"s>
           <ion-label position="floating" >{{translate.instant('AD-Mitarbeiter')}}</ion-label>
-          <ion-select [disabled]="!this.userdata.role_set.edit_customer"
-                      required
+          <ion-select required
+                      (ionChange)="inputErrorMsg()"
+                      [disabled]="!this.userdata.role_set.edit_customer"
                       name="selectSales" 
                       id="selectSales"
                       [(ngModel)]="activCustomer.sales"
@@ -124,8 +126,9 @@
       <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12">
         <ion-item lines="none">
           <ion-label position="floating" >{{translate.instant('Prüfer')}}</ion-label>
-          <ion-select [disabled]="!this.userdata.role_set.edit_customer"
-                      required
+          <ion-select required
+                      (ionChange)="inputErrorMsg()"
+                      [disabled]="!this.userdata.role_set.edit_customer"
                       name="selectTester" 
                       id="selectTester"
                       [(ngModel)]="activCustomer.tester"
@@ -141,8 +144,9 @@
       <ion-col size="12">
         <ion-item lines="none">
           <ion-label position="floating" >{{translate.instant('Branche')}}</ion-label>
-          <ion-select [disabled]="!this.userdata.role_set.edit_customer"
-                      required
+          <ion-select required
+                      (ionChange)="inputErrorMsg()"
+                      [disabled]="!this.userdata.role_set.edit_customer"
                       name="selectBranche" 
                       id="selectBranche"
                       [(ngModel)]="activCustomer.sector"

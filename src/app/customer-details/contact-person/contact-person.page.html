@@ -71,11 +71,11 @@
               <ion-col size="12">
                 <ion-item lines="none" style="padding-left: 0px;">
                   <ion-label position="floating">{{translate.instant('Name')}}</ion-label>
-                  <ion-input type="text"
-                              required
-                              id="ansp_name" 
-                              id="ansp_name" 
-                              [(ngModel)]="contactPersonEdit.last_name">
+                  <ion-input required
+                             (ionChange)="inputErrorMsg()"
+                             type="text"
+                             id="ansp_name" 
+                             [(ngModel)]="contactPersonEdit.last_name">
                   </ion-input>
                 </ion-item>
               </ion-col>
@@ -85,10 +85,11 @@
               <ion-col size="12">
                 <ion-item lines="none" style="padding-left: 0px;">
                   <ion-label  position="floating">{{translate.instant('Vorname')}}</ion-label>
-                  <ion-input type="text"
-                              required
-                              id="ansp_vorname" 
-                              [(ngModel)]="contactPersonEdit.first_name">
+                  <ion-input required
+                             (ionChange)="inputErrorMsg()"
+                             type="text"
+                             id="ansp_vorname" 
+                             [(ngModel)]="contactPersonEdit.first_name">
                   </ion-input>
                 </ion-item>
               </ion-col>
@@ -98,10 +99,11 @@
               <ion-col size="12">
                 <ion-item lines="none" style="padding-left: 0px;">
                   <ion-label position="floating">{{translate.instant('E-Mail')}}</ion-label>
-                  <ion-input type="text"
-                              required
-                              id="ansp_eMail"
-                              [(ngModel)]="contactPersonEdit.email">
+                  <ion-input required
+                             (ionChange)="inputErrorMsg()"
+                             type="text"
+                             id="ansp_eMail"
+                             [(ngModel)]="contactPersonEdit.email">
                   </ion-input>
                 </ion-item>
               </ion-col>

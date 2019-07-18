@@ -15,8 +15,9 @@
         <ion-col size-xl="12" size-lg="12" size-md="12" size-sm="12" size="12">
           <ion-item lines="none">
               <ion-label position="floating" >{{translate.instant('Quelle Firma')}}</ion-label>
-              <ion-input type="text" 
-                         [ngClass]="{required:inputError}" 
+              <ion-input required
+                         (ionChange)="inputErrorMsg()"
+                         type="text"
                          [(ngModel)]="activCustomer.company"
                          [disabled]= "true">
               </ion-input>
@@ -27,8 +28,8 @@
       <ion-col size-xl="12" size-lg="12" size-md="12" size-sm="12" size="12">
         <ion-item lines="none">
           <ion-label position="floating">{{translate.instant('Ziel Firma')}}</ion-label>
-          <ionic-selectable item-content 
-                            [ngClass]="{required:inputError}" 
+          <ionic-selectable required
+                            item-content
                             [(ngModel)]="targetCustomer"
                             [(items)]="listCustomer"
                             itemValueField="id"

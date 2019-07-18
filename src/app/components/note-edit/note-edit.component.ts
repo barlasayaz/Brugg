@@ -148,6 +148,10 @@ export class NoteEditComponent {
     this.showConfirmAlert(this.activNote);
   }
 
+  inputErrorMsg() {
+    this.inputError = false;
+  }
+  
   showConfirmAlert(activNote) {
     let alert = this.alertCtrl.create({
       header: 'Confirm deactivate note',

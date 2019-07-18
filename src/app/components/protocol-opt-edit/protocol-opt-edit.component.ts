@@ -226,6 +226,10 @@ export class ProtocolOptEditComponent implements OnInit {
 
     }
 
+    inputErrorMsg() {
+      this.inputError = false;
+    }
+
     add_option() {
       this.options.push({
         de: '',
@@ -298,6 +302,7 @@ export class ProtocolOptEditComponent implements OnInit {
                 return false;
               } else {
                 console.log('options:', this.options);
+                this.inputError = false;
                 if (type == 1) {
                   this.activOption.title = data;
                 } else {

@@ -23,6 +23,7 @@ export class AssignmentPage {
   public salesListe: any = [];
   public testerListe: any = [];
   public params: any;
+  public inputError: boolean = false;
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
@@ -78,6 +79,10 @@ export class AssignmentPage {
 
   dismiss() {
     this.viewCtrl.dismiss();
+  }
+
+  inputErrorMsg() {
+    this.inputError = false;
   }
 
   editAssignment() {

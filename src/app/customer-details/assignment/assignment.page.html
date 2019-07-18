@@ -16,8 +16,9 @@
             <ion-col size="12">
               <ion-item lines="none">  
                 <ion-label position="floating">{{translate.instant('AD-Mitarbeiter')}}</ion-label>
-                <ion-select [(ngModel)]="idSales"
-                            required
+                <ion-select required
+                            (ionChange)="inputErrorMsg()"
+                            [(ngModel)]="idSales"
                             okText="{{translate.instant('okay')}}" 
                             cancelText="{{translate.instant('dismiss')}}">
                   <ion-select-option *ngFor="let pr of salesListe" [value]="pr.id">{{pr.first_name + " " + pr.last_name}}</ion-select-option>
@@ -30,8 +31,9 @@
           <ion-col size="12">
             <ion-item lines="none">  
               <ion-label position="floating">{{translate.instant('Prüfer')}}</ion-label>
-              <ion-select [(ngModel)]="idTester"
-                          required
+              <ion-select required
+                          (ionChange)="inputErrorMsg()"
+                          [(ngModel)]="idTester"
                           okText="{{translate.instant('okay')}}" 
                           cancelText="{{translate.instant('dismiss')}}">
                 <ion-select-option *ngFor="let pr of testerListe" [value]="pr.id">{{pr.first_name + " " + pr.last_name}}</ion-select-option>
@@ -41,6 +43,11 @@
       </ion-row>   
     </ion-grid>
     
+    <!-- Error -->
+    <div [hidden]="!inputError" class="pfehler">
+      {{translate.instant('Bitte füllen Sie alle Pflichtfelder aus.')}}
+    </div>
+
     <div class="modal-footer">
       <ion-button type="button"
                   class="btn btn-modal-danger footerIcon"

@@ -17,22 +17,24 @@
             <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12">
               <ion-item lines="none">
                 <ion-label position="floating">{{translate.instant('Vorname')}}</ion-label>
-                  <ion-input [disabled]="true" 
-                            type="text"
-                            id="Vorname"
-                            [(ngModel)]="edit.bid.first_name"
-                            [ngClass]="{'required':pfelder}">
+                  <ion-input required
+                             (ionChange)="inputErrorMsg()"
+                             [disabled]="true" 
+                             type="text"
+                             id="Vorname"
+                             [(ngModel)]="edit.bid.first_name">
                 </ion-input>
               </ion-item>					
             </ion-col>
             <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12">
               <ion-item lines="none">
                 <ion-label position="floating">{{translate.instant('Name')}}</ion-label>
-                  <ion-input [disabled]="true"
-                            type="text"
-                            id="Name"
-                            [(ngModel)]="edit.bid.last_name"
-                            [ngClass]="{required:pfelder}">
+                  <ion-input required
+                             (ionChange)="inputErrorMsg()"
+                             [disabled]="true"
+                             type="text"
+                             id="Name"
+                             [(ngModel)]="edit.bid.last_name">
                 </ion-input>
               </ion-item>
             </ion-col>
@@ -40,10 +42,10 @@
               <ion-item lines="none">
                 <ion-label position="floating">{{translate.instant('KennungMitarbeiter')}}</ion-label>
                   <ion-input required
-                            type="text"
-                            id="short_code"
-                            [(ngModel)]="edit.short_code"
-                            [ngClass]="{required:pfelder}">
+                             (ionChange)="inputErrorMsg()"
+                             type="text"
+                             id="short_code"
+                             [(ngModel)]="edit.short_code">
                 </ion-input>
               </ion-item>
             </ion-col>
@@ -57,8 +59,7 @@
                 <ion-input [disabled]="true"
                           type="text"
                           id="Telefon"
-                          [(ngModel)]="edit.bid.phone"
-                          [ngClass]="{required:pfelder}">
+                          [(ngModel)]="edit.bid.phone">
               </ion-input>
             </ion-item>
           </ion-col>
@@ -82,10 +83,9 @@
               <ion-item lines="none">
                 <ion-label position="floating">{{translate.instant('E-Mail')}}</ion-label>
                   <ion-input [disabled]="true"
-                                type="text"
-                                id="email"
-                                [(ngModel)]="edit.email"
-                                [ngClass]="{required:pfelder}">
+                             type="text"
+                             id="email"
+                             [(ngModel)]="edit.email">
                     </ion-input>
               </ion-item>
               </ion-col>
