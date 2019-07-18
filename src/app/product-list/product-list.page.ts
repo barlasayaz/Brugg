@@ -9,7 +9,7 @@ import { ExcelService } from '../services/excel';
 import { PdfExportService } from '../services/pdf-export';
 import { DatePipe } from '@angular/common';
 import { ProductMigrationPage } from '../product-migration/product-migration.page';
-import { ActivatedRoute,Router, NavigationEnd } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { SlideMenu } from 'primeng/primeng';
 import { DataService } from '../services/data.service';
 
@@ -18,7 +18,7 @@ import { DataService } from '../services/data.service';
     templateUrl: './product-list.page.html',
     styleUrls: ['./product-list.page.scss'],
 })
-export class ProductListPage implements OnInit, OnDestroy {
+export class ProductListPage implements OnInit {
     public productListAll: TreeNode[] = [];
     public productListView: TreeNode[] = [];
     public cols: any[] = [];
@@ -216,16 +216,7 @@ export class ProductListPage implements OnInit, OnDestroy {
         public pdf: PdfExportService,
         public events: Events,
         private dataService: DataService,
-        private router: Router,
         private route: ActivatedRoute) {
-             // subscribe to the router events - storing the subscription so
-             // we can unsubscribe later. 
-        this.navigationSubscription = this.router.events.subscribe((e: any) => {
-               // If it is a NavigationEnd event re-initalise the component
-               if (e instanceof NavigationEnd) {
-                 this.page_load();
-               }
-        });
     }
 
     ngOnInit() {
@@ -243,13 +234,6 @@ export class ProductListPage implements OnInit, OnDestroy {
 
         console.log('ProductListPage idCustomer:', this.idCustomer);
         this.page_load();
-    }
-
-    ngOnDestroy()
-    {
-        if (this.navigationSubscription) {  
-            this.navigationSubscription.unsubscribe();
-         }
     }
 
     onResize(event) {
