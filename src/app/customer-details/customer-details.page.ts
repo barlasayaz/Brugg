@@ -248,7 +248,7 @@ export class CustomerDetailsPage implements OnInit {
 
         modal.onDidDismiss().then((data) => {
           console.log('onDidDismiss Data :', data);
-          if (data.data != undefined) {
+          if (data.data) {
             const contact = data['data'];
             this.contactPersonAddresses = [];
             this.contactPersonAddr = [];
@@ -281,10 +281,12 @@ export class CustomerDetailsPage implements OnInit {
           }
         });
         modal.onDidDismiss().then(data => {
-        this.contactPersonAddr = [];
-        for (var i = 0, len = contactPersonAddrTmp.length; i < len; i++) {
-          this.contactPersonAddr.push(contactPersonAddrTmp[i]);
-        }
+          if (data['data']) {
+            this.contactPersonAddr = [];
+            for (var i = 0, len = contactPersonAddrTmp.length; i < len; i++) {
+              this.contactPersonAddr.push(contactPersonAddrTmp[i]);
+            }
+          }
       });
       modal.present();
     }
@@ -389,7 +391,13 @@ export class CustomerDetailsPage implements OnInit {
           componentProps: {
             idCustomer: this.idCustomer, appointmentType: 0, redirect: 3
           }
-        }).then(x => x.present());
+        });
+        modal.onDidDismiss().then(data => {
+          if (data['data']) {
+            this.loadCustomer(this.activCustomer.id) ;
+          }
+        });
+        modal.present();
     }
 
     async noteEdit() {
@@ -432,8 +440,9 @@ export class CustomerDetailsPage implements OnInit {
         }
       });
       modal.onDidDismiss().then(data => {
-        console.log('AssignmentPage onDidDismiss:', data);
-        this.loadCustomer(this.activCustomer.id) ;
+        if (data['data']) { 
+           this.loadCustomer(this.activCustomer.id);
+        }
       });
       modal.present();
 
@@ -449,8 +458,9 @@ export class CustomerDetailsPage implements OnInit {
         }
       });
       modal.onDidDismiss().then(data => {
-        console.log('AssignmentPage onDidDismiss:', data);
-        this.loadCustomer(this.activCustomer.id) ;
+        if (data['data']) {
+            this.loadCustomer(this.activCustomer.id) ;
+        }
       });
       modal.present();
     }

@@ -28,7 +28,7 @@ const routes: Routes = [
     },
     loadChildren: './product-edit/product-edit.module#ProductEditPageModule'
   },
-  { path: 'product-list/:id', loadChildren: './product-list/product-list.module#ProductListPageModule' },
+  { path: 'product-list/:id', loadChildren: './product-list/product-list.module#ProductListPageModule', runGuardsAndResolvers: 'always', },
   { path: 'product-migration', loadChildren: './product-migration/product-migration.module#ProductMigrationPageModule' },
   { path: 'product-new', loadChildren: './product-new/product-new.module#ProductNewPageModule' },
   {
@@ -80,7 +80,7 @@ const routes: Routes = [
 ];
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules }),
+    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules, onSameUrlNavigation: "reload" }),
     FormsModule, ReactiveFormsModule,
   ],
   exports: [RouterModule]

@@ -365,7 +365,7 @@ export class ProductEditPage implements OnInit {
     this.apiService.pvs4_set_product(obj).then((result: any) => {
       console.log('result: ', result);
       // this.viewCtrl.dismiss(true);
-      this.navCtrl.navigateBack('/product-list/' + this.idCustomer);
+      this.dismiss();
     });
 
     var str: string = this.imagesSave;
@@ -382,7 +382,7 @@ export class ProductEditPage implements OnInit {
   }
 
   dismiss() {
-    this.navCtrl.navigateBack('/product-list/' + this.idCustomer);
+    this.navCtrl.navigateRoot(['/product-list', this.idCustomer]);
   }
 
   productDeactivate() {

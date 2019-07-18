@@ -283,21 +283,11 @@ export class AppointmentEditComponent implements OnInit {
       obj.end_time = this.apiService.appointmentEndTime;
     }
 
-    console.log('appointmentEdit obj :', obj, this.redirect, this.activAppointment.appointment_date);
+    console.log('appointmentEdit obj :', obj, this.activAppointment.appointment_date);
     this.apiService.pvs4_set_appointment(obj).then((result: any) => {
       console.log('result: ', result);
     });
-      if (this.redirect == 1) {
-       this.navCtrl.navigateRoot('/dashboard-new');
-       this.dismiss();
-      }
-      if (this.redirect == 2) {
-        this.navCtrl.navigateRoot('/appointment-plan');
-        this.dismiss();
-      }
-      if (this.redirect == 3 || this.redirect == 4) {
-        this.dismiss();
-      }
+    this.viewCtrl.dismiss(obj);
   }
 
   appointmentDeactivate() {
@@ -339,15 +329,7 @@ export class AppointmentEditComponent implements OnInit {
 
             this.apiService.pvs4_set_appointment(activAppointment).then((result: any) => {
               console.log('result: ', result);
-              if (this.redirect == 1) {                
-                this.navCtrl.navigateRoot('/dashboard-new');
-                this.dismiss();
-              }
-              else {
-                this.navCtrl.navigateRoot('/appointment-plan');
-                this.dismiss();
-              }
-
+              this.viewCtrl.dismiss(activAppointment);
             });
           }
         }
