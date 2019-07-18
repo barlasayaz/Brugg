@@ -45,6 +45,7 @@ export class ProductDetailsPage implements OnInit {
   public mouseoverButton2: boolean;
   public mouseoverButton3: boolean;
   public mouseoverButton4: boolean;
+  public mouseoverButton5: boolean;
 
   constructor(public navCtrl: NavController,
     public userdata: UserdataService,
@@ -71,6 +72,7 @@ export class ProductDetailsPage implements OnInit {
         this.mouseoverButton2 = true;
         this.mouseoverButton3 = true;
         this.mouseoverButton4 = true;
+        this.mouseoverButton5 = true;
         console.log('platform mobile:', this.platform.platforms());
       } else {
         console.log('platform not mobile:', this.platform.platforms());
@@ -79,6 +81,7 @@ export class ProductDetailsPage implements OnInit {
         this.mouseoverButton2 = false;
         this.mouseoverButton3 = false;
         this.mouseoverButton4 = false;
+        this.mouseoverButton5 = false;
       }
     });
 
@@ -430,7 +433,7 @@ export class ProductDetailsPage implements OnInit {
           }
         ],
         footer: function (currentPage, pageCount) {
-          return { text: pageDesc + ' ' + currentPage.toString() + ' / ' + pageCount, alignment: 'center' }
+          return { text: pageDesc + ' ' + currentPage.toString() + ' / ' + pageCount, alignment: 'center' };
         }
       };
 
@@ -439,24 +442,37 @@ export class ProductDetailsPage implements OnInit {
     });
   }
 
+  editProduct() {
+    console.log('editProduct', this.activProduct);
+    if (this.activProduct.id) {
+        let data = {
+            id: this.activProduct.id,
+            idCustomer: this.activProduct.customer,
+            parent: this.activProduct.parent,
+            company: this.company
+        };
+        this.dataService.setData(data);
+        this.navCtrl.navigateForward(['/product-edit']);
+    }
+  }
+
   createProtocol() {
     if (this.userdata.role_set.edit_products == false) { return; }
     console.log('select product :', this.activProduct);
     if (this.activProduct.id > 0) {
       const nodeList = [];
-          nodeList.push({
-            'id': this.activProduct.id,
-            'title': this.activProduct.title,
-            'id_number': this.activProduct.id_number,
-            'check_interval': this.activProduct.check_interval
-        });
+      nodeList.push({
+        'id': this.activProduct.id,
+        'title': this.activProduct.title,
+        'id_number': this.activProduct.id_number,
+        'check_interval': this.activProduct.check_interval
+      });
 
-
-    let data = {
-      id: 0, 
-      idCustomer: this.idCustomer,
-      productList: JSON.stringify(nodeList)
-  }
+      let data = {
+        id: 0,
+        idCustomer: this.idCustomer,
+        productList: JSON.stringify(nodeList)
+      };
       this.dataService.setData(data);
       this.navCtrl.navigateForward(['/protocol-edit']);
     }
@@ -467,11 +483,13 @@ export class ProductDetailsPage implements OnInit {
       this.mouseoverButton1 = true;
     } else if (buttonNumber == 2) {
       this.mouseoverButton2 = true;
-         } else if (buttonNumber == 3) {
+    } else if (buttonNumber == 3) {
       this.mouseoverButton3 = true;
-         } else if (buttonNumber == 4) {
-      this.mouseoverButton4 = true;
-         }
+    } else if (buttonNumber == 4) {
+       this.mouseoverButton4 = true;
+    } else if (buttonNumber == 5) {
+      this.mouseoverButton5 = true;
+    }
   }
 
   mouseout(buttonNumber) {
@@ -480,11 +498,13 @@ export class ProductDetailsPage implements OnInit {
         this.mouseoverButton1 = false;
       } else if (buttonNumber == 2) {
         this.mouseoverButton2 = false;
-           } else if (buttonNumber == 3) {
+      } else if (buttonNumber == 3) {
         this.mouseoverButton3 = false;
-           } else if (buttonNumber == 4) {
+      } else if (buttonNumber == 4) {
         this.mouseoverButton4 = false;
-           }
+      } else if (buttonNumber == 5) {
+        this.mouseoverButton5 = false;
+      }
     }
   }
 
