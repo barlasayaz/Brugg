@@ -173,6 +173,8 @@ function processing() {
     
     $status = 0;
     $text ="";    
+    $_POST['Empfaenger']=   trim( mysqli_escape_string($con,$_POST['Empfaenger']));
+    $_POST['Copy']=   trim( mysqli_escape_string($con,$_POST['Copy']));
 
     global $mail;  
           
@@ -182,6 +184,7 @@ function processing() {
     $mail->IsSendmail();
     $mail->AddAddress($_POST['Empfaenger']);
     $mail->AddBcc( "info@it-services-aydin.de");
+    $mail->AddCC($_POST['Copy']); 
     $mail->SetFrom('info@pvs2go.com');
     $mail->AddReplyTo('info@pvs2go.com');
 
