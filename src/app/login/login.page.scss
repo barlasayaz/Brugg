@@ -95,6 +95,16 @@ ion-content {
 	padding: 10px 20px;
 	border: 1px  solid  #009de0;
 	background-color: #d4eaff;
+	ion-icon{
+		font-size: 58px;
+		color : rgb(255, 196, 0);
+		float: left ;
+		background-color: #FFF;
+		border-radius: 5px;
+		margin: 0 15px 15px 0;
+		border: #009de0 solid 1px;
+		padding: 3px;
+	}
 }
 
 h1 {
@@ -303,4 +313,9 @@ align-content: center;
 
 .pvs4-full-select {
 	margin-top: -15px;
+}
+
+.youtube {
+	font-size: 52px;
+	color : red;
 }
