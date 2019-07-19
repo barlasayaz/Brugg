@@ -103,8 +103,8 @@ export class ProductMigrationPage implements OnInit {
     }
     if (this.targetCustomer) {
       let alert = this.alertCtrl.create({
-        header: 'Bestätigen Sie das Migration Produkt',
-        message: this.translate.instant('Möchten Sie dieses Produkt wirklich migrieren?'),
+        header: this.translate.instant('Bestätigen sie das migration produkt'),
+        message: this.translate.instant('Möchten sie dieses produkt wirklich migrieren?'),
         buttons: [
           {
             text: this.translate.instant('dismiss'),
@@ -139,7 +139,9 @@ export class ProductMigrationPage implements OnInit {
           items:            resultProduct.obj.items,
           images:           resultProduct.obj.images, 
           nfc_tag_id:       resultProduct.obj.nfc_tag_id,
-          qr_code:          resultProduct.obj.qr_code
+          qr_code:          resultProduct.obj.qr_code,
+          pvs3_id:          resultProduct.obj.pvs3_id,
+          author:           resultProduct.obj.author
         };
         let oldParent: any = resultProduct.obj.parent;
         this.apiService.pvs4_set_product(oldObj).then((result: any) => {
@@ -153,7 +155,7 @@ export class ProductMigrationPage implements OnInit {
               title:            resultParent.obj.title,
               customer:         resultParent.obj.customer,
               id_number:        resultParent.obj.id_number,
-              parent:           oldParent, 
+              parent:           oldParent,
               active:           resultParent.obj.active,
               check_interval:   resultParent.obj.check_interval,
               last_protocol:    resultParent.obj.last_protocol,
@@ -161,7 +163,9 @@ export class ProductMigrationPage implements OnInit {
               items:            resultParent.obj.items,
               images:           resultParent.obj.images, 
               nfc_tag_id:       resultParent.obj.nfc_tag_id,
-              qr_code:          resultParent.obj.qr_code
+              qr_code:          resultParent.obj.qr_code,
+              pvs3_id:          resultParent.obj.pvs3_id,
+              author:           resultParent.obj.author
             };
             this.apiService.pvs4_set_product(parentObj).then((result: any) => {
               console.log('parent product result: ', result);
@@ -182,7 +186,9 @@ export class ProductMigrationPage implements OnInit {
             items:            resultProduct.obj.items,
             images:           resultProduct.obj.images,
             nfc_tag_id:       resultProduct.obj.nfc_tag_id,
-            qr_code:          resultProduct.obj.qr_code
+            qr_code:          resultProduct.obj.qr_code,
+            pvs3_id:          resultProduct.obj.pvs3_id,
+            author:           resultProduct.obj.author
           };
 
           console.log('obj :', newObj);

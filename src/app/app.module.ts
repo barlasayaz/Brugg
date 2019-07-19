@@ -52,6 +52,7 @@ import { TabMenuModule } from 'primeng/tabmenu';
 import { MenuModule } from 'primeng/menu';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { RoundProgressModule } from 'angular-svg-round-progressbar';
+import { ProductCopyPageModule } from './product-copy/product-copy.module';
 
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { FileUploadModule } from 'primeng/fileupload';
@@ -135,6 +136,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     AccordionModule,
     NgxQRCodeModule,
     RoundProgressModule,
+    ProductCopyPageModule,
     DragulaModule.forRoot(),
     TranslateModule.forRoot({
       loader: {

@@ -12,6 +12,7 @@ import { DatePipe } from '@angular/common';
 import { PdfExportService } from '../services/pdf-export';
 import { ActivatedRoute } from '@angular/router';
 import { DataService } from '../services/data.service';
+import { ProductCopyPage } from '../product-copy/product-copy.page';
 
 /**
  * Generated class for the ProductDetailsPage page.
@@ -46,6 +47,7 @@ export class ProductDetailsPage implements OnInit {
   public mouseoverButton3: boolean;
   public mouseoverButton4: boolean;
   public mouseoverButton5: boolean;
+  public mouseoverButton6: boolean;
 
   constructor(public navCtrl: NavController,
     public userdata: UserdataService,
@@ -73,6 +75,7 @@ export class ProductDetailsPage implements OnInit {
         this.mouseoverButton3 = true;
         this.mouseoverButton4 = true;
         this.mouseoverButton5 = true;
+        this.mouseoverButton6 = true;
         console.log('platform mobile:', this.platform.platforms());
       } else {
         console.log('platform not mobile:', this.platform.platforms());
@@ -82,12 +85,13 @@ export class ProductDetailsPage implements OnInit {
         this.mouseoverButton3 = false;
         this.mouseoverButton4 = false;
         this.mouseoverButton5 = false;
+        this.mouseoverButton6 = false;
       }
     });
 
       this.url = this.apiService.pvsApiURL;
       this.idProduct = parseInt(this.route.snapshot.paramMap.get('id'));
-      
+
       this.dateiListe();
       this.nocache = new Date().getTime();
   }
@@ -108,23 +112,23 @@ export class ProductDetailsPage implements OnInit {
       this.activProduct = result.obj;
       this.idCustomer = this.activProduct.customer;
       let title = JSON.parse(this.activProduct.title);
-      try{
+      try {
         title = JSON.parse(this.activProduct.title);
-      }catch{
+      } catch {
         console.log('loadProduct title JSON.parse:', this.activProduct.title);
-        title = JSON.parse(this.activProduct.title);       
-      } 
+        title = JSON.parse(this.activProduct.title);
+      }
 
       this.activProduct.title = title[this.lang];
 
-      if(this.activProduct.items){
-        try{
+      if (this.activProduct.items) {
+        try {
           this.activProduct.items = JSON.parse(this.activProduct.items);
-        }catch{
+        } catch {
           console.log('loadProduct items JSON.parse:', this.activProduct.items);
-          this.activProduct.items = [];          
-        }        
-      }else{
+          this.activProduct.items = [];
+        }
+      } else {
         this.activProduct.items = [];
       }
 
@@ -447,13 +451,25 @@ export class ProductDetailsPage implements OnInit {
     if (this.activProduct.id) {
         let data = {
             id: this.activProduct.id,
-            idCustomer: this.activProduct.customer,
+            idCustomer: this.idCustomer,
             parent: this.activProduct.parent,
             company: this.company
         };
         this.dataService.setData(data);
         this.navCtrl.navigateForward(['/product-edit']);
     }
+  }
+
+  async copyProduct() {
+    const modal =
+      await this.modalCtrl.create({
+        component: ProductCopyPage,
+        componentProps: {
+          readOnly: false, idProduct: this.activProduct.id, idCustomer: this.idCustomer
+        }
+      });
+
+    modal.present();
   }
 
   createProtocol() {
@@ -489,6 +505,8 @@ export class ProductDetailsPage implements OnInit {
        this.mouseoverButton4 = true;
     } else if (buttonNumber == 5) {
       this.mouseoverButton5 = true;
+    } else if (buttonNumber == 6) {
+      this.mouseoverButton6 = true;
     }
   }
 
@@ -504,6 +522,8 @@ export class ProductDetailsPage implements OnInit {
         this.mouseoverButton4 = false;
       } else if (buttonNumber == 5) {
         this.mouseoverButton5 = false;
+      } else if (buttonNumber == 6) {
+        this.mouseoverButton6 = false;
       }
     }
   }
