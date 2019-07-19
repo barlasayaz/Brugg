@@ -390,9 +390,9 @@ export class ProductListPage implements OnInit {
             if(this.columnFilterValues[this.cols[i].field]){
                 if (this.columnFilterValues[this.cols[i].field].trim().length > 0
                     && (node.data[this.cols[i].field] == undefined || (node.data[this.cols[i].field] != undefined
-                    && node.data[this.cols[i].field].toString().
-                    toLowerCase().
-                    indexOf(this.columnFilterValues[this.cols[i].field].trim().toLowerCase()) < 0))) {
+                        && node.data[this.cols[i].field].toString().
+                            toLowerCase().
+                            indexOf(this.columnFilterValues[this.cols[i].field].trim().toLowerCase()) < 0))) {
                     ret = false;
                 }
             }
