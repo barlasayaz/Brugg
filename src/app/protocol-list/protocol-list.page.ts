@@ -25,7 +25,7 @@ export class ProtocolListPage implements OnInit {
     public xlsHeader: any[];
     public splitFilter = false;
     public idCustomer = 0;
-    public columnFilterValues = { protocol_number: '', title: '', id: '', protocol_date: '', product: '', search_all: '' };
+    public columnFilterValues = { protocol_number: '', title: '', product: '', id: '', protocol_date: '', search_all: '' };
     public filterCols: string[];
     public expendedNodes: string[] = [];
     public rowRecords = 0;
@@ -146,11 +146,12 @@ export class ProtocolListPage implements OnInit {
         this.cols = [
             { field: 'protocol_number', header: this.translate.instant('Protokoll') },
             { field: 'title', header: this.translate.instant('Titel') },
+            { field: 'product', header: this.translate.instant('Produkt') },
             { field: 'id', header: 'DB-ID' },
             { field: 'protocol_date', header: this.translate.instant('Datum') },
             { field: 'result', header: this.translate.instant('Prüfergebnis') },
-            { field: 'protocol_date_next', header: this.translate.instant('nächste Prüfung') },
-            { field: 'product', header: this.translate.instant('Produkt') }
+            { field: 'protocol_date_next', header: this.translate.instant('nächste Prüfung') }
+            
         ];
         this.idCustomer = parseInt(this.route.snapshot.paramMap.get('id'));
         this.apiService.pvs4_get_customer(this.idCustomer).then((result: any) => {
@@ -193,7 +194,9 @@ export class ProtocolListPage implements OnInit {
             }
 
             this.selectedColumns = JSON.parse(JSON.stringify(this.cols));
-
+            for (let k = 0; k < this.cols.length; k++) {
+                this.columnFilterValues[this.cols[k].field] = '';
+            }
             if (localStorage.getItem('filter_values_protocol') != undefined) {
                 this.columnFilterValues = JSON.parse(localStorage.getItem('filter_values_protocol'));
             }
@@ -203,10 +206,6 @@ export class ProtocolListPage implements OnInit {
             }
             if (localStorage.getItem('show_columns_protocol') != undefined) {
                 this.selectedColumns = JSON.parse(localStorage.getItem('show_columns_protocol'));
-            }
-
-            for (let k = 0; k < this.cols.length; k++) {
-                this.columnFilterValues[this.cols[k].field] = '';
             }
 
             this.generate_protocolList();

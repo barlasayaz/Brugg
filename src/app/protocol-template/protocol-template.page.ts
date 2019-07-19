@@ -239,7 +239,7 @@ export class ProtocolTemplatePage implements OnInit {
         componentProps: { id: 0, idCustomer: this.idCustomer }
       });
     modal.onDidDismiss().then(data => {
-      if (data) {
+      if (data['data']) {
         this.options.push(data['data']);
       }
     });

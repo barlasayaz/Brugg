@@ -1,4 +1,4 @@
-import { Component, ViewChild, OnInit } from '@angular/core';
+import { Component, ViewChild, OnInit,OnDestroy } from '@angular/core';
 import { NavController, ModalController, AlertController, Events } from '@ionic/angular';
 import { ApiService } from '../services/api';
 import { TranslateService } from '@ngx-translate/core';
@@ -39,6 +39,7 @@ export class ProductListPage implements OnInit {
     public lang: string = localStorage.getItem('lang');
     public company = '';
     public selectMulti: number;
+    public navigationSubscription: any;
 
 
     public menuItems: MenuItem[] = [{
@@ -266,6 +267,15 @@ export class ProductListPage implements OnInit {
             }
 
             try {
+                let json = '{';
+                for (var j = 0; j < this.cols.length; j++) {
+                    json += '"' + this.cols[j].field + '":""';
+                    json += ',';
+                }
+                json += '"search_all":""}';
+                //console.log('columnFilterValues :', json);
+                this.columnFilterValues = JSON.parse(json);
+                
                 if (localStorage.getItem('filter_values_product') != undefined) {
                     this.columnFilterValues = JSON.parse(localStorage.getItem('filter_values_product'));
                 }
@@ -336,14 +346,6 @@ export class ProductListPage implements OnInit {
             }
             console.log("selectedColumns");
             this.selectedColumns = JSON.parse(JSON.stringify(this.cols));
-            let json = '{';
-            for (var j = 0; j < this.cols.length; j++) {
-                json += '"' + this.cols[j].field + '":""';
-                json += ',';
-            }
-            json += '"search_all":""}';
-            //console.log('columnFilterValues :', json);
-            this.columnFilterValues = JSON.parse(json);
 
             this.generate_productList();
         });
