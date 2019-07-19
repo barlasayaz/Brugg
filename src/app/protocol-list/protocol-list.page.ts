@@ -266,13 +266,15 @@ export class ProtocolListPage implements OnInit {
              }
 
         for (let i = 0; i < this.cols.length; i++) {
-            if (this.columnFilterValues[this.cols[i].field] && this.columnFilterValues[this.cols[i].field].trim().length > 0
-                && (node.data[this.cols[i].field] == undefined || (node.data[this.cols[i].field] != undefined
-                    && node.data[this.cols[i].field].toString().
-                                                     toLowerCase().
-                                                     indexOf(this.columnFilterValues[this.cols[i].field].trim().toLowerCase()) < 0))) {
-                ret = false;
-            }
+            if(this.columnFilterValues[this.cols[i].field]) {
+                if ( this.columnFilterValues[this.cols[i].field].trim().length > 0
+                    && (node.data[this.cols[i].field] == undefined || (node.data[this.cols[i].field] != undefined
+                        && node.data[this.cols[i].field].toString().
+                                                        toLowerCase().
+                                                        indexOf(this.columnFilterValues[this.cols[i].field].trim().toLowerCase()) < 0))) {
+                    ret = false;
+                }
+            }            
         }
         return ret;
     }
@@ -587,9 +589,11 @@ export class ProtocolListPage implements OnInit {
     isFilterOn(): any {
         let ret = false;
         for (let i = 0; i < this.cols.length; i++) {
-            if (this.columnFilterValues[this.cols[i].field] && this.columnFilterValues[this.cols[i].field].trim().length > 0) {
-                ret = true;
-            }
+            if (this.columnFilterValues[this.cols[i].field] ){
+                if (this.columnFilterValues[this.cols[i].field].trim().length > 0) {
+                    ret = true;
+                }
+            }  
         }
         if (this.columnFilterValues['search_all'].trim().length > 0) {
             ret = true;
