@@ -35,6 +35,7 @@ export class LoginPage {
   private loader: HTMLIonLoadingElement;
   timeoutShow: any;
   show_hide_err: boolean = false;
+  construction: boolean = true;
 
   constructor(public navCtrl: NavController,
     public api: ApiService,
@@ -82,44 +83,46 @@ export class LoginPage {
 
     platform.ready().then(() => {
       let isin: boolean = false;
-      let slUser: any = localStorage.getItem('UserInfo');
-      if (slUser) {
-        slUser = JSON.parse(slUser);
-        console.info('userdata: slUser ', slUser);
-        if ((slUser.token) && (slUser.token.length > 10)) {
-          this.userdata.set(slUser);
-          isin = true;
-        }
-      }
-      if (!isin) {
-        let llUser: any = localStorage.getItem('saveLogin');
-        if (llUser) {
-          llUser = JSON.parse(llUser);
-          console.info('userdata: llUser ', llUser);
-          if ((llUser.token) && (llUser.token.length > 10)) {
-            this.userdata.set(llUser);
-            isin = true;
+      if(!this.construction){
+          let slUser: any = localStorage.getItem('UserInfo');
+          if (slUser) {
+            slUser = JSON.parse(slUser);
+            console.info('userdata: slUser ', slUser);
+            if ((slUser.token) && (slUser.token.length > 10)) {
+              this.userdata.set(slUser);
+              isin = true;
+            }
           }
-        }
-      }
-      //PVS4
-      isin = false;
-      let pvs4_user: any = localStorage.getItem('pvs4_user');
-      if (pvs4_user) {
-        pvs4_user = JSON.parse(pvs4_user);
-        this.userdata.first_name = pvs4_user.first_name;
-        this.userdata.last_name = pvs4_user.last_name;
-        this.userdata.email = pvs4_user.email;
-        this.userdata.phone = pvs4_user.phone;
-        console.info('userdata: pvs4_user ', pvs4_user);
-        this.api.pvs4_get_my_profile(pvs4_user.email).then((result: any) => {
-          console.info("pvs4_get_my_profile ok: ", result);
-          this.navCtrl.navigateRoot('/customer-table');
-        }, // success path
-          error => {
-            // connection failed
-            console.info("pvs4_get_my_profile error: ", error);
-          });// error path);
+          if (!isin) {
+            let llUser: any = localStorage.getItem('saveLogin');
+            if (llUser) {
+              llUser = JSON.parse(llUser);
+              console.info('userdata: llUser ', llUser);
+              if ((llUser.token) && (llUser.token.length > 10)) {
+                this.userdata.set(llUser);
+                isin = true;
+              }
+            }
+          }
+          //PVS4
+          isin = false;
+          let pvs4_user: any = localStorage.getItem('pvs4_user');
+          if (pvs4_user) {
+            pvs4_user = JSON.parse(pvs4_user);
+            this.userdata.first_name = pvs4_user.first_name;
+            this.userdata.last_name = pvs4_user.last_name;
+            this.userdata.email = pvs4_user.email;
+            this.userdata.phone = pvs4_user.phone;
+            console.info('userdata: pvs4_user ', pvs4_user);
+            this.api.pvs4_get_my_profile(pvs4_user.email).then((result: any) => {
+              console.info("pvs4_get_my_profile ok: ", result);
+              this.navCtrl.navigateRoot('/customer-table');
+            }, // success path
+              error => {
+                // connection failed
+                console.info("pvs4_get_my_profile error: ", error);
+              });// error path);
+          }
       }
     });
   }
