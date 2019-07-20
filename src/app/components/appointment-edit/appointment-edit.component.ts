@@ -287,7 +287,7 @@ export class AppointmentEditComponent implements OnInit {
     this.apiService.pvs4_set_appointment(obj).then((result: any) => {
       console.log('result: ', result);
     });
-    this.viewCtrl.dismiss(obj);
+    this.viewCtrl.dismiss(true);
   }
 
   appointmentDeactivate() {
@@ -329,7 +329,7 @@ export class AppointmentEditComponent implements OnInit {
 
             this.apiService.pvs4_set_appointment(activAppointment).then((result: any) => {
               console.log('result: ', result);
-              this.viewCtrl.dismiss(activAppointment);
+              this.viewCtrl.dismiss(true);
             });
           }
         }

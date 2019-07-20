@@ -4,7 +4,6 @@ import { ApiService } from '../services/api';
 import { TranslateService } from '@ngx-translate/core';
 import { UserdataService } from '../services/userdata';
 import { DragulaService } from 'ng2-dragula';
-import { ProductOptEditComponent } from '../components/product-opt-edit/product-opt-edit.component';
 import { ProtocolOptEditComponent } from '../components/protocol-opt-edit/protocol-opt-edit.component';
 import { ActivatedRoute } from '@angular/router';
 
@@ -249,7 +248,7 @@ export class ProtocolTemplatePage implements OnInit {
   async option_edit(option: { id: any; }) {
     console.log('option :', option);
     const modal: HTMLIonModalElement = await this.modalCtrl.create({
-        component: ProductOptEditComponent,
+        component: ProtocolOptEditComponent,
         componentProps: { id: option.id, option: option, idCustomer: this.idCustomer }
       });
     modal.onDidDismiss().then(data => {
