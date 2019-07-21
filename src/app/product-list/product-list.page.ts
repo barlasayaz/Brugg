@@ -280,7 +280,7 @@ export class ProductListPage implements OnInit {
                 json += '"search_all":""}';
                 //console.log('columnFilterValues :', json);
                 this.columnFilterValues = JSON.parse(json);
-                
+                this.selectedColumns = JSON.parse(JSON.stringify(this.cols));
                 if (localStorage.getItem('filter_values_product') != undefined) {
                     this.columnFilterValues = JSON.parse(localStorage.getItem('filter_values_product'));
                 }
@@ -349,8 +349,6 @@ export class ProductListPage implements OnInit {
                 }
                 // console.log("index :", index);
             }
-            console.log("selectedColumns");
-            this.selectedColumns = JSON.parse(JSON.stringify(this.cols));
 
             this.generate_productList();
         });
