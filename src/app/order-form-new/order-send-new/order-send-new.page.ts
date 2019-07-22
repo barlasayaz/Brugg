@@ -85,6 +85,9 @@ export class OrderSendNewPage {
     if (this.Ziel_DropDown == 2) {
       this.Empfaenger = '';
     }
+    if (this.Ziel_DropDown == 3) {
+      this.Empfaenger = 'vente.lifting@brugg.com';
+    }
   }
 
   async send() {

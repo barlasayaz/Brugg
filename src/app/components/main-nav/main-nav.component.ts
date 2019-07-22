@@ -1,7 +1,8 @@
-import { Component,OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { UserdataService } from '../../services/userdata';
 import { NavController, Events } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
+import { NavigationExtras } from '@angular/router';
 /**
  * Generated class for the MainNavComponent component.
  *
@@ -13,7 +14,7 @@ import { TranslateService } from '@ngx-translate/core';
   templateUrl: './main-nav.component.html',
   styleUrls: ['./main-nav.component.scss']
 })
-export class MainNavComponent  implements OnInit {
+export class MainNavComponent implements OnInit {
   @Input() aktivPage: string;
   @Input() idCustomer: number;
 
@@ -28,7 +29,7 @@ export class MainNavComponent  implements OnInit {
     public events: Events) {
 
     console.log('Hello MainNavComponent Component');
-    this.events.subscribe('progressBar', (progressBar) => {      
+    this.events.subscribe('progressBar', (progressBar) => {
       if (progressBar >= 0) {
         this.progressBar = progressBar;
       }
@@ -42,7 +43,7 @@ export class MainNavComponent  implements OnInit {
 
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   getClass(path) {
     if (this.aktivPage == path) {
@@ -68,19 +69,24 @@ export class MainNavComponent  implements OnInit {
           this.navCtrl.navigateRoot(['/customer-table']);
           break;
         case 'CustomerDetails':
-          this.navCtrl.navigateRoot(['/customer-details',id]);
+          this.navCtrl.navigateRoot(['/customer-details', id]);
           break;
         case 'ProductList':
-          this.navCtrl.navigateRoot(['/product-list/'+id]);
+            let navigationExtras: NavigationExtras = {
+              queryParams: {
+                refresh: new Date().getTime()
+              }
+            };
+          this.navCtrl.navigateRoot(['/product-list/' + id],navigationExtras);
           break;
         case 'ProtocolList':
-          this.navCtrl.navigateRoot(['/protocol-list/'+id]);
+          this.navCtrl.navigateRoot(['/protocol-list/' + id]);
           break;
         case 'OrderFormNew':
-          this.navCtrl.navigateRoot(['/order-form-new',id]);
+          this.navCtrl.navigateRoot(['/order-form-new', id]);
           break;
         case 'NoteList':
-          this.navCtrl.navigateRoot(['/note-list/'+id]);
+          this.navCtrl.navigateRoot(['/note-list/' + id]);
           break;
       }
     }

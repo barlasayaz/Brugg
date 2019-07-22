@@ -96,6 +96,8 @@ function processing($user, $customer) {
     $anz_liste = 0;
     if($ret_sql) {
         while ($row = mysqli_fetch_assoc($ret_sql)) {
+            $teil = explode(" ", $row['protocol_date']);
+            $row['protocol_date'] = $teil[0];
             $liste[] = array('data' => utf8encodeArray($row) );
             $anz_liste++;
         }

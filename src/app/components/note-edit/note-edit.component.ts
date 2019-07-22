@@ -134,7 +134,7 @@ export class NoteEditComponent {
     this.apiService.pvs4_set_note(obj).then((result: any) => {
       console.log('result - redirect: ', result, '- ', this.redirect);
       if (this.redirect == 1) {
-        this.viewCtrl.dismiss(obj);
+        this.viewCtrl.dismiss(true);
       }
       if (this.redirect == 2) {
         this.dismiss();
@@ -173,7 +173,7 @@ export class NoteEditComponent {
             }
             this.apiService.pvs4_set_note(activNote).then((result: any) => {
               console.log('result: ', result); 
-              this.viewCtrl.dismiss(activNote);
+              this.viewCtrl.dismiss(true);
             });
           }
         }
