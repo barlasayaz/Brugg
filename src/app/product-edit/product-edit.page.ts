@@ -9,6 +9,7 @@ import { LoadingController } from '@ionic/angular';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
 import { ActivatedRoute } from '@angular/router';
 import { DataService } from '../services/data.service';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
 /**
  * Generated class for the ProductEditPage page.
@@ -65,6 +66,7 @@ export class ProductEditPage implements OnInit {
   public productListAll: any[] = [];
   public allnodes: any[] = [];
   public idnumberControl: boolean = false;
+  public uploadedFiles: any[] = [];
 
   constructor(public navCtrl: NavController,
     public route: ActivatedRoute,
@@ -77,7 +79,8 @@ export class ProductEditPage implements OnInit {
     public camera: Camera,
     public transfer: FileTransfer,
     public dataService: DataService,
-    public loadingCtrl: LoadingController) {
+    public loadingCtrl: LoadingController,
+    public httpClient: HttpClient) {
 
   }
 
@@ -420,6 +423,7 @@ export class ProductEditPage implements OnInit {
 
     modal.onDidDismiss().then(data => {
       if (data['data']) {
+        console.log('getImage data :', data, data['data']);
         this.activProduct.images = data['data'];
         this.imagesSave = data['data'];
       }
@@ -468,7 +472,7 @@ export class ProductEditPage implements OnInit {
         'dir': 'mobileimages',
         'token': window.localStorage['access_token']
       }
-    }
+    };
 
     console.log('imageURI :', this.imageURI);
     console.log('upload :', this.url + 'upload.php');
@@ -486,6 +490,31 @@ export class ProductEditPage implements OnInit {
         this.hideLoader();
       });
   }
+
+  onFileUpload(data: { files: File }): void {
+    const formData: FormData = new FormData();
+    const file = data.files[0];
+
+    console.log('uploader :', formData, file);
+
+    formData.append('token', window.localStorage['access_token']);
+    formData.append('dir', 'mobileimages');
+    formData.append('file', file, 'productimage_' + this.idProduct + '.jpg');
+    console.log('onBeforeUpload event :', formData, file.name);
+
+    this.httpClient.post(this.url + 'upload.php', formData).subscribe(r => {
+      console.log('upload');
+    },
+      (err: HttpErrorResponse) => {
+        console.log (err, err.message);
+        this.nocache = new Date().getTime();
+        this.activProduct.images = this.file_link + 'mobileimages/productimage_' + this.idProduct + '.jpg';
+        this.imagesSave = 'mobileimages/productimage_' + this.idProduct + '.jpg';
+        console.log('upload images :', this.file_link, this.activProduct.images);
+    });
+
+  }
+
   async hideLoader() {
     if (this.loader) {
       await this.loader.dismiss();

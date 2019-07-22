@@ -254,9 +254,24 @@
                           </ion-button>   
                           <ion-button size="small"
                                       (click)="getCamera()"
-                                      [disabled]="!mobilePlatform">
+                                      [disabled]="!mobilePlatform"
+                                      style="padding-right: 10px;">
                             <ion-icon name="camera"></ion-icon>
                           </ion-button> 
+                          <p-fileUpload #fubauto
+                                        class="btn-primary"
+                                        mode="basic"
+                                        name="file"
+                                        url="{{url}}upload.php"
+                                        method="POST"
+                                        accept="image/*"
+                                        maxFileSize="3000000"
+                                        customUpload="true"
+                                        (uploadHandler)="onFileUpload($event)"
+                                        [auto]="true"
+                                        chooseLabel="{{'Wähle Bild' | translate}}">
+                          </p-fileUpload>
+
                         </div>
                       </div>
                       <div class="whitebox-image">
