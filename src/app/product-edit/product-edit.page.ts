@@ -9,7 +9,6 @@ import { LoadingController } from '@ionic/angular';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
 import { ActivatedRoute, NavigationExtras } from '@angular/router';
 import { DataService } from '../services/data.service';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
 /**
  * Generated class for the ProductEditPage page.
@@ -79,8 +78,7 @@ export class ProductEditPage implements OnInit {
     public camera: Camera,
     public transfer: FileTransfer,
     public dataService: DataService,
-    public loadingCtrl: LoadingController,
-    public httpClient: HttpClient) {
+    public loadingCtrl: LoadingController) {
 
   }
 
@@ -506,13 +504,9 @@ export class ProductEditPage implements OnInit {
     formData.append('dir', 'mobileimages');
     formData.append('file', file, 'productimage_' + this.idProduct + '.jpg');
     console.log('onBeforeUpload event :', formData, file.name);
-
-    this.httpClient.post(this.url + 'upload.php', formData).subscribe(r => {
-      console.log('upload');
-    },
-      (err: HttpErrorResponse) => {
-        console.log (err, err.message);
-        this.nocache = new Date().getTime();
+    
+   this.apiService.pvs4_uploadphp(formData).then((result: any) => {
+        console.log('result: ', result);
         this.activProduct.images = this.file_link + 'mobileimages/productimage_' + this.idProduct + '.jpg';
         this.imagesSave = 'mobileimages/productimage_' + this.idProduct + '.jpg';
         console.log('upload images :', this.file_link, this.activProduct.images);
