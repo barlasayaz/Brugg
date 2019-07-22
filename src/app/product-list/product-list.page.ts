@@ -362,7 +362,16 @@ export class ProductListPage implements OnInit {
             } else {
                 nodes[i].data.nfc_tag_id = false;
             }*/
-            const title = JSON.parse(nodes[i].data.title);
+            var title = nodes[i].data.title;
+
+            try {
+                title = JSON.parse(nodes[i].data.title);
+                // console.log("options :", options);
+            } catch (e) {
+                console.error("JSON.parse options err :", e);
+                console.log("title :", nodes[i].data, title);
+            }
+            
             nodes[i].data.titleJson = title;
             nodes[i].data.title = title[this.lang];
             if (nodes[i].children && nodes[i].children.length > 0) {

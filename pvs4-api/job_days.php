@@ -41,6 +41,10 @@ switch ($_SERVER['REQUEST_METHOD']) {
 function processing() {
     global $brugg_id_api,$database_location,$database_username,$database_password,$database_name;
     $con=mysqli_connect($database_location,$database_username,$database_password,$database_name);
+    
+    global $database_location_2,$database_username_2,$database_password_2,$database_name_2;
+    $con_pr=mysqli_connect($database_location_2,$database_username_2,$database_password_2,$database_name_2);
+
     mysqli_query($con,"SET NAMES 'utf8'");
     if (mysqli_connect_errno()){
         http_response_code(500);
@@ -96,7 +100,7 @@ function processing() {
             while ($row = mysqli_fetch_assoc($ret_sql)) {
                 $pid = $row['id'];
                 $where = "SELECT * FROM `protocols` WHERE `product` LIKE '%\"id\":\"$pid\"%' ORDER by protocol_date DESC, id DESC LIMIT 1;" ;
-                $prot= mysqli_query( $con, $where  );
+                $prot= mysqli_query( $con_pr, $where  );
                 if($prot) {
                     if(mysqli_num_rows($prot) > 0){
                         $prot_row = mysqli_fetch_assoc($prot);

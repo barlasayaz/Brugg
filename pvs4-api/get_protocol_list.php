@@ -48,6 +48,10 @@ switch ($_SERVER['REQUEST_METHOD']) {
 function processing($user, $customer) {
     global $brugg_id_api,$database_location,$database_username,$database_password,$database_name;
     $con=mysqli_connect($database_location,$database_username,$database_password,$database_name);
+    
+    global $database_location_2,$database_username_2,$database_password_2,$database_name_2;
+    $con_pr=mysqli_connect($database_location_2,$database_username_2,$database_password_2,$database_name_2);
+
     mysqli_query($con,"SET NAMES 'utf8'");
     if (mysqli_connect_errno()){
         http_response_code(500);
@@ -90,14 +94,12 @@ function processing($user, $customer) {
     $customer  = intval ( trim( mysqli_escape_string($con,$customer) ) );
     
     $sql    = "SELECT * FROM `protocols` where `customer` = $customer and `active` = 1 ORDER BY `protocol_date`;";
-    $ret_sql= mysqli_query( $con, $sql );
+    $ret_sql= mysqli_query( $con_pr, $sql );
 
     $liste = [];
     $anz_liste = 0;
     if($ret_sql) {
         while ($row = mysqli_fetch_assoc($ret_sql)) {
-            $teil = explode(" ", $row['protocol_date']);
-            $row['protocol_date'] = $teil[0];
             $liste[] = array('data' => utf8encodeArray($row) );
             $anz_liste++;
         }

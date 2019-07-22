@@ -35,7 +35,7 @@ export class LoginPage {
   private loader: HTMLIonLoadingElement;
   timeoutShow: any;
   show_hide_err: boolean = false;
-  construction: boolean = true;
+  construction: boolean = false;
 
   constructor(public navCtrl: NavController,
     public api: ApiService,

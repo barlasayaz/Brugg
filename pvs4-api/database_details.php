@@ -6,6 +6,11 @@ if(strcmp ($_SERVER['SERVER_NAME'], 'localhost')==0){
     $database_username = 'root';
     $database_password = '';
 
+    $database_name_2 = 'brugg4';
+    $database_location_2 = 'localhost';
+    $database_username_2 = 'root';
+    $database_password_2 = '';
+
     //$brugg_id_api   = 'http://localhost/brugg-id/';
     $brugg_id_api   = 'https://bruggdigital.com/';
     $file_link      = 'http://localhost/BruggPVS4/attachments/';
@@ -16,6 +21,11 @@ if(strcmp ($_SERVER['SERVER_NAME'], 'localhost')==0){
     $database_location  = 'db759837994.hosting-data.io';
     $database_username  = 'dbo759837994';
     $database_password  = 'Sd-PVS4-DB';
+
+    $database_name_2     = 'dbs126376';
+    $database_location_2  = 'db5000131609.hosting-data.io';
+    $database_username_2  = 'dbu44763';
+    $database_password_2  = 'Sd-PVS4-DB';
 
     $brugg_id_api   = 'https://bruggdigital.com/';
     $file_link      = 'https://www.pvs2go.com/attachments/';

@@ -42,6 +42,10 @@ switch ($_SERVER['REQUEST_METHOD']) {
 function processing() {
     global $brugg_id_api,$database_location,$database_username,$database_password,$database_name;
     $con=mysqli_connect($database_location,$database_username,$database_password,$database_name);
+
+    global $database_location_2,$database_username_2,$database_password_2,$database_name_2;
+    $con_pr=mysqli_connect($database_location_2,$database_username_2,$database_password_2,$database_name_2);
+
     mysqli_query($con,"SET NAMES 'utf8'");
     if (mysqli_connect_errno()){
         http_response_code(500);
@@ -100,7 +104,7 @@ function processing() {
                result = $result,  protocol_date_next = '$protocol_date_next', author='$author' WHERE id = $id"; 
     } else {
         $sql = "SELECT max(protocol_number)+1 as protocol_number FROM protocols WHERE customer=$customer";
-        $ret_sql = mysqli_query( $con, $sql );
+        $ret_sql = mysqli_query( $con_pr, $sql );
         while( $sonuc = mysqli_fetch_object($ret_sql) ){
             if($sonuc->protocol_number > 0){
                 $prtcl_num = $sonuc->protocol_number;
@@ -111,7 +115,7 @@ function processing() {
         $sql=" INSERT INTO protocols (active,protocol_number,customer,title,items,product,protocol_date,protocol_date_next,result, author )
                VALUES($active,$prtcl_num,$customer,'$title','$items','$product','$protocol_date','$protocol_date_next',$result, '$author')     "; 
    }
-    $ret_sql= mysqli_query( $con, $sql );   
+    $ret_sql= mysqli_query( $con_pr, $sql );   
 
     if($ret_sql) {
         if($id==0) $id = $con->insert_id;

@@ -223,7 +223,7 @@ export class CustomerTablePage implements OnInit {
     }
 
     try_filter(node: TreeNode): boolean {
-        console.log('try_filter', node );
+        //console.log('try_filter', node );
         let ret: any = false;
 
         for (let i = 0; i < this.cols.length; i++) {
@@ -258,7 +258,7 @@ export class CustomerTablePage implements OnInit {
     }
 
     dir_try_filter(nodes: TreeNode[]): any {
-        console.log('dir_try_filter', nodes, nodes.length);
+        //console.log('dir_try_filter', nodes, nodes.length);
         let del_ret = false;
         for (let i = 0; i < nodes.length; i++) {
             if (nodes[i].children) {

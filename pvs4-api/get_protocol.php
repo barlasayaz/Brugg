@@ -49,6 +49,10 @@ switch ($_SERVER['REQUEST_METHOD']) {
 function processing($id) {
     global $brugg_id_api,$database_location,$database_username,$database_password,$database_name;
     $con=mysqli_connect($database_location,$database_username,$database_password,$database_name);
+
+    global $database_location_2,$database_username_2,$database_password_2,$database_name_2;
+    $con_pr=mysqli_connect($database_location_2,$database_username_2,$database_password_2,$database_name_2);
+
     mysqli_query($con,"SET NAMES 'utf8'");
     if (mysqli_connect_errno()){
         http_response_code(500);
@@ -90,7 +94,7 @@ function processing($id) {
     $id   = trim( mysqli_escape_string($con,$id) );
     
     $sql    = "SELECT * FROM `protocols` WHERE `id`=$id;";
-    $ret_sql= mysqli_query( $con, $sql );
+    $ret_sql= mysqli_query( $con_pr, $sql );
 
     $liste = [];
     $anz_liste = 0;
