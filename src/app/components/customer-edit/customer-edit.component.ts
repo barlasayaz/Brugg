@@ -185,7 +185,7 @@ export class CustomerEditComponent implements OnInit {
     }
     this.apiService.pvs4_set_customer(obj).then((result: any) => {
       console.log('result: ', result, obj);
-        this.viewCtrl.dismiss(obj);
+        this.viewCtrl.dismiss(true);
     });
 
   }

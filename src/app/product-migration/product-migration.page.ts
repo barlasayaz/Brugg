@@ -222,8 +222,7 @@ export class ProductMigrationPage implements OnInit {
             console.log('obj :', newObj);
             this.apiService.pvs4_set_product(newObj).then((result: any) => {
               console.log('images product result: ', result);
-              this.dismiss();
-              this.navCtrl.navigateBack('/product-list/' + this.idCustomer); 
+              this.viewCtrl.dismiss(true);
             });
           });
       });

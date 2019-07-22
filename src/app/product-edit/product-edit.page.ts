@@ -7,7 +7,7 @@ import { DialogproduktbildmodalPage } from '../components/dialogproduktbildmodal
 import { CameraOptions, Camera } from '@ionic-native/camera/ngx';
 import { LoadingController } from '@ionic/angular';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, NavigationExtras } from '@angular/router';
 import { DataService } from '../services/data.service';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
@@ -385,7 +385,12 @@ export class ProductEditPage implements OnInit {
   }
 
   dismiss() {
-    this.navCtrl.navigateRoot(['/product-list', this.idCustomer]);
+    let navigationExtras: NavigationExtras = {
+      queryParams: {
+        refresh: new Date().getTime()
+      }
+    };
+    this.navCtrl.navigateRoot(['/product-list', this.idCustomer], navigationExtras);
   }
 
   productDeactivate() {
@@ -541,10 +546,15 @@ export class ProductEditPage implements OnInit {
             obj['title'] = JSON.stringify(this.activProduct['title']);
             this.apiService.pvs4_set_product(obj).then((result: any) => {
               console.log('result: ', result);
-              this.navCtrl.navigateBack('/product-list/' + this.idCustomer);
-            });
-          }
+              let navigationExtras: NavigationExtras = {
+                queryParams: {
+                  refresh: new Date().getTime()
+                }
+              };
+              this.navCtrl.navigateBack(['/product-list/' + this.idCustomer], navigationExtras);
+          });
         }
+       }
       ]
     }).then(x => x.present());
 
