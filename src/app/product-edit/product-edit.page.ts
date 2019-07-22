@@ -504,9 +504,10 @@ export class ProductEditPage implements OnInit {
     formData.append('dir', 'mobileimages');
     formData.append('file', file, 'productimage_' + this.idProduct + '.jpg');
     console.log('onBeforeUpload event :', formData, file.name);
-    
+
    this.apiService.pvs4_uploadphp(formData).then((result: any) => {
         console.log('result: ', result);
+        this.nocache = new Date().getTime();
         this.activProduct.images = this.file_link + 'mobileimages/productimage_' + this.idProduct + '.jpg';
         this.imagesSave = 'mobileimages/productimage_' + this.idProduct + '.jpg';
         console.log('upload images :', this.file_link, this.activProduct.images);
