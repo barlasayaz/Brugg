@@ -74,7 +74,7 @@ function processing() {
         $ret = move_uploaded_file( $tempPath, $uploadPath.'/'.$_FILES[ 'file' ][ 'name' ] );
         echo $uploadPath.'/'.$_FILES[ 'file' ][ 'name' ] ;
     
-        if(ret)   $answer = array( 'answer' => 'File transfer completed' );
+        if($ret)   $answer = array( 'answer' => 'File transfer completed' );
         else $answer = array( 'answer' => 'Error: move_uploaded_file()' );
         $json = json_encode( $answer );
     
