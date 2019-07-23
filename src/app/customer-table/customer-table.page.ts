@@ -244,7 +244,7 @@ export class CustomerTablePage implements OnInit {
             if (this.columnFilterValues[this.cols[i].field]) {
                 fx = this.columnFilterValues[this.cols[i].field].trim();
             }
-            console.log('node.data[this.cols[i].field]', node.data[this.cols[i].field] );
+            //console.log('node.data[this.cols[i].field]', node.data[this.cols[i].field] );
             if  (fx.length > 0) {
                 if (node.data[this.cols[i].field]) {
                     if ( (node.data[this.cols[i].field].toLowerCase().indexOf(fx.toLowerCase()) < 0) ) { return false; }
