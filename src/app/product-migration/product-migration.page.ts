@@ -5,6 +5,7 @@ import { UserdataService } from '../services/userdata';
 import { ApiService } from '../services/api';
 import { TreeNode } from 'primeng/api';
 import { File } from '@ionic-native/file/ngx';
+
 /**
  * Generated class for the ProductMigrationPage page.
  *
@@ -61,8 +62,8 @@ export class ProductMigrationPage implements OnInit {
 
   loadSourceCustomer() {
     this.apiService.pvs4_get_customer(this.idCustomer).then((result: any) => {
-      this.activCustomer = result.obj;  
-      console.log('loadCustomer: ' , this.activCustomer); 
+      this.activCustomer = result.obj;
+      console.log('loadCustomer: ' , this.activCustomer);
     });
   }
 
@@ -145,8 +146,8 @@ export class ProductMigrationPage implements OnInit {
         };
         let oldParent: any = resultProduct.obj.parent;
         this.apiService.pvs4_set_product(oldObj).then((result: any) => {
-          console.log('deactive product result: ', result);
-        });  
+          // console.log('deactive product result: ', result);
+        });
 
         this.apiService.pvs4_get_product_parrent(element.id).then((resultParent: any) => {
           if (resultParent.obj) {
@@ -168,7 +169,7 @@ export class ProductMigrationPage implements OnInit {
               author:           resultParent.obj.author
             };
             this.apiService.pvs4_set_product(parentObj).then((result: any) => {
-              console.log('parent product result: ', result);
+              // console.log('parent product result: ', result);
             });
           }
         });
@@ -191,9 +192,9 @@ export class ProductMigrationPage implements OnInit {
             author:           resultProduct.obj.author
           };
 
-          console.log('obj :', newObj);
+          // console.log('obj :', newObj);
           this.apiService.pvs4_set_product(newObj).then((result: any) => {
-            console.log('migration product result: ', result);
+            // console.log('migration product result: ', result);
 
             let newImgPath: string = '';
             if (resultProduct.obj.images) {
@@ -209,9 +210,9 @@ export class ProductMigrationPage implements OnInit {
             }
 
             this.apiService.pvs4_get_file(element.id, 'product').then((result2) => {
-              console.log('dateiliste :', result2);
+              // console.log('dateiliste :', result2);
               this.attachmentsFileCount = result2['files'].length;
-              console.log('attachmentsFileCount :', this.attachmentsFileCount);
+              // console.log('attachmentsFileCount :', this.attachmentsFileCount);
               if (this.attachmentsFileCount > 0) {
                 this.copyFile('product_' + element.id, 'product_' + result.id);
               }
@@ -219,9 +220,9 @@ export class ProductMigrationPage implements OnInit {
 
             newObj.id = result.id;
             newObj.images = newImgPath;
-            console.log('obj :', newObj);
+            // console.log('obj :', newObj);
             this.apiService.pvs4_set_product(newObj).then((result: any) => {
-              console.log('images product result: ', result);
+              // console.log('images product result: ', result);
               this.viewCtrl.dismiss(true);
             });
           });

@@ -1,4 +1,3 @@
-/* import { Component, ɵConsole } from '@angular/core'; --DP-- */
 import { Component } from '@angular/core';
 import { NavController, NavParams, ModalController, AlertController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';

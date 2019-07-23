@@ -55,7 +55,7 @@ export class MainNavComponent implements OnInit {
 
   go(action: any, id: number = 0) {
     // Navigation
-    console.info('app.go: ', action, id, this.aktivPage);
+    console.log('app.go: ', action, id, this.aktivPage);
 
     if (this.aktivPage != action) {
       switch (action) {

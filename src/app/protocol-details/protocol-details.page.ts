@@ -89,7 +89,7 @@ export class ProtocolDetailsPage implements OnInit {
 
       console.log('idProtocol :', this.idProtocol);
       this.loadCustomer(this.idCustomer);
-    }   
+    }
   }
 
   loadCustomer(id) {
@@ -103,18 +103,19 @@ export class ProtocolDetailsPage implements OnInit {
   loadProtocol(id: any) {
     this.apiService.pvs4_get_protocol(id).then((result: any) => {
       this.activProtocol = result.obj;
-      //console.log('loadProtocol :', this.activProtocol);
+      // console.log('loadProtocol :', this.activProtocol);
       this.activProtocol.items = JSON.parse(this.activProtocol.items);
       let productList = JSON.parse(this.activProtocol.product);
       productList.forEach(element => {
-        console.log('product list :', element);
+        // console.log('product list :', element);
         this.loadProduct(element.id);
       });
+
       if (this.activProtocol.result == 0) { this.activProtocol.resultText = this.translate.instant('betriebsbereit'); }
       if (this.activProtocol.result == 1) { this.activProtocol.resultText = this.translate.instant('reparieren'); }
       if (this.activProtocol.result == 3) { this.activProtocol.resultText = this.translate.instant('unauffindbar'); }
       if (this.activProtocol.result == 4) { this.activProtocol.resultText = this.translate.instant('ausmustern'); }
-      
+
       this.dateiListe();
     });
   }
@@ -122,26 +123,26 @@ export class ProtocolDetailsPage implements OnInit {
   loadProduct(id: any) {
     this.apiService.pvs4_get_product(id).then((result: any) => {
       console.log('result :', result);
-      this.activProduct = result.obj;      
+      this.activProduct = result.obj;
       let title = JSON.parse(this.activProduct.title);
-      try{
+      try {
         title = JSON.parse(this.activProduct.title);
-      }catch{
+      } catch {
         console.log('loadProduct title JSON.parse:', this.activProduct.title);
-        title = JSON.parse(this.activProduct.title);       
-      } 
+        title = JSON.parse(this.activProduct.title);
+      }
       this.activProduct.title = title[this.lang];
-      if(this.activProduct.items){
-        try{
+      if (this.activProduct.items) {
+        try {
           this.activProduct.items = JSON.parse(this.activProduct.items);
-        }catch{
+        } catch {
           console.log('loadProduct items JSON.parse:', this.activProduct.items);
-          this.activProduct.items = [];          
-        }        
-      }else{
+          this.activProduct.items = [];
+        }
+      } else {
         this.activProduct.items = [];
       }
-      
+
       let i: any = 0;
       this.activProduct.items.forEach(event => {
         if (event.type == 5) {
@@ -241,7 +242,7 @@ export class ProtocolDetailsPage implements OnInit {
 
       columns.forEach(function (column) {
         dataRow.push(row[column].toString());
-      })
+      });
 
       bodyProtocol.push(dataRow);
     });
@@ -270,7 +271,7 @@ export class ProtocolDetailsPage implements OnInit {
     bodyProduct.push(prdctTitle);
 
     product.forEach(element => {
-      console.log('product element :', this.translate.instant('Titel'), element.title);
+      // console.log('product element :', this.translate.instant('Titel'), element.title);
 
       if (element.title) {
         bodyProduct.push([{ text: this.translate.instant('Titel'), color: '#000000', fillColor: '#8bd8f9' },
@@ -302,7 +303,7 @@ export class ProtocolDetailsPage implements OnInit {
 
       // product oprtions
       element.items.forEach(elementItems => {
-        console.log('product oprtions :', elementItems.title, '- ', elementItems.title[this.lang], ' - ', elementItems.value);
+        // console.log('product oprtions :', elementItems.title, '- ', elementItems.title[this.lang], ' - ', elementItems.value);
         if (elementItems.title[this.lang] != '' && elementItems.value != undefined) {
           bodyProduct.push([{ text: elementItems.title[this.lang]}, {text: elementItems.value }]);
         } else {
@@ -370,7 +371,7 @@ export class ProtocolDetailsPage implements OnInit {
           }
         ],
         footer: function (currentPage, pageCount) {
-          return { text: pageDesc + ' ' + currentPage.toString() + ' / ' + pageCount, alignment: 'center' }
+          return { text: pageDesc + ' ' + currentPage.toString() + ' / ' + pageCount, alignment: 'center' };
         }
       };
 
@@ -388,7 +389,7 @@ export class ProtocolDetailsPage implements OnInit {
   onUpload(event) {
     console.log('setFile event :', event);
     for (let file of event.files) {
-      console.log('file', file);
+      // console.log('file', file);
       this.uploadedFiles.push(file);
     }
 
@@ -432,7 +433,7 @@ export class ProtocolDetailsPage implements OnInit {
   }
 
   mouseover(buttonNumber) {
-    if (buttonNumber == 1) { 
+    if (buttonNumber == 1) {
       this.mouseoverButton1 = true;
     } else if (buttonNumber == 2) {
       this.mouseoverButton2 = true;
@@ -441,7 +442,7 @@ export class ProtocolDetailsPage implements OnInit {
 
   mouseout(buttonNumber) {
     if (this.mobilePlatform == false) {
-      if (buttonNumber == 1) { 
+      if (buttonNumber == 1) {
         this.mouseoverButton1 = false;
       } else if (buttonNumber == 2) {
         this.mouseoverButton2 = false;
@@ -487,7 +488,7 @@ export class ProtocolDetailsPage implements OnInit {
         'dir': 'protocol_' + this.idProtocol,
         'token': window.localStorage['access_token']
       }
-    }
+    };
 
     console.log('imageURI :', this.imageURI);
     console.log('upload :', this.url + 'upload.php');
@@ -505,4 +506,3 @@ export class ProtocolDetailsPage implements OnInit {
   }
 
 }
-

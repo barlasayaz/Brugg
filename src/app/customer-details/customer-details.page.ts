@@ -91,7 +91,7 @@ export class CustomerDetailsPage implements OnInit {
           this.mouseoverButton4 = false;
         }
       });
-      console.log('ionViewDidLoad CustomerDetailsPage',  this.userdata); 
+      console.log('ionViewDidLoad CustomerDetailsPage',  this.userdata);
       if (this.userdata.role == 3) {
         for (var i = 0, len = this.userdata.all_role_set.length; i < len; i++) {
           let c = parseInt( this.userdata.all_role_set[i].customer);
@@ -112,7 +112,6 @@ export class CustomerDetailsPage implements OnInit {
           }
         }
       }
-      console.log('ionViewDidLoad CustomerDetailsPage',  this.userdata); 
     }
 
    loadCustomer(id) {
@@ -232,7 +231,6 @@ export class CustomerDetailsPage implements OnInit {
           }
         }
 
-        console.log('pageBack pageCount1 pageTotalCount :', this.pageCount, '-', this.pageTotalCount, '-', this.contactPersonAddresses, '-', this.contactPersonAddr);
       });
 
     }

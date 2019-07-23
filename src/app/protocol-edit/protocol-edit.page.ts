@@ -160,7 +160,7 @@ export class ProtocolEditPage implements OnInit {
   loadTemplate() {
     this.templates = [];
     this.apiService.pvs4_get_protocol_tem(this.userdata.licensee, 1).then((result: any) => {
-      result.list.forEach(element => { 
+      result.list.forEach(element => {
         element.data.options = JSON.parse(element.data.options);
         element.data.title = JSON.parse(element.data.title);
         this.templates.push(element.data);
@@ -177,7 +177,7 @@ export class ProtocolEditPage implements OnInit {
     this.productList.forEach(element => {
       let obj = element;
       if (element.data) { obj = element.data; }
-      //obj.id = parseInt( obj.id ); //have to be a string
+      // obj.id = parseInt( obj.id ); //have to be a string
       this.products.push({'id': obj.id, 'id_number': obj.id_number});
       obj.check_interval = parseInt(obj.check_interval);
       if ((obj.check_interval  < interval) && (obj.check_interval > 1)) { interval = obj.check_interval; }
@@ -221,45 +221,45 @@ export class ProtocolEditPage implements OnInit {
     }
 
     this.activProtocol.items.forEach(element => {
-      console.log('Mandatory Control :', element, element.mandatory, element.type, element.value);
+      // console.log('Mandatory Control :', element, element.mandatory, element.type, element.value);
       // Toggle
       if (element.type == 0) {
-        console.log('toggle :', element.value);
+        // console.log('toggle :', element.value);
         if (element.mandatory == 'true' && !element.value) {
           this.mandatoryControl = true;
         }
       }
       // Sekect
       if (element.type == 1) {
-        console.log('select :', element.value);
+        // console.log('select :', element.value);
         if (element.mandatory == 'true' && element.value == null) {
           this.mandatoryControl = true;
         }
       }
       // Textarea
       if (element.type == 2) {
-        console.log('textarea :', element.value);
+        // console.log('textarea :', element.value);
         if (element.mandatory == 'true' && element.value == null) {
           this.mandatoryControl = true;
         }
       }
       // Number
       if (element.type == 3) {
-        console.log('number :', element.value);
+        // console.log('number :', element.value);
         if (element.mandatory == 'true' && element.value == null) {
           this.mandatoryControl = true;
         }
       }
       // Time
       if (element.type == 4) {
-        console.log('time :', element.value);
+        // console.log('time :', element.value);
         if (element.mandatory == 'true' && element.value == null) {
           this.mandatoryControl = true;
         }
       }
       // Date
       if (element.type == 5) {
-        console.log('date :', element.value);
+        // console.log('date :', element.value);
         if (element.mandatory == 'true' && element.value == null) {
           this.mandatoryControl = true;
         }
@@ -383,7 +383,7 @@ export class ProtocolEditPage implements OnInit {
               if (temp.options[index].mandatory == 1) {
                 temp.options[index].mandatory = 'true';
               }
-              console.log('mandatory :', temp.options[index].mandatory);
+              // console.log('mandatory :', temp.options[index].mandatory);
               if (temp.options[index].type == 0 || temp.options[index].type == 4) {
                 temp.options[index].value = temp.options[index].options.default;
                 // this.activProtocol.items[index].value =  temp.options[index].options.default;
@@ -435,8 +435,8 @@ export class ProtocolEditPage implements OnInit {
   edit_template() {
     let activTemplate = this.templates.find(x => x.id == this.selectedTmplt);
     console.log('Active Template :', activTemplate);
-    let data = { 
-      idTemplate: this.selectedTmplt, 
+    let data = {
+      idTemplate: this.selectedTmplt,
       idCustomer: this.idCustomer,
       activTemplate: JSON.stringify(activTemplate)
     }

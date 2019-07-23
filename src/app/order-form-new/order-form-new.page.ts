@@ -999,7 +999,9 @@ export class OrderFormNewPage {
           }
         };
 
-        this.pdf.createPdf(docDefinition, pdfMethod, this.translate.instant('Bestellformular'.replace(/\s/g, '')) + '.pdf').then((result) => {
+        this.pdf.createPdf(docDefinition,
+                           pdfMethod,
+                           this.translate.instant('Bestellformular'.replace(/\s/g, '')) + '.pdf').then((result) => {
           console.log('pdf result :', result);
           loader.dismiss();
           res(result);

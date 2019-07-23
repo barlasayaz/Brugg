@@ -212,8 +212,8 @@ export class ProtocolTemplatePage implements OnInit {
         if (element.data.mandatory == 1) { element.data.mandatory = 'true'; }
         this.options.push(element.data);
         this.selectedOption[element.data.id] = 0;
-        console.log('elemet data :', element.data.id, ' - ', element.data);
-        console.log('selectedOption :', this.selectedOption[element.data.id]);
+        // console.log('elemet data :', element.data.id, ' - ', element.data);
+        // console.log('selectedOption :', this.selectedOption[element.data.id]);
       });
       this.optionsAll = JSON.parse(JSON.stringify(this.options));
       console.log('loadOption: ', result.list);

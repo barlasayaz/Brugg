@@ -29,7 +29,7 @@ export class ApiService {
   public appointmentMaxTime: string = '17:59';
 
   version: any = '4.4.11';
-  
+
   constructor(public http: HttpClient, public userdata: UserdataService) {
     console.log('Start ApiProvider Provider');
   }
@@ -48,10 +48,10 @@ export class ApiService {
         'password'     : password
       }
       // call  endpoint
-      this.http.post(url, data,{ responseType:'text' })
+      this.http.post(url, data, { responseType: 'text' })
         .subscribe(
           (data: any) => {
-            data =JSON.parse(data);
+            data = JSON.parse(data);
             console.log('api bid_login() post data: ', data);
             if (data.amount == 1) {
               console.log('api bid_login() ok ');
@@ -65,16 +65,16 @@ export class ApiService {
               this.userdata.email = data.user_info.email;
               this.userdata.phone = data.user_info.phone;
 
-              this.pvs4_get_my_profile(email).then((done: any) => { 
+              this.pvs4_get_my_profile(email).then((done: any) => {
                 done = done.obj;
                 done.last_login = this.date2mysql(new Date(), false);
-                this.pvs4_set_profile(done).then((done: any) => { 
+                this.pvs4_set_profile(done).then((done: any) => {
                     console.log('api pvs4_set_profile() ok ');
                 },
                   err => { // return the error
-                    console.error('api pvs4_set_profile() nok ',err);
+                    console.error('api pvs4_set_profile() nok ', err);
                 });
-                
+
                 res(data);
               },
                 err => { // return the error
@@ -89,7 +89,7 @@ export class ApiService {
               localStorage.removeItem('refresh_token');
               window.localStorage['pvs4_bruggid'] = '';
               rej(data);
-            }            
+            }
           }, // success path
           error => {
             window.localStorage['pvs4_login'] = 0;
@@ -105,7 +105,7 @@ export class ApiService {
     });
   }
 
-  bid_reset(orig_url: string, orig_data: any, orig_headers:any) {
+  bid_reset(orig_url: string, orig_data: any, orig_headers: any) {
     console.log('pvs4_api_reset():', orig_url, orig_data);
     return new Promise((res, rej) => {
       // inject our access token
@@ -118,7 +118,7 @@ export class ApiService {
         'refresh_token' : window.localStorage['refresh_token']
       }
       // call  endpoint
-      this.http.post(url, data,{ responseType:'text' })
+      this.http.post(url, data, { responseType: 'text' })
         .subscribe(
           (data: any) => {
             data = JSON.parse(data);
@@ -129,11 +129,11 @@ export class ApiService {
             this.http.post(orig_url, orig_data, { headers: orig_headers }).subscribe((done: any) => {
               // return the result
               done = JSON.parse(done);
-              console.info(url, done);
+              console.log(url, done);
               res(done);
             },
             err => {
-                console.info('bid_reset() post error:',url, err);
+                console.log('bid_reset() post error:', url, err);
                 rej(err);
             });
           }, // success path
@@ -175,7 +175,7 @@ export class ApiService {
     });
   }
   */
- 
+
   /******************* PVS4 API  *********************************************/
   pvs4_api_post(func: string, data: any) {
     console.log('pvs4_api_post():', func, data);
@@ -187,22 +187,22 @@ export class ApiService {
       data.token = window.localStorage['access_token'];
       data.bruggid = window.localStorage['pvs4_bruggid'];
       // call  endpoint
-      this.http.post(url, data, { headers: headers,responseType:'text' }).subscribe((done: any) => {
+      this.http.post(url, data, { headers: headers, responseType: 'text' }).subscribe((done: any) => {
           // return the result
-          done =JSON.parse(done);
-          console.info(func, done);
+          done = JSON.parse(done);
+          console.log(func, done);
           res(done);
         },
           err => {
-            console.info('pvs4_api_post error:',func, err);
-            if(err.status==401){
+            console.log('pvs4_api_post error:', func, err);
+            if (err.status == 401) {
               this.bid_reset(url, data, headers).then((done: any) => { // return the result
                 res(done);
               },
                 err => { // return the error
                   rej(err);
               });
-            }else{
+            } else {
               rej(err);
             }
         });
@@ -215,7 +215,7 @@ export class ApiService {
         email: email
       }
       this.pvs4_api_post('get_profile.php', post_data).then((done: any) => { // return the result
-        console.info('pvs4_getprofile done ok: ', done);
+        console.log('pvs4_getprofile done ok: ', done);
         const system_role = JSON.parse(done.obj.system_role); 
         const licensee_role = JSON.parse(done.obj.licensee_role); 
         const customer_role = JSON.parse( done.obj.customer_role); 
@@ -234,27 +234,27 @@ export class ApiService {
         }; 
         this.userdata.short_code = done.obj.short_code; 
         this.userdata.colour = done.obj.colour; 
-        if(system_role.length>0) { 
+        if (system_role.length > 0) { 
           this.userdata.role = 1; 
           this.userdata.role_set = system_role[0]; 
           this.userdata.all_role_set = system_role; 
-        }else if(licensee_role.length>0)  { 
+        } else if (licensee_role.length > 0)  { 
           this.userdata.role = 2; 
           this.userdata.role_set = licensee_role[0]; 
           this.userdata.licensee = licensee_role[0].licensee;
           this.userdata.all_role_set = licensee_role; 
-        }else if(customer_role.length>0) { 
+        } else if (customer_role.length > 0) { 
           this.userdata.role = 3; 
           this.userdata.role_set = customer_role[0]; 
           this.userdata.all_role_set = customer_role; 
         }
-        if(!this.userdata.role_set.check_products) this.userdata.role_set.check_products = false;
-        if(!this.userdata.role_set.edit_contact_persons) this.userdata.role_set.edit_contact_persons = false;
-        if(!this.userdata.role_set.edit_customer) this.userdata.role_set.edit_customer = false;
-        if(!this.userdata.role_set.edit_membership) this.userdata.role_set.edit_membership = false;
-        if(!this.userdata.role_set.edit_products) this.userdata.role_set.edit_products = false;
-        if(!this.userdata.role_set.edit_rights) this.userdata.role_set.edit_rights = false;
-        console.info('pvs4_get_my_profile done ok: ', this.userdata); 
+        if (!this.userdata.role_set.check_products) { this.userdata.role_set.check_products = false; }
+        if (!this.userdata.role_set.edit_contact_persons) { this.userdata.role_set.edit_contact_persons = false; }
+        if (!this.userdata.role_set.edit_customer) { this.userdata.role_set.edit_customer = false; }
+        if (!this.userdata.role_set.edit_membership) { this.userdata.role_set.edit_membership = false; }
+        if (!this.userdata.role_set.edit_products) { this.userdata.role_set.edit_products = false; }
+        if (!this.userdata.role_set.edit_rights) { this.userdata.role_set.edit_rights = false; }
+        console.log('pvs4_get_my_profile done ok: ', this.userdata); 
         res(done);
       },
         err => { // return the error
@@ -275,7 +275,7 @@ export class ApiService {
       let post_data = {
       }
       this.pvs4_api_post("_run_.php", post_data).then((done: any) => { //return the result
-        console.info("_run_ done ok: ", done);
+        console.log("_run_ done ok: ", done);
         res(done);
       },
         err => { // return the error
@@ -284,14 +284,14 @@ export class ApiService {
     });
   }
 */
-  pvs4_get_profile(email: string, check:number=0) {
+  pvs4_get_profile(email: string, check: number= 0) {
     return new Promise((res, rej) => {
       const post_data = {
         email: email,
         check: check
       }
       this.pvs4_api_post('get_profile.php', post_data).then((done: any) => { // return the result
-        console.info('pvs4_get_profile done ok: ', done);
+        console.log('pvs4_get_profile done ok: ', done);
         res(done);
       },
         err => { // return the error
@@ -301,7 +301,7 @@ export class ApiService {
   }
 
   pvs4_set_profile(obj: any) {
-    console.info('pvs4_set_profile():', obj);
+    console.log('pvs4_set_profile():', obj);
     return new Promise((res, rej) => {
       this.pvs4_api_post('set_profile.php', obj).then((done: any) => {// return the result
         res(done);
@@ -323,24 +323,24 @@ export class ApiService {
       });
     });
   }
-  pvs4_move_pvs3_customer(pvs3_id:number) { 
-    console.info('move_pvs3_customer() ', pvs3_id);
+  pvs4_move_pvs3_customer(pvs3_id: number) { 
+    console.log('move_pvs3_customer() ', pvs3_id);
     return new Promise((res, rej) => {
       const data = {
         pvs3_id: pvs3_id
       }
       this.pvs4_api_post('move_pvs3_customer.php', data).then((done: any) => { // return the result
-        console.info('move_pvs3_customer done ok: ', done);
+        console.log('move_pvs3_customer done ok: ', done);
         res(done);
       },
         err => { // return the error
-          console.info('move_pvs3_customer error: ', err);
+          console.log('move_pvs3_customer error: ', err);
           rej(err);
       });
     });
   }
 
-  pvs4_get_colleagues_list(role: number, role_set:any, licensee:number) {
+  pvs4_get_colleagues_list(role: number, role_set: any, licensee: number) {
     // let userID = this.userdata.id;
     return new Promise((res, rej) => {
       const data = {
@@ -358,7 +358,7 @@ export class ApiService {
     });
   }
 
-  pvs4_get_customer_list(parentID: number, offset:number=0) {
+  pvs4_get_customer_list(parentID: number, offset: number= 0) {
     const userID = this.userdata.id;
     const licensee = this.userdata.licensee;
     const role = this.userdata.role;
@@ -367,7 +367,7 @@ export class ApiService {
         user: userID,
         parent: parentID,
         licensee: licensee,
-        offset :offset,
+        offset : offset,
         role: role
       }
       this.pvs4_api_post('get_customer_list.php', data).then((done: any) => { // return the result
@@ -400,7 +400,7 @@ export class ApiService {
   }
 
   pvs4_set_product_opt(obj: any) {
-    console.info('pvs4_set_product_opt():', obj);
+    console.log('pvs4_set_product_opt():', obj);
     return new Promise((res, rej) => {
       this.pvs4_api_post('set_product_opt.php', obj).then((done: any) => {// return the result
         res(done);
@@ -428,7 +428,7 @@ export class ApiService {
     });
   }
   pvs4_set_product_tem(obj: any) {
-    console.info('pvs4_set_product_tem():', obj);
+    console.log('pvs4_set_product_tem():', obj);
     return new Promise((res, rej) => {
 
       this.pvs4_api_post('set_product_tem.php', obj).then((done: any) => {// return the result
@@ -459,8 +459,8 @@ export class ApiService {
   }
 
   pvs4_set_protocol_opt(obj: any) {
-    obj.author = this.userdata.first_name+' '+this.userdata.last_name;
-    console.info('pvs4_set_protocol_opt():', obj);
+    obj.author = this.userdata.first_name + ' ' + this.userdata.last_name;
+    console.log('pvs4_set_protocol_opt():', obj);
     return new Promise((res, rej) => {
       this.pvs4_api_post('set_protocol_opt.php', obj).then((done: any) => {// return the result
         res(done);
@@ -489,7 +489,7 @@ export class ApiService {
   }
 
   pvs4_set_protocol_tem(obj: any) {
-    console.info('pvs4_set_protocol_tem():', obj);
+    console.log('pvs4_set_protocol_tem():', obj);
     return new Promise((res, rej) => {
       this.pvs4_api_post('set_protocol_tem.php', obj).then((done: any) => {// return the result
         res(done);
@@ -501,7 +501,7 @@ export class ApiService {
   }
 
   pvs4_set_note(obj: any) {
-    console.info('pvs4_set_note():', obj);
+    console.log('pvs4_set_note():', obj);
     return new Promise((res, rej) => {
       this.pvs4_api_post('set_note.php', obj).then((done: any) => {// return the result
         res(done);
@@ -547,7 +547,7 @@ export class ApiService {
 
   pvs4_set_protocol(obj: any) {
     obj.author = this.userdata.first_name + ' ' + this.userdata.last_name;
-    console.info('pvs4_set_protocol():', obj);
+    console.log('pvs4_set_protocol():', obj);
     return new Promise((res, rej) => {
       this.pvs4_api_post('set_protocol.php', obj).then((done: any) => {// return the result
         res(done);
@@ -597,7 +597,7 @@ export class ApiService {
 
   pvs4_set_product(obj: any) {
     obj.author = this.userdata.first_name + ' ' + this.userdata.last_name;
-    console.info('pvs4_set_product():', obj);
+    console.log('pvs4_set_product():', obj);
     return new Promise((res, rej) => {
       this.pvs4_api_post('set_product.php', obj).then((done: any) => {// return the result
         res(done);
@@ -609,7 +609,7 @@ export class ApiService {
   }
 
   pvs4_set_product_tag(obj: any) {
-    console.info('pvs4_set_product():', obj);
+    console.log('pvs4_set_product():', obj);
     return new Promise((res, rej) => {
       this.pvs4_api_post('set_product_tag.php', obj).then((done: any) => {// return the result
         res(done);
@@ -629,7 +629,7 @@ export class ApiService {
       }
       this.pvs4_api_post('get_nfc_product.php', data).then((done: any) => {// return the result
         done.amount = parseInt(done.amount);
-        if(done.amount>0) {
+        if (done.amount > 0) {
           done.obj.id = parseInt(done.obj.id);
           done.obj.active = parseInt(done.obj.active);
           done.obj.parent = parseInt(done.obj.parent);
@@ -675,9 +675,9 @@ export class ApiService {
         id: productID
       }
       this.pvs4_api_post('get_product.php', data).then((done: any) => {// return the result
-        //console.log('get_product :', done);
-        if(done.amount){
-          if(done.amount>0){
+        // console.log('get_product :', done);
+        if (done.amount) {
+          if (done.amount > 0) {
             done.obj.id = parseInt(done.obj.id);
             done.obj.active = parseInt(done.obj.active);
             done.obj.parent = parseInt(done.obj.parent);
@@ -729,7 +729,7 @@ export class ApiService {
     });
   }
 
-  pvs4_set_inspection_service(customerID: number, mode:number) {
+  pvs4_set_inspection_service(customerID: number, mode: number) {
     return new Promise((res, rej) => {
       const data = {
         id: customerID,
@@ -745,7 +745,7 @@ export class ApiService {
   }
 
   pvs4_set_customer(obj: any) {
-    console.info('pvs4_set_customer():', obj);
+    console.log('pvs4_set_customer():', obj);
     return new Promise((res, rej) => {
       this.pvs4_api_post('set_customer.php', obj).then((done: any) => {// return the result
         res(done);
@@ -763,8 +763,8 @@ export class ApiService {
     return new Promise((res, rej) => {
       const data = {
         user: userID
-        ,licensee: licensee
-        ,role: role
+        , licensee: licensee
+        , role: role
       }
       this.pvs4_api_post('get_appointment_list.php', data).then((done: any) => {// return the result
         res(done);
@@ -775,18 +775,18 @@ export class ApiService {
     });
   }
 
-  pvs4_get_customer_list_app( a:boolean) {
+  pvs4_get_customer_list_app( a: boolean) {
     const userID = this.userdata.id;
     const licensee = this.userdata.licensee;
     const role = this.userdata.role;
     let all = 0;
-    if(a) all = 1;
+    if (a) { all = 1; }
     return new Promise((res, rej) => {
       const data = {
         user: userID
-        ,all: all
-        ,licensee: licensee
-        ,role: role
+        , all: all
+        , licensee: licensee
+        , role: role
       }
       this.pvs4_api_post('get_customer_list_app.php', data).then((done: any) => {// return the result
         res(done);
@@ -816,7 +816,7 @@ export class ApiService {
   }
 
   pvs4_set_appointment(obj: any) {
-    console.info('pvs4_set_appointment():', obj);
+    console.log('pvs4_set_appointment():', obj);
     return new Promise((res, rej) => {
       this.pvs4_api_post('set_appointment.php', obj).then((done: any) => {// return the result
         res(done);
@@ -873,7 +873,7 @@ export class ApiService {
   }
 
   pvs4_set_rebox_pickup(obj: any) {
-    console.info('pvs4_set_rebox_pickup():', obj);
+    console.log('pvs4_set_rebox_pickup():', obj);
     return new Promise((res, rej) => {
       this.pvs4_api_post('set_rebox_pickup.php', obj).then((done: any) => {// return the result
         res(done);
@@ -885,10 +885,10 @@ export class ApiService {
   }
 
   pvs4_set_orders_send(obj: any) {
-    console.info('pvs4_set_orders_send():', obj);
+    console.log('pvs4_set_orders_send():', obj);
     return new Promise((res, rej) => {
       this.pvs4_api_post('set_orders_send.php', obj).then((done: any) => {// return the result
-        console.info('pvs4_set_orders_send', done);
+        console.log('pvs4_set_orders_send', done);
         res(done);
       },
         err => { // return the error
@@ -927,7 +927,7 @@ export class ApiService {
   }
 
   pvs4_set_mydata(obj: any) {
-    console.info('pvs4_set_mydata():', obj);
+    console.log('pvs4_set_mydata():', obj);
     return new Promise((res, rej) => {
       this.pvs4_api_post('set_mydata.php', obj).then((done: any) => {// return the result
         res(done);
@@ -1004,7 +1004,7 @@ export class ApiService {
   }
 
   pvs4_set_contact_person(obj: any) {
-    console.info('pvs4_set_contact_person():', obj);
+    console.log('pvs4_set_contact_person():', obj);
     return new Promise((res, rej) => {
       this.pvs4_api_post('set_contact_person.php', obj).then((done: any) => {// return the result
         res(done);
@@ -1021,8 +1021,8 @@ export class ApiService {
     return new Promise((res, rej) => {
       const data = {
         user: userID
-        ,licensee: licensee
-        ,idCustomer: idCustomer
+        , licensee: licensee
+        , idCustomer: idCustomer
       }
       this.pvs4_api_post('get_appointment_date.php', data).then((done: any) => {// return the result
         res(done);
@@ -1034,13 +1034,13 @@ export class ApiService {
   }
 
   pvs4_uploadphp(obj: any) {
-    console.info('pvs4_uploadphp():', obj);
+    console.log('pvs4_uploadphp():', obj);
     return new Promise((resolve, reject) => {
       const tick = Date.now().toString(16).toUpperCase();
       const url = pvs4_apiURL + 'upload.php' + '?tick=' + tick;
       // obj.append("token",this.userdata.token);
       this.http.post(url, obj).subscribe(res => {
-        console.info('pvs4_uploadphp done :', res);
+        console.log('pvs4_uploadphp done :', res);
         resolve(res);
       }, (err) => {
         console.log('pvs4_uploadphp err :', err);
@@ -1059,7 +1059,7 @@ export class ApiService {
       parameters.token = this.userdata.token;
 
       this.http.post(url, JSON.stringify(parameters), { headers: headers }).subscribe(res => {
-        // console.info("postData", res);
+        // console.log("postData", res);
         resolve(res);
       }, (err) => {
         reject(err);
@@ -1101,23 +1101,25 @@ export class ApiService {
 
   date2mysql(dateobj, kurz) {
     let date = new Date();
-    if (dateobj) date = new Date(dateobj);
+    if (dateobj) { date = new Date(dateobj); }
 
     // let mysqlDateTime = date.toISOString().slice(0, 19).replace('T', ' ');
     // if(kurz) let mysqlDateTime = date.toISOString().slice(0, 10);
 
     let mysqlDateTime = date.getFullYear() + '-' + this.addZero(date.getMonth() + 1) + '-' + this.addZero(date.getDate());
-    if (!kurz) mysqlDateTime += ' ' + this.addZero(date.getHours()) + ':' + this.addZero(date.getMinutes()) + ':' + this.addZero(date.getSeconds());
+    if (!kurz) {
+      mysqlDateTime += ' ' + this.addZero(date.getHours()) + ':' + this.addZero(date.getMinutes()) + ':' + this.addZero(date.getSeconds());
+    }
 
     return mysqlDateTime;
   }
 
   time2mysql(dateobj) {
     let date = new Date();
-    if (dateobj) date = new Date(dateobj);
+    if (dateobj) { date = new Date(dateobj); }
     let mysqlTime: any = '';
-    if (date.getHours() < 10) mysqlTime = '0' + date.getHours(); else mysqlTime = date.getHours();
-    if (date.getMinutes() < 10) mysqlTime += ':0' + date.getMinutes(); else mysqlTime += ':' + date.getMinutes();
+    if (date.getHours() < 10) { mysqlTime = '0' + date.getHours(); } else { mysqlTime = date.getHours(); }
+    if (date.getMinutes() < 10) { mysqlTime += ':0' + date.getMinutes(); } else { mysqlTime += ':' + date.getMinutes(); }
     mysqlTime += ':00';
     return mysqlTime;
   }

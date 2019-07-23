@@ -196,7 +196,7 @@ export class ProductEditPage implements OnInit {
         this.selectedTemplate[element.data.id] = 0;
       });
       this.templateAll = JSON.parse(JSON.stringify(this.templates));
-      console.log('Template Title :', this.templates);
+      // console.log('Template Title :', this.templates);
     });
   }
 
@@ -206,7 +206,7 @@ export class ProductEditPage implements OnInit {
       console.log('ionViewDidLoad result :', result);
       this.productListAll = JSON.parse(JSON.stringify(result.list));
       this.data_tree(this.productListAll);
-      console.log('productListAll :', this.productListAll);
+      // console.log('productListAll :', this.productListAll);
     });
   }
 
@@ -247,7 +247,7 @@ export class ProductEditPage implements OnInit {
       this.mandatoryControl = true;
     }
     this.activProduct.items.forEach(element => {
-      console.log('Mandatory Control :', element, element.mandatory, element.type, element.value);
+      // console.log('Mandatory Control :', element, element.mandatory, element.type, element.value);
       // Toggle
       if (element.type == 0) {
         if (element.mandatory == 'true' && !element.value) {
@@ -256,35 +256,35 @@ export class ProductEditPage implements OnInit {
       }
       // Select
       if (element.type == 1) {
-        console.log('select :', element.mandatory, element.value);
+        // console.log('select :', element.mandatory, element.value);
         if (element.mandatory == 'true' && element.value == null) {
           this.mandatoryControl = true;
         }
       }
       // Textarea
       if (element.type == 2) {
-        console.log('textarea :', element.mandatory, element.value);
+        // console.log('textarea :', element.mandatory, element.value);
         if (element.mandatory == 'true' &&  element.value == null) {
           this.mandatoryControl = true;
         }
       }
       // Number
       if (element.type == 3) {
-        console.log('number :', element.mandatory, element.value);
+        // console.log('number :', element.mandatory, element.value);
         if (element.mandatory == 'true' &&  element.value == null) {
           this.mandatoryControl = true;
         }
       }
       // Time
       if (element.type == 4) {
-        console.log('time :', element.mandatory, element.value);
+        // console.log('time :', element.mandatory, element.value);
         if (element.mandatory == 'true' && element.value == null) {
           this.mandatoryControl = true;
         }
       }
       // Date
       if (element.type == 5) {
-        console.log('date :', element.mandatory, element.value);
+        // console.log('date :', element.mandatory, element.value);
         if (element.mandatory == 'true' && element.value == null) {
           this.mandatoryControl = true;
         }
@@ -298,7 +298,7 @@ export class ProductEditPage implements OnInit {
     }
 
     this.idnumberControl = false;
-    console.log('allnodes :', this.allnodes);
+    // console.log('allnodes :', this.allnodes);
     this.allnodes.forEach(element => {
       if ((this.activProduct.id_number == element.id_number) && (this.activProduct.id != element.id)) {
         this.idnumberControl = true;
@@ -405,7 +405,13 @@ export class ProductEditPage implements OnInit {
     // const pattern = /^(\d*\,)?\d+$/;
     let regex = new RegExp(/[0-9]/g);
     let inputChar = String.fromCharCode(event.keyCode);
-    if (event.keyCode == 37 || event.keyCode == 39 ||  event.keyCode == 8 || event.keyCode == 46 || event.keyCode == 188 || event.keyCode == 110 || (event.keyCode >= 96 && event.keyCode <= 105)) {  // Left / Up / Right / Down Arrow, Backspace, Delete keys
+    if (event.keyCode == 37 ||
+        event.keyCode == 39 ||
+        event.keyCode == 8 ||
+        event.keyCode == 46 ||
+        event.keyCode == 188 ||
+        event.keyCode == 110 ||
+        (event.keyCode >= 96 && event.keyCode <= 105)) {  // Left / Up / Right / Down Arrow, Backspace, Delete keys
       return;
     }
 
@@ -613,7 +619,7 @@ export class ProductEditPage implements OnInit {
               if (temp.options[index].mandatory == 1) {
                 temp.options[index].mandatory = 'true';
               }
-              console.log('mandatory :', temp.options[index].mandatory);
+              // console.log('mandatory :', temp.options[index].mandatory);
               if (temp.options[index].type == 0 || temp.options[index].type == 4) {
                 temp.options[index].value = temp.options[index].options.default;
                 // this.activProduct.items[index].value = temp.options[index].options.default;
