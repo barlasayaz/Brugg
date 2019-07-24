@@ -184,27 +184,32 @@ export class CustomerDetailsPage implements OnInit {
         });
         // **********************************
         console.log('loadCustomer', this.activCustomer);
+
+        // get BAAN and NAV
+        let nr = this.activCustomer.customer_number.trim();
+        console.log('idCustomer :',this.activCustomer.customer_number);
+        if(nr.length>0){
+          if (((this.userdata.role == 1) || (this.userdata.role == 2)) && (this.userdata.licensee == 1)) {
+            this.apiService.pvs4_get_baan(nr).then((baan_nav: any) => {
+              console.log('baan_nav :', baan_nav);
+              if (baan_nav.baan1) {
+                if (baan_nav.baan1 != '') {
+                  this.baan1_aktiv = true;
+                  this.baan1_href = baan_nav.baan1;
+                }
+              }
+              if (baan_nav.baan2) {
+                if (baan_nav.baan2 != '') {
+                  this.baan2_aktiv = true;
+                  this.baan2_href = baan_nav.baan2;
+                }
+              }
+            });
+          }
+        }
       });
 
-      // get BAAN and NAV
-      console.log('idCustomer :', id);
-      if (((this.userdata.role == 1) || (this.userdata.role == 2)) && (this.userdata.licensee == 1)) {
-        this.apiService.pvs4_get_baan(id).then((baan_nav: any) => {
-          console.log('baan_nav :', baan_nav);
-          if (baan_nav.baan1) {
-            if (baan_nav.baan1 != '') {
-              this.baan1_aktiv = true;
-              this.baan1_href = baan_nav.baan1;
-            }
-          }
-          if (baan_nav.baan2) {
-            if (baan_nav.baan2 != '') {
-              this.baan2_aktiv = true;
-              this.baan2_href = baan_nav.baan2;
-            }
-          }
-        });
-      }
+      
     }
 
     getContactList() {

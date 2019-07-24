@@ -28,7 +28,7 @@ export class ApiService {
   public appointmentMinTime: string = '07:00';
   public appointmentMaxTime: string = '17:59';
 
-  version: any = '4.4.11';
+  public version: any = '4.4.12';
   
   constructor(public http: HttpClient, public userdata: UserdataService) {
     console.log('Start ApiProvider Provider');
@@ -897,10 +897,10 @@ export class ApiService {
     });
   }
 
-  pvs4_get_baan(id: any) {
+  pvs4_get_baan(nr: any) {
     return new Promise((res, rej) => {
       const data = {
-        id: id
+        id_nr: nr
       }
       this.pvs4_api_post('get_baan.php', data).then((done: any) => {// return the result
         res(done);

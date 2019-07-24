@@ -21,8 +21,8 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' && empty($_POST)) {
 switch ($_SERVER['REQUEST_METHOD']) {
     case "POST":
         // if we are passed an email 
-        if(isset($_POST['id']) ) {
-            processing( $_POST['id'] );
+        if(isset($_POST['id_nr']) ) {
+            processing( $_POST['id_nr'] );
         }else{
             http_response_code(500);
             $error = new \stdClass();
@@ -47,7 +47,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
         die;
 }
 
-function processing($id) {
+function processing($id_nr) {
     global $brugg_id_api,$database_location,$database_username,$database_password,$database_name;
     global $baan_dir1, $baan_dir2, $baan_link1, $baan_link2;
 
@@ -91,15 +91,15 @@ function processing($id) {
 
     //ok 
     $output['baan1'] = '';
-    $filename= $baan_dir1."BDAG_".sprintf("%05s",$_POST['id']).".pdf";
+    $filename= $baan_dir1."BDAG_".sprintf("%05s",$_POST['id_nr']).".pdf";
 	if (file_exists($filename)) { 
-        $output['baan1'] =  $baan_link1."BDAG_".sprintf("%05s",$_POST['id']).".pdf";
+        $output['baan1'] =  $baan_link1."BDAG_".sprintf("%05s",$_POST['id_nr']).".pdf";
     }
 
     $output['baan2'] = '';
-    $filename= $baan_dir2."BDAG_".sprintf("%05s",$_POST['id']).".pdf";
+    $filename= $baan_dir2."BDAG_".sprintf("%05s",$_POST['id_nr']).".pdf";
 	if (file_exists($filename)) { 
-        $output['baan2'] =  $baan_link2."BDAG_".sprintf("%05s",$_POST['id']).".pdf";
+        $output['baan2'] =  $baan_link2."BDAG_".sprintf("%05s",$_POST['id_nr']).".pdf";
     }
 
     echo json_encode($output );
