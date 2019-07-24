@@ -167,10 +167,12 @@ export class ProtocolListPage implements OnInit {
             this.title_translate(this.protocolListAll);
 
             for (let index = 0; index < this.protocolListAll.length; index++) {
-                // console.log("data :", this.protocolListAll[index].data);
-                let options = JSON.parse(this.protocolListAll[index].data.items);
-                // console.log("options :", options);
-                if (options == null) { options = []; }
+                let options = []
+                try{
+                    options = JSON.parse(this.protocolListAll[index].data.items);
+                }catch{
+                    console.error('JSON.parse index:'+index, this.protocolListAll[index].data );
+                }   
 
                 for (let i = 0; i < options.length; i++) {
                     if (!this.cols.find(x => x.field == options[i].title[this.lang])) {
@@ -230,7 +232,7 @@ export class ProtocolListPage implements OnInit {
 
     title_translate(nodes: TreeNode[]): any {
         for (let i = 0; i < nodes.length; i++) {
-            const title = JSON.parse(nodes[i].data.title);
+
             let product = [];
             if (nodes[i].data.product) {
                 product = JSON.parse(nodes[i].data.product);
@@ -243,7 +245,15 @@ export class ProtocolListPage implements OnInit {
                 }
                 nodes[i].data.product = productText;
             }
-            nodes[i].data.title = title[this.lang];
+
+            let title = nodes[i].data.title;
+            try{
+                title = JSON.parse(nodes[i].data.title);
+                title = title[this.lang];
+            }catch{
+                console.error('JSON.parse i:'+i, nodes[i].data );
+            }
+            nodes[i].data.title = title ;
         }
     }
 
