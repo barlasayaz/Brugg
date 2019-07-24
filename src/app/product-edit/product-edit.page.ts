@@ -435,6 +435,30 @@ export class ProductEditPage implements OnInit {
         console.log('getImage data :', data, data['data']);
         this.activProduct.images = data['data'];
         this.imagesSave = data['data'];
+
+        let imgstr: string = this.imagesSave;
+        console.log('productEdit imgstr :', imgstr);
+        if (imgstr != null) {
+          if (imgstr.indexOf('assets/') != -1) {
+            this.imagesSave = imgstr.replace('assets/', '');
+          }
+          if (imgstr.indexOf('attachments/') != -1) {
+            this.imagesSave = imgstr.replace('attachments/', '');
+          }
+        } else {
+          this.imagesSave = '';
+        }
+
+        let obj = JSON.parse(JSON.stringify(this.activProduct));
+        if (obj['id'] > 0) {
+          obj['items'] = JSON.stringify(this.activProduct['items']);
+          obj['title'] = JSON.stringify(this.activProduct['title']);
+          obj['images'] = this.imagesSave;
+          this.apiService.pvs4_set_product(obj).then((result: any) => {
+            console.log('result: ', result);
+          });
+        }
+
       }
     });
     modal.present();
@@ -493,6 +517,30 @@ export class ProductEditPage implements OnInit {
         this.imagesSave = 'mobileimages/productimage_' + this.idProduct + '.jpg';
         console.log('upload images :', this.imagesSave);
         this.hideLoader();
+
+        let imgstr: string = this.imagesSave;
+        console.log('productEdit imgstr :', imgstr);
+        if (imgstr != null) {
+          if (imgstr.indexOf('assets/') != -1) {
+            this.imagesSave = imgstr.replace('assets/', '');
+          }
+          if (imgstr.indexOf('attachments/') != -1) {
+            this.imagesSave = imgstr.replace('attachments/', '');
+          }
+        } else {
+          this.imagesSave = '';
+        }
+
+        let obj = JSON.parse(JSON.stringify(this.activProduct));
+        if (obj['id'] > 0) {
+          obj['items'] = JSON.stringify(this.activProduct['items']);
+          obj['title'] = JSON.stringify(this.activProduct['title']);
+          obj['images'] = this.imagesSave;
+          this.apiService.pvs4_set_product(obj).then((result: any) => {
+            console.log('result: ', result);
+          });
+        }
+
       }, (err) => {
         console.log('Uploaded Error :', err);
         this.activProduct.images = '';
@@ -517,6 +565,30 @@ export class ProductEditPage implements OnInit {
         this.activProduct.images = this.file_link + 'mobileimages/productimage_' + this.idProduct + '.jpg';
         this.imagesSave = 'mobileimages/productimage_' + this.idProduct + '.jpg';
         console.log('upload images :', this.file_link, this.activProduct.images);
+
+        let imgstr: string = this.imagesSave;
+        console.log('productEdit imgstr :', imgstr);
+        if (imgstr != null) {
+          if (imgstr.indexOf('assets/') != -1) {
+            this.imagesSave = imgstr.replace('assets/', '');
+          }
+          if (imgstr.indexOf('attachments/') != -1) {
+            this.imagesSave = imgstr.replace('attachments/', '');
+          }
+        } else {
+          this.imagesSave = '';
+        }
+
+        let obj = JSON.parse(JSON.stringify(this.activProduct));
+        if (obj['id'] > 0) {
+          obj['items'] = JSON.stringify(this.activProduct['items']);
+          obj['title'] = JSON.stringify(this.activProduct['title']);
+          obj['images'] = this.imagesSave;
+          this.apiService.pvs4_set_product(obj).then((result: any) => {
+            console.log('result: ', result);
+          });
+        }
+
     });
 
   }
@@ -806,5 +878,14 @@ export class ProductEditPage implements OnInit {
   delImage() {
     this.activProduct.images = '';
     this.imagesSave = '';
+    let obj = JSON.parse(JSON.stringify(this.activProduct));
+    if (obj['id'] > 0) {
+      obj['items'] = JSON.stringify(this.activProduct['items']);
+      obj['title'] = JSON.stringify(this.activProduct['title']);
+      obj['images'] = this.activProduct.images;
+      this.apiService.pvs4_set_product(obj).then((result: any) => {
+        console.log('result: ', result);
+      });
+    }
   }
 }

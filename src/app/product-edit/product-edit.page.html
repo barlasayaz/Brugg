@@ -92,7 +92,8 @@
                           </button>     -->        
                           <ion-button size="small" 
                                       class="btn-red"
-                                     (click)="productDeactivate()">
+                                     (click)="productDeactivate()"
+                                     [disabled] = "!activProduct.id">
                             <ion-icon name="trash"></ion-icon>
                           </ion-button>   
                           <ion-button size="small" 
