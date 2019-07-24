@@ -175,17 +175,24 @@ export class CustomerTablePage implements OnInit {
             { field: 'inspector', header: this.translate.instant('Prüfer') }
         ];
 
-        this.filterCols = [
-            'company', 'id', 'customer_number', 'rating', 'zip_code', 'place', 'employees', 'last_date', 'next_date', 'inspector', 'search_all'
-        ];
+        this.filterCols = ['company',
+                           'id',
+                           'customer_number',
+                           'rating',
+                           'zip_code',
+                           'place',
+                           'employees',
+                           'last_date',
+                           'next_date',
+                           'inspector',
+                           'search_all'];
         this.selectedColumns = this.cols;
         console.log('CustomerTablePage idCustomer:', this.idCustomer);
         this.page_load();
     }
     onResize(event) {
-        console.log('onResize');
         this.funcHeightCalc();
-     }
+    }
 
     funcHeightCalc() {
         let x = this.divHeightCalc.nativeElement.scrollHeight;
@@ -193,7 +200,6 @@ export class CustomerTablePage implements OnInit {
         if (this.splitFilter) { x = x - 51; }
         // if (x < 80) { x = 80; }
         this.heightCalc = x + 'px';
-        console.log('heightCalc 1 :', x, this.heightCalc );
     }
 
     page_load() {
@@ -206,7 +212,7 @@ export class CustomerTablePage implements OnInit {
 
             this.customerListAll = result.list;
 
-            console.log(' customerListAll ', this.customerListAll );
+            // console.log(' customerListAll ', this.customerListAll );
             if (localStorage.getItem('filter_values') != undefined) {
                 this.columnFilterValues = JSON.parse(localStorage.getItem('filter_values'));
             }
@@ -223,7 +229,6 @@ export class CustomerTablePage implements OnInit {
     }
 
     try_filter(node: TreeNode): boolean {
-        //console.log('try_filter', node );
         let ret: any = false;
 
         for (let i = 0; i < this.cols.length; i++) {
@@ -239,12 +244,11 @@ export class CustomerTablePage implements OnInit {
             ret = true;
              }
 
-        for (let i = 0; i < this.cols.length; i++) { 
+        for (let i = 0; i < this.cols.length; i++) {
             let fx = '';
             if (this.columnFilterValues[this.cols[i].field]) {
                 fx = this.columnFilterValues[this.cols[i].field].trim();
             }
-            //console.log('node.data[this.cols[i].field]', node.data[this.cols[i].field] );
             if  (fx.length > 0) {
                 if (node.data[this.cols[i].field]) {
                     if ( (node.data[this.cols[i].field].toLowerCase().indexOf(fx.toLowerCase()) < 0) ) { return false; }
@@ -258,7 +262,6 @@ export class CustomerTablePage implements OnInit {
     }
 
     dir_try_filter(nodes: TreeNode[]): any {
-        //console.log('dir_try_filter', nodes, nodes.length);
         let del_ret = false;
         for (let i = 0; i < nodes.length; i++) {
             if (nodes[i].children) {
@@ -514,7 +517,7 @@ export class CustomerTablePage implements OnInit {
             obj.po_box  = obj.po_box.replace(/(\\r\\n|\\n|\\r)/gm, ' ');
             obj.sector  = obj.sector.replace(/(\\r\\n|\\n|\\r)/gm, ' ');
             obj.street  = obj.street.replace(/(\\r\\n|\\n|\\r)/gm, ' ');
-            console.log('obj >>> ', obj);
+            // console.log('obj >>> ', obj);
             let json: any = {};
             for (var j = 0; j < this.selectedColumns.length; j++) {
                 if (obj[this.selectedColumns[j].field]) {
@@ -523,7 +526,7 @@ export class CustomerTablePage implements OnInit {
                     json[this.selectedColumns[j].header] = '';
                 }
             }
-            console.log('>>json :', json);
+            // console.log('>>json :', json);
             data.push(json);
         }
         this.excelService.exportAsExcelFile(data, 'customer_all.xlsx');
@@ -550,7 +553,7 @@ export class CustomerTablePage implements OnInit {
                     json[this.selectedColumns[j].header] = '';
                 }
             }
-            console.log('>>json :', json);
+            // console.log('>>json :', json);
             data.push(json);
         }
         this.excelService.exportAsExcelFile(data, 'customer_view.xlsx');
@@ -618,7 +621,7 @@ export class CustomerTablePage implements OnInit {
               value: this.cols[i].field,
               checked: this.selectedColumns.find(x => x.field == this.cols[i].field)
           });
-      } 
+      }
           const alert = await this.alertCtrl.create({header: this.translate.instant('Spalten Auswählen'), inputs: inputs,
           buttons: [{
               text: this.translate.instant('dismiss'),

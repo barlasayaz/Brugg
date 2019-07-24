@@ -32,8 +32,24 @@ export class NoteListPage implements OnInit {
     public xlsHeader: any[];
     public splitFilter: boolean = false;
     public idCustomer: number = 0;
-    public columnFilterValues = { title: '', notes: '', notes_date: '', category: '', name_user: '', name_contact: '', search_all: '' };
-    public categoryNames: string[] = ['Besuchsberichte', 'Kundenpotential', 'Kundenbeziehung', 'Mitbewerber', 'Dokumentation', 'Werbegeschenke', 'Jahreswechsel', 'Dienstleistungen', 'Sonstiges', 'Disposition',  'Neukundenakquise'];
+    public columnFilterValues = { title: '',
+                                  notes: '',
+                                  notes_date: '',
+                                  category: '',
+                                  name_user: '',
+                                  name_contact: '',
+                                  search_all: '' };
+    public categoryNames: string[] = ['Besuchsberichte',
+                                      'Kundenpotential',
+                                      'Kundenbeziehung',
+                                      'Mitbewerber',
+                                      'Dokumentation',
+                                      'Werbegeschenke',
+                                      'Jahreswechsel',
+                                      'Dienstleistungen',
+                                      'Sonstiges',
+                                      'Disposition',
+                                      'Neukundenakquise'];
     public filterCols: string[];
     public expendedNodes: string[] = [];
     public rowRecords: number = 0;
@@ -164,7 +180,7 @@ export class NoteListPage implements OnInit {
 
     }
     onResize(event) {
-        console.log('onResize');
+        // console.log('onResize');
         this.funcHeightCalc();
      }
 
@@ -174,7 +190,7 @@ export class NoteListPage implements OnInit {
         if (this.splitFilter) { x = x - 51; }
         // if (x < 80) { x = 80; }
         this.heightCalc = x + 'px';
-        console.log('heightCalc 4 :', x, this.heightCalc );
+        // console.log('heightCalc 4 :', x, this.heightCalc );
     }
 
     page_load() {
@@ -199,8 +215,8 @@ export class NoteListPage implements OnInit {
                 let ci = parseInt(this.noteListAll[i].data.category) - 1 ;
                 if (ci < 0) { ci = 8; }
                 let cn = this.categoryNames[ci];
-                console.log('categoryName:', cn, ci, this.noteListAll[i]);
-                this.noteListAll[i].data.category = this.translate.instant(cn); 
+                // console.log('categoryName:', cn, ci, this.noteListAll[i]);
+                this.noteListAll[i].data.category = this.translate.instant(cn);
             }
 
             this.generate_noteList();
@@ -208,11 +224,12 @@ export class NoteListPage implements OnInit {
         this.funcHeightCalc();
     }
 
-
     try_filter(node: TreeNode): boolean {
         let ret: any = false;
         for (let i = 0; i < this.cols.length; i++) {
-            if (this.columnFilterValues['search_all'].trim().length > 0 && node.data[this.cols[i].field] != undefined && node.data[this.cols[i].field].toLowerCase().indexOf(this.columnFilterValues['search_all'].trim().toLowerCase()) >= 0) {
+            if ( this.columnFilterValues['search_all'].trim().length > 0 &&
+                 node.data[this.cols[i].field] != undefined &&
+                 node.data[this.cols[i].field].toLowerCase().indexOf(this.columnFilterValues['search_all'].trim().toLowerCase()) >= 0) {
                 ret = true;
             }
         }
@@ -228,7 +245,9 @@ export class NoteListPage implements OnInit {
             if (this.columnFilterValues[this.cols[i].field]) {
                 fx = this.columnFilterValues[this.cols[i].field].trim();
             }
-            if (fx.length > 0 && node.data[this.cols[i].field] != undefined && node.data[this.cols[i].field].toLowerCase().indexOf(fx.toLowerCase()) < 0) {
+            if (fx.length > 0 &&
+                node.data[this.cols[i].field] != undefined &&
+                node.data[this.cols[i].field].toLowerCase().indexOf(fx.toLowerCase()) < 0) {
                 ret = false;
             }
         }
@@ -263,7 +282,13 @@ export class NoteListPage implements OnInit {
                 this.columnFilterValues[this.cols[i].field] = '';
             }
         } else {
-            this.columnFilterValues = { title: '', notes: '', notes_date: '', category: '', name_user: '', name_contact: '', search_all: '' };
+            this.columnFilterValues = { title: '',
+                                        notes: '',
+                                        notes_date: '',
+                                        category: '',
+                                        name_user: '',
+                                        name_contact: '',
+                                        search_all: '' };
         }
         this.generate_noteList();
     }
@@ -304,7 +329,7 @@ export class NoteListPage implements OnInit {
     }
 
     nodeSelect(event) {
-        console.log('nodeSelect:', event, this.menuItems);
+        // console.log('nodeSelect:', event, this.menuItems);
         this.menuItems[0].disabled = false;
         this.menuItems[1].disabled = false;
     }
@@ -386,8 +411,8 @@ export class NoteListPage implements OnInit {
                     json[this.selectedColumns[j].header] = '';
                 }
             }
-            console.log('>>json :', json);
-            data.push(json); 
+            // console.log('>>json :', json);
+            data.push(json);
         }
         this.excelService.exportAsExcelFile(data, 'note_all.xlsx');
     }
@@ -408,7 +433,7 @@ export class NoteListPage implements OnInit {
                     json[this.selectedColumns[j].header] = '';
                 }
             }
-            console.log('>>json :', json);
+            // console.log('>>json :', json);
             data.push(json);
         }
         this.excelService.exportAsExcelFile(data, 'note_view.xlsx');
@@ -485,7 +510,6 @@ export class NoteListPage implements OnInit {
                 text: this.translate.instant('okay'),
                 handler: data => {
                     console.log('Checkbox data:', data);
-
                     this.selectedColumns = this.cols.filter(function (element, index, array) { return data.includes(element.field) });
                     localStorage.setItem('show_columns_note', JSON.stringify(this.selectedColumns));
                 }

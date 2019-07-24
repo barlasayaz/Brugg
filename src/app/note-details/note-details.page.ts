@@ -20,7 +20,6 @@ import { ActivatedRoute } from '@angular/router';
 export class NoteDetailsPage {
   public idNote: number = 0;
   public activNote: any = {};
-
   public idCustomer: number = 0;
   public categoryNames: string[] = ['Besuchsberichte', 'Kundenpotential', 'Kundenbeziehung', 'Mitbewerber',
                                     'Dokumentation', 'Werbegeschenke', 'Jahreswechsel', 'Dienstleistungen',

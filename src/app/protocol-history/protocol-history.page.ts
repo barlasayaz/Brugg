@@ -99,7 +99,7 @@ export class ProtocolHistoryPage implements OnInit {
 
     loadProtocol() {
         this.apiService.pvs4_get_protocol_history(this.idCustomer, this.idProduct).then((result: any) => {
-           //console.log('loadProtocol pvs4_get_protocol_history :', result.list);
+           // console.log('loadProtocol pvs4_get_protocol_history :', result.list);
            const nodes: any[] = JSON.parse(JSON.stringify(result.list));
            for (let i = 0; i < nodes.length; i++) {
                 const prdct = JSON.parse(nodes[i].data.product);
@@ -162,7 +162,7 @@ export class ProtocolHistoryPage implements OnInit {
         this.listCount = [];
         for (let index = 0; index < prtcl.length; index++) {
             let options = JSON.parse(prtcl[index].data.items);
-            console.log('options :', options);
+            // console.log('options :', options);
             this.listCount.push(index);
             if (options == null) {
                 options = [];
@@ -230,7 +230,7 @@ export class ProtocolHistoryPage implements OnInit {
                     json[this.selectedColumns[j].header] = '';
                 }
             }
-            console.log('>>json :', json);
+            // console.log('>>json :', json);
             data.push(json);
         }
         this.excelService.exportAsExcelFile(data, 'protocol_history.xlsx');
@@ -351,7 +351,7 @@ export class ProtocolHistoryPage implements OnInit {
     }
 
     mouseover(buttonNumber) {
-        if (buttonNumber == 1) { 
+        if (buttonNumber == 1) {
           this.mouseoverButton1 = true;
         } else if (buttonNumber == 2) {
           this.mouseoverButton2 = true;

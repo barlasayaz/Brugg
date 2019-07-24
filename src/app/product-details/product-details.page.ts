@@ -163,7 +163,7 @@ export class ProductDetailsPage implements OnInit {
   onUpload(event) {
     console.log('setFile event :', event);
     for (const file of event.files) {
-      console.log('file', file);
+      // console.log('file', file);
       this.uploadedFiles.push(file);
     }
 

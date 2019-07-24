@@ -47,7 +47,6 @@ export class ProductTemplatePage implements OnInit {
   public company = '';
   public mandatory = 'false';
 
-
   constructor(public navCtrl: NavController,
     public route: ActivatedRoute,
     public apiService: ApiService,
@@ -210,8 +209,8 @@ export class ProductTemplatePage implements OnInit {
         element.data.title = JSON.parse(element.data.title);
         this.options.push(element.data);
         this.selectedOption[element.data.id] = 0;
-        console.log('elemet data :', element.data.id);
-        console.log('selectedOption :', this.selectedOption[element.data.id]);
+        // console.log('elemet data :', element.data.id);
+        // console.log('selectedOption :', this.selectedOption[element.data.id]);
       });
       this.optionsAll = JSON.parse(JSON.stringify(this.options));
       console.log('loadOption: ', result.list);

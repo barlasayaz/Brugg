@@ -46,7 +46,7 @@ export class MyDataEditPage {
               public translate: TranslateService,
               private api : ApiService,
               public viewCtrl: ModalController) {
-    console.log('my-data-edit.ts')
+    console.log('my-data-edit.ts');
     this.pid = 0;
     this.Farbe = '#000fff';
     this.editType = 0;

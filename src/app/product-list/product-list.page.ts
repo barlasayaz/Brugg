@@ -31,7 +31,12 @@ export class ProductListPage implements OnInit {
     public heightCalc: any = '700px';
     public move_id = 0;
     public move_obj: any = {};
-    public columnFilterValues = { title: '', nfc_tag_id: '', id_number: '', articel_no: '', check_interval: '', search_all: '' };
+    public columnFilterValues = { title: '',
+                                  nfc_tag_id: '',
+                                  id_number: '',
+                                  articel_no: '',
+                                  check_interval: '',
+                                  search_all: '' };
     public filterCols: string[];
     public expendedNodes: string[] = [];
     public rowRecords = 0;
@@ -234,7 +239,7 @@ export class ProductListPage implements OnInit {
                     { field: 'check_interval', header: this.translate.instant('Intervall Prüfen') }
                 ];
                 this.idCustomer = parseInt(this.route.snapshot.paramMap.get('id'));
-        
+
                 console.log('ProductListPage idCustomer:', this.idCustomer);
                 this.page_load();
             }
@@ -242,7 +247,7 @@ export class ProductListPage implements OnInit {
     }
 
     onResize(event) {
-        console.log('onResize');
+        // console.log('onResize');
         this.funcHeightCalc();
     }
 
@@ -252,7 +257,7 @@ export class ProductListPage implements OnInit {
         if (this.splitFilter) { x = x - 51; }
         // if (x < 80) { x = 80; }
         this.heightCalc = x + 'px';
-        console.log('heightCalc 2 :', x, this.heightCalc);
+        // console.log('heightCalc 2 :', x, this.heightCalc);
     }
 
     page_load() {
@@ -265,7 +270,7 @@ export class ProductListPage implements OnInit {
         this.apiService.pvs4_get_product_list(this.idCustomer).then((result: any) => {
             console.log('pvs4_get_product_list ok');
             try {
-                let list = JSON.parse(JSON.stringify(result.list));
+                const list = JSON.parse(JSON.stringify(result.list));
                 this.productListAll = list;
             } catch (e) {
                 console.log('JSON.parse err :', e);
@@ -273,12 +278,12 @@ export class ProductListPage implements OnInit {
 
             try {
                 let json = '{';
-                for (var j = 0; j < this.cols.length; j++) {
+                for (let j = 0; j < this.cols.length; j++) {
                     json += '"' + this.cols[j].field + '":""';
                     json += ',';
                 }
                 json += '"search_all":""}';
-                //console.log('columnFilterValues :', json);
+                // console.log('columnFilterValues :', json);
                 this.columnFilterValues = JSON.parse(json);
                 this.selectedColumns = JSON.parse(JSON.stringify(this.cols));
                 if (localStorage.getItem('filter_values_product') != undefined) {
@@ -306,12 +311,22 @@ export class ProductListPage implements OnInit {
                         // console.log("pr :", pr);
                         try {
                             pr = JSON.parse(pr);
-                            if (pr.protocol_date) this.productListAll[index].data.last_protocol_date = this.apiService.mysqlDate2view(pr.protocol_date);
-                            if (pr.protocol_date_next) this.productListAll[index].data.last_protocol_next = this.apiService.mysqlDate2view(pr.protocol_date_next);
+                            if (pr.protocol_date) {
+                                this.productListAll[index].data.last_protocol_date = this.apiService.mysqlDate2view(pr.protocol_date);
+                            }
+                            if (pr.protocol_date_next) {
+                                this.productListAll[index].data.last_protocol_next = this.apiService.mysqlDate2view(pr.protocol_date_next);
+                            }
                             if (pr.result) {
-                                if (pr.result == 1) this.productListAll[index].data.last_protocol_next = this.translate.instant('reparieren');
-                                if (pr.result == 3) this.productListAll[index].data.last_protocol_next = this.translate.instant('unauffindbar');
-                                if (pr.result == 4) this.productListAll[index].data.last_protocol_next = this.translate.instant('ausmustern');
+                                if (pr.result == 1) {
+                                    this.productListAll[index].data.last_protocol_next = this.translate.instant('reparieren');
+                                }
+                                if (pr.result == 3) {
+                                    this.productListAll[index].data.last_protocol_next = this.translate.instant('unauffindbar');
+                                }
+                                if (pr.result == 4) {
+                                    this.productListAll[index].data.last_protocol_next = this.translate.instant('ausmustern');
+                                }
                             }
                         } catch (e) {
                             console.log('JSON.parse(pr) err :', e);
@@ -328,24 +343,30 @@ export class ProductListPage implements OnInit {
                         options = JSON.parse(this.productListAll[index].data.items);
                         // console.log("options :", options);
                     } catch (e) {
-                        console.error("JSON.parse options err :", e);
-                        console.log("options :", this.productListAll[index].data);
+                        console.error('JSON.parse options err :', e);
+                        console.log('options :', this.productListAll[index].data);
                     }
                 }
 
-                //console.log('options :', options);
+                // console.log('options :', options);
 
                 if (options == null) { options = []; }
 
                 for (let i = 0; i < options.length; i++) {
-                    //console.log('options :', options[i]);
-                    //console.log('options :', options[i].id);
-                    //console.log('options :', options[i].title);
+                    // console.log('options :', options[i]);
+                    // console.log('options :', options[i].id);
+                    // console.log('options :', options[i].title);
 
-                    if (!this.cols.find(x => x.field == options[i].title[this.lang])) { this.cols.push({ field: options[i].title[this.lang], header: options[i].title[this.lang] }); }
+                    if (!this.cols.find(x => x.field == options[i].title[this.lang])) {
+                        this.cols.push({ field: options[i].title[this.lang], header: options[i].title[this.lang] });
+                    }
                     const pipe = new DatePipe('en-US');
-                    if (options[i].type == 5) { this.productListAll[index].data[options[i].title[this.lang]] = pipe.transform(options[i].value, 'dd.MM.yyyy'); }
-                    if (options[i].type != 5) { this.productListAll[index].data[options[i].title[this.lang]] = options[i].value; }
+                    if (options[i].type == 5) {
+                        this.productListAll[index].data[options[i].title[this.lang]] = pipe.transform(options[i].value, 'dd.MM.yyyy');
+                    }
+                    if (options[i].type != 5) {
+                        this.productListAll[index].data[options[i].title[this.lang]] = options[i].value;
+                    }
                 }
                 // console.log("index :", index);
             }
@@ -362,16 +383,16 @@ export class ProductListPage implements OnInit {
             } else {
                 nodes[i].data.nfc_tag_id = false;
             }*/
-            var title = nodes[i].data.title;
+            let title = nodes[i].data.title;
 
             try {
                 title = JSON.parse(nodes[i].data.title);
                 // console.log("options :", options);
             } catch (e) {
-                console.error("JSON.parse options err :", e);
-                console.log("title :", nodes[i].data, title);
+                // console.error('JSON.parse options err :', e);
+                // console.log('title :', nodes[i].data, title);
             }
-            
+
             nodes[i].data.titleJson = title;
             nodes[i].data.title = title[this.lang];
             if (nodes[i].children && nodes[i].children.length > 0) {
@@ -399,7 +420,7 @@ export class ProductListPage implements OnInit {
         }
 
         for (let i = 0; i < this.cols.length; i++) {
-            if(this.columnFilterValues[this.cols[i].field]){
+            if (this.columnFilterValues[this.cols[i].field]) {
                 if (this.columnFilterValues[this.cols[i].field].trim().length > 0
                     && (node.data[this.cols[i].field] == undefined || (node.data[this.cols[i].field] != undefined
                         && node.data[this.cols[i].field].toString().
@@ -457,7 +478,7 @@ export class ProductListPage implements OnInit {
             }
         } else {
             let json = '{';
-            for (var j = 0; j < this.cols.length; j++) {
+            for (let j = 0; j < this.cols.length; j++) {
                 json += '"' + this.cols[j].field + '":""';
                 json += ',';
             }
@@ -580,7 +601,7 @@ export class ProductListPage implements OnInit {
                 obj.parent = this.selectedNode.data.id;
             }
         }
- 
+
         this.dataService.setData(obj);
         this.navCtrl.navigateForward(['/product-edit']);
     }
@@ -588,13 +609,13 @@ export class ProductListPage implements OnInit {
     menu_edit() {
         console.log('menu_edit', this.selectedNode);
         if (this.selectedNode) {
-            if (this.selectedNode.data.id) {           
-                let data = {
+            if (this.selectedNode.data.id) {
+                const data = {
                     id: this.selectedNode.data.id,
                     idCustomer: this.idCustomer,
                     parent: this.selectedNode.data.parent,
                     company: this.company
-                }
+                };
                 this.dataService.setData(data);
                 this.navCtrl.navigateForward(['/product-edit']);
             }
@@ -608,12 +629,12 @@ export class ProductListPage implements OnInit {
                 const id = parseInt(this.selectedNode.data.id);
                 console.log('menu_history id', id);
 
-                let data = {
+                const data = {
                     idCustomer: this.idCustomer,
                     idProduct: id,
                     titleProduct: this.selectedNode.data.title,
                     company: this.company
-                }
+                };
                 this.dataService.setData(data);
                 this.navCtrl.navigateForward(['/protocol-history']);
             }
@@ -623,7 +644,7 @@ export class ProductListPage implements OnInit {
     async product_migration() {
         console.log('product_migration', this.selectedNode);
         if (this.selectedNode) {
-            let nodeList : string[]  = [];
+            const nodeList: string[]  = [];
             for (let index = 0; index < this.selectedNode.length; index++) {
                 const element = this.selectedNode[index];
                 nodeList.push(element.data);
@@ -679,19 +700,19 @@ export class ProductListPage implements OnInit {
         if (this.selectedNode) {
             if (this.selectedNode.data.id) {
                 const id = parseInt(this.selectedNode.data.id);
-                console.log('menu_view :', id, JSON.stringify(this.selectedNode.data));
-     
-                this.navCtrl.navigateForward(['/product-details',id] );
+                // console.log('menu_view :', id, JSON.stringify(this.selectedNode.data));
+
+                this.navCtrl.navigateForward(['/product-details', id] );
             }
         }
     }
 
     create_template() {
         console.log('create_template', this.selectedNode);
-    
-        let data = {
+
+        const data = {
             idCustomer: this.idCustomer
-        }
+        };
         this.dataService.setData(data);
         this.navCtrl.navigateForward(['/product-template']);
     }
@@ -699,7 +720,7 @@ export class ProductListPage implements OnInit {
     create_protocol() {
         if (this.selectedNode) {
             console.log('create_protocol', this.selectedNode);
-            let nodeList = [];
+            const nodeList = [];
             for (let index = 0; index < this.selectedNode.length; index++) {
                 const element = this.selectedNode[index];
                 nodeList.push({
@@ -710,12 +731,12 @@ export class ProductListPage implements OnInit {
                 });
                 // nodeList.push(element.data);
             }
-              
-            let data = {
-                id: 0, 
+
+            const data = {
+                id: 0,
                 idCustomer: this.idCustomer,
                 productList: JSON.stringify(nodeList)
-            }
+            };
             this.dataService.setData(data);
             this.navCtrl.navigateForward(['/protocol-edit']);
         }
@@ -738,7 +759,7 @@ export class ProductListPage implements OnInit {
                     json[this.selectedColumns[j].header] = '';
                 }
             }
-            console.log('>>json :', json);
+            // console.log('>>json :', json);
             data.push(json);
         }
         console.log('excel_all data :', data);
@@ -761,7 +782,7 @@ export class ProductListPage implements OnInit {
                     json[this.selectedColumns[j].header] = '';
                 }
             }
-            console.log('>>json :', json);
+            // console.log('>>json :', json);
             data.push(json);
         }
         this.excelService.exportAsExcelFile(data, 'product_view.xlsx');
@@ -799,7 +820,7 @@ export class ProductListPage implements OnInit {
             }
             bodyArray.push(rowArray);
 
-            for (var l = 7; l < this.selectedColumns.length; l++) {
+            for (let l = 7; l < this.selectedColumns.length; l++) {
                 rowArray = [];
                 rowArray.push({ text: this.selectedColumns[l].header, style: 'header' });
                 if (obj[this.selectedColumns[l].field]) {
@@ -853,7 +874,7 @@ export class ProductListPage implements OnInit {
 
     async show_columns() {
         const inputs: any[] = [];
-        for (var i = 0; i < this.cols.length; i++) {
+        for (let i = 0; i < this.cols.length; i++) {
             inputs.push({
                 type: 'checkbox',
                 label: this.cols[i].header,
@@ -873,7 +894,7 @@ export class ProductListPage implements OnInit {
                 text: this.translate.instant('okay'),
                 handler: data => {
                     console.log('Checkbox data:', data);
-                    this.selectedColumns = this.cols.filter(function (element, index, array) { return data.includes(element.field) });
+                    this.selectedColumns = this.cols.filter(function (element, index, array) { return data.includes(element.field); });
                     localStorage.setItem('show_columns_product', JSON.stringify(this.selectedColumns));
                 }
             }
@@ -885,7 +906,7 @@ export class ProductListPage implements OnInit {
     isFilterOn(): any {
         let ret = false;
         for (let i = 0; i < this.cols.length; i++) {
-            if(this.columnFilterValues[this.cols[i].field]){
+            if (this.columnFilterValues[this.cols[i].field]) {
                 if (this.columnFilterValues[this.cols[i].field].trim().length > 0) {
                     ret = true;
                 }
@@ -913,7 +934,7 @@ export class ProductListPage implements OnInit {
         localStorage.setItem('expanded_nodes_product', JSON.stringify(this.expendedNodes));
     }
     onNodeCollapse(event) {
-        this.expendedNodes = this.expendedNodes.filter(function (element, index, array) { return element != event.node.data['id'] });
+        this.expendedNodes = this.expendedNodes.filter(function (element, index, array) { return element != event.node.data['id']; });
         localStorage.setItem('expanded_nodes_product', JSON.stringify(this.expendedNodes));
     }
 }

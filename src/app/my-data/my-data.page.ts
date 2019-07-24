@@ -61,10 +61,8 @@ export class MyDataPage {
 
   mw_test_a(nr: number) {
     console.log('mw_test():', nr);
-    let data = {
-      type: nr,
-      rev: 1
-    }
+    let data = { type: nr,
+                 rev: 1 };
     this.apiService.pvs4_api_post('mw_get_list.php', data).then((done: any) => { // return the result
         console.log('mw_get_list ok :', done);
     },
@@ -74,11 +72,9 @@ export class MyDataPage {
   }
   mw_test_b(nr: number) {
     console.log('mw_test():', nr);
-    let data = {
-      type: nr,
-      action: 'f',
-      id : 49
-    }
+    let data = { type: nr,
+                 action: 'f',
+                 id : 49 };
 
     this.apiService.pvs4_api_post('mw_handle_object.php', data).then((done: any) => { // return the result
         console.log('mw_get_list ok :', done);
@@ -122,9 +118,8 @@ export class MyDataPage {
           this.loadList();
         }
       }
-    })
+    });
     modal.present();
   }
 
 }
-
