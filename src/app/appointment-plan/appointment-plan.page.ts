@@ -264,8 +264,8 @@ export class AppointmentPlanPage {
                 this.events.push( JSON.parse(JSON.stringify(t)) );
                 this.allEvents.push( JSON.parse(JSON.stringify(t)));
             }
-            console.log('events: ', this.events, this.allEvents);
-            this.changeFilter(); 
+            // console.log('events: ', this.events, this.allEvents);
+            this.changeFilter();
         });
     }
     loadEvents(model: any) {

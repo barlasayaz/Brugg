@@ -53,7 +53,6 @@ export class MyDataEditPage {
     this.role = 0;
     this.role_nr = 0;
     this.setRights = false;
-    this.emailToFind = '';
     this.viewNewMode = 0;
     this.pid = parseInt( this.navParams.get('pid') );
     this.role = parseInt( this.navParams.get('role') );

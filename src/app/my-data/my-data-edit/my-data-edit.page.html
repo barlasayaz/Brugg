@@ -164,7 +164,7 @@
             </div>
           </ion-row>
       </ion-grid>
-    </ion-content>
+  </ion-content>
 
   <ion-content *ngIf="editType==1">
     <ion-grid>
@@ -172,17 +172,16 @@
         <ion-col size-md="10" size-sm="10" size="10">
             <ion-item lines="none">
               <ion-label position="floating">{{translate.instant('E-Mail')}}</ion-label>
-                <ion-input required
-                         type="email"
-                         placeholder=""
-                         id="emailToFind"
-                         [(ngModel)]="emailToFind">
+              <ion-input required
+                        type="email"
+                        id="emailToFind"
+                        [(ngModel)]="emailToFind">
               </ion-input>
             </ion-item>
         </ion-col>
         <ion-col size-md="2" size-sm="2" size="2">
           <ion-button style="margin-top: 18px"
-                      [disabled]="emailToFind==''"
+                      [disabled]="!emailToFind!=''"
                       class="btn btn-modal-teal"
                       (click)="findEmail();">
             <ion-icon name="search"></ion-icon>
