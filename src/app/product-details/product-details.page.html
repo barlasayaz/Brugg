@@ -55,39 +55,39 @@
 									<div class="thead">
 										<div class="tr table-header">
 											<div class="th">{{'Dateianhänge' | translate}}</div>
-											<div *ngIf="(userdata.role==1)||(userdata.role==2)" class="header-buttons">
-												<ion-button size="small" 
-															(click)="getCamera()"
-															[disabled]="!mobilePlatform">
-													<ion-icon name="camera"></ion-icon>
-												</ion-button>
-											</div>
 										</div>
 									</div>
 									<div class="tbody">
-										<div class="pdownloads" *ngFor="let row of dateien">
-											<ion-icon name="trash" class="delSpan" (click)="delFile(row)"></ion-icon>
-											<a class="datei_link" href="{{link}}{{row}}" target="_blank"> &nbsp;
-												{{row}}</a>
-											<a *ngIf="KraftWegGraph && row=='KraftWegGraph.txt'"
-												class="glyphicon glyphicon-signal delSpan" (click)="chart()"></a>
+										<div class="tr table-subheader table-subheader-fix">
+											<div class="table-subheader-buttons">  
+												<div *ngIf="(userdata.role==1)||(userdata.role==2)">
+													<ion-button small
+																(click)="getCamera()"
+																[disabled]="!mobilePlatform"
+																style="padding-right: 10px; margin-top: -32px;">
+														<ion-icon name="camera"></ion-icon>
+													</ion-button>
+													<p-fileUpload #fubauto
+																mode="basic"
+																[auto]="true"
+																name="file" 
+																class="btn-primary"
+																url="{{url}}upload.php" 
+																(onUpload)="onUpload($event)"
+																(onBeforeUpload)="onBeforeUpload($event)"
+																method="POST"
+																accept="image/*,application/*,audio/*,message/*,text/*,video/*" 
+																maxFileSize="3000000"
+																chooseLabel="{{'Wähle Dateien' | translate}}">
+													</p-fileUpload>
+												</div>
+											</div>	
 										</div>
-										<div *ngIf="(userdata.role==1)||(userdata.role==2)" class="tr">
-											<p-fileUpload name="file" url="{{url}}upload.php"
-												(onUpload)="onUpload($event)" (onBeforeUpload)="onBeforeUpload($event)"
-												method="POST"
-												accept="image/*,application/*,audio/*,message/*,text/*,video/*"
-												maxFileSize="3000000" chooseLabel="{{'Wähle Dateien' | translate}}"
-												uploadLabel="{{'Hochladen' | translate}}"
-												cancelLabel="{{'Abbrechen' | translate}}">
-												<ng-template pTemplate="content">
-													<ul *ngIf="uploadedFiles.length">
-														<li *ngFor="let file of uploadedFiles">{{file.name}} -
-															{{file.size}} bytes</li>
-													</ul>
-												</ng-template>
-											</p-fileUpload>
-										</div>
+										<p *ngFor="let row of dateien">   
+											<ion-icon name="trash" class="delSpan" (click)="delFile(row)"></ion-icon>         
+											<a class="datei_link" href="{{link}}{{row}}" target="_blank"> &nbsp; {{row}}</a>
+											<a *ngIf="KraftWegGraph && row=='KraftWegGraph.txt'" class="glyphicon glyphicon-signal delSpan" (click)="chart()"></a>
+										</p> 
 									</div>
 								</div>
 							</div>
