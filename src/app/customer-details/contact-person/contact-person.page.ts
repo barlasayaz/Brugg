@@ -68,7 +68,15 @@ export class ContactPersonPage {
                 } else {
                     item.edit_products = false;
                 }
-                item.addresses = JSON.parse(item.addresses);
+
+                try
+                {
+                    item.addresses = JSON.parse(item.addresses);
+                }
+                catch{
+                   console.error('JSON.parse err', item.addresses) ;
+                }
+
                 this.contactPersonList.push(item);
             }
         });

@@ -194,7 +194,14 @@ export class NoteEditComponent {
       for (var i = 0, len = result.list.length; i < len; i++) {
         var item = result.list[i].data;
         item.id = parseInt(item.id);
-        item.addresses = JSON.parse(item.addresses);
+        try
+        {
+          item.addresses = JSON.parse(item.addresses);
+        }
+        catch{
+           console.error('JSON.parse err', item.addresses) ;
+        }
+
         let contactPersonList = {id: item.id, name: item.first_name + ' ' + item.last_name};
         this.userList.push(contactPersonList);
         if (idContactPerson == item.id) {

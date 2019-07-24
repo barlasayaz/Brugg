@@ -379,7 +379,13 @@ export class AppointmentEditComponent implements OnInit {
       console.log('contactPersonsList result', result.list);
       for (var i = 0, len = result.list.length; i < len; i++) {
         var item = result.list[i].data;
-        item.addresses = JSON.parse(item.addresses);
+        try
+        {
+          item.addresses = JSON.parse(item.addresses);      
+        }
+        catch{
+           console.error('JSON.parse err', item.addresses) ;
+        }
         this.contactPersonList.push(item);
       }
     });
