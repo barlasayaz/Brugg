@@ -37,7 +37,14 @@ export class AssignmentPage {
     }
     this.activCustomer = this.navParams.get('activCustomer');
     if (this.activCustomer) {
-      this.activCustomer = JSON.parse(this.activCustomer);
+      try
+      {
+        this.activCustomer = JSON.parse(this.activCustomer);
+      }
+      catch{
+         console.error('JSON.parse err',this.activCustomer) ;
+      }
+
     }
     console.log('activCustomer :', this.activCustomer);
     if (this.activCustomer.sales != 0) {
@@ -86,7 +93,13 @@ export class AssignmentPage {
   }
 
   editAssignment() {
-    this.activCustomer = JSON.parse(this.activCustomer);
+    try
+    {
+      this.activCustomer = JSON.parse(this.activCustomer);
+    }
+    catch{
+       console.error('JSON.parse',this.activCustomer) ;
+    }
     console.log('activCustomer edit :', this.activCustomer);
     console.log('idSales :', this.idSales);
     console.log('idTester :', this.idTester);

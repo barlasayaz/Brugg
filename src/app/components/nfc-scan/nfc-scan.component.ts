@@ -151,11 +151,19 @@ export class NfcScanComponent implements OnInit {
                   }
                   if (rein) {
                     this.apiService.pvs4_get_customer(result.obj.customer).then((customer: any) => {
-                      result.obj.title = JSON.parse(result.obj.title);
+                      try
+                      {
+                        result.obj.title = JSON.parse(result.obj.title);   
+                        result.obj.title = result.obj.title[this.lang];   
+                      }
+                      catch{
+                         console.error('JSON.parse err', result.obj.title) ;
+                      }
+
                       let new_obj = {
                         id: result.obj.id,
                         id_number: result.obj.id_number,
-                        title: result.obj.title[this.lang],
+                        title: result.obj.title,
                         customer: customer.obj.company,
                         idCustomer: customer.obj.id
                       }

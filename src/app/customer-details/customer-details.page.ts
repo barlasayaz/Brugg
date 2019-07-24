@@ -151,7 +151,7 @@ export class CustomerDetailsPage implements OnInit {
             if (sales_dates.last_date) { this.last_visit = this.apiService.view2mysql(sales_dates.last_date) ; }
             if (sales_dates.next_date) { this.next_visit = this.apiService.view2mysql(sales_dates.next_date); }
         } catch (e) {
-            // nix
+          console.error('JSON.parse err',this.activCustomer.sales_dates) ;
         }
 
         this.apiService.pvs4_get_appointment_date(id).then((done: any) => {
@@ -223,7 +223,13 @@ export class CustomerDetailsPage implements OnInit {
         this.contactPersonCount = result.list.length;
         for (var i = 0, len = result.list.length; i < len; i++) {
           var item = result.list[i].data;
-          item.addresses = JSON.parse(item.addresses);
+          try {
+            item.addresses = JSON.parse(item.addresses);
+          }
+          catch
+          {
+            console.error('JSON.parse',item.addresses) ;
+          }
           this.contactPersonList.push(item);
           let localContact = localStorage.getItem('ContactPerson' + this.idCustomer);
           if ((i == 0 && !localContact) || (localContact && item.id == localContact)) {
