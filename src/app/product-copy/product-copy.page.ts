@@ -96,6 +96,7 @@ export class ProductCopyPage implements OnInit {
           {
             text: this.translate.instant('okay'),
             handler: () => {
+              this.dismiss();
               this.productCopy();
             }
           }
@@ -114,7 +115,7 @@ export class ProductCopyPage implements OnInit {
             parent:           0,
             active:           resultProduct.obj.active,
             check_interval:   resultProduct.obj.check_interval,
-            last_protocol:    resultProduct.obj.last_protocol,
+            last_protocol:    '',
             articel_no:       resultProduct.obj.articel_no,
             items:            resultProduct.obj.items,
             images:           resultProduct.obj.images,
@@ -155,7 +156,7 @@ export class ProductCopyPage implements OnInit {
             console.log('obj :', newObj);
             this.apiService.pvs4_set_product(newObj).then((result: any) => {
               console.log('images product result: ', result);
-              this.dismiss();
+              this.navCtrl.navigateForward(['/product-details', result['id']] );
             });
           });
       });
