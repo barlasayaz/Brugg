@@ -48,7 +48,7 @@ export class OrderSendNewPage {
                 this.Copy = this.userdata.email;
                 this.Betreff = 'Brugg Drahtseil: ' +  this.company;
                 console.log('activOrderForm :', this.activOrderForm);
-                console.log('order-send-new pdfRetVal :', this.pdfRetVal);
+                // console.log('order-send-new pdfRetVal :', this.pdfRetVal);
   }
 
   dismiss() {

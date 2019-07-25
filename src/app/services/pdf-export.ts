@@ -168,7 +168,7 @@ export class PdfExportService {
                       const pdfDocGenerator = pdfMake.createPdf(docDefinition);
                       pdfDocGenerator.getBase64((data) => {
                           // alert(data);
-                          console.log("PDF base64 :", data);
+                          // console.log("PDF base64 :", data);
                           res(data);
                       });
                   } else {
@@ -242,7 +242,7 @@ export class PdfExportService {
                       const pdfDocGenerator = pdfMake.createPdf(docDefinition);
                       pdfDocGenerator.getBase64((data) => {
                           // alert(data);
-                          console.log("PDF base64 :", data);
+                          // console.log("PDF base64 :", data);
                           res(data);
                       });
                   } 

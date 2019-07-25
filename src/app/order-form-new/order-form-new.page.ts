@@ -248,7 +248,7 @@ export class OrderFormNewPage {
     this.activOrderForm.products = tmpProducts;
 
     this.printPdf('base64').then(async (result: string) => {
-      console.log('pdf result :', result);
+      // console.log('pdf result :', result);
       const modalPage = await this.modalCtrl.create({
         component: OrderSendNewPage,
         componentProps: {
@@ -1002,7 +1002,7 @@ export class OrderFormNewPage {
         this.pdf.createPdf(docDefinition,
                            pdfMethod,
                            this.translate.instant('Bestellformular'.replace(/\s/g, '')) + '.pdf').then((result) => {
-          console.log('pdf result :', result);
+          // console.log('pdf result :', result);
           loader.dismiss();
           res(result);
         });
