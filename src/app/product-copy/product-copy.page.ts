@@ -119,8 +119,8 @@ export class ProductCopyPage implements OnInit {
             articel_no:       resultProduct.obj.articel_no,
             items:            resultProduct.obj.items,
             images:           resultProduct.obj.images,
-            nfc_tag_id:       resultProduct.obj.nfc_tag_id,
-            qr_code:          resultProduct.obj.qr_code,
+            nfc_tag_id:       '',
+            qr_code:          '',
             pvs3_id:          resultProduct.obj.pvs3_id,
             author:           resultProduct.obj.author
           };
