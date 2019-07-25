@@ -146,10 +146,14 @@ export class CustomerDetailsPage implements OnInit {
 
         }
         // Appointment Date
-        try {
-          let sales_dates = JSON.parse( this.activCustomer.sales_dates);
+        try 
+        {
+          if(this.activCustomer.sales_dates && this.activCustomer.sales_dates != null && this.activCustomer.sales_dates != '')
+          {
+            let sales_dates = JSON.parse( this.activCustomer.sales_dates);
             if (sales_dates.last_date) { this.last_visit = this.apiService.view2mysql(sales_dates.last_date) ; }
             if (sales_dates.next_date) { this.next_visit = this.apiService.view2mysql(sales_dates.next_date); }
+          }
         } catch (e) {
           console.error('JSON.parse err',this.activCustomer.sales_dates) ;
         }
