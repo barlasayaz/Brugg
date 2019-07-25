@@ -33,7 +33,7 @@ export class ProductEditPage implements OnInit {
           id: 0,
           id_number: '',
           articel_no: '',
-          check_interval: 0,
+          check_interval: 12,
           last_protocol: '',
           items: '',
           title: '',
