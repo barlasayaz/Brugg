@@ -72,7 +72,7 @@ export class QrBarcodeComponent implements OnInit {
       this.qrText = this.qrCodeText;
     }
     this.cols = [
-      { field: 'id', header: 'ID' },
+      { field: 'id_number', header: 'ID' },
       { field: 'title', header: this.translate.instant('Produkt') },
       { field: 'customer', header: this.translate.instant('Kunden') }
     ];
