@@ -121,7 +121,7 @@ export class ProtocolListPage implements OnInit {
         label: this.translate.instant('Menü'),
         icon: 'fa fa-fw fa-list',
         items: this.menuItems
-    }]
+    }];
 
     @ViewChild('tt') dataTable: TreeTable;
     @ViewChild('divHeightCalc') divHeightCalc: any;
@@ -167,12 +167,12 @@ export class ProtocolListPage implements OnInit {
             this.title_translate(this.protocolListAll);
 
             for (let index = 0; index < this.protocolListAll.length; index++) {
-                let options = []
-                try{
+                let options = [];
+                try {
                     options = JSON.parse(this.protocolListAll[index].data.items);
-                }catch{
-                    console.error('JSON.parse index:'+index, this.protocolListAll[index].data );
-                }   
+                } catch {
+                    console.error('JSON.parse index:' + index, this.protocolListAll[index].data );
+                }
 
                 for (let i = 0; i < options.length; i++) {
                     if (!this.cols.find(x => x.field == options[i].title[this.lang])) {
@@ -247,11 +247,11 @@ export class ProtocolListPage implements OnInit {
             }
 
             let title = nodes[i].data.title;
-            try{
+            try {
                 title = JSON.parse(nodes[i].data.title);
                 title = title[this.lang];
-            }catch{
-                console.error('JSON.parse i:'+i, nodes[i].data );
+            } catch {
+                console.error('JSON.parse i:' + i, nodes[i].data );
             }
             nodes[i].data.title = title ;
         }
@@ -276,7 +276,7 @@ export class ProtocolListPage implements OnInit {
              }
 
         for (let i = 0; i < this.cols.length; i++) {
-            if(this.columnFilterValues[this.cols[i].field]) {
+            if (this.columnFilterValues[this.cols[i].field]) {
                 if ( this.columnFilterValues[this.cols[i].field].trim().length > 0
                     && (node.data[this.cols[i].field] == undefined || (node.data[this.cols[i].field] != undefined
                         && node.data[this.cols[i].field].toString().
@@ -378,7 +378,7 @@ export class ProtocolListPage implements OnInit {
         let data = {
             id: 0,
             idCustomer: this.idCustomer
-        }
+        };
         this.dataService.setData(data);
         this.navCtrl.navigateForward(['/protocol-edit']);
     }
@@ -390,7 +390,7 @@ export class ProtocolListPage implements OnInit {
                 let data = {
                     id: this.selectedNode.data.id,
                     idCustomer: this.idCustomer
-                }
+                };
                 this.dataService.setData(data);
                 this.navCtrl.navigateForward(['/protocol-edit']);
             }
@@ -408,7 +408,7 @@ export class ProtocolListPage implements OnInit {
                     idCustomer: this.idCustomer,
                     customer_number: this.customer_number,
                     idProtocol: id
-                  }
+                  };
                 this.dataService.setData(data);
                 this.navCtrl.navigateForward(['/protocol-details/' + id]);
             }
@@ -418,7 +418,7 @@ export class ProtocolListPage implements OnInit {
     create_template() {
         let data = {
             idCustomer: this.idCustomer
-        }
+        };
         this.dataService.setData(data);
         this.navCtrl.navigateForward(['/protocol-template']);
     }
@@ -587,7 +587,7 @@ export class ProtocolListPage implements OnInit {
                 text: this.translate.instant('okay'),
                 handler: data => {
                     console.log('Checkbox data:', data);
-                    this.selectedColumns = this.cols.filter(function (element, index, array) { return data.includes(element.field) });
+                    this.selectedColumns = this.cols.filter(function (element, index, array) { return data.includes(element.field); });
                     localStorage.setItem('show_columns_protocol', JSON.stringify(this.selectedColumns));
                 }
             }
@@ -599,7 +599,7 @@ export class ProtocolListPage implements OnInit {
     isFilterOn(): any {
         let ret = false;
         for (let i = 0; i < this.cols.length; i++) {
-            if (this.columnFilterValues[this.cols[i].field] ){
+            if (this.columnFilterValues[this.cols[i].field] ) {
                 if (this.columnFilterValues[this.cols[i].field].trim().length > 0) {
                     ret = true;
                 }

@@ -619,12 +619,13 @@ export class ProductEditPage implements OnInit {
             obj['title'] = JSON.stringify(this.activProduct['title']);
             this.apiService.pvs4_set_product(obj).then((result: any) => {
               console.log('result: ', result);
-              let navigationExtras: NavigationExtras = {
+              this.dismiss();
+/*               let navigationExtras: NavigationExtras = {
                 queryParams: {
                   refresh: new Date().getTime()
                 }
               };
-              this.navCtrl.navigateBack(['/product-list/' + this.idCustomer], navigationExtras);
+              this.navCtrl.navigateBack(['/product-list/' + this.idCustomer], navigationExtras); */
           });
         }
        }
