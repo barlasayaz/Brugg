@@ -5,144 +5,148 @@
 		<div class="container">
 			<div class="mt20 content-sm">		
 				<ion-grid>
-					<ion-row>
-						<!-- Protocol Details -->
+					<ion-row>						
 						<ion-col size-xl="6" size-lg="6" size-md="6" size-sm="12" size="12">
-							<div class="table-responsive" id="ps_protocol">
-								<div class="table table-striped" id="protocol_details">
-									<div class="thead">
-										<div class="tr table-header">
-											<div class="th">{{'Protokoll Details' | translate}}</div>
-										</div>
-									</div>  
-									<div class="tbody" style="max-height: 560px; overflow-x: auto;">
-										<!--<div class="tr table-body">
-											<div class="td">{{'Titel' | translate}}</div>
-											<div class="td">{{activProtocol.title}}</div>
-										</div> -->
-										<div class="tr table-body">
-											<div class="td">{{'Kunde' | translate}}</div>
-											<div class="td">{{activCustomer.company}}</div>
-										</div>
-										<div class="tr table-body">
-											<div class="td">{{'Kunde' | translate}} DB-ID</div>
-											<div class="td">{{activCustomer.id}}</div>
-										</div>
-										<div class="tr table-body">
-											<div class="td">{{'Kundennummer' | translate}}</div>
-											<div class="td">{{activCustomer.customer_number}}</div>
-										</div>
-										<div class="tr table-body">
-											<div class="td">{{'Protokoll Nummer' | translate}}</div>
-											<div class="td">{{activProtocol.protocol_number}}</div>
-										</div>
-										<div class="tr table-body"> 
-											<div class="td">{{'Datum' | translate}}</div>
-											<div class="td">{{activProtocol.protocol_date | date: 'dd.MM.yyyy'}}</div>
-										</div>
-										<div class="tr table-body">
-											<div class="td">{{'Prüfergebnis' | translate}}</div>
-											<div class="td">{{activProtocol.resultText }}</div>
-										</div>
-										<div class="tr table-body">
-											<div class="td">{{'nächste Prüfung' | translate}}</div>
-											<div class="td">{{activProtocol.protocol_date_next | date: 'dd.MM.yyyy'}}</div>
-										</div>
-										<div class="tr table-body">
-											<div class="td">{{'Autor' | translate}}</div>
-											<div class="td">{{activProtocol.author}}</div>
-									    </div>
-										<div class="tr table-body" *ngFor="let item of activProtocol.items">
-											<div class="td">{{item.title[lang]}}</div>
-											<div class="td">{{item.value}}</div> 
-										</div>
-									</div>
-								</div>
-							</div>
-							<!-- File Attachments --> 
-							<div class="table-responsive">
-								<div class="table table-striped">
-									<div class="thead">
-										<div class="tr table-header">
-											<div class="th">{{'Dateianhänge' | translate}}</div>
-										</div>
-									</div>
-									<div class="tbody">
-										<div class="tr table-subheader table-subheader-fix">
-											<div class="table-subheader-buttons">  
-												<div *ngIf="userdata.role_set.check_products">
-													<ion-button small
-																(click)="getCamera()"
-																[disabled]="!mobilePlatform"
-																style="padding-right: 10px; margin-top: -32px;">
-														<ion-icon name="camera"></ion-icon>
-													</ion-button>
-													<p-fileUpload #fubauto
-																mode="basic"
-																[auto]="true"
-																name="file" 
-																class="btn-primary"
-																url="{{url}}upload.php" 
-																(onUpload)="onUpload($event)"
-																(onBeforeUpload)="onBeforeUpload($event)"
-																method="POST"
-																accept="image/*,application/*,audio/*,message/*,text/*,video/*" 
-																maxFileSize="3000000"
-																chooseLabel="{{'Wähle Dateien' | translate}}">
-													</p-fileUpload>
-												</div>
-											</div>	
-										</div>
-										<p *ngFor="let row of dateien">   
-											<ion-icon name="trash" class="delSpan" (click)="delFile(row)"></ion-icon>         
-											<a class="datei_link" href="{{link}}{{row}}" target="_blank"> &nbsp; {{row}}</a>
-											<a *ngIf="KraftWegGraph && row=='KraftWegGraph.txt'" class="glyphicon glyphicon-signal delSpan" (click)="chart()"></a>
-										</p> 
-									</div>
-								</div>
-							</div>
-						</ion-col>
-          				<!-- Product Details -->
-						<ion-col size-xl="6" size-lg="6" size-md="6" size-sm="12" size="12">
-							<div class="table-responsive" id="ps_product_2">
-								<div class="table table-striped" id="product_details_2">
-									<div class="thead">
-										<div class="tr table-header">
-											<div class="th">{{'Produkt Details' | translate}}</div>
-										</div>
-									</div>  
-									<p-accordion>
-										<div style="max-height: 560px; overflow-x: auto;">
-											<div *ngFor="let item of listProduct">
-												<p-accordionTab styleClass="ui-accordion-header" header="{{'Titel' | translate}} &nbsp;&nbsp;&nbsp;&nbsp; {{item.title}}">
-													<div class="tbody">
-														<div class="tr table-body">
-															<div class="td-lbl">#</div>
-															<div class="td">{{item.id_number}}</div>
-														</div>
-														<div class="tr table-body">
-															<div class="td-lbl">{{'Articel No' | translate}}</div>
-															<div class="td">{{item.articel_no}}</div>
-														</div>
-														<div class="tr table-body">
-															<div class="td-lbl">{{'Autor' | translate}}</div>
-															<div class="td">{{item.author}}</div>
-														</div>
-														<div class="tr table-body">
-															<div class="td-lbl">{{'Intervall Prüfen' | translate}}</div>
-															<div class="td">{{item.check_interval}}</div>
-														</div>
-														<div class="tr table-body" *ngFor="let items of item.items">
-															<div class="td-lbl">{{items.title[lang]}}</div>
-															<div class="td">{{items.value}}</div>  
-														</div>
-													</div>
-												</p-accordionTab>
+							<div class="kunden-wrap">
+								<!-- Protocol Details -->
+								<div class="kunden-col" style="padding-bottom: 12px;">
+									<div class="table-info">
+										<div class="thead">
+											<div class="tr table-header">
+												<div class="th">{{'Protokoll Details' | translate}}</div>
+											</div>
+										</div>  
+										<div class="tbody" style="max-height: 560px; overflow-x: auto;">
+											<!--<div class="tr table-body">
+												<div class="td">{{'Titel' | translate}}</div>
+												<div class="td">{{activProtocol.title}}</div>
+											</div> -->
+											<div class="tr table-body">
+												<div class="td">{{'Kunde' | translate}}</div>
+												<div class="td">{{activCustomer.company}}</div>
+											</div>
+											<div class="tr table-body">
+												<div class="td">{{'Kunde' | translate}} DB-ID</div>
+												<div class="td">{{activCustomer.id}}</div>
+											</div>
+											<div class="tr table-body">
+												<div class="td">{{'Kundennummer' | translate}}</div>
+												<div class="td">{{activCustomer.customer_number}}</div>
+											</div>
+											<div class="tr table-body">
+												<div class="td">{{'Protokoll Nummer' | translate}}</div>
+												<div class="td">{{activProtocol.protocol_number}}</div>
+											</div>
+											<div class="tr table-body"> 
+												<div class="td">{{'Datum' | translate}}</div>
+												<div class="td">{{activProtocol.protocol_date | date: 'dd.MM.yyyy'}}</div>
+											</div>
+											<div class="tr table-body">
+												<div class="td">{{'Prüfergebnis' | translate}}</div>
+												<div class="td">{{activProtocol.resultText }}</div>
+											</div>
+											<div class="tr table-body">
+												<div class="td">{{'nächste Prüfung' | translate}}</div>
+												<div class="td">{{activProtocol.protocol_date_next | date: 'dd.MM.yyyy'}}</div>
+											</div>
+											<div class="tr table-body">
+												<div class="td">{{'Autor' | translate}}</div>
+												<div class="td">{{activProtocol.author}}</div>
+											</div>
+											<div class="tr table-body" *ngFor="let item of activProtocol.items">
+												<div class="td">{{item.title[lang]}}</div>
+												<div class="td">{{item.value}}</div> 
 											</div>
 										</div>
-									</p-accordion>
+									</div>
 								</div>
-							</div>  
+								<!-- File Attachments --> 
+								<div class="table-responsive" style="padding-bottom: 12px;">
+									<div class="table-info">
+										<div class="thead">
+											<div class="tr table-header">
+												<div class="th">{{'Dateianhänge' | translate}}</div>
+											</div>
+										</div>
+										<div class="tbody">
+											<div class="tr table-subheader table-subheader-fix">
+												<div class="table-subheader-buttons">  
+													<div *ngIf="userdata.role_set.check_products">
+														<ion-button small
+																	(click)="getCamera()"
+																	[disabled]="!mobilePlatform"
+																	style="padding-right: 10px; margin-top: -32px;">
+															<ion-icon name="camera"></ion-icon>
+														</ion-button>
+														<p-fileUpload #fubauto
+																	mode="basic"
+																	[auto]="true"
+																	name="file" 
+																	class="btn-primary"
+																	url="{{url}}upload.php" 
+																	(onUpload)="onUpload($event)"
+																	(onBeforeUpload)="onBeforeUpload($event)"
+																	method="POST"
+																	accept="image/*,application/*,audio/*,message/*,text/*,video/*" 
+																	maxFileSize="3000000"
+																	chooseLabel="{{'Wähle Dateien' | translate}}">
+														</p-fileUpload>
+													</div>
+												</div>	
+											</div>
+											<p *ngFor="let row of dateien">   
+												<ion-icon name="trash" class="delSpan" (click)="delFile(row)"></ion-icon>         
+												<a class="datei_link" href="{{link}}{{row}}" target="_blank"> &nbsp; {{row}}</a>
+												<a *ngIf="KraftWegGraph && row=='KraftWegGraph.txt'" class="glyphicon glyphicon-signal delSpan" (click)="chart()"></a>
+											</p> 
+										</div>
+									</div>
+								</div>
+							</div>
+						</ion-col>          				
+						<ion-col size-xl="6" size-lg="6" size-md="6" size-sm="12" size="12">
+							<div class="kunden-wrap">
+								<!-- Product Details -->
+								<div class="kunden-col" style="padding-bottom: 12px;">
+									<div class="table-info">
+										<div class="thead">
+											<div class="tr table-header">
+												<div class="th">{{'Produkt Details' | translate}}</div>
+											</div>
+										</div>  
+										<p-accordion>
+											<div style="max-height: 560px; overflow-x: auto;">
+												<div *ngFor="let item of listProduct">
+													<p-accordionTab styleClass="ui-accordion-header" header="{{'Titel' | translate}} &nbsp;&nbsp;&nbsp;&nbsp; {{item.title}}">
+														<div class="tbody">
+															<div class="tr table-body">
+																<div class="td">#</div>
+																<div class="td">{{item.id_number}}</div>
+															</div>
+															<div class="tr table-body">
+																<div class="td">{{'Articel No' | translate}}</div>
+																<div class="td">{{item.articel_no}}</div>
+															</div>
+															<div class="tr table-body">
+																<div class="td">{{'Autor' | translate}}</div>
+																<div class="td">{{item.author}}</div>
+															</div>
+															<div class="tr table-body">
+																<div class="td">{{'Intervall Prüfen' | translate}}</div>
+																<div class="td">{{item.check_interval}}</div>
+															</div>
+															<div class="tr table-body" *ngFor="let items of item.items">
+																<div class="td">{{items.title[lang]}}</div>
+																<div class="td">{{items.value}}</div>  
+															</div>
+														</div>
+													</p-accordionTab>
+												</div>
+											</div>
+										</p-accordion>
+									</div>
+								</div>  
+							</div>
 						</ion-col>
 					</ion-row>					
 				</ion-grid>
@@ -150,6 +154,7 @@
 		</div>
 	</div>
 </ion-content>
+
 <ion-fab slot="fixed" horizontal="end" vertical="bottom"> 
 	<ion-fab-button color="tertiary">
 	<ion-icon name="menu"></ion-icon>
