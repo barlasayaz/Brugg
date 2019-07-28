@@ -155,7 +155,8 @@
 												[disabled]="userdata.role_set.edit_membership==false"
 												(click)="open_mydataedit(0,0,0,1)"
 												[ngClass]="{'not-allowed': userdata.role_set.edit_membership==false}">
-												<ion-icon name="add"></ion-icon>
+												<ion-icon name="add"></ion-icon>&nbsp;&nbsp;{{'Mitarbeiter' | translate}}
+												
 											</ion-button>
 										</div>
 									</div>
