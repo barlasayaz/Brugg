@@ -53,15 +53,15 @@
           *ngIf="activAppointment.appointment_type<2">
           <ion-item lines="none">
             <ion-label position="floating">{{translate.instant('Kunden')}}</ion-label>
-            <ionic-selectable required
-                              item-content                                                            
+            <ionic-selectable required                                                         
                               name="Customer"
                               [(ngModel)]="customer"
-                              [(items)]="listCustomer"
+                              [items]="listCustomer"
                               itemValueField="id"
                               itemTextField="company"
                               [canSearch]="true"
                               (onChange)="customerChange($event)"
+                              [hasVirtualScroll]="true"
                               [disabled]=customerDisabled>
             </ionic-selectable>
           </ion-item>

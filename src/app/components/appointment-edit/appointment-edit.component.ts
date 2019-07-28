@@ -15,7 +15,7 @@ export class AppointmentEditComponent implements OnInit {
 
   public modalTitle: string;
   public listCustomer: any[] = [];
-  public idCustomer: Number = 0;
+  public idCustomer: number = 0;
   public idAppointment: number = 0;
   public itsNew: boolean = false;
   public activAppointment: any = {
@@ -67,7 +67,7 @@ export class AppointmentEditComponent implements OnInit {
     this.maxDate = this.apiService.maxDate;
 
     this.employeesList();
-    this.loadCustomer();
+       this.loadCustomer();
 
     if (this.navParams.get('appointment')) {
       this.activAppointment = this.navParams.get('appointment');
@@ -131,13 +131,15 @@ export class AppointmentEditComponent implements OnInit {
       } 
       */
       this.customer = null;
-      for (let i = 0; i < this.listCustomer.length; i++) {
-        if (this.listCustomer[i].id == this.idCustomer) {
-          this.customer = this.listCustomer[i];
-          console.log('customer: ', this.customer);
+      if (this.idCustomer > 0) { 
+        for (let i = 0; i < this.listCustomer.length; i++) {
+          if (this.listCustomer[i].id == this.idCustomer) {
+            this.customer = this.listCustomer[i];
+            console.log('customer: ', this.customer);
+          }
         }
+        this.contactPersonsList(this.idCustomer); 
       }
-      if (this.idCustomer > 0) { this.contactPersonsList(this.idCustomer); }
     });
   }
 
