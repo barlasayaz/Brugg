@@ -215,9 +215,16 @@ export class ApiService {
       }
       this.pvs4_api_post('get_profile.php', post_data).then((done: any) => { // return the result
         console.log('pvs4_getprofile done ok: ', done);
-        const system_role = JSON.parse(done.obj.system_role); 
-        const licensee_role = JSON.parse(done.obj.licensee_role); 
-        const customer_role = JSON.parse( done.obj.customer_role); 
+        let system_role = [];
+        if(done.obj.system_role && done.obj.system_role!='' && done.obj.system_role!=null)
+           system_role = JSON.parse(done.obj.system_role); 
+        let licensee_role = [];
+        if(done.obj.licensee_role && done.obj.licensee_role!='' && done.obj.licensee_role!=null)
+           licensee_role = JSON.parse(done.obj.licensee_role); 
+        let customer_role = [];
+        if(done.obj.customer_role && done.obj.customer_role!='' && done.obj.customer_role!=null)
+           customer_role = JSON.parse(done.obj.customer_role); 
+
         this.userdata.profile = parseInt(done.obj.id);
         this.userdata.id = this.userdata.profile;
         this.userdata.licensee = 0; 
