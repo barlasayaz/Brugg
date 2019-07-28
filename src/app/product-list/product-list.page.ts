@@ -265,6 +265,14 @@ export class ProductListPage implements OnInit {
         this.rowRecords = 0;
         this.totalRecords = 0;
         this.selectMulti = 1;
+        this.selectedNode = [];
+        this.menuItems[0].disabled = true;
+        this.menuItems[1].disabled = true;
+        this.menuItems[2].disabled = true;
+        this.menuItems[3].disabled = true;
+        this.menuItems[5].items[0]['disabled'] = true;
+        this.menuItems[5].items[1]['disabled'] = true;
+        this.menuItems[8].items[4]['disabled'] = true;
 
         this.events.publish('prozCustomer', 0);
         this.apiService.pvs4_get_product_list(this.idCustomer).then((result: any) => {
@@ -527,16 +535,15 @@ export class ProductListPage implements OnInit {
     }
 
     nodeSelect(event, selectedNode) {
-        console.log('nodeSelect selectedNode :', selectedNode.length);
+        console.log('nodeSelect :', event, selectedNode, selectedNode.length, this.selectMulti);
         let selectedNodeLength = selectedNode.length;
-        console.log('selectMulti :', this.selectMulti);
+
         if (!this.selectMulti) {
             selectedNodeLength = 1;
             this.selectMulti = 1;
         }
+        console.log('selectMulti :', this.selectMulti);
 
-        console.log('nodeSelect event:', event  );
-        console.log('nodeSelect selectedNodeLength:',  selectedNodeLength);
         this.selectedNode.data = event.node.data;
         this.menuItems[0].disabled = false;
         this.menuItems[1].disabled = false;
@@ -547,7 +554,6 @@ export class ProductListPage implements OnInit {
         this.menuItems[8].items[4]['disabled'] = false;
         let id_sn = 0;
 
-        console.log('selectedNodeLength :', selectedNodeLength);
         if (selectedNodeLength == 1) {
             this.selectedNode.data = this.selectedNode[0].data;
             if (this.selectedNode) {

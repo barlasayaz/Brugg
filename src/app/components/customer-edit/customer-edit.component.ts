@@ -198,7 +198,7 @@ export class CustomerEditComponent implements OnInit {
   inputErrorMsg() {
     this.inputError = false;
   }
-  
+
   showConfirmAlert(activeCustomer) {
     let alert = this.alertCtrl.create({
       header: 'Confirm delete user',
@@ -216,8 +216,7 @@ export class CustomerEditComponent implements OnInit {
             activeCustomer.active = 0;
             this.apiService.pvs4_set_customer(activeCustomer).then((result: any) => {
               console.log('result: ', result);
-              this.dismiss();
-              this.navCtrl.navigateBack('/customer-table');
+              this.viewCtrl.dismiss(true);
             });
 
           }

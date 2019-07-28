@@ -1,13 +1,13 @@
 
-    .qrqr {
-      display: flex;
-      -webkit-align-items: center;
-              align-items: center;
-          -webkit-justify-content: center;
-                  justify-content: center;
-      img {
-          width: 100%;
-      }
+  .qrqr {
+    display: flex;
+    -webkit-align-items: center;
+            align-items: center;
+        -webkit-justify-content: center;
+                justify-content: center;
+    img {
+        width: 100%;
+    }
   }
 
   .pdownloads {
@@ -19,14 +19,14 @@
       }
   }
 
-    .whitebox-image {
-      background: #fff;
-      color: #4a5356;
-      padding: 20px;
-      width: 100%;
-      border-radius: 3px;
-      position: relative;
-      text-align: center;
+  .whitebox-image {
+    background: #fff;
+    color: #4a5356;
+    padding: 10px;
+    width: 100%;
+    border-radius: 3px;
+    position: relative;
+    text-align: center;
   }
 
   img {
@@ -35,30 +35,30 @@
     max-height: 300px !important;
   }
 
-    .btn-primary:disabled {
-        background-color: rgb(136, 177, 221) !important;
+  .btn-primary:disabled {
+      background-color: rgb(136, 177, 221) !important;
+  }
+
+  .header-buttons {
+    height: 100%;
+    display: flex;
+    ion-button {
+      height: 100%;
+      padding: 0px 15px;
+      margin: 0;
+      font-size: 16px;
+      --background: var(--ion-color-darkmain);
+      &:hover
+      {
+        --background: rgba(var(--ion-color-darkmain-rgb), 0.6) !important;
+      }
     }
+    ion-button  + ion-button  {
+      margin-left: 10px;
+    }
+  }
 
-      .header-buttons {
-        height: 100%;
-        display: flex;
-        ion-button {
-          height: 100%;
-          padding: 0px 15px;
-          margin: 0;
-          font-size: 16px;
-          --background: var(--ion-color-darkmain);
-          &:hover
-          {
-            --background: rgba(var(--ion-color-darkmain-rgb), 0.6) !important;
-          }
-        }
-        ion-button  + ion-button  {
-          margin-left: 10px;
-        }
-      }
-
-      .btn-primary {
-        background-color: var(--ion-color-primary) !important;
-        border-radius: var(--global-radius) !important;
-      }
+  .btn-primary {
+    background-color: var(--ion-color-primary) !important;
+    border-radius: var(--global-radius) !important;
+  }

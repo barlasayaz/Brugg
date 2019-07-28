@@ -5,97 +5,99 @@
 		<div class="container">
 			<div class="mt20 content-sm">
 				<ion-grid>
-					<ion-row>
-						<!-- Product Details -->
+					<ion-row>						
 						<ion-col size-xl="7" size-lg="7" size-md="7" size-sm="12" size="12">
-							<div class="table-responsive" id="ps_product" style="margin-bottom:10px">
-								<div class="table-info table-striped">
-									<div class="thead">
-										<div class="tr table-header">
-											<div class="th">{{'Produkt Details' | translate}}</div>
+							<div class="kunden-wrap">
+								<!-- Product Details -->
+								<div class="kunden-col" style="padding-bottom: 12px;">
+									<div class="table-info">
+										<div class="thead">
+											<div class="tr table-header">
+												<div class="th">{{'Produkt Details' | translate}}</div>
+											</div>
 										</div>
-									</div>
-									<div class="tbody">
-										<div class="tr table-body">
-											<div class="td td-lbl">{{'Titel' | translate}}</div>
-											<div class="td">{{activProduct.title}}</div>
-										</div>
-										<div class="tr table-body">
-											<div class="td td-lbl">DB-ID</div>
-											<div class="td">{{activProduct.id}}</div>
-										</div>
-										<div class="tr table-body">
-											<div class="td td-lbl">#</div>
-											<div class="td">{{activProduct.id_number}}</div>
-										</div>
-										<div class="tr table-body">
-											<div class="td td-lbl">{{'Articel No' | translate}}</div>
-											<div class="td">{{activProduct.articel_no}}</div>
-										</div>
-										<div class="tr table-body">
-											<div class="td td-lbl">{{'Autor' | translate}}</div>
-											<div class="td">{{activProduct.author}}</div>
-										</div>
-										<div class="tr table-body">
-											<div class="td td-lbl">{{'Intervall Prüfen' | translate}}</div>
-											<div class="td">{{activProduct.check_interval}}</div>
-										</div>
-										<div class="tr table-body" *ngFor="let item of activProduct.items">
-											<div class="td td-lbl">{{item.title[lang]}}</div>
-											<div *ngIf="item.type != 5" class="td">{{item.value}}</div>											
-											<div *ngIf="item.type == 5" class="td">{{item.value | date : 'dd.MM.yyyy'}}
+										<div class="tbody">
+											<div class="tr table-body">
+												<div class="td">{{'Titel' | translate}}</div>
+												<div class="td">{{activProduct.title}}</div>
+											</div>
+											<div class="tr table-body">
+												<div class="td">DB-ID</div>
+												<div class="td">{{activProduct.id}}</div>
+											</div>
+											<div class="tr table-body">
+												<div class="td">#</div>
+												<div class="td">{{activProduct.id_number}}</div>
+											</div>
+											<div class="tr table-body">
+												<div class="td">{{'Articel No' | translate}}</div>
+												<div class="td">{{activProduct.articel_no}}</div>
+											</div>
+											<div class="tr table-body">
+												<div class="td">{{'Autor' | translate}}</div>
+												<div class="td">{{activProduct.author}}</div>
+											</div>
+											<div class="tr table-body">
+												<div class="td ">{{'Intervall Prüfen' | translate}}</div>
+												<div class="td">{{activProduct.check_interval}}</div>
+											</div>
+											<div class="tr table-body" *ngFor="let item of activProduct.items">
+												<div class="td">{{item.title[lang]}}</div>
+												<div *ngIf="item.type != 5" class="td">{{item.value}}</div>											
+												<div *ngIf="item.type == 5" class="td">{{item.value | date : 'dd.MM.yyyy'}}
+												</div>
 											</div>
 										</div>
 									</div>
 								</div>
-							</div>
-							<!-- File Attachments -->
-							<div class="table-responsive">
-								<div class="table table-striped">
-									<div class="thead">
-										<div class="tr table-header">
-											<div class="th">{{'Dateianhänge' | translate}}</div>
+								<!-- File Attachments -->
+								<div class="table-responsive" style="padding-bottom: 12px;">
+									<div class="table-info">
+										<div class="thead">
+											<div class="tr table-header">
+												<div class="th">{{'Dateianhänge' | translate}}</div>
+											</div>
 										</div>
-									</div>
-									<div class="tbody">
-										<div class="tr table-subheader table-subheader-fix">
-											<div class="table-subheader-buttons">  
-												<div *ngIf="(userdata.role==1)||(userdata.role==2)">
-													<ion-button small
-																(click)="getCamera()"
-																[disabled]="!mobilePlatform"
-																style="padding-right: 10px; margin-top: -32px;">
-														<ion-icon name="camera"></ion-icon>
-													</ion-button>
-													<p-fileUpload #fubauto
-																mode="basic"
-																[auto]="true"
-																name="file" 
-																class="btn-primary"
-																url="{{url}}upload.php" 
-																(onUpload)="onUpload($event)"
-																(onBeforeUpload)="onBeforeUpload($event)"
-																method="POST"
-																accept="image/*,application/*,audio/*,message/*,text/*,video/*" 
-																maxFileSize="3000000"
-																chooseLabel="{{'Wähle Dateien' | translate}}">
-													</p-fileUpload>
-												</div>
-											</div>	
+										<div class="tbody">
+											<div class="tr table-subheader table-subheader-fix">
+												<div class="table-subheader-buttons">  
+													<div *ngIf="(userdata.role==1)||(userdata.role==2)">
+														<ion-button small
+																	(click)="getCamera()"
+																	[disabled]="!mobilePlatform"
+																	style="padding-right: 10px; margin-top: -32px;">
+															<ion-icon name="camera"></ion-icon>
+														</ion-button>
+														<p-fileUpload #fubauto
+																	mode="basic"
+																	[auto]="true"
+																	name="file" 
+																	class="btn-primary"
+																	url="{{url}}upload.php" 
+																	(onUpload)="onUpload($event)"
+																	(onBeforeUpload)="onBeforeUpload($event)"
+																	method="POST"
+																	accept="image/*,application/*,audio/*,message/*,text/*,video/*" 
+																	maxFileSize="3000000"
+																	chooseLabel="{{'Wähle Dateien' | translate}}">
+														</p-fileUpload>
+													</div>
+												</div>	
+											</div>
+											<p *ngFor="let row of dateien">   
+												<ion-icon name="trash" class="delSpan" (click)="delFile(row)"></ion-icon>         
+												<a class="datei_link" href="{{link}}{{row}}" target="_blank"> &nbsp; {{row}}</a>
+												<a *ngIf="KraftWegGraph && row=='KraftWegGraph.txt'" class="glyphicon glyphicon-signal delSpan" (click)="chart()"></a>
+											</p> 
 										</div>
-										<p *ngFor="let row of dateien">   
-											<ion-icon name="trash" class="delSpan" (click)="delFile(row)"></ion-icon>         
-											<a class="datei_link" href="{{link}}{{row}}" target="_blank"> &nbsp; {{row}}</a>
-											<a *ngIf="KraftWegGraph && row=='KraftWegGraph.txt'" class="glyphicon glyphicon-signal delSpan" (click)="chart()"></a>
-										</p> 
-									</div>
+										</div>
 								</div>
 							</div>
-						</ion-col>
-						<!-- Product Image -->
+						</ion-col>						
 						<ion-col size-xl="5" size-lg="5" size-md="5" size-sm="12" size="12">
-							<div class="table-responsive">
-								<div class="table table-striped">
+							<!-- Product Image -->
+							<div class="table-responsive" style="padding-bottom: 12px;">
+								<div class="table-info">
 									<div class="thead">
 										<div class="tr table-header">
 											<div class="th">{{'Produktbild' | translate}}</div>
@@ -109,8 +111,8 @@
 								</div>
 							</div>
 							<!-- Product QR -->
-							<div *ngIf="activProduct.qr_code" class="table-responsive">
-								<div class="table-info table-striped">
+							<div *ngIf="activProduct.qr_code" class="table-responsive" style="padding-bottom: 12px;">
+								<div class="table-info">
 									<div class="thead">
 										<div class="tr table-header">
 											<div class="th">{{'QR-Code' | translate}}</div>

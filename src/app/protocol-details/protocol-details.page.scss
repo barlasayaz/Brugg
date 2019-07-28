@@ -1,9 +1,3 @@
-.th {
-  justify-content: left !important;       
-  font-size: 17px !important;
-  padding-left: 10px !important; 
-}
-
 .td-lbl {
   height: auto;
   padding: 7px 10px;
@@ -23,27 +17,9 @@
   max-width: 200px;
 }
 
-.whitebox-image {
-  background: #fff;
-  color: #4a5356;
-  padding: 20px;
-  width: 100%;
-  min-height: 278px;
-  border-radius: 3px;
-  position: relative;
-  text-align: center;
-}
-
-img {
-  max-width: 100% !important;
-  border: 0 !important;
-  max-height: 300px !important;
-}
-
 .btn-primary:disabled {
   background-color: rgb(136, 177, 221) !important;
 }
-
 
 .ui-accordion .ui-accordion-header {
   -webkit-border-radius: 0 !important;
