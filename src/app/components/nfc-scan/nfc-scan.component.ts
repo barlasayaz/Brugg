@@ -57,7 +57,7 @@ export class NfcScanComponent implements OnInit {
     this.pid = this.navParams.get("pid");
 
     this.cols = [
-      { field: 'id_number', header: 'ID', width: '300px' },
+      { field: 'id_number', header: '#', width: '300px' },
       { field: 'title', header: this.translate.instant('Produkt') },
       { field: 'details', header: this.translate.instant('Produktdetails')  } 
     ];
