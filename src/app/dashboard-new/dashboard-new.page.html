@@ -64,7 +64,6 @@
 												(click)="sortAppointment('appointment_type_text')">
 												{{'Terminart' | translate}}</div>
 										</div>
-										<div style="max-height: 465px; overflow-x: auto;">
 										  <ion-virtual-scroll [items]="nextAppointment" >
 											<div class="tr table-body {{item.classes}}" *virtualItem="let item">
 												<div class="td date clickable" (click)="editAppointment(item)">
@@ -89,7 +88,6 @@
 												</div>
 											</div>
 										</ion-virtual-scroll>
-										</div>
 									</div>
 								</div>
 							</div>
@@ -152,7 +150,6 @@
 												(click)="sortCustomerNum('days90')" *ngIf="disponent_view">
 												{{'90T' | translate}}</div>
 										</div>
-										<div style="max-height: 465px; overflow-x: auto;">
 										  <ion-virtual-scroll [items]="listInspection">
 											<div class="tr table-body" *virtualItem="let row">
 												<div class="td time">
@@ -189,7 +186,6 @@
 												</div>
 											</div>
 										  </ion-virtual-scroll>
-										</div>
 									</div>
 								</div>
 							</div>
