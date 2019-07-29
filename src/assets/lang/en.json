@@ -832,5 +832,7 @@
   "Das Produktbild wird gelöscht. Sind Sie sicher?": "Product image will be deleted, Are you sure?",
   "Benutzer nicht gefunden!" : "User not found!",
   "Benutzer hinzufügen": "Add user",
-  "Passwort vergessen?": "Forgot your password?"
+  "Passwort vergessen?": "Forgot your password?",
+  "Beachtung": "Attention",
+  "Produkte mit untergeordneten Datensätzen können nicht gelöscht werden.": "Products with child records cannot be deleted."
 }

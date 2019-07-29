@@ -838,5 +838,7 @@
   "Das Produktbild wird gelöscht. Sind Sie sicher?": "L'immagine del prodotto vuole essere cancellata, sei sicuro?",
   "Benutzer nicht gefunden!" : "Utente non trovato!",
   "Benutzer hinzufügen": "Aggiungi utenti",
-  "Passwort vergessen?": "Hai dimenticato la password?"
+  "Passwort vergessen?": "Hai dimenticato la password?",
+  "Beachtung": "Attenzione",
+  "Produkte mit untergeordneten Datensätzen können nicht gelöscht werden.": "I prodotti con record figlio non possono essere eliminati."
 }

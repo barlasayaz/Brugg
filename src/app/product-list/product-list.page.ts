@@ -45,8 +45,6 @@ export class ProductListPage implements OnInit {
     public company = '';
     public selectMulti: number;
     public navigationSubscription: any;
-
-
     public menuItems: MenuItem[] = [{
         label: this.translate.instant('Ansicht'),
         icon: 'pi pi-fw pi-eye',
@@ -65,6 +63,16 @@ export class ProductListPage implements OnInit {
             if (this.userdata.role_set.edit_products == false) { return; }
             console.log('command menuitem:', event.item);
             this.menu_edit();
+        }
+    },
+    {
+        label: this.translate.instant('l\u00f6schen'),
+        icon: 'pi pi-fw pi-trash',
+        disabled: true,
+        visible:  this.userdata.role_set.check_products,
+        command: (event) => {
+            console.log('command menuitem:', event.item);
+            this.productDeactivateAlert();
         }
     },
     {
@@ -270,9 +278,10 @@ export class ProductListPage implements OnInit {
         this.menuItems[1].disabled = true;
         this.menuItems[2].disabled = true;
         this.menuItems[3].disabled = true;
-        this.menuItems[5].items[0]['disabled'] = true;
-        this.menuItems[5].items[1]['disabled'] = true;
-        this.menuItems[8].items[4]['disabled'] = true;
+        this.menuItems[4].disabled = true;
+        this.menuItems[6].items[0]['disabled'] = true;
+        this.menuItems[6].items[1]['disabled'] = true;
+        this.menuItems[9].items[4]['disabled'] = true;
 
         this.events.publish('prozCustomer', 0);
         this.apiService.pvs4_get_product_list(this.idCustomer).then((result: any) => {
@@ -469,9 +478,9 @@ export class ProductListPage implements OnInit {
 
     search_all() {
         if (this.isFilterOn()) {
-            this.menuItems[8].items[2]['disabled'] = false;
+            this.menuItems[9].items[2]['disabled'] = false;
         } else {
-            this.menuItems[8].items[2]['disabled'] = true;
+            this.menuItems[9].items[2]['disabled'] = true;
         }
         this.generate_productList();
         localStorage.setItem('filter_values_product', JSON.stringify(this.columnFilterValues));
@@ -479,7 +488,7 @@ export class ProductListPage implements OnInit {
 
     cancel_filters(cancel_type) {
         console.log('cancel_filters');
-        this.menuItems[8].items[2]['disabled'] = true;
+        this.menuItems[9].items[2]['disabled'] = true;
         if (cancel_type == 1) {
             for (let i = 0; i < this.cols.length; i++) {
                 this.columnFilterValues[this.cols[i].field] = '';
@@ -508,13 +517,13 @@ export class ProductListPage implements OnInit {
         }
 
         if (this.productListView.length > 0) {
-            this.menuItems[8].items[0]['disabled'] = false;
-            this.menuItems[8].items[1]['disabled'] = false;
-            this.menuItems[8].items[3]['disabled'] = false;
+            this.menuItems[9].items[0]['disabled'] = false;
+            this.menuItems[9].items[1]['disabled'] = false;
+            this.menuItems[9].items[3]['disabled'] = false;
         } else {
-            this.menuItems[8].items[0]['disabled'] = true;
-            this.menuItems[8].items[1]['disabled'] = true;
-            this.menuItems[8].items[3]['disabled'] = true;
+            this.menuItems[9].items[0]['disabled'] = true;
+            this.menuItems[9].items[1]['disabled'] = true;
+            this.menuItems[9].items[3]['disabled'] = true;
         }
 
         this.rowRecords = this.productListView.length;
@@ -549,9 +558,10 @@ export class ProductListPage implements OnInit {
         this.menuItems[1].disabled = false;
         this.menuItems[2].disabled = false;
         this.menuItems[3].disabled = false;
-        this.menuItems[5].items[0]['disabled'] = false;
-        this.menuItems[5].items[1]['disabled'] = false;
-        this.menuItems[8].items[4]['disabled'] = false;
+        this.menuItems[4].disabled = false;
+        this.menuItems[6].items[0]['disabled'] = false;
+        this.menuItems[6].items[1]['disabled'] = false;
+        this.menuItems[9].items[4]['disabled'] = false;
         let id_sn = 0;
 
         if (selectedNodeLength == 1) {
@@ -562,8 +572,8 @@ export class ProductListPage implements OnInit {
                 }
             }
             if (id_sn == this.move_id) {
-                this.menuItems[3].visible = this.userdata.role_set.edit_products;
-                this.menuItems[4].visible = false;
+                this.menuItems[4].visible = this.userdata.role_set.edit_products;
+                this.menuItems[5].visible = false;
                 this.move_id = 0;
             } else if (this.move_id > 0) {
                 this.move_obj.parent = id_sn;
@@ -572,8 +582,8 @@ export class ProductListPage implements OnInit {
                     console.log('result: ', result);
                     this.page_load();
                 });
-                this.menuItems[3].visible = this.userdata.role_set.edit_products;
-                this.menuItems[4].visible = false;
+                this.menuItems[4].visible = this.userdata.role_set.edit_products;
+                this.menuItems[5].visible = false;
                 this.move_id = 0;
             }
         } else {
@@ -581,22 +591,26 @@ export class ProductListPage implements OnInit {
             this.menuItems[1].disabled = true;
             this.menuItems[2].disabled = true;
             this.menuItems[3].disabled = true;
-            this.menuItems[3].visible = this.userdata.role_set.edit_products;
-            this.menuItems[4].visible = false;
-            this.menuItems[8].items[4]['disabled'] = true;
+            this.menuItems[4].disabled = true;
+            this.menuItems[4].visible = this.userdata.role_set.edit_products;
+            this.menuItems[5].visible = false;
+            this.menuItems[9].items[4]['disabled'] = true;
             this.move_id = 0;
         }
         if (selectedNodeLength == 0) {
-            this.menuItems[5].items[2]['disabled'] = true;
-            this.menuItems[8].items[4]['disabled'] = true;
+            this.menuItems[2].disabled = true;
+            this.menuItems[6].items[2]['disabled'] = true;
+            this.menuItems[9].items[4]['disabled'] = true;
         } else {
-            this.menuItems[5].items[2]['disabled'] = false;
-            this.menuItems[8].items[4]['disabled'] = false;
+            this.menuItems[2].disabled = false;
+            this.menuItems[6].items[2]['disabled'] = false;
+            this.menuItems[9].items[4]['disabled'] = false;
         }
         if (selectedNodeLength >= 2) {
-            this.menuItems[5].items[0]['disabled'] = true;
-            this.menuItems[5].items[1]['disabled'] = true;
+            this.menuItems[6].items[0]['disabled'] = true;
+            this.menuItems[6].items[1]['disabled'] = true;
         }
+
     }
 
     menu_new() {
@@ -681,8 +695,8 @@ export class ProductListPage implements OnInit {
                     this.move_obj = JSON.parse(JSON.stringify(this.selectedNode.data));
                 }
             }
-            this.menuItems[3].visible = false;
-            this.menuItems[4].visible = true;
+            this.menuItems[4].visible = false;
+            this.menuItems[5].visible = true;
             this.selectMulti = 0;
         } else if (n == 2) {
             // in Root
@@ -692,10 +706,10 @@ export class ProductListPage implements OnInit {
                 console.log('result: ', result);
                 this.page_load();
             });
-            this.menuItems[3].visible = true;
-            this.menuItems[4].visible = false;
-            this.menuItems[3].visible = true;
-            this.menuItems[4].visible = false;
+            this.menuItems[4].visible = true;
+            this.menuItems[5].visible = false;
+            this.menuItems[4].visible = true;
+            this.menuItems[5].visible = false;
             this.move_id = 0;
             this.selectMulti = 1;
         }
@@ -939,8 +953,73 @@ export class ProductListPage implements OnInit {
         this.expendedNodes.push(event.node.data['id']);
         localStorage.setItem('expanded_nodes_product', JSON.stringify(this.expendedNodes));
     }
+
     onNodeCollapse(event) {
         this.expendedNodes = this.expendedNodes.filter(function (element, index, array) { return element != event.node.data['id']; });
         localStorage.setItem('expanded_nodes_product', JSON.stringify(this.expendedNodes));
     }
+
+    productDeactivateAlert() {
+        const alert = this.alertCtrl.create({
+            header: this.translate.instant('Deaktivierung des Produkts bestätigen'),
+            message: this.translate.instant('Möchten Sie dieses Produkt wirklich deaktivieren'),
+            buttons: [
+                {
+                    text: this.translate.instant('nein'),
+                    handler: () => {
+                        console.log('Cancel clicked');
+                    }
+                },
+                {
+                    text: this.translate.instant('ja'),
+                    handler: () => {
+                        this.productDeactivate();
+                    }
+                }
+            ]
+        }).then(x => x.present());
+    }
+
+    productDeactivate() {
+        console.log('productDeactivate');
+        let isChild = 0;
+        this.selectedNode.forEach(element => {
+            if (element['children'] != undefined) {
+                if (element.children.length > 0) {
+                    isChild++;
+                }
+            }
+        });
+        if (isChild > 0) {
+            this.showChildMsg();
+        } else {
+            this.selectedNode.forEach(element => {
+                this.apiService.pvs4_get_product(element.data.id).then((result: any) => {
+                    const activProduct = result.obj;
+                    activProduct.active = 0;
+                    this.apiService.pvs4_set_product(activProduct).then((setResult: any) => {
+                        console.log('result: ', setResult);
+                        this.ngOnInit();
+                    });
+                });
+            });
+        }
+
+    }
+
+    showChildMsg() {
+        const alert = this.alertCtrl.create({
+            header: this.translate.instant('Beachtung'),
+            message: this.translate.instant('Produkte mit untergeordneten Datensätzen können nicht gelöscht werden.'),
+            buttons: [
+                {
+                    text: this.translate.instant('ja'),
+                    handler: () => {
+
+                    }
+                }
+            ]
+        }).then(x => x.present());
+    }
+
 }

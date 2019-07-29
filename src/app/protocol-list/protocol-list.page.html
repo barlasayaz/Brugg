@@ -48,18 +48,20 @@
     </div>
     <p-treeTable [value]="protocolListView"
                  [columns]="selectedColumns"
-                 selectionMode="single"
+                 selectionMode="multiple"
                  [(selection)]="selectedNode"
-                 (onNodeSelect)="nodeSelect($event)"
-                 (onNodeUnselect)="nodeUnselect()"
-                 styleClass="ui-treetable-scrollable-body"
-                 [resizableColumns]="true"
+                 (onNodeSelect)="nodeSelect($event, selectedNode)"
+                 (onNodeUnselect)="nodeSelect($event, selectedNode)"
                  dataKey="id"
+                 (onNodeExpand)="onNodeExpand($event)"
+                 (onNodeCollapse)="onNodeCollapse($event)"
+                 styleClass="ui-treetable-scrollable-body"
+                 [resizableColumns]="true"                 
                  [scrollable]="true"
                  [scrollHeight]="heightCalc"
                  [rows]="25"
                  [paginator]="true"
-                 [reorderableColumns]="true" >
+                 [reorderableColumns]="true">
         <ng-template pTemplate="colgroup" let-columns>
             <colgroup>
                 <col *ngFor="let col of selectedColumns" style="width:200px">
