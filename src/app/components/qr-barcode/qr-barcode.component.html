@@ -34,7 +34,7 @@
                     <ng-template pTemplate="header" let-columns>
                         <tr>
                             <th *ngFor="let col of columns">{{col.header}}</th>
-                            <th></th>
+                            <th class="action"></th>
                         </tr>
                     </ng-template>
                     <ng-template pTemplate="body" let-scanList let-columns="cols">
@@ -46,6 +46,11 @@
                                 </ion-button>
                             </td>
                         </tr>
+                    </ng-template>
+                    <ng-template pTemplate="summary" >
+                        <div class="table-summary">
+                            {{company}} 
+                        </div>         
                     </ng-template>
                 </p-table>
             </div>

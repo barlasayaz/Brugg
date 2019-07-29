@@ -42,7 +42,8 @@
                               (onChange)="inputErrorMsg()"
                               item-content
                               [(ngModel)]="selectedContact"
-                              [(items)]="userList"
+                              [hasVirtualScroll]="true"
+                              [items]="userList"
                               itemValueField="id"
                               itemTextField="name"
                               [canSearch]="true">

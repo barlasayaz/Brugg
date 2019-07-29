@@ -31,9 +31,10 @@
           <ionic-selectable required
                             item-content
                             [(ngModel)]="targetCustomer"
-                            [(items)]="listCustomer"
+                            [items]="listCustomer"
                             itemValueField="id"
                             itemTextField="company"
+                            [hasVirtualScroll]="true"
                             [canSearch]="true"
                             (onChange)="customerChange($event)">
           </ionic-selectable> 

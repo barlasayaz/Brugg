@@ -25,8 +25,18 @@
         width: 150px;
     }
     .button-larger {
-        width: 140px!important;
+        width: 160px!important;
     }
     .modal-header {
         display: inline-flex !important;
+    }
+
+    .action{
+        width: 80px;
+    }
+
+    .table-summary {
+        padding: 5px !important;
+        text-align: right !important;
+        color: #444 !important;
     }

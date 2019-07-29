@@ -32,6 +32,7 @@ export class QrBarcodeComponent implements OnInit {
   public url: any;
   public lang: string = localStorage.getItem('lang');
   public mobilePlatform = false;
+  public company:string ="";
 
   constructor(public translate: TranslateService,
     public apiService: ApiService,
@@ -74,7 +75,7 @@ export class QrBarcodeComponent implements OnInit {
     this.cols = [
       { field: 'id_number', header: 'ID' },
       { field: 'title', header: this.translate.instant('Produkt') },
-      { field: 'customer', header: this.translate.instant('Kunden') }
+      { field: 'details', header: this.translate.instant('Produktdetails')  } 
     ];
   }
 

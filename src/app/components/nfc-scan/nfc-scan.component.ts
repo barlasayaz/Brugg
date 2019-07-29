@@ -33,6 +33,7 @@ export class NfcScanComponent implements OnInit {
   public cols: any[];
   public result: string = "";
   public lang: string = localStorage.getItem('lang');
+  public company:string ="";
 
   constructor(
     public translate: TranslateService,
@@ -56,9 +57,9 @@ export class NfcScanComponent implements OnInit {
     this.pid = this.navParams.get("pid");
 
     this.cols = [
-      { field: 'id_number', header: 'ID' },
+      { field: 'id_number', header: 'ID', width: '300px' },
       { field: 'title', header: this.translate.instant('Produkt') },
-      { field: 'customer', header: this.translate.instant('Kunden') }
+      { field: 'details', header: this.translate.instant('Produktdetails')  } 
     ];
     this.procedure = 0;
     this.isWritable = true;
@@ -149,6 +150,18 @@ export class NfcScanComponent implements OnInit {
                   for (var i = 0; i < this.scanList.length; i++) {
                     if (this.scanList[i].id == result.obj.id) rein = false;
                   }
+                  for (var i = 0; i < this.scanList.length; i++) {
+                    this.scanList[i].idCustomer = parseInt(this.scanList[i].idCustomer);
+                    result.obj.customer = parseInt(result.obj.customer);
+                    if (this.scanList[i].idCustomer != result.obj.customer){
+                      rein = false;
+                      const toast = this.toastCtrl.create({
+                        message: this.translate.instant("Produkt einem anderem Kunden zugeteilt"),
+                        duration: 2000
+                      }).then(x => x.present());
+                      return;
+                    } 
+                  }
                   if (rein) {
                     this.apiService.pvs4_get_customer(result.obj.customer).then((customer: any) => {
                       try
@@ -157,15 +170,40 @@ export class NfcScanComponent implements OnInit {
                         result.obj.title = result.obj.title[this.lang];   
                       }
                       catch{
-                         console.error('JSON.parse err', result.obj.title) ;
+                         console.error('JSON.parse err title', result.obj.title) ;
                       }
+                      let details ="";
+                      try
+                      {
+                        let items = JSON.parse(result.obj.items); 
+                        
+                        console.log("items:", result.obj.details );   
+                        for (var i = 0; i < items.length; i++) {
+                          if (items[i].type != 2 ) continue;
+                          if (items[i].value.trim() == "" ) continue;
+                          if(details != ""){
+                            details +=", ";
+                          }
+                          details += items[i].title[this.lang] +":"+items[i].value.trim();   
+                          if(details.length>63) {
+                            details = details.substring(0,60)+"...";
+                            break;
+                          } 
+                        } 
+                      }
+                      catch{
+                         console.error('JSON.parse err items', result.obj.items) ;
+                      }
+
+                      this.company = customer.obj.company;
 
                       let new_obj = {
                         id: result.obj.id,
                         id_number: result.obj.id_number,
                         title: result.obj.title,
-                        customer: customer.obj.company,
-                        idCustomer: customer.obj.id
+                        company: customer.obj.company,
+                        idCustomer: customer.obj.id,
+                        details: details
                       }
                       this.zone.run(() => {
                         this.scanList.push(new_obj);
