@@ -49,6 +49,7 @@ export class QrBarcodeComponent implements OnInit {
   }
 
   ngOnInit() {
+
     this.platform.ready().then(() => {
       if (this.platform.is('ios') ||
         this.platform.is('android')) {
@@ -118,7 +119,8 @@ export class QrBarcodeComponent implements OnInit {
           } else {
             const toast = this.toastCtrl.create({
               message: this.translate.instant('Produkt unbekannt'),
-              duration: 2000
+              cssClass: "toast-warning",
+              duration: 3000
             }).then(x => x.present());
           }
           // this.scanData = barcodeData;
@@ -167,7 +169,8 @@ export class QrBarcodeComponent implements OnInit {
       console.log('pvs4_set_product_tag() ok:', done);
       const toast = this.toastCtrl.create({
         message: this.translate.instant('Speichern erfolgreich'),
-        duration: 2000
+        cssClass: "toast-warning",
+        duration: 3000
       }).then(x => x.present());
 
 
@@ -175,7 +178,8 @@ export class QrBarcodeComponent implements OnInit {
       console.log('pvs4_set_product_tag() ok:', err);
       const toast = this.toastCtrl.create({
         message: 'Error',
-        duration: 2000
+        cssClass: "toast-warning",
+        duration: 3000
       }).then(x => x.present());
 
     });
@@ -220,6 +224,19 @@ export class QrBarcodeComponent implements OnInit {
               for (var i = 0; i < this.scanList.length; i++) {
                 if (this.scanList[i].id == product.id) { add = false; }
               }
+              for (var i = 0; i < this.scanList.length; i++) {
+                this.scanList[i].idCustomer = parseInt(this.scanList[i].idCustomer);
+                product.customer = parseInt(product.customer);
+                if (this.scanList[i].idCustomer != product.customer){
+                  add = false;
+                  const toast = this.toastCtrl.create({
+                    message: this.translate.instant("Produkt einem anderem Kunden zugeteilt"),
+                    cssClass: "toast-warning",
+                    duration: 3000
+                  }).then(x => x.present());
+                  return;
+                } 
+              }
               if (add) {
                 let details = "";
                 try {
@@ -257,7 +274,8 @@ export class QrBarcodeComponent implements OnInit {
           } else {
             const toast = this.toastCtrl.create({
               message: this.translate.instant('Produkt unbekannt'),
-              duration: 2000
+              cssClass: "toast-warning",
+              duration: 3000
             }).then(x => x.present());
           }
           // this.scanData = barcodeData;
