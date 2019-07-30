@@ -45,7 +45,7 @@
                  selectionMode="multiple"
                  [(selection)]="selectedNode"
                  (onNodeSelect)="nodeSelect($event, selectedNode)"
-                 (onNodeUnselect)="nodeSelect($event, selectedNode)"
+                 (onNodeUnselect)="onNodeUnselect($event, selectedNode)"
                  dataKey="id"
                  (onNodeExpand)="onNodeExpand($event)"
                  (onNodeCollapse)="onNodeCollapse($event)"

@@ -45,6 +45,7 @@ export class ProductListPage implements OnInit {
     public company = '';
     public selectMulti: number;
     public navigationSubscription: any;
+    public childCount: number;
     public menuItems: MenuItem[] = [{
         label: this.translate.instant('Ansicht'),
         icon: 'pi pi-fw pi-eye',
@@ -273,6 +274,7 @@ export class ProductListPage implements OnInit {
         this.rowRecords = 0;
         this.totalRecords = 0;
         this.selectMulti = 1;
+        this.childCount = 0;
         this.selectedNode = [];
         this.menuItems[0].disabled = true;
         this.menuItems[1].disabled = true;
@@ -499,7 +501,7 @@ export class ProductListPage implements OnInit {
                 json += '"' + this.cols[j].field + '":""';
                 json += ',';
             }
-            json += 'search_all:""}';
+            json += '"search_all":""}';
             this.columnFilterValues = JSON.parse(json);
         }
         this.generate_productList();
@@ -609,6 +611,91 @@ export class ProductListPage implements OnInit {
         if (selectedNodeLength >= 2) {
             this.menuItems[6].items[0]['disabled'] = true;
             this.menuItems[6].items[1]['disabled'] = true;
+        }
+
+        if (this.selectedNode.data.parent != 0) {
+            this.childCount++;
+        }
+        if (this.childCount > 0) {
+            this.menuItems[9].items[4]['disabled'] = true;
+        }
+
+    }
+
+    onNodeUnselect(event, selectedNode) {
+
+        console.log('nodeSelect :', event, selectedNode, selectedNode.length, this.selectMulti);
+        let selectedNodeLength = selectedNode.length;
+
+        if (!this.selectMulti) {
+            selectedNodeLength = 1;
+            this.selectMulti = 1;
+        }
+        console.log('selectMulti :', this.selectMulti);
+
+        this.selectedNode.data = event.node.data;
+        this.menuItems[0].disabled = false;
+        this.menuItems[1].disabled = false;
+        this.menuItems[2].disabled = false;
+        this.menuItems[3].disabled = false;
+        this.menuItems[4].disabled = false;
+        this.menuItems[6].items[0]['disabled'] = false;
+        this.menuItems[6].items[1]['disabled'] = false;
+        this.menuItems[9].items[4]['disabled'] = false;
+        let id_sn = 0;
+
+        if (selectedNodeLength == 1) {
+            this.selectedNode.data = this.selectedNode[0].data;
+            if (this.selectedNode) {
+                if (this.selectedNode.data.id) {
+                    id_sn = this.selectedNode.data.id;
+                }
+            }
+            if (id_sn == this.move_id) {
+                this.menuItems[4].visible = this.userdata.role_set.edit_products;
+                this.menuItems[5].visible = false;
+                this.move_id = 0;
+            } else if (this.move_id > 0) {
+                this.move_obj.parent = id_sn;
+                this.move_obj.title = JSON.stringify(this.move_obj.titleJson);
+                this.apiService.pvs4_set_product(this.move_obj).then((result: any) => {
+                    console.log('result: ', result);
+                    this.page_load();
+                });
+                this.menuItems[4].visible = this.userdata.role_set.edit_products;
+                this.menuItems[5].visible = false;
+                this.move_id = 0;
+            }
+        } else {
+            this.menuItems[0].disabled = true;
+            this.menuItems[1].disabled = true;
+            this.menuItems[2].disabled = true;
+            this.menuItems[3].disabled = true;
+            this.menuItems[4].disabled = true;
+            this.menuItems[4].visible = this.userdata.role_set.edit_products;
+            this.menuItems[5].visible = false;
+            this.menuItems[9].items[4]['disabled'] = true;
+            this.move_id = 0;
+        }
+        if (selectedNodeLength == 0) {
+            this.menuItems[2].disabled = true;
+            this.menuItems[6].items[2]['disabled'] = true;
+            this.menuItems[9].items[4]['disabled'] = true;
+        } else {
+            this.menuItems[2].disabled = false;
+            this.menuItems[6].items[2]['disabled'] = false;
+            this.menuItems[9].items[4]['disabled'] = false;
+        }
+        if (selectedNodeLength >= 2) {
+            this.menuItems[6].items[0]['disabled'] = true;
+            this.menuItems[6].items[1]['disabled'] = true;
+        }
+
+        if (event.node.data.parent != 0) {
+            this.childCount--;
+        }
+        if (this.childCount > 0) {
+            this.menuItems[9].items[4]['disabled'] = true;
         }
 
     }
