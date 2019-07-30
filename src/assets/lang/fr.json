@@ -193,7 +193,7 @@
   "Dateianhänge l\u00f6schen": "Supprimer annexe de fichier",
   "Dateien l\u00f6schen": "Supprimer fichier",
   "Daten": "Donn\u00e9es",
-  "Datensätze von":"Enregistrements",
+  "Datensätze von":"Records de",
   "Datum": "Date",
   "Datum bis ...": "Date jusqu'au \u2026",
   "Datum vom ...": "Date du \u2026",
@@ -838,5 +838,7 @@
   "Das Produktbild wird gelöscht. Sind Sie sicher?": "L'image du produit veut être supprimée, êtes-vous sûr?",
   "Benutzer nicht gefunden!" : "Utilisateur non trouvé!",
   "Benutzer hinzufügen": "Ajouter des utilisateurs",
-  "Passwort vergessen?": "Mot de passe oublié?"
+  "Passwort vergessen?": "Mot de passe oublié?",
+  "Beachtung": "Beachtung",
+  "Produkte mit untergeordneten Datensätzen können nicht gelöscht werden.": "Produkte mit untergeordneten Datensätzen können nicht gelöscht werden."
 }
