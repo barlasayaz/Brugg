@@ -1,4 +1,4 @@
-import { Component, NgZone,OnInit } from '@angular/core';
+import { Component, NgZone, OnInit } from '@angular/core';
 import { NavParams, Platform, ModalController, AlertController, NavController } from '@ionic/angular';
 import { ToastController } from '@ionic/angular';
 import { NFC, Ndef } from '@ionic-native/nfc/ngx';
@@ -18,6 +18,7 @@ import { DataService } from '../../services/data.service';
   templateUrl: './nfc-scan.component.html',
   styleUrls: ['./nfc-scan.component.scss']
 })
+
 export class NfcScanComponent implements OnInit {
   subscription: Subscription = new Subscription;
   ndeflistener: any;
@@ -28,12 +29,12 @@ export class NfcScanComponent implements OnInit {
   public readonly: boolean;
   public scanList: any = [];
   public isWritable: boolean;
-  public listView: boolean = true;
-  public tagId: string = "";
+  public listView = true;
+  public tagId = '';
   public cols: any[];
-  public result: string = "";
+  public result = '';
   public lang: string = localStorage.getItem('lang');
-  public company:string ="";
+  public company = '';
 
   constructor(
     public translate: TranslateService,
@@ -51,19 +52,18 @@ export class NfcScanComponent implements OnInit {
 
   }
 
-  ngOnInit()
-  {
-    this.readonly = this.navParams.get("readOnly");
-    this.pid = this.navParams.get("pid");
+  ngOnInit() {
+    this.readonly = this.navParams.get('readOnly');
+    this.pid = this.navParams.get('pid');
 
     this.cols = [
       { field: 'id_number', header: '#', width: '300px' },
       { field: 'title', header: this.translate.instant('Produkt') },
-      { field: 'details', header: this.translate.instant('Produktdetails')  } 
+      { field: 'details', header: this.translate.instant('Produktdetails')  }
     ];
     this.procedure = 0;
     this.isWritable = true;
-    if (!this.readonly) this.listView = false;
+    if (!this.readonly) { this.listView = false; }
 
     this.platform.ready().then(() => {
       if (this.platform.is('ios') ||
@@ -74,143 +74,134 @@ export class NfcScanComponent implements OnInit {
         this.platform.is('tablet')) {
           this.nfc.enabled().then((flag) => {
           this.subscribeNfc();
-        }).catch(this.onFailure);;
-      }
-      else {
-        console.log("platform :", this.platform.platforms());
+        }).catch(this.onFailure); ;
+      } else {
+        console.log('platform :', this.platform.platforms());
       }
     });
   }
 
   subscribeNfc() {
-    console.log("subscribeNfc()");
-    this.ndeflistener = this.nfc.addNdefListener()
+    console.log('subscribeNfc()');
+    this.ndeflistener = this.nfc.addNdefListener();
     this.subscription = this.ndeflistener.subscribe(
       (data: Event) => this.nfcReadNdef(data),
       (err: any) => console.log(err)
     );
   }
 
-
   nfcReadNdef(event: any) {
-    console.log("nfcReadNdef()", event);
+    console.log('nfcReadNdef()', event);
     if (event && event.tag && event.tag.id) {
       this.tagId = this.nfc.bytesToHexString(event.tag.id);
       this.isWritable = event.tag.isWritable;
-      console.log(typeof (this.tagId) + " tagId: ", this.tagId);
-      console.log("isWritable: ", this.isWritable);
-      console.log("only read: ", this.readonly);
+      console.log(typeof (this.tagId) + ' tagId: ', this.tagId);
+      console.log('isWritable: ', this.isWritable);
+      console.log('only read: ', this.readonly);
       if (this.readonly) {
         this.read_nfc_data(event);
       } else {
         this.procedure = 1;
       }
-
     }
-
   }
 
   read_nfc_data(nfcEvent: any) {
-    console.log("read_nfc_data()", nfcEvent);
+    console.log('read_nfc_data()', nfcEvent);
     if (!nfcEvent.tag.ndefMessage) {
       const toast = this.toastCtrl.create({
-        message: this.translate.instant("Produkt unbekannt"),
-        cssClass: "toast-warning",
+        message: this.translate.instant('Produkt unbekannt'),
+        cssClass: 'toast-warning',
         duration: 3000
       }).then(x => x.present());
       return;
     }
-    var art = this.nfc.bytesToString(nfcEvent.tag.ndefMessage[0].type);
+    let art = this.nfc.bytesToString(nfcEvent.tag.ndefMessage[0].type);
     console.log('NFC art:', art);
-    if (art == "T") {
-      var text = this.ndef.textHelper.decodePayload(nfcEvent.tag.ndefMessage[0].payload);
-      console.log("NFC text", text);
-      var res = text.split(":");
+    if (art == 'T') {
+      let text = this.ndef.textHelper.decodePayload(nfcEvent.tag.ndefMessage[0].payload);
+      console.log('NFC text', text);
+      let res = text.split(':');
       if (res.length >= 3) {
-        if (res[0] == "BruggPVS") {
-          if (res[1] == "ProductID") {
-            let pid = parseInt(res[2]);
-            console.log("NFC pid", pid);
+        if (res[0] == 'BruggPVS') {
+          if (res[1] == 'ProductID') {
+            const pid = parseInt(res[2]);
+            console.log('NFC pid', pid);
             if (pid > 0) {
               this.apiService.pvs4_get_nfc_product(this.tagId).then((result: any) => {
-                console.log("nfc result", result);
+                console.log('nfc result', result);
                 if (result.amount == 0) {
                   const toast = this.toastCtrl.create({
-                    message: this.translate.instant("Produkt unbekannt"),
-                    cssClass: "toast-warning",
+                    message: this.translate.instant('Produkt unbekannt'),
+                    cssClass: 'toast-warning',
                     duration: 3000
                   }).then(x => x.present());
                   return;
                 }
                 if (!this.listView) {
-                  //result.obj.title = JSON.parse(result.obj.title);
+                  // result.obj.title = JSON.parse(result.obj.title);
                   this.viewCtrl.dismiss();
-                  this.navCtrl.navigateForward(['/product-details', result.obj.id ] );                  
-                }
-                else {
+                  this.navCtrl.navigateForward(['/product-details', result.obj.id ] );
+                } else {
                   let rein = true;
-                  for (var i = 0; i < this.scanList.length; i++) {
-                    if (this.scanList[i].id == result.obj.id) rein = false;
+                  for (let i = 0; i < this.scanList.length; i++) {
+                    if (this.scanList[i].id == result.obj.id) { rein = false; }
                   }
-                  for (var i = 0; i < this.scanList.length; i++) {
+                  for (let i = 0; i < this.scanList.length; i++) {
                     this.scanList[i].idCustomer = parseInt(this.scanList[i].idCustomer);
                     result.obj.customer = parseInt(result.obj.customer);
-                    if (this.scanList[i].idCustomer != result.obj.customer){
+                    if (this.scanList[i].idCustomer != result.obj.customer) {
                       rein = false;
                       const toast = this.toastCtrl.create({
-                        message: this.translate.instant("Produkt einem anderem Kunden zugeteilt"),
-                        cssClass: "toast-warning",
+                        message: this.translate.instant('Produkt einem anderem Kunden zugeteilt'),
+                        cssClass: 'toast-warning',
                         duration: 3000
                       }).then(x => x.present());
                       return;
-                    } 
+                    }
                   }
                   if (rein) {
                     this.apiService.pvs4_get_customer(result.obj.customer).then((customer: any) => {
-                      try
-                      {
-                        result.obj.title = JSON.parse(result.obj.title);   
-                        result.obj.title = result.obj.title[this.lang];   
-                      }
-                      catch{
+                      try {
+                        result.obj.title = JSON.parse(result.obj.title);
+                        result.obj.title = result.obj.title[this.lang];
+                      } catch {
                          console.error('JSON.parse err title', result.obj.title) ;
                       }
-                      let details ="";
-                      try
-                      {
-                        let items = JSON.parse(result.obj.items); 
-                        
-                        console.log("items:", result.obj.items );   
-                        for (var i = 0; i < items.length; i++) {
-                          if (items[i].type != 2 ) continue;
-                          if (items[i].value.trim() == "" ) continue;
-                          if(details != ""){
-                            details +=", ";
+                      let details = '';
+                      try {
+                        const items = JSON.parse(result.obj.items);
+
+                        console.log('items:', result.obj.items );
+                        for (let i = 0; i < items.length; i++) {
+                          if (items[i].type != 2 ) { continue; }
+                          if (items[i].value.trim() == '' ) { continue; }
+                          if (details != '') {
+                            details += ', ';
                           }
-                          details += items[i].title[this.lang] +":"+items[i].value.trim();   
-                          if(details.length>63) {
-                            details = details.substring(0,60)+"...";
+                          details += items[i].title[this.lang] + ':' + items[i].value.trim();
+                          if (details.length > 63) {
+                            details = details.substring(0, 60) + '...';
                             break;
-                          } 
-                        } 
-                      }
-                      catch{
+                          }
+                        }
+                      } catch {
                          console.error('JSON.parse err items', result.obj.items) ;
                       }
 
                       this.company = customer.obj.company;
 
-                      let new_obj = {
+                      const new_obj = {
                         id: result.obj.id,
                         id_number: result.obj.id_number,
                         title: result.obj.title,
                         company: customer.obj.company,
                         idCustomer: customer.obj.id,
                         details: details
-                      }
+                      };
                       this.zone.run(() => {
                         this.scanList.push(new_obj);
-                        console.log("scanList:", this.scanList);
+                        console.log('scanList:', this.scanList);
                       });
 
                     }).catch(this.onFailure);
@@ -229,22 +220,22 @@ export class NfcScanComponent implements OnInit {
   }
 
   nfc_write() {
-    console.log("nfc_write()");
-    let message = [
-      this.ndef.textRecord("BruggPVS:ProductID:" + this.pid),
-      this.ndef.uriRecord("https://www.pvs2go.com/")
+    console.log('nfc_write()');
+    const message = [
+      this.ndef.textRecord('BruggPVS:ProductID:' + this.pid),
+      this.ndef.uriRecord('https://www.pvs2go.com/')
     ];
-    console.log("nfc_write()", message);
+    console.log('nfc_write()', message);
     this.procedure = 2;
     this.nfc.write(message)
       .then(() => {
-        console.log("nfc_write() ok");
-        let obj = { nfc_tag_id: this.tagId, id: this.pid }
+        console.log('nfc_write() ok');
+        const obj = { nfc_tag_id: this.tagId, id: this.pid };
 
         this.apiService.pvs4_set_product_tag(obj).then((done: any) => {
-          console.log("pvs4_set_product_tag() ok:", done);
+          console.log('pvs4_set_product_tag() ok:', done);
         }).catch((err: any) => {
-          console.log("pvs4_set_product_tag() ok:", err);
+          console.log('pvs4_set_product_tag() ok:', err);
           this.procedure = 4;
           this.result = this.translate.instant('NFC-Schreibvorgang fehlgeschlagen!');
         });
@@ -253,7 +244,7 @@ export class NfcScanComponent implements OnInit {
         this.result = this.translate.instant('NFC-Schreibvorgang erfolgreich abgeschlossen.');
       })
       .catch((err) => {
-        console.log("nfc_write() error:", err);
+        console.log('nfc_write() error:', err);
         this.procedure = 4;
         this.result = this.translate.instant('NFC-Schreibvorgang fehlgeschlagen!');
       });
@@ -264,9 +255,9 @@ export class NfcScanComponent implements OnInit {
 
     this.procedure = 4;
 
-    let alert = this.alertCtrl.create({
+    const alert = this.alertCtrl.create({
       header: 'Error',
-      message: "Fehler: NFC Listener " + reason,
+      message: 'Fehler: NFC Listener ' + reason,
       buttons: [
         {
           text: 'Ok',
@@ -279,39 +270,40 @@ export class NfcScanComponent implements OnInit {
   }
 
   onSuccess(msg: any) {
-    console.log("onSuccess()", msg);
+    console.log('onSuccess()', msg);
   }
 
   delScanList = function (del: any) {
     console.log('NFC delScanList():', del);
-    var hilf = [];
-    for (var i = 0; i < this.scanList.length; i++) {
-      if (this.scanList[i].id != del.id) hilf.push(this.scanList[i]);
+    let hilf = [];
+    for (let i = 0; i < this.scanList.length; i++) {
+      if (this.scanList[i].id != del.id) { hilf.push(this.scanList[i]); }
     }
     this.scanList = hilf;
-    if(hilf.length==0)
-      this.company = "";
-  }
+    if (hilf.length == 0) {
+      this.company = '';
+    }
+  };
   dismiss() {
     this.viewCtrl.dismiss();
   }
 
   createProtocol() {
-    console.log("scanList :", this.scanList);
+    console.log('scanList :', this.scanList);
     if (this.scanList.length > 0) {
-      var hilf = [];
-      for (var i = 0; i < this.scanList.length; i++) {
-        let data = this.scanList[i];
+      let hilf = [];
+      for (let i = 0; i < this.scanList.length; i++) {
+        const data = this.scanList[i];
         hilf.push(data);
       }
 
-      let data = {
-            id: 0, 
+      const data = {
+            id: 0,
             idCustomer: this.scanList[0].idCustomer,
             productList: JSON.stringify(hilf)
-        }
+        };
       this.dataService.setData(data);
-      this.navCtrl.navigateForward(["/protocol-edit"]);
+      this.navCtrl.navigateForward(['/protocol-edit']);
       this.viewCtrl.dismiss();
     }
   }

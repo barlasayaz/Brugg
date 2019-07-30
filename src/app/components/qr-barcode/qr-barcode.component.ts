@@ -19,6 +19,7 @@ import { DataService } from '../../services/data.service';
   templateUrl: './qr-barcode.component.html',
   styleUrls: ['./qr-barcode.component.scss']
 })
+
 export class QrBarcodeComponent implements OnInit {
   public modalTitle: string;
   public readOnly: boolean;
@@ -32,7 +33,7 @@ export class QrBarcodeComponent implements OnInit {
   public url: any;
   public lang: string = localStorage.getItem('lang');
   public mobilePlatform = false;
-  public company: string = "";
+  public company: string = '';
 
   constructor(public translate: TranslateService,
     public apiService: ApiService,
@@ -83,7 +84,8 @@ export class QrBarcodeComponent implements OnInit {
   scanQr() {
     this.options = {
       prompt: this.translate.instant('QR-Code scannen')
-    }
+    };
+
     this.scanner.scan(this.options).then((barcodeData) => {
       console.log('scanQr:', barcodeData);
       if (barcodeData.text != '') {
@@ -93,14 +95,13 @@ export class QrBarcodeComponent implements OnInit {
             this.viewCtrl.dismiss();
           } else if (result.list.length > 1) {
             let buttons: any[] = [];
-            let addresses = "";
+            let addresses = '';
 
             result.list.forEach(product => {
               try {
                 addresses = JSON.parse(product.title);
                 addresses = addresses[this.lang];
-              }
-              catch{
+              } catch {
                 console.error('JSON.parse err', product.title);
               }
               buttons.push({
@@ -119,7 +120,7 @@ export class QrBarcodeComponent implements OnInit {
           } else {
             const toast = this.toastCtrl.create({
               message: this.translate.instant('Produkt unbekannt'),
-              cssClass: "toast-warning",
+              cssClass: 'toast-warning',
               duration: 3000
             }).then(x => x.present());
           }
@@ -134,7 +135,7 @@ export class QrBarcodeComponent implements OnInit {
   scanQrToDb() {
     this.options = {
       prompt: this.translate.instant('QR-Code scannen')
-    }
+    };
     this.scanner.scan(this.options).then((barcodeData) => {
       console.log(barcodeData);
       this.qrText = barcodeData.text;
@@ -146,30 +147,30 @@ export class QrBarcodeComponent implements OnInit {
     this.qrCodeText = this.qrText;
 
     /*this.scanner.encode(this.scanner.Encode.TEXT_TYPE, this.qrText).then((encodedData) => {
- 
+
        console.log("encodedData",encodedData);
        this.encodedData = encodedData;
        let obj = {qr_code:this.qrText, id:this.pid}
- 
+
        this.apiService.pvs4_set_product_tag(obj).then((done: any) => {
          console.log("pvs4_set_product_tag() ok:", done);
        }).catch((err: any) => {
          console.log("pvs4_set_product_tag() ok:", err);
        });
- 
+
      }, (err) => {
        console.log("Error occured : ", err);
      });*/
   }
 
   saveText() {
-    let obj = { qr_code: this.qrText, id: this.pid }
+    let obj = { qr_code: this.qrText, id: this.pid };
 
     this.apiService.pvs4_set_product_tag(obj).then((done: any) => {
       console.log('pvs4_set_product_tag() ok:', done);
       const toast = this.toastCtrl.create({
         message: this.translate.instant('Speichern erfolgreich'),
-        cssClass: "toast-warning",
+        cssClass: 'toast-warning',
         duration: 3000
       }).then(x => x.present());
 
@@ -178,7 +179,7 @@ export class QrBarcodeComponent implements OnInit {
       console.log('pvs4_set_product_tag() ok:', err);
       const toast = this.toastCtrl.create({
         message: 'Error',
-        cssClass: "toast-warning",
+        cssClass: 'toast-warning',
         duration: 3000
       }).then(x => x.present());
 
@@ -193,9 +194,10 @@ export class QrBarcodeComponent implements OnInit {
       if (this.scanList[i].id != del.id) { newList.push(this.scanList[i]); }
     }
     this.scanList = newList;
-    if(newList.length==0)
-      this.company = "";
-  }
+    if (newList.length == 0) {
+      this.company = '';
+    }
+  };
 
   createProtocol() {
     console.log('scanList :', this.scanList);
@@ -204,7 +206,7 @@ export class QrBarcodeComponent implements OnInit {
       id: 0,
       idCustomer: this.scanList[0].idCustomer,
       productList: JSON.stringify(this.scanList)
-    }
+    };
     this.dataService.setData(data);
     this.navCtrl.navigateForward(['/protocol-edit']);
     this.viewCtrl.dismiss();
@@ -213,7 +215,7 @@ export class QrBarcodeComponent implements OnInit {
   scanQrToList() {
     this.options = {
       prompt: this.translate.instant('QR-Code scannen')
-    }
+    };
     this.scanner.scan(this.options).then((barcodeData) => {
       console.log('scanQr:', barcodeData);
       if (barcodeData.text != '') {
@@ -227,36 +229,35 @@ export class QrBarcodeComponent implements OnInit {
               for (var i = 0; i < this.scanList.length; i++) {
                 this.scanList[i].idCustomer = parseInt(this.scanList[i].idCustomer);
                 product.customer = parseInt(product.customer);
-                if (this.scanList[i].idCustomer != product.customer){
+                if (this.scanList[i].idCustomer != product.customer) {
                   add = false;
                   const toast = this.toastCtrl.create({
-                    message: this.translate.instant("Produkt einem anderem Kunden zugeteilt"),
-                    cssClass: "toast-warning",
+                    message: this.translate.instant('Produkt einem anderem Kunden zugeteilt'),
+                    cssClass: 'toast-warning',
                     duration: 3000
                   }).then(x => x.present());
                   return;
                 } 
               }
               if (add) {
-                let details = "";
+                let details = '';
                 try {
                   let items = JSON.parse(product.items);
 
-                  console.log("items:", product.items);
+                  console.log('items:', product.items);
                   for (var i = 0; i < items.length; i++) {
-                    if (items[i].type != 2) continue;
-                    if (items[i].value.trim() == "") continue;
-                    if (details != "") {
-                      details += ", ";
+                    if (items[i].type != 2) { continue; }
+                    if (items[i].value.trim() == '') { continue; }
+                    if (details != '') {
+                      details += ', ';
                     }
-                    details += items[i].title[this.lang] + ":" + items[i].value.trim();
+                    details += items[i].title[this.lang] + ':' + items[i].value.trim();
                     if (details.length > 63) {
-                      details = details.substring(0, 60) + "...";
+                      details = details.substring(0, 60) + '...';
                       break;
                     }
                   }
-                }
-                catch{
+                } catch {
                   console.error('JSON.parse err items', product.items);
                 }
                 this.company = product.company;
@@ -267,14 +268,14 @@ export class QrBarcodeComponent implements OnInit {
                   company: product.company,
                   idCustomer: product.customer,
                   details: details
-                }
+                };
                 this.scanList.push(new_obj);
               }
             });
           } else {
             const toast = this.toastCtrl.create({
               message: this.translate.instant('Produkt unbekannt'),
-              cssClass: "toast-warning",
+              cssClass: 'toast-warning',
               duration: 3000
             }).then(x => x.present());
           }
