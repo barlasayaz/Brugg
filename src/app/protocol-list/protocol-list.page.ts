@@ -363,6 +363,10 @@ export class ProtocolListPage implements OnInit {
         this.events.publish('rowRecords', this.rowRecords);
         this.events.publish('totalRecords', this.totalRecords);
 
+        if (localStorage.getItem('expanded_nodes_protocol') != undefined) {
+            this.expandChildren(this.protocolListView, JSON.parse(localStorage.getItem('expanded_nodes_protocol')));
+        }
+
     }
 
     nodeSelect(event, selectedNode) {
@@ -463,7 +467,7 @@ export class ProtocolListPage implements OnInit {
             json += '}';
             data.push(JSON.parse(json));
         } */
-        this.excelService.exportAsExcelFile(data, 'product_all.xlsx');
+        this.excelService.exportAsExcelFile(data, 'protocol_all.xlsx');
     }
 
     excel_view() {
@@ -486,7 +490,7 @@ export class ProtocolListPage implements OnInit {
             data.push(json);
         }
         console.log('data :', data);
-        this.excelService.exportAsExcelFile(data, 'product_view.xlsx');
+        this.excelService.exportAsExcelFile(data, 'protocol_view.xlsx');
     }
 
     printPdf() {
@@ -618,6 +622,26 @@ export class ProtocolListPage implements OnInit {
         return ret;
     }
 
+    expandChildren(nodes: TreeNode[], expended: string[]) {
+        for (let i = 0; i < nodes.length; i++) {
+            if (expended != null) {
+                if (nodes[i].children && expended.find(x => x == nodes[i].data['id'])) {
+                    nodes[i].expanded = true;
+                    this.expandChildren(nodes[i].children, expended);
+                }
+            }
+        }
+    }
+
+    onNodeExpand(event) {
+        this.expendedNodes.push(event.node.data['id']);
+        localStorage.setItem('expanded_nodes_protocol', JSON.stringify(this.expendedNodes));
+    }
+
+    onNodeCollapse(event) {
+        this.expendedNodes = this.expendedNodes.filter(function (element, index, array) { return element != event.node.data['id']; });
+        localStorage.setItem('expanded_nodes_protocol', JSON.stringify(this.expendedNodes));
+    }
 
     protocolDeactivate() {
         console.log('delete');
