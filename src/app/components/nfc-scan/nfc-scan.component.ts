@@ -57,7 +57,7 @@ export class NfcScanComponent implements OnInit {
     this.pid = this.navParams.get("pid");
 
     this.cols = [
-      { field: 'id_number', header: 'ID', width: '300px' },
+      { field: 'id_number', header: '#', width: '300px' },
       { field: 'title', header: this.translate.instant('Produkt') },
       { field: 'details', header: this.translate.instant('Produktdetails')  } 
     ];
@@ -115,7 +115,8 @@ export class NfcScanComponent implements OnInit {
     if (!nfcEvent.tag.ndefMessage) {
       const toast = this.toastCtrl.create({
         message: this.translate.instant("Produkt unbekannt"),
-        duration: 2000
+        cssClass: "toast-warning",
+        duration: 3000
       }).then(x => x.present());
       return;
     }
@@ -136,7 +137,8 @@ export class NfcScanComponent implements OnInit {
                 if (result.amount == 0) {
                   const toast = this.toastCtrl.create({
                     message: this.translate.instant("Produkt unbekannt"),
-                    duration: 2000
+                    cssClass: "toast-warning",
+                    duration: 3000
                   }).then(x => x.present());
                   return;
                 }
@@ -157,7 +159,8 @@ export class NfcScanComponent implements OnInit {
                       rein = false;
                       const toast = this.toastCtrl.create({
                         message: this.translate.instant("Produkt einem anderem Kunden zugeteilt"),
-                        duration: 2000
+                        cssClass: "toast-warning",
+                        duration: 3000
                       }).then(x => x.present());
                       return;
                     } 
