@@ -66,7 +66,7 @@ export class ProductListPage implements OnInit {
         }
     },
     {
-        label: this.translate.instant('l\u00f6schen'),
+        label: this.translate.instant('löschen'),
         icon: 'pi pi-fw pi-trash',
         disabled: true,
         visible:  this.userdata.role_set.check_products,
@@ -116,6 +116,7 @@ export class ProductListPage implements OnInit {
                 label: this.translate.instant('Neue Produktvorlage'),
                 icon: 'pi pi-fw pi-plus',
                 visible: this.userdata.role_set.edit_products,
+                disabled: false,
                 command: (event) => {
                     if (this.userdata.role_set.edit_products == false) { return; }
                     console.log('command menuitem:', event.item);
@@ -126,6 +127,7 @@ export class ProductListPage implements OnInit {
                 label: this.translate.instant('Neues Produkt'),
                 icon: 'pi pi-fw pi-plus',
                 visible: this.userdata.role_set.edit_products,
+                disabled: false,
                 command: (event) => {
                     if (this.userdata.role_set.edit_products == false) { return; }
                     console.log('command menuitem:', event.item);
@@ -251,7 +253,13 @@ export class ProductListPage implements OnInit {
                 console.log('ProductListPage idCustomer:', this.idCustomer);
                 this.page_load();
             }
-          });
+        });        
+    }
+
+    ngAfterViewChecked(){        
+        setTimeout(()=>{   
+            this.funcHeightCalc();
+        }, 1000);
     }
 
     onResize(event) {
@@ -263,9 +271,9 @@ export class ProductListPage implements OnInit {
         let x = this.divHeightCalc.nativeElement.scrollHeight;
         if (x == 0) { x = 550; }
         if (this.splitFilter) { x = x - 51; }
-        // if (x < 80) { x = 80; }
+        if (x < 80) { x = 80; }
         this.heightCalc = x + 'px';
-        // console.log('heightCalc 2 :', x, this.heightCalc);
+        //console.log('heightCalc 2 :', x, this.heightCalc);
     }
 
     page_load() {
@@ -279,8 +287,8 @@ export class ProductListPage implements OnInit {
         this.menuItems[2].disabled = true;
         this.menuItems[3].disabled = true;
         this.menuItems[4].disabled = true;
-        this.menuItems[6].items[0]['disabled'] = true;
-        this.menuItems[6].items[1]['disabled'] = true;
+        this.menuItems[6].items[0]['disabled'] = false;
+        this.menuItems[6].items[1]['disabled'] = false;
         this.menuItems[9].items[4]['disabled'] = true;
 
         this.events.publish('prozCustomer', 0);
