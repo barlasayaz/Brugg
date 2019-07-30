@@ -394,7 +394,7 @@
   "Sitzgurt EN 813": "Harnais \u00e0 sellette EN 813",
   "Sonstiges": "Autres",
   "Speichern": "Sauvegarder",
-  "Standort": "Lieu",  
+  "Standort": "Lieu",
   "Startzeit":"Heure de Début",
   "Stockwinde": "Cric \u00e0 main",
   "Stränge": "Brins",
@@ -839,6 +839,6 @@
   "Benutzer nicht gefunden!" : "Utilisateur non trouvé!",
   "Benutzer hinzufügen": "Ajouter des utilisateurs",
   "Passwort vergessen?": "Mot de passe oublié?",
-  "Beachtung": "Attention",
-  "Produkte mit untergeordneten Datensätzen können nicht gelöscht werden.": "Les produits avec des enregistrements enfants ne peuvent pas être supprimés."
+  "Beachtung": "Beachtung",
+  "Produkte mit untergeordneten Datensätzen können nicht gelöscht werden.": "Produkte mit untergeordneten Datensätzen können nicht gelöscht werden."
 }
