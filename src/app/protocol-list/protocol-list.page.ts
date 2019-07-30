@@ -19,7 +19,7 @@ export class ProtocolListPage implements OnInit {
     public protocolListAll: TreeNode[] = [];
     public protocolListView: TreeNode[] = [];
     public cols: any[] = [];
-    public selectedNode: TreeNode;
+    public selectedNode: any;
     public allnodes: any[] = [];
     public selectedColumns: any[];
     public xlsHeader: any[];
@@ -47,6 +47,16 @@ export class ProtocolListPage implements OnInit {
             }
         },
         {
+            label: this.translate.instant('l\u00f6schen'),
+            icon: 'pi pi-fw pi-trash',
+            disabled: true,
+            visible:  this.userdata.role_set.check_products,
+            command: (event) => {
+                console.log('command menuitem:', event.item);
+                this.protocolDeactivate();
+            }
+        },
+        {
             label: this.translate.instant('Neue Protokollvorlage'),
             icon: 'pi pi-fw pi-plus',
             visible:  this.userdata.role_set.check_products,
@@ -69,16 +79,6 @@ export class ProtocolListPage implements OnInit {
             command: (event) => {
                 console.log('command menuitem:', event.item);
                 this.show_columns();
-            }
-        },
-        {
-            label: this.translate.instant('l\u00f6schen'),
-            icon: 'pi pi-fw pi-trash',
-            disabled: true,
-            visible:  this.userdata.role_set.check_products,
-            command: (event) => {
-                console.log('command menuitem:', event.item);
-                this.protocolDeactivate();
             }
         },
         {
@@ -142,6 +142,9 @@ export class ProtocolListPage implements OnInit {
     ngOnInit() {
         this.rowRecords = 0;
         this.totalRecords = 0;
+        this.menuItems[0].disabled = true;
+        this.menuItems[1].disabled = true;
+        this.selectedNode = [];
         this.events.publish('prozCustomer', 0);
         this.cols = [
             { field: 'protocol_number', header: this.translate.instant('Protokoll') },
@@ -161,6 +164,7 @@ export class ProtocolListPage implements OnInit {
         console.log('ProtocolListPage idCustomer:', this.idCustomer);
 
         this.apiService.pvs4_get_protocol_list(this.idCustomer).then((result: any) => {
+            console.log('result protocol :', result);
             this.protocolListAll = JSON.parse(JSON.stringify(result.list));
             // console.log('protocolListAll :', this.protocolListAll);
 
@@ -361,16 +365,19 @@ export class ProtocolListPage implements OnInit {
 
     }
 
-    nodeSelect(event) {
-        // console.log('nodeSelect:', event, this.menuItems);
-        this.menuItems[0].disabled = false;
-        this.menuItems[4].disabled = false;
-    }
-
-    nodeUnselect() {
-        // console.log('nodeUnselect:');
-        this.menuItems[0].disabled = true;
-        this.menuItems[4].disabled = true;
+    nodeSelect(event, selectedNode) {
+        this.selectedNode.data = event.node.data;
+        if (selectedNode.length == 0) {
+            this.menuItems[0].disabled = true;
+            this.menuItems[1].disabled = true;
+        } else if (selectedNode.length == 1) {
+            this.selectedNode.data = this.selectedNode[0].data;
+            this.menuItems[0].disabled = false;
+            this.menuItems[1].disabled = false;
+        } else if (selectedNode.length > 1) {
+            this.menuItems[0].disabled = true;
+            this.menuItems[1].disabled = false;
+        }
     }
 
     menu_new() {
@@ -631,14 +638,15 @@ export class ProtocolListPage implements OnInit {
                 {
                     text: this.translate.instant('ja'),
                     handler: () => {
-                        this.apiService.pvs4_get_protocol(idProtocol).then((result: any) => {
-                            const activProtocol = result.obj;
-                            console.log('loadProtocol: ', activProtocol);
+                        this.selectedNode.forEach(element => {
+                            this.apiService.pvs4_get_protocol(element.data.id).then((result: any) => {
+                                const activProtocol = result.obj;
 
-                            activProtocol.active = 0;
-                            this.apiService.pvs4_set_protocol(activProtocol).then((setResult: any) => {
-                                console.log('result: ', setResult);
-                                this.ngOnInit();
+                                activProtocol.active = 0;
+                                this.apiService.pvs4_set_protocol(activProtocol).then((setResult: any) => {
+                                    console.log('result: ', setResult);
+                                    this.ngOnInit();
+                                });
                             });
                         });
                     }

@@ -88,7 +88,7 @@ function processing($qrCode) {
     // escape the uemailid to prevent sql injection
     $qrCode   = trim( mysqli_escape_string($con,$qrCode) );
     
-    $sql    = "SELECT products.id, products.id_number, products.title, customer.company, products.customer FROM products LEFT JOIN customer ON products.customer = customer.id  WHERE products.qr_code='$qrCode';";
+    $sql    = "SELECT products.id, products.id_number, products.title, customer.company, products.customer, products.items FROM products LEFT JOIN customer ON products.customer = customer.id  WHERE products.qr_code='$qrCode';";
     $ret_sql= mysqli_query( $con, $sql );
 
     $liste = [];

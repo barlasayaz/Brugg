@@ -177,7 +177,7 @@ export class NfcScanComponent implements OnInit {
                       {
                         let items = JSON.parse(result.obj.items); 
                         
-                        console.log("items:", result.obj.details );   
+                        console.log("items:", result.obj.items );   
                         for (var i = 0; i < items.length; i++) {
                           if (items[i].type != 2 ) continue;
                           if (items[i].value.trim() == "" ) continue;
@@ -286,6 +286,8 @@ export class NfcScanComponent implements OnInit {
       if (this.scanList[i].id != del.id) hilf.push(this.scanList[i]);
     }
     this.scanList = hilf;
+    if(hilf.length==0)
+      this.company = "";
   }
   dismiss() {
     this.viewCtrl.dismiss();

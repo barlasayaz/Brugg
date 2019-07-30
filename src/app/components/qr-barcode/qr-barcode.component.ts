@@ -32,7 +32,7 @@ export class QrBarcodeComponent implements OnInit {
   public url: any;
   public lang: string = localStorage.getItem('lang');
   public mobilePlatform = false;
-  public company:string ="";
+  public company: string = "";
 
   constructor(public translate: TranslateService,
     public apiService: ApiService,
@@ -50,8 +50,8 @@ export class QrBarcodeComponent implements OnInit {
 
   ngOnInit() {
     this.platform.ready().then(() => {
-      if ( this.platform.is('ios') ||
-        this.platform.is('android') ) {
+      if (this.platform.is('ios') ||
+        this.platform.is('android')) {
         this.mobilePlatform = true;
         console.log('platform mobile:', this.platform.platforms());
       } else {
@@ -73,9 +73,9 @@ export class QrBarcodeComponent implements OnInit {
       this.qrText = this.qrCodeText;
     }
     this.cols = [
-      { field: 'id_number', header: 'ID' },
+      { field: 'id_number', header: 'ID', width: '300px' },
       { field: 'title', header: this.translate.instant('Produkt') },
-      { field: 'details', header: this.translate.instant('Produktdetails')  } 
+      { field: 'details', header: this.translate.instant('Produktdetails') }
     ];
   }
 
@@ -88,25 +88,24 @@ export class QrBarcodeComponent implements OnInit {
       if (barcodeData.text != '') {
         this.apiService.pvs4_get_qr_product_list(barcodeData.text).then(async (result: any) => {
           if (result.list.length == 1) {
-            this.navCtrl.navigateForward(['/product-details',result.list[0].id]);
+            this.navCtrl.navigateForward(['/product-details', result.list[0].id]);
             this.viewCtrl.dismiss();
           } else if (result.list.length > 1) {
             let buttons: any[] = [];
             let addresses = "";
 
             result.list.forEach(product => {
-              try
-              {
+              try {
                 addresses = JSON.parse(product.title);
                 addresses = addresses[this.lang];
               }
               catch{
-                 console.error('JSON.parse err', product.title);
+                console.error('JSON.parse err', product.title);
               }
               buttons.push({
                 text: addresses + ' - ' + product.id_number,
                 handler: id => {
-                  this.navCtrl.navigateForward(['/product-details', product.id] );
+                  this.navCtrl.navigateForward(['/product-details', product.id]);
                   this.viewCtrl.dismiss();
                 }
               });
@@ -190,16 +189,18 @@ export class QrBarcodeComponent implements OnInit {
       if (this.scanList[i].id != del.id) { newList.push(this.scanList[i]); }
     }
     this.scanList = newList;
+    if(newList.length==0)
+      this.company = "";
   }
 
   createProtocol() {
     console.log('scanList :', this.scanList);
- 
+
     let data = {
-      id: 0, 
+      id: 0,
       idCustomer: this.scanList[0].idCustomer,
       productList: JSON.stringify(this.scanList)
-  }
+    }
     this.dataService.setData(data);
     this.navCtrl.navigateForward(['/protocol-edit']);
     this.viewCtrl.dismiss();
@@ -220,12 +221,35 @@ export class QrBarcodeComponent implements OnInit {
                 if (this.scanList[i].id == product.id) { add = false; }
               }
               if (add) {
+                let details = "";
+                try {
+                  let items = JSON.parse(product.items);
+
+                  console.log("items:", product.items);
+                  for (var i = 0; i < items.length; i++) {
+                    if (items[i].type != 2) continue;
+                    if (items[i].value.trim() == "") continue;
+                    if (details != "") {
+                      details += ", ";
+                    }
+                    details += items[i].title[this.lang] + ":" + items[i].value.trim();
+                    if (details.length > 63) {
+                      details = details.substring(0, 60) + "...";
+                      break;
+                    }
+                  }
+                }
+                catch{
+                  console.error('JSON.parse err items', product.items);
+                }
+                this.company = product.company;
                 let new_obj = {
                   id: product.id,
                   id_number: product.id_number,
                   title: JSON.parse(product.title)[this.lang],
-                  customer: product.company,
-                  idCustomer: product.customer
+                  company: product.company,
+                  idCustomer: product.customer,
+                  details: details
                 }
                 this.scanList.push(new_obj);
               }

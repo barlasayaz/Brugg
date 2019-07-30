@@ -839,5 +839,7 @@
     "Produktbild löschen": "Produktbild löschen",
     "Das Produktbild wird gelöscht. Sind Sie sicher?": "Das Produktbild wird gelöscht. Sind Sie sicher?",
     "Benutzer hinzufügen": "Benutzer hinzufügen",
-    "Passwort vergessen?": "Passwort vergessen?"
+    "Passwort vergessen?": "Passwort vergessen?",
+    "Beachtung": "Beachtung",
+    "Produkte mit untergeordneten Datensätzen können nicht gelöscht werden.": "Produkte mit untergeordneten Datensätzen können nicht gelöscht werden."
 }

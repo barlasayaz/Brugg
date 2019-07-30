@@ -838,5 +838,7 @@
   "Das Produktbild wird gelöscht. Sind Sie sicher?": "L'image du produit veut être supprimée, êtes-vous sûr?",
   "Benutzer nicht gefunden!" : "Utilisateur non trouvé!",
   "Benutzer hinzufügen": "Ajouter des utilisateurs",
-  "Passwort vergessen?": "Mot de passe oublié?"
+  "Passwort vergessen?": "Mot de passe oublié?",
+  "Beachtung": "Attention",
+  "Produkte mit untergeordneten Datensätzen können nicht gelöscht werden.": "Les produits avec des enregistrements enfants ne peuvent pas être supprimés."
 }
