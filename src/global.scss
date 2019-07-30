@@ -99,6 +99,15 @@ body .ui-widget button {
   background: aliceblue !important;
 }
 
+//Toast
+.toast-warning{
+    --background: yellow;
+    --color: black;
+    --border-style: solid;
+    --border-width :1px;
+    --border-color: black;
+}
+
 //FAB
 .fab-in-list.show {
   color: #FFF;
