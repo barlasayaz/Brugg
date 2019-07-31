@@ -311,8 +311,8 @@ export class ProtocolEditPage implements OnInit {
     }
 
     this.apiService.pvs4_set_protocol(obj).then((result: any) => {
-      // console.log('result: ', result); 
-      this.navCtrl.navigateBack('/protocol-list/' + this.idCustomer);
+      // console.log('result: ', result);
+      this.navCtrl.navigateBack('/product-list/' + this.idCustomer);
     });
 
   }
