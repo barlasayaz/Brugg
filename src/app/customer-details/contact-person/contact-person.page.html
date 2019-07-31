@@ -32,7 +32,7 @@
           <div class="row ansprechpartner-row">
             <!-- NAME -->
             <div class="col-8" (click)="setContactPerson(contactPerson);">
-              <div class="ansprechpartner-name" style="font-size:1.5em;">{{contactPerson.first_name}} {{contactPerson.last_name}}</div>
+              <div class="ansprechpartner-name" style="font-size:1.5em;">{{contactPerson.gender_text}} {{contactPerson.first_name}} {{contactPerson.last_name}}</div>
             <div class="ansprechpartner-name" style="font-size:1.5em;"> </div>
               <div class="ansprechpartner-position" style="font-size:1.1em;">{{contactPerson.department}}</div>
             <div class="ansprechpartner-position" style="font-size:1.1em;"> </div>
@@ -59,11 +59,26 @@
       <ion-grid>
         <ion-row>  
           <!-- Left -->
-          <ion-col size-xl="12" size-lg="12" size-md="12" size-sm="12" size="12" style="top: -20px;">
-            <!-- Row 0-->
+          <ion-col size-xl="12" size-lg="12" size-md="12" size-sm="12" size="12" style="top: -20px;">            
             <ion-row>
               <ion-col size="12" >
                 <h6 style="font-size: 16px;">{{translate.instant('Ansprechpartner Daten')}}</h6>
+              </ion-col>
+            </ion-row>
+            <!-- Row 0-->
+            <ion-row>
+              <ion-col size="4">
+                <ion-item lines="none" style="padding-left: 0px;">  
+                  <ion-label position="floating">{{translate.instant('Geschlecht')}}</ion-label>
+                  <ion-select required
+                              (ionChange)="inputErrorMsg()"
+                              [(ngModel)]="contactPersonEdit.gender"
+                              okText="{{translate.instant('okay')}}" 
+                              cancelText="{{translate.instant('dismiss')}}">
+                    <ion-select-option value = 1> {{translate.instant('Herr')}} </ion-select-option>
+                    <ion-select-option value = 2> {{translate.instant('Frau')}} </ion-select-option>
+                  </ion-select>                  
+                </ion-item>
               </ion-col>
             </ion-row>
             <!-- Row 1 -->

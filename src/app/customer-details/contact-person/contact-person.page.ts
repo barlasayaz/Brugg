@@ -69,12 +69,20 @@ export class ContactPersonPage {
                     item.edit_products = false;
                 }
 
-                try
-                {
+                try {
                     item.addresses = JSON.parse(item.addresses);
-                }
-                catch{
+                } catch {
                    console.error('JSON.parse err', item.addresses) ;
+                }
+
+                if (item.gender == 0) {
+                    item.gender_text = '';
+                }
+                if (item.gender == 1) {
+                    item.gender_text = this.translate.instant('Herr');
+                }
+                if (item.gender == 2) {
+                    item.gender_text = this.translate.instant('Frau');
                 }
 
                 this.contactPersonList.push(item);
@@ -89,6 +97,14 @@ export class ContactPersonPage {
         this.pw_felder = 1;
         console.log('contactPersonEdit :', this.contactPersonEdit);
         if (this.contactPersonEdit) {
+            if (this.contactPersonEdit.gender) {
+                this.pw_felder = 0;
+            } else {
+                this.inputError = true;
+                this.pw_felder = 1;
+                this.pfelder = 1;
+                return;
+            }
             if (this.contactPersonEdit.last_name) {
                 this.pw_felder = 0;
             } else {
@@ -123,6 +139,7 @@ export class ContactPersonPage {
         let obj = {id: 0,
                     check_products: 0,
                     edit_products: 0,
+                    gender: 0,
                     email: '',
                     first_name: '',
                     last_name: '',
@@ -137,10 +154,11 @@ export class ContactPersonPage {
         if (recType == 1) {
             if (this.contactPersonEdit['id']) { obj.id = this.contactPersonEdit['id']; }
         }
+        if (this.contactPersonEdit['gender']) { obj.gender = this.contactPersonEdit['gender']; }
         if (this.contactPersonEdit['email']) { obj.email = this.contactPersonEdit['email']; }
         if (this.contactPersonEdit['first_name']) { obj.first_name = this.contactPersonEdit['first_name']; }
         if (this.contactPersonEdit['last_name']) { obj.last_name = this.contactPersonEdit['last_name']; }
-        if (this.contactPersonEdit['customer']) { obj.customer = this.idCustomer; } 
+        if (this.contactPersonEdit['customer']) { obj.customer = this.idCustomer; }
         if (this.contactPersonEdit['addresses']) { obj.addresses = JSON.stringify(this.contactPersonEdit['addresses']); }
         if (this.contactPersonEdit['department']) { obj.department = this.contactPersonEdit['department']; }
         if (this.contactPersonEdit['active']) { obj.active = 1; }
@@ -152,7 +170,7 @@ export class ContactPersonPage {
         this.apiService.pvs4_set_contact_person(obj).then((result: any) => {
             console.log('result: ', result);
             this.navCtrl.navigateBack('/customer-details/' + this.idCustomer);
-        }); 
+        });
         this.contactPersonEdit = [];
         this.contactPersonEditOderNeu = 1; // 0->bearbeiten 1->neu
         this.viewCtrl.dismiss();
@@ -175,6 +193,9 @@ export class ContactPersonPage {
     editContactPerson(contactPerson) {
         console.log('editContactPerson 1 :', contactPerson);
         localStorage.setItem('KundenAnspListe', JSON.stringify(contactPerson));
+        if (contactPerson.gender == 0) {
+            contactPerson.gender = '';
+        }
         this.contactPersonEdit = contactPerson;
         this.contactPersonEditOderNeu = 0;
         this.kundendaten = 'create';
@@ -190,15 +211,16 @@ export class ContactPersonPage {
             message: this.translate.instant('Ansprechpartner wirklich deaktivieren?'),
             buttons: [
                 {
-                    text: this.translate.instant('Nein'),
+                    text: this.translate.instant('nein'),
                     handler: () => {
-                        console.log('Cancel clicked'); 
+                        console.log('Cancel clicked');
                     }
                 },
                 {
-                    text: this.translate.instant('Ja'),
+                    text: this.translate.instant('ja'),
                     handler: () => {
                         let obj = {id: 0,
+                                   gender: 0,
                                    email: '',
                                    first_name: '',
                                    last_name: '',
@@ -208,6 +230,7 @@ export class ContactPersonPage {
                                    active: 0};
 
                         if (contactPerson['id']) { obj.id = contactPerson['id']; }
+                        if (contactPerson['gender']) { obj.gender = contactPerson['gender']; }
                         if (contactPerson['email']) { obj.email = contactPerson['email']; }
                         if (contactPerson['first_name']) { obj.first_name = contactPerson['first_name']; }
                         if (contactPerson['last_name']) { obj.last_name = contactPerson['last_name']; }
@@ -222,7 +245,7 @@ export class ContactPersonPage {
                             console.log('result: ', result);
                             this.navCtrl.navigateBack('/customer-details/' + this.idCustomer);
                         });
-
+                        this.viewCtrl.dismiss();
                     }
                 }
             ]
