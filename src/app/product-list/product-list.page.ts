@@ -711,12 +711,11 @@ export class ProductListPage implements OnInit {
     menu_new() {
         console.log('menu_new', this.selectedNode, this.idCustomer);
         const obj = { id: 0, parent: 0, idCustomer: this.idCustomer };
-        if (this.selectedNode) {
+        if (this.selectedNode.length > 0) {
             if (this.selectedNode.data.id) {
                 obj.parent = this.selectedNode.data.id;
             }
         }
-
         this.dataService.setData(obj);
         this.navCtrl.navigateForward(['/product-edit']);
     }
