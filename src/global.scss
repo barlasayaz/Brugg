@@ -99,7 +99,17 @@ body .ui-widget button {
   background: aliceblue !important;
 }
 
-//Toast
+// ionic-selectable
+.ionic-selectable-item {
+  left: 25px !important;
+}
+
+ion-header ion-toolbar:first-child {
+  --background: #009de0 !important;
+  color: white;
+}
+
+// Toast
 .toast-warning{
     --background: yellow;
     --color: black;
@@ -108,7 +118,7 @@ body .ui-widget button {
     --border-color: black;
 }
 
-//FAB
+// FAB
 .fab-in-list.show {
   color: #FFF;
 }

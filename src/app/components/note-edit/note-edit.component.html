@@ -46,8 +46,12 @@
                               [items]="userList"
                               itemValueField="id"
                               itemTextField="name"
-                              [canSearch]="true">
-            </ionic-selectable>   
+                              [canSearch]="true"
+                              closeButtonSlot="end">
+              <ng-template ionicSelectableCloseButtonTemplate>
+                <ion-icon name="close" style="font-size: 24px;"></ion-icon>
+              </ng-template>
+            </ionic-selectable>
           </ion-item>
         </ion-col>       
       </ion-row>

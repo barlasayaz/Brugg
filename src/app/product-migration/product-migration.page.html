@@ -36,7 +36,11 @@
                             itemTextField="company"
                             [hasVirtualScroll]="true"
                             [canSearch]="true"
-                            (onChange)="customerChange($event)">
+                            (onChange)="customerChange($event)"
+                            closeButtonSlot="end">
+            <ng-template ionicSelectableCloseButtonTemplate>
+              <ion-icon name="close" style="font-size: 24px;"></ion-icon>
+            </ng-template>
           </ionic-selectable> 
         </ion-item>
       </ion-col>
