@@ -58,11 +58,14 @@
                               [(ngModel)]="customer"
                               [items]="listCustomer"
                               itemValueField="id"
-                              itemTextField="company"
+                              itemTextField="listText"
                               [canSearch]="true"
                               (onChange)="customerChange($event)"
                               [hasVirtualScroll]="true"
                               [disabled]=customerDisabled>
+                              <ng-template ionicSelectableCloseButtonTemplate>
+                                <ion-icon name="close-circle" style="font-size: 24px;"></ion-icon>
+                              </ng-template>
             </ionic-selectable>
           </ion-item>
         </ion-col>
