@@ -324,7 +324,7 @@ export class ProtocolListPage implements OnInit {
                 json += '"' + this.cols[j].field + '":""';
                 json += ',';
             }
-            json += 'search_all:""}';
+            json += '"search_all":""}';
             this.columnFilterValues = JSON.parse(json);
         }
         this.generate_protocolList();

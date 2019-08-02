@@ -6,7 +6,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { UserdataService } from '../services/userdata';
 import { SystemService } from '../services/system';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
-import { ContactPersonPage } from './contact-person/contact-person.page'; 
+import { ContactPersonPage } from './contact-person/contact-person.page';
 import { ContactPersonAddressPage } from './contact-person-address/contact-person-address.page';
 import { CustomerEditComponent } from '../components/customer-edit/customer-edit.component';
 import { NoteEditComponent } from '../components/note-edit/note-edit.component';
@@ -146,16 +146,14 @@ export class CustomerDetailsPage implements OnInit {
 
         }
         // Appointment Date
-        try 
-        {
-          if(this.activCustomer.sales_dates && this.activCustomer.sales_dates != null && this.activCustomer.sales_dates != '')
-          {
+        try {
+          if (this.activCustomer.sales_dates && this.activCustomer.sales_dates != null && this.activCustomer.sales_dates != '') {
             let sales_dates = JSON.parse( this.activCustomer.sales_dates);
             if (sales_dates.last_date) { this.last_visit = this.apiService.view2mysql(sales_dates.last_date) ; }
             if (sales_dates.next_date) { this.next_visit = this.apiService.view2mysql(sales_dates.next_date); }
           }
         } catch (e) {
-          console.error('JSON.parse err',this.activCustomer.sales_dates) ;
+          console.error('JSON.parse err', this.activCustomer.sales_dates) ;
         }
 
         this.apiService.pvs4_get_appointment_date(id).then((done: any) => {
@@ -190,8 +188,8 @@ export class CustomerDetailsPage implements OnInit {
 
         // get BAAN and NAV
         let nr = this.activCustomer.customer_number.trim();
-        console.log('idCustomer :',this.activCustomer.customer_number);
-        if(nr.length>0){
+        console.log('idCustomer :', this.activCustomer.customer_number);
+        if (nr.length > 0) {
           if (((this.userdata.role == 1) || (this.userdata.role == 2)) && (this.userdata.licensee == 1)) {
             this.apiService.pvs4_get_baan(nr).then((baan_nav: any) => {
               console.log('baan_nav :', baan_nav);
@@ -212,7 +210,7 @@ export class CustomerDetailsPage implements OnInit {
         }
       });
 
-      
+
     }
 
     getContactList() {
@@ -229,14 +227,21 @@ export class CustomerDetailsPage implements OnInit {
           var item = result.list[i].data;
           try {
             item.addresses = JSON.parse(item.addresses);
-          }
-          catch
-          {
-            console.error('JSON.parse',item.addresses) ;
+          } catch {
+            console.error('JSON.parse', item.addresses) ;
           }
           this.contactPersonList.push(item);
           let localContact = localStorage.getItem('ContactPerson' + this.idCustomer);
           if ((i == 0 && !localContact) || (localContact && item.id == localContact)) {
+            if (item.gender == 0) {
+              item.gender_text = '';
+            }
+            if (item.gender == 1) {
+                item.gender_text = this.translate.instant('Herr');
+            }
+            if (item.gender == 2) {
+                item.gender_text = this.translate.instant('Frau');
+            }
             this.contactPerson.push(item);
             this.pageTotalCount = item.addresses.length;
             this.contactPersonAddresses.push(item.addresses[0]);
@@ -453,7 +458,7 @@ export class CustomerDetailsPage implements OnInit {
         }
       });
       modal.onDidDismiss().then(data => {
-        if (data['data']) { 
+        if (data['data']) {
            this.loadCustomer(this.activCustomer.id);
         }
       });

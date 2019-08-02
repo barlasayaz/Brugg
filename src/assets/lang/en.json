@@ -835,5 +835,8 @@
   "Passwort vergessen?": "Forgot your password?",
   "Beachtung": "Attention",
   "Produkte mit untergeordneten Datensätzen können nicht gelöscht werden.": "Products with child records cannot be deleted.",
-  "Hinzufügen": "Add"
+  "Hinzufügen": "Add",
+  "Geschlecht": "Gender",
+  "Herr": "Mr",
+  "Frau": "Mrs"
 }

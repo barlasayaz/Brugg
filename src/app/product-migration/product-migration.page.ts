@@ -126,117 +126,25 @@ export class ProductMigrationPage implements OnInit {
 
   productMigration() {
     this.productList.forEach(element => {
-      this.apiService.pvs4_get_product(element.id).then((resultProduct: any) => {
-        let oldObj = {
-          id:               element.id,
-          title:            resultProduct.obj.title,
-          customer:         resultProduct.obj.customer,
-          id_number:        resultProduct.obj.id_number,
-          parent:           resultProduct.obj.parent, 
-          active:           0,
-          check_interval:   resultProduct.obj.check_interval,
-          last_protocol:    resultProduct.obj.last_protocol,
-          articel_no:       resultProduct.obj.articel_no,
-          items:            resultProduct.obj.items,
-          images:           resultProduct.obj.images, 
-          nfc_tag_id:       resultProduct.obj.nfc_tag_id,
-          qr_code:          resultProduct.obj.qr_code,
-          pvs3_id:          resultProduct.obj.pvs3_id,
-          author:           resultProduct.obj.author
-        };
-        let oldParent: any = resultProduct.obj.parent;
-        this.apiService.pvs4_set_product(oldObj).then((result: any) => {
-          // console.log('deactive product result: ', result);
-        });
-
-        this.apiService.pvs4_get_product_parrent(element.id).then((resultParent: any) => {
-          if (resultParent.obj) {
-            let parentObj = {
-              id:               resultParent.obj.id,
-              title:            resultParent.obj.title,
-              customer:         resultParent.obj.customer,
-              id_number:        resultParent.obj.id_number,
-              parent:           oldParent,
-              active:           resultParent.obj.active,
-              check_interval:   resultParent.obj.check_interval,
-              last_protocol:    resultParent.obj.last_protocol,
-              articel_no:       resultParent.obj.articel_no,
-              items:            resultParent.obj.items,
-              images:           resultParent.obj.images, 
-              nfc_tag_id:       resultParent.obj.nfc_tag_id,
-              qr_code:          resultParent.obj.qr_code,
-              pvs3_id:          resultParent.obj.pvs3_id,
-              author:           resultParent.obj.author
-            };
-            this.apiService.pvs4_set_product(parentObj).then((result: any) => {
-              // console.log('parent product result: ', result);
-            });
-          }
-        });
-
-        let newObj = {
-            id:               0,
-            title:            resultProduct.obj.title,
-            customer:         this.targetCustomer.id,
-            id_number:        resultProduct.obj.id_number,
-            parent:           0,
-            active:           resultProduct.obj.active,
-            check_interval:   resultProduct.obj.check_interval,
-            last_protocol:    resultProduct.obj.last_protocol,
-            articel_no:       resultProduct.obj.articel_no,
-            items:            resultProduct.obj.items,
-            images:           resultProduct.obj.images,
-            nfc_tag_id:       resultProduct.obj.nfc_tag_id,
-            qr_code:          resultProduct.obj.qr_code,
-            pvs3_id:          resultProduct.obj.pvs3_id,
-            author:           resultProduct.obj.author
-          };
-
-          // console.log('obj :', newObj);
-          this.apiService.pvs4_set_product(newObj).then((result: any) => {
-            // console.log('migration product result: ', result);
-
-            let newImgPath: string = '';
-            if (resultProduct.obj.images) {
-              if (resultProduct.obj.images.indexOf('img/') != -1) {
-                newImgPath = resultProduct.obj.images;
-              }
-              if (resultProduct.obj.images.indexOf('mobileimages/') != -1) {
-                newImgPath = 'mobileimages/productimage_' + result.id + '.jpg';
-                this.copyFile('mobileimages/productimage_' + element.id + '.jpg', 'mobileimages/productimage_' + result.id + '.jpg');
-              }
-            } else {
-              newImgPath = '';
-            }
-
-            this.apiService.pvs4_get_file(element.id, 'product').then((result2) => {
-              // console.log('dateiliste :', result2);
-              this.attachmentsFileCount = result2['files'].length;
-              // console.log('attachmentsFileCount :', this.attachmentsFileCount);
-              if (this.attachmentsFileCount > 0) {
-                this.copyFile('product_' + element.id, 'product_' + result.id);
-              }
-          });
-
-            newObj.id = result.id;
-            newObj.images = newImgPath;
-            // console.log('obj :', newObj);
-            this.apiService.pvs4_set_product(newObj).then((result: any) => {
-              // console.log('images product result: ', result);
-              this.viewCtrl.dismiss(true);
+      this.apiService.pvs4_get_product_parrent(element.id).then((resultParent: any) => {
+        resultParent.obj.forEach(element => {
+          this.apiService.pvs4_get_product(element.data.id).then((result: any) => {
+            const activChildProduct = element.data;
+            activChildProduct.customer = this.targetCustomer.id;
+            this.apiService.pvs4_set_product(activChildProduct).then((setResult: any) => {
+                console.log('result: ', setResult);
             });
           });
+        });
       });
-    });
-  }
-
-  copyFile(sourceFile: any, targetFile: any) {
-    console.log('copyFile sourceFile-targetFile', sourceFile, ' - ', targetFile);
-    this.params = { 'sourceFile': sourceFile, 
-                    'targetFile': targetFile
-                  }; 
-    this.apiService.pvs4_copy_file(this.params).then((result) => {
-      console.log('result :', result);
+      this.apiService.pvs4_get_product(element.id).then((result: any) => {
+        const activProduct = result.obj;
+        activProduct.customer = this.targetCustomer.id;
+        this.apiService.pvs4_set_product(activProduct).then((setResult: any) => {
+            console.log('result: ', setResult);
+            this.viewCtrl.dismiss(true);
+        });
+      });
     });
   }
 

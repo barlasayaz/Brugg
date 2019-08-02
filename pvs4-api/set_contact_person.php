@@ -81,6 +81,7 @@ function processing() {
     // escape the uemailid to prevent sql injection
     $id       	    = intval( $_POST['id'] );
     $email       	= trim(strtolower( mysqli_escape_string($con,$_POST['email']) ) );
+    $gender 		= intval( $_POST['gender'] );
     $first_name   	= trim( mysqli_escape_string($con,$_POST['first_name']));
     $last_name 	    = trim( mysqli_escape_string($con,$_POST['last_name']));
     $customer 		= intval( $_POST['customer'] );
@@ -95,6 +96,7 @@ function processing() {
     if($id > 0) {
         $sql="UPDATE contact_persons 
                  SET email = '$email',
+                     gender = '$gender',
                      first_name = '$first_name', 
                      last_name = '$last_name', 
                      customer = $customer, 
@@ -105,8 +107,8 @@ function processing() {
                      active = $active
                WHERE id = $id";
     } else {
-        $sql="INSERT INTO contact_persons (email,first_name,last_name,customer,addresses,department,active,edit_products,check_products)
-              VALUES('$email','$first_name','$last_name',$customer,'$addresses','$department',$active,$edit_products,$check_products )";
+        $sql="INSERT INTO contact_persons (email,gender,first_name,last_name,customer,addresses,department,active,edit_products,check_products)
+              VALUES('$email','$gender','$first_name','$last_name',$customer,'$addresses','$department',$active,$edit_products,$check_products )";
     }
 	$ret_sql= mysqli_query( $con, $sql );
 

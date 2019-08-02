@@ -94,10 +94,14 @@ function processing($parentId) {
     $liste = [];
     $anz_liste = 0;
     if($ret_sql) {
+        while ($row = mysqli_fetch_assoc($ret_sql)) {
+            $liste[] = array('data' => utf8encodeArray($row) );
+            $anz_liste++;
+        }
         http_response_code(200);
         $ok = new \stdClass();
-        $ok->amount = 1;
-        $ok->obj = mysqli_fetch_assoc($ret_sql);
+        $ok->amount = $anz_liste;
+        $ok->obj = $liste;
         echo json_encode($ok);
         mysqli_close($con);
         die;
