@@ -12,10 +12,10 @@
 
 <ion-toolbar no-border-top style="min-height: 0px;padding:0px">
   <ion-segment [(ngModel)]="kundendaten">
-    <ion-segment-button value="person" style="background-color: rgba(17, 121, 170); color: white;">
+    <ion-segment-button value="person">
       <ion-icon name="person"></ion-icon>
     </ion-segment-button>
-    <ion-segment-button value="create" style="background-color: rgba(17, 121, 170); color: white;">
+    <ion-segment-button value="create">
       <ion-icon name="create"></ion-icon>
     </ion-segment-button>
   </ion-segment>
@@ -60,11 +60,11 @@
         <ion-row>  
           <!-- Left -->
           <ion-col size-xl="12" size-lg="12" size-md="12" size-sm="12" size="12" style="top: -20px;">            
-            <ion-row>
+<!--             <ion-row>
               <ion-col size="12" >
                 <h6 style="font-size: 16px;">{{translate.instant('Ansprechpartner Daten')}}</h6>
               </ion-col>
-            </ion-row>
+            </ion-row> -->
             <!-- Row 0-->
             <ion-row>
               <ion-col size="4">
@@ -135,25 +135,38 @@
                 </ion-item>
               </ion-col>
             </ion-row>
-            <!-- -->
+            <!-- Row 5 -->
             <ion-row *ngIf="true">
               <ion-col size-md="6" size-sm="12" size="12">
-                  <ion-item lines="none" class="item-trns">
-                      <ion-label>{{translate.instant('edit_products')}}</ion-label>
-                      <ion-toggle [(ngModel)]="contactPersonEdit.edit_products"
-                                  disabled="{{!setRights}}">
-                      </ion-toggle>
-                  </ion-item>						
+                <ion-item lines="none" class="item-trns">
+                    <ion-label>{{translate.instant('edit_products')}}</ion-label>
+                    <ion-toggle [(ngModel)]="contactPersonEdit.edit_products"
+                                disabled="{{!setRights}}">
+                    </ion-toggle>
+                </ion-item>						
               </ion-col>
               <ion-col size-md="6" size-sm="12" size="12">
-                  <ion-item lines="none" class="item-trns">
-                      <ion-label>{{translate.instant('check_products')}}</ion-label>
-                      <ion-toggle [(ngModel)]="contactPersonEdit.check_products"
-                                  disabled="{{!setRights}}">
-                      </ion-toggle>
-                  </ion-item>						
+                <ion-item lines="none" class="item-trns">
+                    <ion-label>{{translate.instant('check_products')}}</ion-label>
+                    <ion-toggle [(ngModel)]="contactPersonEdit.check_products"
+                                disabled="{{!setRights}}">
+                    </ion-toggle>
+                </ion-item>						
               </ion-col>
-          </ion-row> 
+            </ion-row> 
+              <!-- Row 6 -->
+              <ion-row>
+                <ion-col size="12">
+                  <ion-item lines="none" style="padding-left: 0px;">
+                    <ion-label position="floating">{{translate.instant('Notiz')}}</ion-label>
+                    <ion-textarea type="text" 
+                                  id="ansp_note"
+                                  rows="5"
+                                  [(ngModel)]="contactPersonEdit.note">
+                    </ion-textarea>
+                  </ion-item>
+                </ion-col>
+            </ion-row>
           </ion-col>  
         </ion-row>
       </ion-grid>  

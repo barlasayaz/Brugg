@@ -146,6 +146,7 @@ export class ContactPersonPage {
                     customer: this.idCustomer,
                     addresses: '[{"street":"", "zip_code":"", "department":"", "email":"", "phone":"", "mobile":""}]',
                     department: '',
+                    note: '',
                     active: 1};
 
         if (recType == 0) {
@@ -164,6 +165,7 @@ export class ContactPersonPage {
         if (this.contactPersonEdit['active']) { obj.active = 1; }
         if (this.contactPersonEdit['check_products']) { obj.check_products = 1; }
         if (this.contactPersonEdit['edit_products']) { obj.edit_products = 1; }
+        if (this.contactPersonEdit['note']) { obj.note = this.contactPersonEdit['note']; }
 
         console.log('updateData obj :', obj);
 
@@ -227,6 +229,7 @@ export class ContactPersonPage {
                                    customer: '',
                                    addresses: '[{"street":"", "zip_code":"", "department":"", "email":"", "phone":"", "mobile":""}]',
                                    department: '',
+                                   note: '',
                                    active: 0};
 
                         if (contactPerson['id']) { obj.id = contactPerson['id']; }
@@ -237,6 +240,7 @@ export class ContactPersonPage {
                         if (contactPerson['customer']) { obj.customer = contactPerson['customer']; }
                         if (contactPerson['addresses']) { obj.addresses = JSON.stringify(contactPerson['addresses']); }
                         if (contactPerson['department']) { obj.department = contactPerson['department']; }
+                        if (contactPerson['note']) { obj.note = contactPerson['note']; }
                         if (contactPerson['active']) { obj.active = 0; }
 
                         console.log('delContactPerson obj :', obj);

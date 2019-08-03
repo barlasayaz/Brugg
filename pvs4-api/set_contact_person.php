@@ -91,6 +91,7 @@ function processing() {
     $check_products  = 0;
     if(isset($_POST['edit_products'])) $edit_products  = intval( $_POST['edit_products'] );
     if(isset($_POST['check_products'])) $check_products  = intval( $_POST['check_products'] );
+    $note     	    = trim( mysqli_escape_string($con,$_POST['note']) );
     $active 		= intval( $_POST['active'] );
   
     if($id > 0) {
@@ -104,11 +105,12 @@ function processing() {
                      department = '$department',
                      edit_products = '$edit_products',
                      check_products = '$check_products',
+                     note = '$note',
                      active = $active
                WHERE id = $id";
     } else {
-        $sql="INSERT INTO contact_persons (email,gender,first_name,last_name,customer,addresses,department,active,edit_products,check_products)
-              VALUES('$email','$gender','$first_name','$last_name',$customer,'$addresses','$department',$active,$edit_products,$check_products )";
+        $sql="INSERT INTO contact_persons (email,gender,first_name,last_name,customer,addresses,department,active,edit_products,check_products,note)
+              VALUES('$email','$gender','$first_name','$last_name',$customer,'$addresses','$department',$active,$edit_products,$check_products,'$note' )";
     }
 	$ret_sql= mysqli_query( $con, $sql );
 
