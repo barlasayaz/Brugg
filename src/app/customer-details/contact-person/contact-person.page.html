@@ -132,7 +132,7 @@
             <!-- Row 5 -->
             <ion-row *ngIf="true">
               <ion-col size-md="6" size-sm="12" size="12">
-                <ion-item lines="none" class="item-trns">
+                <ion-item lines="none" class="item-border">
                     <ion-label>{{translate.instant('edit_products')}}</ion-label>
                     <ion-toggle [(ngModel)]="contactPersonEdit.edit_products"
                                 disabled="{{!setRights}}">
@@ -140,7 +140,7 @@
                 </ion-item>						
               </ion-col>
               <ion-col size-md="6" size-sm="12" size="12">
-                <ion-item lines="none" class="item-trns">
+                <ion-item lines="none" class="item-border">
                     <ion-label>{{translate.instant('check_products')}}</ion-label>
                     <ion-toggle [(ngModel)]="contactPersonEdit.check_products"
                                 disabled="{{!setRights}}">

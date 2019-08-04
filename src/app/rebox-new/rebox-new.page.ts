@@ -53,7 +53,7 @@ export class ReboxNewPage {
                 this.rebox.Ort = '';
                 this.rebox.latitude = '';
                 this.rebox.Notiz = '';
-                this.anzRebox = '';
+                this.anzRebox = 1;
                 this.rebox.ReBoxDate = new Date().toISOString().substring(0, 10);
   }
 

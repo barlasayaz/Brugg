@@ -93,7 +93,7 @@
           <!-- Row 4-->
           <ion-row>
             <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="12" size="12">
-              <ion-item lines="none" class="item-trns">
+              <ion-item lines="none" class="item-border">
                   <ion-label>{{translate.instant('edit_customer')}}</ion-label>
                   <ion-toggle [(ngModel)]="edit.role_set.edit_customer"
                               disabled="{{!setRights}}">
@@ -101,7 +101,7 @@
               </ion-item>
             </ion-col>
             <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="12" size="12">
-              <ion-item lines="none" class="item-trns">
+              <ion-item lines="none" class="item-border">
                   <ion-label>{{translate.instant('edit_membership')}}</ion-label>
                   <ion-toggle [(ngModel)]="edit.role_set.edit_membership"
                               disabled="{{!setRights}}">
@@ -111,7 +111,7 @@
           </ion-row>
           <ion-row>
             <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="12" size="12">
-              <ion-item lines="none" class="item-trns">
+              <ion-item lines="none" class="item-border">
                   <ion-label>{{translate.instant('edit_rights')}}</ion-label>
                   <ion-toggle [(ngModel)]="edit.role_set.edit_rights"
                               disabled="{{!setRights}}">
@@ -119,7 +119,7 @@
               </ion-item>
             </ion-col>
             <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="12" size="12">
-              <ion-item lines="none" class="item-trns">
+              <ion-item lines="none" class="item-border">
                   <ion-label>{{translate.instant('edit_products')}}</ion-label>
                   <ion-toggle [(ngModel)]="edit.role_set.edit_products"
                               disabled="{{!setRights}}">
@@ -129,7 +129,7 @@
           </ion-row>
           <ion-row>
             <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="12" size="12">
-              <ion-item lines="none" class="item-trns">
+              <ion-item lines="none" class="item-border">
                   <ion-label>{{translate.instant('check_products')}}</ion-label>
                   <ion-toggle [(ngModel)]="edit.role_set.check_products"
                               disabled="{{!setRights}}">
@@ -137,7 +137,7 @@
               </ion-item>
             </ion-col>
             <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="12" size="12">
-              <ion-item lines="none" class="item-trns">
+              <ion-item lines="none" class="item-border">
                 <ion-label>{{translate.instant('edit_contact_persons')}}</ion-label>
                 <ion-toggle [(ngModel)]="edit.role_set.edit_contact_persons"
                             disabled="{{!setRights}}">
@@ -223,15 +223,15 @@
       </ion-row>
       <ion-row *ngIf="viewNewMode==2">
         <ion-col size-md="6" size-sm="12" size="12">
-          <ion-item lines="none" class="item-trns">
+          <ion-item lines="none" class="item-border">            
             <ion-label>{{translate.instant('edit_customer')}}</ion-label>
             <ion-toggle [(ngModel)]="role_set.edit_customer"
                         disabled="{{!setRights}}">
-            </ion-toggle>
+            </ion-toggle>            
           </ion-item>
         </ion-col>
         <ion-col size-md="6" size-sm="12" size="12">
-          <ion-item lines="none" class="item-trns">
+          <ion-item lines="none" class="item-border">
             <ion-label>{{translate.instant('edit_membership')}}</ion-label>
             <ion-toggle [(ngModel)]="role_set.edit_membership"
                         disabled="{{!setRights}}">
@@ -239,7 +239,7 @@
           </ion-item>
         </ion-col>
         <ion-col size-md="6" size-sm="12" size="12">
-          <ion-item lines="none" class="item-trns">
+          <ion-item lines="none" class="item-border">
             <ion-label>{{translate.instant('edit_rights')}}</ion-label>
             <ion-toggle [(ngModel)]="role_set.edit_rights"
                         disabled="{{!setRights}}">
@@ -247,7 +247,7 @@
           </ion-item>
         </ion-col>
         <ion-col size-md="6" size-sm="12" size="12">
-          <ion-item lines="none" class="item-trns">
+          <ion-item lines="none" class="item-border">
             <ion-label>{{translate.instant('edit_products')}}</ion-label>
             <ion-toggle [(ngModel)]="role_set.edit_products"
                         disabled="{{!setRights}}">
@@ -255,7 +255,7 @@
           </ion-item>
         </ion-col>
         <ion-col size-md="6" size-sm="12" size="12">
-          <ion-item lines="none" class="item-trns">
+          <ion-item lines="none" class="item-border">
             <ion-label>{{translate.instant('check_products')}}</ion-label>
             <ion-toggle [(ngModel)]="role_set.check_products"
                         disabled="{{!setRights}}">
@@ -263,7 +263,7 @@
           </ion-item>
         </ion-col>
         <ion-col size-md="6" size-sm="12" size="12">
-          <ion-item lines="none" class="item-trns">
+          <ion-item lines="none" class="item-border">
             <ion-label>{{translate.instant('edit_contact_persons')}}</ion-label>
             <ion-toggle [(ngModel)]="role_set.edit_contact_persons"
                         disabled="{{!setRights}}">

@@ -56,13 +56,13 @@
                     </ion-button>
                 </ion-item>
             </ion-col>
-            <ion-col size-xl="5" size-lg="5" size-md="5" size-sm="12" size-xs="12" style="align-items:center; margin-top:25px">
-                <ion-item lines="none">
-                    <ion-label *ngIf="mandatoryToogle==true" style="padding-left: 10px;">
+            <ion-col size-xl="5" size-lg="5" size-md="5" size-sm="12" size-xs="12" style="align-items: center; margin-top:20px">
+                <ion-item lines="none" class="item-border">
+                    <ion-label *ngIf="mandatoryToogle==true">
                         {{translate.instant('Verpflichtend')}}:
                         {{translate.instant('Wahr')}}
                     </ion-label>
-                    <ion-label *ngIf="mandatoryToogle==false" style="padding-left: 10px;">
+                    <ion-label *ngIf="mandatoryToogle==false">
                         {{translate.instant('Verpflichtend')}}:
                         {{translate.instant('Falsch')}}
                     </ion-label>
@@ -72,14 +72,14 @@
         </ion-row>
 
         <!-- Toggle -->
-        <ion-row *ngIf="activOption.type==0" style="align-items:center; margin-top:15px">
+        <ion-row *ngIf="activOption.type==0" style="align-items: center; margin-top: 10px">
             <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="6" size-xs="6" style="margin-top: 12px;">
-                <ion-item lines="none">
-                    <ion-label *ngIf="defaultToggle==true" style="padding-left: 10px;">
+                <ion-item lines="none" class="item-border">
+                    <ion-label *ngIf="defaultToggle==true">
                         {{translate.instant('Standard')}}:
                         {{translate.instant('Wahr')}}
                     </ion-label>
-                    <ion-label *ngIf="defaultToggle==false" style="padding-left: 10px;">
+                    <ion-label *ngIf="defaultToggle==false">
                         {{translate.instant('Standard')}}:
                         {{translate.instant('Falsch')}}
                     </ion-label>

@@ -115,6 +115,19 @@ ion-header ion-toolbar:first-child {
   color: white;
 }
 
+// toggle transparent
+.item-trns {
+	--background: transparent;
+}
+
+// toggle border
+.item-border {
+	--background: transparent;
+  border: 1px solid var(--ion-color-green);
+  padding-left: 10px;
+}
+
+
 // Toast
 .toast-warning{
     --background: yellow;
