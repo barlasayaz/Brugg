@@ -124,14 +124,14 @@ export class ProtocolDetailsPage implements OnInit {
     this.apiService.pvs4_get_product(id).then((result: any) => {
       console.log('result :', result);
       this.activProduct = result.obj;
-      let title = JSON.parse(this.activProduct.title);
+      let title = {};
       try {
         title = JSON.parse(this.activProduct.title);
+        title = title[this.lang];
       } catch {
         console.log('loadProduct title JSON.parse:', this.activProduct.title);
-        title = JSON.parse(this.activProduct.title);
       }
-      this.activProduct.title = title[this.lang];
+      this.activProduct.title = title;
       if (this.activProduct.items) {
         try {
           this.activProduct.items = JSON.parse(this.activProduct.items);

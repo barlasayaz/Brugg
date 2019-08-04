@@ -30,7 +30,7 @@ export class MyDataPage {
 
     this.lang = '';
     this.lang = localStorage.getItem('lang');
-    console.log('ionViewDidLoad MyDataPage', this.userdata, this.userdata.role_set.edit_customer);
+    console.log('constructor MyDataPage', this.userdata, this.userdata.role_set.edit_customer);
     if ((this.userdata.role == 1) || (this.userdata.role == 2)) { this.loadList(); }
 
   }

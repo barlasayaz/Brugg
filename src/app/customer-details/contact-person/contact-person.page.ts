@@ -72,7 +72,8 @@ export class ContactPersonPage {
                 try {
                     item.addresses = JSON.parse(item.addresses);
                 } catch {
-                   console.error('JSON.parse err', item.addresses) ;
+                   console.error('JSON.parse err', item.addresses);
+                   item.addresses = [];
                 }
 
                 if (item.gender == 0) {

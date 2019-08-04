@@ -95,17 +95,17 @@ export class QrBarcodeComponent implements OnInit {
             this.viewCtrl.dismiss();
           } else if (result.list.length > 1) {
             let buttons: any[] = [];
-            let addresses = '';
+            let title = '';
 
             result.list.forEach(product => {
               try {
-                addresses = JSON.parse(product.title);
-                addresses = addresses[this.lang];
+                title = JSON.parse(product.title);
+                title = title[this.lang];
               } catch {
                 console.error('JSON.parse err', product.title);
               }
               buttons.push({
-                text: addresses + ' - ' + product.id_number,
+                text: title + ' - ' + product.id_number,
                 handler: id => {
                   this.navCtrl.navigateForward(['/product-details', product.id]);
                   this.viewCtrl.dismiss();

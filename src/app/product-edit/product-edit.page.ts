@@ -203,7 +203,7 @@ export class ProductEditPage implements OnInit {
   loadProductList() {
     this.productListAll = [];
     this.apiService.pvs4_get_product_list(this.idCustomer).then((result: any) => {
-      console.log('ionViewDidLoad result :', result);
+      console.log('loadProductList result :', result);
       this.productListAll = JSON.parse(JSON.stringify(result.list));
       this.data_tree(this.productListAll);
       // console.log('productListAll :', this.productListAll);

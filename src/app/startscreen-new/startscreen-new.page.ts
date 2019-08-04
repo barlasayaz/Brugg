@@ -92,10 +92,6 @@ export class StartscreenNewPage {
     }).then(x => x.present());
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad StartscreenNewPage');
-  }
-
   logout() {
     this.userdata.delStorage();
     this.navCtrl.navigateForward('/login');
