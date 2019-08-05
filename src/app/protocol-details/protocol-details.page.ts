@@ -114,7 +114,7 @@ export class ProtocolDetailsPage implements OnInit {
       if (this.activProtocol.result == 0) { this.activProtocol.resultText = this.translate.instant('betriebsbereit'); }
       if (this.activProtocol.result == 1) { this.activProtocol.resultText = this.translate.instant('reparieren'); }
       if (this.activProtocol.result == 3) { this.activProtocol.resultText = this.translate.instant('unauffindbar'); }
-      if (this.activProtocol.result == 4) { this.activProtocol.resultText = this.translate.instant('ausmustern'); }
+      if ((this.activProtocol.result == 2) || (this.activProtocol.result == 4)) { this.activProtocol.resultText = this.translate.instant('ausmustern'); }
 
       this.dateiListe();
     });

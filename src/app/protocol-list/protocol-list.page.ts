@@ -194,7 +194,7 @@ export class ProtocolListPage implements OnInit {
                 if (this.protocolListAll[index].data.result == 3) {
                     this.protocolListAll[index].data.result = this.translate.instant('unauffindbar');
                 }
-                if (this.protocolListAll[index].data.result == 4) {
+                if ((this.protocolListAll[index].data.result == 2) || (this.protocolListAll[index].data.result == 4)){
                     this.protocolListAll[index].data.result = this.translate.instant('ausmustern');
                 }
             }
