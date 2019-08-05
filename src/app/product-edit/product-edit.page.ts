@@ -41,7 +41,8 @@ export class ProductEditPage implements OnInit {
           parent: this.parentProduct,
           customer: 0,
           nfc_tag_id: '',
-          qr_code: ''
+          qr_code: '',
+          product_status: 'O'
   };
   public templates: any[] = [];
   public templateAll: any[] = [];
@@ -85,6 +86,7 @@ export class ProductEditPage implements OnInit {
   ngOnInit() {
     this.url = this.apiService.pvsApiURL;
     this.maxDate = this.apiService.maxDate;
+    this.activProduct.id_number = '';
 
     if (this.route.snapshot.data['special']) {
       let params = this.route.snapshot.data['special'];
@@ -337,7 +339,8 @@ export class ProductEditPage implements OnInit {
       customer: this.idCustomer,
       id: 0,
       nfc_tag_id: '',
-      qr_code: ''
+      qr_code: '',
+      product_status: 'O'
     };
 
     if (this.activProduct['active']) { obj.active = this.activProduct['active']; }
@@ -351,6 +354,7 @@ export class ProductEditPage implements OnInit {
     if (this.activProduct['images']) { obj.images = this.imagesSave; }
     if (this.activProduct['nfc_tag_id']) { obj.nfc_tag_id = this.activProduct['nfc_tag_id']; }
     if (this.activProduct['qr_code']) { obj.qr_code = this.activProduct['qr_code']; }
+    if (this.activProduct['product_status']) { obj.product_status = 'O'; }
 
     console.log('edit title :', this.activProduct['title']);
     if (!this.itsNew) {
@@ -889,4 +893,5 @@ export class ProductEditPage implements OnInit {
       });
     }
   }
+
 }

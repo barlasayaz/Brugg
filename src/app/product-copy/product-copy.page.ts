@@ -124,7 +124,8 @@ export class ProductCopyPage implements OnInit {
             nfc_tag_id:       '',
             qr_code:          '',
             pvs3_id:          resultProduct.obj.pvs3_id,
-            author:           resultProduct.obj.author
+            author:           resultProduct.obj.author,
+            product_status:   'C'
           };
 
           console.log('obj :', newObj);

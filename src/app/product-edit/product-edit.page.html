@@ -105,6 +105,9 @@
                             <ion-icon name="close"></ion-icon>
                           </ion-button> 
                         </div>
+                        <div *ngIf="activProduct.product_status == 'C'" style="padding-right: 15px; color: #f7ff05;">
+                            {{'Nicht original. Sollte bearbeitet werden' | translate}}
+                        </div>
                     </div>
                     <div style="max-height: 518px; overflow-x: auto;">
                       <div class="container" style="padding: 0px 10px 10px 10px; background: white;">
@@ -127,7 +130,7 @@
                             <ion-item lines="none">
                                 <ion-label position="floating">ID Number</ion-label>
                                 <ion-input required="true"
-                                           type="text"                                                                             
+                                           type="text"                                                                          
                                            [(ngModel)]="activProduct.id_number">
                                 </ion-input>
                             </ion-item>

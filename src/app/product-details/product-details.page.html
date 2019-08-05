@@ -14,6 +14,9 @@
 										<div class="thead">
 											<div class="tr table-header">
 												<div class="th">{{'Produkt Details' | translate}}</div>
+												<div *ngIf="activProduct.product_status == 'C'" style="padding-right: 15px; color: #f7ff05;">
+													{{'Nicht original. Sollte bearbeitet werden' | translate}}
+												</div>
 											</div>
 										</div>
 										<div class="tbody">
