@@ -9,6 +9,8 @@ import { ExcelService } from '../services/excel';
 import { AlertController } from '@ionic/angular';
 import { CustomerEditComponent } from '../components/customer-edit/customer-edit.component';
 import { PdfExportService } from '../services/pdf-export';
+import { Subject } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
     selector: 'app-customer-table',
@@ -17,7 +19,6 @@ import { PdfExportService } from '../services/pdf-export';
 })
 
 export class CustomerTablePage implements OnInit {
-
     constructor(public navCtrl: NavController,
         public userdata: UserdataService,
         public apiService: ApiService,
@@ -27,6 +28,17 @@ export class CustomerTablePage implements OnInit {
         public alertCtrl: AlertController,
         public pdf: PdfExportService,
         public events: Events) {
+            this.modelChanged.pipe(
+                debounceTime(700))
+                .subscribe(model => {
+                    if (this.isFilterOn()) {
+                        this.menuItems[7].items[2]['disabled'] = false;
+                    } else {
+                        this.menuItems[7].items[2]['disabled'] = true;
+                    }
+                    this.generate_customerList();
+                    localStorage.setItem('filter_values', JSON.stringify(this.columnFilterValues));
+            });
     }
     public customerListAll: TreeNode[] = [];
     public customerListView: TreeNode[] = [];
@@ -46,6 +58,7 @@ export class CustomerTablePage implements OnInit {
     public expendedNodes: string[] = [];
     public rowRecords: number = 0;
     public totalRecords: number = 0;
+    modelChanged: Subject<any> = new Subject<any>();
 
     public menuItems: MenuItem[] = [{
         label: this.translate.instant('Ansicht'),
@@ -287,13 +300,7 @@ export class CustomerTablePage implements OnInit {
     }
 
     search_all() {
-        if (this.isFilterOn()) {
-            this.menuItems[7].items[2]['disabled'] = false;
-        } else {
-            this.menuItems[7].items[2]['disabled'] = true;
-        }
-        this.generate_customerList();
-        localStorage.setItem('filter_values', JSON.stringify(this.columnFilterValues));
+        this.modelChanged.next(this.columnFilterValues);
     }
 
     cancel_filters(cancel_type) {

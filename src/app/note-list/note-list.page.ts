@@ -9,7 +9,8 @@ import { ExcelService } from '../services/excel';
 import { NoteEditComponent } from '../components/note-edit/note-edit.component';
 import { PdfExportService } from '../services/pdf-export';
 import { ActivatedRoute } from '@angular/router';
-
+import { Subject } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 /**
  * Generated class for the NoteListPage page.
  *
@@ -58,6 +59,7 @@ export class NoteListPage implements OnInit {
     public heightCalc: any = '700px';
     public authorList: any = [];
     public pointofContactList: any = [];
+    modelChanged: Subject<any> = new Subject<any>();
 
     public menuItems: MenuItem[] = [{
         label: this.translate.instant('Ansicht'),
@@ -156,6 +158,17 @@ export class NoteListPage implements OnInit {
         public pdf: PdfExportService,
         public events: Events,
         private route: ActivatedRoute) {
+            this.modelChanged.pipe(
+                debounceTime(700))
+                .subscribe(model => {
+                    if (this.isFilterOn()) {
+                        this.menuItems[5].items[2]['disabled'] = false;
+                    } else {
+                        this.menuItems[5].items[2]['disabled'] = true;
+                    }
+                    this.generate_noteList();
+                    localStorage.setItem('filter_values_note', JSON.stringify(this.columnFilterValues));
+            });
 
     }
     ngOnInit() { 
@@ -265,13 +278,7 @@ export class NoteListPage implements OnInit {
     }
 
     search_all() {
-        if (this.isFilterOn()) {
-            this.menuItems[5].items[2]['disabled'] = false;
-        } else {
-            this.menuItems[5].items[2]['disabled'] = true;
-        }
-        this.generate_noteList();
-        localStorage.setItem('filter_values_note', JSON.stringify(this.columnFilterValues));
+        this.modelChanged.next(this.columnFilterValues);
     }
 
     cancel_filters(cancel_type) {

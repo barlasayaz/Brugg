@@ -9,6 +9,8 @@ import { ExcelService } from '../services/excel';
 import { PdfExportService } from '../services/pdf-export';
 import { ActivatedRoute } from '@angular/router';
 import { DataService } from '../services/data.service';
+import { Subject } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
     selector: 'app-protocol-list',
@@ -35,6 +37,7 @@ export class ProtocolListPage implements OnInit {
     public heightCalc: any = '700px';
     public activCustomer: any = {};
     public customer_number: any;
+    modelChanged: Subject<any> = new Subject<any>();
 
     public menuItems: MenuItem[] = [
         {
@@ -137,6 +140,17 @@ export class ProtocolListPage implements OnInit {
         public events: Events,
         private dataService: DataService,
         private route: ActivatedRoute) {
+            this.modelChanged.pipe(
+                debounceTime(700))
+                .subscribe(model => {
+                    if (this.isFilterOn()) {
+                        this.menuItems[5].items[2]['disabled'] = false;
+                    } else {
+                        this.menuItems[5].items[2]['disabled'] = true;
+                    }
+                    this.generate_protocolList();
+                    localStorage.setItem('filter_values_protocol', JSON.stringify(this.columnFilterValues));
+            });
     }
 
     ngOnInit() {
@@ -302,13 +316,7 @@ export class ProtocolListPage implements OnInit {
         }
     }
     search_all() {
-        if (this.isFilterOn()) {
-            this.menuItems[5].items[2]['disabled'] = false;
-        } else {
-            this.menuItems[5].items[2]['disabled'] = true;
-        }
-        this.generate_protocolList();
-        localStorage.setItem('filter_values_protocol', JSON.stringify(this.columnFilterValues));
+        this.modelChanged.next(this.columnFilterValues);
     }
 
     cancel_filters(cancel_type) {

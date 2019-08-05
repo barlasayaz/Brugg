@@ -12,6 +12,8 @@ import { ProductMigrationPage } from '../product-migration/product-migration.pag
 import { ActivatedRoute } from '@angular/router';
 import { SlideMenu } from 'primeng/primeng';
 import { DataService } from '../services/data.service';
+import { Subject } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
     selector: 'app-product-list',
@@ -46,6 +48,8 @@ export class ProductListPage implements OnInit {
     public selectMulti: number;
     public navigationSubscription: any;
     public childCount: number;
+    modelChanged: Subject<any> = new Subject<any>();
+    
     public menuItems: MenuItem[] = [{
         label: this.translate.instant('Ansicht'),
         icon: 'pi pi-fw pi-eye',
@@ -233,6 +237,17 @@ export class ProductListPage implements OnInit {
         public events: Events,
         private dataService: DataService,
         private route: ActivatedRoute) {
+            this.modelChanged.pipe(
+                debounceTime(700))
+                .subscribe(model => {
+                    if (this.isFilterOn()) {
+                        this.menuItems[9].items[2]['disabled'] = false;
+                    } else {
+                        this.menuItems[9].items[2]['disabled'] = true;
+                    }
+                    this.generate_productList();
+                    localStorage.setItem('filter_values_product', JSON.stringify(this.columnFilterValues));
+            });
     }
 
     ngOnInit() {
@@ -486,13 +501,7 @@ export class ProductListPage implements OnInit {
     }
 
     search_all() {
-        if (this.isFilterOn()) {
-            this.menuItems[9].items[2]['disabled'] = false;
-        } else {
-            this.menuItems[9].items[2]['disabled'] = true;
-        }
-        this.generate_productList();
-        localStorage.setItem('filter_values_product', JSON.stringify(this.columnFilterValues));
+        this.modelChanged.next(this.columnFilterValues);
     }
 
     cancel_filters(cancel_type) {
