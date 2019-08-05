@@ -4,6 +4,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { UserdataService } from '../services/userdata';
 import { ApiService } from '../services/api';
 import { File } from '@ionic-native/file/ngx';
+import { DataService } from '../services/data.service';
 
 /**
  * Generated class for the ProductCopyPage page.
@@ -32,14 +33,15 @@ export class ProductCopyPage implements OnInit {
   public idProduct: any;
   public inputError: boolean = false;
 
-  constructor(public navCtrl: NavController, 
+  constructor(public navCtrl: NavController,
               public viewCtrl: ModalController,
               public translate: TranslateService,
               public userdata: UserdataService,
               public apiService: ApiService,
               public alertCtrl: AlertController,
               private navParams: NavParams,
-              public file: File) {
+              public file: File,
+              private dataService: DataService) {
 
   }
 
@@ -69,12 +71,12 @@ export class ProductCopyPage implements OnInit {
       this.activProduct = result.obj;
       console.log('loadProduct: ' , this.activProduct);
 
-      let title = "";
+      let title = '';
       try {
         title = JSON.parse(this.activProduct.title);
         title = title[this.lang];
       } catch {
-        console.error('loadProduct title JSON.parse:', this.activProduct.title);;
+        console.error('loadProduct title JSON.parse:', this.activProduct.title);
       }
 
       this.activProduct.title = title;
@@ -155,11 +157,25 @@ export class ProductCopyPage implements OnInit {
             newObj.images = newImgPath;
             console.log('obj :', newObj);
             this.apiService.pvs4_set_product(newObj).then((result: any) => {
-              console.log('images product result: ', result);
-              this.navCtrl.navigateForward(['/product-details', result['id']] );
+              console.log('product result: ', result, result.obj);
+              this.editProduct(result['id'], this.idCustomer, 0, '');
             });
           });
       });
+  }
+
+  editProduct(id: any, idCustomer: any, parent: any, company: any) {
+    console.log('editProduct', this.activProduct);
+    if (id) {
+        let data = {
+            id: id,
+            idCustomer: idCustomer,
+            parent: parent,
+            company: company
+        };
+        this.dataService.setData(data);
+        this.navCtrl.navigateForward(['/product-edit']);
+    }
   }
 
   copyFile(sourceFile: any, targetFile: any) {
