@@ -362,7 +362,7 @@ export class ProductListPage implements OnInit {
                                 if (pr.result == 3) {
                                     this.productListAll[index].data.last_protocol_next = this.translate.instant('unauffindbar');
                                 }
-                                if (pr.result == 4) {
+                                if ((pr.result == 2) || (pr.result == 4)) {
                                     this.productListAll[index].data.last_protocol_next = this.translate.instant('ausmustern');
                                 }
                             }

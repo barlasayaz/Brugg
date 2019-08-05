@@ -41,8 +41,13 @@ switch ($_SERVER['REQUEST_METHOD']) {
 function processing() {
     global $brugg_id_api,$database_location,$database_username,$database_password,$database_name;
     $con_pvs4=mysqli_connect($database_location,$database_username,$database_password,$database_name);
+
+    global $database_location_2,$database_username_2,$database_password_2,$database_name_2;
+    $con_pvs4_pr=mysqli_connect($database_location_2,$database_username_2,$database_password_2,$database_name_2);
+
     $con_pvs3=mysqli_connect('db2412.1und1.de','dbo322099820','1qay2wsx','db322099820');
     mysqli_query($con_pvs4,"SET NAMES 'utf8'");
+    mysqli_query($con_pvs4_pr,"SET NAMES 'utf8'");
     mysqli_query($con_pvs3,"SET NAMES 'utf8'");
     if (mysqli_connect_errno()){
         http_response_code(500);
@@ -80,81 +85,66 @@ function processing() {
     }
     // -------------------------------------------------
     // escape the uemailid to prevent sql injection
-    $liste = [];
+
+    $list = array();
     $anz  = 0;
 
-    //$pvs3_obj= mysqli_query($con_pvs3,"SELECT * FROM kunden WHERE Aktiv =1 AND `pvs4_id`=0 ");
-    $pvs3_obj= mysqli_query($con_pvs3,"SELECT * FROM kunden WHERE Aktiv =1  "); 
-
-    $alleMitarbeiter_res = mysqli_query($con_pvs3,"SELECT * FROM verantwortlicher  ; ");
-    $alleMitarbeiter = array();
-    while($mit = mysqli_fetch_array($alleMitarbeiter_res, MYSQLI_ASSOC)){
-        $alleMitarbeiter[$mit['idVerantwortliche']] = $mit;
-    }
-
+    $list_p= mysqli_query($con_pvs4,"SELECT id , last_protocol,pvs3_id FROM `products` WHERE `last_protocol` NOT LIKE '%}%' AND `last_protocol` LIKE '%{%' AND pvs3_id>0 ORDER BY `products`.`pvs3_id` ASC LIMIT 1200 ");
   
-    if($pvs3_obj){             
-        if(mysqli_num_rows($pvs3_obj) > 0){
-            while ($row = mysqli_fetch_assoc($pvs3_obj)) {
-                /*
-                if(isset( $alleMitarbeiter[ $row['Verantwortlicher_idAusendienster']  ]  ))  
-                    $row['Mitarbeiter'] = $alleMitarbeiter[$row['Verantwortlicher_idAusendienster']]['Name'].', '.$alleMitarbeiter[$row['Verantwortlicher_idAusendienster']]['Vorname'];
-                else
-                    $row['Mitarbeiter'] = "";
+    if($list_p){             
+        if(mysqli_num_rows($list_p) > 0){
+            while ($row = mysqli_fetch_assoc($list_p)) { 
+                $id = $row['id'];
+                $last_protocol = trim( $row['last_protocol']) ;
+                $pvs3_id = $row['pvs3_id'];
+        
+                $last_protocol = array(
+                    'id'        => 0,
+                    'protocol_date'      => "" ,
+                    'protocol_date_next' => "" ,
+                    "result" => 0
+                );    
 
-                if(isset( $alleMitarbeiter[ $row['Verantwortlicher_idPruefer']  ]  ))  
-                    $row['Pruefer'] = $alleMitarbeiter[$row['Verantwortlicher_idPruefer']]['Name'].', '.$alleMitarbeiter[$row['Verantwortlicher_idPruefer']]['Vorname'];
-                else
-                    $row['Pruefer'] = "";
-                */
-
-                $pvs3_id = $row['idKunde'];
-                $row['last_date'] = "";
-                $row['next_date'] = "";      
-                /*       
-                $info = mysqli_query($con_pvs3, "SELECT * FROM kunden_info WHERE id=$pvs3_id;" );
-                if($info){                  
+                $info = mysqli_query($con_pvs3, "SELECT * FROM anschlagmittel_info WHERE id=".$pvs3_id .";" );
+                if($info){
                     if(mysqli_num_rows($info) > 0){
-                        $t = mysqli_fetch_assoc($info);                        
-                        $row['last_date']  = $t['last_termin'];
-                        $row['next_date']  = $t['next_termin'];
-                    }
-                }  
-                */                                 
-
-                
-                $ap = 0;
-                
-                $info = mysqli_query($con_pvs3, "SELECT COUNT(`idAnschlagmittel`) AS ap FROM `anschlagmittel` WHERE `aktiv`=1 AND `Kunden_idKunde`=$pvs3_id" );
-                if($info){                  
-                    if(mysqli_num_rows($info) > 0){
-                        $t = mysqli_fetch_assoc($info);   
-                        $ap = $t['ap'];                     
-                    }
-                }       
-                                     
-                $row['ap'] =  $ap ;
-                
-                if($ap>1000){
-                    $liste[] =  utf8encodeArray($row) ;
-                    $anz++;
+                        $t = mysqli_fetch_array($info);
+                        $x= $t['last_pr'];
+                        if (strpos($x, '.') != false) {
+                            $st = explode('.',$x);
+                            $last_protocol['protocol_date'] = $st[2].'-'.$st[1].'-'.$st[0];
+                        }
+                        $x= $t['next_pr'];
+                        if (strpos($x, '.') != false) {
+                            $st = explode('.',$x);
+                            $last_protocol['protocol_date_next'] = $st[2].'-'.$st[1].'-'.$st[0];                                    
+                        }else if( strpos($x, 'reparieren') != false) {
+                            $last_protocol['result'] = 1;
+                        }else if( strpos($x, 'unauffindbar') != false) {
+                            $last_protocol['result'] = 3;
+                        }else if( strpos($x, 'ausmustern') != false) {
+                            $last_protocol['result'] = 4;
+                        }
+                    }  
                 }
-                
 
+                $last_protocol = json_encode( $last_protocol , JSON_UNESCAPED_UNICODE );
+                $update = mysqli_query($con_pvs4, "UPDATE `products` SET `last_protocol` = '$last_protocol' WHERE `products`.`id` = $id;" );
                 
-            }        
+                $anz++; 
+                //echo "<br>  anz : ".$anz."  lp: ".$last_protocol;
+            }
             http_response_code(200);
             $ok = new \stdClass();
-            $ok->anz = $anz;
-            $ok->zeilen = $liste ;
+            $ok->amount = $anz;
             echo json_encode($ok);
             mysqli_close($con_pvs4);
             die; 
         }else{
             http_response_code(200);
             $ok = new \stdClass();
-            $ok->anz = 0;
-            $ok->zeilen = '[]' ;
+            $ok->amount = 0;
+            $ok->obj = '[]' ;
             echo json_encode($ok);
             mysqli_close($con_pvs4);
             die;        
