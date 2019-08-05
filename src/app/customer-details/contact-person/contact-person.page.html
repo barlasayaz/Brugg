@@ -119,6 +119,18 @@
             </ion-row>
             <!-- Row 4 -->
             <ion-row>
+                <ion-col size="12">
+                  <ion-item lines="none" style="padding-left: 0px;">
+                    <ion-label position="floating">{{translate.instant('Funktion')}}</ion-label>
+                    <ion-input type="text" 
+                               id="ansp_position"
+                               [(ngModel)]="contactPersonEdit.position">
+                    </ion-input>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+            <!-- Row 5 -->
+            <ion-row>
               <ion-col size="12">
                 <ion-item lines="none" style="padding-left: 0px;">
                   <ion-label position="floating">{{translate.instant('Abteilung')}}</ion-label>
@@ -129,7 +141,7 @@
                 </ion-item>
               </ion-col>
             </ion-row>
-            <!-- Row 5 -->
+            <!-- Row 6 -->
             <ion-row *ngIf="true">
               <ion-col size-md="6" size-sm="12" size="12">
                 <ion-item lines="none" class="item-border">
@@ -148,7 +160,7 @@
                 </ion-item>						
               </ion-col>
             </ion-row> 
-              <!-- Row 6 -->
+              <!-- Row 7 -->
               <ion-row>
                 <ion-col size="12">
                   <ion-item lines="none" style="padding-left: 0px;">

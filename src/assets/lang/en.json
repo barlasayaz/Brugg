@@ -838,5 +838,8 @@
   "Hinzufügen": "Add",
   "Geschlecht": "Gender",
   "Herr": "Mr",
-  "Frau": "Mrs"
+  "Frau": "Mrs",
+  "Nicht original. Sollte bearbeitet werden": "Not original. Should be edited",
+  "Original": "Original",
+  "Kopieren": "Copy"
 }

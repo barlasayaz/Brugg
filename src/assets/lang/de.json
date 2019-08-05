@@ -844,5 +844,8 @@
     "Produkte mit untergeordneten Datensätzen können nicht gelöscht werden.": "Produkte mit untergeordneten Datensätzen können nicht gelöscht werden.",
     "Geschlecht": "Geschlecht",
     "Herr": "Herr",
-    "Frau": "Frau"
+    "Frau": "Frau",
+    "Nicht original. Sollte bearbeitet werden": "Nicht original. Sollte bearbeitet werden",
+    "Original": "Original",
+    "Kopieren": "Kopieren"
 }

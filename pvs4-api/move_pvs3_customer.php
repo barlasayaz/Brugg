@@ -41,8 +41,13 @@ switch ($_SERVER['REQUEST_METHOD']) {
 function processing() {
     global $brugg_id_api,$database_location,$database_username,$database_password,$database_name;
     $con_pvs4=mysqli_connect($database_location,$database_username,$database_password,$database_name);
+
+    global $database_location_2,$database_username_2,$database_password_2,$database_name_2;
+    $con_pvs4_pr=mysqli_connect($database_location_2,$database_username_2,$database_password_2,$database_name_2);
+
     $con_pvs3=mysqli_connect('db2412.1und1.de','dbo322099820','1qay2wsx','db322099820');
     mysqli_query($con_pvs4,"SET NAMES 'utf8'");
+    mysqli_query($con_pvs4_pr,"SET NAMES 'utf8'");
     mysqli_query($con_pvs3,"SET NAMES 'utf8'");
     if (mysqli_connect_errno()){
         http_response_code(500);
@@ -92,18 +97,18 @@ function processing() {
             $licensee = 1;
             $parent =0;
             $active =1;
-            $customer_number = trim( $row['Kundennummer']);
-            $company = trim( $row['Firma']);
-            $street = trim( $row['Strasse']);
-            $po_box = trim( $row['Postfach']);
-            $zip_code = trim( $row['PLZ']);
-            $place = trim( $row['Ort']);
-            $country = trim( $row['Land']);
-            $phone = trim( $row['Telefon']);
-            $email = trim( $row['eMail']);
-            $website = trim( $row['Website']);
-            $sector = trim( $row['Branche']);
-            $rating = trim( $row['Wertung']);
+            $customer_number = str_replace("'","´", trim( $row['Kundennummer']) );
+            $company = str_replace("'","´",trim( $row['Firma']));
+            $street = str_replace("'","´",trim( $row['Strasse']));
+            $po_box = str_replace("'","´",trim( $row['Postfach']));
+            $zip_code = str_replace("'","´",trim( $row['PLZ']));
+            $place = str_replace("'","´",trim( $row['Ort']));
+            $country = str_replace("'","´",trim( $row['Land']));
+            $phone = str_replace("'","´",trim( $row['Telefon']));
+            $email = str_replace("'","´",trim( $row['eMail']));
+            $website = str_replace("'","´",trim( $row['Website']));
+            $sector = str_replace("'","´",trim( $row['Branche']));
+            $rating = str_replace("'","´",trim( $row['Wertung']));
             /***************************************** Salse / Tester **********************************************************************************************/
             $sales = 0;
             $tester = 0;
@@ -152,8 +157,17 @@ function processing() {
                     $sales_dates['next_date']  = $t['next_termin'];
                 }
             } 
-            $sales_dates = json_encode( utf8encodeArray($sales_dates), JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT);
+            $sales_dates = json_encode( utf8encodeArray($sales_dates), JSON_UNESCAPED_UNICODE);
             /****************************************** insert ************************************************************************** */
+            $allesOK = false; 
+
+            $einlesen = mysqli_query("SELECT pvs3_id FROM customer WHERE pvs3_id=$pvs3_id");
+            if(mysqli_num_rows($einlesen)==0) $allesOK = true;
+            else { 
+                echo " - Kunden gibt es schon  ".$pvs3_id   ;
+                die;
+            };
+
             $sql = "INSERT INTO `customer`( `pvs3_id`,`licensee`, `parent`,`active`, `customer_number`, `company`, `street`, `po_box`, `zip_code`, `place`, `country`, `phone`, `email`, `website`,  `sector`, `rating`,`sales`,`tester`,`sales_dates`)
                     VALUES ($pvs3_id,$licensee,$parent,$active,'$customer_number','$company','$street','$po_box','$zip_code','$place','$country','$phone','$email','$website','$sector','$rating',$sales, $tester, '$sales_dates');";
             $insert= mysqli_query($con_pvs4, $sql);
@@ -178,7 +192,7 @@ function processing() {
                         $last_protocol = "";
                         $images =$prod['Bild'];
                         $t = utf8encodeArray ( array('de'=>$prod['EingabeObjekt'],'en'=>$prod['EingabeObjekt'],'it'=>$prod['EingabeObjekt'],'fr'=>$prod['EingabeObjekt']  ) );
-                        $title = json_encode( $t , JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT );               
+                        $title = json_encode( $t , JSON_UNESCAPED_UNICODE );               
                         $items = array();
                         $i_1 = array('de'=>'Standort' ,'fr'=> 'Lieu' ,'it'=>'Sede' ,'en'=>'Location' );
                         $i_2 = array( 'type'=> 2, 'title' => $i_1, "value"=>  $prod['Standort'], 'id'=>0, 'user'=>0, 'licensee'=>0, 'options'=> array('max'=>200)  );
@@ -287,8 +301,8 @@ function processing() {
                             }  
                             }
 
-                        $last_protocol = json_encode( $last_protocol , JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT );
-                        $items = json_encode( $items , JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT );
+                        $last_protocol = json_encode( $last_protocol , JSON_UNESCAPED_UNICODE );
+                        $items = json_encode( $items , JSON_UNESCAPED_UNICODE );
 
                         $pvs3_prod_id = $prod['idAnschlagmittel'];
 
@@ -297,6 +311,10 @@ function processing() {
                                     
                         $insert= mysqli_query($con_pvs4, $sql);
                         $prod_id = mysqli_insert_id($con_pvs4);
+                        if(!$insert){
+                            echo " - insert products error <br> ".mysqli_error($con_pvs4)." <br> ".$sql;   
+                            die;
+                        }
 
                         $dir = '../../brugg2/attachments/prod_'.$prod['idAnschlagmittel'];
                         if(is_dir($dir)) {
@@ -321,7 +339,7 @@ function processing() {
                                 while ($pruef = mysqli_fetch_assoc($info)) {
                                     $pruef = utf8encodeArray($pruef);
                                     $t = utf8encodeArray ( array('de'=>"PVS3 Protokoll",'en'=>"PVS3 Protocol",'it'=>"PVS3 Protocole",'fr'=>"PVS3 Protocole"  ) );
-                                    $title = json_encode( $t , JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT );    
+                                    $title = json_encode( $t , JSON_UNESCAPED_UNICODE );    
                                     $protocol_number = intval($pruef['Protokoll_Nr']);
                                     $product = '[{"id":"'.$prod_id.'","id_number":"'.$id_number.'"}]';
                                     $protocol_date = $pruef['Datum']." 08:00:00";
@@ -357,8 +375,12 @@ function processing() {
                                     $sql = "INSERT INTO `protocols` (`pvs3_id`,`title`, `customer`, `product`,  `protocol_number`,  `active`, `items`, `protocol_date`, `protocol_date_next`, `result`) 
                                             VALUES            ($pvs3_pruef_id,'$title',$customer, '$product',  $protocol_number,  1      ,'$items','$protocol_date','$protocol_date_next',$result );";
                                                 
-                                    $insert= mysqli_query($con_pvs4, $sql);
-                                    $pruef_id = mysqli_insert_id($con_pvs4);
+                                    $insert= mysqli_query($con_pvs4_pr, $sql);
+                                    if(!$insert){
+                                        echo " - insert protocols error <br> ".mysqli_error($con_pvs4)." <br> ".$sql;  
+                                        die;
+                                    }
+                                    //$pruef_id = mysqli_insert_id($con_pvs4);
 //echo $sql."  <br> id:$pruef_id   ".intval($pruef['HandAuge']);
 //break; //todo
                                 }
@@ -396,14 +418,15 @@ function processing() {
                             $adr_1 = array( "address_type" => "Lieferadresse", "street" => $la_street, "zip_code" => $la_zip , "department" => $la_dep, "email" => "", "phone" => "", "mobile" => "");
                             $adr[] = $adr_1;
                         }
-                        $addresses = json_encode( $adr , JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT );
+                        $addresses = json_encode( $adr , JSON_UNESCAPED_UNICODE );
                         $sql = "INSERT INTO `contact_persons`( `pvs3_id`, `email`, `active`, `first_name`, `last_name`, `customer`, `addresses`, `department`) 
                                                     VALUES ($pvs3_ansp_id, '$email', $active , '$first_name' , '$last_name' , $customer , '$addresses' , '$department' );";
                         $insert= mysqli_query($con_pvs4, $sql);
                     }
                 } 
             }else{
-                echo " - inser error - ".mysqli_error($con_pvs4)." - ".$sql;   
+                echo " - insert costumer error <br> ".mysqli_error($con_pvs4)." <br> ".$sql;    
+                die;
             }
             http_response_code(200);
             $ok = new \stdClass();

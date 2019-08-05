@@ -92,18 +92,28 @@ function processing() {
     $images         = trim( mysqli_escape_string($con,$_POST['images']) );
     $nfc_tag_id     = trim( mysqli_escape_string($con,$_POST['nfc_tag_id']) );
     $qr_code        = trim( mysqli_escape_string($con,$_POST['qr_code']) );    
-    $author             = "";
+    $author         = "";
     if(isset($_POST['author'])) $author = trim( mysqli_escape_string($con,$_POST['author']));
    
     if($id >0) {
         $sql="  UPDATE products 
-                SET active =$active ,customer = $customer, parent =$parent, title='$title', 
-                id_number='$id_number', check_interval=$check_interval, last_protocol='$last_protocol', 
-                articel_no='$articel_no', items='$items', images='$images',nfc_tag_id='$nfc_tag_id',qr_code='$qr_code', author='$author' 
-                WHERE id =$id";
+                   SET active =$active,
+                       customer = $customer,
+                       parent =$parent,
+                       title='$title', 
+                       id_number='$id_number',
+                       check_interval=$check_interval,
+                       last_protocol='$last_protocol', 
+                       articel_no='$articel_no',
+                       items='$items',
+                       images='$images',
+                       nfc_tag_id='$nfc_tag_id',
+                       qr_code='$qr_code',
+                       author='$author'
+                 WHERE id =$id";
     } else {
-        $sql="  INSERT INTO products (active,customer,parent,title,id_number,items,check_interval,last_protocol,articel_no,images,nfc_tag_id,qr_code, author)
-                VALUES($active,$customer,$parent,'$title','$id_number','$items',$check_interval,'$last_protocol','$articel_no','$images','$nfc_tag_id','$qr_code', '$author')";
+        $sql="  INSERT INTO products (active,customer,parent,title,id_number,items,check_interval,last_protocol,articel_no,images,nfc_tag_id,qr_code,author)
+                VALUES($active,$customer,$parent,'$title','$id_number','$items',$check_interval,'$last_protocol','$articel_no','$images','$nfc_tag_id','$qr_code','$author')";
     }
 	$ret_sql= mysqli_query( $con, $sql );
 

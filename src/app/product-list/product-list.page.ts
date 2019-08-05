@@ -14,6 +14,7 @@ import { SlideMenu } from 'primeng/primeng';
 import { DataService } from '../services/data.service';
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
+import { ProductCopyPage } from '../product-copy/product-copy.page';
 
 @Component({
     selector: 'app-product-list',
@@ -212,6 +213,17 @@ export class ProductListPage implements OnInit {
                     console.log('command menuitem:', event.item);
                     this.product_migration();
                 }
+            },
+            {
+                label: this.translate.instant('Produkt duplizieren alt'),
+                icon: 'pi pi-fw pi-copy',
+                visible: this.userdata.role_set.edit_products,
+                disabled: true,
+                command: (event) => {
+                    if (this.userdata.role_set.edit_products == false) { return; }
+                    console.log('command menuitem:', event.item);
+                    this.product_copy();
+                }
             }
         ]
     }];
@@ -269,11 +281,11 @@ export class ProductListPage implements OnInit {
                 console.log('ProductListPage idCustomer:', this.idCustomer);
                 this.page_load();
             }
-        });        
+        });
     }
 
-    ngAfterViewChecked(){        
-        setTimeout(()=>{   
+    ngAfterViewChecked() {
+        setTimeout(() => {
             this.funcHeightCalc();
         }, 1000);
     }
@@ -289,7 +301,7 @@ export class ProductListPage implements OnInit {
         if (this.splitFilter) { x = x - 51; }
         if (x < 80) { x = 80; }
         this.heightCalc = x + 'px';
-        //console.log('heightCalc 2 :', x, this.heightCalc);
+        // console.log('heightCalc 2 :', x, this.heightCalc);
     }
 
     page_load() {
@@ -307,13 +319,13 @@ export class ProductListPage implements OnInit {
         this.menuItems[6].items[0]['disabled'] = false;
         this.menuItems[6].items[1]['disabled'] = false;
         this.menuItems[9].items[4]['disabled'] = true;
+        this.menuItems[9].items[5]['disabled'] = true;
 
         this.events.publish('prozCustomer', 0);
         this.apiService.pvs4_get_product_list(this.idCustomer).then((result: any) => {
             console.log('pvs4_get_product_list ok');
             const list = JSON.parse(JSON.stringify(result.list));
             this.productListAll = list;
-
 
             let json = '{';
             for (let j = 0; j < this.cols.length; j++) {
@@ -364,7 +376,7 @@ export class ProductListPage implements OnInit {
                                 if (pr.result == 3) {
                                     this.productListAll[index].data.last_protocol_next = this.translate.instant('unauffindbar');
                                 }
-                                if (pr.result == 4) {
+                                if ((pr.result == 2) || (pr.result == 4)) {
                                     this.productListAll[index].data.last_protocol_next = this.translate.instant('ausmustern');
                                 }
                             }
@@ -580,6 +592,7 @@ export class ProductListPage implements OnInit {
         this.menuItems[6].items[0]['disabled'] = false;
         this.menuItems[6].items[1]['disabled'] = false;
         this.menuItems[9].items[4]['disabled'] = false;
+        this.menuItems[9].items[5]['disabled'] = false;
         let id_sn = 0;
 
         if (selectedNodeLength == 1) {
@@ -613,6 +626,7 @@ export class ProductListPage implements OnInit {
             this.menuItems[4].visible = this.userdata.role_set.edit_products;
             this.menuItems[5].visible = false;
             this.menuItems[9].items[4]['disabled'] = true;
+            this.menuItems[9].items[5]['disabled'] = true;
             this.move_id = 0;
         }
         if (selectedNodeLength == 0) {
@@ -658,6 +672,7 @@ export class ProductListPage implements OnInit {
         this.menuItems[6].items[0]['disabled'] = false;
         this.menuItems[6].items[1]['disabled'] = false;
         this.menuItems[9].items[4]['disabled'] = false;
+        this.menuItems[9].items[5]['disabled'] = false;
         let id_sn = 0;
 
         if (selectedNodeLength == 1) {
@@ -691,6 +706,7 @@ export class ProductListPage implements OnInit {
             this.menuItems[4].visible = this.userdata.role_set.edit_products;
             this.menuItems[5].visible = false;
             this.menuItems[9].items[4]['disabled'] = true;
+            this.menuItems[9].items[5]['disabled'] = true;
             this.move_id = 0;
         }
         if (selectedNodeLength == 0) {
@@ -1122,6 +1138,32 @@ export class ProductListPage implements OnInit {
                 }
             ]
         }).then(x => x.present());
+    }
+
+    async product_copy() {
+    const modal =
+        await this.modalCtrl.create({
+        component: ProductCopyPage,
+        componentProps: {
+            readOnly: false, idProduct: this.selectedNode.data.id, idCustomer: this.idCustomer
+        }
+        });
+
+    modal.present();
+    }
+
+    editProduct() {
+        console.log('editProduct', this.selectedNode.data);
+        if (this.selectedNode.data.id) {
+            const data = {
+                id: this.selectedNode.data.id,
+                idCustomer: this.idCustomer,
+                parent: this.selectedNode.data.parent,
+                company: this.company
+            };
+            this.dataService.setData(data);
+            this.navCtrl.navigateForward(['/product-edit']);
+        }
     }
 
 }

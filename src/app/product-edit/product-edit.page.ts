@@ -85,6 +85,7 @@ export class ProductEditPage implements OnInit {
   ngOnInit() {
     this.url = this.apiService.pvsApiURL;
     this.maxDate = this.apiService.maxDate;
+    this.activProduct.id_number = '';
 
     if (this.route.snapshot.data['special']) {
       let params = this.route.snapshot.data['special'];
@@ -889,4 +890,5 @@ export class ProductEditPage implements OnInit {
       });
     }
   }
+
 }
