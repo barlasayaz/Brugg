@@ -69,15 +69,15 @@ export class ProductCopyPage implements OnInit {
       this.activProduct = result.obj;
       console.log('loadProduct: ' , this.activProduct);
 
-      let title = JSON.parse(this.activProduct.title);
+      let title = "";
       try {
         title = JSON.parse(this.activProduct.title);
+        title = title[this.lang];
       } catch {
-        console.log('loadProduct title JSON.parse:', this.activProduct.title);
-        title = JSON.parse(this.activProduct.title);
+        console.error('loadProduct title JSON.parse:', this.activProduct.title);;
       }
 
-      this.activProduct.title = title[this.lang];
+      this.activProduct.title = title;
     });
   }
 

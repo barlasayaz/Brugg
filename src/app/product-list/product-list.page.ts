@@ -278,7 +278,7 @@ export class ProductListPage implements OnInit {
     }
 
     page_load() {
-        console.log('ionViewDidLoad ProductListPage');
+        console.log('page_load ProductListPage');
         this.rowRecords = 0;
         this.totalRecords = 0;
         this.selectMulti = 1;
@@ -296,21 +296,18 @@ export class ProductListPage implements OnInit {
         this.events.publish('prozCustomer', 0);
         this.apiService.pvs4_get_product_list(this.idCustomer).then((result: any) => {
             console.log('pvs4_get_product_list ok');
-            try {
-                const list = JSON.parse(JSON.stringify(result.list));
-                this.productListAll = list;
-            } catch (e) {
-                console.log('JSON.parse err :', e);
-            }
+            const list = JSON.parse(JSON.stringify(result.list));
+            this.productListAll = list;
 
-            try {
-                let json = '{';
-                for (let j = 0; j < this.cols.length; j++) {
-                    json += '"' + this.cols[j].field + '":""';
-                    json += ',';
-                }
-                json += '"search_all":""}';
+
+            let json = '{';
+            for (let j = 0; j < this.cols.length; j++) {
+                json += '"' + this.cols[j].field + '":""';
+                json += ',';
+            }
+            json += '"search_all":""}';
                 // console.log('columnFilterValues :', json);
+            try {
                 this.columnFilterValues = JSON.parse(json);
                 this.selectedColumns = JSON.parse(JSON.stringify(this.cols));
                 if (localStorage.getItem('filter_values_product') != undefined) {
@@ -324,7 +321,8 @@ export class ProductListPage implements OnInit {
                     this.selectedColumns = JSON.parse(localStorage.getItem('show_columns_product'));
                 }
             } catch (e) {
-                console.log('JSON.parse filter err :', e);
+                console.error('JSON.parse filter err :', e);
+                console.log('columnFilterValues', json);
             }
 
             this.title_translate(this.productListAll);
@@ -356,7 +354,8 @@ export class ProductListPage implements OnInit {
                                 }
                             }
                         } catch (e) {
-                            console.log('JSON.parse(pr) err :', e);
+                            console.error('JSON.parse(pr) err :', e);
+                            console.log('pr :', pr);
                         }
                     }
                 }
@@ -416,8 +415,8 @@ export class ProductListPage implements OnInit {
                 title = JSON.parse(nodes[i].data.title);
                 // console.log("options :", options);
             } catch (e) {
-                // console.error('JSON.parse options err :', e);
-                // console.log('title :', nodes[i].data, title);
+                 console.error('JSON.parse options err :', e);
+                 console.log('title :', nodes[i].data, title);
             }
 
             nodes[i].data.titleJson = title;

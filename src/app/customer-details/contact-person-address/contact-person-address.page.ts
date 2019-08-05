@@ -95,6 +95,7 @@ export class ContactPersonAddressPage {
     if (this.pw_felder == 0) {
       let obj = {id: 0,
                 email: '',
+                gender: '',
                 first_name: '',
                 last_name: '',
                 customer: this.idCustomer,
@@ -105,6 +106,7 @@ export class ContactPersonAddressPage {
 
       if (this.contactPerson[0].id) { obj.id = this.contactPerson[0].id; }
       if (this.contactPerson[0].email) { obj.email = this.contactPerson[0].email; }
+      if (this.contactPerson[0].gender) { obj.gender = this.contactPerson[0].gender; }
       if (this.contactPerson[0].first_name) { obj.first_name = this.contactPerson[0].first_name; }
       if (this.contactPerson[0].last_name) { obj.last_name = this.contactPerson[0].last_name; }
       if (this.contactPerson[0].customer) { obj.customer = this.contactPerson[0].customer; } 
@@ -136,7 +138,7 @@ export class ContactPersonAddressPage {
   }
 
   remAddress(indAdr) {
-    this.contactPersonAddresses.splice(indAdr, 1); 
+    this.contactPersonAddresses.splice(indAdr, 1);
     if (this.contactPersonAddresses.length == 0) {
       this.contactPersonAddresses.push({
         address_type: 'Rechnungsadresse',
@@ -146,7 +148,7 @@ export class ContactPersonAddressPage {
         email: '',
         phone: '',
         mobile: ''
-      }); 
+      });
     }
   }
 
@@ -159,7 +161,7 @@ export class ContactPersonAddressPage {
       email: '',
       phone: '',
       mobile: ''
-    }); 
+    });
     console.log('addAddress :', this.contactPersonAddresses);
   }
 

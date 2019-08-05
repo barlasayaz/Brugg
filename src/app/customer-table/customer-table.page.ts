@@ -203,12 +203,12 @@ export class CustomerTablePage implements OnInit {
     }
 
     page_load() {
-        console.log('ionViewDidLoad CustomerTablePage');
+        console.log('page_load CustomerTablePage');
         this.rowRecords = 0;
         this.totalRecords = 0;
         this.events.publish('prozCustomer', 0);
         this.apiService.pvs4_get_customer_list(0).then((result: any) => {
-            console.log('ionViewDidLoad result :', result);
+            console.log('page_load result :', result);
 
             this.customerListAll = result.list;
 

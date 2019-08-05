@@ -270,7 +270,7 @@ export class DashboardNewPage implements OnInit {
                         days30 = days.days30;
                         days90 = days.days90;
                     } catch (e) {
-                        // nix
+                        console.error("days", item.days);
                     }
                     if (!item.company) { item.company = ''; }
                     if (!item.place) { item.place = ''; }

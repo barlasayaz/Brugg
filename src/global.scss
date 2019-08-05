@@ -99,6 +99,12 @@ body .ui-widget button {
   background: aliceblue !important;
 }
 
+// segment-button
+.sc-ion-segment-md-hion-toolbar:not(.ion-color).sc-ion-segment-md-s > .segment-button-checked, ion-toolbar .sc-ion-segment-md-h:not(.ion-color).sc-ion-segment-md-s > .segment-button-checked {
+  color: white !important;
+  background: #98d2e8 !important;
+}
+
 // ionic-selectable
 .ionic-selectable-item {
   left: 25px !important;
@@ -108,6 +114,19 @@ ion-header ion-toolbar:first-child {
   --background: #009de0 !important;
   color: white;
 }
+
+// toggle transparent
+.item-trns {
+	--background: transparent;
+}
+
+// toggle border
+.item-border {
+	--background: transparent;
+  border: 1px solid var(--ion-color-green);
+  padding-left: 10px;
+}
+
 
 // Toast
 .toast-warning{

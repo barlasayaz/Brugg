@@ -192,8 +192,8 @@
                         <!-- Row 3 -->
                         <ion-row *ngFor="let item of activProtocol.items">
                           <ion-col size="12" size-md="10" *ngIf="item.type == 0">
-                            <ion-item lines="none">
-                              <ion-label style="padding-left: 10px;">{{item.title[lang]}}</ion-label>
+                            <ion-item lines="none" class="item-border">
+                              <ion-label>{{item.title[lang]}}</ion-label>
                               <ion-toggle required="{{item.mandatory}}"
                                           [(ngModel)]="item.value" 
                                           color="{{item.options.color}}">
