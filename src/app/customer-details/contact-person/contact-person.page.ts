@@ -146,7 +146,7 @@ export class ContactPersonPage {
                     last_name: '',
                     customer: this.idCustomer,
                     addresses: '[{"street":"", "zip_code":"", "department":"", "email":"", "phone":"", "mobile":""}]',
-                    functional: '',
+                    position: '',
                     department: '',
                     note: '',
                     active: 1};
@@ -163,7 +163,7 @@ export class ContactPersonPage {
         if (this.contactPersonEdit['last_name']) { obj.last_name = this.contactPersonEdit['last_name']; }
         if (this.contactPersonEdit['customer']) { obj.customer = this.idCustomer; }
         if (this.contactPersonEdit['addresses']) { obj.addresses = JSON.stringify(this.contactPersonEdit['addresses']); }
-        if (this.contactPersonEdit['functional']) { obj.functional = this.contactPersonEdit['functional']; }
+        if (this.contactPersonEdit['position']) { obj.position = this.contactPersonEdit['position']; }
         if (this.contactPersonEdit['department']) { obj.department = this.contactPersonEdit['department']; }
         if (this.contactPersonEdit['active']) { obj.active = 1; }
         if (this.contactPersonEdit['check_products']) { obj.check_products = 1; }
@@ -231,7 +231,7 @@ export class ContactPersonPage {
                                    last_name: '',
                                    customer: '',
                                    addresses: '[{"street":"", "zip_code":"", "department":"", "email":"", "phone":"", "mobile":""}]',
-                                   functional: '',
+                                   position: '',
                                    department: '',
                                    note: '',
                                    active: 0};
@@ -243,7 +243,7 @@ export class ContactPersonPage {
                         if (contactPerson['last_name']) { obj.last_name = contactPerson['last_name']; }
                         if (contactPerson['customer']) { obj.customer = contactPerson['customer']; }
                         if (contactPerson['addresses']) { obj.addresses = JSON.stringify(contactPerson['addresses']); }
-                        if (contactPerson['functional']) { obj.functional = contactPerson['functional']; }
+                        if (contactPerson['position']) { obj.position = contactPerson['position']; }
                         if (contactPerson['department']) { obj.department = contactPerson['department']; }
                         if (contactPerson['note']) { obj.note = contactPerson['note']; }
                         if (contactPerson['active']) { obj.active = 0; }

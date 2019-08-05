@@ -86,7 +86,7 @@ function processing() {
     $last_name 	    = trim( mysqli_escape_string($con,$_POST['last_name']));
     $customer 		= intval( $_POST['customer'] );
     $addresses 		= trim( mysqli_escape_string($con,$_POST['addresses']));
-    $functional    	= trim( mysqli_escape_string($con,$_POST['functional']));
+    $position    	= trim( mysqli_escape_string($con,$_POST['position']));
     $department 	= trim( mysqli_escape_string($con,$_POST['department']));
     $edit_products  = 0;
     $check_products  = 0;
@@ -103,7 +103,7 @@ function processing() {
                      last_name = '$last_name', 
                      customer = $customer, 
                      addresses = '$addresses',
-                     functional = '$functional',
+                     position = '$position',
                      department = '$department',
                      edit_products = '$edit_products',
                      check_products = '$check_products',
@@ -111,8 +111,8 @@ function processing() {
                      active = $active
                WHERE id = $id";
     } else {
-        $sql="INSERT INTO contact_persons (email,gender,first_name,last_name,customer,addresses,functional,department,active,edit_products,check_products,note)
-              VALUES('$email','$gender','$first_name','$last_name',$customer,'$addresses','$functional','$department',$active,$edit_products,$check_products,'$note' )";
+        $sql="INSERT INTO contact_persons (email,gender,first_name,last_name,customer,addresses,position,department,active,edit_products,check_products,note)
+              VALUES('$email','$gender','$first_name','$last_name',$customer,'$addresses','$position','$department',$active,$edit_products,$check_products,'$note' )";
     }
 	$ret_sql= mysqli_query( $con, $sql );
 
