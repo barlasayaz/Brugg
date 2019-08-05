@@ -50,15 +50,9 @@ export class ApiService {
       this.http.post(url, data, { responseType: 'text' })
         .subscribe(
           (data: any) => {
-            try{
-              data = JSON.parse(data);
-            }
-            catch(e)
-            {
-              console.error("data", data);
-            }
+            data = JSON.parse(data);
             console.log('api bid_login() post data: ', data);
-            if (data.amount && data.amount == 1) {
+            if (data.amount == 1) {
               console.log('api bid_login() ok ');
               window.localStorage['pvs4_login'] = 1;
               window.localStorage['pvs4_user'] = JSON.stringify(data.user_info);
@@ -126,30 +120,14 @@ export class ApiService {
       this.http.post(url, data, { responseType: 'text' })
         .subscribe(
           (data: any) => {
-            try{
-              data = JSON.parse(data);
-              window.localStorage['access_token'] = data.access_token;
-              window.localStorage['refresh_token'] = data.refresh_token;
-              orig_data.token  = data.access_token;
-            }
-            catch(e)
-            {
-              console.error("data", data);
-              localStorage.removeItem('access_token');
-              localStorage.removeItem('refresh_token');
-            }
+            data = JSON.parse(data);
             console.log('api bid_reset() post data: ', data);
-
+            window.localStorage['access_token'] = data.access_token;
+            window.localStorage['refresh_token'] = data.refresh_token;
+            orig_data.token  = data.access_token;
             this.http.post(orig_url, orig_data, { headers: orig_headers }).subscribe((done: any) => {
               // return the result
-              try{
-                done = JSON.parse(done);
-              }
-              catch(e)
-              {
-                console.error("data", done);
-                done = {};
-              }
+              done = JSON.parse(done);
               console.log(url, done);
               res(done);
             },
@@ -201,7 +179,7 @@ export class ApiService {
   pvs4_api_post(func: string, data: any) {
     console.log('pvs4_api_post():', func, data);
     return new Promise((res, rej) => {
-      const headers = new HttpHeaders().set('Content-Type', 'text/plain; charset=utf-8');
+      const headers = new HttpHeaders().set('Content-Type', 'application/json; charset=utf-8');
       const tick = Date.now().toString(16).toUpperCase();
       const url = pvs4_apiURL + func + '?tick=' + tick;
       // inject our access token
@@ -210,14 +188,7 @@ export class ApiService {
       // call  endpoint
       this.http.post(url, data, { headers: headers, responseType: 'text' }).subscribe((done: any) => {
           // return the result
-          try{
-            done = JSON.parse(done);
-          }
-          catch(e)
-          {
-            console.error("data", done);
-            done = {};
-          }
+          done = JSON.parse(done);
           console.log(func, done);
           res(done);
         },
