@@ -5,6 +5,7 @@ import { UserdataService } from '../services/userdata';
 import { ApiService } from '../services/api';
 import { File } from '@ionic-native/file/ngx';
 import { DataService } from '../services/data.service';
+import { ToastController } from '@ionic/angular';
 
 /**
  * Generated class for the ProductCopyPage page.
@@ -41,7 +42,8 @@ export class ProductCopyPage implements OnInit {
               public alertCtrl: AlertController,
               private navParams: NavParams,
               public file: File,
-              private dataService: DataService) {
+              private dataService: DataService,
+              private toastCtrl: ToastController) {
 
   }
 
@@ -124,8 +126,7 @@ export class ProductCopyPage implements OnInit {
             nfc_tag_id:       '',
             qr_code:          '',
             pvs3_id:          resultProduct.obj.pvs3_id,
-            author:           resultProduct.obj.author,
-            product_status:   'C'
+            author:           resultProduct.obj.author
           };
 
           console.log('obj :', newObj);
@@ -158,8 +159,16 @@ export class ProductCopyPage implements OnInit {
             newObj.images = newImgPath;
             console.log('obj :', newObj);
             this.apiService.pvs4_set_product(newObj).then((result: any) => {
-              console.log('product result: ', result, result.obj);
+              console.log('product result: ', result, result.amount);
               this.editProduct(result['id'], this.idCustomer, 0, '');
+              if (result.amount == 1) {
+                const toast = this.toastCtrl.create({
+                  message: this.translate.instant('Produkt kopieren erfolgreich.'),
+                  cssClass: 'toast-warning',
+                  duration: 3500
+                }).then(x => x.present());
+                return;
+              }
             });
           });
       });

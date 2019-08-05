@@ -37,7 +37,6 @@ export class ProductListPage implements OnInit {
                                   id_number: '',
                                   articel_no: '',
                                   check_interval: '',
-                                  product_status: '',
                                   search_all: '' };
     public filterCols: string[];
     public expendedNodes: string[] = [];
@@ -260,8 +259,7 @@ export class ProductListPage implements OnInit {
                     { field: 'articel_no', header: this.translate.instant('Artikel-Nr.') },
                     { field: 'last_protocol_date', header: '<<' + this.translate.instant('Termin') },
                     { field: 'last_protocol_next', header: this.translate.instant('Termin') + '>>' },
-                    { field: 'check_interval', header: this.translate.instant('Intervall Prüfen') },
-                    { field: 'product_status', header: this.translate.instant('Produktstatus') }
+                    { field: 'check_interval', header: this.translate.instant('Intervall Prüfen') }
                 ];
                 this.idCustomer = parseInt(this.route.snapshot.paramMap.get('id'));
 
@@ -344,13 +342,6 @@ export class ProductListPage implements OnInit {
 
             for (let index = 0; index < this.productListAll.length; index++) {
                 // last_protocol & last_protocol_next
-                if (this.productListAll[index].data.product_status == '' ||
-                    this.productListAll[index].data.product_status == 'O') {
-                    this.productListAll[index].data.product_status = this.translate.instant('Original');
-                }
-                if (this.productListAll[index].data.product_status == 'C') {
-                    this.productListAll[index].data.product_status = this.translate.instant('Copy');
-                }
                 let pr = this.productListAll[index].data.last_protocol;
                 if (pr) {
                     if (pr.length > 0) {

@@ -94,7 +94,6 @@ function processing() {
     $qr_code        = trim( mysqli_escape_string($con,$_POST['qr_code']) );    
     $author         = "";
     if(isset($_POST['author'])) $author = trim( mysqli_escape_string($con,$_POST['author']));
-    $product_status   = trim( mysqli_escape_string($con,$_POST['product_status']) );
    
     if($id >0) {
         $sql="  UPDATE products 
@@ -110,12 +109,11 @@ function processing() {
                        images='$images',
                        nfc_tag_id='$nfc_tag_id',
                        qr_code='$qr_code',
-                       author='$author',
-                       product_status='$product_status' 
+                       author='$author'
                  WHERE id =$id";
     } else {
-        $sql="  INSERT INTO products (active,customer,parent,title,id_number,items,check_interval,last_protocol,articel_no,images,nfc_tag_id,qr_code,author,product_status)
-                VALUES($active,$customer,$parent,'$title','$id_number','$items',$check_interval,'$last_protocol','$articel_no','$images','$nfc_tag_id','$qr_code','$author','$product_status')";
+        $sql="  INSERT INTO products (active,customer,parent,title,id_number,items,check_interval,last_protocol,articel_no,images,nfc_tag_id,qr_code,author)
+                VALUES($active,$customer,$parent,'$title','$id_number','$items',$check_interval,'$last_protocol','$articel_no','$images','$nfc_tag_id','$qr_code','$author')";
     }
 	$ret_sql= mysqli_query( $con, $sql );
 
