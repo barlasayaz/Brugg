@@ -188,9 +188,13 @@ export class ApiService {
       // call  endpoint
       this.http.post(url, data, { headers: headers, responseType: 'text' }).subscribe((done: any) => {
           // return the result
-          done = JSON.parse(done);
-          console.log(func, done);
-          res(done);
+          try{
+            let done_json = JSON.parse(done);
+            console.log(func, done_json);
+            res(done_json);
+          }catch{
+            console.error(func, done);
+          }
         },
           err => {
             console.log('pvs4_api_post error:', func, err);

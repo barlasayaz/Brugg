@@ -87,35 +87,41 @@ function processing() {
     $mode = 0; 
     if(isset($_POST['mode'])) $mode   = intval($_POST['mode'] );
     
-    $sql    = "SELECT id,last_protocol,check_interval FROM `products` WHERE `active` = 1 AND `inspection_service`=1 AND `customer` = $id;";
+    $sql    = "SELECT * FROM `products` WHERE `active` = 1 AND `inspection_service`=1 `customer` = $id;";
     $ret_sql= mysqli_query( $con, $sql );
 
+    $liste = [];
+    $anz_liste = 0;
     $days10 = 0;
     $days30 = 0;
     $days90 = 0;
     if($ret_sql) {
         if(mysqli_num_rows($ret_sql) > 0){
             while ($row = mysqli_fetch_assoc($ret_sql)) {
-                $product = utf8encodeArray($row);
                 $pid = $row['id'];
-                if( $row['last_protocol'] )  {
-                    $last_pr = json_decode( $row['last_protocol'], true, 512 ,JSON_INVALID_UTF8_IGNORE);
-                    $result   = intval($last_pr['result'] );
-
-                    $PR_next_time = strtotime($last_pr['protocol_date']);
-                    if( $row['check_interval']>0) $PR_next_time += $row['check_interval'] * (60*60*24*30.4);
-                    else $PR_next_time += 12 * (60*60*24*30.4); 
-                        
-                    //echo $PR_next_time."<br>";
-                    $diffTime = $PR_next_time - time();
-                    if( $diffTime <= (60*60*24*10)){
-                        $days10++;
-                    } else if( $diffTime <= (60*60*24*30)){
-                        $days30++;
-                    } else if( $diffTime < (60*60*24*90)){
-                        $days90++;
+                $where = "SELECT * FROM `protocols` WHERE `product` LIKE '%\"id\":\"$pid\"%' ORDER by protocol_date DESC, id DESC LIMIT 1;" ;
+                $prot= mysqli_query( $con_pr, $where  );
+                if($prot) {
+                    if(mysqli_num_rows($prot) > 0){
+                        $prot_row = mysqli_fetch_assoc($prot);
+                        if($prot_row['result']==0){ 
+                            $PR_next_time = strtotime($prot_row['protocol_date']);
+                            if( $row['check_interval']>0) $PR_next_time += $row['check_interval'] * (60*60*24*30.4);
+                            else $PR_next_time += 12 * (60*60*24*30.4);                         
+                            //$PR_next_time = date("Y-m-d", $PR_next_time ) ;
+                            //echo $PR_next_time."<br><br>";
+                            $diffTime = $PR_next_time - time();
+                            if( $diffTime <= (60*60*24*10)){
+                                $days10++;
+                            } else if( $diffTime <= (60*60*24*30)){
+                                $days30++;
+                            } else if( $diffTime < (60*60*24*90)){
+                                $days90++;
+                            }
+                        }
                     }
-                }              
+                }
+                //echo $where."<br>";
             }
         }
 

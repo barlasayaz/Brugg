@@ -174,11 +174,13 @@ export class CustomerDetailsPage implements OnInit {
           this.isLoaded = true;
         } catch (e) {
           this.activCustomer.days = {'days10': 0, 'days30': 0, 'days90': 0 };
+          console.error('JSON.parse err days ', this.activCustomer.days) ;
         }
         // get new
         this.apiService.pvs4_api_post('job_days.php', {id: id}).then((days: any) => {
               console.log('ok job_days.php ', days);
               this.activCustomer.days = {'days10': days.days10 , 'days30': days.days30  , 'days90': days.days90  };
+              this.isLoaded = true;
         },
         err => { // return the error
               console.log('error job_days.php ', err);
