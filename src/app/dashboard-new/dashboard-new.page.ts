@@ -265,10 +265,13 @@ export class DashboardNewPage implements OnInit {
                     let days30 = 0;
                     let days90 = 0;
                     try {
-                        let days = JSON.parse(item.days);
-                        days10 = days.days10;
-                        days30 = days.days30;
-                        days90 = days.days90;
+                        if(item.days && item.days!= "")
+                        {
+                            let days = JSON.parse(item.days);
+                            days10 = days.days10;
+                            days30 = days.days30;
+                            days90 = days.days90;
+                        }
                     } catch (e) {
                         console.error("days", item.days);
                     }
