@@ -142,7 +142,7 @@ export class DashboardNewPage implements OnInit {
             this.zone.run(() => {
                 this.listInspection.sort((a, b) => {
                     let c = b[type] - a[type];
-                    // console.log('b[type] -  a[type] , c', b[type], a[type] , c);
+                    //console.log('b[type] -  a[type] , c', b[type], a[type] , c);
                     return c;
                 });
             });
