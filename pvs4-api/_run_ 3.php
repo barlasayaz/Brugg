@@ -26,7 +26,6 @@ mysqli_query($con_pvs4_pr,"SET NAMES 'utf8'");
 
 $pvs4= mysqli_query($con_pvs4," SELECT id,id_number,customer,items,optimized FROM `products` WHERE  `optimized`=0 AND   `pvs3_id`>0 ORDER BY `pvs3_id` DESC LIMIT 3000; ");
 
-
 if($pvs4){
     if(mysqli_num_rows($pvs4) > 0){
         while ($product = mysqli_fetch_assoc($pvs4)) {
@@ -62,7 +61,6 @@ if($pvs4){
                 }
                 $new_items_json .= ']';
                 //echo '<br>json:<br>'.$new_items_json ;
-
                 
                 $sql="  UPDATE products 
                         SET  items='$new_items_json', optimized=1 
@@ -75,11 +73,9 @@ if($pvs4){
                     echo "<br> $sql <br>";
                     die;
                 }
-
             }else{
                 echo "<br> +++> errror sizeof() id : $id   nr: $nr  customer:$customer" ; 
-            }
-            
+            }            
             
         }
     }
