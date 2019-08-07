@@ -149,7 +149,7 @@
     padding: 0;
     margin: 0 0 0 10px;
     list-style: none;
-    display: flex;
+    display: flex;    
 
     a {
       @extend .topBar-btn;
@@ -193,7 +193,7 @@
 
     .kundendaten-nav, .produktdaten-nav, .dashboard-nav {
       position: absolute;
-      top: 65px;
+      top: 62px;
       width: 100%;
       margin: 0;
       left: 0;

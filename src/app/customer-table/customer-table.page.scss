@@ -22,7 +22,7 @@
     }
 }
     
-@media screen and (min-width: 1000px) {
+@media screen and (min-width: 990px) {
     #menuMin {
         display: none;
     }
@@ -31,7 +31,7 @@
     }
 }
 
-@media screen and (max-width: 1000px) {
+@media screen and (max-width: 991px) {
     #menuMax {
         display: none;
     }
@@ -44,14 +44,3 @@
     background-color:#009de0;
     color: #ffffff;
 }
-
-.ui-treetable-scrollable-body {
-    //height: auto !important;
-    //max-height: calc(100% - 4em) !important;
-    //overflow-y: scroll !important;
-}
-
-/*     .ui-datatable-scrollable-header {
-    width: calc(100% - 0.3em) !important;
-} */
-

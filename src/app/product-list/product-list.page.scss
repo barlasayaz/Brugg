@@ -22,15 +22,14 @@
     }
 }
 
-@media screen and (min-width: 1024px) {
-    #btnMenu,
-    #menuMin {
+@media screen and (max-width: 991px) {
+    #menuMax {
         display: none;
     }
 }
 
-@media screen and (max-width: 1024px) {
-    #menuMax {
+@media screen and (min-width: 992px) {
+    #menuMin {
         display: none;
     }
 }
@@ -42,7 +41,7 @@
 
 .ek-content {
     @media only screen and (max-width: 767px) {
-        padding-top: 47px;
+        padding-top: 44px;
     }
 }
 
