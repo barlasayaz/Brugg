@@ -204,7 +204,7 @@
                             <ion-col size="12" size-md="10" *ngIf="item.type == 4">
                               <ion-item lines="none">
                                   <ion-label position="floating">{{item.title[lang]}}</ion-label>
-                                      <ion-datetime required="{{item.mandatory}}"
+                                      <ion-datetime  mode="ios"  required="{{item.mandatory}}"
                                                     type="time"
                                                     [(ngModel)]="item.value"
                                                     name="time" 
@@ -217,7 +217,7 @@
                           <ion-col size="12" size-md="10" *ngIf="item.type == 5">
                             <ion-item lines="none">
                                 <ion-label position="floating">{{item.title[lang]}}</ion-label>
-                                <ion-datetime required="{{item.mandatory}}"
+                                <ion-datetime  mode="ios"  required="{{item.mandatory}}"
                                               [(ngModel)]="item.value"
                                               displayFormat="DD.MM.YYYY"
                                               max = {{maxDate}}

@@ -171,7 +171,7 @@
             <ion-col col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12>
             <ion-item lines="none">
                 <ion-label floating>{{translate.instant('Datum')}}</ion-label>
-                <ion-datetime required
+                <ion-datetime  mode="ios"  required
                               (ionChange)="inputErrorMsg()"
                               [(ngModel)]="default_date"
                               displayFormat="DD.MM.YYYY"
@@ -187,7 +187,7 @@
             <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="10" size-xs="10">
                 <ion-item lines="none">
                     <ion-label position="floating">{{translate.instant('Standard')}}</ion-label>
-                    <ion-datetime required
+                    <ion-datetime  mode="ios"  required
                                   (ionChange)="inputErrorMsg()"
                                   type="time"
                                   [(ngModel)]="defaultTime"

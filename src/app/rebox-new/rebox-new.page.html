@@ -27,7 +27,7 @@
 			<ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12">
 				<ion-item lines="none">
 					<ion-label position="floating">{{translate.instant('Datum')}}</ion-label> 
-					<ion-datetime required
+					<ion-datetime  mode="ios"  required
 								  (ionChange)="inputErrorMsg()"
 								  name="rebox.ReBoxDate"
 								  [(ngModel)]="rebox.ReBoxDate"   

@@ -193,7 +193,8 @@
                       <div class="tr table-body">                
                         <div class="td"><span class="strong">{{'Bestelldatum' | translate}}</span></div> 
                         <ion-item lines="none">   
-                          <ion-datetime [(ngModel)]="activOrderForm.order_date"
+                          <ion-datetime mode="ios" 
+                                        [(ngModel)]="activOrderForm.order_date"
                                         id="order_date"
                                         required="true"
                                         displayFormat="DD.MM.YYYY"
@@ -227,7 +228,8 @@
                       <div class="tr table-body">
                         <div class="td"><span class="strong">{{'Liefertermin' | translate}}</span></div>
                         <ion-item lines="none">
-                          <ion-datetime [(ngModel)]="activOrderForm.delivery_date"
+                          <ion-datetime mode="ios" 
+                                        [(ngModel)]="activOrderForm.delivery_date"
                                         id="date_delivery"
                                         required="true"                                       
                                         displayFormat="DD.MM.YYYY"

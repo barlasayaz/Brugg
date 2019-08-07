@@ -24,15 +24,21 @@
     }
 
     
+    @media screen and (min-width: 990px) {
+        #menuMin {
+            display: none;
+        }
+        #menuMax {
+            display: inline;
+        }
+    }
+    
     @media screen and (max-width: 991px) {
         #menuMax {
             display: none;
         }
-    }
-
-    @media screen and (min-width: 992px) {
         #menuMin {
-            display: none;
+            display: inline;
         }
     }
 

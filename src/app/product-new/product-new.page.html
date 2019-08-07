@@ -133,26 +133,13 @@
             </ion-col>
         </ion-row>
 
-         <!-- Date -->
-       <!-- <ion-row style="margin-top:-5px;" *ngIf="activOption.type==4">
-          <ion-col col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12>
-            <ion-item lines="none">
-                <ion-label floating>{{translate.instant('Datum')}}</ion-label>
-                <ion-datetime [(ngModel)]="default_date"
-                              displayFormat="DD.MM.YYYY"
-                              doneText="{{translate.instant('okay')}}"
-                              cancelText="{{translate.instant('dismiss')}}">
-                </ion-datetime>
-            </ion-item>
-          </ion-col>  
-        </ion-row>-->
 
          <!-- Time -->
         <ion-row *ngIf="activOption.type==4">
           <ion-col size="6">
             <ion-item lines="none">
               <ion-label position="floating">{{translate.instant('Standard')}}</ion-label>
-              <ion-datetime type="time"
+              <ion-datetime mode="ios" type="time"
                             [(ngModel)]="defaultTime"
                             name="start_time" 
                             required="true"
