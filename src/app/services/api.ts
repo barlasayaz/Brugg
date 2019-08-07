@@ -27,7 +27,7 @@ export class ApiService {
   public appointmentEndTime: string = '16:59';
   public appointmentMinTime: string = '07:00';
   public appointmentMaxTime: string = '17:59';
-  public version: any = '4.4.17';
+  public version: any = '4.4.18';
   
   constructor(public http: HttpClient, public userdata: UserdataService) {
     console.log('Start ApiProvider Provider');
@@ -127,12 +127,16 @@ export class ApiService {
             orig_data.token  = data.access_token;
             this.http.post(orig_url, orig_data, { headers: orig_headers }).subscribe((done: any) => {
               // return the result
-              done = JSON.parse(done);
-              console.log(url, done);
-              res(done);
+              try{
+                let done_json = JSON.parse(done);
+                console.log('bid_reset() ok: ',url, done_json);
+                res(done_json);
+              }catch{
+                console.error('bid_reset() JSON.parse error:', url, done);
+              }
             },
             err => {
-                console.log('bid_reset() post error:', url, err);
+                console.error('bid_reset() post error:', url, err);
                 rej(err);
             });
           }, // success path

@@ -213,6 +213,7 @@ export class CustomerTablePage implements OnInit {
         if (this.splitFilter) { x = x - 51; }
         // if (x < 80) { x = 80; }
         this.heightCalc = x + 'px';
+        console.log('funcHeightCalc:', x , this.heightCalc  );
     }
 
     page_load() {
@@ -230,13 +231,13 @@ export class CustomerTablePage implements OnInit {
                 this.columnFilterValues = JSON.parse(localStorage.getItem('filter_values'));
             }
             if (localStorage.getItem('split_filter') != undefined) {
-                this.splitFilter = JSON.parse(localStorage.getItem('split_filter'));
-                this.funcHeightCalc();
+                this.splitFilter = JSON.parse(localStorage.getItem('split_filter'));                
             }
             if (localStorage.getItem('show_columns') != undefined) {
                 this.selectedColumns = JSON.parse(localStorage.getItem('show_columns'));
             }
             this.generate_customerList();
+            this.funcHeightCalc();
         });
         this.funcHeightCalc();
     }
