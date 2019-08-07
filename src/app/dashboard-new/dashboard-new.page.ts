@@ -139,36 +139,33 @@ export class DashboardNewPage implements OnInit {
         sortCustomerNum(type: string) {
             console.log('sortCustomer', type);
             this.sortCustomerType = type;
-            this.zone.run(() => {
                 this.listInspection.sort((a, b) => {
                     let c = b[type] - a[type];
-                    // console.log('b[type] -  a[type] , c', b[type], a[type] , c);
+                    //console.log('b[type] -  a[type] , c', b[type], a[type] , c);
                     return c;
-                });
-            });
+                });    
+                this.listInspection = JSON.parse(JSON.stringify(this.listInspection));
         }
 
         sortCustomerStr(type: string) {
             console.log('sortCustomer', type);
             this.sortCustomerType = type;
-            this.zone.run(() => {
                 this.listInspection.sort((a, b) => {
                     let c = a[type].localeCompare(b[type]);
                     // console.log('b[type] -  a[type] , c', b[type], a[type] , c);
                     return c;
-                });
-            });
+                });              
+                this.listInspection = JSON.parse(JSON.stringify(this.listInspection));
         }
 
         sortAppointment(type: string) {
             console.log('sortAppointment', type);
             this.sortAppointmentType = type;
-            this.zone.run(() => {
                 this.nextAppointment.sort((a, b) => {
                     let c = a[type].localeCompare(b[type]);
                     return c;
-                });
-            });
+                });           
+                this.nextAppointment = JSON.parse(JSON.stringify(this.nextAppointment));
         }
 
         all_customer() {
@@ -301,6 +298,7 @@ export class DashboardNewPage implements OnInit {
 
             this.apiService.pvs4_get_appointment_list().then((result: any) => {
                 let appointments: any = result.list;
+                this.nextAppointment = [];
                 for (let i = 0; i < appointments.length; i++) {
                     let item = appointments[i].data;
                     if (!item.company) { item.company = ''; }
