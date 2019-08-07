@@ -4,11 +4,12 @@
     <p-menubar id="menuMin" class="wideMenu">
         <div style="width: 100%">
             <button type="button" 
-                    pButton icon="fa fa-fw fa-list"
+                    pButton
+                    icon="fa fa-fw fa-list"
                     label="Menu"
                     id="btnMenu"
                     (click)="menu.toggle($event)">
-                    <span class="ui-submenu-icon pi pi-fw pi-caret-down slide-caret"></span>
+                <span class="ui-submenu-icon pi pi-fw pi-caret-down slide-caret"></span>
             </button>            
         </div>
         <div class="ui-inputgroup search-search">
@@ -20,14 +21,19 @@
     </p-menubar>
     <p-slideMenu [model]="menuItems"
                  popup="false"
-                 [viewportHeight]="280" 
+                 [viewportHeight]="250" 
                  [style]="{'width':'200px'}" 
                  #menu>
     </p-slideMenu>
-    <p-menubar [model]="menuItems" [autoDisplay]="false" id="menuMax">
+    <p-menubar [model]="menuItems"
+               [autoDisplay]="false"
+               id="menuMax">
         <div class="ui-inputgroup search-search">
-            <input type="text" pInputText placeholder="{{'Suche' |translate }}"
-                [(ngModel)]="columnFilterValues['search_all']" (input)="search_all()">
+            <input type="text"
+                   pInputText
+                   placeholder="{{'Suche' |translate }}"
+                   [(ngModel)]="columnFilterValues['search_all']"
+                   (input)="search_all()">
             <!-- <button (click)="search_all()" 
                     pButton type="button" 
                     icon="fa fa-search" 
