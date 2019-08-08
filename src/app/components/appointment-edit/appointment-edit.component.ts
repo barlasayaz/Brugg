@@ -121,6 +121,12 @@ export class AppointmentEditComponent implements OnInit {
     });
   }
 
+  open_customer()
+  {
+    this.navCtrl.navigateForward(['/customer-details', this.idCustomer]);
+    this.dismiss();
+  }
+
   loadCustomer() {
     this.apiService.pvs4_get_customer_list(0).then((result: any) => {
       this.listCustomer = [];
