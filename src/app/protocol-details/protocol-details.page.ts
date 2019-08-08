@@ -290,6 +290,11 @@ export class ProtocolDetailsPage implements OnInit {
       } else {
         bodyProduct.push([{ text: this.translate.instant('Articel No') }, { text: '' }]);
       }
+      if (element.customer_description) {
+        bodyProduct.push([{ text: this.translate.instant('Kundenbezeichnung') }, { text: element.customer_description }]);
+      } else {
+        bodyProduct.push([{ text: this.translate.instant('Kundenbezeichnung') }, { text: '' }]);
+      }
       if (element.author) {
         bodyProduct.push([{ text: this.translate.instant('Autor') }, { text: element.author }]);
       } else {

@@ -33,6 +33,7 @@ export class ProductEditPage implements OnInit {
           id: 0,
           id_number: '',
           articel_no: '',
+          customer_description: '',
           check_interval: 12,
           last_protocol: '',
           items: '',
@@ -329,6 +330,7 @@ export class ProductEditPage implements OnInit {
       active: 1,
       id_number: '',
       articel_no: '',
+      customer_description: '',
       check_interval: 0,
       last_protocol: '',
       items: '',
@@ -345,6 +347,7 @@ export class ProductEditPage implements OnInit {
     if (this.activProduct['title']) { obj.title = JSON.stringify(this.activProduct['title']); }
     if (this.activProduct['id_number']) { obj.id_number = this.activProduct['id_number']; }
     if (this.activProduct['articel_no']) { obj.articel_no = this.activProduct['articel_no']; }
+    if (this.activProduct['customer_description']) { obj.customer_description = this.activProduct['customer_description']; }
     if (this.activProduct['check_interval']) { obj.check_interval = this.activProduct['check_interval']; }
     if (this.activProduct['last_protocol']) { obj.last_protocol = this.activProduct['last_protocol']; }
     if (this.activProduct['items']) { obj.items = JSON.stringify(this.activProduct['items']); }

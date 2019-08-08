@@ -29,7 +29,6 @@ import { DialogproduktbildmodalPageModule } from'./components/dialogproduktbildm
 import { MyDataEditPageModule } from './my-data/my-data-edit/my-data-edit.module';
 import { OrderSendNewPageModule } from './order-form-new/order-send-new/order-send-new.module';
 import { ProductNewPageModule } from'./product-new/product-new.module';
-import { SignupPageModule } from './signup/signup.module';
 import { AppointmentEditComponentModule } from './components/appointment-edit/appointment-edit.module';
 import { ContactPersonPageModule } from'./customer-details/contact-person/contact-person.module';
 import { ContactPersonAddressPageModule } from'./customer-details/contact-person-address/contact-person-address.module';
@@ -122,7 +121,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     MyDataEditPageModule,
     OrderSendNewPageModule,
     ProductNewPageModule,
-    SignupPageModule,
     AppointmentEditComponentModule,
     ContactPersonPageModule,
     ContactPersonAddressPageModule,

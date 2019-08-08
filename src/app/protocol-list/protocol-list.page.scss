@@ -24,15 +24,21 @@
     }
 
     
-    @media screen and (min-width: 1024px) {
+    @media screen and (min-width: 990px) {
         #menuMin {
             display: none;
         }
+        #menuMax {
+            display: inline;
+        }
     }
-
-    @media screen and (max-width: 1024px) {
+    
+    @media screen and (max-width: 991px) {
         #menuMax {
             display: none;
+        }
+        #menuMin {
+            display: inline;
         }
     }
 
@@ -45,7 +51,7 @@
 
     .ek-content {
         @media only screen and (max-width: 767px) {
-            padding-top: 47px;
+            padding-top: 44px;
         }
     }
 

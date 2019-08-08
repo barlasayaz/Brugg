@@ -133,7 +133,7 @@
                           <ion-col size="12"  size-md="5"> 
                             <ion-item lines="none">
                               <ion-label position="floating">{{translate.instant('Datum')}}</ion-label>
-                              <ion-datetime [(ngModel)]="activProtocol.protocol_date" 
+                              <ion-datetime mode="ios" [(ngModel)]="activProtocol.protocol_date" 
                                             displayFormat="DD.MM.YYYY"
                                             max = {{maxDate}}
                                             doneText="{{translate.instant('okay')}}"
@@ -159,7 +159,7 @@
                           <ion-col size="12"  size-md="5">
                             <ion-item lines="none">
                               <ion-label position="stacked">{{translate.instant('nächster Prüftermin')}}</ion-label>
-                              <ion-datetime [(ngModel)]="activProtocol.protocol_date_next" 
+                              <ion-datetime mode="ios" [(ngModel)]="activProtocol.protocol_date_next" 
                                             displayFormat="DD.MM.YYYY"
                                             max = {{maxDate}}
                                             doneText="{{translate.instant('okay')}}"
@@ -237,7 +237,7 @@
                           <ion-col size="12" size-md="10" *ngIf="item.type == 4">
                             <ion-item lines="none">
                               <ion-label position="floating">{{item.title[lang]}}</ion-label>
-                              <ion-datetime required="{{item.mandatory}}"
+                              <ion-datetime  mode="ios"  required="{{item.mandatory}}"
                                             type="time" 
                                             [(ngModel)]="item.value"
                                             name="time" 
@@ -250,7 +250,7 @@
                           <ion-col size="12" size-md="10" *ngIf="item.type == 5">
                             <ion-item lines="none">
                               <ion-label position="floating">{{item.title[lang]}}</ion-label>
-                              <ion-datetime required="{{item.mandatory}}"
+                              <ion-datetime  mode="ios"  required="{{item.mandatory}}"
                                             [(ngModel)]="item.value"
                                             displayFormat="DD.MM.YYYY" 
                                             max = {{maxDate}}

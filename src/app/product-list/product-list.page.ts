@@ -38,6 +38,7 @@ export class ProductListPage implements OnInit {
                                   nfc_tag_id: '',
                                   id_number: '',
                                   articel_no: '',
+                                  customer_description: '',
                                   check_interval: '',
                                   search_all: '' };
     public filterCols: string[];
@@ -272,6 +273,7 @@ export class ProductListPage implements OnInit {
                     // { field: 'id', header: 'DB-ID' },
                     { field: 'id_number', header: '#' },
                     { field: 'articel_no', header: this.translate.instant('Artikel-Nr.') },
+                    { field: 'customer_description', header: this.translate.instant('Kundenbezeichnung') },
                     { field: 'last_protocol_date', header: '<<' + this.translate.instant('Termin') },
                     { field: 'last_protocol_next', header: this.translate.instant('Termin') + '>>' },
                     { field: 'check_interval', header: this.translate.instant('Intervall Prüfen') }

@@ -3,13 +3,9 @@ import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/timeout';
 import { UserdataService } from './userdata';
 
-// const apiURL = "http://localhost/pvs/api/";
-const apiURL = 'http://testpvs.schaefer4u.de/api/';
-// const apiURL =  "http://localhost/bruggpvs/api/";
 
 // const pvs4_apiURL = 'http://localhost/BruggPVS4/pvs4-api/';
-// const pvs4_apiURL = "http://schaefer4u.de/pvs4/pvs4-api/";
- const pvs4_apiURL = "https://www.pvs2go.com/pvs4-api/";
+const pvs4_apiURL = "https://www.pvs2go.com/pvs4-api/";
 
 const brugg_id_api = 'https://www.bruggdigital.com/';
 const pvs4_client_id = 'brugg-pvs';
@@ -27,7 +23,7 @@ export class ApiService {
   public appointmentEndTime: string = '16:59';
   public appointmentMinTime: string = '07:00';
   public appointmentMaxTime: string = '17:59';
-  public version: any = '4.4.17';
+  public version: any = '4.4.18';
   
   constructor(public http: HttpClient, public userdata: UserdataService) {
     console.log('Start ApiProvider Provider');
@@ -127,12 +123,16 @@ export class ApiService {
             orig_data.token  = data.access_token;
             this.http.post(orig_url, orig_data, { headers: orig_headers }).subscribe((done: any) => {
               // return the result
-              done = JSON.parse(done);
-              console.log(url, done);
-              res(done);
+              try{
+                let done_json = JSON.parse(done);
+                console.log('bid_reset() ok: ',url, done_json);
+                res(done_json);
+              }catch{
+                console.error('bid_reset() JSON.parse error:', url, done);
+              }
             },
             err => {
-                console.log('bid_reset() post error:', url, err);
+                console.error('bid_reset() post error:', url, err);
                 rej(err);
             });
           }, // success path
@@ -1059,23 +1059,8 @@ export class ApiService {
     });
   }
 
-  /**********************************PVS 3*****************************************/
-  /********************************************************************************/
-  postData(parameters: any, func: String) {
-    return new Promise((resolve, reject) => {
-      const headers = new HttpHeaders().set('Content-Type', 'application/json; charset=utf-8');
-      const tick = Date.now().toString(16).toUpperCase();
-      const url = apiURL + func + '?tick=' + tick;
-      parameters.token = this.userdata.token;
 
-      this.http.post(url, JSON.stringify(parameters), { headers: headers }).subscribe(res => {
-        // console.log("postData", res);
-        resolve(res);
-      }, (err) => {
-        reject(err);
-      });
-    });
-  }
+  /********************************************************************************/
 
   mysql2view(timestamp, kurz) {
     // function parses mysql datetime string and returns javascript Date object

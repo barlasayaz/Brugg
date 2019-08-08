@@ -60,7 +60,8 @@
         <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12">
           <ion-item lines="none">
               <ion-label position="floating">{{translate.instant('Datum')}}</ion-label>
-              <ion-datetime [(ngModel)]="activNote.notes_date"
+              <ion-datetime mode="ios" 
+                            [(ngModel)]="activNote.notes_date"
                             displayFormat="DD.MM.YYYY"
                             max = {{maxDate}}
                             doneText="{{translate.instant('okay')}}"
@@ -71,7 +72,8 @@
         <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12">
           <ion-item lines="none">
               <ion-label position="floating">{{translate.instant('Uhrzeit')}}</ion-label>
-              <ion-datetime [(ngModel)]="activNote.notes_date"
+              <ion-datetime mode="ios" 
+                            [(ngModel)]="activNote.notes_date"
                             displayFormat="HH:mm"
                             max = {{maxDate}}
                             doneText="{{translate.instant('okay')}}"

@@ -105,7 +105,7 @@
         <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12">
           <ion-item lines="none">
             <ion-label position="floating">{{translate.instant('Datum')}}</ion-label>
-            <ion-datetime required
+            <ion-datetime  mode="ios"  required
                           (ionChange)="inputErrorMsg()"
                           name="Date1"
                           [(ngModel)]="activAppointment.appointment_date"
@@ -120,7 +120,7 @@
           <!-- Start Time -->
           <ion-item lines="none">
             <ion-label position="floating">{{translate.instant('Startzeit')}}</ion-label>
-            <ion-datetime required
+            <ion-datetime  mode="ios"  required
                           (ionChange)="inputErrorMsg()"
                           name="StartTime1"
                           type="time"
@@ -138,7 +138,7 @@
           <!-- End Time -->
           <ion-item lines="none">
             <ion-label position="floating">{{translate.instant('Endzeit')}}</ion-label>
-            <ion-datetime required
+            <ion-datetime  mode="ios"  required
                           (ionChange)="inputErrorMsg()"
                           name="EndTime1"
                           type="time"
@@ -159,7 +159,7 @@
         <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12" *ngIf="addDate>=2">
           <ion-item lines="none">
             <ion-label position="floating">{{translate.instant('Datum')}}</ion-label>
-            <ion-datetime required
+            <ion-datetime  mode="ios"  required
                           (ionChange)="inputErrorMsg()"
                           [(ngModel)]="activAppointment.appointment_date2"
                           displayFormat="DD.MM.YYYY"
@@ -173,7 +173,7 @@
           <!-- Start Time -->
           <ion-item lines="none">
             <ion-label position="floating">{{translate.instant('Startzeit')}}</ion-label>
-            <ion-datetime required
+            <ion-datetime  mode="ios"  required
                           (ionChange)="inputErrorMsg()"
                           type="time"
                           id="start_time"
@@ -189,7 +189,7 @@
           <!-- End Time -->
           <ion-item lines="none">
             <ion-label position="floating">{{translate.instant('Endzeit')}}</ion-label>
-            <ion-datetime required
+            <ion-datetime  mode="ios"  required
                           (ionChange)="inputErrorMsg()"
                           type="time"
                           id="end_time"
@@ -208,7 +208,7 @@
         <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12" *ngIf="addDate>=3">
           <ion-item lines="none">
             <ion-label position="floating">{{translate.instant('Datum')}}</ion-label>
-            <ion-datetime required
+            <ion-datetime  mode="ios"  required
                           (ionChange)="inputErrorMsg()"
                           [(ngModel)]="activAppointment.appointment_date3"
                           displayFormat="DD.MM.YYYY"
@@ -222,7 +222,7 @@
           <!-- Start Time -->
           <ion-item lines="none">
             <ion-label position="floating">{{translate.instant('Startzeit')}}</ion-label>
-            <ion-datetime required
+            <ion-datetime  mode="ios"  required
                           (ionChange)="inputErrorMsg()"
                           type="time"
                           id="start_time"
@@ -238,7 +238,7 @@
           <!-- End Time -->
           <ion-item lines="none">
             <ion-label position="floating">{{translate.instant('Endzeit')}}</ion-label>
-            <ion-datetime required
+            <ion-datetime  mode="ios"  required
                           (ionChange)="inputErrorMsg()"
                           type="time"
                           id="end_time"
@@ -257,7 +257,7 @@
         <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12" *ngIf="addDate>=4">
           <ion-item lines="none">
             <ion-label position="floating">{{translate.instant('Datum')}}</ion-label>
-            <ion-datetime required
+            <ion-datetime  mode="ios"  required
                           (ionChange)="inputErrorMsg()"
                           [(ngModel)]="activAppointment.appointment_date4"
                           displayFormat="DD.MM.YYYY"
@@ -271,7 +271,7 @@
           <!-- Start Time -->
           <ion-item lines="none">
             <ion-label position="floating">{{translate.instant('Startzeit')}}</ion-label>
-            <ion-datetime required
+            <ion-datetime  mode="ios"  required
                           (ionChange)="inputErrorMsg()"
                           type="time"
                           id="start_time"
@@ -287,7 +287,7 @@
           <!-- End Time -->
           <ion-item lines="none">
             <ion-label position="floating">{{translate.instant('Endzeit')}}</ion-label>
-            <ion-datetime required
+            <ion-datetime  mode="ios"  required
                           (ionChange)="inputErrorMsg()"
                           type="time"
                           id="end_time"
@@ -306,7 +306,7 @@
         <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12" *ngIf="addDate>=5">
           <ion-item lines="none">
             <ion-label position="floating">{{translate.instant('Datum')}}</ion-label>
-            <ion-datetime required
+            <ion-datetime  mode="ios"  required
                           (ionChange)="inputErrorMsg()"
                           [(ngModel)]="activAppointment.appointment_date5"
                           displayFormat="DD.MM.YYYY"
@@ -320,7 +320,7 @@
           <!-- Start Time -->
           <ion-item lines="none">
             <ion-label position="floating">{{translate.instant('Startzeit')}}</ion-label>
-            <ion-datetime required
+            <ion-datetime  mode="ios"  required
                           (ionChange)="inputErrorMsg()"
                           type="time"
                           id="start_time"
@@ -336,7 +336,7 @@
           <!-- End Time -->
           <ion-item lines="none">
             <ion-label position="floating">{{translate.instant('Endzeit')}}</ion-label>
-            <ion-datetime required
+            <ion-datetime  mode="ios"  required
                           (ionChange)="inputErrorMsg()"
                           type="time"
                           id="end_time"
@@ -355,7 +355,7 @@
         <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12" *ngIf="addDate>=6">
           <ion-item lines="none">
             <ion-label position="floating">{{translate.instant('Datum')}}</ion-label>
-            <ion-datetime required
+            <ion-datetime  mode="ios"  required
                           (ionChange)="inputErrorMsg()"
                           [(ngModel)]="activAppointment.appointment_date6"
                           displayFormat="DD.MM.YYYY"
@@ -369,7 +369,7 @@
           <!-- Start Time -->
           <ion-item lines="none">
             <ion-label position="floating">{{translate.instant('Startzeit')}}</ion-label>
-            <ion-datetime required
+            <ion-datetime  mode="ios"  required
                           (ionChange)="inputErrorMsg()"
                           type="time"
                           id="start_time"
@@ -385,7 +385,7 @@
           <!-- End Time -->
           <ion-item lines="none">
             <ion-label position="floating">{{translate.instant('Endzeit')}}</ion-label>
-            <ion-datetime required
+            <ion-datetime  mode="ios"  required
                           (ionChange)="inputErrorMsg()"
                           type="time"
                           id="end_time"
@@ -404,7 +404,7 @@
         <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12" *ngIf="addDate>=7">
           <ion-item lines="none">
             <ion-label position="floating">{{translate.instant('Datum')}}</ion-label>
-            <ion-datetime required
+            <ion-datetime  mode="ios"  required
                           (ionChange)="inputErrorMsg()"
                           [(ngModel)]="activAppointment.appointment_date7"
                           displayFormat="DD.MM.YYYY"
@@ -418,7 +418,7 @@
           <!-- Start Time -->
           <ion-item lines="none">
             <ion-label position="floating">{{translate.instant('Startzeit')}}</ion-label>
-            <ion-datetime required
+            <ion-datetime  mode="ios"  required
                           (ionChange)="inputErrorMsg()"
                           type="time"
                           id="start_time"
@@ -433,7 +433,7 @@
           <!-- End Time -->
           <ion-item lines="none">
             <ion-label position="floating">{{translate.instant('Endzeit')}}</ion-label>
-            <ion-datetime required
+            <ion-datetime  mode="ios"  required
                           (ionChange)="inputErrorMsg()"
                           type="time"
                           id="end_time"
@@ -452,7 +452,7 @@
         <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12" *ngIf="addDate>=8">
           <ion-item lines="none">
             <ion-label position="floating">{{translate.instant('Datum')}}</ion-label>
-            <ion-datetime required
+            <ion-datetime  mode="ios"  required
                           (ionChange)="inputErrorMsg()"
                           [(ngModel)]="activAppointment.appointment_date8"
                           displayFormat="DD.MM.YYYY"
@@ -466,7 +466,7 @@
           <!-- Start Time -->
           <ion-item lines="none">
             <ion-label position="floating">{{translate.instant('Startzeit')}}</ion-label>
-            <ion-datetime required
+            <ion-datetime  mode="ios"  required
                           (ionChange)="inputErrorMsg()"
                           type="time"
                           id="start_time"
@@ -482,7 +482,7 @@
           <!-- End Time -->
           <ion-item lines="none">
             <ion-label position="floating">{{translate.instant('Endzeit')}}</ion-label>
-            <ion-datetime required
+            <ion-datetime  mode="ios"  required
                           (ionChange)="inputErrorMsg()"
                           type="time"
                           id="end_time"
@@ -501,7 +501,7 @@
         <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12" *ngIf="addDate>=9">
           <ion-item lines="none">
             <ion-label position="floating">{{translate.instant('Datum')}}</ion-label>
-            <ion-datetime required
+            <ion-datetime  mode="ios"  required
                           (ionChange)="inputErrorMsg()"
                           [(ngModel)]="activAppointment.appointment_date9"
                           displayFormat="DD.MM.YYYY"
@@ -515,7 +515,7 @@
           <!-- Start Time -->
           <ion-item lines="none">
             <ion-label position="floating">{{translate.instant('Startzeit')}}</ion-label>
-            <ion-datetime required
+            <ion-datetime  mode="ios"  required
                           (ionChange)="inputErrorMsg()"
                           type="time"
                           id="start_time"
@@ -531,7 +531,7 @@
           <!-- End Time -->
           <ion-item lines="none">
             <ion-label position="floating">{{translate.instant('Endzeit')}}</ion-label>
-            <ion-datetime required
+            <ion-datetime  mode="ios"  required
                           (ionChange)="inputErrorMsg()"
                           type="time"
                           id="end_time"

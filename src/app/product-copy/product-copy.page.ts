@@ -112,21 +112,22 @@ export class ProductCopyPage implements OnInit {
   productCopy() {
       this.apiService.pvs4_get_product(this.idProduct).then((resultProduct: any) => {
         let newObj = {
-            id:               0,
-            title:            resultProduct.obj.title,
-            customer:         this.idCustomer,
-            id_number:        '',
-            parent:           0,
-            active:           resultProduct.obj.active,
-            check_interval:   resultProduct.obj.check_interval,
-            last_protocol:    '',
-            articel_no:       resultProduct.obj.articel_no,
-            items:            resultProduct.obj.items,
-            images:           resultProduct.obj.images,
-            nfc_tag_id:       '',
-            qr_code:          '',
-            pvs3_id:          resultProduct.obj.pvs3_id,
-            author:           resultProduct.obj.author
+            id:                   0,
+            title:                resultProduct.obj.title,
+            customer:             this.idCustomer,
+            id_number:            '',
+            parent:               0,
+            active:               resultProduct.obj.active,
+            check_interval:       resultProduct.obj.check_interval,
+            last_protocol:        '',
+            articel_no:           resultProduct.obj.articel_no,
+            customer_description: resultProduct.obj.customer_description,
+            items:                resultProduct.obj.items,
+            images:               resultProduct.obj.images,
+            nfc_tag_id:           '',
+            qr_code:              '',
+            pvs3_id:              resultProduct.obj.pvs3_id,
+            author:               resultProduct.obj.author
           };
 
           console.log('obj :', newObj);
