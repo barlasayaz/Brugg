@@ -316,6 +316,11 @@ export class ProductDetailsPage implements OnInit {
       } else {
         productList.push({ 'title': this.translate.instant('Articel No'), 'value': ' ' });
       }
+      if (element.customer_description != undefined) {
+        productList.push({ 'title': this.translate.instant('Kundenbezeichnung'), 'value': element.customer_description });
+      } else {
+        productList.push({ 'title': this.translate.instant('Kundenbezeichnung'), 'value': ' ' });
+      }
       if (element.author != undefined) {
          productList.push({ "title": this.translate.instant('Autor'), "value": element.author });
       } else {

@@ -39,7 +39,6 @@ switch ($_SERVER['REQUEST_METHOD']) {
         die;
 }
 
-
 function processing() {
     global $brugg_id_api,$database_location,$database_username,$database_password,$database_name;
     $con=mysqli_connect($database_location,$database_username,$database_password,$database_name);
@@ -116,19 +115,20 @@ function processing() {
             die;
         }
     }else if(strcmp($action , 'i') == 0){
-        $active    = intval( trim( mysqli_escape_string($con,$_POST['active'] ) ) );
-        $customer       = intval( $_POST['customer'] );
-        $parent         = intval( $_POST['parent'] );
-        $check_interval = intval( $_POST['check_interval'] );
-        $articel_no     = trim( mysqli_escape_string($con,$_POST['articel_no']) );
-        $title      = trim( mysqli_escape_string($con,$_POST['title']) );
-        $id_number  = trim( mysqli_escape_string($con,$_POST['id_number']) );    
-        $items      =  trim( mysqli_escape_string($con,$_POST['items']) );
-        $images     = trim( mysqli_escape_string($con,$_POST['images']) );
-        $nfc_tag_id = trim( mysqli_escape_string($con,$_POST['nfc_tag_id']) );  
+        $active                 = intval( trim( mysqli_escape_string($con,$_POST['active'] ) ) );
+        $customer               = intval( $_POST['customer'] );
+        $parent                 = intval( $_POST['parent'] );
+        $check_interval         = intval( $_POST['check_interval'] );
+        $articel_no             = trim( mysqli_escape_string($con,$_POST['articel_no']) );
+        $customer_description   = trim( mysqli_escape_string($con,$_POST['customer_description']) );
+        $title                  = trim( mysqli_escape_string($con,$_POST['title']) );
+        $id_number              = trim( mysqli_escape_string($con,$_POST['id_number']) );    
+        $items                  = trim( mysqli_escape_string($con,$_POST['items']) );
+        $images                 = trim( mysqli_escape_string($con,$_POST['images']) );
+        $nfc_tag_id             = trim( mysqli_escape_string($con,$_POST['nfc_tag_id']) );  
 
-        $sql="  INSERT INTO products (active,customer,parent,title,id_number,items,check_interval,articel_no,images,nfc_tag_id)
-                VALUES($active,$customer,$parent,'$title','$id_number','$items',$check_interval,'$articel_no','$images','$nfc_tag_id')";
+        $sql="  INSERT INTO products (active,customer,parent,title,id_number,items,check_interval,articel_no,customer_description,images,nfc_tag_id)
+                VALUES($active,$customer,$parent,'$title','$id_number','$items',$check_interval,'$articel_no','$customer_description','$images','$nfc_tag_id')";
 
         $ret_sql= mysqli_query( $con, $sql );
         if($ret_sql) {
@@ -150,22 +150,31 @@ function processing() {
         }
 
     }else if(strcmp($action , 'u') == 0){
-        $id        = intval( trim( mysqli_escape_string($con,$_POST['id']) ) );
-        $active    = intval( trim( mysqli_escape_string($_POST['active'] ) ) );
-        $customer       = intval( $_POST['customer'] );
-        $parent         = intval( $_POST['parent'] );
-        $check_interval = intval( $_POST['check_interval'] );
-        $articel_no     = trim( mysqli_escape_string($con,$_POST['articel_no']) );
-        $title      = trim( mysqli_escape_string($con,$_POST['title']) );
-        $id_number  = trim( mysqli_escape_string($con,$_POST['id_number']) );    
-        $items      =  trim( mysqli_escape_string($con,$_POST['items']) );
-        $images     = trim( mysqli_escape_string($con,$_POST['images']) );
-        $nfc_tag_id = trim( mysqli_escape_string($con,$_POST['nfc_tag_id']) ); 
+        $id                     = intval( trim( mysqli_escape_string($con,$_POST['id']) ) );
+        $active                 = intval( trim( mysqli_escape_string($_POST['active'] ) ) );
+        $customer               = intval( $_POST['customer'] );
+        $parent                 = intval( $_POST['parent'] );
+        $check_interval         = intval( $_POST['check_interval'] );
+        $articel_no             = trim( mysqli_escape_string($con,$_POST['articel_no']) );
+        $customer_description   = trim( mysqli_escape_string($con,$_POST['customer_description']) );
+        $title                  = trim( mysqli_escape_string($con,$_POST['title']) );
+        $id_number              = trim( mysqli_escape_string($con,$_POST['id_number']) );    
+        $items                  = trim( mysqli_escape_string($con,$_POST['items']) );
+        $images                 = trim( mysqli_escape_string($con,$_POST['images']) );
+        $nfc_tag_id             = trim( mysqli_escape_string($con,$_POST['nfc_tag_id']) ); 
         $sql="  UPDATE products 
-                SET active =$active ,customer = $customer, parent =$parent, title='$title', 
-                id_number='$id_number', check_interval=$check_interval, articel_no='$articel_no', 
-                items='$items', images='$images',nfc_tag_id='$nfc_tag_id'
-                WHERE id =$id";
+                   SET active = $active,
+                       customer = $customer,
+                       parent = $parent,
+                       title = '$title', 
+                       id_number = '$id_number',
+                       check_interval = $check_interval,
+                       articel_no = '$articel_no', 
+                       customer_description = '$customer_description',
+                       items = '$items',
+                       images = '$images',
+                       nfc_tag_id = '$nfc_tag_id'
+                 WHERE id =$id";
         $ret_sql= mysqli_query( $con, $sql );
         if($ret_sql) {
             http_response_code(200);

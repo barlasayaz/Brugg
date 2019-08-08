@@ -155,7 +155,15 @@
                                 <ion-select-option [value] = "36"> 36 {{translate.instant('Monate')}}</ion-select-option>
                               </ion-select> 
                             </ion-item>
-                          </ion-col>       
+                          </ion-col>
+                          <ion-col size="12">
+                            <ion-item lines="none">
+                                <ion-label position="floating">{{'Kundenbezeichnung' | translate}}</ion-label>
+                                <ion-input type="text"
+                                           [(ngModel)]="activProduct.customer_description">
+                                </ion-input>
+                            </ion-item>
+                          </ion-col>    
                         </ion-row>
                         <!-- Row 3 -->
                         <ion-row *ngFor="let item of activProduct.items">

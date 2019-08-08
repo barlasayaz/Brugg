@@ -38,6 +38,7 @@ export class ProductListPage implements OnInit {
                                   nfc_tag_id: '',
                                   id_number: '',
                                   articel_no: '',
+                                  customer_description: '',
                                   check_interval: '',
                                   search_all: '' };
     public filterCols: string[];
