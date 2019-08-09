@@ -89,7 +89,7 @@ export class CustomerEditComponent implements OnInit {
     console.log('CustomerEditComponent: ', this.idCustomer);
 
     if (this.redirect == 3) {
-      this.customerDisabled = true;
+      //this.customerDisabled = true;
     }
   }
 

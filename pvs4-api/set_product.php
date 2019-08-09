@@ -85,8 +85,9 @@ function processing() {
     $parent                 = intval( $_POST['parent'] );
     $check_interval         = intval( $_POST['check_interval'] );
     $last_protocol          = trim( mysqli_escape_string($con,$_POST['last_protocol']) );
-    $articel_no             = trim( mysqli_escape_string($con,$_POST['articel_no']) );
-    $customer_description   = trim( mysqli_escape_string($con,$_POST['customer_description']) );
+    $articel_no             = trim( mysqli_escape_string($con,$_POST['articel_no']) );  
+    $customer_description   = "";
+    if(isset($_POST['customer_description'])) $customer_description   = trim( mysqli_escape_string($con,$_POST['customer_description']) );
     $title                  = trim( mysqli_escape_string($con,$_POST['title']) );
     $id_number              = trim( mysqli_escape_string($con,$_POST['id_number']) );    
     $items                  = trim( mysqli_escape_string($con,$_POST['items']) );
