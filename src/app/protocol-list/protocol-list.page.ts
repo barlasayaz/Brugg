@@ -38,6 +38,7 @@ export class ProtocolListPage implements OnInit {
     public activCustomer: any = {};
     public customer_number: any;
     modelChanged: Subject<any> = new Subject<any>();
+    public selectedRow: number;
 
     public menuItems: MenuItem[] = [
         {
@@ -119,8 +120,7 @@ export class ProtocolListPage implements OnInit {
                     }
                 }
             ]
-        },
-        {label: ""}
+        }
     ];
     public popupMenu: MenuItem[] = [{
         label: this.translate.instant('Menü'),
@@ -161,6 +161,7 @@ export class ProtocolListPage implements OnInit {
         this.menuItems[0].disabled = true;
         this.menuItems[1].disabled = true;
         this.selectedNode = [];
+        this.selectedRow = 0;
         this.events.publish('prozCustomer', 0);
         this.cols = [
             { field: 'protocol_number', header: this.translate.instant('Protokoll') },
@@ -381,7 +382,7 @@ export class ProtocolListPage implements OnInit {
 
     nodeSelect(event, selectedNode) {
         this.selectedNode.data = event.node.data;
-        this.menuItems[6].label = this.translate.instant('selektiert') +": "+ selectedNode.length;
+        this.selectedRow = selectedNode.length;
         if (selectedNode.length == 0) {
             this.menuItems[0].disabled = true;
             this.menuItems[1].disabled = true;

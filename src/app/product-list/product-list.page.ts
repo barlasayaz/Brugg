@@ -51,7 +51,8 @@ export class ProductListPage implements OnInit {
     public navigationSubscription: any;
     public childCount: number;
     modelChanged: Subject<any> = new Subject<any>();
-    
+    public selectedRow: number;
+
     public menuItems: MenuItem[] = [{
         label: this.translate.instant('Ansicht'),
         icon: 'pi pi-fw pi-eye',
@@ -227,9 +228,6 @@ export class ProductListPage implements OnInit {
                 }
             }
         ]
-    },
-    {
-        label: ""
     }
 ];
 
@@ -317,6 +315,7 @@ export class ProductListPage implements OnInit {
         this.selectMulti = 1;
         this.childCount = 0;
         this.selectedNode = [];
+        this.selectedRow = 0;
         this.menuItems[0].disabled = true;
         this.menuItems[1].disabled = true;
         this.menuItems[2].disabled = true;
@@ -582,7 +581,7 @@ export class ProductListPage implements OnInit {
     nodeSelect(event, selectedNode) {
         console.log('nodeSelect :', event, selectedNode, selectedNode.length, this.selectMulti);
         let selectedNodeLength = selectedNode.length;
-        this.menuItems[10].label = this.translate.instant('selektiert') +": "+ selectedNode.length;
+        this.selectedRow = selectedNodeLength;
 
         if (!this.selectMulti) {
             selectedNodeLength = 1;
@@ -663,7 +662,8 @@ export class ProductListPage implements OnInit {
 
         console.log('nodeSelect :', event, selectedNode, selectedNode.length, this.selectMulti);
         let selectedNodeLength = selectedNode.length;
-        this.menuItems[10].label = this.translate.instant('selektiert') +": "+ selectedNode.length;
+        this.selectedRow = selectedNodeLength;
+        this.menuItems[10].label = this.translate.instant('selektiert') + ': ' + selectedNode.length;
         if (!this.selectMulti) {
             selectedNodeLength = 1;
             this.selectMulti = 1;

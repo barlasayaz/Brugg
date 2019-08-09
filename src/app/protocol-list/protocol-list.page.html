@@ -2,7 +2,7 @@
 
 <div class="ek-content" (window:resize)="onResize($event)">
     <p-menubar id="menuMin" class="wideMenu">
-        <div style="width: 100%">
+        <div>
             <button type="button"
                     pButton icon="fa fa-fw fa-list"
                     label="Menu"
@@ -10,6 +10,9 @@
                     (click)="menu.toggle($event)">
                 <span class="ui-submenu-icon pi pi-fw pi-caret-down slide-caret"></span>
             </button>
+        </div>
+        <div style="padding-top: 5px; padding-right: 10px; margin-left: auto;">
+            {{'selektiert' |translate }}: {{selectedRow}}
         </div>
         <div class="ui-inputgroup search-search">
             <input type="text"
@@ -28,6 +31,9 @@
     <p-menubar [model]="menuItems"
                [autoDisplay]="false"
                id="menuMax">
+        <div style="padding-top: 5px; padding-right: 10px;">
+            {{'selektiert' |translate }}: {{selectedRow}}
+        </div>
         <div class="ui-inputgroup search-search">
             <input type="text"
                    pInputText

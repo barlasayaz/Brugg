@@ -2,7 +2,7 @@
 
 <div class="ek-content" (window:resize)="onResize($event)">
     <p-menubar id="menuMin" class="wideMenu">
-        <div style="width: 100%">
+        <div>
             <button type="button" 
                     pButton
                     icon="fa fa-fw fa-list"
@@ -12,9 +12,13 @@
                 <span class="ui-submenu-icon pi pi-fw pi-caret-down slide-caret"></span>
             </button>            
         </div>
-        <div class="ui-inputgroup search-search">
+        <div style="padding-top: 5px; padding-right: 10px; margin-left: auto;">
+            {{'selektiert' |translate }}: {{selectedRow}}
+        </div>
+        <div class="ui-inputgroup search-search">            
             <input type="text" 
-                   pInputText placeholder="{{'Suche' |translate }}"
+                   pInputText
+                   placeholder="{{'Suche' |translate }}"
                    [(ngModel)]="columnFilterValues['search_all']" 
                    (input)="search_all()">
         </div>
@@ -28,7 +32,10 @@
     <p-menubar [model]="menuItems"
                [autoDisplay]="false"
                id="menuMax">
-        <div class="ui-inputgroup search-search">
+        <div style="padding-top: 5px; padding-right: 10px;">
+            {{'selektiert' |translate }}: {{selectedRow}}
+        </div>
+        <div class="ui-inputgroup search-search">           
             <input type="text"
                    pInputText
                    placeholder="{{'Suche' |translate }}"
