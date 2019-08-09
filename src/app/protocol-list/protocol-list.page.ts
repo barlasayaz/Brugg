@@ -381,7 +381,7 @@ export class ProtocolListPage implements OnInit {
 
     nodeSelect(event, selectedNode) {
         this.selectedNode.data = event.node.data;
-        this.menuItems[6].label = this.translate.instant('Ausgewählte Zeilen') +": "+ selectedNode.length;
+        this.menuItems[6].label = this.translate.instant('selektiert') +": "+ selectedNode.length;
         if (selectedNode.length == 0) {
             this.menuItems[0].disabled = true;
             this.menuItems[1].disabled = true;
