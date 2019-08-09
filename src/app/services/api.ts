@@ -3,13 +3,9 @@ import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/timeout';
 import { UserdataService } from './userdata';
 
-// const apiURL = "http://localhost/pvs/api/";
-const apiURL = 'http://testpvs.schaefer4u.de/api/';
-// const apiURL =  "http://localhost/bruggpvs/api/";
 
- const pvs4_apiURL = 'http://localhost/BruggPVS4/pvs4-api/';
-// const pvs4_apiURL = "http://schaefer4u.de/pvs4/pvs4-api/";
-// const pvs4_apiURL = "https://www.pvs2go.com/pvs4-api/";
+// const pvs4_apiURL = 'http://localhost/BruggPVS4/pvs4-api/';
+const pvs4_apiURL = "https://www.pvs2go.com/pvs4-api/";
 
 const brugg_id_api = 'https://www.bruggdigital.com/';
 const pvs4_client_id = 'brugg-pvs';
@@ -1063,23 +1059,8 @@ export class ApiService {
     });
   }
 
-  /**********************************PVS 3*****************************************/
-  /********************************************************************************/
-  postData(parameters: any, func: String) {
-    return new Promise((resolve, reject) => {
-      const headers = new HttpHeaders().set('Content-Type', 'application/json; charset=utf-8');
-      const tick = Date.now().toString(16).toUpperCase();
-      const url = apiURL + func + '?tick=' + tick;
-      parameters.token = this.userdata.token;
 
-      this.http.post(url, JSON.stringify(parameters), { headers: headers }).subscribe(res => {
-        // console.log("postData", res);
-        resolve(res);
-      }, (err) => {
-        reject(err);
-      });
-    });
-  }
+  /********************************************************************************/
 
   mysql2view(timestamp, kurz) {
     // function parses mysql datetime string and returns javascript Date object

@@ -738,6 +738,7 @@
   "Cancel filters": "Cancel filters",
   "Spalten Auswählen": "Choose Columns",
   "spalten ausgewählt": "columns selected",
+  "Ausgewählte Zeilen": "Selected Rows", 
   "Bewegung": "Move",
   "Wurzelverzeichnis": "Root directory",
   "Optionen": "Options",
@@ -841,5 +842,6 @@
   "Frau": "Mrs",
   "Nicht original. Sollte bearbeitet werden": "Not original. Should be edited",
   "Original": "Original",
-  "Kopieren": "Copy"
+  "Kopieren": "Copy",
+  "selektiert": "selected"
 }

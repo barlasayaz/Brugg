@@ -68,7 +68,6 @@ const routes: Routes = [
     loadChildren: './protocol-template/protocol-template.module#ProtocolTemplatePageModule'
   },
   { path: 'rebox-new', loadChildren: './rebox-new/rebox-new.module#ReboxNewPageModule' },
-  { path: 'signup', loadChildren: './signup/signup.module#SignupPageModule' },
   { path: 'product-copy', loadChildren: './product-copy/product-copy.module#ProductCopyPageModule' },
   // ,{ path: 'appointment-edit', loadChildren: './components/appointment-edit/appointment-edit.module#AppointmentEditComponentModule' },
   // { path: 'customer-edit', loadChildren: './components/customer-edit/customer-edit.module#CustomerEditComponentModule' },

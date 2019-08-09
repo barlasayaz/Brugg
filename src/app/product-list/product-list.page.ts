@@ -227,7 +227,11 @@ export class ProductListPage implements OnInit {
                 }
             }
         ]
-    }];
+    },
+    {
+        label: ""
+    }
+];
 
     public popupMenu: MenuItem[] = [{
         label: this.translate.instant('Menü'),
@@ -261,7 +265,7 @@ export class ProductListPage implements OnInit {
                     this.generate_productList();
                     localStorage.setItem('filter_values_product', JSON.stringify(this.columnFilterValues));
             });
-    }
+        }
 
     ngOnInit() {
         this.route.queryParams.subscribe(params => {
@@ -578,6 +582,7 @@ export class ProductListPage implements OnInit {
     nodeSelect(event, selectedNode) {
         console.log('nodeSelect :', event, selectedNode, selectedNode.length, this.selectMulti);
         let selectedNodeLength = selectedNode.length;
+        this.menuItems[10].label = this.translate.instant('selektiert') +": "+ selectedNode.length;
 
         if (!this.selectMulti) {
             selectedNodeLength = 1;
@@ -658,7 +663,7 @@ export class ProductListPage implements OnInit {
 
         console.log('nodeSelect :', event, selectedNode, selectedNode.length, this.selectMulti);
         let selectedNodeLength = selectedNode.length;
-
+        this.menuItems[10].label = this.translate.instant('selektiert') +": "+ selectedNode.length;
         if (!this.selectMulti) {
             selectedNodeLength = 1;
             this.selectMulti = 1;

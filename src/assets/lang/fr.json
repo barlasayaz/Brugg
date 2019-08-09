@@ -738,6 +738,7 @@
   "Cancel filters": "Annuler les filtres",
   "Spalten Auswählen": "Choisir des Colonnes",
   "spalten ausgewählt": "colonnes sélectionnées",
+  "Ausgewählte Zeilen": "Lignes Sélectionnées", 
   "Bewegung": "Bouge toi",
   "Wurzelverzeichnis": "Répertoire racine",
   "Optionen": "Options",
@@ -846,5 +847,7 @@
   "Frau": "Mme",
   "Nicht original. Sollte bearbeitet werden": "Pas original. Devrait être édité",
   "Original": "Original",
-  "Kopieren": "Copie"
+  "Kopieren": "Copie",
+  "selektiert": "choisie"
+  
 }
