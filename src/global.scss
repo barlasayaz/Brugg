@@ -18180,7 +18180,7 @@ tbody.ui-table-tbody {
   }
   .calendar .fc-toolbar {
     background: #009de0;
-    padding: 10px;
+    padding: 5px;
     border-radius: 0 0 3px 3px;
     display: -webkit-box;
     display: -moz-box;
@@ -18193,6 +18193,8 @@ tbody.ui-table-tbody {
     -ms-flex-align: center;
     -webkit-align-items: center;
     align-items: center;
+    font-size: small;
+    margin-bottom: 0.3em !important;
   }
   @media only screen and (max-width: 767px) {
     .calendar .fc-toolbar {
@@ -18203,7 +18205,7 @@ tbody.ui-table-tbody {
     margin-right: 20px;
   }
   .calendar .fc-toolbar .fc-right {
-    margin-right: 40px;
+    margin-right: 20px;
   }
   .calendar .fc-toolbar .fc-center {
     display: -webkit-box;
@@ -18223,21 +18225,46 @@ tbody.ui-table-tbody {
   }
   .calendar .fc-toolbar .fc-center h2 {
     color: #fff;
-    font-size: 22px;
+    font-size: 18px;
   }
-  @media only screen and (max-width: 767px) {
-    .calendar .fc-toolbar .fc-center h2 {
-      font-size: 18px;
-    }
-  }
-  @media only screen and (max-width: 460px) {
+  @media only screen and (max-width: 768px) {
     .calendar .fc-toolbar .fc-center h2 {
       font-size: 14px;
     }
   }
-  .calendar .fc-toolbar .fc-button-group {
-    margin-right: 10px;
+  @media only screen and (max-width: 503px) {
+    .calendar .fc-toolbar .fc-center h2 {
+      font-size: 13px;
+    }
   }
+  @media only screen and (max-width: 425px) {
+    .calendar .fc-toolbar .fc-center h2 {
+      font-size: 13px;
+    }
+  }
+  @media only screen and (max-width: 403px) {
+    .calendar .fc-toolbar .fc-center h2 {
+      font-size: 12px;
+    }
+  }
+  @media only screen and (max-width: 375px) {
+    .calendar .fc-toolbar .fc-center h2 {
+      font-size: 12px;
+    }
+  }
+  @media only screen and (max-width: 367px) {
+    .calendar .fc-toolbar .fc-center h2 {
+      font-size: 9px;
+    }
+  }
+  @media only screen and (max-width: 320px) {
+    .calendar .fc-toolbar .fc-center h2 {
+      font-size: 9px;
+    }
+  }
+/*   .calendar .fc-toolbar .fc-button-group {
+    margin-right: 10px;
+  } */
   .calendar .fc-toolbar button {
     border: none;
     background: #fff;
@@ -18249,10 +18276,55 @@ tbody.ui-table-tbody {
     -webkit-box-shadow: none;
     box-shadow: none;
     margin: 0px 10px 0px 0px;
+    font-size: 14px;
   }
-  @media only screen and (max-width: 767px) {
+  @media only screen and (max-width: 768px) {
     .calendar .fc-toolbar button {
       margin: 0px 5px 0px 0px;
+      padding: 0px 9px;
+      font-size: 12px;
+    }
+  }
+  @media only screen and (max-width: 503px) {
+    .calendar .fc-toolbar button {
+      margin: 0px 5px 0px 0px;
+      padding: 0px 4px;
+      font-size: 11px;
+    }
+  }
+  @media only screen and (max-width: 425px) {
+    .calendar .fc-toolbar button {
+      margin: 0px 5px 0px 0px;
+      padding: 0px 4px;
+      font-size: 11px;
+    }
+  }
+  @media only screen and (max-width: 403px) {
+    .calendar .fc-toolbar button {
+      margin: 0px 5px 0px 0px;
+      padding: 0px 3px;
+      font-size: 10px;
+    }
+  }
+  @media only screen and (max-width: 375px) {
+    .calendar .fc-toolbar button {
+      margin: 0px 5px 0px 0px;
+      padding: 0px 3px;
+      font-size: 10px;
+    }
+  }
+  @media only screen and (max-width: 367px) {
+    .calendar .fc-toolbar button {
+      margin: 0px 5px 0px 0px;
+      padding: 0px 3px;
+      font-size: 8px;
+    }
+  }
+  @media only screen and (max-width: 320px) {
+    .calendar .fc-toolbar button {
+      margin: 0px 5px 0px 0px;
+      padding: 0px 3px;
+      font-size: 8px;
     }
   }
   .calendar .fc-toolbar button:last-child {
