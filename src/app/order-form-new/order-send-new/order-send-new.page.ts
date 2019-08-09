@@ -3,6 +3,7 @@ import { NavController, NavParams, ModalController, AlertController,LoadingContr
 import { TranslateService } from '@ngx-translate/core';
 import { UserdataService } from '../../services/userdata';
 import { ApiService } from '../../services/api';
+
 /**
  * Generated class for the OrderSendNewPage page.
  *
@@ -16,13 +17,14 @@ import { ApiService } from '../../services/api';
   styleUrls: ['./order-send-new.page.scss'],
 })
 export class OrderSendNewPage {
+  public inputError: boolean = false;
   public Ziel_DropDown: any = '0';
   public Empfaenger: string = '';
   public idCustomer: number;
   public RE_Ansp: any = {};
   public Betreff: string = '';
   public params: any = [];
-  public Copy:string = '';
+  public Copy: string = '';
   public contactPersonList: any = [];
   public contactPerson: any = [];
   public contactPersonAddresses: any = [];
@@ -30,6 +32,7 @@ export class OrderSendNewPage {
   public company = '';
   public activOrderForm: any = {};
   public pdfRetVal: any;
+  public email_felder: any = 0;
 
   constructor(public navCtrl: NavController, 
               public navParams: NavParams,
@@ -44,7 +47,7 @@ export class OrderSendNewPage {
                 this.company = this.navParams.get('company');
                 this.activOrderForm = this.navParams.get('activOrderForm');
                 this.pdfRetVal = this.navParams.get('pdfRetVal');
-                this.getContactList();  
+                this.getContactList();
                 this.Copy = this.userdata.email;
                 this.Betreff = 'Brugg Drahtseil: ' +  this.company;
                 console.log('activOrderForm :', this.activOrderForm);
@@ -55,8 +58,9 @@ export class OrderSendNewPage {
     this.modalCtrl.dismiss(false);
   }
 
-  changeAnsp(){
+  changeAnsp() {
     console.log('changeReAnsp :', this.RE_Ansp);
+    this.inputError = false;
     this.Empfaenger = this.RE_Ansp.email;
   }
 
@@ -69,7 +73,11 @@ export class OrderSendNewPage {
 
       for (var i = 0, len = result.list.length; i < len; i++) {
         var item = result.list[i].data;
-        item.addresses = JSON.parse(item.addresses);
+        try {
+          item.addresses = JSON.parse(item.addresses);
+        } catch {
+           console.error('JSON.parse err', item.addresses) ;
+        }
         this.contactPersonList.push(item);
       }
     });
@@ -84,6 +92,7 @@ export class OrderSendNewPage {
     }
     if (this.Ziel_DropDown == 2) {
       this.Empfaenger = '';
+      this.RE_Ansp = '';
     }
     if (this.Ziel_DropDown == 3) {
       this.Empfaenger = 'vente.lifting@brugg.com';
@@ -92,6 +101,36 @@ export class OrderSendNewPage {
 
   async send() {
     console.log('send()');
+
+    this.inputError = false;
+    this.email_felder = 0;
+    if (this.Betreff == '') {   // Subject
+      this.inputError = true;
+      return;
+    }
+    if (this.Empfaenger == '') {  // To
+      this.inputError = true;
+      return;
+    }
+    if (this.Copy == '') {  // Cc
+      this.inputError = true;
+      return;
+    }
+    if (this.Ziel_DropDown == 2 && this.RE_Ansp == '') {  // person contact
+      this.inputError = true;
+      return;
+    }
+    if (this.validateEmail(this.Empfaenger) == false) {  // To
+      this.inputError = false;
+      this.email_felder = 1;
+      return;
+    }
+    if (this.validateEmail(this.Copy) == false) { // Cc
+      this.inputError = false;
+      this.email_felder = 1;
+      return;
+    }
+
     let loader = await this.loadingCtrl.create({
       message: this.translate.instant('Bitte warten')
     });
@@ -122,15 +161,15 @@ export class OrderSendNewPage {
         if (result['status'] == 1) {
           // OK
           let alert = await this.alertCtrl.create({ header: this.translate.instant('Bestellformular'),
-                                              message: this.translate.instant('Die Nachricht wurde erfolgreich versendet.'),
-                                              buttons: [
-                                                {
-                                                  text: this.translate.instant('ja'),
-                                                  handler: () => {
+              message: this.translate.instant('Die Nachricht wurde erfolgreich versendet.'),
+              buttons: [
+                {
+                  text: this.translate.instant('ja'),
+                  handler: () => {
 
-                                                  }
-                                                }
-                                              ]
+                  }
+                }
+              ]
           });
           loader.dismiss();
           alert.present();
@@ -172,4 +211,19 @@ export class OrderSendNewPage {
       }
     });
   }
+
+  inputErrorMsg() {
+    this.inputError = false;
+    this.email_felder = 0;
+  }
+
+  validateEmail(email) {
+    let reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+    if (reg.test(email) == false) {
+        return (false);
+    } else {
+        return (true);
+    }
+  }
+
 }
