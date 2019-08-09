@@ -34,7 +34,8 @@
             <ion-col size="12">
               <ion-item lines="none">
                 <ion-label position="floating">{{translate.instant('Ansprechpartner')}}</ion-label>
-                  <ion-select (ionChange)="changeAnsp()"
+                  <ion-select required="true"
+                              (ionChange)="changeAnsp()"
                               name="RE_Ansp"
                               id="RE_Ansp"
                               [(ngModel)]="RE_Ansp"
@@ -51,7 +52,8 @@
         <ion-col size="12" size-md="6">
             <ion-item lines="none">
               <ion-label position="floating">{{translate.instant('Betreff')}}</ion-label>
-              <ion-input
+              <ion-input required="true"  
+                         (ionChange)="inputErrorMsg()"
                          type="text"
                          name="Betreff"
                          id="Betreff"
@@ -62,11 +64,12 @@
         <ion-col size="12" size-md="6">
           <ion-item lines="none">
             <ion-label position="floating">{{translate.instant('Empfänger')}}</ion-label>
-            <ion-input
-                        type="text"
-                        name="Empfaenger"
-                        id="Empfaenger"
-                        [(ngModel)]="Empfaenger">
+            <ion-input required="true"  
+                       (ionChange)="inputErrorMsg()"
+                       type="text"
+                       name="Empfaenger"
+                       id="Empfaenger"
+                       [(ngModel)]="Empfaenger">
             </ion-input>
           </ion-item>
         </ion-col>
@@ -75,7 +78,8 @@
         <ion-col size="12" size-md="6" offset-md="6">
             <ion-item lines="none">
               <ion-label position="floating">{{translate.instant('Cc')}}</ion-label>
-              <ion-input
+              <ion-input required="true"  
+                         (ionChange)="inputErrorMsg()"
                          type="text"
                          name="Copy"
                          id="Copy"
@@ -86,11 +90,21 @@
       </ion-row>
   </ion-grid>
 
+  <!-- Error -->
+  <div *ngIf="email_felder" class="pfehler">
+    {{translate.instant('E-Mail nicht standardkonform.')}}
+  </div>
+  <div [hidden]="!inputError" class="pfehler">
+    {{translate.instant('Bitte füllen Sie alle Pflichtfelder aus.')}}
+  </div>
+
   <div class="modal-footer">
       <ion-button type="button" class="btn btn-modal-danger footerIcon" (click)="dismiss()">
-          <ion-icon name="close"></ion-icon>
+        <ion-icon name="close"></ion-icon>
       </ion-button>
-      <ion-button type="button" [disabled]="Empfaenger==''" class="btn btn-modal-success footerIcon" (click)="send();">
+      <ion-button type="button"
+                  class="btn btn-modal-success footerIcon"
+                  (click)="send();">
           <ion-icon name="checkmark"></ion-icon>
       </ion-button>
   </div>
