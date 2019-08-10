@@ -1,5 +1,5 @@
 <?php
-error_reporting(E_ALL);
+error_reporting(E_ERROR);
 
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Credentials: true');

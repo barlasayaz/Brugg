@@ -121,7 +121,7 @@ export class ApiService {
             window.localStorage['access_token'] = data.access_token;
             window.localStorage['refresh_token'] = data.refresh_token;
             orig_data.token  = data.access_token;
-            this.http.post(orig_url, orig_data, { headers: orig_headers }).subscribe((done: any) => {
+            this.http.post(orig_url, orig_data, { headers: orig_headers , responseType: 'text' }).subscribe((done: any) => {
               // return the result
               try{
                 let done_json = JSON.parse(done);
