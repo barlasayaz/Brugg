@@ -12,7 +12,9 @@
             </button>
         </div>
         <div style="padding-top: 5px; padding-right: 10px; margin-left: auto; color: white;">
-            {{'selektiert' |translate }}: {{selectedRow}}
+            <button type="button" pButton (click)="deSelectAll()" >
+                {{'selektiert' |translate }}: {{selectedRow}}
+            </button>
         </div>
         <div class="ui-inputgroup search-search">
             <input type="text"
@@ -32,7 +34,9 @@
                [autoDisplay]="false"
                id="menuMax">
         <div style="padding-top: 5px; padding-right: 10px; color: white;">
-            {{'selektiert' |translate }}: {{selectedRow}}
+            <button type="button" pButton (click)="deSelectAll()" >
+                {{'selektiert' |translate }}: {{selectedRow}}
+            </button>
         </div>
         <div class="ui-inputgroup search-search">
             <input type="text"

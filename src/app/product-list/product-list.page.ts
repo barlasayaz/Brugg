@@ -434,6 +434,29 @@ export class ProductListPage implements OnInit {
         this.funcHeightCalc();
     }
 
+    async deSelectAll()
+    {
+        const alert = await this.alertCtrl.create({
+            header: this.translate.instant('Möchten Sie wirklich alle abwählen'),
+            buttons: [{
+                text: this.translate.instant('dismiss'),
+                handler: data => {
+                    //  alert.dismiss();
+                }
+            },
+            {
+                text: this.translate.instant('okay'),
+                handler: data => {
+                    this.selectedNode = [];
+                    this.selectedRow = 0;
+                }
+            }
+            ]
+        });
+        await alert.present();
+
+    }
+
     title_translate(nodes: TreeNode[]): any {
         for (let i = 0; i < nodes.length; i++) {
             /*if(nodes[i].data.nfc_tag_id) {

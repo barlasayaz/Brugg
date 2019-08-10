@@ -660,6 +660,29 @@ export class ProtocolListPage implements OnInit {
         this.showConfirmAlert(this.selectedNode.data.id);
     }
 
+    async deSelectAll()
+    {
+        const alert = await this.alertCtrl.create({
+            header: this.translate.instant('Möchten Sie wirklich alle abwählen'),
+            buttons: [{
+                text: this.translate.instant('dismiss'),
+                handler: data => {
+                    //  alert.dismiss();
+                }
+            },
+            {
+                text: this.translate.instant('okay'),
+                handler: data => {
+                    this.selectedNode = [];
+                    this.selectedRow = 0;
+                }
+            }
+            ]
+        });
+        await alert.present();
+
+    }
+
     showConfirmAlert(idProtocol) {
         const alert = this.alertCtrl.create({
             header: this.translate.instant('Deaktivierung des Protokolls bestätigen'),
