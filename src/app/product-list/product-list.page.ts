@@ -663,7 +663,6 @@ export class ProductListPage implements OnInit {
         console.log('nodeSelect :', event, selectedNode, selectedNode.length, this.selectMulti);
         let selectedNodeLength = selectedNode.length;
         this.selectedRow = selectedNodeLength;
-        this.menuItems[10].label = this.translate.instant('selektiert') + ': ' + selectedNode.length;
         if (!this.selectMulti) {
             selectedNodeLength = 1;
             this.selectMulti = 1;
