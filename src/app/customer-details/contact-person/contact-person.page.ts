@@ -135,6 +135,14 @@ export class ContactPersonPage {
                 this.pfelder = 1;
                 return;
             }
+            if (this.contactPersonEdit.phone) {
+                this.pw_felder = 0;
+            } else {
+                this.inputError = true;
+                this.pw_felder = 1;
+                this.pfelder = 1;
+                return;
+            }
         }
         if (this.pw_felder == 0) {
         let obj = {id: 0,
@@ -146,6 +154,7 @@ export class ContactPersonPage {
                     last_name: '',
                     customer: this.idCustomer,
                     addresses: '[{"street":"", "zip_code":"", "department":"", "email":"", "phone":"", "mobile":""}]',
+                    phone: '',
                     position: '',
                     department: '',
                     note: '',
@@ -163,6 +172,7 @@ export class ContactPersonPage {
         if (this.contactPersonEdit['last_name']) { obj.last_name = this.contactPersonEdit['last_name']; }
         if (this.contactPersonEdit['customer']) { obj.customer = this.idCustomer; }
         if (this.contactPersonEdit['addresses']) { obj.addresses = JSON.stringify(this.contactPersonEdit['addresses']); }
+        if (this.contactPersonEdit['phone']) { obj.phone = this.contactPersonEdit['phone']; }
         if (this.contactPersonEdit['position']) { obj.position = this.contactPersonEdit['position']; }
         if (this.contactPersonEdit['department']) { obj.department = this.contactPersonEdit['department']; }
         if (this.contactPersonEdit['active']) { obj.active = 1; }
@@ -231,6 +241,7 @@ export class ContactPersonPage {
                                    last_name: '',
                                    customer: '',
                                    addresses: '[{"street":"", "zip_code":"", "department":"", "email":"", "phone":"", "mobile":""}]',
+                                   phone: '',
                                    position: '',
                                    department: '',
                                    note: '',
@@ -243,6 +254,7 @@ export class ContactPersonPage {
                         if (contactPerson['last_name']) { obj.last_name = contactPerson['last_name']; }
                         if (contactPerson['customer']) { obj.customer = contactPerson['customer']; }
                         if (contactPerson['addresses']) { obj.addresses = JSON.stringify(contactPerson['addresses']); }
+                        if (contactPerson['phone']) { obj.phone = contactPerson['phone']; }
                         if (contactPerson['position']) { obj.position = contactPerson['position']; }
                         if (contactPerson['department']) { obj.department = contactPerson['department']; }
                         if (contactPerson['note']) { obj.note = contactPerson['note']; }

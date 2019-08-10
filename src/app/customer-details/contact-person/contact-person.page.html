@@ -64,7 +64,7 @@
               <ion-col size="4">
                 <ion-item lines="none" style="padding-left: 0px;">  
                   <ion-label position="floating">{{translate.instant('Geschlecht')}}</ion-label>
-                  <ion-select required
+                  <ion-select required="true"
                               (ionChange)="inputErrorMsg()"
                               [(ngModel)]="contactPersonEdit.gender"
                               okText="{{translate.instant('okay')}}" 
@@ -80,7 +80,7 @@
               <ion-col size="12">
                 <ion-item lines="none" style="padding-left: 0px;">
                   <ion-label position="floating">{{translate.instant('Name')}}</ion-label>
-                  <ion-input required
+                  <ion-input required="true"
                              (ionChange)="inputErrorMsg()"
                              type="text"
                              id="ansp_name" 
@@ -94,7 +94,7 @@
               <ion-col size="12">
                 <ion-item lines="none" style="padding-left: 0px;">
                   <ion-label  position="floating">{{translate.instant('Vorname')}}</ion-label>
-                  <ion-input required
+                  <ion-input required="true"
                              (ionChange)="inputErrorMsg()"
                              type="text"
                              id="ansp_vorname" 
@@ -108,7 +108,7 @@
               <ion-col size="12">
                 <ion-item lines="none" style="padding-left: 0px;">
                   <ion-label position="floating">{{translate.instant('E-Mail')}}</ion-label>
-                  <ion-input required
+                  <ion-input required="true"
                              (ionChange)="inputErrorMsg()"
                              type="text"
                              id="ansp_eMail"
@@ -121,6 +121,20 @@
             <ion-row>
                 <ion-col size="12">
                   <ion-item lines="none" style="padding-left: 0px;">
+                    <ion-label position="floating">{{translate.instant('Telefon')}}</ion-label>
+                    <ion-input required="true"
+                               (ionChange)="inputErrorMsg()"
+                               type="text" 
+                               id="ansp_phone"
+                               [(ngModel)]="contactPersonEdit.phone">
+                    </ion-input>
+                  </ion-item>
+                </ion-col>
+            </ion-row>
+            <!-- Row 5 -->
+            <ion-row>
+                <ion-col size="12">
+                  <ion-item lines="none" style="padding-left: 0px;">
                     <ion-label position="floating">{{translate.instant('Funktion')}}</ion-label>
                     <ion-input type="text" 
                                id="ansp_position"
@@ -128,8 +142,8 @@
                     </ion-input>
                   </ion-item>
                 </ion-col>
-              </ion-row>
-            <!-- Row 5 -->
+            </ion-row>
+            <!-- Row 6 -->
             <ion-row>
               <ion-col size="12">
                 <ion-item lines="none" style="padding-left: 0px;">
@@ -141,7 +155,7 @@
                 </ion-item>
               </ion-col>
             </ion-row>
-            <!-- Row 6 -->
+            <!-- Row 7 -->
             <ion-row *ngIf="true">
               <ion-col size-md="6" size-sm="12" size="12">
                 <ion-item lines="none" class="item-border">
@@ -160,7 +174,7 @@
                 </ion-item>						
               </ion-col>
             </ion-row> 
-              <!-- Row 7 -->
+              <!-- Row 8 -->
               <ion-row>
                 <ion-col size="12">
                   <ion-item lines="none" style="padding-left: 0px;">
