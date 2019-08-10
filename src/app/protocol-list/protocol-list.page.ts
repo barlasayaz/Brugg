@@ -211,7 +211,7 @@ export class ProtocolListPage implements OnInit {
                 if (this.protocolListAll[index].data.result == 3) {
                     this.protocolListAll[index].data.result = this.translate.instant('unauffindbar');
                 }
-                if ((this.protocolListAll[index].data.result == 2) || (this.protocolListAll[index].data.result == 4)){
+                if ((this.protocolListAll[index].data.result == 2) || (this.protocolListAll[index].data.result == 4)) {
                     this.protocolListAll[index].data.result = this.translate.instant('ausmustern');
                 }
             }
@@ -660,27 +660,30 @@ export class ProtocolListPage implements OnInit {
         this.showConfirmAlert(this.selectedNode.data.id);
     }
 
-    async deSelectAll()
-    {
-        const alert = await this.alertCtrl.create({
-            header: this.translate.instant('Möchten Sie wirklich alle abwählen'),
-            buttons: [{
-                text: this.translate.instant('dismiss'),
-                handler: data => {
-                    //  alert.dismiss();
+    async deSelectAll() {
+        if (this.selectedRow > 0) {
+            const alert = await this.alertCtrl.create({
+                header: this.translate.instant('Beachtung'),
+                message: this.translate.instant('Möchten Sie wirklich alle abwählen'),
+                buttons: [{
+                    text: this.translate.instant('nein'),
+                    handler: data => {
+                        //  alert.dismiss();
+                    }
+                },
+                {
+                    text: this.translate.instant('ja'),
+                    handler: data => {
+                        this.selectedNode = [];
+                        this.selectedRow = 0;
+                        this.menuItems[0].disabled = true;
+                        this.menuItems[1].disabled = true;
+                    }
                 }
-            },
-            {
-                text: this.translate.instant('okay'),
-                handler: data => {
-                    this.selectedNode = [];
-                    this.selectedRow = 0;
-                }
-            }
-            ]
-        });
-        await alert.present();
-
+                ]
+            });
+            await alert.present();
+        }
     }
 
     showConfirmAlert(idProtocol) {
