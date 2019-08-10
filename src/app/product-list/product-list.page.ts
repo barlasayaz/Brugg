@@ -437,7 +437,7 @@ export class ProductListPage implements OnInit {
     async deSelectAll() {
         if (this.selectedRow > 0) {
             const alert = await this.alertCtrl.create({
-                header: this.translate.instant('Beachtung'),
+                header: this.translate.instant('Achtung'),
                 message: this.translate.instant('Möchten Sie wirklich alle abwählen'),
                 buttons: [{
                     text: this.translate.instant('nein'),
@@ -1169,7 +1169,7 @@ export class ProductListPage implements OnInit {
 
     showChildMsg() {
         const alert = this.alertCtrl.create({
-            header: this.translate.instant('Beachtung'),
+            header: this.translate.instant('Achtung'),
             message: this.translate.instant('Produkte mit untergeordneten Datensätzen können nicht gelöscht werden.'),
             buttons: [
                 {
