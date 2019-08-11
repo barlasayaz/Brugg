@@ -130,7 +130,7 @@ export class CustomerDetailsPage implements OnInit {
             }
           });
         });
-        if (this.activCustomer.note && this.activCustomer.note != '') {
+        /*if (this.activCustomer.note && this.activCustomer.note != '') {
           let alert = this.alertCtrl.create({
             header: this.translate.instant('Notiz'),
             message: this.activCustomer.note,
@@ -144,7 +144,7 @@ export class CustomerDetailsPage implements OnInit {
             ]
           }).then(x => x.present() );
 
-        }
+        }*/
         // Appointment Date
         try {
           if (this.activCustomer.sales_dates && this.activCustomer.sales_dates != null && this.activCustomer.sales_dates != '') {
