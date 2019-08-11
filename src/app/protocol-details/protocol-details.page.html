@@ -70,14 +70,8 @@
 										</div>
 										<div class="tbody">
 											<div class="tr table-subheader table-subheader-fix">
-												<div class="table-subheader-buttons">  
-													<div *ngIf="userdata.role_set.check_products">
-														<ion-button small
-																	(click)="getCamera()"
-																	[disabled]="!mobilePlatform"
-																	style="padding-right: 10px; margin-top: -32px;">
-															<ion-icon name="camera"></ion-icon>
-														</ion-button>
+												<div class="table-subheader-buttons" *ngIf="userdata.role_set.check_products">  
+													<div>
 														<p-fileUpload #fubauto
 																	mode="basic"
 																	[auto]="true"
@@ -92,6 +86,12 @@
 																	chooseLabel="{{'Wähle Dateien' | translate}}">
 														</p-fileUpload>
 													</div>
+													<ion-button small
+																(click)="getCamera()"
+																[disabled]="!mobilePlatform"
+																style="padding-left: 10px;">
+														<ion-icon name="camera"></ion-icon>
+													</ion-button>
 												</div>	
 											</div>
 											<p *ngFor="let row of dateien">   

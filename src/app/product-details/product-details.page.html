@@ -64,19 +64,12 @@
 										</div>
 										<div class="tbody">
 											<div class="tr table-subheader table-subheader-fix">
-												<div class="table-subheader-buttons">  
-													<div *ngIf="(userdata.role==1)||(userdata.role==2)">
-														<ion-button small
-																	(click)="getCamera()"
-																	[disabled]="!mobilePlatform"
-																	style="padding-right: 10px; margin-top: -32px;">
-															<ion-icon name="camera"></ion-icon>
-														</ion-button>
+												<div class="table-subheader-buttons" *ngIf="(userdata.role==1)||(userdata.role==2)">  
+													<div>
 														<p-fileUpload #fubauto
 																	mode="basic"
 																	[auto]="true"
-																	name="file" 
-																	class="btn-primary"
+																	name="file"
 																	url="{{url}}upload.php" 
 																	(onUpload)="onUpload($event)"
 																	(onBeforeUpload)="onBeforeUpload($event)"
@@ -86,6 +79,12 @@
 																	chooseLabel="{{'Wähle Dateien' | translate}}">
 														</p-fileUpload>
 													</div>
+													<ion-button small
+																(click)="getCamera()"
+																[disabled]="!mobilePlatform"
+																style="padding-left: 10px;">
+														<ion-icon name="camera"></ion-icon>
+													</ion-button>
 												</div>	
 											</div>
 											<p *ngFor="let row of dateien">   
