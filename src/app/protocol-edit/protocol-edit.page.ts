@@ -4,7 +4,7 @@ import { UserdataService } from '../services/userdata';
 import { TranslateService } from '@ngx-translate/core';
 import { ApiService } from '../services/api';
 import { DatePipe } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, NavigationExtras } from '@angular/router';
 import { DataService } from '../services/data.service';
 
 /**
@@ -312,7 +312,12 @@ export class ProtocolEditPage implements OnInit {
 
     this.apiService.pvs4_set_protocol(obj).then((result: any) => {
       // console.log('result: ', result);
-      this.navCtrl.navigateBack('/product-list/' + this.idCustomer);
+      let navigationExtras: NavigationExtras = {
+        queryParams: {
+          refresh: new Date().getTime()
+        }
+      };
+      this.navCtrl.navigateBack(['/product-list/' + this.idCustomer],navigationExtras);
     });
 
   }
