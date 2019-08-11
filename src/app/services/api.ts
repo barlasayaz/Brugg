@@ -23,7 +23,7 @@ export class ApiService {
   public appointmentEndTime: string = '16:59';
   public appointmentMinTime: string = '07:00';
   public appointmentMaxTime: string = '17:59';
-  public version: any = '4.4.19';
+  public version: any = '4.4.20';
   
   constructor(public http: HttpClient, public userdata: UserdataService) {
     console.log('Start ApiProvider Provider');
@@ -121,7 +121,7 @@ export class ApiService {
             window.localStorage['access_token'] = data.access_token;
             window.localStorage['refresh_token'] = data.refresh_token;
             orig_data.token  = data.access_token;
-            this.http.post(orig_url, orig_data, { headers: orig_headers }).subscribe((done: any) => {
+            this.http.post(orig_url, orig_data, { headers: orig_headers , responseType: 'text' }).subscribe((done: any) => {
               // return the result
               try{
                 let done_json = JSON.parse(done);
