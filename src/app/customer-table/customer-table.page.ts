@@ -231,7 +231,7 @@ export class CustomerTablePage implements OnInit {
                 this.columnFilterValues = JSON.parse(localStorage.getItem('filter_values'));
             }
             if (localStorage.getItem('split_filter') != undefined) {
-                this.splitFilter = JSON.parse(localStorage.getItem('split_filter'));                
+                this.splitFilter = JSON.parse(localStorage.getItem('split_filter'));
             }
             if (localStorage.getItem('show_columns') != undefined) {
                 this.selectedColumns = JSON.parse(localStorage.getItem('show_columns'));
@@ -403,25 +403,27 @@ export class CustomerTablePage implements OnInit {
 
     async menu_new() {
         console.log('menu_new', this.selectedNode);
-        const obj = { id: 0, parent: 0 };
-        if (this.selectedNode) {
+        const idCustomer = 0;
+        let parentCustomer = 0;
+        if (this.selectedNode != undefined) {
             if (this.selectedNode.data.id) {
-                obj.parent = this.selectedNode.data.id;
+                parentCustomer = parseInt(this.selectedNode.data.id);
             }
         }
         const modal =
         await this.modalCtrl.create({
           component: CustomerEditComponent,
           componentProps: {
-            obj: obj
+            id: idCustomer,
+            parent: parentCustomer
           }
         });
         modal.onDidDismiss().then(data => {
             if (data['data']) {
               this.page_load();
             }
-          }); 
-          modal.present();
+        });
+        modal.present();
     }
 
     async menu_edit() {

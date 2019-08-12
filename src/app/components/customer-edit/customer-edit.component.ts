@@ -50,7 +50,6 @@ export class CustomerEditComponent implements OnInit {
     this.activCustomer.sales = '';
     this.activCustomer.tester = '';
     this.activCustomer.sector = '';
-    if (!this.parentCustomer) { this.parentCustomer = 0; }
     if (this.idCustomer > 0) {
       this.modalTitle = this.translate.instant('Kundendaten bearbeiten');
       this.itsNew = false;
@@ -89,7 +88,7 @@ export class CustomerEditComponent implements OnInit {
     console.log('CustomerEditComponent: ', this.idCustomer);
 
     if (this.redirect == 3) {
-      //this.customerDisabled = true;
+      // this.customerDisabled = true;
     }
   }
 
