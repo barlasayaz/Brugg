@@ -20,7 +20,7 @@
                             (ionChange)="inputErrorMsg()"
                             [(ngModel)]="idSales"
                             okText="{{translate.instant('okay')}}" 
-                            cancelText="{{translate.instant('dismiss')}}">
+                            cancelText="{{translate.instant('abbrechen')}}">
                   <ion-select-option *ngFor="let pr of salesListe" [value]="pr.id">{{pr.first_name + " " + pr.last_name}}</ion-select-option>
                 </ion-select>                  
               </ion-item>
@@ -35,7 +35,7 @@
                           (ionChange)="inputErrorMsg()"
                           [(ngModel)]="idTester"
                           okText="{{translate.instant('okay')}}" 
-                          cancelText="{{translate.instant('dismiss')}}">
+                          cancelText="{{translate.instant('abbrechen')}}">
                 <ion-select-option *ngFor="let pr of testerListe" [value]="pr.id">{{pr.first_name + " " + pr.last_name}}</ion-select-option>
               </ion-select>                  
             </ion-item>

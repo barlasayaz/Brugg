@@ -65,7 +65,7 @@
                             displayFormat="DD.MM.YYYY"
                             max = {{maxDate}}
                             doneText="{{translate.instant('okay')}}"
-                            cancelText="{{translate.instant('dismiss')}}">
+                            cancelText="{{translate.instant('abbrechen')}}">
               </ion-datetime>
           </ion-item>
         </ion-col>  
@@ -77,7 +77,7 @@
                             displayFormat="HH:mm"
                             max = {{maxDate}}
                             doneText="{{translate.instant('okay')}}"
-                            cancelText="{{translate.instant('dismiss')}}">
+                            cancelText="{{translate.instant('abbrechen')}}">
               </ion-datetime>
           </ion-item>
         </ion-col> 
@@ -88,7 +88,7 @@
                         (ionChange)="inputErrorMsg()"
                         [(ngModel)]="activNote.category" 
                         okText="{{translate.instant('okay')}}"
-                        cancelText="{{translate.instant('dismiss')}}">
+                        cancelText="{{translate.instant('abbrechen')}}">
                 <ion-select-option value="1" selected>{{translate.instant('Besuchsberichte')}}</ion-select-option>
                 <ion-select-option value="10">{{translate.instant('Disposition')}}</ion-select-option>
                 <ion-select-option value="11">{{translate.instant('Neukundenakquise')}}</ion-select-option>

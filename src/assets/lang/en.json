@@ -129,7 +129,7 @@
   "2-Strang": "2- leg",
   "3-Strang": "3- leg",
   "4-Strang": "4- leg",
-  "Abbrechen": "Cancel",
+  "abbrechen": "Cancel",
   "ablegereif": "to be discarded",
   "Abteilung": "Department",
   "AD-Mitarbeiter": "Field staff",
@@ -260,6 +260,7 @@
   "Interne Nr.": "Internal no.",
   "Internet": "Internet",
   "ja": "Yes",
+  "nein": "No",
   "Jahreswechsel": "Turn of the year",
   "jährlich (12 Monate)": "annually (12 months)",
   "Kausche": "Thimble",
@@ -317,8 +318,7 @@
   "nächster Besuch": "next visit",
   "nächster Kontrollbesuch": "next inspection visit",
   "nächster Ter.": "next date",
-  "Name": "Name",
-  "nein": "no",
+  "Name": "Name",  
   "Neue Notiz": "New Note",
   "Bearbeiten Notiz": "Edit Note",
   "Aussicht Notiz": "View Note",
@@ -586,7 +586,7 @@
   "Termin hinzufügen": "Add date",
   "Notiz hinzufügen": "Add note",
   "Letzter Login": "Last login",
-  "Auswaehlen": "Select",
+  "Auswaehlen": "Choose",
   "Hinzufuegen": "Add",
   "Ansprechpartner Daten": "Contact details",
   "Produktdetails": "Product details",
@@ -844,5 +844,6 @@
   "Nicht original. Sollte bearbeitet werden": "Not original. Should be edited",
   "Original": "Original",
   "Kopieren": "Copy",
-  "selektiert": "selected"
+  "selektiert": "selected",
+  "Möchten Sie diesen Termin wirklich deaktivieren?": "Are you sure you want to deactivate this appointment?"
 }

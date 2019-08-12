@@ -721,7 +721,7 @@ export class ProductEditPage implements OnInit {
       message: this.translate.instant('Bitte füllen Sie alle Pflichtfelder aus.'),
       buttons: [
         {
-          text: this.translate.instant('ja'),
+          text: this.translate.instant('okay'),
           handler: () => {
 
           }
@@ -736,7 +736,7 @@ export class ProductEditPage implements OnInit {
       message: this.translate.instant('Produkt Option long'),
       buttons: [
         {
-          text: this.translate.instant('ja'),
+          text: this.translate.instant('okay'),
           handler: () => {
 
           }
@@ -811,7 +811,7 @@ export class ProductEditPage implements OnInit {
       ],
       buttons: [
         {
-          text: this.translate.instant('dismiss'),
+          text: this.translate.instant('abbrechen'),
           role: 'cancel',
           handler: data => {
             console.log('Cancel clicked:', data);
@@ -848,7 +848,7 @@ export class ProductEditPage implements OnInit {
       message: this.translate.instant('Bitte überprüfen Sie das Feld ID-Nummer. Diese Nummer wird verwendet.'),
       buttons: [
         {
-          text: this.translate.instant('ja'),
+          text: this.translate.instant('okay'),
           handler: () => {
 
           }

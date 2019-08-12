@@ -108,7 +108,7 @@ export class ProductMigrationPage implements OnInit {
         message: this.translate.instant('Möchten sie dieses produkt wirklich migrieren?'),
         buttons: [
           {
-            text: this.translate.instant('dismiss'),
+            text: this.translate.instant('abbrechen'),
             handler: () => {
               console.log('Cancel clicked');
             }

@@ -120,7 +120,7 @@ export class ProductTemplatePage implements OnInit {
       ],
       buttons: [
         {
-          text: this.translate.instant('dismiss'),
+          text: this.translate.instant('abbrechen'),
           role: 'cancel',
           handler: data => {
             console.log('Cancel clicked:', data);

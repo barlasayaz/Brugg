@@ -508,7 +508,7 @@ export class NoteListPage implements OnInit {
         }
         let alert = await this.alertCtrl.create({
             header: this.translate.instant('Spalten Auswählen'), inputs: inputs, buttons: [{
-                text: this.translate.instant('dismiss'),
+                text: this.translate.instant('abbrechen'),
                 handler: data => {
                     //  alert.dismiss();
                 }

@@ -136,7 +136,7 @@ export class CustomerDetailsPage implements OnInit {
             message: this.activCustomer.note,
             buttons: [
               {
-                text: this.translate.instant('Ja'),
+                text: this.translate.instant('okay'),
                 handler: () => {
 
                 }
@@ -384,13 +384,13 @@ export class CustomerDetailsPage implements OnInit {
         message: msg,
         buttons: [
           {
-            text: this.translate.instant('Nein'),
+            text: this.translate.instant('nein'),
             handler: () => {
               console.log('Cancel clicked');
             }
           },
           {
-            text: this.translate.instant('Ja'),
+            text: this.translate.instant('ja'),
             handler: () => {
               this.aktive_products = 0;
               this.inspection_service = 0;

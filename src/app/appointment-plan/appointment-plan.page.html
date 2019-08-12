@@ -17,7 +17,7 @@
 		<ion-select [(ngModel)]="peopleFilter" 
 								okText="{{translate.instant('okay')}}" 
 								(ionChange)="changeFilter()"
-								cancelText="{{translate.instant('dismiss')}}">
+								cancelText="{{translate.instant('abbrechen')}}">
 			<ion-select-option value="none">{{translate.instant('Alle Mitarbeiter')}}</ion-select-option>
 			<ion-select-option *ngFor="let p of people" [value]="p.email">{{p.first_name + " " + p.last_name}}</ion-select-option>
 		</ion-select>                  

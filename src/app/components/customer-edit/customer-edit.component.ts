@@ -204,13 +204,13 @@ export class CustomerEditComponent implements OnInit {
       message: 'Are you sure you want to permanently delete this user?',
       buttons: [
         {
-          text: 'No',
+          text: this.translate.instant('nein'),
           handler: () => {
             console.log('Cancel clicked');
           }
         },
         {
-          text: 'Yes',
+          text: this.translate.instant('ja'),
           handler: () => {
             activeCustomer.active = 0;
             this.apiService.pvs4_set_customer(activeCustomer).then((result: any) => {

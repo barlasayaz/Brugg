@@ -34,7 +34,7 @@
                           name="Wertung"
                           [(ngModel)]="activCustomer.rating"
                           okText="{{translate.instant('okay')}}"
-                          cancelText="{{translate.instant('dismiss')}}">
+                          cancelText="{{translate.instant('abbrechen')}}">
                 <ion-select-option value="A">A</ion-select-option>
                 <ion-select-option value="B">B</ion-select-option>
                 <ion-select-option value="C">C</ion-select-option>
@@ -118,7 +118,7 @@
                       id="selectSales"
                       [(ngModel)]="activCustomer.sales"
                       okText="{{translate.instant('okay')}}"
-                      cancelText="{{translate.instant('dismiss')}}">
+                      cancelText="{{translate.instant('abbrechen')}}">
             <ion-select-option *ngFor="let pr of salesListe" [value]="pr.id">{{pr.first_name + " " + pr.last_name}}</ion-select-option>
           </ion-select>
         </ion-item>
@@ -133,7 +133,7 @@
                       id="selectTester"
                       [(ngModel)]="activCustomer.tester"
                       okText="{{translate.instant('okay')}}"
-                      cancelText="{{translate.instant('dismiss')}}">
+                      cancelText="{{translate.instant('abbrechen')}}">
             <ion-select-option *ngFor="let pr of testerListe" [value]="pr.id">{{pr.first_name + " " + pr.last_name}}</ion-select-option>
           </ion-select>
         </ion-item>
@@ -151,7 +151,7 @@
                       id="selectBranche"
                       [(ngModel)]="activCustomer.sector"
                       okText="{{translate.instant('okay')}}"
-                      cancelText="{{translate.instant('dismiss')}}">
+                      cancelText="{{translate.instant('abbrechen')}}">
             <ion-select-option *ngFor="let s of Branches" [value]="s.value">{{translate.instant(s.value)}}</ion-select-option>
           </ion-select>
         </ion-item>

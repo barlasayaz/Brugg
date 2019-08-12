@@ -1065,7 +1065,7 @@ export class ProductListPage implements OnInit {
         const alert = await this.alertCtrl.create({
             header: this.translate.instant('Spalten Auswählen'), inputs: inputs,
             buttons: [{
-                text: this.translate.instant('dismiss'),
+                text: this.translate.instant('abbrechen'),
                 handler: data => {
                     //  alert.dismiss();
                 }
@@ -1173,7 +1173,7 @@ export class ProductListPage implements OnInit {
             message: this.translate.instant('Produkte mit untergeordneten Datensätzen können nicht gelöscht werden.'),
             buttons: [
                 {
-                    text: this.translate.instant('ja'),
+                    text: this.translate.instant('okay'),
                     handler: () => {
 
                     }

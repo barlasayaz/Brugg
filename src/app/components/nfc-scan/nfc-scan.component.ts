@@ -260,7 +260,7 @@ export class NfcScanComponent implements OnInit {
       message: 'Fehler: NFC Listener ' + reason,
       buttons: [
         {
-          text: 'Ok',
+          text: this.translate.instant('okay'),
           handler: () => {
           }
         }

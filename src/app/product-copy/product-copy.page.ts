@@ -92,13 +92,13 @@ export class ProductCopyPage implements OnInit {
         message: this.translate.instant('Möchten sie dieses produkt wirklich kopieren?'),
         buttons: [
           {
-            text: this.translate.instant('dismiss'),
+            text: this.translate.instant('nein'),
             handler: () => {
               console.log('Cancel clicked');
             }
           },
           {
-            text: this.translate.instant('okay'),
+            text: this.translate.instant('ja'),
             handler: () => {
               this.dismiss();
               this.productCopy();

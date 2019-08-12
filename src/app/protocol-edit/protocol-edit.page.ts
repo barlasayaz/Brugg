@@ -412,7 +412,7 @@ export class ProtocolEditPage implements OnInit {
       message: this.translate.instant('Bitte füllen Sie alle Pflichtfelder aus.'),
       buttons: [
         {
-          text: this.translate.instant('ja'),
+          text: this.translate.instant('okay'),
           handler: () => {
 
           }
@@ -427,7 +427,7 @@ export class ProtocolEditPage implements OnInit {
       message: this.translate.instant('Produkt Option long'),
       buttons: [
         {
-          text: this.translate.instant('ja'),
+          text: this.translate.instant('okay'),
           handler: () => {
 
           }

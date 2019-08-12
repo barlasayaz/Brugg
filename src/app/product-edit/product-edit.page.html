@@ -146,7 +146,7 @@
                               <ion-select required="true"
                                           [(ngModel)]="activProduct.check_interval"
                                           okText="{{translate.instant('okay')}}"
-                                          cancelText="{{translate.instant('dismiss')}}">
+                                          cancelText="{{translate.instant('abbrechen')}}">
                                 <ion-select-option [value] = "0"> {{translate.instant('kein Intervall')}} </ion-select-option>
                                 <ion-select-option [value] = "3"> 3 {{translate.instant('Monate')}} </ion-select-option>
                                 <ion-select-option [value] = "6"> 6 {{translate.instant('Monate')}}</ion-select-option>
@@ -183,7 +183,7 @@
                                                 class="form-control"
                                                 [(ngModel)]="item.value"
                                                 okText="{{translate.instant('okay')}}"
-                                                cancelText="{{translate.instant('dismiss')}}">
+                                                cancelText="{{translate.instant('abbrechen')}}">
                                       <ion-select-option *ngFor="let option of item.options" >{{option[lang]}}</ion-select-option>
                                     </ion-select> 
                                 </ion-item>
@@ -218,7 +218,7 @@
                                                     name="time" 
                                                     displayFormat="HH:mm"
                                                     doneText="{{translate.instant('okay')}}" 
-                                                    cancelText="{{translate.instant('dismiss')}}">
+                                                    cancelText="{{translate.instant('abbrechen')}}">
                                       </ion-datetime>  
                               </ion-item>
                           </ion-col> 
@@ -230,7 +230,7 @@
                                               displayFormat="DD.MM.YYYY"
                                               max = {{maxDate}}
                                               doneText="{{translate.instant('okay')}}"
-                                              cancelText="{{translate.instant('dismiss')}}">
+                                              cancelText="{{translate.instant('abbrechen')}}">
                                 </ion-datetime>
                             </ion-item>
                           </ion-col> 

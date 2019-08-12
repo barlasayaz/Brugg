@@ -121,8 +121,7 @@ export class AppointmentEditComponent implements OnInit {
     });
   }
 
-  open_customer()
-  {
+  open_customer() {
     this.navCtrl.navigateForward(['/customer-details', this.idCustomer]);
     this.dismiss();
   }
@@ -319,22 +318,23 @@ export class AppointmentEditComponent implements OnInit {
 
   showConfirmAlert(activAppointment) {
     let alert = this.alertCtrl.create({
-      header: 'Confirm deactivate appointment',
-      message: 'Are you sure you want to deactivate this appointment',
+      header: this.translate.instant('Achtung'),
+      message: this.translate.instant('Möchten Sie diesen Termin wirklich deaktivieren?'),
       buttons: [
         {
-          text: 'No',
+          text: this.translate.instant('nein'),
           handler: () => {
             console.log('Cancel clicked');
           }
         },
         {
-          text: 'Yes',
+          text: this.translate.instant('ja'),
           handler: () => {
             activAppointment.active = 0;
             let pipe = new DatePipe('en-US');
-            if (this.activAppointment['appointment_date']) { this.activAppointment['appointment_date'] = pipe.transform(this.activAppointment['appointment_date'], 'yyyy-MM-dd HH:mm:ss'); }
-
+            if (this.activAppointment['appointment_date']) { 
+              this.activAppointment['appointment_date'] = pipe.transform(this.activAppointment['appointment_date'], 'yyyy-MM-dd HH:mm:ss');
+            }
             this.apiService.pvs4_set_appointment(activAppointment).then((result: any) => {
               console.log('result: ', result);
               this.viewCtrl.dismiss(true);
@@ -387,11 +387,9 @@ export class AppointmentEditComponent implements OnInit {
       console.log('contactPersonsList result', result.list);
       for (var i = 0, len = result.list.length; i < len; i++) {
         var item = result.list[i].data;
-        try
-        {
+        try {
           item.addresses = JSON.parse(item.addresses);      
-        }
-        catch{
+        } catch{
            console.error('JSON.parse err', item.addresses) ;
         }
         this.contactPersonList.push(item);

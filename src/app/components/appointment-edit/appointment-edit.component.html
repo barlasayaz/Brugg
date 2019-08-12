@@ -24,7 +24,7 @@
                         id="selectEmployee"
                         [(ngModel)]="activAppointment.idUser"
                         okText="{{translate.instant('okay')}}"
-                        cancelText="{{translate.instant('dismiss')}}">
+                        cancelText="{{translate.instant('abbrechen')}}">
               <ion-select-option *ngFor="let pr of employeeList" [value]="pr.id">{{pr.first_name + " " + pr.last_name}}</ion-select-option>
             </ion-select>
           </ion-item>
@@ -40,7 +40,7 @@
                         [(ngModel)]="activAppointment.appointment_type"
                         [disabled]=appointmentTypeDisabled 
                         okText="{{translate.instant('okay')}}"
-                        cancelText="{{translate.instant('dismiss')}}">
+                        cancelText="{{translate.instant('abbrechen')}}">
               <ion-select-option value="0" selected>{{translate.instant('Kundenbesuch')}}</ion-select-option>
               <ion-select-option value="1">{{translate.instant('Prüfung')}}</ion-select-option>
               <ion-select-option value="2">{{translate.instant('Urlaub')}}</ion-select-option>
@@ -93,7 +93,7 @@
                         [disabled]="contactPersonDisabled"
                         [(ngModel)]="activAppointment.idContactPerson"
                         okText="{{translate.instant('okay')}}" 
-                        cancelText="{{translate.instant('dismiss')}}">
+                        cancelText="{{translate.instant('abbrechen')}}">
               <ion-select-option *ngFor="let pr of contactPersonList" [value]="pr.id">
                 {{pr.first_name + " " + pr.last_name}}</ion-select-option>
             </ion-select>
@@ -112,7 +112,7 @@
                           displayFormat="DD.MM.YYYY"
                           max={{maxDate}}
                           doneText="{{translate.instant('okay')}}"
-                          cancelText="{{translate.instant('dismiss')}}">
+                          cancelText="{{translate.instant('abbrechen')}}">
             </ion-datetime>
           </ion-item>
         </ion-col>
@@ -130,7 +130,7 @@
                           min={{minTime}}
                           max={{maxTime}}
                           doneText="{{translate.instant('okay')}}"
-                          cancelText="{{translate.instant('dismiss')}}">
+                          cancelText="{{translate.instant('abbrechen')}}">
             </ion-datetime>
           </ion-item>
         </ion-col>
@@ -148,7 +148,7 @@
                           min={{minTime}}
                           max={{maxTime}}
                           doneText="{{translate.instant('okay')}}"
-                          cancelText="{{translate.instant('dismiss')}}">
+                          cancelText="{{translate.instant('abbrechen')}}">
             </ion-datetime>
           </ion-item>
         </ion-col>
@@ -165,7 +165,7 @@
                           displayFormat="DD.MM.YYYY"
                           max={{maxDate}}
                           doneText="{{translate.instant('okay')}}"
-                          cancelText="{{translate.instant('dismiss')}}">
+                          cancelText="{{translate.instant('abbrechen')}}">
             </ion-datetime>
           </ion-item>
         </ion-col>
@@ -181,7 +181,7 @@
                           name="start_time"
                           displayFormat="HH:mm"
                           doneText="{{translate.instant('okay')}}"
-                          cancelText="{{translate.instant('dismiss')}}">
+                          cancelText="{{translate.instant('abbrechen')}}">
             </ion-datetime>
           </ion-item>
         </ion-col>
@@ -197,7 +197,7 @@
                           name="end_time"
                           displayFormat="HH:mm"
                           doneText="{{translate.instant('okay')}}"
-                          cancelText="{{translate.instant('dismiss')}}">
+                          cancelText="{{translate.instant('abbrechen')}}">
             </ion-datetime>
           </ion-item>
         </ion-col>
@@ -214,7 +214,7 @@
                           displayFormat="DD.MM.YYYY"
                           max={{maxDate}}
                           doneText="{{translate.instant('okay')}}"
-                          cancelText="{{translate.instant('dismiss')}}">
+                          cancelText="{{translate.instant('abbrechen')}}">
             </ion-datetime>
           </ion-item>
         </ion-col>
@@ -230,7 +230,7 @@
                           name="start_time"
                           displayFormat="HH:mm"
                           doneText="{{translate.instant('okay')}}"
-                          cancelText="{{translate.instant('dismiss')}}">
+                          cancelText="{{translate.instant('abbrechen')}}">
             </ion-datetime>
           </ion-item>
         </ion-col>
@@ -246,7 +246,7 @@
                           name="end_time"
                           displayFormat="HH:mm"
                           doneText="{{translate.instant('okay')}}"
-                          cancelText="{{translate.instant('dismiss')}}">
+                          cancelText="{{translate.instant('abbrechen')}}">
             </ion-datetime>
           </ion-item>
         </ion-col>
@@ -263,7 +263,7 @@
                           displayFormat="DD.MM.YYYY"
                           max={{maxDate}}
                           doneText="{{translate.instant('okay')}}"
-                          cancelText="{{translate.instant('dismiss')}}">
+                          cancelText="{{translate.instant('abbrechen')}}">
             </ion-datetime>
           </ion-item>
         </ion-col>
@@ -279,7 +279,7 @@
                           name="start_time"
                           displayFormat="HH:mm"
                           doneText="{{translate.instant('okay')}}"
-                          cancelText="{{translate.instant('dismiss')}}">
+                          cancelText="{{translate.instant('abbrechen')}}">
             </ion-datetime>
           </ion-item>
         </ion-col>
@@ -295,7 +295,7 @@
                           name="end_time"
                           displayFormat="HH:mm"
                           doneText="{{translate.instant('okay')}}"
-              cancelText="{{translate.instant('dismiss')}}">
+                          cancelText="{{translate.instant('abbrechen')}}">
             </ion-datetime>
           </ion-item>
         </ion-col>
@@ -312,7 +312,7 @@
                           displayFormat="DD.MM.YYYY"
                           max={{maxDate}}
                           doneText="{{translate.instant('okay')}}"
-                          cancelText="{{translate.instant('dismiss')}}">
+                          cancelText="{{translate.instant('abbrechen')}}">
             </ion-datetime>
           </ion-item>
         </ion-col>
@@ -328,7 +328,7 @@
                           name="start_time"
                           displayFormat="HH:mm"
                           doneText="{{translate.instant('okay')}}"
-                          cancelText="{{translate.instant('dismiss')}}">
+                          cancelText="{{translate.instant('abbrechen')}}">
             </ion-datetime>
           </ion-item>
         </ion-col>
@@ -344,7 +344,7 @@
                           name="end_time"
                           displayFormat="HH:mm"
                           doneText="{{translate.instant('okay')}}"
-                          cancelText="{{translate.instant('dismiss')}}">
+                          cancelText="{{translate.instant('abbrechen')}}">
             </ion-datetime>
           </ion-item>
         </ion-col>
@@ -361,7 +361,7 @@
                           displayFormat="DD.MM.YYYY"
                           max={{maxDate}}
                           doneText="{{translate.instant('okay')}}"
-                          cancelText="{{translate.instant('dismiss')}}">
+                          cancelText="{{translate.instant('abbrechen')}}">
             </ion-datetime>
           </ion-item>
         </ion-col>
@@ -377,7 +377,7 @@
                           name="start_time"
                           displayFormat="HH:mm"
                           doneText="{{translate.instant('okay')}}"
-                          cancelText="{{translate.instant('dismiss')}}">
+                          cancelText="{{translate.instant('abbrechen')}}">
             </ion-datetime>
           </ion-item>
         </ion-col>
@@ -393,7 +393,7 @@
                           name="end_time"
                           displayFormat="HH:mm"
                           doneText="{{translate.instant('okay')}}"
-                          cancelText="{{translate.instant('dismiss')}}">
+                          cancelText="{{translate.instant('abbrechen')}}">
             </ion-datetime>
           </ion-item>
         </ion-col>
@@ -410,7 +410,7 @@
                           displayFormat="DD.MM.YYYY"
                           max={{maxDate}}
                           doneText="{{translate.instant('okay')}}"
-                          cancelText="{{translate.instant('dismiss')}}">
+                          cancelText="{{translate.instant('abbrechen')}}">
             </ion-datetime>
           </ion-item>
         </ion-col>
@@ -425,7 +425,7 @@
                           [(ngModel)]="activAppointment.start_time7"
                           name="start_time"
                           displayFormat="HH:mm"
-              doneText="{{translate.instant('okay')}}" cancelText="{{translate.instant('dismiss')}}">
+              doneText="{{translate.instant('okay')}}" cancelText="{{translate.instant('abbrechen')}}">
             </ion-datetime>
           </ion-item>
         </ion-col>
@@ -441,7 +441,7 @@
                           name="end_time"
                           displayFormat="HH:mm"
                           doneText="{{translate.instant('okay')}}"
-              cancelText="{{translate.instant('dismiss')}}">
+                          cancelText="{{translate.instant('abbrechen')}}">
             </ion-datetime>
           </ion-item>
         </ion-col>
@@ -458,7 +458,7 @@
                           displayFormat="DD.MM.YYYY"
                           max={{maxDate}}
                           doneText="{{translate.instant('okay')}}"
-                          cancelText="{{translate.instant('dismiss')}}">
+                          cancelText="{{translate.instant('abbrechen')}}">
             </ion-datetime>
           </ion-item>
         </ion-col>
@@ -474,7 +474,7 @@
                           name="start_time"
                           displayFormat="HH:mm"
                           doneText="{{translate.instant('okay')}}"
-                          cancelText="{{translate.instant('dismiss')}}">
+                          cancelText="{{translate.instant('abbrechen')}}">
             </ion-datetime>
           </ion-item>
         </ion-col>
@@ -490,7 +490,7 @@
                           name="end_time"
                           displayFormat="HH:mm"
                           doneText="{{translate.instant('okay')}}"
-              cancelText="{{translate.instant('dismiss')}}">
+                          cancelText="{{translate.instant('abbrechen')}}">
             </ion-datetime>
           </ion-item>
         </ion-col>
@@ -507,7 +507,7 @@
                           displayFormat="DD.MM.YYYY"
                           max={{maxDate}}
                           doneText="{{translate.instant('okay')}}"
-                          cancelText="{{translate.instant('dismiss')}}">
+                          cancelText="{{translate.instant('abbrechen')}}">
             </ion-datetime>
           </ion-item>
         </ion-col>
@@ -523,7 +523,7 @@
                           name="start_time"
                           displayFormat="HH:mm"
                           doneText="{{translate.instant('okay')}}"
-                          cancelText="{{translate.instant('dismiss')}}">
+                          cancelText="{{translate.instant('abbrechen')}}">
             </ion-datetime>
           </ion-item>
         </ion-col>
@@ -539,7 +539,7 @@
                           name="Notes"
                           displayFormat="HH:mm"
                           doneText="{{translate.instant('okay')}}"
-              cancelText="{{translate.instant('dismiss')}}">
+                          cancelText="{{translate.instant('abbrechen')}}">
             </ion-datetime>
           </ion-item>
         </ion-col>

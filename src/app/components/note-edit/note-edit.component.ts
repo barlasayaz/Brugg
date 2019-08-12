@@ -158,13 +158,13 @@ export class NoteEditComponent {
       message: 'Are you sure you want to deactivate this note',
       buttons: [
         {
-          text: 'No',
+          text: this.translate.instant('nein'),
           handler: () => {
             console.log('Cancel clicked');
           }
         },
         {
-          text: 'Yes',
+          text: this.translate.instant('ja'),
           handler: () => {
             activNote.active = 0;
             let pipe = new DatePipe('en-US');
