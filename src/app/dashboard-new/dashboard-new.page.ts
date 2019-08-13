@@ -6,6 +6,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { ExcelService } from '../services/excel';
 import { AppointmentEditComponent } from '../components/appointment-edit/appointment-edit.component';
 import { Keyboard } from '@ionic-native/keyboard/ngx';
+import { debounceTime } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 @Component({
     selector: 'app-dashboard-new',
@@ -42,6 +44,8 @@ export class DashboardNewPage implements OnInit {
     public all_dates_view = false;
     public sortCustomerType = 'customer_number';
     public sortAppointmentType = 'appointment_date';
+    modelAppChanged: Subject<any> = new Subject<any>();
+    modelChanged: Subject<any> = new Subject<any>();
     
     constructor(public navCtrl: NavController,
         public apiService: ApiService,
@@ -54,7 +58,42 @@ export class DashboardNewPage implements OnInit {
         public modalCtrl: ModalController,
         private keyboard: Keyboard,
         public events: Events) {
+            this.modelAppChanged.pipe(
+                debounceTime(700))
+                .subscribe(model => {
+                    this.nextAppointment = JSON.parse(JSON.stringify(this.nextAppointmentAll));
+                    for (let i = this.nextAppointment.length - 1; i >= 0; i--) {
+                        let s = this.filterValueApp.toLowerCase();
+                        let a = this.nextAppointment[i];
+                        let del = true;
+                        if (a.company && a.company != null && a.company.toLowerCase().indexOf(s) >= 0) { del = false; }
+                        if (a.appointment_type_text &&
+                            a.appointment_type_text != null &&
+                            a.appointment_type_text.toLowerCase().indexOf(s) >= 0) { del = false; }
+                        if (this.all_dates_view) { if (a.last_name.toLowerCase().indexOf(s) >= 0) { del = false; } }
+                        // console.log(a, s, del, i);
+                        if (del) { this.nextAppointment.splice(i, 1); }
+                    }
+                    this.progress_appointment(this.nextAppointment.length, this.nextAppointmentAll.length);
+            });
 
+            this.modelChanged.pipe(
+                debounceTime(700))
+                .subscribe(model => {
+                    this.listInspection = JSON.parse(JSON.stringify(this.listInspectionAll));
+                    for (let i = this.listInspection.length - 1; i >= 0; i--) {
+                        let s = this.filterValue.toLowerCase();
+                        let a = this.listInspection[i];
+                        let del = true;
+                        if (a.company && a.company != null && a.company.toLowerCase().indexOf(s) >= 0) { del = false; }
+                        if (a.place && a.place != null && a.place.toLowerCase().indexOf(s) >= 0) { del = false; }
+                        if (a.customer_number && a.customer_number != null && a.customer_number.toLowerCase().indexOf(s) >= 0) { del = false; }
+                        if (a.zip_code && a.zip_code != null && a.zip_code.toLowerCase().indexOf(s) >= 0) { del = false; }
+                        // console.log(a, s, del, i);
+                        if (del) { this.listInspection.splice(i, 1); }
+                    }
+                    this.progress_inspection(this.listInspection.length, this.listInspectionAll.length);
+            });
         }
 
         ngOnInit() {
@@ -408,37 +447,12 @@ export class DashboardNewPage implements OnInit {
         }
 
         search_all() {
-            this.listInspection = JSON.parse(JSON.stringify(this.listInspectionAll));
-            for (let i = this.listInspection.length - 1; i >= 0; i--) {
-                let s = this.filterValue.toLowerCase();
-                let a = this.listInspection[i];
-                let del = true;
-                if (a.company && a.company != null && a.company.toLowerCase().indexOf(s) >= 0) { del = false; }
-                if (a.place && a.place != null && a.place.toLowerCase().indexOf(s) >= 0) { del = false; }
-                if (a.customer_number && a.customer_number != null && a.customer_number.toLowerCase().indexOf(s) >= 0) { del = false; }
-                if (a.zip_code && a.zip_code != null && a.zip_code.toLowerCase().indexOf(s) >= 0) { del = false; }
-                // console.log(a, s, del, i);
-                if (del) { this.listInspection.splice(i, 1); }
-            }
-            this.progress_inspection(this.listInspection.length, this.listInspectionAll.length);
+            this.modelChanged.next(this.filterValue);
         }
 
 
         search_all_app() {
-            this.nextAppointment = JSON.parse(JSON.stringify(this.nextAppointmentAll));
-            for (let i = this.nextAppointment.length - 1; i >= 0; i--) {
-                let s = this.filterValueApp.toLowerCase();
-                let a = this.nextAppointment[i];
-                let del = true;
-                if (a.company && a.company != null && a.company.toLowerCase().indexOf(s) >= 0) { del = false; }
-                if (a.appointment_type_text &&
-                    a.appointment_type_text != null &&
-                    a.appointment_type_text.toLowerCase().indexOf(s) >= 0) { del = false; }
-                if (this.all_dates_view) { if (a.last_name.toLowerCase().indexOf(s) >= 0) { del = false; } }
-                // console.log(a, s, del, i);
-                if (del) { this.nextAppointment.splice(i, 1); }
-            }
-            this.progress_appointment(this.nextAppointment.length, this.nextAppointmentAll.length);
+            this.modelChanged.next(this.filterValueApp);
         }
 
         progress_appointment(rowRecords, totalRecords) {
