@@ -84,15 +84,6 @@ export class ProductListPage implements OnInit {
         }
     },
     {
-        label: this.translate.instant('Protokolle'),
-        icon: 'pi pi-fw pi-info-circle',
-        disabled: true,
-        command: (event) => {
-            console.log('command menuitem:', event.item);
-            this.menu_history();
-        }
-    },
-    {
         label: this.translate.instant('Bewegen'),
         icon: 'pi pi-fw pi-arrow-up',
         visible: this.userdata.role_set.edit_products,
@@ -226,6 +217,15 @@ export class ProductListPage implements OnInit {
                     console.log('command menuitem:', event.item);
                     this.product_copy();
                 }
+            },
+            {
+                label: this.translate.instant('Protokolle'),
+                icon: 'pi pi-fw pi-info-circle',
+                disabled: true,
+                command: (event) => {
+                    console.log('command menuitem:', event.item);
+                    this.menu_history();
+                }
             }
         ]
     }
@@ -256,9 +256,9 @@ export class ProductListPage implements OnInit {
                 debounceTime(700))
                 .subscribe(model => {
                     if (this.isFilterOn()) {
-                        this.menuItems[9].items[2]['disabled'] = false;
+                        this.menuItems[8].items[2]['disabled'] = false;
                     } else {
-                        this.menuItems[9].items[2]['disabled'] = true;
+                        this.menuItems[8].items[2]['disabled'] = true;
                     }
                     this.generate_productList();
                     localStorage.setItem('filter_values_product', JSON.stringify(this.columnFilterValues));
@@ -319,12 +319,13 @@ export class ProductListPage implements OnInit {
         this.menuItems[0].disabled = true;
         this.menuItems[1].disabled = true;
         this.menuItems[2].disabled = true;
+        // this.menuItems[3].disabled = true;
         this.menuItems[3].disabled = true;
-        this.menuItems[4].disabled = true;
-        this.menuItems[6].items[0]['disabled'] = false;
-        this.menuItems[6].items[1]['disabled'] = false;
-        this.menuItems[9].items[4]['disabled'] = true;
-        this.menuItems[9].items[5]['disabled'] = true;
+        this.menuItems[5].items[0]['disabled'] = false;
+        this.menuItems[5].items[1]['disabled'] = false;
+        this.menuItems[8].items[4]['disabled'] = true;
+        this.menuItems[8].items[5]['disabled'] = true;
+        this.menuItems[8].items[6]['disabled'] = true;
 
         this.events.publish('prozCustomer', 0);
         this.apiService.pvs4_get_product_list(this.idCustomer).then((result: any) => {
@@ -453,15 +454,16 @@ export class ProductListPage implements OnInit {
                         this.menuItems[0].disabled = true;
                         this.menuItems[1].disabled = true;
                         this.menuItems[2].disabled = true;
+                        // this.menuItems[3].disabled = true;
                         this.menuItems[3].disabled = true;
-                        this.menuItems[4].disabled = true;
-                        this.menuItems[4].visible = this.userdata.role_set.edit_products;
-                        this.menuItems[5].visible = false;
-                        this.menuItems[6].items[0]['disabled'] = false;
-                        this.menuItems[6].items[1]['disabled'] = false;
-                        this.menuItems[6].items[2]['disabled'] = true;
-                        this.menuItems[9].items[4]['disabled'] = true;
-                        this.menuItems[9].items[5]['disabled'] = true;
+                        this.menuItems[3].visible = this.userdata.role_set.edit_products;
+                        this.menuItems[4].visible = false;
+                        this.menuItems[5].items[0]['disabled'] = false;
+                        this.menuItems[5].items[1]['disabled'] = false;
+                        this.menuItems[5].items[2]['disabled'] = true;
+                        this.menuItems[8].items[4]['disabled'] = true;
+                        this.menuItems[8].items[5]['disabled'] = true;
+                        this.menuItems[8].items[6]['disabled'] = true;
                     }
                 }
                 ]
@@ -559,7 +561,7 @@ export class ProductListPage implements OnInit {
 
     cancel_filters(cancel_type) {
         console.log('cancel_filters');
-        this.menuItems[9].items[2]['disabled'] = true;
+        this.menuItems[8].items[2]['disabled'] = true;
         if (cancel_type == 1) {
             for (let i = 0; i < this.cols.length; i++) {
                 this.columnFilterValues[this.cols[i].field] = '';
@@ -588,13 +590,13 @@ export class ProductListPage implements OnInit {
         }
 
         if (this.productListView.length > 0) {
-            this.menuItems[9].items[0]['disabled'] = false;
-            this.menuItems[9].items[1]['disabled'] = false;
-            this.menuItems[9].items[3]['disabled'] = false;
+            this.menuItems[8].items[0]['disabled'] = false;
+            this.menuItems[8].items[1]['disabled'] = false;
+            this.menuItems[8].items[3]['disabled'] = false;
         } else {
-            this.menuItems[9].items[0]['disabled'] = true;
-            this.menuItems[9].items[1]['disabled'] = true;
-            this.menuItems[9].items[3]['disabled'] = true;
+            this.menuItems[8].items[0]['disabled'] = true;
+            this.menuItems[8].items[1]['disabled'] = true;
+            this.menuItems[8].items[3]['disabled'] = true;
         }
 
         this.rowRecords = this.productListView.length;
@@ -629,12 +631,13 @@ export class ProductListPage implements OnInit {
         this.menuItems[0].disabled = false;
         this.menuItems[1].disabled = false;
         this.menuItems[2].disabled = false;
+        // this.menuItems[3].disabled = false;
         this.menuItems[3].disabled = false;
-        this.menuItems[4].disabled = false;
-        this.menuItems[6].items[0]['disabled'] = false;
-        this.menuItems[6].items[1]['disabled'] = false;
-        this.menuItems[9].items[4]['disabled'] = false;
-        this.menuItems[9].items[5]['disabled'] = false;
+        this.menuItems[5].items[0]['disabled'] = false;
+        this.menuItems[5].items[1]['disabled'] = false;
+        this.menuItems[8].items[4]['disabled'] = false;
+        this.menuItems[8].items[5]['disabled'] = false;
+        this.menuItems[8].items[6]['disabled'] = false;
         let id_sn = 0;
 
         if (selectedNodeLength == 1) {
@@ -645,8 +648,8 @@ export class ProductListPage implements OnInit {
                 }
             }
             if (id_sn == this.move_id) {
-                this.menuItems[4].visible = this.userdata.role_set.edit_products;
-                this.menuItems[5].visible = false;
+                this.menuItems[3].visible = this.userdata.role_set.edit_products;
+                this.menuItems[4].visible = false;
                 this.move_id = 0;
             } else if (this.move_id > 0) {
                 this.move_obj.parent = id_sn;
@@ -655,41 +658,42 @@ export class ProductListPage implements OnInit {
                     console.log('result: ', result);
                     this.page_load();
                 });
-                this.menuItems[4].visible = this.userdata.role_set.edit_products;
-                this.menuItems[5].visible = false;
+                this.menuItems[3].visible = this.userdata.role_set.edit_products;
+                this.menuItems[4].visible = false;
                 this.move_id = 0;
             }
         } else {
             this.menuItems[0].disabled = true;
             this.menuItems[1].disabled = true;
             this.menuItems[2].disabled = true;
+            // this.menuItems[3].disabled = true;
             this.menuItems[3].disabled = true;
-            this.menuItems[4].disabled = true;
-            this.menuItems[4].visible = this.userdata.role_set.edit_products;
-            this.menuItems[5].visible = false;
-            this.menuItems[9].items[4]['disabled'] = true;
-            this.menuItems[9].items[5]['disabled'] = true;
+            this.menuItems[3].visible = this.userdata.role_set.edit_products;
+            this.menuItems[4].visible = false;
+            this.menuItems[8].items[4]['disabled'] = true;
+            this.menuItems[8].items[5]['disabled'] = true;
+            this.menuItems[8].items[6]['disabled'] = true;
             this.move_id = 0;
         }
         if (selectedNodeLength == 0) {
             this.menuItems[2].disabled = true;
-            this.menuItems[6].items[2]['disabled'] = true;
-            this.menuItems[9].items[4]['disabled'] = true;
+            this.menuItems[5].items[2]['disabled'] = true;
+            this.menuItems[8].items[4]['disabled'] = true;
         } else {
             this.menuItems[2].disabled = false;
-            this.menuItems[6].items[2]['disabled'] = false;
-            this.menuItems[9].items[4]['disabled'] = false;
+            this.menuItems[5].items[2]['disabled'] = false;
+            this.menuItems[8].items[4]['disabled'] = false;
         }
         if (selectedNodeLength >= 2) {
-            this.menuItems[6].items[0]['disabled'] = true;
-            this.menuItems[6].items[1]['disabled'] = true;
+            this.menuItems[5].items[0]['disabled'] = true;
+            this.menuItems[5].items[1]['disabled'] = true;
         }
 
         if (this.selectedNode.data.parent != 0) {
             this.childCount++;
         }
         if (this.childCount > 0) {
-            this.menuItems[9].items[4]['disabled'] = true;
+            this.menuItems[8].items[4]['disabled'] = true;
         }
 
     }
@@ -709,12 +713,13 @@ export class ProductListPage implements OnInit {
         this.menuItems[0].disabled = false;
         this.menuItems[1].disabled = false;
         this.menuItems[2].disabled = false;
+        // this.menuItems[3].disabled = false;
         this.menuItems[3].disabled = false;
-        this.menuItems[4].disabled = false;
-        this.menuItems[6].items[0]['disabled'] = false;
-        this.menuItems[6].items[1]['disabled'] = false;
-        this.menuItems[9].items[4]['disabled'] = false;
-        this.menuItems[9].items[5]['disabled'] = false;
+        this.menuItems[5].items[0]['disabled'] = false;
+        this.menuItems[5].items[1]['disabled'] = false;
+        this.menuItems[8].items[4]['disabled'] = false;
+        this.menuItems[8].items[5]['disabled'] = false;
+        this.menuItems[8].items[6]['disabled'] = false;
         let id_sn = 0;
 
         if (selectedNodeLength == 1) {
@@ -725,8 +730,8 @@ export class ProductListPage implements OnInit {
                 }
             }
             if (id_sn == this.move_id) {
-                this.menuItems[4].visible = this.userdata.role_set.edit_products;
-                this.menuItems[5].visible = false;
+                this.menuItems[3].visible = this.userdata.role_set.edit_products;
+                this.menuItems[4].visible = false;
                 this.move_id = 0;
             } else if (this.move_id > 0) {
                 this.move_obj.parent = id_sn;
@@ -735,41 +740,42 @@ export class ProductListPage implements OnInit {
                     console.log('result: ', result);
                     this.page_load();
                 });
-                this.menuItems[4].visible = this.userdata.role_set.edit_products;
-                this.menuItems[5].visible = false;
+                this.menuItems[3].visible = this.userdata.role_set.edit_products;
+                this.menuItems[4].visible = false;
                 this.move_id = 0;
             }
         } else {
             this.menuItems[0].disabled = true;
             this.menuItems[1].disabled = true;
             this.menuItems[2].disabled = true;
+            // this.menuItems[3].disabled = true;
             this.menuItems[3].disabled = true;
-            this.menuItems[4].disabled = true;
-            this.menuItems[4].visible = this.userdata.role_set.edit_products;
-            this.menuItems[5].visible = false;
-            this.menuItems[9].items[4]['disabled'] = true;
-            this.menuItems[9].items[5]['disabled'] = true;
+            this.menuItems[3].visible = this.userdata.role_set.edit_products;
+            this.menuItems[4].visible = false;
+            this.menuItems[8].items[4]['disabled'] = true;
+            this.menuItems[8].items[5]['disabled'] = true;
+            this.menuItems[8].items[6]['disabled'] = true;
             this.move_id = 0;
         }
         if (selectedNodeLength == 0) {
             this.menuItems[2].disabled = true;
-            this.menuItems[6].items[2]['disabled'] = true;
-            this.menuItems[9].items[4]['disabled'] = true;
+            this.menuItems[5].items[2]['disabled'] = true;
+            this.menuItems[8].items[4]['disabled'] = true;
         } else {
             this.menuItems[2].disabled = false;
-            this.menuItems[6].items[2]['disabled'] = false;
-            this.menuItems[9].items[4]['disabled'] = false;
+            this.menuItems[5].items[2]['disabled'] = false;
+            this.menuItems[8].items[4]['disabled'] = false;
         }
         if (selectedNodeLength >= 2) {
-            this.menuItems[6].items[0]['disabled'] = true;
-            this.menuItems[6].items[1]['disabled'] = true;
+            this.menuItems[5].items[0]['disabled'] = true;
+            this.menuItems[8].items[1]['disabled'] = true;
         }
 
         if (event.node.data.parent != 0) {
             this.childCount--;
         }
         if (this.childCount > 0) {
-            this.menuItems[9].items[4]['disabled'] = true;
+            this.menuItems[8].items[4]['disabled'] = true;
         }
 
     }
@@ -855,8 +861,8 @@ export class ProductListPage implements OnInit {
                     this.move_obj = JSON.parse(JSON.stringify(this.selectedNode.data));
                 }
             }
-            this.menuItems[4].visible = false;
-            this.menuItems[5].visible = true;
+            this.menuItems[3].visible = false;
+            this.menuItems[4].visible = true;
             this.selectMulti = 0;
         } else if (n == 2) {
             // in Root
@@ -866,10 +872,10 @@ export class ProductListPage implements OnInit {
                 console.log('result: ', result);
                 this.page_load();
             });
-            this.menuItems[4].visible = true;
-            this.menuItems[5].visible = false;
-            this.menuItems[4].visible = true;
-            this.menuItems[5].visible = false;
+            this.menuItems[3].visible = true;
+            this.menuItems[4].visible = false;
+            this.menuItems[3].visible = true;
+            this.menuItems[4].visible = false;
             this.move_id = 0;
             this.selectMulti = 1;
         }
