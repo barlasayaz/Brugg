@@ -688,7 +688,7 @@ export class ProtocolListPage implements OnInit {
 
     showConfirmAlert(idProtocol) {
         const alert = this.alertCtrl.create({
-            header: this.translate.instant('Deaktivierung des Protokolls bestätigen'),
+            header: this.translate.instant('Achtung'),
             message: this.translate.instant('Möchten Sie dieses Protokoll wirklich deaktivieren'),
             buttons: [
                 {

@@ -198,7 +198,7 @@ export class ProductDetailsPage implements OnInit {
 
   delFile(datei) {
     const alert = this.alertCtrl.create({
-      header: '',
+      header: this.translate.instant('Achtung'),
       message: this.translate.instant('del_file'),
       buttons: [
         {

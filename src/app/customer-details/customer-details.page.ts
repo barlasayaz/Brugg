@@ -378,7 +378,7 @@ export class CustomerDetailsPage implements OnInit {
     setProductSrv(mode: number) {
       let titel = this.translate.instant('Prüfservice');
       let msg = this.translate.instant('disable_service_produkte');
-      if (mode == 1) { this.translate.instant('enable_service_produkte'); }
+      if (mode == 1) { msg = this.translate.instant('enable_service_produkte'); }
       let alert = this.alertCtrl.create({
         header: titel,
         message: msg,

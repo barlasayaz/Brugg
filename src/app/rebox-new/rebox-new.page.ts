@@ -110,7 +110,7 @@ export class ReboxNewPage {
     } */
 
     let alert = this.alertCtrl.create({
-        header: '',
+        header: this.translate.instant('Achtung'),
         message: this.translate.instant('Möchten Sie eine ReBox verbindlich bestellen?'),
         buttons: [
             {
@@ -167,7 +167,7 @@ export class ReboxNewPage {
           if (result == 1) {
             // OK
             let alert = this.alertCtrl.create({
-              header: '',
+              header: this.translate.instant('information'),
               message: this.translate.instant('Die Nachricht wurde erfolgreich versendet.'),
               buttons: [
                   {
@@ -181,7 +181,7 @@ export class ReboxNewPage {
           } else {
             // NOK
             let alert = this.alertCtrl.create({
-              header: '',
+              header: this.translate.instant('information'),
               message: this.translate.instant('Die Nachricht konnte nicht versandt werden!'),
               buttons: [
                   {

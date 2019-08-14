@@ -88,7 +88,7 @@ export class ProductCopyPage implements OnInit {
   productCopyAlert() {
     if (this.targetCustomer) {
       let alert = this.alertCtrl.create({
-        header: this.translate.instant('Bestätigen sie das copy produkt'),
+        header: this.translate.instant('Achtung'),
         message: this.translate.instant('Möchten sie dieses produkt wirklich kopieren?'),
         buttons: [
           {

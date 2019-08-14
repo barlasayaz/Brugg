@@ -333,7 +333,7 @@ export class ProtocolEditPage implements OnInit {
 
   showConfirmAlert(activProtocol) {
     let alert = this.alertCtrl.create({
-      header: this.translate.instant('Deaktivierung des Protokolls bestätigen'),
+      header: this.translate.instant('Achtung'),
       message: this.translate.instant('Möchten Sie dieses Protokoll wirklich deaktivieren'),
       buttons: [
         {
@@ -363,7 +363,7 @@ export class ProtocolEditPage implements OnInit {
 
   showConfirmTemplateAlert(activProtocol) {
     let alert = this.alertCtrl.create({
-      header: this.translate.instant('Bestätigen Sie die Protokollerstellung'),
+      header: this.translate.instant('Achtung'),
       message: this.translate.instant('Möchten Sie diese Vorlage wirklich verwenden'),
       buttons: [
         {
@@ -408,7 +408,7 @@ export class ProtocolEditPage implements OnInit {
 
   showMandatoryAlert() {
     let alert = this.alertCtrl.create({
-      header: this.translate.instant('Protokoll speichern short'),
+      header: this.translate.instant('Achtung'),
       message: this.translate.instant('Bitte füllen Sie alle Pflichtfelder aus.'),
       buttons: [
         {
@@ -423,7 +423,7 @@ export class ProtocolEditPage implements OnInit {
 
   showOptionAlert() {
     let alert = this.alertCtrl.create({
-      header: this.translate.instant('Protokoll speichern short'),
+      header: this.translate.instant('Achtung'),
       message: this.translate.instant('Produkt Option long'),
       buttons: [
         {

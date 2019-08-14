@@ -154,8 +154,8 @@ export class NoteEditComponent {
   
   showConfirmAlert(activNote) {
     let alert = this.alertCtrl.create({
-      header: 'Confirm deactivate note',
-      message: 'Are you sure you want to deactivate this note',
+      header: this.translate.instant('Achtung'),
+      message: this.translate.instant('Möchten Sie diese Notiz wirklich deaktivieren'),
       buttons: [
         {
           text: this.translate.instant('nein'),

@@ -160,7 +160,7 @@ export class OrderSendNewPage {
       if (result != null) {
         if (result['status'] == 1) {
           // OK
-          let alert = await this.alertCtrl.create({ header: this.translate.instant('Bestellformular'),
+          let alert = await this.alertCtrl.create({ header: this.translate.instant('information'),
               message: this.translate.instant('Die Nachricht wurde erfolgreich versendet.'),
               buttons: [
                 {
@@ -177,7 +177,7 @@ export class OrderSendNewPage {
         } else {
           // NOK
           console.log('set_orders_send.php NOK:', result);
-          let alert = await this.alertCtrl.create({ header: this.translate.instant('Bestellformular'),
+          let alert = await this.alertCtrl.create({ header: this.translate.instant('information'),
                                               message: this.translate.instant('Die Nachricht konnte nicht versandt werden!'),
                                               buttons: [
                                                 {
@@ -195,7 +195,7 @@ export class OrderSendNewPage {
       } else {
         // NOK
         console.log('set_orders_send.php NOK:', result);
-        let alert = await this.alertCtrl.create({ header: this.translate.instant('Bestellformular'), 
+        let alert = await this.alertCtrl.create({ header: this.translate.instant('information'),
                                             message: this.translate.instant('Die Nachricht konnte nicht versandt werden!'),
                                             buttons: [
                                               {

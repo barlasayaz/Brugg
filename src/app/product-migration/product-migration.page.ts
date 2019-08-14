@@ -104,17 +104,17 @@ export class ProductMigrationPage implements OnInit {
     }
     if (this.targetCustomer) {
       let alert = this.alertCtrl.create({
-        header: this.translate.instant('Bestätigen sie das migration produkt'),
+        header: this.translate.instant('Achtung'),
         message: this.translate.instant('Möchten sie dieses produkt wirklich migrieren?'),
         buttons: [
           {
-            text: this.translate.instant('abbrechen'),
+            text: this.translate.instant('nein'),
             handler: () => {
               console.log('Cancel clicked');
             }
           },
           {
-            text: this.translate.instant('okay'),
+            text: this.translate.instant('ja'),
             handler: () => {
               this.productMigration();
             }

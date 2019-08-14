@@ -1071,13 +1071,13 @@ export class ProductListPage implements OnInit {
         const alert = await this.alertCtrl.create({
             header: this.translate.instant('Spalten Auswählen'), inputs: inputs,
             buttons: [{
-                text: this.translate.instant('abbrechen'),
+                text: this.translate.instant('nein'),
                 handler: data => {
                     //  alert.dismiss();
                 }
             },
             {
-                text: this.translate.instant('okay'),
+                text: this.translate.instant('ja'),
                 handler: data => {
                     console.log('Checkbox data:', data);
                     this.selectedColumns = this.cols.filter(function (element, index, array) { return data.includes(element.field); });
@@ -1127,7 +1127,7 @@ export class ProductListPage implements OnInit {
 
     productDeactivateAlert() {
         const alert = this.alertCtrl.create({
-            header: this.translate.instant('Deaktivierung des Produkts bestätigen'),
+            header: this.translate.instant('Achtung'),
             message: this.translate.instant('Möchten Sie dieses Produkt wirklich deaktivieren'),
             buttons: [
                 {
@@ -1175,7 +1175,7 @@ export class ProductListPage implements OnInit {
 
     showChildMsg() {
         const alert = this.alertCtrl.create({
-            header: this.translate.instant('Achtung'),
+            header: this.translate.instant('information'),
             message: this.translate.instant('Produkte mit untergeordneten Datensätzen können nicht gelöscht werden.'),
             buttons: [
                 {

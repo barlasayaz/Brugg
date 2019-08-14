@@ -605,7 +605,7 @@ export class ProductEditPage implements OnInit {
   }
   showConfirmAlert(activProduct) {
     let alert = this.alertCtrl.create({
-      header: this.translate.instant('Deaktivierung des Produkts bestätigen'),
+      header: this.translate.instant('Achtung'),
       message: this.translate.instant('Möchten Sie dieses Produkt wirklich deaktivieren'),
       buttons: [
         {
@@ -640,7 +640,7 @@ export class ProductEditPage implements OnInit {
 
   showConfirmDeleteTemplate() {
     let alert = this.alertCtrl.create({
-      header: this.translate.instant('Deaktivierung der Vorlage bestätigen'),
+      header: this.translate.instant('Achtung'),
       message: this.translate.instant('Möchten Sie dieses Vorlage wirklich deaktivieren'),
       buttons: [
         {
@@ -671,7 +671,7 @@ export class ProductEditPage implements OnInit {
 
   showConfirmTemplateAlert(activProduct) {
     let alert = this.alertCtrl.create({
-      header: this.translate.instant('Bestätigen Sie die Produkterstellung'),
+      header: this.translate.instant('Achtung'),
       message: this.translate.instant('Möchten Sie diese Vorlage wirklich verwenden'),
       buttons: [
         {
@@ -717,7 +717,7 @@ export class ProductEditPage implements OnInit {
 
   showMandatoryAlert() {
     let alert = this.alertCtrl.create({
-      header: this.translate.instant('Produkt speichern short'),
+      header: this.translate.instant('information'),
       message: this.translate.instant('Bitte füllen Sie alle Pflichtfelder aus.'),
       buttons: [
         {
@@ -732,7 +732,7 @@ export class ProductEditPage implements OnInit {
 
   showOptionAlert() {
     let alert = this.alertCtrl.create({
-      header: this.translate.instant('Produkt speichern short'),
+      header: this.translate.instant('information'),
       message: this.translate.instant('Produkt Option long'),
       buttons: [
         {
@@ -844,7 +844,7 @@ export class ProductEditPage implements OnInit {
 
   showConfirmIDNumberAlert() {
     let alert = this.alertCtrl.create({
-      header: this.translate.instant('Produkt speichern short'),
+      header: this.translate.instant('information'),
       message: this.translate.instant('Bitte überprüfen Sie das Feld ID-Nummer. Diese Nummer wird verwendet.'),
       buttons: [
         {
@@ -860,7 +860,7 @@ export class ProductEditPage implements OnInit {
 
   showConfirmDeletImageAlert() {
     let alert = this.alertCtrl.create({
-      header: this.translate.instant('Produktbild löschen'),
+      header: this.translate.instant('Achtung'),
       message: this.translate.instant('Das Produktbild wird gelöscht. Sind Sie sicher?'),
       buttons: [
         {

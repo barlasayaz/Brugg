@@ -249,7 +249,7 @@ export class DashboardNewPage implements OnInit {
             }, (err) => {
                 loader.dismiss();
                 console.log('Error: ', err);
-                let alert = this.alertCtrl.create({ header: 'Problem', message: err.message }).then(x => x.present());;
+                let alert = this.alertCtrl.create({ header: this.translate.instant('information'), message: err.message }).then(x => x.present());;
             });
         }
 

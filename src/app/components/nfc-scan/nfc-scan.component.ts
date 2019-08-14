@@ -256,7 +256,7 @@ export class NfcScanComponent implements OnInit {
     this.procedure = 4;
 
     const alert = this.alertCtrl.create({
-      header: 'Error',
+      header: this.translate.instant('information'),
       message: 'Fehler: NFC Listener ' + reason,
       buttons: [
         {
