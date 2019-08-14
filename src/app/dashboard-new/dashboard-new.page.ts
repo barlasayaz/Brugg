@@ -126,13 +126,8 @@ export class DashboardNewPage implements OnInit {
                 date_end.setDate(today.getDate() + 30);
                 var date_start = new Date();
                 date_start.setDate(today.getDate() - 1);
-                let data = {
-                    user: this.userdata.id,
-                    licensee: this.userdata.licensee,
-                    date_start: date_start,
-                    date_end: date_end
-                };
-                this.apiService.pvs4_api_post('get_appointment_list_ps.php', data).then((done: any) => {// return the result
+
+                this.apiService.pvs4_get_appointment_list_ps(this.apiService.date2mysql(date_start,true),this.apiService.date2mysql(date_end,true)).then((done: any) => {// return the result
                     let appointments: any = done.list;
                     for (let i = 0; i < appointments.length; i++) {
                         let item = appointments[i].data;
@@ -163,6 +158,7 @@ export class DashboardNewPage implements OnInit {
                         }
                         this.nextAppointment.push(obj);
                     }
+                    this.nextAppointment = JSON.parse(JSON.stringify(this.nextAppointment));
                     this.nextAppointmentAll = JSON.parse(JSON.stringify(this.nextAppointment));
                     this.progress_appointment(this.nextAppointment.length, this.nextAppointmentAll.length);
                     this.search_all_app();
@@ -366,6 +362,8 @@ export class DashboardNewPage implements OnInit {
                     }
                     this.nextAppointment.push(obj);
                 }
+                
+                this.nextAppointment = JSON.parse(JSON.stringify(this.nextAppointment));
                 this.nextAppointmentAll = JSON.parse(JSON.stringify(this.nextAppointment));
                 this.progress_appointment(this.nextAppointment.length, this.nextAppointmentAll.length);
                 this.search_all_app();
