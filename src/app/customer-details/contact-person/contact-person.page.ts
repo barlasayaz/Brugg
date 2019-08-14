@@ -135,14 +135,6 @@ export class ContactPersonPage {
                 this.pfelder = 1;
                 return;
             }
-            if (this.contactPersonEdit.phone) {
-                this.pw_felder = 0;
-            } else {
-                this.inputError = true;
-                this.pw_felder = 1;
-                this.pfelder = 1;
-                return;
-            }
         }
         if (this.pw_felder == 0) {
         let obj = {id: 0,
