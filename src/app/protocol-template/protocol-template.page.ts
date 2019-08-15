@@ -100,7 +100,7 @@ export class ProtocolTemplatePage implements OnInit {
       inputs: [
         {
           name: 'de',
-          placeholder: 'Deutsch',
+          placeholder: 'German',
           value: this.templateTitleObj.de
         },
         {
@@ -110,12 +110,12 @@ export class ProtocolTemplatePage implements OnInit {
         },
         {
           name: 'fr',
-          placeholder: 'Français',
+          placeholder: 'French',
           value: this.templateTitleObj.fr
         },
         {
           name: 'it',
-          placeholder: 'Italiano',
+          placeholder: 'Italian',
           value: this.templateTitleObj.it
         }
       ],
