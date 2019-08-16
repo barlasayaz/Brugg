@@ -53,7 +53,18 @@ export class CustomerTablePage implements OnInit {
     public heightCalc: any = '700px';
     public move_id: number = 0;
     public move_obj: any = {};
-    public columnFilterValues = { company: '', id: '', customer_number: '', rating: '', zip_code: '', place: '', employees: '', last_date: '', next_date: '', inspector: '', search_all: '' };
+    public columnFilterValues = { company: '',
+                                  id: '',
+                                  customer_number: '',
+                                  rating: '',
+                                  zip_code: '',
+                                  place: '',
+                                  employees: '',
+                                  last_date: '',
+                                  next_date: '',
+                                  inspector: '',
+                                  sector: '',
+                                  search_all: '' };
     public filterCols: string[];
     public expendedNodes: string[] = [];
     public rowRecords: number = 0;
@@ -185,7 +196,8 @@ export class CustomerTablePage implements OnInit {
             { field: 'employees', header: this.translate.instant('Mitarbeiter') },
             { field: 'last_date', header: '<< ' + this.translate.instant('Termin') },
             { field: 'next_date', header: '>> ' + this.translate.instant('Termin') },
-            { field: 'inspector', header: this.translate.instant('Prüfer') }
+            { field: 'inspector', header: this.translate.instant('Prüfer') },
+            { field: 'sector', header: this.translate.instant('Branche') }
         ];
 
         this.filterCols = ['company',
@@ -198,6 +210,7 @@ export class CustomerTablePage implements OnInit {
                            'last_date',
                            'next_date',
                            'inspector',
+                           'sector',
                            'search_all'];
         this.selectedColumns = this.cols;
         console.log('CustomerTablePage idCustomer:', this.idCustomer);
@@ -322,6 +335,7 @@ export class CustomerTablePage implements OnInit {
                                         last_date: '',
                                         next_date: '',
                                         inspector: '',
+                                        sector: '',
                                         search_all: '' };
         }
         this.generate_customerList();
@@ -496,7 +510,8 @@ export class CustomerTablePage implements OnInit {
                 'employees': obj.employees,
                 'last_date': obj.last_date, 
                 'next_date': obj.next_date,
-                'inspector': obj.inspector
+                'inspector': obj.inspector,
+                'sector': obj.sector
             });
         }
         this.customerList = data;
