@@ -61,6 +61,7 @@ export class DashboardNewPage implements OnInit {
             this.modelAppChanged.pipe(
                 debounceTime(700))
                 .subscribe(model => {
+                    console.log('modelAppChanged:',model);
                     this.nextAppointment = JSON.parse(JSON.stringify(this.nextAppointmentAll));
                     for (let i = this.nextAppointment.length - 1; i >= 0; i--) {
                         let s = this.filterValueApp.toLowerCase();
@@ -80,6 +81,7 @@ export class DashboardNewPage implements OnInit {
             this.modelChanged.pipe(
                 debounceTime(700))
                 .subscribe(model => {
+                    console.log('modelChanged:',model);
                     this.listInspection = JSON.parse(JSON.stringify(this.listInspectionAll));
                     for (let i = this.listInspection.length - 1; i >= 0; i--) {
                         let s = this.filterValue.toLowerCase();
@@ -450,7 +452,7 @@ export class DashboardNewPage implements OnInit {
 
 
         search_all_app() {
-            this.modelChanged.next(this.filterValueApp);
+            this.modelAppChanged.next(this.filterValueApp);
         }
 
         progress_appointment(rowRecords, totalRecords) {
