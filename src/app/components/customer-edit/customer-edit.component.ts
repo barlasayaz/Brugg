@@ -201,7 +201,7 @@ export class CustomerEditComponent implements OnInit {
   showConfirmAlert(activeCustomer) {
     let alert = this.alertCtrl.create({
       header: this.translate.instant('Achtung'),
-      message: this.translate.instant('Möchten Sie diesen Benutzer wirklich dauerhaft löschen?'),
+      message: this.translate.instant('Möchten Sie diesen Kunden wirklich dauerhaft löschen?'),
       buttons: [
         {
           text: this.translate.instant('nein'),

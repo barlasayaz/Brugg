@@ -670,7 +670,7 @@ export class CustomerTablePage implements OnInit {
     isFilterOn(): any {
         let ret = false;
         for (let i = 0; i < this.filterCols.length; i++) {
-            if (this.columnFilterValues[this.filterCols[i]].trim().length > 0) {
+            if ( (this.columnFilterValues[this.filterCols[i]]) && (this.columnFilterValues[this.filterCols[i]].trim().length > 0) ) {
                 ret = true;
             }
         }
