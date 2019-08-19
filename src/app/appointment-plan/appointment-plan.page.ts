@@ -4,7 +4,16 @@ import { ApiService } from '../services/api';
 import { UserdataService } from '../services/userdata';
 import { TranslateService } from '@ngx-translate/core';
 import { AppointmentEditComponent } from '../components/appointment-edit/appointment-edit.component';
-import { CalendarComponent } from 'ng-fullcalendar';
+import { FullCalendarComponent } from '@fullcalendar/angular';
+//import { EventInput, Calendar } from '@fullcalendar/core';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import timeGrigPlugin from '@fullcalendar/timegrid';
+import interactionPlugin from '@fullcalendar/interaction'; // for dateClick
+import frLocale from '@fullcalendar/core/locales/fr'
+import itLocale from '@fullcalendar/core/locales/it'
+import deLocale from '@fullcalendar/core/locales/de'
+import { DatePipe } from '@angular/common';
+import bootstrapPlugin from '@fullcalendar/bootstrap';
 /**
  * Generated class for the TerminplanPage page.
  *
@@ -31,8 +40,20 @@ export class AppointmentPlanPage {
     public viewMode = 0;
     public peopleFilter = 'none';
     public typeFilter = 99;
-
-    @ViewChild('fullcalendar') fullcalendar: CalendarComponent;
+    calendarPlugins = [dayGridPlugin,timeGrigPlugin,interactionPlugin,bootstrapPlugin]; 
+    headers =  {
+        left: 'prev,next today',
+        center: 'title',
+        right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+    };
+    businessHours = {
+        dow: [1, 2, 3, 4, 5], // Monday - Thursday
+        start: '07:00', // a start time (10am in this example)
+        end: '18:00', // an end time (6pm in this example)
+    };
+    locales = [itLocale,frLocale,deLocale];
+    lang = localStorage.getItem('lang');
+    @ViewChild('calendar') calendarComponent: FullCalendarComponent;
 
     constructor(public navCtrl: NavController,
         public apiService: ApiService,
@@ -42,81 +63,7 @@ export class AppointmentPlanPage {
         public platform: Platform
         // private datePipe: DatePipe
     ) {
-        this.calendarOptions = {
-            timezone: 'local',
-            editable: true,
-            eventLimit: false,
-            timeFormat: 'HH:mm',
-            slotLabelFormat: 'HH:mm',
-            weekHeader: 'dd',
-            dateFormat: 'dd.mm.yy',
-            firstDay: 1,
-            allDaySlot: false,
-            businessHours: {
-                dow: [1, 2, 3, 4, 5], // Monday - Thursday
-                start: '07:00', // a start time (10am in this example)
-                end: '18:00', // an end time (6pm in this example)
-            },
-            minTime: '06:00:00',
-            maxTime: '19:00:00',
-            header: {
-                left: 'prev,next,today',
-                center: 'title, myCustomButton',
-                right: 'month,agendaWeek,agendaDay,listMonth'
-            },
-            events: []
-        };
-        const lang = localStorage.getItem('lang');
-        console.log(lang);
-        if (lang == 'fr') {
-            this.calendarOptions.monthNames = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin',
-                                               'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'];
-            this.calendarOptions.monthNamesShort = ['janv.', 'févr.', 'mars', 'avr.', 'mai', 'juin',
-                                                    'juil.', 'août', 'sept.', 'oct.', 'nov.', 'déc.'];
-            this.calendarOptions.dayNames = ['dimanche', 'lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi'];
-            this.calendarOptions.dayNamesShort = ['dim.', 'lun.', 'mar.', 'mer.', 'jeu.', 'ven.', 'sam.'];
-            this.calendarOptions.dayNamesMin = ['D', 'L', 'M', 'M', 'J', 'V', 'S'];
-            this.calendarOptions.buttonText = {
-                year: 'Année',
-                month: 'Mois',
-                week: 'Semaine',
-                day: 'Jour',
-                list: 'Mon planning',
-                today: 'Aujourd\'hui'
-            };
-        }
-        if (lang == 'de') {
-            this.calendarOptions.monthNames = ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni',
-                                               'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'];
-            this.calendarOptions.monthNamesShort = ['Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul',
-                                                    'Aug', 'Sep', 'Okt', 'Nov', 'Dez'];
-            this.calendarOptions.dayNames = ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'];
-            this.calendarOptions.dayNamesShort = ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'];
-            this.calendarOptions.dayNamesMin = ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'];
-            this.calendarOptions.buttonText = {
-                month: 'Monat',
-                week: 'Woche',
-                day: 'Tag',
-                list: 'Terminübersicht',
-                today: 'Heute'
-            };
-        }
-        if (lang == 'it') {
-            this.calendarOptions.monthNames = ['Gennaio', 'Febbraio', 'Marzo', 'Aprile', 'Maggio', 'Giugno',
-                                               'Luglio', 'Agosto', 'Settembre', 'Ottobre', 'Novembre', 'Dicembre'];
-            this.calendarOptions.monthNamesShort = ['Gen', 'Feb', 'Mar', 'Apr', 'Mag', 'Giu',
-                                                    'Lug', 'Ago', 'Set', 'Ott', 'Nov', 'Dic'];
-            this.calendarOptions.dayNames = ['Domenica', 'Lunedì', 'Martedì', 'Mercoledì', 'Giovedì', 'Venerdì', 'Sabato'];
-            this.calendarOptions.dayNamesShort = ['Dom', 'Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab'];
-            this.calendarOptions.dayNamesMin = ['Do', 'Lu', 'Ma', 'Me', 'Gi', 'Ve', 'Sa'];
-            this.calendarOptions.buttonText = {
-                month: 'Mese',
-                week: 'Settimana',
-                day: 'Giorno',
-                list: 'Agenda',
-                today: 'Oggi'
-            };
-        }
+        console.log(this.lang);
         const today = new Date();
         const newdate = new Date();
         newdate.setDate(today.getDate() + 30);
@@ -270,8 +217,10 @@ export class AppointmentPlanPage {
     }
     loadEvents(model: any) {
         console.log('loadEvents(): ', model);
-        const event_start = model.view.start.format('YYYY-MM-DD');
-        const event_end = model.view.end.format('YYYY-MM-DD');
+        let pipe = new DatePipe('en-US');
+        
+        const event_start = pipe.transform(model.view.activeStart, 'yyyy-MM-dd');
+        const event_end = pipe.transform(model.view.activeEnd, 'yyyy-MM-dd');
         console.log('event_start: ', event_start);
         console.log('event_end: ', event_end);
         this.eventsFunc(event_start, event_end);
@@ -305,9 +254,12 @@ export class AppointmentPlanPage {
 
     updateEvent(model: any) {
         console.log(model.event);
-        const event_date = model.event.start.format('YYYY-MM-DD');
-        const start_time = model.event.start.format('HH:mm');
-        const end_time = model.event.end.format('HH:mm');
+        let pipe = new DatePipe('en-US');
+        
+        const event_date = pipe.transform(model.event.start, 'yyyy-MM-dd');
+        const start_time = pipe.transform(model.event.start, 'HH:mm');
+        const end_time = pipe.transform(model.event.end, 'HH:mm');
+
         this.apiService.pvs4_get_appointment(model.event.id).then((result: any) => {
             console.log(result);
             if (result && result.obj) {

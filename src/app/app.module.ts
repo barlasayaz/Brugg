@@ -42,7 +42,7 @@ import { NoteEditComponentModule } from './components/note-edit/note-edit.module
 import { ButtonModule, ColorPickerModule, SharedModule } from 'primeng/primeng';
 import { TableModule } from 'primeng/table';
 import { OrderModule } from 'ngx-order-pipe';
-import { FullCalendarModule } from 'ng-fullcalendar';
+import { FullCalendarModule } from '@fullcalendar/angular';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { ToggleButtonModule } from 'primeng/togglebutton';
 import { TreeTableModule } from 'primeng/treetable';
