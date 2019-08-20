@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 import { ComponentsModule } from '../components/components.module';
 import { IonicModule } from '@ionic/angular';
-import { FullCalendarModule } from 'ng-fullcalendar';
+import { FullCalendarModule } from '@fullcalendar/angular';
 import { AppointmentPlanPage } from './appointment-plan.page';
 
 const routes: Routes = [
