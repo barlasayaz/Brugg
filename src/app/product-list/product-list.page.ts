@@ -47,11 +47,11 @@ export class ProductListPage implements OnInit {
     public totalRecords = 0;
     public lang: string = localStorage.getItem('lang');
     public company = '';
-    public selectMulti: number;
     public navigationSubscription: any;
     public childCount: number;
     modelChanged: Subject<any> = new Subject<any>();
     public selectedRow: number;
+    public selectMode: boolean = false;
 
     public menuItems: MenuItem[] = [{
         label: this.translate.instant('Ansicht'),
@@ -312,17 +312,16 @@ export class ProductListPage implements OnInit {
         console.log('page_load ProductListPage');
         this.rowRecords = 0;
         this.totalRecords = 0;
-        this.selectMulti = 1;
         this.childCount = 0;
         this.selectedNode = [];
         this.selectedRow = 0;
         this.menuItems[0].disabled = true;
         this.menuItems[1].disabled = true;
         this.menuItems[2].disabled = true;
-        // this.menuItems[3].disabled = true;
         this.menuItems[3].disabled = true;
         this.menuItems[5].items[0]['disabled'] = false;
         this.menuItems[5].items[1]['disabled'] = false;
+        this.menuItems[5].items[2]['disabled'] = true;
         this.menuItems[8].items[4]['disabled'] = true;
         this.menuItems[8].items[5]['disabled'] = true;
         this.menuItems[8].items[6]['disabled'] = true;
@@ -454,7 +453,6 @@ export class ProductListPage implements OnInit {
                         this.menuItems[0].disabled = true;
                         this.menuItems[1].disabled = true;
                         this.menuItems[2].disabled = true;
-                        // this.menuItems[3].disabled = true;
                         this.menuItems[3].disabled = true;
                         this.menuItems[3].visible = this.userdata.role_set.edit_products;
                         this.menuItems[4].visible = false;
@@ -617,63 +615,55 @@ export class ProductListPage implements OnInit {
     }
 
     nodeSelect(event, selectedNode) {
-        console.log('nodeSelect :', event, selectedNode, selectedNode.length, this.selectMulti);
+        console.log('nodeSelect :', event, selectedNode);
+
         let selectedNodeLength = selectedNode.length;
         this.selectedRow = selectedNodeLength;
 
-        if (!this.selectMulti) {
+        if (this.selectMode) {
             selectedNodeLength = 1;
-            this.selectMulti = 1;
         }
-        console.log('selectMulti :', this.selectMulti);
-
         this.selectedNode.data = event.node.data;
         this.menuItems[0].disabled = false;
         this.menuItems[1].disabled = false;
         this.menuItems[2].disabled = false;
-        // this.menuItems[3].disabled = false;
         this.menuItems[3].disabled = false;
         this.menuItems[5].items[0]['disabled'] = false;
         this.menuItems[5].items[1]['disabled'] = false;
+        this.menuItems[5].items[2]['disabled'] = false;
         this.menuItems[8].items[4]['disabled'] = false;
         this.menuItems[8].items[5]['disabled'] = false;
         this.menuItems[8].items[6]['disabled'] = false;
         let id_sn = 0;
 
         if (selectedNodeLength == 1) {
-            this.selectedNode.data = this.selectedNode[0].data;
             if (this.selectedNode) {
                 if (this.selectedNode.data.id) {
                     id_sn = this.selectedNode.data.id;
                 }
             }
-            if (id_sn == this.move_id) {
-                this.menuItems[3].visible = this.userdata.role_set.edit_products;
-                this.menuItems[4].visible = false;
-                this.move_id = 0;
-            } else if (this.move_id > 0) {
+            if (this.move_id > 0) {
                 this.move_obj.parent = id_sn;
                 this.move_obj.title = JSON.stringify(this.move_obj.titleJson);
                 this.apiService.pvs4_set_product(this.move_obj).then((result: any) => {
                     console.log('result: ', result);
+                    this.menuItems[3].visible = this.userdata.role_set.edit_products;
+                    this.menuItems[4].visible = false;
+                    this.menuItems[5].items[2]['disabled'] = true;
+                    this.move_id = 0;
                     this.page_load();
                 });
-                this.menuItems[3].visible = this.userdata.role_set.edit_products;
-                this.menuItems[4].visible = false;
-                this.move_id = 0;
             }
         } else {
             this.menuItems[0].disabled = true;
             this.menuItems[1].disabled = true;
             this.menuItems[2].disabled = true;
-            // this.menuItems[3].disabled = true;
             this.menuItems[3].disabled = true;
             this.menuItems[3].visible = this.userdata.role_set.edit_products;
             this.menuItems[4].visible = false;
             this.menuItems[8].items[4]['disabled'] = true;
             this.menuItems[8].items[5]['disabled'] = true;
             this.menuItems[8].items[6]['disabled'] = true;
-            this.move_id = 0;
         }
         if (selectedNodeLength == 0) {
             this.menuItems[2].disabled = true;
@@ -685,7 +675,6 @@ export class ProductListPage implements OnInit {
             this.menuItems[8].items[4]['disabled'] = false;
         }
         if (selectedNodeLength >= 2) {
-            this.menuItems[5].items[0]['disabled'] = true;
             this.menuItems[5].items[1]['disabled'] = true;
         }
 
@@ -699,85 +688,66 @@ export class ProductListPage implements OnInit {
     }
 
     onNodeUnselect(event, selectedNode) {
-
-        console.log('nodeSelect :', event, selectedNode, selectedNode.length, this.selectMulti);
-        let selectedNodeLength = selectedNode.length;
-        this.selectedRow = selectedNodeLength;
-        if (!this.selectMulti) {
-            selectedNodeLength = 1;
-            this.selectMulti = 1;
-        }
-        console.log('selectMulti :', this.selectMulti);
-
-        this.selectedNode.data = event.node.data;
-        this.menuItems[0].disabled = false;
-        this.menuItems[1].disabled = false;
-        this.menuItems[2].disabled = false;
-        // this.menuItems[3].disabled = false;
-        this.menuItems[3].disabled = false;
-        this.menuItems[5].items[0]['disabled'] = false;
-        this.menuItems[5].items[1]['disabled'] = false;
-        this.menuItems[8].items[4]['disabled'] = false;
-        this.menuItems[8].items[5]['disabled'] = false;
-        this.menuItems[8].items[6]['disabled'] = false;
-        let id_sn = 0;
-
-        if (selectedNodeLength == 1) {
-            this.selectedNode.data = this.selectedNode[0].data;
-            if (this.selectedNode) {
-                if (this.selectedNode.data.id) {
-                    id_sn = this.selectedNode.data.id;
-                }
-            }
-            if (id_sn == this.move_id) {
-                this.menuItems[3].visible = this.userdata.role_set.edit_products;
-                this.menuItems[4].visible = false;
-                this.move_id = 0;
-            } else if (this.move_id > 0) {
-                this.move_obj.parent = id_sn;
-                this.move_obj.title = JSON.stringify(this.move_obj.titleJson);
-                this.apiService.pvs4_set_product(this.move_obj).then((result: any) => {
-                    console.log('result: ', result);
-                    this.page_load();
-                });
-                this.menuItems[3].visible = this.userdata.role_set.edit_products;
-                this.menuItems[4].visible = false;
-                this.move_id = 0;
-            }
-        } else {
+        console.log('nodeSelect :', event, selectedNode);
+        if (this.selectMode) {
             this.menuItems[0].disabled = true;
             this.menuItems[1].disabled = true;
             this.menuItems[2].disabled = true;
-            // this.menuItems[3].disabled = true;
-            this.menuItems[3].disabled = true;
-            this.menuItems[3].visible = this.userdata.role_set.edit_products;
+            this.menuItems[3].visible = true;
+            this.menuItems[3].disabled = false;
             this.menuItems[4].visible = false;
-            this.menuItems[8].items[4]['disabled'] = true;
-            this.menuItems[8].items[5]['disabled'] = true;
-            this.menuItems[8].items[6]['disabled'] = true;
-            this.move_id = 0;
-        }
-        if (selectedNodeLength == 0) {
-            this.menuItems[2].disabled = true;
+            this.menuItems[5].items[0]['disabled'] = false;
+            this.menuItems[5].items[1]['disabled'] = false;
             this.menuItems[5].items[2]['disabled'] = true;
-            this.menuItems[8].items[4]['disabled'] = true;
+            this.menuItems[8].items[0]['disabled'] = false;
+            this.menuItems[8].items[1]['disabled'] = false;
+            this.menuItems[8].items[2]['disabled'] = false;
+            this.menuItems[8].items[3]['disabled'] = false;
+            this.selectMode = false;
+            this.move_id = 0;
         } else {
+            let selectedNodeLength = selectedNode.length;
+            this.selectedRow = selectedNodeLength;
+            this.selectedNode.data = event.node.data;
+            this.menuItems[0].disabled = false;
+            this.menuItems[1].disabled = false;
             this.menuItems[2].disabled = false;
+            this.menuItems[3].disabled = false;
+            this.menuItems[4].disabled = false;
+            this.menuItems[5].items[0]['disabled'] = false;
+            this.menuItems[5].items[1]['disabled'] = false;
             this.menuItems[5].items[2]['disabled'] = false;
             this.menuItems[8].items[4]['disabled'] = false;
-        }
-        if (selectedNodeLength >= 2) {
-            this.menuItems[5].items[0]['disabled'] = true;
-            this.menuItems[8].items[1]['disabled'] = true;
-        }
+            this.menuItems[8].items[5]['disabled'] = false;
+            this.menuItems[8].items[6]['disabled'] = false;
 
-        if (event.node.data.parent != 0) {
-            this.childCount--;
-        }
-        if (this.childCount > 0) {
-            this.menuItems[8].items[4]['disabled'] = true;
-        }
+            if (selectedNodeLength == 0) {
+                this.menuItems[0].disabled = true;
+                this.menuItems[1].disabled = true;
+                this.menuItems[2].disabled = true;
+                this.menuItems[3].disabled = true;
+                this.menuItems[5].items[2]['disabled'] = true;
+                this.menuItems[8].items[4]['disabled'] = true;
+                this.menuItems[8].items[5]['disabled'] = true;
+                this.menuItems[8].items[6]['disabled'] = true;
+            }
+            if (selectedNodeLength >= 2) {
+                this.menuItems[0].disabled = true;
+                this.menuItems[1].disabled = true;
+                this.menuItems[3].disabled = true;
+                this.menuItems[5].items[1]['disabled'] = true;
+                this.menuItems[8].items[5]['disabled'] = true;
+                this.menuItems[8].items[6]['disabled'] = true;
+            }
 
+            if (event.node.data.parent != 0) {
+                this.childCount--;
+            }
+            if (this.childCount > 0) {
+                this.menuItems[8].items[4]['disabled'] = true;
+            }
+            this.move_id = 0;
+        }
     }
 
     menu_new() {
@@ -861,9 +831,25 @@ export class ProductListPage implements OnInit {
                     this.move_obj = JSON.parse(JSON.stringify(this.selectedNode.data));
                 }
             }
+            //this.menuItems[3].visible = false;
+            //this.menuItems[4].visible = true;
+            // this.selectMulti = 0;
+            this.menuItems[0].disabled = true;
+            this.menuItems[1].disabled = true;
+            this.menuItems[2].disabled = true;
             this.menuItems[3].visible = false;
             this.menuItems[4].visible = true;
-            this.selectMulti = 0;
+            this.menuItems[5].items[0]['disabled'] = true;
+            this.menuItems[5].items[1]['disabled'] = true;
+            this.menuItems[5].items[2]['disabled'] = true;
+            this.menuItems[8].items[0]['disabled'] = true;
+            this.menuItems[8].items[1]['disabled'] = true;
+            this.menuItems[8].items[2]['disabled'] = true;
+            this.menuItems[8].items[3]['disabled'] = true;
+            this.menuItems[8].items[4]['disabled'] = true;
+            this.menuItems[8].items[5]['disabled'] = true;
+            this.menuItems[8].items[6]['disabled'] = true;
+            this.selectMode = true;
         } else if (n == 2) {
             // in Root
             this.move_obj.parent = 0;
@@ -876,8 +862,10 @@ export class ProductListPage implements OnInit {
             this.menuItems[4].visible = false;
             this.menuItems[3].visible = true;
             this.menuItems[4].visible = false;
+            this.menuItems[5].items[2]['disabled'] = true;
             this.move_id = 0;
-            this.selectMulti = 1;
+            // this.selectMulti = 1;
+            this.selectMode = false;
         }
     }
 
