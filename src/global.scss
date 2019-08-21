@@ -142,8 +142,6 @@ ion-header ion-toolbar:first-child {
   border: 1px solid var(--ion-color-green);
   padding-left: 10px;
 }
-
-
 // Toast
 .toast-warning{
     --background: yellow;
@@ -646,6 +644,25 @@ ul.ui-widget-content {
   }
 }
 
+// Calendar 
+.fc-icon-chevron-left:before {
+  content: "" !important;
+  font-size: 2em !important;
+  margin-left: -5px !important;
+}
+
+body .fc .fc-toolbar .fc-prev-button span::before {
+  content: "" !important;
+}
+.fc-icon-chevron-right:before {
+  content: "" !important;
+  font-size: 2em !important;
+  margin-left: -5px !important;
+}
+
+body .fc .fc-toolbar .fc-next-button span::before {
+  content: "" !important;
+}
 
 //****NEU-END*****////
 
@@ -18221,7 +18238,7 @@ tbody.ui-table-tbody {
     margin-right: 20px;
   }
   .calendar .fc-toolbar .fc-right {
-    margin-right: 20px;
+    margin-right: -5px;
   }
   .calendar .fc-toolbar .fc-center {
     display: -webkit-box;
@@ -18343,9 +18360,7 @@ tbody.ui-table-tbody {
       font-size: 8px;
     }
   }
-  .calendar .fc-toolbar button:last-child {
-    margin-right: 0px;
-  }
+
   .calendar .fc-toolbar button:hover,
   .calendar .fc-toolbar button.fc-state-active {
     background: #005e86;
@@ -19673,9 +19688,7 @@ body .fc .fc-toolbar .fc-prev-button span {
   text-align: center;
   height: auto !important;
 }
-body .fc .fc-toolbar .fc-prev-button span::before {
-  content: "" !important;
-}
+
 
 body .fc .fc-toolbar .fc-next-button span {
   line-height: inherit;
@@ -19689,9 +19702,6 @@ body .fc .fc-toolbar .fc-next-button span {
   text-indent: 0px !important;
   text-align: center;
   height: auto !important;
-}
-body .fc .fc-toolbar .fc-next-button span::before {
-  content: "" !important; 
 }
 
 body .ui-paginator .ui-paginator-pages .ui-paginator-page {
