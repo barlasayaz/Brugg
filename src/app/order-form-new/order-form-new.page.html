@@ -17,17 +17,17 @@
                         </div>
                       </div>
                       <div class="tbody">
-                        <div class="tr table-body" style="border:2px solid #ccc;">
-                            <div class="td" style="max-width: 30px;"><ion-checkbox [(ngModel)]="activOrderForm.orderCheckBox"></ion-checkbox></div>
-                            <div class="td" style="font-weight: bolder; font-size: 18px; margin-top: -6px; color: rgba(17, 238, 17, 0.658); text-transform: uppercase;">{{'Bestellen' | translate}}</div>
-                            <div class="td" style="max-width: 30px;"><ion-checkbox [(ngModel)]="activOrderForm.offerCheckBox"></ion-checkbox></div>
-                            <div class="td" style="font-weight: bolder; font-size: 18px; margin-top: -6px; color: rgba(255, 166, 0, 0.719); text-transform: uppercase;">{{'Offerte' | translate}}</div>
-                            <div class="td" style="max-width: 30px;"><ion-checkbox [(ngModel)]="activOrderForm.repairCheckBox"></ion-checkbox></div>
-                            <div class="td" style="font-weight: bolder; font-size: 18px; margin-top: -6px; color: rgba(0, 0, 255, 0.63); text-transform: uppercase;">{{'Reparatur' | translate}}</div>
-                            <div class="td" style="max-width: 30px;"><ion-checkbox [(ngModel)]="activOrderForm.inspectionCheckBox"></ion-checkbox></div>
-                            <div class="td" style="font-weight: bolder; font-size: 18px; margin-top: -6px; color: rgba(128, 128, 128, 0.678); text-transform: uppercase;">{{'Prüfung' | translate}}</div>
-                            <div class="td" style="max-width: 30px;"><ion-checkbox [(ngModel)]="activOrderForm.rentCheckBox"></ion-checkbox></div>
-                            <div class="td" style="font-weight: bolder; font-size: 18px; margin-top: -6px; color: rgba(207, 207, 26, 0.753); text-transform: uppercase;">{{'Miete' | translate}}</div> 
+                        <div class="tr table-body orederType" style="border:2px solid #ccc;">
+                            <div class="td" style="max-width: 25px;"><ion-checkbox [(ngModel)]="activOrderForm.orderCheckBox"></ion-checkbox></div>
+                            <div class="orederTypeOrder">{{'Bestellen' | translate}}</div>
+                            <div class="td" style="max-width: 25px;"><ion-checkbox [(ngModel)]="activOrderForm.offerCheckBox"></ion-checkbox></div>
+                            <div class="orederTypeOffer">{{'Offerte' | translate}}</div>
+                            <div class="td" style="max-width: 25px;"><ion-checkbox [(ngModel)]="activOrderForm.repairCheckBox"></ion-checkbox></div>
+                            <div class="orederTypeReperatur">{{'Reparatur' | translate}}</div>
+                            <div class="td" style="max-width: 25px;"><ion-checkbox [(ngModel)]="activOrderForm.inspectionCheckBox"></ion-checkbox></div>
+                            <div class="orederTypeInspection">{{'Prüfung' | translate}}</div>
+                            <div class="td" style="max-width: 25px;"><ion-checkbox [(ngModel)]="activOrderForm.rentCheckBox"></ion-checkbox></div>
+                            <div class="orederTypeRent">{{'Miete' | translate}}</div> 
                         </div>
                       </div>
                     </div>
@@ -59,9 +59,9 @@
                         </ion-input>
                       </div>
                       <div class="tr table-body">
-                        <div class="td"><span class="strong">{{'PLZ' | translate}} {{'Ort' | translate}}</span></div>
+                        <div class="td"><span class="strong">{{'PLZ' | translate}} - {{'Ort' | translate}}</span></div>
                         <ion-input type="text"                                     
-                                    [(ngModel)]="activOrderForm.billing.zip_code">
+                                    [(ngModel)]="activOrderForm.billing.zipCodePlace">
                         </ion-input>
                       </div>
                       <div class="tr table-body">
@@ -141,7 +141,7 @@
                         <div class="tr table-body">
                           <div class="td"><span class="strong">{{'PLZ' | translate}} {{'Ort' | translate}}</span></div>
                           <ion-input type="text"
-                                      [(ngModel)]="activOrderForm.shipping.zip_code">
+                                      [(ngModel)]="activOrderForm.shipping.zipCodePlace">
                           </ion-input>
                         </div>
                         <div class="tr table-body">

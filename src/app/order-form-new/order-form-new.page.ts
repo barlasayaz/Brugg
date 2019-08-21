@@ -47,7 +47,7 @@ export class OrderFormNewPage {
     billing: {
       company: '',
       street: '',
-      zip_code: '',
+      zipCodePlace: '',
       sector: '',
       email: '',
       phone: '',
@@ -56,7 +56,7 @@ export class OrderFormNewPage {
     shipping: {
       name: '',
       street: '',
-      zip_code: '',
+      zipCodePlace: '',
       department: '',
       email: '',
       phone: '',
@@ -160,14 +160,14 @@ export class OrderFormNewPage {
     console.log('activCustomer :', activCustomer);
     this.activOrderForm.billing.company = activCustomer.company;
     this.activOrderForm.billing.street = activCustomer.street;
-    this.activOrderForm.billing.zip_code = activCustomer.zip_code;
+    this.activOrderForm.billing.zipCodePlace = activCustomer.zip_code + '  ' + activCustomer.place;
     this.activOrderForm.billing.sector = activCustomer.sector;
     this.activOrderForm.billing.email = activCustomer.email;
     this.activOrderForm.billing.phone = activCustomer.phone;
     this.activOrderForm.billing.internet = activCustomer.website;
 
     this.activOrderForm.shipping.street = activCustomer.street;
-    this.activOrderForm.shipping.zip_code = activCustomer.zip_code;
+    this.activOrderForm.shipping.zipCodePlace = activCustomer.zip_code + '  ' + activCustomer.place;
     this.activOrderForm.shipping.email = activCustomer.email;
     this.activOrderForm.shipping.phone = activCustomer.phone;
 
@@ -195,7 +195,7 @@ export class OrderFormNewPage {
     console.log('contactPerson :', contactPerson, contactPerson.detail.value.addresses);
     this.activOrderForm.shipping.name = contactPerson.detail.value.first_name + ' ' + contactPerson.detail.value.last_name;
     this.activOrderForm.shipping.street = '';
-    this.activOrderForm.shipping.zip_code = '';
+    this.activOrderForm.shipping.zipCodePlace = '';
     this.activOrderForm.shipping.department = '';
     this.activOrderForm.shipping.email = '';
     this.activOrderForm.shipping.phone = '';
@@ -203,7 +203,7 @@ export class OrderFormNewPage {
     for (let i = 0, len = contactPerson.detail.value.addresses.length; i < len; i++) {
       if (contactPerson.detail.value.addresses[i].address_type == 'Lieferadresse') {
         this.activOrderForm.shipping.street = contactPerson.detail.value.addresses[i].street;
-        this.activOrderForm.shipping.zip_code = contactPerson.detail.value.addresses[i].zip_code;
+        this.activOrderForm.shipping.zipCodePlace = contactPerson.detail.value.addresses[i].zip_code;
         this.activOrderForm.shipping.department = contactPerson.detail.value.addresses[i].department;
         this.activOrderForm.shipping.email = contactPerson.detail.value.addresses[i].email;
         this.activOrderForm.shipping.phone = contactPerson.detail.value.addresses[i].phone;
@@ -349,7 +349,7 @@ export class OrderFormNewPage {
       bodyInvoiceAddress.push([ { text: this.translate.instant('Strasse'), color: '#000000', fillColor: '#ffffff' },
                                 { text: this.activOrderForm.billing.street, color: '#000000', fillColor: '#ffffff' } ]);
       bodyInvoiceAddress.push([ { text: this.translate.instant('PLZ'), color: '#000000', fillColor: '#f5f7f7' },
-                                { text: this.activOrderForm.billing.zip_code, color: '#000000', fillColor: '#f5f7f7' } ]);
+                                { text: this.activOrderForm.billing.zipCodePlace, color: '#000000', fillColor: '#f5f7f7' } ]);
       bodyInvoiceAddress.push([ { text: this.translate.instant('Branche'), color: '#000000', fillColor: '#ffffff' },
                                 { text: this.activOrderForm.billing.sector, color: '#000000', fillColor: '#ffffff' } ]);
       bodyInvoiceAddress.push([ { text: this.translate.instant('E-Mail'), color: '#000000', fillColor: '#f5f7f7' },
@@ -374,7 +374,7 @@ export class OrderFormNewPage {
       bodyShippingAddress.push([ { text: this.translate.instant('Strasse'), color: '#000000', fillColor: '#ffffff' },
                                 { text: this.activOrderForm.shipping.street, color: '#000000', fillColor: '#ffffff' } ]);
       bodyShippingAddress.push([ { text: this.translate.instant('PLZ'), color: '#000000', fillColor: '#f5f7f7' },
-                                { text: this.activOrderForm.shipping.zip_code, color: '#000000', fillColor: '#f5f7f7' } ]);
+                                { text: this.activOrderForm.shipping.zipCodePlace, color: '#000000', fillColor: '#f5f7f7' } ]);
       bodyShippingAddress.push([ { text: this.translate.instant('Abteilung'), color: '#000000', fillColor: '#ffffff' },
                                 { text: this.activOrderForm.shipping.department, color: '#000000', fillColor: '#ffffff' } ]);
       bodyShippingAddress.push([ { text: this.translate.instant('E-Mail'), color: '#000000', fillColor: '#f5f7f7' },

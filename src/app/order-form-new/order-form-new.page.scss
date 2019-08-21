@@ -42,3 +42,124 @@
       height: 40px !important;
       padding: 10px 10px 5px 10px !important;
     }
+
+  .orederTypeOrder {
+    font-weight: bolder;
+    font-size: 18px;
+    padding-right: 15px;
+    @media only screen and (max-width: 630px) {
+      font-size: 16px;
+      padding-right: 5px;
+    }
+    @media only screen and (max-width: 500px) {
+      font-size: 12px;
+      padding-right: 5px;
+    }
+    @media only screen and (max-width: 490px) {
+      font-size: 12px;
+      padding-right: 5px;
+    }
+    @media only screen and (max-width: 450px) {
+      font-size: 10px;
+      padding-right: 5px;
+    }
+    margin-top: -6px;
+    text-transform: uppercase;    
+    color: rgba(17, 238, 17, 0.658);
+  }
+  .orederTypeOffer {
+    font-weight: bolder;
+    font-size: 18px;
+    padding-right: 15px;
+    @media only screen and (max-width: 630px) {
+      font-size: 16px;
+      padding-right: 5px;
+    }
+    @media only screen and (max-width: 540px) {
+      font-size: 14px;
+      padding-right: 5px;
+    }
+    @media only screen and (max-width: 490px) {
+      font-size: 12px;
+      padding-right: 5px;
+    }
+    @media only screen and (max-width: 450px) {
+      font-size: 10px;
+      padding-right: 5px;
+    }
+    margin-top: -6px;
+    text-transform: uppercase;    
+    color: rgba(255, 166, 0, 0.719);
+  }
+  .orederTypeReperatur {
+    font-weight: bolder;
+    font-size: 18px;
+    padding-right: 15px;
+    @media only screen and (max-width: 630px) {
+      font-size: 16px;
+      padding-right: 5px;
+    }
+    @media only screen and (max-width: 540px) {
+      font-size: 14px;
+      padding-right: 5px;
+    }
+    @media only screen and (max-width: 490px) {
+      font-size: 12px;
+      padding-right: 5px;
+    }
+    @media only screen and (max-width: 450px) {
+      font-size: 10px;
+      padding-right: 5px;
+    }
+    margin-top: -6px;
+    text-transform: uppercase;
+    color: rgba(0, 0, 255, 0.63);
+  }
+  .orederTypeInspection {
+    font-weight: bolder;
+    font-size: 18px;
+    padding-right: 15px;
+    @media only screen and (max-width: 630px) {
+      font-size: 16px;
+      padding-right: 5px;
+    }
+    @media only screen and (max-width: 540px) {
+      font-size: 14px;
+      padding-right: 5px;
+    }
+    @media only screen and (max-width: 490px) {
+      font-size: 12px;
+      padding-right: 5px;
+    }
+    @media only screen and (max-width: 450px) {
+      font-size: 10px;
+      padding-right: 5px;
+    }
+    margin-top: -6px;
+    text-transform: uppercase;
+    color: rgba(128, 128, 128, 0.678);
+  }
+  .orederTypeRent {
+    font-weight: bolder;
+    font-size: 18px;
+    padding-right: 15px;
+    @media only screen and (max-width: 630px) {
+      font-size: 16px;
+      padding-right: 5px;
+    }
+    @media only screen and (max-width: 540px) {
+      font-size: 14px;
+      padding-right: 5px;
+    }
+    @media only screen and (max-width: 490px) {
+      font-size: 12px;
+      padding-right: 5px;
+    }
+    @media only screen and (max-width: 450px) {
+      font-size: 10px;
+      padding-right: 5px;
+    }
+    margin-top: -6px;
+    text-transform: uppercase;
+    color: rgba(207, 207, 26, 0.753);
+  }
