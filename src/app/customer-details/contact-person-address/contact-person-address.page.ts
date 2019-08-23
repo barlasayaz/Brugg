@@ -100,7 +100,10 @@ export class ContactPersonAddressPage {
                 last_name: '',
                 customer: this.idCustomer,
                 addresses: '[{"address_type":"Rechnungsadresse","street":"", "zip_code":"", "department":"", "email":"", "phone":"", "mobile":""}]',
+                phone: '',
+                position: '',
                 department: '',
+                note: '',
                 active: 1
       };
 
@@ -112,6 +115,9 @@ export class ContactPersonAddressPage {
       if (this.contactPerson[0].customer) { obj.customer = this.contactPerson[0].customer; } 
       if (this.contactPerson[0].addresses) { obj.addresses = JSON.stringify(this.contactPersonAddresses); }
       if (this.contactPerson[0].department) { obj.department = this.contactPerson[0].department; }
+      if (this.contactPerson[0].phone) { obj.phone = this.contactPerson[0].phone; }
+      if (this.contactPerson[0].position) { obj.position = this.contactPerson[0].position; }
+      if (this.contactPerson[0].note) { obj.note = this.contactPerson[0].note; }
       if (this.contactPerson[0].active) { obj.active = 1; }
 
       console.log('updateData obj :', obj);
