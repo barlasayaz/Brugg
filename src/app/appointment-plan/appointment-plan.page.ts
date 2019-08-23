@@ -199,6 +199,7 @@ export class AppointmentPlanPage {
                 } else {
                     title += ' ' + liste[k].zip_code+' '+ liste[k].company;
                 }
+                title += ' ' + liste[k].notes;
                 const t = { id: liste[k].id,
                             email: liste[k].email,
                             type: liste[k].appointment_type,

@@ -146,7 +146,11 @@ export class LoginPage {
       this.translate.use('en');
       localStorage.setItem('lang', x);
     }
+
+    localStorage.removeItem('split_filter_product');
+    localStorage.removeItem('show_columns_product');  
   }
+
   async signIn() {
     if (!this.authForm.valid) {
       this.showHideErrors();

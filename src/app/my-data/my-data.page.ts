@@ -94,6 +94,8 @@ export class MyDataPage {
       this.translate.use('en');
       localStorage.setItem('lang', x);
     }
+    localStorage.removeItem('split_filter_product');
+    localStorage.removeItem('show_columns_product');  
   }
 
   async open_mydataedit(pid: number, role: number, role_nr: number,  editType: number= 0 ) {

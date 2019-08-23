@@ -411,19 +411,21 @@ export class ProductListPage implements OnInit {
                 if (options == null) { options = []; }
 
                 for (let i = 0; i < options.length; i++) {
-                    // console.log('options :', options[i]);
+                    //console.log('options :', options[i]);
                     // console.log('options :', options[i].id);
                     // console.log('options :', options[i].title);
 
+                    //console.log('this.lang :', this.lang);
                     if (!this.cols.find(x => x.field == options[i].title[this.lang])) {
                         this.cols.push({ field: options[i].title[this.lang], header: options[i].title[this.lang] });
+                        //console.log('this.lang :', options[i].title[this.lang]);
                     }
                     const pipe = new DatePipe('en-US');
                     if (options[i].type == 5) {
                         this.productListAll[index].data[options[i].title[this.lang]] = pipe.transform(options[i].value, 'dd.MM.yyyy');
                     }
                     if (options[i].type != 5) {
-                        this.productListAll[index].data[options[i].title[this.lang]] = options[i].value;
+                        this.productListAll[index].data[ options[i].title[this.lang] ] = options[i].value;
                     }
                 }
                 // console.log("index :", index);
