@@ -177,8 +177,6 @@ export class AppointmentPlanPage {
                 let z1 = moment(liste[k].appointment_date + ' ' + liste[k].start_time, 'YYYY-MM-DD HH:mm:ss').toDate();
                 let z2 = moment(liste[k].appointment_date + ' ' + liste[k].end_time, 'YYYY-MM-DD HH:mm:ss').toDate();
 
-                console.log('z1: ',  z1);
-
                 if (z1.getHours() < 7) {
                     z1.setHours(7);
                     z1.setMinutes(0);
