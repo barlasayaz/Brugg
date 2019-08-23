@@ -82,6 +82,7 @@ export class AppointmentPlanPage {
               this.mouseoverButton2 = true;
               this.mouseoverButton3 = true;
               this.mouseoverButton4 = true;
+              this.mouseoverButton5 = true;
               console.log('platform mobile:', this.platform.platforms());
             } else {
               console.log('platform not mobile:', this.platform.platforms());
@@ -90,6 +91,7 @@ export class AppointmentPlanPage {
               this.mouseoverButton2 = false;
               this.mouseoverButton3 = false;
               this.mouseoverButton4 = false;
+              this.mouseoverButton5 = false;
             }
           });
     }

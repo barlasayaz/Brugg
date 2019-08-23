@@ -664,6 +664,11 @@ body .fc .fc-toolbar .fc-next-button span::before {
   content: "" !important;
 }
 
+.fc-scroller {
+  overflow: hidden hidden !important;
+  height: auto !important;
+}
+
 //****NEU-END*****////
 
 
@@ -18368,6 +18373,8 @@ tbody.ui-table-tbody {
   }
   .calendar .fc-view-container {
     background: #fff;
+    overflow: hidden scroll !important;
+    max-height: 600px !important;
   }
   .calendar .fc-view-container .fc-head-container {
     padding: 5px 0px;
