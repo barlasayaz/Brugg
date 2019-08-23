@@ -134,7 +134,7 @@ function processing() {
         http_response_code(500);
         $error = new \stdClass();
         $error->message = 'Internal Server Error 6';
-        $error->sql =  $sql ;
+        //$error->sql =  $sql ;
         echo json_encode($error);
         mysqli_close($con);
         die;

@@ -14,6 +14,7 @@ import itLocale from '@fullcalendar/core/locales/it'
 import deLocale from '@fullcalendar/core/locales/de'
 import { DatePipe } from '@angular/common';
 import bootstrapPlugin from '@fullcalendar/bootstrap';
+import * as moment from 'moment';
 /**
  * Generated class for the TerminplanPage page.
  *
@@ -173,8 +174,11 @@ export class AppointmentPlanPage {
                 }
                 if(n) { this.people.push(p); } // nur neue personen
 
-                const z1 = new Date(liste[k].appointment_date + ' ' + liste[k].start_time);
-                const z2 = new Date(liste[k].appointment_date + ' ' + liste[k].end_time);
+                let z1 = moment(liste[k].appointment_date + ' ' + liste[k].start_time, 'YYYY-MM-DD HH:mm:ss').toDate();
+                let z2 = moment(liste[k].appointment_date + ' ' + liste[k].end_time, 'YYYY-MM-DD HH:mm:ss').toDate();
+
+                console.log('z1: ',  z1);
+
                 if (z1.getHours() < 7) {
                     z1.setHours(7);
                     z1.setMinutes(0);
@@ -218,7 +222,7 @@ export class AppointmentPlanPage {
                 this.events.push( JSON.parse(JSON.stringify(t)) );
                 this.allEvents.push( JSON.parse(JSON.stringify(t)));
             }
-            // console.log('events: ', this.events, this.allEvents);
+            console.log('events: ',  this.allEvents);
             this.changeFilter();
         });
     }
