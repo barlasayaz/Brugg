@@ -127,10 +127,9 @@ export class AppointmentPlanPage {
     }
 
     changeFilter() {
-        console.log( 'changeFilter()', this.peopleFilter, this.typeFilter );
+        console.log( 'changeFilter()', this.peopleFilter, this.typeFilter, this.allEvents.length );
         for (let k = 0; k < this.events.length; k++) { this.events.pop(); } // clear
         this.events = [];
-        const l = this.events.length;
         for (let k = 0; k < this.allEvents.length; k++) {  
             if(this.peopleFilter == 'none') {
                 if(this.typeFilter == 99 ) {
