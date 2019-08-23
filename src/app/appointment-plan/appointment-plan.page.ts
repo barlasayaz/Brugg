@@ -196,9 +196,14 @@ export class AppointmentPlanPage {
                 if (liste[k].appointment_type == 2) {
                     title += ' (' + this.translate.instant('Urlaub') + ')';
                 } else {
-                    title += ' ' + liste[k].zip_code+' '+ liste[k].company;
+                    if( liste[k].zip_code) title += ' ' + liste[k].zip_code;
+                    if( liste[k].company) title += ' ' + liste[k].company;
                 }
-                title += ' ' + liste[k].notes;
+                let note = liste[k].notes;
+                if(note.length>33) {
+                    note = note.substr(0, 30)+'...';
+                }
+                title += ' ' + note;
                 const t = { id: liste[k].id,
                             email: liste[k].email,
                             type: liste[k].appointment_type,
