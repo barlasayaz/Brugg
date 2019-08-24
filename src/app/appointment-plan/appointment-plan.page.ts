@@ -14,6 +14,7 @@ import itLocale from '@fullcalendar/core/locales/it'
 import deLocale from '@fullcalendar/core/locales/de'
 import { DatePipe } from '@angular/common';
 import bootstrapPlugin from '@fullcalendar/bootstrap';
+import * as moment from 'moment';
 /**
  * Generated class for the TerminplanPage page.
  *
@@ -127,10 +128,9 @@ export class AppointmentPlanPage {
     }
 
     changeFilter() {
-        console.log( 'changeFilter()', this.peopleFilter, this.typeFilter );
+        console.log( 'changeFilter()', this.peopleFilter, this.typeFilter, this.allEvents.length );
         for (let k = 0; k < this.events.length; k++) { this.events.pop(); } // clear
         this.events = [];
-        const l = this.events.length;
         for (let k = 0; k < this.allEvents.length; k++) {  
             if(this.peopleFilter == 'none') {
                 if(this.typeFilter == 99 ) {
@@ -174,8 +174,9 @@ export class AppointmentPlanPage {
                 }
                 if(n) { this.people.push(p); } // nur neue personen
 
-                const z1 = new Date(liste[k].appointment_date + ' ' + liste[k].start_time);
-                const z2 = new Date(liste[k].appointment_date + ' ' + liste[k].end_time);
+                let z1 = moment(liste[k].appointment_date + ' ' + liste[k].start_time, 'YYYY-MM-DD HH:mm:ss').toDate();
+                let z2 = moment(liste[k].appointment_date + ' ' + liste[k].end_time, 'YYYY-MM-DD HH:mm:ss').toDate();
+
                 if (z1.getHours() < 7) {
                     z1.setHours(7);
                     z1.setMinutes(0);
@@ -197,9 +198,14 @@ export class AppointmentPlanPage {
                 if (liste[k].appointment_type == 2) {
                     title += ' (' + this.translate.instant('Urlaub') + ')';
                 } else {
-                    title += ' ' + liste[k].zip_code+' '+ liste[k].company;
+                    if( liste[k].zip_code) title += ' ' + liste[k].zip_code;
+                    if( liste[k].company) title += ' ' + liste[k].company;
                 }
-                title += ' ' + liste[k].notes;
+                let note = liste[k].notes;
+                if(note.length>33) {
+                    note = note.substr(0, 30)+'...';
+                }
+                title += ' ' + note;
                 const t = { id: liste[k].id,
                             email: liste[k].email,
                             type: liste[k].appointment_type,
@@ -214,7 +220,7 @@ export class AppointmentPlanPage {
                 this.events.push( JSON.parse(JSON.stringify(t)) );
                 this.allEvents.push( JSON.parse(JSON.stringify(t)));
             }
-            // console.log('events: ', this.events, this.allEvents);
+            console.log('events: ',  this.allEvents);
             this.changeFilter();
         });
     }
