@@ -665,8 +665,13 @@ body .fc .fc-toolbar .fc-next-button span::before {
 }
 
 .fc-scroller {
-  overflow: hidden hidden !important;
+  overflow: hidden scroll !important;
   height: auto !important;
+}
+
+.fc-dayGrid-view .fc-body .fc-row {
+  min-height: 5.8em !important;
+  max-height: 5.8em !important;
 }
 
 //****NEU-END*****////
@@ -18315,6 +18320,13 @@ tbody.ui-table-tbody {
     box-shadow: none;
     margin: 0px 10px 0px 0px;
     font-size: 14px;
+  }
+  @media only screen and (max-width: 1024px) {
+    .calendar .fc-toolbar button {
+      margin: 0px 5px 0px 0px;
+      padding: 0px 9px;
+      font-size: 14px;
+    }
   }
   @media only screen and (max-width: 768px) {
     .calendar .fc-toolbar button {
