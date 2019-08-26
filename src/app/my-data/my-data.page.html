@@ -123,10 +123,28 @@
 										</div>
 									</div>
 									<div class="tr table-body">
+										<div class="td">{{'edit_product_templates' | translate}}</div>
+										<div class="td">
+											<ion-item lines="none" class="item-trns">
+												<ion-toggle disabled [(ngModel)]="userdata.role_set.edit_product_templates">
+												</ion-toggle>
+											</ion-item>
+										</div>
+									</div>
+									<div class="tr table-body">
 										<div class="td">{{'check_products' | translate}}</div>
 										<div class="td">
 											<ion-item lines="none" class="item-trns">
 												<ion-toggle disabled [(ngModel)]="userdata.role_set.check_products">
+												</ion-toggle>
+											</ion-item>
+										</div>
+									</div>
+									<div class="tr table-body">
+										<div class="td">{{'edit_protocol_templates' | translate}}</div>
+										<div class="td">
+											<ion-item lines="none" class="item-trns">
+												<ion-toggle disabled [(ngModel)]="userdata.role_set.edit_protocol_templates">
 												</ion-toggle>
 											</ion-item>
 										</div>
