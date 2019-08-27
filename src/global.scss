@@ -281,6 +281,15 @@ ion-item {
   z-index: 999 !important;
   font-size: 14px !important;
 } 
+.label-floating.sc-ion-label-ios-h, .label-stacked.sc-ion-label-ios-h{
+  margin: 5px 5px -13px 5px;
+  padding: 0px 5px 0px 5px !important;
+  background: #FFF !important;
+  width: auto !important;
+  align-self: baseline !important;
+  z-index: 999 !important;
+  font-size: 14px !important;
+}
 
 ion-item.item-input {
   ion-input {
@@ -733,6 +742,7 @@ ion-button.button,button.button {
 .pvs4-btn {
   height: 45px;
   width: auto;
+  -webkit-appearance: none !important;
   // --background: var(--ion-color-green);
   -webkit-box-shadow: none !important;
           box-shadow: none !important;

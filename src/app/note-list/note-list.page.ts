@@ -11,6 +11,7 @@ import { PdfExportService } from '../services/pdf-export';
 import { ActivatedRoute } from '@angular/router';
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
+import { SystemService } from '../services/system';
 /**
  * Generated class for the NoteListPage page.
  *
@@ -157,6 +158,7 @@ export class NoteListPage implements OnInit {
         public alertCtrl: AlertController,
         public pdf: PdfExportService,
         public events: Events,
+        public system: SystemService,
         private route: ActivatedRoute) {
             this.modelChanged.pipe(
                 debounceTime(700))
@@ -200,6 +202,7 @@ export class NoteListPage implements OnInit {
     funcHeightCalc() {
         let x = this.divHeightCalc.nativeElement.scrollHeight;
         if (x == 0) { x = 550; }
+        if (x > 572 && this.system.platform == 2) { x = 600; }
         if (this.splitFilter) { x = x - 51; }
         // if (x < 80) { x = 80; }
         this.heightCalc = x + 'px';
