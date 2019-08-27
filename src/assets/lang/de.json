@@ -856,5 +856,7 @@
     "Möchten Sie diesen Termin wirklich deaktivieren?": "Möchten Sie diesen Termin wirklich deaktivieren?",
     "Option bearbeiten": "Option bearbeiten",
     "Auswahlmöglichkeiten": "Auswahlmöglichkeiten",
-    "Ziehen Sie Ihre Optionen in dieses Feld": "Ziehen Sie Ihre Optionen in dieses Feld"
+    "Ziehen Sie Ihre Optionen in dieses Feld": "Ziehen Sie Ihre Optionen in dieses Feld",
+    "edit_product_templates": "Produktvorlagen bearbeiten",
+    "edit_protocol_templates": "Protokollvorlagen bearbeiten"
 }

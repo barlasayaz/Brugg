@@ -855,5 +855,7 @@
   "Möchten Sie diesen Termin wirklich deaktivieren?": "Sei sicuro di voler disattivare questo appuntamento?",
   "Option bearbeiten": "Modifica opzione",
   "Auswahlmöglichkeiten": "Opzioni",
-  "Ziehen Sie Ihre Optionen in dieses Feld": "Trascina le tue opzioni in questo campo"
+  "Ziehen Sie Ihre Optionen in dieses Feld": "Trascina le tue opzioni in questo campo",
+  "edit_product_templates": "Modifica modelli di prodotto",
+  "edit_protocol_templates":"Modifica modelli di protocollo"
 }

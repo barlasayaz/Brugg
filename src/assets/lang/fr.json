@@ -855,6 +855,8 @@
   "Möchten Sie diesen Termin wirklich deaktivieren?": "Voulez-vous vraiment supprimer ce rendez-vous de façon permanente?",
   "Option bearbeiten": "Option d'édition",
   "Auswahlmöglichkeiten": "Options",
-  "Ziehen Sie Ihre Optionen in dieses Feld": "Faites glisser vos options dans ce champ"
+  "Ziehen Sie Ihre Optionen in dieses Feld": "Faites glisser vos options dans ce champ",
+  "edit_product_templates": "Modifier les modèles de produit",
+  "edit_protocol_templates":"Modifier les modèles de protocole"
   
 }
