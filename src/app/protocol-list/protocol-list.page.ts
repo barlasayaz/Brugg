@@ -64,7 +64,8 @@ export class ProtocolListPage implements OnInit {
         {
             label: this.translate.instant('Neue Protokollvorlage'),
             icon: 'pi pi-fw pi-plus',
-            visible:  this.userdata.role_set.check_products,
+            visible:  this.userdata.role_set.edit_protocol_templates,  
+            disabled: !this.userdata.role_set.edit_protocol_templates,
             command: (event) => {
                 console.log('command menuitem:', event.item);
                 this.create_template();

@@ -22,11 +22,13 @@
                           <ion-button size="small" 
                                       class="btn-red"
                                       (click)="templateDeactivate()"
+                                      *ngIf="edit_product_templates" 
                                       [disabled]="selectTemplate == 0">
                                   <ion-icon name="trash"></ion-icon>
                           </ion-button>  
                           <ion-button size="small" 
                                       (click)="edit_template()" 
+                                      *ngIf="edit_product_templates" 
                                       [disabled]="selectTemplate == 0">
                             <ion-icon name="create"></ion-icon>
                           </ion-button> 

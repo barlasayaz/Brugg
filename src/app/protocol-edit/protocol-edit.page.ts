@@ -49,6 +49,7 @@ export class ProtocolEditPage implements OnInit {
   public downClick: any = 0;
   public maxDate: string;
   public mandatoryControl: boolean = false;
+  public edit_protocol_templates: boolean = false;
 
   constructor(public navCtrl: NavController,
     public route: ActivatedRoute,
@@ -62,6 +63,7 @@ export class ProtocolEditPage implements OnInit {
 
   ngOnInit() {
     this.maxDate = this.apiService.maxDate;
+    this.edit_protocol_templates = this.userdata.role_set.edit_protocol_templates;
     if (this.route.snapshot.data['special']) {
       let params = this.route.snapshot.data['special'];
       this.idCustomer = params['idCustomer'];

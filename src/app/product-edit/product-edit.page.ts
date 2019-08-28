@@ -67,6 +67,7 @@ export class ProductEditPage implements OnInit {
   public allnodes: any[] = [];
   public idnumberControl: boolean = false;
   public uploadedFiles: any[] = [];
+  public edit_product_templates: boolean=false;
 
   constructor(public navCtrl: NavController,
     public route: ActivatedRoute,
@@ -87,6 +88,7 @@ export class ProductEditPage implements OnInit {
     this.url = this.apiService.pvsApiURL;
     this.maxDate = this.apiService.maxDate;
     this.activProduct.id_number = '';
+    this.edit_product_templates = this.userdata.role_set.edit_product_templates;
 
     if (this.route.snapshot.data['special']) {
       let params = this.route.snapshot.data['special'];

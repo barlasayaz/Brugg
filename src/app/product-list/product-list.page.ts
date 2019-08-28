@@ -115,7 +115,7 @@ export class ProductListPage implements OnInit {
             {
                 label: this.translate.instant('Neue Produktvorlage'),
                 icon: 'pi pi-fw pi-plus',
-                visible: this.userdata.role_set.edit_products,
+                visible: this.userdata.role_set.edit_product_templates,
                 disabled: false,
                 command: (event) => {
                     if (this.userdata.role_set.edit_products == false) { return; }
@@ -322,7 +322,7 @@ export class ProductListPage implements OnInit {
         this.menuItems[1].disabled = true;
         this.menuItems[2].disabled = true;
         this.menuItems[3].disabled = true;
-        this.menuItems[5].items[0]['disabled'] = false;
+        this.menuItems[5].items[0]['disabled'] = !this.userdata.role_set.edit_product_templates;
         this.menuItems[5].items[1]['disabled'] = false;
         this.menuItems[5].items[2]['disabled'] = true;
         this.menuItems[8].items[4]['disabled'] = true;
@@ -461,7 +461,7 @@ export class ProductListPage implements OnInit {
                         this.menuItems[3].disabled = true;
                         this.menuItems[3].visible = this.userdata.role_set.edit_products;
                         this.menuItems[4].visible = false;
-                        this.menuItems[5].items[0]['disabled'] = false;
+                        this.menuItems[5].items[0]['disabled'] = !this.userdata.role_set.edit_product_templates;
                         this.menuItems[5].items[1]['disabled'] = false;
                         this.menuItems[5].items[2]['disabled'] = true;
                         this.menuItems[8].items[4]['disabled'] = true;
@@ -633,7 +633,7 @@ export class ProductListPage implements OnInit {
         this.menuItems[1].disabled = false;
         this.menuItems[2].disabled = false;
         this.menuItems[3].disabled = false;
-        this.menuItems[5].items[0]['disabled'] = false;
+        this.menuItems[5].items[0]['disabled'] = !this.userdata.role_set.edit_product_templates;
         this.menuItems[5].items[1]['disabled'] = false;
         this.menuItems[5].items[2]['disabled'] = false;
         this.menuItems[8].items[4]['disabled'] = false;
@@ -701,7 +701,7 @@ export class ProductListPage implements OnInit {
             this.menuItems[3].visible = true;
             this.menuItems[3].disabled = false;
             this.menuItems[4].visible = false;
-            this.menuItems[5].items[0]['disabled'] = false;
+            this.menuItems[5].items[0]['disabled'] = !this.userdata.role_set.edit_product_templates;
             this.menuItems[5].items[1]['disabled'] = false;
             this.menuItems[5].items[2]['disabled'] = true;
             this.menuItems[8].items[0]['disabled'] = false;
@@ -719,7 +719,7 @@ export class ProductListPage implements OnInit {
             this.menuItems[2].disabled = false;
             this.menuItems[3].disabled = false;
             this.menuItems[4].disabled = false;
-            this.menuItems[5].items[0]['disabled'] = false;
+            this.menuItems[5].items[0]['disabled'] = !this.userdata.role_set.edit_product_templates;
             this.menuItems[5].items[1]['disabled'] = false;
             this.menuItems[5].items[2]['disabled'] = false;
             this.menuItems[8].items[4]['disabled'] = false;
