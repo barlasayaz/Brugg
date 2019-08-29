@@ -1,3 +1,11 @@
 RewriteEngine On
-RewriteCond %{SERVER_PORT} !=443
-RewriteRule ^(.*)$ https://pvs2go.com/$1 [R=301,L]
+RewriteCond %{HTTPS} !=on
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+RewriteCond %{HTTP_HOST} !^www\.
+RewriteCond %{HTTPS}s ^on(s)|
+RewriteRule ^ http%1://www.%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+ErrorDocument 404 /index.html
+
+DirectoryIndex index.php index.html
