@@ -184,7 +184,9 @@
                             </ion-icon>
                         </span>
                     </span>
-                    <span *ngIf="col.field != 'nfc_tag_id'">{{rowData[col.field]}}</span>
+                    <span *ngIf="(col.field != 'nfc_tag_id') && (col.field != 'last_protocol_next')">{{rowData[col.field]}}</span>
+
+                    <span *ngIf="(col.field != 'nfc_tag_id') && (col.field === 'last_protocol_next')" [ngStyle]="{'color': rowData.last_protocol_next_color  }" >{{rowData[col.field]}}</span>
 
                 </td>
             </tr>

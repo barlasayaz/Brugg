@@ -377,15 +377,19 @@ export class ProductListPage implements OnInit {
                             if (pr.protocol_date_next) {
                                 this.productListAll[index].data.last_protocol_next = this.apiService.mysqlDate2view(pr.protocol_date_next);
                             }
+                            this.productListAll[index].data.last_protocol_next_color = "rgb(74, 83, 86)";
                             if (pr.result) {
                                 if (pr.result == 1) {
                                     this.productListAll[index].data.last_protocol_next = this.translate.instant('reparieren');
+                                    this.productListAll[index].data.last_protocol_next_color = "#f1c40f";
                                 }
                                 if (pr.result == 3) {
                                     this.productListAll[index].data.last_protocol_next = this.translate.instant('unauffindbar');
+                                    this.productListAll[index].data.last_protocol_next_color = "#e74c3c";
                                 }
                                 if ((pr.result == 2) || (pr.result == 4)) {
                                     this.productListAll[index].data.last_protocol_next = this.translate.instant('ausmustern');
+                                    this.productListAll[index].data.last_protocol_next_color = "#C558D3";
                                 }
                             }
                         } catch (e) {

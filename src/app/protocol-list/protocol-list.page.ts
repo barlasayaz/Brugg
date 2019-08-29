@@ -167,14 +167,13 @@ export class ProtocolListPage implements OnInit {
         this.selectedRow = 0;
         this.events.publish('prozCustomer', 0);
         this.cols = [
-            { field: 'protocol_number', header: this.translate.instant('Protokoll'), width: '130px' },
-            { field: 'title', header: this.translate.instant('Titel'), width: '300px' },
-            { field: 'product', header: this.translate.instant('Produkt'), width: '300px' },
-            { field: 'id', header: 'DB-ID', width: '130px' },
-            { field: 'protocol_date', header: this.translate.instant('Datum'), width: '90px'},
-            { field: 'result', header: this.translate.instant('Prüfergebnis'), width: '180px' },
-            { field: 'protocol_date_next', header: this.translate.instant('nächste Prüfung'), width: '120px' }
-
+            { field: 'protocol_number', header: this.translate.instant('Protokoll'), width: '100px' },
+            { field: 'title', header: this.translate.instant('Titel'), width: '200px' },
+            { field: 'product', header: this.translate.instant('Produkt'), width: '200px' },
+            { field: 'id', header: 'DB-ID', width: '95px' },
+            { field: 'protocol_date', header: this.translate.instant('Datum'), width: '95px'}, 
+            { field: 'result', header: this.translate.instant('Prüfergebnis'), width: '160px' },
+            { field: 'protocol_date_next', header: this.translate.instant('nächste Prüfung'), width: '95px' }
         ];
         this.idCustomer = parseInt(this.route.snapshot.paramMap.get('id'));
         this.apiService.pvs4_get_customer(this.idCustomer).then((result: any) => {
