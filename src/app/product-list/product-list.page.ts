@@ -272,15 +272,15 @@ export class ProductListPage implements OnInit {
             const refresh = params['refresh'];
             if (refresh) {
                 this.cols = [
-                    { field: 'nfc_tag_id', header: 'NFC' },
-                    { field: 'title', header: this.translate.instant('Titel') },
+                    { field: 'nfc_tag_id', header: 'NFC', width:'40px' },
+                    { field: 'title', header: this.translate.instant('Titel'), width:'200px' },
                     // { field: 'id', header: 'DB-ID' },
-                    { field: 'id_number', header: '#' },
-                    { field: 'articel_no', header: this.translate.instant('Artikel-Nr.') },
-                    { field: 'customer_description', header: this.translate.instant('Kundenbezeichnung') },
-                    { field: 'last_protocol_date', header: '<<' + this.translate.instant('Termin') },
-                    { field: 'last_protocol_next', header: this.translate.instant('Termin') + '>>' },
-                    { field: 'check_interval', header: this.translate.instant('Intervall Prüfen') }
+                    { field: 'id_number', header: '#', width:'200px' },
+                    { field: 'articel_no', header: this.translate.instant('Artikel-Nr.'), width:'200px' },
+                    { field: 'customer_description', header: this.translate.instant('Kundenbezeichnung'), width:'200px' },
+                    { field: 'last_protocol_date', header: '<<' + this.translate.instant('Termin'), width:'70px' },
+                    { field: 'last_protocol_next', header: this.translate.instant('Termin') + '>>', width:'70px' },
+                    { field: 'check_interval', header: this.translate.instant('Intervall Prüfen'), width:'90px' }
                 ];
                 this.idCustomer = parseInt(this.route.snapshot.paramMap.get('id'));
 
@@ -420,7 +420,7 @@ export class ProductListPage implements OnInit {
 
                     //console.log('this.lang :', this.lang);
                     if (!this.cols.find(x => x.field == options[i].title[this.lang])) {
-                        this.cols.push({ field: options[i].title[this.lang], header: options[i].title[this.lang] });
+                        this.cols.push({ field: options[i].title[this.lang], header: options[i].title[this.lang] , width:'200px'});
                         //console.log('this.lang :', options[i].title[this.lang]);
                     }
                     const pipe = new DatePipe('en-US');
