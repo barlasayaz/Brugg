@@ -189,17 +189,17 @@ export class CustomerTablePage implements OnInit {
 
     ngOnInit(): void {
         this.cols = [
-            { field: 'company', header: this.translate.instant('Firma'), width:'12%' },
-            { field: 'id', header: 'DB-ID', width:'4%' },
-            { field: 'customer_number', header: '#', width:'6%'},
-            { field: 'rating', header: this.translate.instant('Typ'), width:'3%' },
-            { field: 'zip_code', header: this.translate.instant('PLZ'), width:'9%' },
-            { field: 'place', header: this.translate.instant('Ort'), width:'11%' },
-            { field: 'employees', header: this.translate.instant('Mitarbeiter'), width:'11%' },
-            { field: 'last_date', header: '<< ' + this.translate.instant('Termin'), width:'11%' },
-            { field: 'next_date', header: '>> ' + this.translate.instant('Termin'), width:'11%' },
-            { field: 'inspector', header: this.translate.instant('Prüfer'), width:'11%' },
-            { field: 'sector', header: this.translate.instant('Branche'), width:'11%' }
+            { field: 'company', header: this.translate.instant('Firma'), width:'200px' },
+            { field: 'id', header: 'DB-ID', width:'60px' },
+            { field: 'customer_number', header: '#', width:'200px'},
+            { field: 'rating', header: this.translate.instant('Typ'), width:'50px' },
+            { field: 'zip_code', header: this.translate.instant('PLZ'), width:'200px'},
+            { field: 'place', header: this.translate.instant('Ort'), width:'200px' },
+            { field: 'employees', header: this.translate.instant('Mitarbeiter'), width:'200px' },
+            { field: 'last_date', header: '<< ' + this.translate.instant('Termin'), width:'200px' },
+            { field: 'next_date', header: '>> ' + this.translate.instant('Termin'), width:'200px' },
+            { field: 'inspector', header: this.translate.instant('Prüfer'), width:'200px' },
+            { field: 'sector', header: this.translate.instant('Branche'), width:'200px' }
         ];
 
         this.filterCols = ['company',
