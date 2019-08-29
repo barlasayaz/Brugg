@@ -68,6 +68,7 @@
 				(mouseover)="mouseover(3)"
 				(mouseout)="mouseout(3)"
 				[class.mouse-over]="mouseoverButton3"
+				*ngIf="userdata.role!=3" 
 				[labelFab]="'Kundenbesuch'">				
 			<ion-icon name="people"></ion-icon>
 		</ion-fab-button>
@@ -77,6 +78,7 @@
 				(mouseover)="mouseover(4)"
 				(mouseout)="mouseout(4)"
 				[class.mouse-over]="mouseoverButton4"
+				*ngIf="userdata.role!=3" 
 				[labelFab]="'Prüfung'">				
 			<ion-icon name="eye"></ion-icon>
 		</ion-fab-button>
@@ -86,6 +88,7 @@
 				(mouseover)="mouseover(5)" 
 				(mouseout)="mouseout(5)"
 				[class.mouse-over]="mouseoverButton5"
+				*ngIf="userdata.role!=3" 
 				[labelFab]="'Urlaub'">				
 			<ion-icon name="cafe"></ion-icon>
 		</ion-fab-button>
