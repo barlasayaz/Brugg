@@ -272,15 +272,15 @@ export class ProductListPage implements OnInit {
             const refresh = params['refresh'];
             if (refresh) {
                 this.cols = [
-                    { field: 'nfc_tag_id', header: 'NFC', width: '40px' },
-                    { field: 'title', header: this.translate.instant('Titel'), width: '200px' },
+                    { field: 'nfc_tag_id', header: 'NFC', width:'80px' },
+                    { field: 'title', header: this.translate.instant('Titel'), width:'220px' },
                     // { field: 'id', header: 'DB-ID' },
-                    { field: 'id_number', header: '#', width: '200px' },
-                    { field: 'articel_no', header: this.translate.instant('Artikel-Nr.'), width: '200px' },
-                    { field: 'customer_description', header: this.translate.instant('Kundenbezeichnung'), width: '200px' },
-                    { field: 'last_protocol_date', header: '<<' + this.translate.instant('Termin'), width: '70px' },
-                    { field: 'last_protocol_next', header: this.translate.instant('Termin') + '>>', width: '70px' },
-                    { field: 'check_interval', header: this.translate.instant('Intervall Prüfen'), width: '90px' }
+                    { field: 'id_number', header: '#', width:'85px' },
+                    { field: 'articel_no', header: this.translate.instant('Artikel-Nr.'), width:'100px' },
+                    { field: 'customer_description', header: this.translate.instant('Kundenbezeichnung'), width:'200px' },
+                    { field: 'last_protocol_date', header: '<<' + this.translate.instant('Termin'), width:'100px' },
+                    { field: 'last_protocol_next', header: this.translate.instant('Termin') + '>>', width:'100px' },
+                    { field: 'check_interval', header: this.translate.instant('Intervall Prüfen'), width:'100px' }
                 ];
                 this.idCustomer = parseInt(this.route.snapshot.paramMap.get('id'));
 
