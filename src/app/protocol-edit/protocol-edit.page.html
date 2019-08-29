@@ -22,7 +22,8 @@
                           <ion-button 
                                   size="small" 
                                   (click)="edit_template()"
-                                  [disabled]="selectTemplate == 0">
+                                  [disabled]="selectTemplate == 0" 
+                                  *ngIf="edit_protocol_templates">
                             <ion-icon name="create"></ion-icon>
                           </ion-button>                          
                           <ion-button 

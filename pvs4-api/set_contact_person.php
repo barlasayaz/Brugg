@@ -86,14 +86,18 @@ function processing() {
     $last_name 	    = trim( mysqli_escape_string($con,$_POST['last_name']));
     $customer 		= intval( $_POST['customer'] );
     $addresses 		= trim( mysqli_escape_string($con,$_POST['addresses']));
-    $phone       	= trim( mysqli_escape_string($con,$_POST['phone']));
-    $position    	= trim( mysqli_escape_string($con,$_POST['position']));
+    $phone       	= '';
+    if($_POST['phone']) $phone = trim( mysqli_escape_string($con,$_POST['phone']));
+    $position    	= '';
+    if($_POST['position']) $position = trim( mysqli_escape_string($con,$_POST['position']));
     $department 	= trim( mysqli_escape_string($con,$_POST['department']));
     $edit_products  = 0;
     $check_products  = 0;
     if(isset($_POST['edit_products'])) $edit_products  = intval( $_POST['edit_products'] );
     if(isset($_POST['check_products'])) $check_products  = intval( $_POST['check_products'] );
-    $note     	    = trim( mysqli_escape_string($con,$_POST['note']) );
+    $note = '';
+    if ($_POST['note']) $note = trim( mysqli_escape_string($con,$_POST['note']) );
+        
     $active 		= intval( $_POST['active'] );
   
     if($id > 0) {

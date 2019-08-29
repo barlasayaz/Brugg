@@ -281,6 +281,15 @@ ion-item {
   z-index: 999 !important;
   font-size: 14px !important;
 } 
+.label-floating.sc-ion-label-ios-h, .label-stacked.sc-ion-label-ios-h{
+  margin: 5px 5px -13px 5px;
+  padding: 0px 5px 0px 5px !important;
+  background: #FFF !important;
+  width: auto !important;
+  align-self: baseline !important;
+  z-index: 999 !important;
+  font-size: 14px !important;
+}
 
 ion-item.item-input {
   ion-input {
@@ -565,6 +574,11 @@ ion-item.item-toggle {
 
 
 //BUTTONS
+ion-button {
+  -webkit-appearance: none !important;
+}
+
+
 .opt-add {
   width: 30px;
   height: 30px;
@@ -671,11 +685,14 @@ body .fc .fc-toolbar .fc-next-button span::before {
 
 .fc-dayGrid-view .fc-body .fc-row {
   min-height: 5.8em !important;
-  max-height: 5.8em !important;
+  max-height: 5.8em !important; 
+}
+
+.navbar {
+  display: block !important;
 }
 
 //****NEU-END*****////
-
 
 ion-content {
     .scroll-content {
@@ -733,7 +750,7 @@ ion-button.button,button.button {
 .pvs4-btn {
   height: 45px;
   width: auto;
-  // --background: var(--ion-color-green);
+  -webkit-appearance: none !important;
   -webkit-box-shadow: none !important;
           box-shadow: none !important;
   margin: 0px !important;
@@ -18553,6 +18570,7 @@ tbody.ui-table-tbody {
     align-items: center;
     border: none;
     background: #4caf50;
+    --background: #4caf50;
     color: #fff;
     border-radius: 5px;
   }

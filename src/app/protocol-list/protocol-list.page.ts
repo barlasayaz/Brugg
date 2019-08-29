@@ -11,6 +11,7 @@ import { ActivatedRoute } from '@angular/router';
 import { DataService } from '../services/data.service';
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
+import { SystemService } from '../services/system';
 
 @Component({
     selector: 'app-protocol-list',
@@ -63,7 +64,8 @@ export class ProtocolListPage implements OnInit {
         {
             label: this.translate.instant('Neue Protokollvorlage'),
             icon: 'pi pi-fw pi-plus',
-            visible:  this.userdata.role_set.check_products,
+            visible:  this.userdata.role_set.edit_protocol_templates,  
+            disabled: !this.userdata.role_set.edit_protocol_templates,
             command: (event) => {
                 console.log('command menuitem:', event.item);
                 this.create_template();
@@ -141,6 +143,7 @@ export class ProtocolListPage implements OnInit {
         public pdf: PdfExportService,
         public events: Events,
         private dataService: DataService,
+        public system: SystemService,
         private route: ActivatedRoute) {
             this.modelChanged.pipe(
                 debounceTime(700))
@@ -244,6 +247,7 @@ export class ProtocolListPage implements OnInit {
     funcHeightCalc() {
         let x = this.divHeightCalc.nativeElement.scrollHeight;
         if (x == 0) { x = 550; }
+        if (x > 572 && this.system.platform == 2) { x = 600; }
         if (this.splitFilter) { x = x - 51; }
         // if (x < 80) { x = 80; }
         this.heightCalc = x + 'px';

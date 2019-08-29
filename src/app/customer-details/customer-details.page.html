@@ -185,7 +185,7 @@
                           </div>
                           <div class="tr table-body">
                             <div class="td"><span class="strong">{{'Mobiltelefon' | translate}}</span></div>
-                            <div class="td"> {{contactPersonAddress.mobile}} </div>
+                            <div class="td"> <a href="tel:{{contactPersonAddress.mobile}}">{{contactPersonAddress.mobile}}</a> </div>
                           </div>
                         </div>
                       </div>
@@ -213,10 +213,12 @@
                       </div>
                       <div class="tr table-body">
                           <div class="td">{{'nächster Besuch' | translate}}</div>
-                          <div class="td">{{next_visit | date : 'dd.MM.yyyy'}}</div>
-                          <button (click)="newAppointment(0)" class="icon-add" style="font-size: 1.3em;">
+                          <div class="td" style="max-width: 158px;">{{next_visit | date : 'dd.MM.yyyy'}}</div>
+                          <ion-button size="small"
+                                      (click)="newAppointment(0)"
+                                      class="icon-add">
                               <ion-icon name="add"></ion-icon> 
-                          </button>
+                          </ion-button>
                       </div>
                       <div class="tr table-body">
                           <div class="td">{{'letzter Prüftermin' | translate}}</div>
@@ -224,10 +226,12 @@
                       </div>
                       <div class="tr table-body">
                           <div class="td">{{'nächster Prüftermin' | translate}}</div>
-                          <div class="td">{{next_inspection | date : 'dd.MM.yyyy'}}</div>
-                          <button (click)="newAppointment(1)" class="icon-add" style="font-size: 1.3em;">
+                          <div class="td" style="max-width: 158px;">{{next_inspection | date : 'dd.MM.yyyy'}}</div>
+                          <ion-button size="small"
+                                  (click)="newAppointment(1)"
+                                  class="icon-add">
                               <ion-icon name="add"></ion-icon>
-                          </button>
+                          </ion-button>
                       </div>
                     </div>                 
                   </div>

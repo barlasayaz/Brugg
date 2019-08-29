@@ -48,9 +48,9 @@ export class AppointmentPlanPage {
         right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
     };
     businessHours = {
-        dow: [1, 2, 3, 4, 5], // Monday - Thursday
-        start: '07:00', // a start time (10am in this example)
-        end: '18:00', // an end time (6pm in this example)
+        dow: [1, 2, 3, 4, 5], 
+        start: '05:00', // a start time 
+        end: '18:00', // an end time 
     };
     locales = [itLocale,frLocale,deLocale];
     lang = localStorage.getItem('lang');
@@ -71,7 +71,9 @@ export class AppointmentPlanPage {
         const newdate2 = new Date();
         newdate2.setDate(today.getDate() - 30);
         console.log(newdate + ' - ' + newdate2);
-        this.peopleFilter = this.userdata.email;
+        this.peopleFilter = this.userdata.email.toLocaleLowerCase();
+
+        
 
         this.eventsFunc(newdate2, newdate);
 
@@ -141,7 +143,7 @@ export class AppointmentPlanPage {
                     }
                 }
             } else {
-                if(this.allEvents[k].email == this.peopleFilter ) {
+                if(this.allEvents[k].email.toLocaleLowerCase() == this.peopleFilter.toLocaleLowerCase() ) {
                     if(this.typeFilter == 99 ) {
                         this.events.push( JSON.parse(JSON.stringify( this.allEvents[k] )) );
                     } else {
@@ -308,7 +310,7 @@ export class AppointmentPlanPage {
         console.log('setView():',nr);
         this.viewMode = nr;
         if( nr == 0 ) {
-            this.peopleFilter = this.userdata.email;
+            this.peopleFilter = this.userdata.email.toLocaleLowerCase();
             this.typeFilter = 99;
         } else  {
             this.peopleFilter = 'none';

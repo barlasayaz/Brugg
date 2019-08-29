@@ -11,6 +11,7 @@ import { CustomerEditComponent } from '../components/customer-edit/customer-edit
 import { PdfExportService } from '../services/pdf-export';
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
+import { SystemService } from '../services/system';
 
 @Component({
     selector: 'app-customer-table',
@@ -27,6 +28,7 @@ export class CustomerTablePage implements OnInit {
         public excelService: ExcelService,
         public alertCtrl: AlertController,
         public pdf: PdfExportService,
+        public system: SystemService,
         public events: Events) {
             this.modelChanged.pipe(
                 debounceTime(700))
@@ -213,7 +215,7 @@ export class CustomerTablePage implements OnInit {
                            'sector',
                            'search_all'];
         this.selectedColumns = this.cols;
-        console.log('CustomerTablePage idCustomer:', this.idCustomer);
+        console.log('CustomerTablePage idCustomer:', this.idCustomer, this.system.platform);
         this.page_load();
     }
     onResize(event) {
@@ -223,6 +225,7 @@ export class CustomerTablePage implements OnInit {
     funcHeightCalc() {
         let x = this.divHeightCalc.nativeElement.scrollHeight;
         if (x == 0) { x = 550; }
+        if (x > 572 && this.system.platform == 2) { x = 600; }
         if (this.splitFilter) { x = x - 51; }
         // if (x < 80) { x = 80; }
         this.heightCalc = x + 'px';
