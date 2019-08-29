@@ -173,14 +173,14 @@ export class NoteListPage implements OnInit {
             });
 
     }
-    ngOnInit() { 
+    ngOnInit() {
         this.cols = [
-            { field: 'title', header: this.translate.instant('Titel') },
-            { field: 'notes', header: this.translate.instant('Notiz') },
-            { field: 'notes_date', header: this.translate.instant('Datum') },
-            { field: 'category', header: this.translate.instant('Kategorie') },
-            { field: 'name_user', header: this.translate.instant('Verfasser') },
-            { field: 'name_contact', header: this.translate.instant('Ansprechpartner') }
+            { field: 'title', header: this.translate.instant('Titel'), width: '170px' },
+            { field: 'notes', header: this.translate.instant('Notiz'), width: '350px' },
+            { field: 'notes_date', header: this.translate.instant('Datum'), width: '85px' },
+            { field: 'category', header: this.translate.instant('Kategorie'), width: '110px' },
+            { field: 'name_user', header: this.translate.instant('Verfasser'), width: '100px' },
+            { field: 'name_contact', header: this.translate.instant('Ansprechpartner'), width: '100px' }
         ];
 
         this.filterCols = [

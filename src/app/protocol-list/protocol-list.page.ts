@@ -167,13 +167,13 @@ export class ProtocolListPage implements OnInit {
         this.selectedRow = 0;
         this.events.publish('prozCustomer', 0);
         this.cols = [
-            { field: 'protocol_number', header: this.translate.instant('Protokoll') },
-            { field: 'title', header: this.translate.instant('Titel') },
-            { field: 'product', header: this.translate.instant('Produkt') },
-            { field: 'id', header: 'DB-ID' },
-            { field: 'protocol_date', header: this.translate.instant('Datum') },
-            { field: 'result', header: this.translate.instant('Prüfergebnis') },
-            { field: 'protocol_date_next', header: this.translate.instant('nächste Prüfung') }
+            { field: 'protocol_number', header: this.translate.instant('Protokoll'), width: '130px' },
+            { field: 'title', header: this.translate.instant('Titel'), width: '300px' },
+            { field: 'product', header: this.translate.instant('Produkt'), width: '300px' },
+            { field: 'id', header: 'DB-ID', width: '130px' },
+            { field: 'protocol_date', header: this.translate.instant('Datum'), width: '90px'},
+            { field: 'result', header: this.translate.instant('Prüfergebnis'), width: '180px' },
+            { field: 'protocol_date_next', header: this.translate.instant('nächste Prüfung'), width: '120px' }
 
         ];
         this.idCustomer = parseInt(this.route.snapshot.paramMap.get('id'));
@@ -200,7 +200,7 @@ export class ProtocolListPage implements OnInit {
 
                 for (let i = 0; i < options.length; i++) {
                     if (!this.cols.find(x => x.field == options[i].title[this.lang])) {
-                        this.cols.push({ field: options[i].title[this.lang], header: options[i].title[this.lang] });
+                        this.cols.push({ field: options[i].title[this.lang], header: options[i].title[this.lang], width: '200px' });
                     }
                     this.protocolListAll[index].data[options[i].title[this.lang]] = options[i].value;
                 }

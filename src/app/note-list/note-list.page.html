@@ -60,19 +60,25 @@
                  [scrollHeight]="heightCalc"
                  [rows]="25"
                  [paginator]="true"
+                 columnResizeMode="fit"
                  [reorderableColumns]="true">
+        <ng-template pTemplate="colgroup" let-columns>
+            <colgroup>
+                <col *ngFor="let col of selectedColumns" [ngStyle]="{width: col.width}">
+            </colgroup>
+        </ng-template>
         <ng-template pTemplate="header" let-columns>
             <tr>
                 <th *ngFor="let col of selectedColumns" 
                     ttResizableColumn 
                     [ttSortableColumn]="col.field" 
-                    ttReorderableColumn >
+                    ttReorderableColumn>
                     {{col.header}}
                     <p-treeTableSortIcon [field]="col.field"></p-treeTableSortIcon>
                 </th>
             </tr>
             <tr [hidden]="!splitFilter">
-                <th *ngFor="let col of selectedColumns" [ngSwitch]="col.field" class="p-table-filter">
+                <th *ngFor="let col of selectedColumns" [ngSwitch]="col.field" class="p-table-filter" [ngStyle]="{width: col.width}">
                     <input pInputText
                            type="text"
                            class="filter-search"
