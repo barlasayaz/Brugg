@@ -189,17 +189,17 @@ export class CustomerTablePage implements OnInit {
 
     ngOnInit(): void {
         this.cols = [
-            { field: 'company', header: this.translate.instant('Firma') },
-            { field: 'id', header: 'DB-ID' },
-            { field: 'customer_number', header: '#' },
-            { field: 'rating', header: this.translate.instant('Typ') },
-            { field: 'zip_code', header: this.translate.instant('PLZ') },
-            { field: 'place', header: this.translate.instant('Ort') },
-            { field: 'employees', header: this.translate.instant('Mitarbeiter') },
-            { field: 'last_date', header: '<< ' + this.translate.instant('Termin') },
-            { field: 'next_date', header: '>> ' + this.translate.instant('Termin') },
-            { field: 'inspector', header: this.translate.instant('Prüfer') },
-            { field: 'sector', header: this.translate.instant('Branche') }
+            { field: 'company', header: this.translate.instant('Firma'), width:'12%' },
+            { field: 'id', header: 'DB-ID', width:'4%' },
+            { field: 'customer_number', header: '#', width:'6%'},
+            { field: 'rating', header: this.translate.instant('Typ'), width:'3%' },
+            { field: 'zip_code', header: this.translate.instant('PLZ'), width:'9%' },
+            { field: 'place', header: this.translate.instant('Ort'), width:'11%' },
+            { field: 'employees', header: this.translate.instant('Mitarbeiter'), width:'11%' },
+            { field: 'last_date', header: '<< ' + this.translate.instant('Termin'), width:'11%' },
+            { field: 'next_date', header: '>> ' + this.translate.instant('Termin'), width:'11%' },
+            { field: 'inspector', header: this.translate.instant('Prüfer'), width:'11%' },
+            { field: 'sector', header: this.translate.instant('Branche'), width:'11%' }
         ];
 
         this.filterCols = ['company',

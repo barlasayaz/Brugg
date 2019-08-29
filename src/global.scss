@@ -574,6 +574,11 @@ ion-item.item-toggle {
 
 
 //BUTTONS
+ion-button {
+  -webkit-appearance: none !important;
+}
+
+
 .opt-add {
   width: 30px;
   height: 30px;
@@ -683,6 +688,10 @@ body .fc .fc-toolbar .fc-next-button span::before {
   max-height: 5.8em !important; 
 }
 
+.navbar {
+  display: block !important;
+}
+
 //****NEU-END*****////
 
 ion-content {
@@ -742,7 +751,6 @@ ion-button.button,button.button {
   height: 45px;
   width: auto;
   -webkit-appearance: none !important;
-  // --background: var(--ion-color-green);
   -webkit-box-shadow: none !important;
           box-shadow: none !important;
   margin: 0px !important;
@@ -18562,6 +18570,7 @@ tbody.ui-table-tbody {
     align-items: center;
     border: none;
     background: #4caf50;
+    --background: #4caf50;
     color: #fff;
     border-radius: 5px;
   }
@@ -19800,5 +19809,10 @@ ion-fab-button[label-fab].mouse-over::after {
 }
 .ui-button-text-icon-left .ui-button-text {
   padding-right:0.2px!important
+}
+
+.ui-treetable .ui-column-resizer {
+    width: .1em!important;
+    border: 1px solid white!important;
 }
 
