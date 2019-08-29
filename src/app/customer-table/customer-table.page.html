@@ -62,10 +62,11 @@
                  [rows]="25"
                  [paginator]="true" 
                  [virtualScroll]="false" 
+                 columnResizeMode="fit"
                  [reorderableColumns]="true">
         <ng-template pTemplate="colgroup" let-columns>
             <colgroup>
-                <col *ngFor="let col of selectedColumns" style="width:200px">
+                <col *ngFor="let col of selectedColumns" [ngStyle]="{width: col.width}">
             </colgroup>
         </ng-template>
         <ng-template pTemplate="header" let-columns>
@@ -73,7 +74,7 @@
                 <th *ngFor="let col of selectedColumns" 
                     ttResizableColumn 
                     [ttSortableColumn]="col.field" 
-                    ttReorderableColumn >
+                    ttReorderableColumn  >
                     {{col.header}}
                     <p-treeTableSortIcon [field]="col.field"></p-treeTableSortIcon>
                 </th>

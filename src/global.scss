@@ -19793,3 +19793,8 @@ ion-fab-button[label-fab].mouse-over::after {
   padding-right:0.2px!important
 }
 
+.ui-treetable .ui-column-resizer {
+    width: .1em!important;
+    border: 1px solid white!important;
+}
+
