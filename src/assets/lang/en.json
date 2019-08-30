@@ -852,5 +852,7 @@
   "Auswahlmöglichkeiten": "Options",
   "Ziehen Sie Ihre Optionen in dieses Feld": "Drag your options into this field",
   "edit_product_templates": "Edit Product Templates",
-  "edit_protocol_templates": "Edit Protocol Templates"
+  "edit_protocol_templates": "Edit Protocol Templates",
+  "Gleich wie Rechnungsadresse": "Same as Billing Address",
+  "Manuelle Eingabe": "Manual Input"
 }

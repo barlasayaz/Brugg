@@ -857,5 +857,7 @@
   "Auswahlmöglichkeiten": "Opzioni",
   "Ziehen Sie Ihre Optionen in dieses Feld": "Trascina le tue opzioni in questo campo",
   "edit_product_templates": "Modifica modelli di prodotto",
-  "edit_protocol_templates":"Modifica modelli di protocollo"
+  "edit_protocol_templates":"Modifica modelli di protocollo",
+  "Gleich wie Rechnungsadresse": "Come l'indirizzo di Fatturazione",
+  "Manuelle Eingabe": "Immissione Manuale"
 }

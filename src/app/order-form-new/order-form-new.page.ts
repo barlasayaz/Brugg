@@ -192,23 +192,42 @@ export class OrderFormNewPage {
   }
 
   changeContactPerson(contactPerson) {
-    console.log('contactPerson :', contactPerson, contactPerson.detail.value.addresses);
-    this.activOrderForm.shipping.name = contactPerson.detail.value.first_name + ' ' + contactPerson.detail.value.last_name;
-    this.activOrderForm.shipping.street = '';
-    this.activOrderForm.shipping.zipCodePlace = '';
-    this.activOrderForm.shipping.department = '';
-    this.activOrderForm.shipping.email = '';
-    this.activOrderForm.shipping.phone = '';
-    this.activOrderForm.shipping.mobile = '';
-    for (let i = 0, len = contactPerson.detail.value.addresses.length; i < len; i++) {
-      if (contactPerson.detail.value.addresses[i].address_type == 'Lieferadresse') {
-        this.activOrderForm.shipping.street = contactPerson.detail.value.addresses[i].street;
-        this.activOrderForm.shipping.zipCodePlace = contactPerson.detail.value.addresses[i].zip_code;
-        this.activOrderForm.shipping.department = contactPerson.detail.value.addresses[i].department;
-        this.activOrderForm.shipping.email = contactPerson.detail.value.addresses[i].email;
-        this.activOrderForm.shipping.phone = contactPerson.detail.value.addresses[i].phone;
-        this.activOrderForm.shipping.mobile = contactPerson.detail.value.addresses[i].mobile;
-        return;
+    console.log('contactPerson :', contactPerson.detail.value);
+    if (contactPerson.detail.value == 0) {
+      this.activOrderForm.shipping.name = '';
+      this.activOrderForm.shipping.street = this.activOrderForm.billing.street;
+      this.activOrderForm.shipping.zipCodePlace = this.activOrderForm.billing.zipCodePlace;
+      this.activOrderForm.shipping.department = '';
+      this.activOrderForm.shipping.email = this.activOrderForm.billing.email;
+      this.activOrderForm.shipping.phone = this.activOrderForm.billing.phone;
+      this.activOrderForm.shipping.mobile = '';
+    } else if (contactPerson.detail.value == 1) {
+      this.activOrderForm.shipping.name = '';
+      this.activOrderForm.shipping.street = '';
+      this.activOrderForm.shipping.zipCodePlace = '';
+      this.activOrderForm.shipping.department = '';
+      this.activOrderForm.shipping.email = '';
+      this.activOrderForm.shipping.phone = '';
+      this.activOrderForm.shipping.mobile = '';
+    } else {
+      console.log('contactPerson :', contactPerson.detail, contactPerson.detail.value.addresses);
+      this.activOrderForm.shipping.name = contactPerson.detail.value.first_name + ' ' + contactPerson.detail.value.last_name;
+      this.activOrderForm.shipping.street = '';
+      this.activOrderForm.shipping.zipCodePlace = '';
+      this.activOrderForm.shipping.department = '';
+      this.activOrderForm.shipping.email = '';
+      this.activOrderForm.shipping.phone = '';
+      this.activOrderForm.shipping.mobile = '';
+      for (let i = 0, len = contactPerson.detail.value.addresses.length; i < len; i++) {
+        if (contactPerson.detail.value.addresses[i].address_type == 'Lieferadresse') {
+          this.activOrderForm.shipping.street = contactPerson.detail.value.addresses[i].street;
+          this.activOrderForm.shipping.zipCodePlace = contactPerson.detail.value.addresses[i].zip_code;
+          this.activOrderForm.shipping.department = contactPerson.detail.value.addresses[i].department;
+          this.activOrderForm.shipping.email = contactPerson.detail.value.addresses[i].email;
+          this.activOrderForm.shipping.phone = contactPerson.detail.value.addresses[i].phone;
+          this.activOrderForm.shipping.mobile = contactPerson.detail.value.addresses[i].mobile;
+          return;
+        }
       }
     }
   }
