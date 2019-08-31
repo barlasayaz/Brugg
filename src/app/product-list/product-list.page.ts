@@ -272,15 +272,15 @@ export class ProductListPage implements OnInit {
             const refresh = params['refresh'];
             if (refresh) {
                 this.cols = [
-                    { field: 'nfc_tag_id', header: 'NFC', width:'80px' },
-                    { field: 'title', header: this.translate.instant('Titel'), width:'220px' },
+                    { field: 'nfc_tag_id', header: 'NFC', width: '80px' },
+                    { field: 'title', header: this.translate.instant('Titel'), width: '220px' },
                     // { field: 'id', header: 'DB-ID' },
-                    { field: 'id_number', header: '#', width:'85px' },
-                    { field: 'articel_no', header: this.translate.instant('Artikel-Nr.'), width:'100px' },
-                    { field: 'customer_description', header: this.translate.instant('Kundenbezeichnung'), width:'200px' },
-                    { field: 'last_protocol_date', header: '<<' + this.translate.instant('Termin'), width:'100px' },
-                    { field: 'last_protocol_next', header: this.translate.instant('Termin') + '>>', width:'100px' },
-                    { field: 'check_interval', header: this.translate.instant('Intervall Prüfen'), width:'100px' }
+                    { field: 'id_number', header: '#', width: '85px' },
+                    { field: 'articel_no', header: this.translate.instant('Artikel-Nr.'), width: '100px' },
+                    { field: 'customer_description', header: this.translate.instant('Kundenbezeichnung'), width: '200px' },
+                    { field: 'last_protocol_date', header: '<<' + this.translate.instant('Termin'), width: '100px' },
+                    { field: 'last_protocol_next', header: this.translate.instant('Termin') + '>>', width: '100px' },
+                    { field: 'check_interval', header: this.translate.instant('Intervall Prüfen'), width: '130px' }
                 ];
                 this.idCustomer = parseInt(this.route.snapshot.paramMap.get('id'));
 
@@ -288,12 +288,6 @@ export class ProductListPage implements OnInit {
                 this.page_load();
             }
         });
-    }
-
-    ngAfterViewChecked() {
-        setTimeout(() => {
-            this.funcHeightCalc();
-        }, 1000);
     }
 
     onResize(event) {
@@ -1056,7 +1050,7 @@ export class ProductListPage implements OnInit {
     }
 
     async show_columns() {
-        const inputs: any[] = [];
+        let inputs: any[] = [];
         for (let i = 0; i < this.cols.length; i++) {
             inputs.push({
                 type: 'checkbox',
@@ -1067,20 +1061,38 @@ export class ProductListPage implements OnInit {
         }
         const alert = await this.alertCtrl.create({
             header: this.translate.instant('Spalten Auswählen'), inputs: inputs,
-            buttons: [{
-                text: this.translate.instant('nein'),
-                handler: data => {
-                    //  alert.dismiss();
+            buttons: [
+                {
+                    text: this.translate.instant('Alle Abwählen'),
+                    handler: data => {
+                        this.selectedColumns = [];
+                        localStorage.setItem('show_columns_product', JSON.stringify(this.selectedColumns));
+                    }
+                },
+                {
+                    text: this.translate.instant('Wählen Alle'),
+                    handler: data => {
+                        for (let i = 0; i < this.cols.length; i++) {
+                            this.cols[i].checked = true;
+                        }
+                        this.selectedColumns = this.cols;
+                        localStorage.setItem('show_columns_product', JSON.stringify(this.selectedColumns));
+                    }
+                },
+                {
+                    text: this.translate.instant('nein'),
+                    handler: data => {
+                        //  alert.dismiss();
+                    }
+                },
+                {
+                    text: this.translate.instant('ja'),
+                    handler: data => {
+                        console.log('Checkbox data:', data);
+                        this.selectedColumns = this.cols.filter(function (element, index, array) { return data.includes(element.field); });
+                        localStorage.setItem('show_columns_product', JSON.stringify(this.selectedColumns));
+                    }
                 }
-            },
-            {
-                text: this.translate.instant('ja'),
-                handler: data => {
-                    console.log('Checkbox data:', data);
-                    this.selectedColumns = this.cols.filter(function (element, index, array) { return data.includes(element.field); });
-                    localStorage.setItem('show_columns_product', JSON.stringify(this.selectedColumns));
-                }
-            }
             ]
         });
         await alert.present();

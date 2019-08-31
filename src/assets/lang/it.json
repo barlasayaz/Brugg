@@ -859,5 +859,7 @@
   "edit_product_templates": "Modifica modelli di prodotto",
   "edit_protocol_templates":"Modifica modelli di protocollo",
   "Gleich wie Rechnungsadresse": "Come l'indirizzo di Fatturazione",
-  "Manuelle Eingabe": "Immissione Manuale"
+  "Manuelle Eingabe": "Immissione Manuale",
+  "Wählen Alle": "Seleziona Tutto",
+  "Alle Abwählen": "Deseleziona Tutto"
 }

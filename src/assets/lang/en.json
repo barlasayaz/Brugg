@@ -854,5 +854,7 @@
   "edit_product_templates": "Edit Product Templates",
   "edit_protocol_templates": "Edit Protocol Templates",
   "Gleich wie Rechnungsadresse": "Same as Billing Address",
-  "Manuelle Eingabe": "Manual Input"
+  "Manuelle Eingabe": "Manual Input",
+  "Wählen Alle": "Select All",
+  "Alle Abwählen": "Deselect All"
 }
