@@ -220,7 +220,7 @@ export class ProductListPage implements OnInit {
                 }
             },
             {
-                label: this.translate.instant('Protokoll Geschichte'),
+                label: this.translate.instant('Protokollverlauf'),
                 icon: 'pi pi-fw pi-info-circle',
                 disabled: true,
                 command: (event) => {

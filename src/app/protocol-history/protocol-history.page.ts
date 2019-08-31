@@ -338,8 +338,8 @@ export class ProtocolHistoryPage implements OnInit {
         this.pdf.get_ListDocDefinition(bodyArray,
                                        widthsArray,
                                        headerRowVisible,
-                                       this.translate.instant('Protokoll Geschichte'),
-                                       this.translate.instant('Protokoll Geschichte') + '.pdf');
+                                       this.translate.instant('Protokollverlauf'),
+                                       this.translate.instant('Protokollverlauf') + '.pdf');
 
         const pList: any[] = [];
         for (let index = 0; index < this.prtclLst.length; index++) {
