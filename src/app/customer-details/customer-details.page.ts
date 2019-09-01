@@ -410,7 +410,7 @@ export class CustomerDetailsPage implements OnInit {
         await this.modalCtrl.create({
           component: AppointmentEditComponent,
           componentProps: {
-            idCustomer: this.idCustomer, appointmentType: 0, redirect: 3
+            idCustomer: this.idCustomer, appointmentType: '0', redirect: 3
           }
         });
         modal.onDidDismiss().then(data => {

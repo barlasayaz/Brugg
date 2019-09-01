@@ -435,7 +435,7 @@ export class DashboardNewPage implements OnInit {
             const modal = await this.modalCtrl.create({
                 component: AppointmentEditComponent,
                 componentProps: {
-                    idCustomer: row.idCustomer, appointmentType: 0, redirect: 3
+                    idCustomer: row.idCustomer, appointmentType: '0', redirect: 3
                 }
             });
             modal.onDidDismiss().then(data => {
