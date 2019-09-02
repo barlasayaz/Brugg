@@ -4,8 +4,8 @@ import 'rxjs/add/operator/timeout';
 import { UserdataService } from './userdata';
 
 
-// const pvs4_apiURL = 'http://localhost/BruggPVS4/pvs4-api/';
-const pvs4_apiURL = "https://www.pvs2go.com/pvs4-api/";
+ const pvs4_apiURL = 'http://localhost/BruggPVS4/pvs4-api/';
+// const pvs4_apiURL = "https://www.pvs2go.com/pvs4-api/";
 
 const brugg_id_api = 'https://www.bruggdigital.com/';
 const pvs4_client_id = 'brugg-pvs';

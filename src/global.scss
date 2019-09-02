@@ -89,6 +89,8 @@ input:-webkit-autofill:active  {
 
 .alert-button.sc-ion-alert-md {
   font-size: small !important;
+  -webkit-margin-start: 15p !important;
+  margin-inline-start: 15px !important;
   -webkit-margin-end: 15p !important;
   margin-inline-end: 15px !important;
   -webkit-padding-start: 0px !important;
