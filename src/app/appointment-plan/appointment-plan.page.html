@@ -37,7 +37,7 @@
 								(ionChange)="changeFilter()"
 								cancelText="{{translate.instant('abbrechen')}}">
 			<ion-select-option value="none">{{translate.instant('Alle Mitarbeiter')}}</ion-select-option>
-			<ion-select-option *ngFor="let p of people" [value]="p.id">{{p.first_name + " " + p.last_name}}</ion-select-option>
+			<ion-select-option *ngFor="let p of people" [value]="p.email">{{p.first_name + " " + p.last_name}}</ion-select-option>
 		</ion-select>                  
 	</ion-item>
 	<ion-fab-button color="tertiary">

@@ -1,5 +1,5 @@
-import { Component,ViewChild } from '@angular/core';
-import { NavController,ModalController , Platform } from '@ionic/angular';
+import { Component, ViewChild } from '@angular/core';
+import { NavController, ModalController , Platform } from '@ionic/angular';
 import { ApiService } from '../services/api';
 import { UserdataService } from '../services/userdata';
 import { TranslateService } from '@ngx-translate/core';
@@ -41,7 +41,7 @@ export class AppointmentPlanPage {
     public viewMode = 0;
     public peopleFilter = 'none';
     public typeFilter = 99;
-    calendarPlugins = [dayGridPlugin,timeGrigPlugin,interactionPlugin,bootstrapPlugin]; 
+    calendarPlugins = [dayGridPlugin, timeGrigPlugin, interactionPlugin, bootstrapPlugin]; 
     headers =  {
         left: 'prev,next today',
         center: 'title',
@@ -52,7 +52,7 @@ export class AppointmentPlanPage {
         start: '05:00', // a start time 
         end: '18:00', // an end time 
     };
-    locales = [itLocale,frLocale,deLocale];
+    locales = [itLocale, frLocale, deLocale];
     lang = localStorage.getItem('lang');
     @ViewChild('calendar') calendarComponent: FullCalendarComponent;
 
@@ -72,8 +72,6 @@ export class AppointmentPlanPage {
         newdate2.setDate(today.getDate() - 30);
         console.log(newdate + ' - ' + newdate2);
         this.peopleFilter = this.userdata.email.toLocaleLowerCase();
-
-        
 
         this.eventsFunc(newdate2, newdate);
 
@@ -133,30 +131,30 @@ export class AppointmentPlanPage {
         console.log( 'changeFilter()', this.peopleFilter, this.typeFilter, this.allEvents.length );
         for (let k = 0; k < this.events.length; k++) { this.events.pop(); } // clear
         this.events = [];
-        for (let k = 0; k < this.allEvents.length; k++) {  
-            if(this.peopleFilter == 'none') {
-                if(this.typeFilter == 99 ) {
+        for (let k = 0; k < this.allEvents.length; k++) {
+            if (this.peopleFilter == 'none') {
+                if (this.typeFilter == 99 ) {
                     this.events.push( JSON.parse(JSON.stringify( this.allEvents[k] )) );
                 } else {
-                    if(this.typeFilter == this.allEvents[k].type) {
+                    if (this.typeFilter == this.allEvents[k].type) {
                         this.events.push( JSON.parse(JSON.stringify( this.allEvents[k] )) );
                     }
                 }
             } else {
-                if(this.allEvents[k].email.toLocaleLowerCase() == this.peopleFilter.toLocaleLowerCase() ) {
-                    if(this.typeFilter == 99 ) {
+                if (this.allEvents[k].email.toLocaleLowerCase() == this.peopleFilter.toLocaleLowerCase() ) {
+                    if (this.typeFilter == 99 ) {
                         this.events.push( JSON.parse(JSON.stringify( this.allEvents[k] )) );
                     } else {
-                        if(this.typeFilter == this.allEvents[k].type) {
+                        if (this.typeFilter == this.allEvents[k].type) {
                             this.events.push( JSON.parse(JSON.stringify( this.allEvents[k] )) );
                         }
                     }
                 }
             }
-        }  
+        }
     }
 
-    eventsFunc(start:any, end:any) {
+    eventsFunc(start: any, end: any) {
         this.apiService.pvs4_get_appointment_list_ps(start, end).then((result: any) => {
             this.events = [];
             this.allEvents = []
@@ -169,12 +167,13 @@ export class AppointmentPlanPage {
             for (let k = 0; k < liste.length; k++) {
                 const p = {'first_name': liste[k].first_name,
                            'last_name': liste[k].last_name,
-                           'short_code': liste[k].short_code, 'email':liste[k].email };
+                           'short_code': liste[k].short_code,
+                           'email': liste[k].email };
                 let n = true;
                 for (let z = 0; z < this.people.length; z++) { 
-                    if(this.people[z].email == liste[k].email ) { n = false; }
+                    if (this.people[z].email == liste[k].email ) { n = false; }
                 }
-                if(n) { this.people.push(p); } // nur neue personen
+                if (n) { this.people.push(p); } // nur neue personen
 
                 let z1 = moment(liste[k].appointment_date + ' ' + liste[k].start_time, 'YYYY-MM-DD HH:mm:ss').toDate();
                 let z2 = moment(liste[k].appointment_date + ' ' + liste[k].end_time, 'YYYY-MM-DD HH:mm:ss').toDate();
@@ -200,12 +199,12 @@ export class AppointmentPlanPage {
                 if (liste[k].appointment_type == 2) {
                     title += ' (' + this.translate.instant('Urlaub') + ')';
                 } else {
-                    if( liste[k].zip_code) title += ' ' + liste[k].zip_code;
-                    if( liste[k].company) title += ' ' + liste[k].company;
+                    if ( liste[k].zip_code) title += ' ' + liste[k].zip_code;
+                    if ( liste[k].company) title += ' ' + liste[k].company;
                 }
                 let note = liste[k].notes;
-                if(note.length>33) {
-                    note = note.substr(0, 30)+'...';
+                if (note.length > 33) {
+                    note = note.substr(0, 30) + '...';
                 }
                 title += ' ' + note;
                 const t = { id: liste[k].id,
@@ -306,19 +305,19 @@ export class AppointmentPlanPage {
       modal.present();
     }
 
-    setView(nr:number) {
-        console.log('setView():',nr);
+    setView(nr: number) {
+        console.log('setView():', nr);
         this.viewMode = nr;
-        if( nr == 0 ) {
+        if ( nr == 0 ) {
             this.peopleFilter = this.userdata.email.toLocaleLowerCase();
             this.typeFilter = 99;
         } else  {
             this.peopleFilter = 'none';
         }
 
-        if( nr == 1 ) { this.typeFilter = 0; }
-        if( nr == 2 ) { this.typeFilter = 1; }
-        if( nr == 3 ) { this.typeFilter = 2; }
+        if ( nr == 1 ) { this.typeFilter = 0; }
+        if ( nr == 2 ) { this.typeFilter = 1; }
+        if ( nr == 3 ) { this.typeFilter = 2; }
 
         this.changeFilter();
     }
