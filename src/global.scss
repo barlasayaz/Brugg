@@ -78,6 +78,27 @@ input:-webkit-autofill:active  {
   padding-top: 5px  !important;
 }
 
+.alert-checkbox-group.sc-ion-alert-md, .alert-radio-group.sc-ion-alert-md {
+  border-top: none !important;
+}
+
+.alert-button-group-vertical.sc-ion-alert-md {
+  -ms-flex-direction: row;
+  flex-direction: row;
+}
+
+.alert-button.sc-ion-alert-md {
+  font-size: small !important;
+  -webkit-margin-start: 15p !important;
+  margin-inline-start: 15px !important;
+  -webkit-margin-end: 15p !important;
+  margin-inline-end: 15px !important;
+  -webkit-padding-start: 0px !important;
+  padding-inline-start: 0px !important;
+  -webkit-padding-end: 0px !important;
+  padding-inline-end: 0px !important;
+}
+
 .heightCalc {
   display: block;
   position: absolute;

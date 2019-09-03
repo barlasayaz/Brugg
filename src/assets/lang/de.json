@@ -254,7 +254,7 @@
     "Hebezange": "Hebezange",
     "Hochladen": "Hochladen",
     "H\u00f6hensicherungsgerät EN 360": "H\u00f6hensicherungsgerät EN 360",
-    "ID-Nummer": "ID-Nummer",
+    "ID-Nummer": "ID Nummer",
     "ID-Nummer für diesen Kunden bereits vergeben!!": "ID-Nummer für diesen Kunden bereits vergeben!!",
     "Ihnen zugeteilte Kunden": "Ihnen zugeteilte Kunden",
     "Ihre Daten": "Ihre Daten",
@@ -773,7 +773,7 @@
     "edit_products": "Produkte bearbeiten",
     "check_products": "Produkte prüfen",
     "edit_contact_persons": "Kontaktpersonen bearbeiten",
-    "Protokoll Geschichte": "Protokoll Geschichte",
+    "Protokollverlauf": "Protokollverlauf",
     "Produkt ID": "Produkt ID",
     "Produkt Titel": "Produkt Titel",
     "Produkt Migration": "Produkt Migration",
@@ -858,5 +858,9 @@
     "Auswahlmöglichkeiten": "Auswahlmöglichkeiten",
     "Ziehen Sie Ihre Optionen in dieses Feld": "Ziehen Sie Ihre Optionen in dieses Feld",
     "edit_product_templates": "Produktvorlagen bearbeiten",
-    "edit_protocol_templates": "Protokollvorlagen bearbeiten"
+    "edit_protocol_templates": "Protokollvorlagen bearbeiten",
+    "Gleich wie Rechnungsadresse": "Gleich wie Rechnungsadresse",
+    "Manuelle Eingabe": "Manuelle Eingabe",
+    "Wählen Alle": "Wählen Alle",
+    "Alle Abwählen": "Alle Abwählen"
 }

@@ -35,12 +35,56 @@
         border: 1px solid #ccc !important;
     }
 
+    .label-fixed.sc-ion-label-md-h {      
+      font-weight: 500 !important;
+      font-size: 14px !important;
+
+      min-width: 211px !important;
+      @media only screen and (max-width: 991px) {
+        min-width: 153px !important;
+      }
+      @media only screen and (max-width: 767px) {
+        min-width: 211px !important;
+      }
+      @media only screen and (max-width: 475px) {
+        min-width: 145px !important;
+      }
+      @media only screen and (max-width: 414px) {
+        min-width: 171px !important;
+      }
+      @media only screen and (max-width: 375px) {
+        min-width: 153px !important;
+      }
+      @media only screen and (max-width: 360px) {
+        min-width: 144px !important;
+      }
+      @media only screen and (max-width: 320px) {
+        min-width: 122px !important;
+      }
+    }
+
     .contact-person {
       background-color: white !important; 
-      border: 1px solid #ccc !important; 
-      width: 297px !important;
+      border: 1px solid #ccc !important;       
       height: 40px !important;
-      padding: 10px 10px 5px 10px !important;
+      padding: 10px 10px 5px 10px !important;      
+
+      width: 297px !important;
+      @media only screen and (max-width: 1199px) {
+        width: 204px !important;
+      }
+      @media only screen and (max-width: 991px) {
+        width: 143px !important;
+      }
+      @media only screen and (max-width: 767px) {
+        width: 244px !important;
+      }
+      @media only screen and (max-width: 575px) {
+        width: 279px !important;
+      }
+      @media only screen and (max-width: 375px) {
+        width: 132px !important;
+      }
     }
 
   .orederTypeOrder {

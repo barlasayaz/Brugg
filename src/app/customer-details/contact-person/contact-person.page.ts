@@ -52,6 +52,7 @@ export class ContactPersonPage {
 
     getPointContact() {
         console.log('getPointContact :', this.idCustomer);
+        this.contactPersonList = [];
         this.apiService.pvs4_get_contact_person(this.idCustomer).then((result: any) => {
             console.log('getPointContact result', result.list);
             for (var i = 0, len = result.list.length; i < len; i++) {
@@ -135,6 +136,14 @@ export class ContactPersonPage {
                 this.pfelder = 1;
                 return;
             }
+            if (this.contactPersonEdit.phone) {
+                this.pw_felder = 0;
+            } else {
+                this.inputError = true;
+                this.pw_felder = 1;
+                this.pfelder = 1;
+                return;
+            }
         }
         if (this.pw_felder == 0) {
         let obj = {id: 0,
@@ -176,11 +185,11 @@ export class ContactPersonPage {
 
         this.apiService.pvs4_set_contact_person(obj).then((result: any) => {
             console.log('result: ', result);
-            this.navCtrl.navigateBack('/customer-details/' + this.idCustomer);
+            this.getPointContact();
         });
         this.contactPersonEdit = [];
         this.contactPersonEditOderNeu = 1; // 0->bearbeiten 1->neu
-        this.viewCtrl.dismiss();
+        this.kundendaten = 'person';
         }
     }
 
@@ -256,9 +265,8 @@ export class ContactPersonPage {
 
                         this.apiService.pvs4_set_contact_person(obj).then((result: any) => {
                             console.log('result: ', result);
-                            this.navCtrl.navigateBack('/customer-details/' + this.idCustomer);
+                            this.getPointContact();
                         });
-                        this.viewCtrl.dismiss();
                     }
                 }
             ]

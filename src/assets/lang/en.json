@@ -767,7 +767,7 @@
   "Monate": "months",
   "Protokoll Nummer": "Protocol Number",
   "Benutzerrechte": "user rights",
-  "Protokoll Geschichte": "Protocol History",
+  "Protokollverlauf": "Protocol History",
   "Produkt ID": "Product ID",
   "Produkt Titel": "Product Title",
   "Produkt Migration": "Product Migration",
@@ -852,5 +852,9 @@
   "Auswahlmöglichkeiten": "Options",
   "Ziehen Sie Ihre Optionen in dieses Feld": "Drag your options into this field",
   "edit_product_templates": "Edit Product Templates",
-  "edit_protocol_templates": "Edit Protocol Templates"
+  "edit_protocol_templates": "Edit Protocol Templates",
+  "Gleich wie Rechnungsadresse": "Same as Billing Address",
+  "Manuelle Eingabe": "Manual Input",
+  "Wählen Alle": "Select All",
+  "Alle Abwählen": "Deselect All"
 }

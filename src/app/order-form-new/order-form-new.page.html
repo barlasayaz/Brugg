@@ -110,15 +110,17 @@
                   <div class="table-info">      
                     <div class="thead">
                       <div class="tr table-subheader table-subheader-fix">
-                        <div class="th">{{'Lieferadresse' | translate}}</div>
-                         <div>
-                          <ion-item lines="none" style="--background: #005e86; padding-right: 10px;">
+                         <div style="width: inherit;">
+                          <ion-item lines="none" style="--background: #005e86;">
+                            <ion-label position="fixed" style="color: white !important;">{{translate.instant('Lieferadresse')}}</ion-label>
                             <ion-select (ionChange)="changeContactPerson($event)"
                                         name="RE_Ansp"
                                         id="RE_Ansp"
                                         class='contact-person'
                                         okText="{{translate.instant('okay')}}"
                                         cancelText="{{translate.instant('abbrechen')}}">
+                              <ion-select-option value="0" selected>{{translate.instant('Gleich wie Rechnungsadresse')}}</ion-select-option>
+                              <ion-select-option value="1">{{translate.instant('Manuelle Eingabe')}}</ion-select-option>         
                               <ion-select-option [value]="ansp" *ngFor="let ansp of contactPersonList">{{ansp.first_name}} {{ansp.last_name}}</ion-select-option>
                             </ion-select>
                           </ion-item>

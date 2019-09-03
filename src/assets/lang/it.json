@@ -772,7 +772,7 @@
   "edit_products": "modifica prodotti",
   "check_products": "controllare i prodotti",
   "edit_contact_persons": "modificare le persone di contatto",
-  "Protokoll Geschichte": "Protocollo Storia",
+  "Protokollverlauf": "Cronologia del protocollo",
   "Produkt ID": "Prodotto ID",
   "Produkt Titel": "Prodotto Titolo",
   "Produkt Migration": "Migrazione del Prodotto",
@@ -857,5 +857,9 @@
   "Auswahlmöglichkeiten": "Opzioni",
   "Ziehen Sie Ihre Optionen in dieses Feld": "Trascina le tue opzioni in questo campo",
   "edit_product_templates": "Modifica modelli di prodotto",
-  "edit_protocol_templates":"Modifica modelli di protocollo"
+  "edit_protocol_templates":"Modifica modelli di protocollo",
+  "Gleich wie Rechnungsadresse": "Come l'indirizzo di Fatturazione",
+  "Manuelle Eingabe": "Immissione Manuale",
+  "Wählen Alle": "Seleziona Tutto",
+  "Alle Abwählen": "Deseleziona Tutto"
 }

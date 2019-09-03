@@ -215,7 +215,7 @@
                           <div class="td">{{'nächster Besuch' | translate}}</div>
                           <div class="td" style="max-width: 158px;">{{next_visit | date : 'dd.MM.yyyy'}}</div>
                           <ion-button size="small"
-                                      (click)="newAppointment(0)"
+                                      (click)="newAppointment('0')"
                                       class="icon-add">
                               <ion-icon name="add"></ion-icon> 
                           </ion-button>
@@ -228,7 +228,7 @@
                           <div class="td">{{'nächster Prüftermin' | translate}}</div>
                           <div class="td" style="max-width: 158px;">{{next_inspection | date : 'dd.MM.yyyy'}}</div>
                           <ion-button size="small"
-                                  (click)="newAppointment(1)"
+                                  (click)="newAppointment('1')"
                                   class="icon-add">
                               <ion-icon name="add"></ion-icon>
                           </ion-button>

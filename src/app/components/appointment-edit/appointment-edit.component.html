@@ -38,7 +38,7 @@
                         (ionChange)="inputErrorMsg()"
                         name="AppointmentType"
                         [(ngModel)]="activAppointment.appointment_type"
-                        [disabled]=appointmentTypeDisabled 
+                        [disabled]="appointmentTypeDisabled"
                         okText="{{translate.instant('okay')}}"
                         cancelText="{{translate.instant('abbrechen')}}">
               <ion-select-option value="0" selected>{{translate.instant('Kundenbesuch')}}</ion-select-option>
