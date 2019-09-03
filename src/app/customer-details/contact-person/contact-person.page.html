@@ -38,7 +38,7 @@
             <div class="ansprechpartner-position" style="font-size:1.1em;"> </div>
             </div>
             <!-- ACTION -->
-            <div class="col-4" style="display: flex;justify-content: flex-end;" *ngIf="userdata.Type<20">
+            <div class="col-4" style="display: flex;justify-content: flex-end;" >
               <div class="btn btn-round-blue" (click)="editContactPerson(contactPerson);" style="min-width:50px;margin-right: 10px">
                 <ion-icon class="footerIcon" name="create"></ion-icon>
               </div>
@@ -132,7 +132,7 @@
                 </ion-col>
             </ion-row>
             <!-- Row 5 -->
-            <ion-row>
+            <ion-row *ngIf="userdata.role!=3">
                 <ion-col size="12">
                   <ion-item lines="none" style="padding-left: 0px;">
                     <ion-label position="floating">{{translate.instant('Funktion')}}</ion-label>
@@ -175,7 +175,7 @@
               </ion-col>
             </ion-row> 
               <!-- Row 8 -->
-              <ion-row>
+              <ion-row *ngIf="userdata.role!=3" >
                 <ion-col size="12">
                   <ion-item lines="none" style="padding-left: 0px;">
                     <ion-label position="floating">{{translate.instant('Notiz')}}</ion-label>
