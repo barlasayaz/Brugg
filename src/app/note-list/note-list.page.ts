@@ -509,21 +509,57 @@ export class NoteListPage implements OnInit {
                 checked: this.selectedColumns.find(x => x.field == this.cols[i].field)
             });
         }
+        this.show_alert(inputs);
+    }
+
+    async show_alert(inputs) {
         let alert = await this.alertCtrl.create({
-            header: this.translate.instant('Spalten Auswählen'), inputs: inputs, buttons: [{
-                text: this.translate.instant('abbrechen'),
-                handler: data => {
-                    //  alert.dismiss();
+            header: this.translate.instant('Spalten Auswählen'), inputs: inputs,
+            buttons: [
+                {
+                    text: this.translate.instant('Alle Abwählen'),
+                    handler: data => {
+                        inputs = [];
+                        for (let i = 0; i < this.cols.length; i++) {
+                            inputs.push({
+                                type: 'checkbox',
+                                label: this.cols[i].header,
+                                value: this.cols[i].field,
+                                checked: false
+                            });
+                        }
+                        return this.show_alert(inputs);
+                    }
+                },
+                {
+                    text: this.translate.instant('Wählen Alle'),
+                    handler: data => {
+                        inputs = [];
+                        for (let i = 0; i < this.cols.length; i++) {
+                            inputs.push({
+                                type: 'checkbox',
+                                label: this.cols[i].header,
+                                value: this.cols[i].field,
+                                checked: true
+                            });
+                        }
+                        return this.show_alert(inputs);
+                    }
+                },
+                {
+                    text: this.translate.instant('abbrechen'),
+                    handler: data => {
+                        //  alert.dismiss();
+                    }
+                },
+                {
+                    text: this.translate.instant('okay'),
+                    handler: data => {
+                        console.log('Checkbox data:', data);
+                        this.selectedColumns = this.cols.filter(function (element, index, array) { return data.includes(element.field) });
+                        localStorage.setItem('show_columns_note', JSON.stringify(this.selectedColumns));
+                    }
                 }
-            },
-            {
-                text: this.translate.instant('okay'),
-                handler: data => {
-                    console.log('Checkbox data:', data);
-                    this.selectedColumns = this.cols.filter(function (element, index, array) { return data.includes(element.field) });
-                    localStorage.setItem('show_columns_note', JSON.stringify(this.selectedColumns));
-                }
-            }
             ]
         });
         await alert.present();
