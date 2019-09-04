@@ -18590,8 +18590,8 @@ tbody.ui-table-tbody {
     -webkit-align-items: center;
     align-items: center;
     border: none;
-    background: #4caf50;
-    --background: #4caf50;
+    background: #4caf50!important;
+    --background: #4caf50!important;
     color: #fff;
     border-radius: 5px;
   }
@@ -19839,4 +19839,14 @@ ion-fab-button[label-fab].mouse-over::after {
 
 .ui-treetable-resizable .ui-treetable-thead>tr>th, .ui-treetable-resizable .ui-treetable-tfoot>tr>td, .ui-treetable-resizable .ui-treetable-tbody>tr>td {
   border-bottom: 0.5px solid white !important;
+}
+
+_:-ms-lang(x), _:-webkit-full-screen, .item-inner.sc-ion-item-md
+{
+  padding-right:0px;
+}
+
+_:-ms-lang(x), _:-webkit-full-screen, .item-native.sc-ion-item-md
+{
+  padding-left:0px;
 }
