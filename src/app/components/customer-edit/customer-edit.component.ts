@@ -141,7 +141,7 @@ export class CustomerEditComponent implements OnInit {
       customer_number: '',
       email: '',
       licensee: this.userdata.licensee,
-      parent: this.parentCustomer,
+      parent: 0,
       phone: '',
       place: '',
       po_box: '',
@@ -162,7 +162,7 @@ export class CustomerEditComponent implements OnInit {
     if (this.activCustomer['customer_number']) { obj.customer_number = this.activCustomer['customer_number']; }
     if (this.activCustomer['email']) { obj.email = this.activCustomer['email']; }
     if (this.activCustomer['licensee']) { obj.licensee = this.activCustomer['licensee']; }
-    if (this.activCustomer['parent']) { obj.parent = this.activCustomer['parent']; }
+    if (this.activCustomer['parent']>=0) { obj.parent = this.activCustomer['parent']; }
     if (this.activCustomer['phone']) { obj.phone = this.activCustomer['phone']; }
     if (this.activCustomer['place']) { obj.place = this.activCustomer['place']; }
     if (this.activCustomer['po_box']) { obj.po_box = this.activCustomer['po_box']; }
