@@ -38,3 +38,11 @@ ion-select {
 .right_align {
 	text-align: right;
 }
+
+.colleaguesList {
+	min-height: 300px;
+	max-height: 960px;
+	max-width: 100%;
+	overflow-y: auto;
+	margin-bottom: 10px;
+}
