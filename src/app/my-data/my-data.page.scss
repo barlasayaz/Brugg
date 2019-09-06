@@ -39,6 +39,14 @@ ion-select {
 	text-align: right;
 }
 
+.table-info, .table-info > th, .table-info > td {
+    background-color: #eeee;
+}
+
+.ek-content {
+    min-height: 90%;
+}
+
 .colleaguesList {
 	min-height: 300px;
 	max-height: 960px;
