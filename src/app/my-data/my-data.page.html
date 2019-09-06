@@ -85,11 +85,6 @@
 										<div class="th">{{'Benutzerrechte' | translate}}</div>
 									</div>
 								</div>
-								
-
-
-
-
 								<div class="tbody">
 									<div class="tr table-body" style="max-height: 50px;">
 										<div class="td">{{'edit_customer' | translate}}</div>
@@ -115,6 +110,16 @@
 												</ion-toggle>
 											</ion-item>
 										</div>
+										<div class="td">{{'edit_contact_persons' | translate}}</div>
+										<div class="td">
+											<ion-item lines="none" class="item-trns">
+												<ion-toggle disabled
+													[(ngModel)]="userdata.role_set.edit_contact_persons">
+												</ion-toggle>
+											</ion-item>
+										</div>
+									</div>
+									<div class="tr table-body" style="max-height: 50px;">
 										<div class="td">{{'edit_products' | translate}}</div>
 										<div class="td">
 											<ion-item lines="none" class="item-trns">
@@ -122,8 +127,6 @@
 												</ion-toggle>
 											</ion-item>
 										</div>
-									</div>
-									<div class="tr table-body" style="max-height: 50px;">
 										<div class="td">{{'edit_product_templates' | translate}}</div>
 										<div class="td">
 											<ion-item lines="none" class="item-trns">
@@ -131,6 +134,8 @@
 												</ion-toggle>
 											</ion-item>
 										</div>
+									</div>
+									<div class="tr table-body" style="max-height: 50px;">
 										<div class="td">{{'check_products' | translate}}</div>
 										<div class="td">
 											<ion-item lines="none" class="item-trns">
@@ -138,102 +143,15 @@
 												</ion-toggle>
 											</ion-item>
 										</div>
-									</div>
-									<div class="tr table-body" style="max-height: 50px;">
 										<div class="td">{{'edit_protocol_templates' | translate}}</div>
 										<div class="td">
 											<ion-item lines="none" class="item-trns">
 												<ion-toggle disabled [(ngModel)]="userdata.role_set.edit_protocol_templates">
-												</ion-toggle>
-											</ion-item>
-										</div>
-										<div class="td">{{'edit_contact_persons' | translate}}</div>
-										<div class="td">
-											<ion-item lines="none" class="item-trns">
-												<ion-toggle disabled
-													[(ngModel)]="userdata.role_set.edit_contact_persons">
 												</ion-toggle>
 											</ion-item>
 										</div>
 									</div>
 								</div>
-
-
-<!-- 								<div class="tbody">
-									<div class="tr table-body" style="max-height: 50px;">
-										<div class="td">{{'edit_customer' | translate}}</div>
-										<div class="td">
-											<ion-item lines="none" class="item-trns">
-												<ion-toggle disabled [ngModel]="userdata.role_set.edit_customer">
-												</ion-toggle>
-											</ion-item>
-										</div>
-									</div>
-									<div class="tr table-body" style="max-height: 50px;">
-										<div class="td">{{'edit_membership' | translate}}</div>
-										<div class="td">
-											<ion-item lines="none" class="item-trns">
-												<ion-toggle disabled [(ngModel)]="userdata.role_set.edit_membership">
-												</ion-toggle>
-											</ion-item>
-										</div>
-									</div>
-									<div class="tr table-body" style="max-height: 50px;">
-										<div class="td">{{'edit_rights' | translate}}</div>
-										<div class="td">
-											<ion-item lines="none" class="item-trns">
-												<ion-toggle disabled [(ngModel)]="userdata.role_set.edit_rights">
-												</ion-toggle>
-											</ion-item>
-										</div>
-									</div>
-									<div class="tr table-body" style="max-height: 50px;">
-										<div class="td">{{'edit_products' | translate}}</div>
-										<div class="td">
-											<ion-item lines="none" class="item-trns">
-												<ion-toggle disabled [(ngModel)]="userdata.role_set.edit_products">
-												</ion-toggle>
-											</ion-item>
-										</div>
-									</div>
-									<div class="tr table-body" style="max-height: 50px;">
-										<div class="td">{{'edit_product_templates' | translate}}</div>
-										<div class="td">
-											<ion-item lines="none" class="item-trns">
-												<ion-toggle disabled [(ngModel)]="userdata.role_set.edit_product_templates">
-												</ion-toggle>
-											</ion-item>
-										</div>
-									</div>
-									<div class="tr table-body" style="max-height: 50px;">
-										<div class="td">{{'check_products' | translate}}</div>
-										<div class="td">
-											<ion-item lines="none" class="item-trns">
-												<ion-toggle disabled [(ngModel)]="userdata.role_set.check_products">
-												</ion-toggle>
-											</ion-item>
-										</div>
-									</div>
-									<div class="tr table-body" style="max-height: 50px;">
-										<div class="td">{{'edit_protocol_templates' | translate}}</div>
-										<div class="td">
-											<ion-item lines="none" class="item-trns">
-												<ion-toggle disabled [(ngModel)]="userdata.role_set.edit_protocol_templates">
-												</ion-toggle>
-											</ion-item>
-										</div>
-									</div>
-									<div class="tr table-body" style="max-height: 50px;">
-										<div class="td">{{'edit_contact_persons' | translate}}</div>
-										<div class="td">
-											<ion-item lines="none" class="item-trns">
-												<ion-toggle disabled
-													[(ngModel)]="userdata.role_set.edit_contact_persons">
-												</ion-toggle>
-											</ion-item>
-										</div>
-									</div>
-								</div> -->
 							</div>
 						</div>
 					</ion-col>
