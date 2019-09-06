@@ -80,13 +80,18 @@
 										<div class="td"><span>{{userdata.phone}}</span></div>
 									</div>
 								</div>
-								<div class="thead">
+								<div class="thead" style="margin-top: 10px;">
 									<div class="tr table-header" style="border-radius: 0px">
 										<div class="th">{{'Benutzerrechte' | translate}}</div>
 									</div>
 								</div>
+								
+
+
+
+
 								<div class="tbody">
-									<div class="tr table-body">
+									<div class="tr table-body" style="max-height: 50px;">
 										<div class="td">{{'edit_customer' | translate}}</div>
 										<div class="td">
 											<ion-item lines="none" class="item-trns">
@@ -94,8 +99,6 @@
 												</ion-toggle>
 											</ion-item>
 										</div>
-									</div>
-									<div class="tr table-body">
 										<div class="td">{{'edit_membership' | translate}}</div>
 										<div class="td">
 											<ion-item lines="none" class="item-trns">
@@ -104,7 +107,7 @@
 											</ion-item>
 										</div>
 									</div>
-									<div class="tr table-body">
+									<div class="tr table-body" style="max-height: 50px;">
 										<div class="td">{{'edit_rights' | translate}}</div>
 										<div class="td">
 											<ion-item lines="none" class="item-trns">
@@ -112,8 +115,6 @@
 												</ion-toggle>
 											</ion-item>
 										</div>
-									</div>
-									<div class="tr table-body">
 										<div class="td">{{'edit_products' | translate}}</div>
 										<div class="td">
 											<ion-item lines="none" class="item-trns">
@@ -122,7 +123,7 @@
 											</ion-item>
 										</div>
 									</div>
-									<div class="tr table-body">
+									<div class="tr table-body" style="max-height: 50px;">
 										<div class="td">{{'edit_product_templates' | translate}}</div>
 										<div class="td">
 											<ion-item lines="none" class="item-trns">
@@ -130,8 +131,6 @@
 												</ion-toggle>
 											</ion-item>
 										</div>
-									</div>
-									<div class="tr table-body">
 										<div class="td">{{'check_products' | translate}}</div>
 										<div class="td">
 											<ion-item lines="none" class="item-trns">
@@ -140,7 +139,7 @@
 											</ion-item>
 										</div>
 									</div>
-									<div class="tr table-body">
+									<div class="tr table-body" style="max-height: 50px;">
 										<div class="td">{{'edit_protocol_templates' | translate}}</div>
 										<div class="td">
 											<ion-item lines="none" class="item-trns">
@@ -148,8 +147,6 @@
 												</ion-toggle>
 											</ion-item>
 										</div>
-									</div>
-									<div class="tr table-body">
 										<div class="td">{{'edit_contact_persons' | translate}}</div>
 										<div class="td">
 											<ion-item lines="none" class="item-trns">
@@ -160,6 +157,83 @@
 										</div>
 									</div>
 								</div>
+
+
+<!-- 								<div class="tbody">
+									<div class="tr table-body" style="max-height: 50px;">
+										<div class="td">{{'edit_customer' | translate}}</div>
+										<div class="td">
+											<ion-item lines="none" class="item-trns">
+												<ion-toggle disabled [ngModel]="userdata.role_set.edit_customer">
+												</ion-toggle>
+											</ion-item>
+										</div>
+									</div>
+									<div class="tr table-body" style="max-height: 50px;">
+										<div class="td">{{'edit_membership' | translate}}</div>
+										<div class="td">
+											<ion-item lines="none" class="item-trns">
+												<ion-toggle disabled [(ngModel)]="userdata.role_set.edit_membership">
+												</ion-toggle>
+											</ion-item>
+										</div>
+									</div>
+									<div class="tr table-body" style="max-height: 50px;">
+										<div class="td">{{'edit_rights' | translate}}</div>
+										<div class="td">
+											<ion-item lines="none" class="item-trns">
+												<ion-toggle disabled [(ngModel)]="userdata.role_set.edit_rights">
+												</ion-toggle>
+											</ion-item>
+										</div>
+									</div>
+									<div class="tr table-body" style="max-height: 50px;">
+										<div class="td">{{'edit_products' | translate}}</div>
+										<div class="td">
+											<ion-item lines="none" class="item-trns">
+												<ion-toggle disabled [(ngModel)]="userdata.role_set.edit_products">
+												</ion-toggle>
+											</ion-item>
+										</div>
+									</div>
+									<div class="tr table-body" style="max-height: 50px;">
+										<div class="td">{{'edit_product_templates' | translate}}</div>
+										<div class="td">
+											<ion-item lines="none" class="item-trns">
+												<ion-toggle disabled [(ngModel)]="userdata.role_set.edit_product_templates">
+												</ion-toggle>
+											</ion-item>
+										</div>
+									</div>
+									<div class="tr table-body" style="max-height: 50px;">
+										<div class="td">{{'check_products' | translate}}</div>
+										<div class="td">
+											<ion-item lines="none" class="item-trns">
+												<ion-toggle disabled [(ngModel)]="userdata.role_set.check_products">
+												</ion-toggle>
+											</ion-item>
+										</div>
+									</div>
+									<div class="tr table-body" style="max-height: 50px;">
+										<div class="td">{{'edit_protocol_templates' | translate}}</div>
+										<div class="td">
+											<ion-item lines="none" class="item-trns">
+												<ion-toggle disabled [(ngModel)]="userdata.role_set.edit_protocol_templates">
+												</ion-toggle>
+											</ion-item>
+										</div>
+									</div>
+									<div class="tr table-body" style="max-height: 50px;">
+										<div class="td">{{'edit_contact_persons' | translate}}</div>
+										<div class="td">
+											<ion-item lines="none" class="item-trns">
+												<ion-toggle disabled
+													[(ngModel)]="userdata.role_set.edit_contact_persons">
+												</ion-toggle>
+											</ion-item>
+										</div>
+									</div>
+								</div> -->
 							</div>
 						</div>
 					</ion-col>
@@ -170,15 +244,23 @@
 									<div class="tr table-subheader table-subheader-fix">
 										<div class="table-subheader-buttons">
 											<ion-button size="small"
-												[disabled]="userdata.role_set.edit_membership==false"
-												(click)="open_mydataedit(0,0,0,1)"
-												[ngClass]="{'not-allowed': userdata.role_set.edit_membership==false}">
-												<ion-icon name="add"></ion-icon>&nbsp;&nbsp;{{'Mitarbeiter' | translate}}
-												
+														[disabled]="userdata.role_set.edit_membership==false"
+														(click)="open_mydataedit(0,0,0,1)"
+														[ngClass]="{'not-allowed': userdata.role_set.edit_membership==false}">
+												<ion-icon name="add"></ion-icon>&nbsp;&nbsp;{{'Mitarbeiter' | translate}}												
 											</ion-button>
 										</div>
+										<div class="search-search">
+											<ion-input type="text"
+														placeholder="{{'Suche' |translate }}"
+														[(ngModel)]="filterValue"
+														(input)="search_employee()"
+														class="search-text-input-left">
+											</ion-input>
+										</div>
 									</div>
-									<div *ngFor="let coll of colleagues | orderBy:'Type':true ">
+									<div style="height: 587px; overflow: scroll; margin-bottom: -15px;">
+									<div *ngFor="let coll of colleagues | orderBy:'Type':true">
 										<div class="tr table-body" *ngIf="userdata.Type<20">
 											<div class="td" style="max-width: 100%">
 												<div (click)="open_mydataedit(coll.id,coll.role,coll.role_nr);"
@@ -186,11 +268,13 @@
 													style="display: flex; align-items: center; cursor:pointer;">
 													<div
 														[ngStyle]="{'width':'15px', 'height':'15px', 'margin-right':'10px', 'display':'inline-block', 'background-color':coll.colour}">
-														&nbsp; </div>
+														&nbsp;
+													</div>
 													{{coll.first_name}} {{coll.last_name}} ({{coll.short_code}})
 												</div>
 											</div>
 										</div>
+									</div>
 									</div>
 								</div>
 							</div>

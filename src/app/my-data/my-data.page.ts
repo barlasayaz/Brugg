@@ -5,6 +5,8 @@ import { MyDataEditPage } from './my-data-edit/my-data-edit.page';
 import { TranslateService } from '@ngx-translate/core';
 import { ApiService } from '../services/api';
 import { ModalController } from '@ionic/angular';
+import { Subject } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 
 /**
  * Generated class for the MyDataPage page.
@@ -20,7 +22,11 @@ import { ModalController } from '@ionic/angular';
 })
 export class MyDataPage {
   public lang: string;
+  public colleaguesSearch: any = [];
   public colleagues: any = [];
+  public colleaguesAll: any = [];
+  public filterValue: string = '';
+  modelChanged: Subject<any> = new Subject<any>();
 
   constructor(public navCtrl: NavController, 
               public apiService: ApiService,
@@ -31,11 +37,33 @@ export class MyDataPage {
     this.lang = '';
     this.lang = localStorage.getItem('lang');
     console.log('constructor MyDataPage', this.userdata, this.userdata.role_set.edit_customer);
-    if ((this.userdata.role == 1) || (this.userdata.role == 2)) { this.loadList(); }
+    if ((this.userdata.role == 1) || (this.userdata.role == 2)) {
+      this.loadList();
+    }
+
+    this.modelChanged.pipe(
+      debounceTime(700))
+      .subscribe(model => {
+        console.log('modelChanged:', model);
+        if ((this.userdata.role == 1) || (this.userdata.role == 2)) {
+          this.colleaguesSearch = JSON.parse(JSON.stringify(this.colleaguesAll));
+          for (let i = this.colleaguesSearch.length - 1; i >= 0; i--) {
+              let s = this.filterValue.toLowerCase();
+              let a = this.colleaguesSearch[i];
+              let del = true;
+              if (a.first_name && a.first_name != null && a.first_name.toLowerCase().indexOf(s) >= 0) { del = false; }
+              if (a.last_name && a.last_name != null && a.last_name.toLowerCase().indexOf(s) >= 0) { del = false; }
+              if (a.short_code && a.short_code != null && a.short_code.toLowerCase().indexOf(s) >= 0) { del = false; }
+              if (del) { this.colleaguesSearch.splice(i, 1); }
+          }
+          this.colleagues = this.colleaguesSearch;
+        }
+    });
 
   }
 
   loadList() {
+    this.colleaguesAll = [];
     this.apiService.pvs4_get_colleagues_list(this.userdata.role, this.userdata.role_set , this.userdata.licensee)
     .then((result: any) => {
       console.log('pvs4_get_colleagues_list result:', result);
@@ -48,8 +76,10 @@ export class MyDataPage {
           if (item.id == this.userdata.profile) { continue; }
           // console.log("item:", item);
           this.colleagues.push(item);
+          this.colleaguesAll = JSON.parse(JSON.stringify(this.colleagues));
         }
       }
+      this.search_employee();
     });
   }
 
@@ -95,7 +125,7 @@ export class MyDataPage {
       localStorage.setItem('lang', x);
     }
     localStorage.removeItem('split_filter_product');
-    localStorage.removeItem('show_columns_product');  
+    localStorage.removeItem('show_columns_product');
   }
 
   async open_mydataedit(pid: number, role: number, role_nr: number,  editType: number= 0 ) {
@@ -122,6 +152,10 @@ export class MyDataPage {
       }
     });
     modal.present();
+  }
+
+  search_employee() {
+    this.modelChanged.next(this.filterValue);
   }
 
 }

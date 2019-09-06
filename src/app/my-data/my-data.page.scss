@@ -38,3 +38,11 @@ ion-select {
 .right_align {
 	text-align: right;
 }
+
+.table-info, .table-info > th, .table-info > td {
+    background-color: #eeee;
+}
+
+.ek-content {
+    min-height: 90%;
+}
