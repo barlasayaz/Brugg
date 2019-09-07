@@ -861,5 +861,6 @@
   "check_products": "controllare i prodotti",
   "edit_product_templates": "Modifica modelli di prodotto",
   "edit_contact_persons": "modificare le persone di contatto",
-  "edit_protocol_templates":"Modifica modelli di protocollo"
+  "edit_protocol_templates":"Modifica modelli di protocollo",
+  "Möchten Sie diesen Option wirklich deaktivieren?": "Sei sicuro di voler disattivare questo option?"
 }

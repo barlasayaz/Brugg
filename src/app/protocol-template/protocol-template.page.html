@@ -25,6 +25,11 @@
                             [disabled]="selectOption == 0">
                             <ion-icon name="create"></ion-icon>
                           </ion-button>
+                          <ion-button size="small" (click)="option_deactive(editOption)"
+                            class="btn-red"
+                            [disabled]="selectOption == 0">
+                            <ion-icon name="trash"></ion-icon>
+                          </ion-button>
                           <ion-button (click)="move_left()" [disabled]="selectOption == 0">
                               <ion-icon name="arrow-round-forward"></ion-icon>
                           </ion-button>

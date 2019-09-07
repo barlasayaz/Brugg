@@ -862,5 +862,6 @@
   "edit_products": "Edit Products",
   "edit_product_templates": "Edit Product Templates",
   "check_products": "Check Products",
-  "edit_protocol_templates": "Edit Protocol Templates"
+  "edit_protocol_templates": "Edit Protocol Templates",
+  "Möchten Sie diesen Option wirklich deaktivieren?": "Are you sure you want to deactivate this option?"
 }

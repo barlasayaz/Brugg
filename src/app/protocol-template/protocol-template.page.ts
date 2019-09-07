@@ -212,8 +212,6 @@ export class ProtocolTemplatePage implements OnInit {
         if (element.data.mandatory == 1) { element.data.mandatory = 'true'; }
         this.options.push(element.data);
         this.selectedOption[element.data.id] = 0;
-        // console.log('elemet data :', element.data.id, ' - ', element.data);
-        // console.log('selectedOption :', this.selectedOption[element.data.id]);
       });
       this.optionsAll = JSON.parse(JSON.stringify(this.options));
       console.log('loadOption: ', result.list);
@@ -245,21 +243,29 @@ export class ProtocolTemplatePage implements OnInit {
     modal.present();
   }
 
-  async option_edit(option: { id: any; }) {
+  async option_edit(option) {
     console.log('option :', option);
     const modal: HTMLIonModalElement = await this.modalCtrl.create({
-        component: ProtocolOptEditComponent,
-        componentProps: { id: option.id, option: option, idCustomer: this.idCustomer }
-      });
+      component: ProtocolOptEditComponent,
+      componentProps: { id: option.id, option: option, idCustomer: this.idCustomer }
+    });
+
     modal.onDidDismiss().then(data => {
+      console.log('data :', data['data']);
       if (data['data']) {
-        const optionData = data['data'];
         for (let index = 0; index < this.options.length; index++) {
           if (option.id == this.options[index].id) {
-            this.options[index] = optionData;
-            this.editOption = optionData;
+            if (data['data'].active == 1) {
+              this.options[index] = data['data'];
+              this.editOption = data['data'];
+            }
+            if (data['data'].active == 0) {
+              this.options.splice(index, 1);
+              this.editOption = [];
+            }
           }
         }
+        this.optionsAll = JSON.parse(JSON.stringify(this.options));
       }
     });
     await modal.present();
@@ -319,11 +325,88 @@ export class ProtocolTemplatePage implements OnInit {
     this.selectedTemplate[this.template.length - 1] = 0;
   }
 
-  loeschen() {
+  /* option_deactive(option) {
+    let alert = this.alertCtrl.create({
+      header: this.translate.instant('Achtung'),
+      message: this.translate.instant('Möchten Sie diesen Option wirklich deaktivieren?'),
+      buttons: [
+        {
+          text: this.translate.instant('nein'),
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: this.translate.instant('ja'),
+          handler: () => {
+            const obj = {
+              user: 1,
+              title: '',
+              mandatory: 0,
+              options: '',
+              licensee: this.userdata.licensee,
+              type: 0,
+              id: 0,
+              value: '',
+              active: '0'
+            };
 
-  }
+            if (option['user']) { obj.user = option['user']; }
+            if (option['licensee']) { obj.licensee = option['licensee']; }
+            if (option['type']) { obj.type = option['type']; }
+            if (option['mandatory']) {
+              if (option['mandatory'] == true) { obj.mandatory = 1; }
+              if (option['mandatory'] == false) { obj.mandatory = 0; }
+            }
+            if (option['title']) { obj.title = JSON.stringify(option['title']); }
+            if (option['options']) { obj.options = JSON.stringify(option['options']); }
 
-  pdf_ansicht() {
+            obj.id = option['id'];
+            obj.active = '0';
+            option.active = 0;
+            console.log('deactive obj :', obj);
 
+            this.apiService.pvs4_set_protocol_opt(obj).then((result: any) => {
+              console.log('result: ', result);
+              this.loadOption();
+            });
+          }
+        }
+      ]
+    }).then(x => x.present());
+  } */
+
+  option_deactive(option) {
+    const obj = {
+      user: 1,
+      title: '',
+      mandatory: 0,
+      options: '',
+      licensee: this.userdata.licensee,
+      type: 0,
+      id: 0,
+      value: '',
+      active: '0'
+    };
+
+    if (option['user']) { obj.user = option['user']; }
+    if (option['licensee']) { obj.licensee = option['licensee']; }
+    if (option['type']) { obj.type = option['type']; }
+    if (option['mandatory']) {
+      if (option['mandatory'] == true) { obj.mandatory = 1; }
+      if (option['mandatory'] == false) { obj.mandatory = 0; }
+    }
+    if (option['title']) { obj.title = JSON.stringify(option['title']); }
+    if (option['options']) { obj.options = JSON.stringify(option['options']); }
+
+    obj.id = option['id'];
+    obj.active = '0';
+    option.active = 0;
+    console.log('deactive obj :', obj);
+
+    this.apiService.pvs4_set_protocol_opt(obj).then((result: any) => {
+      console.log('result: ', result);
+      this.loadOption();
+    });
   }
 }

@@ -252,13 +252,21 @@ export class ProductTemplatePage implements OnInit {
     });
 
     modal.onDidDismiss().then(data => {
+      console.log('data :', data['data']);
       if (data['data']) {
         for (let index = 0; index < this.options.length; index++) {
           if (option.id == this.options[index].id) {
-            this.options[index] = data['data'];
-            this.editOption = data['data'];
+            if (data['data'].active == 1) {
+              this.options[index] = data['data'];
+              this.editOption = data['data'];
+            }
+            if (data['data'].active == 0) {
+              this.options.splice(index, 1);
+              this.editOption = [];
+            }
           }
         }
+        this.optionsAll = JSON.parse(JSON.stringify(this.options));
       }
     });
 
@@ -318,6 +326,91 @@ export class ProductTemplatePage implements OnInit {
   move_left() {
     this.template.push(this.options.find(x => x.id == this.selectedOptionId));
     this.selectedTemplate[this.template.length - 1] = 0;
+  }
+
+  /* option_deactive(option) {
+    let alert = this.alertCtrl.create({
+      header: this.translate.instant('Achtung'),
+      message: this.translate.instant('Möchten Sie diesen Option wirklich deaktivieren?'),
+      buttons: [
+        {
+          text: this.translate.instant('nein'),
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: this.translate.instant('ja'),
+          handler: () => {
+            const obj = {
+              user: 1,
+              title: '',
+              mandatory: 0,
+              options: '',
+              licensee: this.userdata.licensee,
+              type: 0,
+              id: 0,
+              value: '',
+              active: '0'
+            };
+
+            if (option['user']) { obj.user = option['user']; }
+            if (option['licensee']) { obj.licensee = option['licensee']; }
+            if (option['type']) { obj.type = option['type']; }
+            if (option['mandatory']) {
+              if (option['mandatory'] == true) { obj.mandatory = 1; }
+              if (option['mandatory'] == false) { obj.mandatory = 0; }
+            }
+            if (option['title']) { obj.title = JSON.stringify(option['title']); }
+            if (option['options']) { obj.options = JSON.stringify(option['options']); }
+
+            obj.id = option['id'];
+            obj.active = '0';
+            option.active = 0;
+            console.log('deactive obj :', obj);
+
+            this.apiService.pvs4_set_product_opt(obj).then((result: any) => {
+              console.log('result: ', result);
+              this.loadOption();
+            });
+          }
+        }
+      ]
+    }).then(x => x.present());
+  } */
+
+  option_deactive(option) {
+    const obj = {
+      user: 1,
+      title: '',
+      mandatory: 0,
+      options: '',
+      licensee: this.userdata.licensee,
+      type: 0,
+      id: 0,
+      value: '',
+      active: '0'
+    };
+
+    if (option['user']) { obj.user = option['user']; }
+    if (option['licensee']) { obj.licensee = option['licensee']; }
+    if (option['type']) { obj.type = option['type']; }
+    if (option['mandatory']) {
+      if (option['mandatory'] == true) { obj.mandatory = 1; }
+      if (option['mandatory'] == false) { obj.mandatory = 0; }
+    }
+    if (option['title']) { obj.title = JSON.stringify(option['title']); }
+    if (option['options']) { obj.options = JSON.stringify(option['options']); }
+
+    obj.id = option['id'];
+    obj.active = '0';
+    option.active = 0;
+    console.log('deactive obj :', obj);
+
+    this.apiService.pvs4_set_product_opt(obj).then((result: any) => {
+      console.log('result: ', result);
+      this.loadOption();
+    });
   }
 
 }
