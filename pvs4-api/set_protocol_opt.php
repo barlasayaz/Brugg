@@ -77,8 +77,6 @@ function processing() {
         die;
     }
     //-----------------------------------------------------
-
-
  
     // escape the uemailid to prevent sql injection
     $id       	= intval( $_POST['id'] );
@@ -88,14 +86,22 @@ function processing() {
     $title      = trim( mysqli_escape_string($con,$_POST['title']));
     $options 	= trim( mysqli_escape_string($con,$_POST['options']));
     $mandatory  = intval( $_POST['mandatory'] );
+    $active     = intval( $_POST['active'] );
    
     if($id >0) {
         $sql="UPDATE protocol_options 
-                SET type =$type ,licensee = $licensee, user=$user, id=$id, mandatory=$mandatory, title='$title', options='$options'
-                WHERE id =$id";
+                SET type = $type,
+                    licensee = $licensee,
+                    user = $user,
+                    id = $id,
+                    mandatory = $mandatory,
+                    title = '$title',
+                    options = '$options',
+                    active = $active
+              WHERE id =$id";
     } else {
-        $sql="INSERT INTO protocol_options (licensee,user,type,mandatory,title,options)
-                VALUES($licensee,$user,$type,$mandatory,'$title','$options')";
+        $sql="INSERT INTO protocol_options (licensee,user,type,mandatory,title,options,active)
+                VALUES($licensee,$user,$type,$mandatory,'$title','$options',$active)";
     }
 	$ret_sql= mysqli_query( $con, $sql );
 

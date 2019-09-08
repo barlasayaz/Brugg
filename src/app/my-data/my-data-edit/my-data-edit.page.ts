@@ -33,6 +33,8 @@ export class MyDataEditPage {
     edit_products: false,
     check_products: false,
     edit_contact_persons: false,
+    edit_product_templates: false,
+    edit_protocol_templates: false,
     licensee: 5
   };
   public setRights: boolean;
@@ -65,6 +67,8 @@ export class MyDataEditPage {
       this.role_set.edit_products = false;
       this.role_set.check_products = false;
       this.role_set.edit_contact_persons = false;
+      this.role_set.edit_product_templates = false;
+      this.role_set.edit_protocol_templates = false;
       this.role_set.licensee = this.userdata.licensee;
     }
     this.editData(this.pid);

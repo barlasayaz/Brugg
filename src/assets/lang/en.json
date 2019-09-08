@@ -851,10 +851,17 @@
   "Option bearbeiten": "Edit option",
   "Auswahlmöglichkeiten": "Options",
   "Ziehen Sie Ihre Optionen in dieses Feld": "Drag your options into this field",
-  "edit_product_templates": "Edit Product Templates",
-  "edit_protocol_templates": "Edit Protocol Templates",
   "Gleich wie Rechnungsadresse": "Same as Billing Address",
   "Manuelle Eingabe": "Manual Input",
   "Wählen Alle": "Select All",
-  "Alle Abwählen": "Deselect All"
+  "Alle Abwählen": "Deselect All",
+  "edit_customer": " Edit Customer",
+  "edit_membership": "Edit Membership",
+  "edit_rights": "Edit Rights",
+  "edit_contact_persons": "Edit Contact Person",
+  "edit_products": "Edit Products",
+  "edit_product_templates": "Edit Product Templates",
+  "check_products": "Check Products",
+  "edit_protocol_templates": "Edit Protocol Templates",
+  "Möchten Sie diesen Option wirklich deaktivieren?": "Are you sure you want to deactivate this option?"
 }

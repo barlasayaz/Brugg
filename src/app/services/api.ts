@@ -4,8 +4,8 @@ import 'rxjs/add/operator/timeout';
 import { UserdataService } from './userdata';
 
 
-// const pvs4_apiURL = 'http://localhost/BruggPVS4/pvs4-api/';
- const pvs4_apiURL = "https://www.pvs2go.com/pvs4-api/";
+ const pvs4_apiURL = 'http://localhost/BruggPVS4/pvs4-api/';
+// const pvs4_apiURL = "https://www.pvs2go.com/pvs4-api/";
 
 const brugg_id_api = 'https://www.bruggdigital.com/';
 const pvs4_client_id = 'brugg-pvs';
@@ -220,43 +220,48 @@ export class ApiService {
       this.pvs4_api_post('get_profile.php', post_data).then((done: any) => { // return the result
         console.log('pvs4_getprofile done ok: ', done);
         let system_role = [];
-        if(done.obj.system_role && done.obj.system_role!='' && done.obj.system_role!=null)
-           system_role = JSON.parse(done.obj.system_role); 
+        if (done.obj.system_role && done.obj.system_role != '' && done.obj.system_role != null) {
+           system_role = JSON.parse(done.obj.system_role);
+        }
         let licensee_role = [];
-        if(done.obj.licensee_role && done.obj.licensee_role!='' && done.obj.licensee_role!=null)
-           licensee_role = JSON.parse(done.obj.licensee_role); 
+        if (done.obj.licensee_role && done.obj.licensee_role != '' && done.obj.licensee_role != null) {
+           licensee_role = JSON.parse(done.obj.licensee_role);
+        }
         let customer_role = [];
-        if(done.obj.customer_role && done.obj.customer_role!='' && done.obj.customer_role!=null)
-           customer_role = JSON.parse(done.obj.customer_role); 
+        if (done.obj.customer_role && done.obj.customer_role != '' && done.obj.customer_role != null) {
+           customer_role = JSON.parse(done.obj.customer_role);
+        }
 
         this.userdata.profile = parseInt(done.obj.id);
         this.userdata.id = this.userdata.profile;
-        this.userdata.licensee = 0; 
-        this.userdata.role = 0; 
-        this.userdata.role_nr = 0; 
+        this.userdata.licensee = 0;
+        this.userdata.role = 0;
+        this.userdata.role_nr = 0;
         this.userdata.role_set = {
           check_products: false,​​
           edit_contact_persons: false,          ​​
           edit_customer: false,          ​​
           edit_membership: false,          ​​
           edit_products: false,          ​​
-          edit_rights: false
+          edit_rights: false,
+          edit_product_templates: false,
+          edit_protocol_templates: false
         }; 
-        this.userdata.short_code = done.obj.short_code; 
-        this.userdata.colour = done.obj.colour; 
-        if (system_role.length > 0) { 
+        this.userdata.short_code = done.obj.short_code;
+        this.userdata.colour = done.obj.colour;
+        if (system_role.length > 0) {
           this.userdata.role = 1; 
-          this.userdata.role_set = system_role[0]; 
-          this.userdata.all_role_set = system_role; 
-        } else if (licensee_role.length > 0)  { 
+          this.userdata.role_set = system_role[0];
+          this.userdata.all_role_set = system_role;
+        } else if (licensee_role.length > 0)  {
           this.userdata.role = 2; 
-          this.userdata.role_set = licensee_role[0]; 
+          this.userdata.role_set = licensee_role[0];
           this.userdata.licensee = licensee_role[0].licensee;
-          this.userdata.all_role_set = licensee_role; 
-        } else if (customer_role.length > 0) { 
+          this.userdata.all_role_set = licensee_role;
+        } else if (customer_role.length > 0) {
           this.userdata.role = 3; 
-          this.userdata.role_set = customer_role[0]; 
-          this.userdata.all_role_set = customer_role; 
+          this.userdata.role_set = customer_role[0];
+          this.userdata.all_role_set = customer_role;
         }
         if (!this.userdata.role_set.check_products) { this.userdata.role_set.check_products = false; }
         if (!this.userdata.role_set.edit_contact_persons) { this.userdata.role_set.edit_contact_persons = false; }
@@ -264,7 +269,9 @@ export class ApiService {
         if (!this.userdata.role_set.edit_membership) { this.userdata.role_set.edit_membership = false; }
         if (!this.userdata.role_set.edit_products) { this.userdata.role_set.edit_products = false; }
         if (!this.userdata.role_set.edit_rights) { this.userdata.role_set.edit_rights = false; }
-        console.log('pvs4_get_my_profile done ok: ', this.userdata); 
+        if (!this.userdata.role_set.edit_product_templates) { this.userdata.role_set.edit_product_templates = false; }
+        if (!this.userdata.role_set.edit_protocol_templates) { this.userdata.role_set.edit_protocol_templates = false; }
+        console.log('pvs4_get_my_profile done ok: ', this.userdata);
         res(done);
       },
         err => { // return the error
