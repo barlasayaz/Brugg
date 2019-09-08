@@ -104,7 +104,7 @@ input:-webkit-autofill:active  {
   position: absolute;
   top: calc(65px + 55px + 41px);
   left: 0;
-  height: calc(100% - 65px - 55px - 41px - 35px);
+  height: calc(100% - 65px - 55px - 41px);
   width: 100%;
   //background: #333;
   z-index: -55;
@@ -124,10 +124,10 @@ body .ui-widget button {
   font-size: 14px !important;
 }
 
-.ui-treetable-scrollable-body {
+/*.ui-treetable-scrollable-body {
   overflow: auto !important;
   position: static !important;
-}
+}*/
 
 .ui-accordion .ui-accordion-header a {
   display: block !important;

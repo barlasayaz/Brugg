@@ -42,7 +42,7 @@
         </div>
     </p-menubar>
 
-    <div id="heightCalc" 
+   <div id="heightCalc" 
          class="heightCalc"
          #divHeightCalc>
     </div>
@@ -58,13 +58,19 @@
                  styleClass="ui-treetable-scrollable-body"
                  [resizableColumns]="true"
                  [scrollable]="true"
+                 [paginator]="false" 
+                 [rows]="rowCount" 
                  [scrollHeight]="heightCalc"
-                 [rows]="25"
-                 [paginator]="true" 
-                 [virtualScroll]="false" 
+                 [virtualRowHeight]="rowHeight"
+                 [virtualScroll]="true" 
                  columnResizeMode="fit"
-                 [reorderableColumns]="true">
-        <ng-template pTemplate="colgroup" let-columns>
+                 [reorderableColumns]="true"
+                 [lazy]="true" 
+                 (onLazyLoad)="loadNodes($event)" 
+                 [totalRecords]="totalRecords" 
+                 [loading]="true"
+                 [showLoader]="showLoader" >      
+        <ng-template pTemplate="colgroup" let-columns="columns">
             <colgroup>
                 <col *ngFor="let col of selectedColumns" [ngStyle]="{width: col.width}">
             </colgroup>
@@ -73,8 +79,8 @@
             <tr>
                 <th *ngFor="let col of selectedColumns" 
                     ttResizableColumn 
-                    [ttSortableColumn]="col.field" 
-                    ttReorderableColumn  >
+                    [ttSortableColumn]="col.field"  
+                    ttReorderableColumn >
                     {{col.header}}
                     <p-treeTableSortIcon [field]="col.field"></p-treeTableSortIcon>
                 </th>
@@ -103,7 +109,13 @@
                 </td>
             </tr>
         </ng-template>
-
+        <ng-template pTemplate="loadingbody" let-columns="columns">
+            <tr style="height:34px">
+                <td *ngFor="let col of selectedColumns;">
+                    <div class="loading-text"></div>
+                </td>
+            </tr>
+        </ng-template>
     </p-treeTable>
 
 </div>

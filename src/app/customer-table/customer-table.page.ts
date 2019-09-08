@@ -38,7 +38,7 @@ export class CustomerTablePage implements OnInit {
                     } else {
                         this.menuItems[7].items[2]['disabled'] = true;
                     }
-                    this.generate_customerList();
+                    this.generate_customerList(0,this.rowCount);
                     localStorage.setItem('filter_values', JSON.stringify(this.columnFilterValues));
             });
     }
@@ -69,9 +69,12 @@ export class CustomerTablePage implements OnInit {
                                   search_all: '' };
     public filterCols: string[];
     public expendedNodes: string[] = [];
-    public rowRecords: number = 0;
-    public totalRecords: number = 0;
+    showLoader: boolean;
     modelChanged: Subject<any> = new Subject<any>();
+    readonly rowHeight = 46;
+    rowCount: number = 25;
+    public totalRecords: number = 9000;
+    public rowRecords: number = 0;
 
     public menuItems: MenuItem[] = [{
         label: this.translate.instant('Ansicht'),
@@ -188,6 +191,7 @@ export class CustomerTablePage implements OnInit {
     @ViewChild('divHeightCalc') divHeightCalc: any;
 
     ngOnInit(): void {
+        this.showLoader = true;
         this.cols = [
             { field: 'company', header: this.translate.instant('Firma'), width:'200px' },
             { field: 'id', header: 'DB-ID', width:'60px' },
@@ -222,6 +226,23 @@ export class CustomerTablePage implements OnInit {
         this.funcHeightCalc();
     }
 
+    
+    loadNodes(event) {
+        if(this.customerListAll.length>0)
+        {
+            this.showLoader = true;
+            this.generate_customerList(event.first,event.first+event.rows);
+            this.showLoader = false;
+        }
+        //in a production application, make a remote request to load data using state metadata from event
+        
+        //event.first = First row offset
+        //event.rows = Number of rows per page
+        //event.sortField = Field name to sort with
+        //event.sortOrder = Sort order as number, 1 for asc and -1 for dec
+        //filters: FilterMetadata object having field as key and filter value, filter matchMode as value
+    }
+
     funcHeightCalc() {
         let x = this.divHeightCalc.nativeElement.scrollHeight;
         if (x == 0) { x = 550; }
@@ -252,8 +273,9 @@ export class CustomerTablePage implements OnInit {
             if (localStorage.getItem('show_columns') != undefined) {
                 this.selectedColumns = JSON.parse(localStorage.getItem('show_columns'));
             }
-            this.generate_customerList();
-            this.funcHeightCalc();
+           this.generate_customerList(0,this.rowCount);
+           this.funcHeightCalc();
+           this.showLoader = false;
         });
         this.funcHeightCalc();
     }
@@ -341,10 +363,10 @@ export class CustomerTablePage implements OnInit {
                                         sector: '',
                                         search_all: '' };
         }
-        this.generate_customerList();
+        this.generate_customerList(0,this.rowCount);
     }
 
-    generate_customerList() {
+    generate_customerList(start_index:number,end_index:number) {
         if (!this.isFilterOn()) {
             this.customerListView = JSON.parse(JSON.stringify(this.customerListAll));
         } else {
@@ -352,6 +374,7 @@ export class CustomerTablePage implements OnInit {
             this.dir_try_filter(try_list);
             this.customerListView = try_list;
         }
+        this.customerListView = this.customerListView.slice(start_index, end_index);
 
         if (this.customerListView.length > 0) {
             this.menuItems[7].items[0]['disabled'] = false;
