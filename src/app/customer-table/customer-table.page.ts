@@ -38,7 +38,7 @@ export class CustomerTablePage implements OnInit {
                     } else {
                         this.menuItems[7].items[2]['disabled'] = true;
                     }
-                    this.generate_customerList(0,this.rowCount);
+                    this.generate_customerList(0,this.rowCount,null,0);
                     localStorage.setItem('filter_values', JSON.stringify(this.columnFilterValues));
             });
     }
@@ -231,7 +231,7 @@ export class CustomerTablePage implements OnInit {
         if(this.customerListAll.length>0)
         {
             this.showLoader = true;
-            this.generate_customerList(event.first,event.first+event.rows);
+            this.generate_customerList(event.first,event.first+event.rows,event.sortField,event.sortOrder);
             this.showLoader = false;
         }
         //in a production application, make a remote request to load data using state metadata from event
@@ -273,7 +273,7 @@ export class CustomerTablePage implements OnInit {
             if (localStorage.getItem('show_columns') != undefined) {
                 this.selectedColumns = JSON.parse(localStorage.getItem('show_columns'));
             }
-           this.generate_customerList(0,this.rowCount);
+           this.generate_customerList(0,this.rowCount,null,0);
            this.funcHeightCalc();
            this.showLoader = false;
         });
@@ -363,16 +363,44 @@ export class CustomerTablePage implements OnInit {
                                         sector: '',
                                         search_all: '' };
         }
-        this.generate_customerList(0,this.rowCount);
+        this.generate_customerList(0,this.rowCount,null,0);
     }
 
-    generate_customerList(start_index:number,end_index:number) {
+    generate_customerList(start_index:number,end_index:number,sort_field,sort_order) {
         if (!this.isFilterOn()) {
             this.customerListView = JSON.parse(JSON.stringify(this.customerListAll));
         } else {
             let try_list = JSON.parse(JSON.stringify(this.customerListAll));
             this.dir_try_filter(try_list);
             this.customerListView = try_list;
+        }
+        if(sort_field!=null)
+        {
+            if(sort_order == 1)
+            {
+                this.customerListView = this.customerListView.sort((a, b) => {
+                    if(a.data[sort_field].toLowerCase( )> b.data[sort_field].toLowerCase( )) {
+                      return 1;
+                    } else if(a.data[sort_field].toLowerCase( ) < b.data[sort_field].toLowerCase( )) {
+                      return -1;
+                    } else {
+                      return 0;
+                    }
+                  });
+            }
+            else
+            {
+                this.customerListView = this.customerListView.sort((a, b) => {
+                    if(a.data[sort_field].toLowerCase( )> b.data[sort_field].toLowerCase( )) {
+                      return -1;
+                    } else if(a.data[sort_field].toLowerCase( ) < b.data[sort_field].toLowerCase( )) {
+                      return 1;
+                    } else {
+                      return 0;
+                    }
+                  });
+            }
+
         }
         this.customerListView = this.customerListView.slice(start_index, end_index);
 

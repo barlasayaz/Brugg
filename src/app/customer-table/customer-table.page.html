@@ -67,7 +67,7 @@
                  [reorderableColumns]="true"
                  [lazy]="true" 
                  (onLazyLoad)="loadNodes($event)" 
-                 [totalRecords]="totalRecords" 
+                 [totalRecords]="rowRecords" 
                  [loading]="true"
                  [showLoader]="showLoader" >      
         <ng-template pTemplate="colgroup" let-columns="columns">
