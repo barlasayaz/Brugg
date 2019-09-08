@@ -414,7 +414,7 @@ export class CustomerTablePage implements OnInit {
             this.menuItems[7].items[3]['disabled'] = true;
         }
 
-        this.rowRecords = this.customerListView.length;
+        this.rowRecords = end_index;
         this.totalRecords = this.customerListAll.length;
         let progressBar;
         if (this.totalRecords > 0 ) {
