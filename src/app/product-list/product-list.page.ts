@@ -86,7 +86,7 @@ export class ProductListPage implements OnInit {
     },
     {
         label: this.translate.instant('Bewegen'),
-        icon: 'pi pi-fw pi-arrow-up',
+        icon: 'pi pi-fw pi-chevron-up',
         visible: this.userdata.role_set.edit_products,
         disabled: true,
         command: (event) => {
@@ -97,7 +97,7 @@ export class ProductListPage implements OnInit {
     },
     {
         label: this.translate.instant('Stammordner'),
-        icon: 'pi pi-fw pi-arrow-down',
+        icon: 'pi pi-fw pi-chevron-down',
         visible: false,
         styleClass: 'move_now',
         disabled: false,

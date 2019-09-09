@@ -38,7 +38,7 @@ export class CustomerTablePage implements OnInit {
                     } else {
                         this.menuItems[7].items[2]['disabled'] = true;
                     }
-                    this.generate_customerList(0,this.rowCount,null,0);
+                    this.generate_customerList(0, this.rowCount, null, 0);
                     localStorage.setItem('filter_values', JSON.stringify(this.columnFilterValues));
             });
     }
@@ -98,7 +98,7 @@ export class CustomerTablePage implements OnInit {
     },
     {
         label: this.translate.instant('Bewegen'),
-        icon: 'pi pi-fw pi-arrow-up',
+        icon: 'pi pi-fw pi-chevron-up',
         visible: this.userdata.role_set.edit_customer,
         disabled: true,
         command: (event) => {
@@ -109,11 +109,11 @@ export class CustomerTablePage implements OnInit {
     },
     {
         label: this.translate.instant('Stammordner'),
-        icon: 'pi pi-fw pi-arrow-down',
+        icon: 'pi pi-fw pi-chevron-down',
         visible: false,
-        styleClass: 'move_now',
         disabled: false,
         command: (event) => {
+            if (this.userdata.role_set.edit_customer != true) { return; }
             console.log('command menuitem:', event);
             this.menu_move(2);
         }
@@ -193,17 +193,17 @@ export class CustomerTablePage implements OnInit {
     ngOnInit(): void {
         this.showLoader = true;
         this.cols = [
-            { field: 'company', header: this.translate.instant('Firma'), width:'200px' },
-            { field: 'id', header: 'DB-ID', width:'60px' },
-            { field: 'customer_number', header: '#', width:'85px'},
-            { field: 'rating', header: this.translate.instant('Typ'), width:'100px' },
-            { field: 'zip_code', header: this.translate.instant('PLZ'), width:'85px'},
-            { field: 'place', header: this.translate.instant('Ort'), width:'200px' },
-            { field: 'employees', header: this.translate.instant('Mitarbeiter'), width:'170px' },
-            { field: 'last_date', header: '<< ' + this.translate.instant('Termin'), width:'120px' },
-            { field: 'next_date', header: '>> ' + this.translate.instant('Termin'), width:'120px' },
-            { field: 'inspector', header: this.translate.instant('Prüfer'), width:'170px' },
-            { field: 'sector', header: this.translate.instant('Branche'), width:'200px' }
+            { field: 'company', header: this.translate.instant('Firma'), width: '200px' },
+            { field: 'id', header: 'DB-ID', width: '60px' },
+            { field: 'customer_number', header: '#', width: '85px'},
+            { field: 'rating', header: this.translate.instant('Typ'), width: '100px' },
+            { field: 'zip_code', header: this.translate.instant('PLZ'), width: '85px'},
+            { field: 'place', header: this.translate.instant('Ort'), width: '200px' },
+            { field: 'employees', header: this.translate.instant('Mitarbeiter'), width: '170px' },
+            { field: 'last_date', header: '<< ' + this.translate.instant('Termin'), width: '120px' },
+            { field: 'next_date', header: '>> ' + this.translate.instant('Termin'), width: '120px' },
+            { field: 'inspector', header: this.translate.instant('Prüfer'), width: '170px' },
+            { field: 'sector', header: this.translate.instant('Branche'), width: '200px' }
         ];
 
         this.filterCols = ['company',
@@ -226,21 +226,19 @@ export class CustomerTablePage implements OnInit {
         this.funcHeightCalc();
     }
 
-    
     loadNodes(event) {
-        if(this.customerListAll.length>0)
+        if (this.customerListAll.length > 0)
         {
             this.showLoader = true;
-            this.generate_customerList(event.first,event.first+event.rows,event.sortField,event.sortOrder);
+            this.generate_customerList(event.first, event.first + event.rows, event.sortField, event.sortOrder);
             this.showLoader = false;
         }
-        //in a production application, make a remote request to load data using state metadata from event
-        
-        //event.first = First row offset
-        //event.rows = Number of rows per page
-        //event.sortField = Field name to sort with
-        //event.sortOrder = Sort order as number, 1 for asc and -1 for dec
-        //filters: FilterMetadata object having field as key and filter value, filter matchMode as value
+        // in a production application, make a remote request to load data using state metadata from event
+        // event.first = First row offset
+        // event.rows = Number of rows per page
+        // event.sortField = Field name to sort with
+        // event.sortOrder = Sort order as number, 1 for asc and -1 for dec
+        // filters: FilterMetadata object having field as key and filter value, filter matchMode as value
     }
 
     funcHeightCalc() {
@@ -273,7 +271,7 @@ export class CustomerTablePage implements OnInit {
             if (localStorage.getItem('show_columns') != undefined) {
                 this.selectedColumns = JSON.parse(localStorage.getItem('show_columns'));
             }
-           this.generate_customerList(0,this.rowCount,null,0);
+           this.generate_customerList(0, this.rowCount, null, 0);
            this.funcHeightCalc();
            this.showLoader = false;
         });
@@ -363,10 +361,10 @@ export class CustomerTablePage implements OnInit {
                                         sector: '',
                                         search_all: '' };
         }
-        this.generate_customerList(0,this.rowCount,null,0);
+        this.generate_customerList(0, this.rowCount, null, 0);
     }
 
-    generate_customerList(start_index:number,end_index:number,sort_field,sort_order) {
+    generate_customerList(start_index: number, end_index: number, sort_field, sort_order) {
         if (!this.isFilterOn()) {
             this.customerListView = JSON.parse(JSON.stringify(this.customerListAll));
         } else {
@@ -374,14 +372,14 @@ export class CustomerTablePage implements OnInit {
             this.dir_try_filter(try_list);
             this.customerListView = try_list;
         }
-        if(sort_field!=null)
+        if (sort_field != null)
         {
-            if(sort_order == 1)
+            if (sort_order == 1)
             {
                 this.customerListView = this.customerListView.sort((a, b) => {
-                    if(a.data[sort_field].toLowerCase( )> b.data[sort_field].toLowerCase( )) {
+                    if (a.data[sort_field].toLowerCase( ) > b.data[sort_field].toLowerCase( )) {
                       return 1;
-                    } else if(a.data[sort_field].toLowerCase( ) < b.data[sort_field].toLowerCase( )) {
+                    } else if (a.data[sort_field].toLowerCase( ) < b.data[sort_field].toLowerCase( )) {
                       return -1;
                     } else {
                       return 0;
@@ -391,9 +389,9 @@ export class CustomerTablePage implements OnInit {
             else
             {
                 this.customerListView = this.customerListView.sort((a, b) => {
-                    if(a.data[sort_field].toLowerCase( )> b.data[sort_field].toLowerCase( )) {
+                    if (a.data[sort_field].toLowerCase( ) > b.data[sort_field].toLowerCase( )) {
                       return -1;
-                    } else if(a.data[sort_field].toLowerCase( ) < b.data[sort_field].toLowerCase( )) {
+                    } else if (a.data[sort_field].toLowerCase( ) < b.data[sort_field].toLowerCase( )) {
                       return 1;
                     } else {
                       return 0;
@@ -537,9 +535,6 @@ export class CustomerTablePage implements OnInit {
                 console.log('result: ', result);
                 this.page_load();
             });
-            this.menuItems[2].visible = true;
-            this.menuItems[3].visible = false;
-            this.move_id = 0;
             this.menuItems[2].visible = true;
             this.menuItems[3].visible = false;
             this.move_id = 0;

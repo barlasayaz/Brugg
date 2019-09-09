@@ -63,6 +63,14 @@ input:-webkit-autofill:active  {
   }
 }
 
+.pi-arrow-up:before {
+  display: none !important;
+}
+
+.pi-arrow-down:before {
+  display: none !important;
+}
+
 .alert-wrapper.sc-ion-alert-md {
   max-width: 500px !important;
   width: 450px !important;
