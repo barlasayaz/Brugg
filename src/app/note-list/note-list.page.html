@@ -57,9 +57,15 @@
                  styleClass="ui-treetable-scrollable-body"
                  [resizableColumns]="true"
                  [scrollable]="true"
+                 [paginator]="false" 
+                 [rows]="rowCount" 
                  [scrollHeight]="heightCalc"
-                 [rows]="25"
-                 [paginator]="true"
+                 [virtualRowHeight]="rowHeight"
+                 [virtualScroll]="true" 
+                 [lazy]="true" 
+                 (onLazyLoad)="loadNodes($event)"  
+                 [loading]="false" 
+                 [totalRecords]="rowRecords"
                  columnResizeMode="fit"
                  [reorderableColumns]="true">
         <ng-template pTemplate="colgroup" let-columns>
@@ -94,6 +100,13 @@
                     <label
                         *ngIf="col.field == 'notes_date'">{{rowData[col.field] | date : 'dd.MM.yyyy - HH:mm'}}</label>
                     <label *ngIf="col.field != 'notes_date'">{{rowData[col.field]}}</label>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="loadingbody" let-columns="columns">
+            <tr style="height:34px">
+                <td *ngFor="let col of selectedColumns;">
+                    <div class="loading-text"></div>
                 </td>
             </tr>
         </ng-template>

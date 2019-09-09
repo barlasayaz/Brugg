@@ -70,10 +70,9 @@ export class CustomerTablePage implements OnInit {
                                   search_all: '' };
     public filterCols: string[];
     public expendedNodes: string[] = [];
-    showLoader: boolean;
     modelChanged: Subject<any> = new Subject<any>();
     readonly rowHeight = 46;
-    rowCount: number = 25;
+    readonly rowCount: number = 25;
     public totalRecords: number;
     public rowRecords: number;
     public loader: any;
@@ -368,9 +367,7 @@ export class CustomerTablePage implements OnInit {
         this.generate_customerList(0, this.rowCount, null, 0);
     }
 
-    isEmpty(str) {
-        return (!str || str==null || 0 === str.length);
-    }
+
 
     generate_customerList(start_index: number, end_index: number, sort_field, sort_order) {
         if (!this.isFilterOn()) {
@@ -386,11 +383,11 @@ export class CustomerTablePage implements OnInit {
                 let value1 = a.data[sort_field];
                 let value2 = b.data[sort_field];
     
-                if (this.isEmpty(value1) && !this.isEmpty(value2))
+                if (this.apiService.isEmpty(value1) && !this.apiService.isEmpty(value2))
                     return-1*sort_order;
-                else if (!this.isEmpty(value1) && this.isEmpty(value2))
+                else if (!this.apiService.isEmpty(value1) && this.apiService.isEmpty(value2))
                     return 1*sort_order;
-                else if (this.isEmpty(value1) && this.isEmpty(value2))
+                else if (this.apiService.isEmpty(value1) && this.apiService.isEmpty(value2))
                     return 0;
                 else if ( value1.toLowerCase( ) > value2.toLowerCase( )) {
                     return 1*sort_order;
@@ -402,7 +399,13 @@ export class CustomerTablePage implements OnInit {
             });
         }
         this.rowRecords = this.customerListView.length;
-        this.customerListView = this.customerListView.slice(start_index, end_index);
+        let endIndex = end_index;
+        if(end_index > this.customerListView.length)
+            endIndex =this.customerListView.length;
+        if(endIndex > 0)
+        {
+            this.customerListView = this.customerListView.slice(start_index, endIndex);
+        }
 
         if (this.customerListView.length > 0) {
             this.menuItems[7].items[0]['disabled'] = false;
