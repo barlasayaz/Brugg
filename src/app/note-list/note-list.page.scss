@@ -44,7 +44,7 @@
     .heightCalc {
         @media (max-width: 767px) {
           top: calc(65px + 55px + 41px + 47px);
-          height: calc(100% - 65px - 55px - 41px - 35px - 47px);
+          height: calc(100% - 65px - 55px - 41px  - 47px);
         }
     }
     

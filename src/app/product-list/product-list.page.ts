@@ -1,5 +1,5 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
-import { NavController, ModalController, AlertController, Events } from '@ionic/angular';
+import { NavController, ModalController, AlertController, Events, LoadingController } from '@ionic/angular';
 import { ApiService } from '../services/api';
 import { TranslateService } from '@ngx-translate/core';
 import { UserdataService } from '../services/userdata';
@@ -44,8 +44,8 @@ export class ProductListPage implements OnInit {
                                   search_all: '' };
     public filterCols: string[];
     public expendedNodes: string[] = [];
-    public rowRecords = 0;
-    public totalRecords = 0;
+    public totalRecords: number;
+    public rowRecords: number;
     public lang: string = localStorage.getItem('lang');
     public company = '';
     public navigationSubscription: any;
@@ -53,6 +53,9 @@ export class ProductListPage implements OnInit {
     modelChanged: Subject<any> = new Subject<any>();
     public selectedRow: number;
     public selectMode: boolean = false;
+    private rowHeight = 60;
+    private rowCount: number = 15;
+    public loader: any;
 
     public menuItems: MenuItem[] = [{
         label: this.translate.instant('Ansicht'),
@@ -253,7 +256,8 @@ export class ProductListPage implements OnInit {
         public events: Events,
         private dataService: DataService,
         public system: SystemService,
-        private route: ActivatedRoute) {
+        private route: ActivatedRoute,
+        private loadingCtrl:LoadingController) {
             this.modelChanged.pipe(
                 debounceTime(700))
                 .subscribe(model => {
@@ -262,7 +266,7 @@ export class ProductListPage implements OnInit {
                     } else {
                         this.menuItems[8].items[2]['disabled'] = true;
                     }
-                    this.generate_productList();
+                    this.generate_productList(0, this.rowCount, null, 0);
                     localStorage.setItem('filter_values_product', JSON.stringify(this.columnFilterValues));
             });
         }
@@ -293,6 +297,17 @@ export class ProductListPage implements OnInit {
     onResize(event) {
         // console.log('onResize');
         this.funcHeightCalc();
+    }
+
+    async loadNodes(event) {
+        this.loader = await this.loadingCtrl.create({
+            message: this.translate.instant('Bitte warten')
+        });
+        this.loader.present();
+
+        if (this.productListAll.length > 0) {
+            this.generate_productList(event.first, event.first + event.rows, event.sortField, event.sortOrder);
+        }
     }
 
     funcHeightCalc() {
@@ -432,7 +447,7 @@ export class ProductListPage implements OnInit {
                 // console.log("index :", index);
             }
 
-            this.generate_productList();
+            this.generate_productList(0, this.rowCount, null, 0);
         });
         this.funcHeightCalc();
     }
@@ -576,10 +591,10 @@ export class ProductListPage implements OnInit {
             json += '"search_all":""}';
             this.columnFilterValues = JSON.parse(json);
         }
-        this.generate_productList();
+        this.generate_productList(0, this.rowCount, null, 0);
     }
 
-    generate_productList() {
+    generate_productList(start_index: number, end_index: number, sort_field, sort_order) {
         console.log('generate_productList', this.isFilterOn());
 
         if (!this.isFilterOn()) {
@@ -590,6 +605,35 @@ export class ProductListPage implements OnInit {
             this.productListView = try_list;
         }
 
+        if (sort_field != null)
+        {
+            this.productListView = this.productListView.sort((a, b) => {
+                let value1 = a.data[sort_field];
+                let value2 = b.data[sort_field];
+    
+                if (this.apiService.isEmpty(value1) && !this.apiService.isEmpty(value2))
+                    return-1*sort_order;
+                else if (!this.apiService.isEmpty(value1) && this.apiService.isEmpty(value2))
+                    return 1*sort_order;
+                else if (this.apiService.isEmpty(value1) && this.apiService.isEmpty(value2))
+                    return 0;
+                else if ( value1.toLowerCase( ) > value2.toLowerCase( )) {
+                    return 1*sort_order;
+                } else if ( value1.toLowerCase( ) < value2.toLowerCase( )) {
+                    return -1*sort_order;
+                } else {
+                    return 0;
+                }
+            });
+        }
+        this.rowRecords = this.productListView.length;
+        let endIndex = end_index;
+        if(end_index > this.productListView.length)
+            endIndex =this.productListView.length;
+        if(endIndex > 0)
+        {
+            this.productListView = this.productListView.slice(start_index, endIndex);
+        }
         if (this.productListView.length > 0) {
             this.menuItems[8].items[0]['disabled'] = false;
             this.menuItems[8].items[1]['disabled'] = false;
@@ -600,7 +644,6 @@ export class ProductListPage implements OnInit {
             this.menuItems[8].items[3]['disabled'] = true;
         }
 
-        this.rowRecords = this.productListView.length;
         this.totalRecords = this.productListAll.length;
         let progressBar;
         if (this.totalRecords > 0 ) {
@@ -615,6 +658,8 @@ export class ProductListPage implements OnInit {
         if (localStorage.getItem('expanded_nodes_product') != undefined) {
             this.expandChildren(this.productListView, JSON.parse(localStorage.getItem('expanded_nodes_product')));
         }
+
+        this.loader.dismiss();
     }
 
     nodeSelect(event, selectedNode) {
@@ -648,12 +693,16 @@ export class ProductListPage implements OnInit {
             if (this.move_id > 0) {
                 this.move_obj.parent = id_sn;
                 this.move_obj.title = JSON.stringify(this.move_obj.titleJson);
-                this.apiService.pvs4_set_product(this.move_obj).then((result: any) => {
+                this.apiService.pvs4_set_product(this.move_obj).then(async (result: any) => {
                     console.log('result: ', result);
                     this.menuItems[3].visible = this.userdata.role_set.edit_products;
                     this.menuItems[4].visible = false;
                     this.menuItems[5].items[2]['disabled'] = true;
                     this.move_id = 0;
+                    this.loader = await this.loadingCtrl.create({
+                        message: this.translate.instant('Bitte warten')
+                    });
+                    this.loader.present();
                     this.page_load();
                 });
             }
@@ -816,8 +865,12 @@ export class ProductListPage implements OnInit {
                     }
                 });
 
-            modal.onDidDismiss().then(data => {
+            modal.onDidDismiss().then(async data => {
                 if (data['data']) {
+                    this.loader = await this.loadingCtrl.create({
+                        message: this.translate.instant('Bitte warten')
+                    });
+                    this.loader.present();
                     this.page_load();
                 }
             });
@@ -857,7 +910,11 @@ export class ProductListPage implements OnInit {
             // in Root
             this.move_obj.parent = 0;
             this.move_obj.title = JSON.stringify(this.move_obj.titleJson);
-            this.apiService.pvs4_set_product(this.move_obj).then((result: any) => {
+            this.apiService.pvs4_set_product(this.move_obj).then(async (result: any) => {
+                this.loader = await this.loadingCtrl.create({
+                    message: this.translate.instant('Bitte warten')
+                });
+                this.loader.present();
                 console.log('result: ', result);
                 this.page_load();
             });

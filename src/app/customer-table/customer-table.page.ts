@@ -51,10 +51,10 @@ export class CustomerTablePage implements OnInit {
     public selectedColumns: any[];
     public xlsHeader: any[];
     public customerList: any[];
-    public splitFilter: boolean = false;
-    public idCustomer: number = 0;
+    public splitFilter = false;
+    public idCustomer = 0;
     public heightCalc: any = '700px';
-    public move_id: number = 0;
+    public move_id = 0;
     public move_obj: any = {};
     public columnFilterValues = { company: '',
                                   id: '',
@@ -70,10 +70,9 @@ export class CustomerTablePage implements OnInit {
                                   search_all: '' };
     public filterCols: string[];
     public expendedNodes: string[] = [];
-    showLoader: boolean;
     modelChanged: Subject<any> = new Subject<any>();
     readonly rowHeight = 46;
-    rowCount: number = 25;
+    readonly rowCount: number = 25;
     public totalRecords: number;
     public rowRecords: number;
 
@@ -322,7 +321,7 @@ export class CustomerTablePage implements OnInit {
         let del_ret = false;
         for (let i = 0; i < nodes.length; i++) {
             if (nodes[i].children) {
-                let ret = this.dir_try_filter(nodes[i].children);
+                const ret = this.dir_try_filter(nodes[i].children);
                 if (ret == true) {
                     del_ret = true;
                 }
@@ -379,14 +378,14 @@ export class CustomerTablePage implements OnInit {
         if (!this.isFilterOn()) {
             this.customerListView = JSON.parse(JSON.stringify(this.customerListAll));
         } else {
-            let try_list = JSON.parse(JSON.stringify(this.customerListAll));
+            const try_list = JSON.parse(JSON.stringify(this.customerListAll));
             this.dir_try_filter(try_list);
             this.customerListView = try_list;
         }
         if (sort_field != null) {
             this.customerListView = this.customerListView.sort((a, b) => {
-                let value1 = a.data[sort_field];
-                let value2 = b.data[sort_field];
+                const value1 = a.data[sort_field];
+                const value2 = b.data[sort_field];
 
                 if (this.isEmpty(value1) && !this.isEmpty(value2)) {
                     return-1 * sort_order;
@@ -405,7 +404,13 @@ export class CustomerTablePage implements OnInit {
         }
 
         this.rowRecords = this.customerListView.length;
-        this.customerListView = this.customerListView.slice(start_index, end_index);
+        let endIndex = end_index;
+        if (end_index > this.customerListView.length) {
+            endIndex = this.customerListView.length;
+        }
+        if (endIndex > 0) {
+            this.customerListView = this.customerListView.slice(start_index, endIndex);
+        }
 
         if (this.customerListView.length > 0) {
             this.menuItems[7].items[0]['disabled'] = false;
@@ -514,7 +519,7 @@ export class CustomerTablePage implements OnInit {
                   if (data['data']) {
                     this.page_load();
                   }
-                }); 
+                });
                 modal.present();
             }
         }
@@ -547,11 +552,11 @@ export class CustomerTablePage implements OnInit {
 
     customer_list(num) {
         console.log('customer_list');
-        let data: any = [];
+        const data: any = [];
         this.allnodes = [];
         this.data_tree(this.customerListAll);
         for (let i = 0, len = this.allnodes.length; i < len; i++) {
-            let obj = this.allnodes[i];
+            const obj = this.allnodes[i];
 
             data.push({
                 'company': obj.company,
@@ -561,7 +566,7 @@ export class CustomerTablePage implements OnInit {
                 'zip_code': obj.zip_code,
                 'place': obj.place,
                 'employees': obj.employees,
-                'last_date': obj.last_date, 
+                'last_date': obj.last_date,
                 'next_date': obj.next_date,
                 'inspector': obj.inspector,
                 'sector': obj.sector
@@ -574,7 +579,7 @@ export class CustomerTablePage implements OnInit {
         console.log('menu_view', this.selectedNode);
         if (this.selectedNode) {
             if (this.selectedNode.data.id) {
-                let id = parseInt(this.selectedNode.data.id);
+                const id = parseInt(this.selectedNode.data.id);
                 console.log('menu_view id', id);
                 this.navCtrl.navigateForward('/customer-details/' + id);
             }
@@ -589,12 +594,12 @@ export class CustomerTablePage implements OnInit {
         });
         loader.present();
 
-        let data: any = [];
+        const data: any = [];
         this.allnodes = [];
         console.log('allnodes :', this.allnodes);
         this.data_tree(this.customerListAll);
-        for (var i = 0, len = this.allnodes.length; i < len; i++) {
-            let obj = this.allnodes[i];
+        for (let i = 0, len = this.allnodes.length; i < len; i++) {
+            const obj = this.allnodes[i];
             obj.company = obj.company.replace(/(\\r\\n|\\n|\\r)/gm, ' ');
             obj.country = obj.country.replace(/(\\r\\n|\\n|\\r)/gm, ' ');
             obj.place   = obj.place.replace(/(\\r\\n|\\n|\\r)/gm, ' ');
@@ -602,8 +607,8 @@ export class CustomerTablePage implements OnInit {
             obj.sector  = obj.sector.replace(/(\\r\\n|\\n|\\r)/gm, ' ');
             obj.street  = obj.street.replace(/(\\r\\n|\\n|\\r)/gm, ' ');
             // console.log('obj >>> ', obj);
-            let json: any = {};
-            for (var j = 0; j < this.selectedColumns.length; j++) {
+            const json: any = {};
+            for (let j = 0; j < this.selectedColumns.length; j++) {
                 if (obj[this.selectedColumns[j].field]) {
                     json[this.selectedColumns[j].header] = obj[this.selectedColumns[j].field];
                 } else {
@@ -625,23 +630,23 @@ export class CustomerTablePage implements OnInit {
         });
         loader.present();
 
-        let data: any = [];
+        const data: any = [];
         this.allnodes = [];
         if (this.isFilterOn()) {
             this.data_tree(this.customerListView);
         } else {
             this.data_tree(this.customerListAll);
         }
-        for (var i = 0, len = this.allnodes.length; i < len; i++) {
-            let obj = this.allnodes[i];
+        for (let i = 0, len = this.allnodes.length; i < len; i++) {
+            const obj = this.allnodes[i];
             obj.company = obj.company.replace(/(\\r\\n|\\n|\\r)/gm, ' ');
             obj.country = obj.country.replace(/(\\r\\n|\\n|\\r)/gm, ' ');
             obj.place   = obj.place.replace(/(\\r\\n|\\n|\\r)/gm, ' ');
             obj.po_box  = obj.po_box.replace(/(\\r\\n|\\n|\\r)/gm, ' ');
             obj.sector  = obj.sector.replace(/(\\r\\n|\\n|\\r)/gm, ' ');
             obj.street  = obj.street.replace(/(\\r\\n|\\n|\\r)/gm, ' ');
-            let json: any = {};
-            for (var j = 0; j < this.selectedColumns.length; j++) {
+            const json: any = {};
+            for (let j = 0; j < this.selectedColumns.length; j++) {
                 if (obj[this.selectedColumns[j].field]) {
                     json[this.selectedColumns[j].header] = obj[this.selectedColumns[j].field];
                 } else {
@@ -661,14 +666,14 @@ export class CustomerTablePage implements OnInit {
         });
         loader.present();
 
-        let columns: any[] = [];
-        let widthsArray: string[] = [];
-        let headerRowVisible: any = 1;
-        for (var k = 0; k < this.selectedColumns.length; k++) {
+        const columns: any[] = [];
+        const widthsArray: string[] = [];
+        const headerRowVisible: any = 1;
+        for (let k = 0; k < this.selectedColumns.length; k++) {
             columns.push({ text: this.selectedColumns[k].header, style: 'header' });
             widthsArray.push('auto');
         }
-        let bodyArray: any[] = [];
+        const bodyArray: any[] = [];
         bodyArray.push(columns);
         this.allnodes = [];
         if (this.isFilterOn()) {
@@ -678,10 +683,10 @@ export class CustomerTablePage implements OnInit {
         }
         let obj: any;
         let rowArray: any[] = [];
-        for (var i = 0, len = this.allnodes.length; i < len; i++) {
+        for (let i = 0, len = this.allnodes.length; i < len; i++) {
             obj = this.allnodes[i];
             rowArray = [];
-            for (var j = 0; j < this.selectedColumns.length; j++) {
+            for (let j = 0; j < this.selectedColumns.length; j++) {
                 if (obj[this.selectedColumns[j].field]) {
                    rowArray.push(obj[this.selectedColumns[j].field]);
                 } else {
@@ -719,7 +724,7 @@ export class CustomerTablePage implements OnInit {
     }
 
     async  show_columns() {
-        const inputs : any[] = [];
+        const inputs: any[] = [];
       for (let i = 0; i < this.cols.length; i++) {
           inputs.push({
               type: 'checkbox',
@@ -774,7 +779,7 @@ export class CustomerTablePage implements OnInit {
                 text: this.translate.instant('okay'),
                 handler: data => {
                     console.log('Checkbox data:', data );
-                    this.selectedColumns = this.cols.filter(function (element, index, array) { return data.includes(element.field) });
+                    this.selectedColumns = this.cols.filter(function (element, index, array) { return data.includes(element.field); });
                     localStorage.setItem('show_columns', JSON.stringify(this.selectedColumns));
                 }
             }
@@ -809,7 +814,7 @@ export class CustomerTablePage implements OnInit {
         localStorage.setItem('expanded_nodes', JSON.stringify(this.expendedNodes));
     }
     onNodeCollapse(event) {
-        this.expendedNodes = this.expendedNodes.filter(function (element, index, array) { return element != event.node.data['id'] });
+        this.expendedNodes = this.expendedNodes.filter(function (element, index, array) { return element != event.node.data['id']; });
         localStorage.setItem('expanded_nodes', JSON.stringify(this.expendedNodes));
     }
 

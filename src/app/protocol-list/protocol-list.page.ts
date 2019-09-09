@@ -1,5 +1,5 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
-import { NavController, ModalController, AlertController, Events } from '@ionic/angular';
+import { NavController, ModalController, AlertController, Events, LoadingController } from '@ionic/angular';
 import { ApiService } from '../services/api';
 import { TranslateService } from '@ngx-translate/core';
 import { UserdataService } from '../services/userdata';
@@ -40,6 +40,9 @@ export class ProtocolListPage implements OnInit {
     public customer_number: any;
     modelChanged: Subject<any> = new Subject<any>();
     public selectedRow: number;
+    readonly rowHeight = 46;
+    readonly rowCount: number = 25;
+    public loader: any;
 
     public menuItems: MenuItem[] = [
         {
@@ -144,7 +147,8 @@ export class ProtocolListPage implements OnInit {
         public events: Events,
         private dataService: DataService,
         public system: SystemService,
-        private route: ActivatedRoute) {
+        private route: ActivatedRoute,
+        private loadingCtrl: LoadingController) {
             this.modelChanged.pipe(
                 debounceTime(700))
                 .subscribe(model => {
@@ -153,7 +157,7 @@ export class ProtocolListPage implements OnInit {
                     } else {
                         this.menuItems[5].items[2]['disabled'] = true;
                     }
-                    this.generate_protocolList();
+                    this.generate_protocolList(0, this.rowCount, null, 0);
                     localStorage.setItem('filter_values_protocol', JSON.stringify(this.columnFilterValues));
             });
     }
@@ -233,7 +237,7 @@ export class ProtocolListPage implements OnInit {
                 this.selectedColumns = JSON.parse(localStorage.getItem('show_columns_protocol'));
             }
 
-            this.generate_protocolList();
+            this.generate_protocolList(0, this.rowCount, null, 0);
             this.funcHeightCalc();
         });
     }
@@ -242,6 +246,17 @@ export class ProtocolListPage implements OnInit {
         // console.log('onResize');
         this.funcHeightCalc();
      }
+
+     async loadNodes(event) {
+        this.loader = await this.loadingCtrl.create({
+            message: this.translate.instant('Bitte warten')
+        });
+        this.loader.present();
+
+        if (this.protocolListAll.length > 0) {
+            this.generate_protocolList(event.first, event.first + event.rows, event.sortField, event.sortOrder);
+        }
+    }
 
     funcHeightCalc() {
         let x = this.divHeightCalc.nativeElement.scrollHeight;
@@ -341,10 +356,10 @@ export class ProtocolListPage implements OnInit {
             json += '"search_all":""}';
             this.columnFilterValues = JSON.parse(json);
         }
-        this.generate_protocolList();
+        this.generate_protocolList(0, this.rowCount, null, 0);
     }
 
-    generate_protocolList() {
+    generate_protocolList(start_index: number, end_index: number, sort_field, sort_order) {
         // console.log('generate_protocolList', this.isFilterOn());
 
         if (!this.isFilterOn()) {
@@ -355,6 +370,35 @@ export class ProtocolListPage implements OnInit {
             this.protocolListView = try_list;
         }
 
+        if (sort_field != null)
+        {
+            this.protocolListView = this.protocolListView.sort((a, b) => {
+                let value1 = a.data[sort_field];
+                let value2 = b.data[sort_field];
+    
+                if (this.apiService.isEmpty(value1) && !this.apiService.isEmpty(value2))
+                    return-1*sort_order;
+                else if (!this.apiService.isEmpty(value1) && this.apiService.isEmpty(value2))
+                    return 1*sort_order;
+                else if (this.apiService.isEmpty(value1) && this.apiService.isEmpty(value2))
+                    return 0;
+                else if ( value1.toLowerCase( ) > value2.toLowerCase( )) {
+                    return 1*sort_order;
+                } else if ( value1.toLowerCase( ) < value2.toLowerCase( )) {
+                    return -1*sort_order;
+                } else {
+                    return 0;
+                }
+            });
+        }
+        this.rowRecords = this.protocolListView.length;
+        let endIndex = end_index;
+        if(end_index > this.protocolListView.length)
+            endIndex =this.protocolListView.length;
+        if(endIndex > 0)
+        {
+            this.protocolListView = this.protocolListView.slice(start_index, endIndex);
+        }
         if (this.protocolListView.length > 0) {
             this.menuItems[5].items[0]['disabled'] = false;
             this.menuItems[5].items[1]['disabled'] = false;
@@ -365,7 +409,6 @@ export class ProtocolListPage implements OnInit {
             this.menuItems[5].items[3]['disabled'] = true;
         }
 
-        this.rowRecords = this.protocolListView.length;
         this.totalRecords = this.protocolListAll.length;
         let progressBar;
         if (this.totalRecords > 0 ) {
@@ -381,6 +424,7 @@ export class ProtocolListPage implements OnInit {
             this.expandChildren(this.protocolListView, JSON.parse(localStorage.getItem('expanded_nodes_protocol')));
         }
 
+        this.loader.dismiss();
     }
 
     nodeSelect(event, selectedNode) {
