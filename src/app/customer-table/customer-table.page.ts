@@ -1,5 +1,5 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
-import { NavController, ModalController, Events } from '@ionic/angular';
+import { NavController, ModalController, Events, LoadingController } from '@ionic/angular';
 import { ApiService } from '../services/api';
 import { TranslateService } from '@ngx-translate/core';
 import { UserdataService } from '../services/userdata';
@@ -29,7 +29,8 @@ export class CustomerTablePage implements OnInit {
         public alertCtrl: AlertController,
         public pdf: PdfExportService,
         public system: SystemService,
-        public events: Events) {
+        public events: Events,
+        public loadingCtrl: LoadingController) {
             this.modelChanged.pipe(
                 debounceTime(700))
                 .subscribe(model => {
@@ -73,8 +74,9 @@ export class CustomerTablePage implements OnInit {
     modelChanged: Subject<any> = new Subject<any>();
     readonly rowHeight = 46;
     rowCount: number = 25;
-    public totalRecords: number = 9000;
-    public rowRecords: number = 0;
+    public totalRecords: number;
+    public rowRecords: number;
+    public loader: any;
 
     public menuItems: MenuItem[] = [{
         label: this.translate.instant('Ansicht'),
@@ -226,9 +228,13 @@ export class CustomerTablePage implements OnInit {
         this.funcHeightCalc();
     }
 
-    loadNodes(event) {
-        if (this.customerListAll.length > 0)
-        {
+    async loadNodes(event) {
+        this.loader = await this.loadingCtrl.create({
+            message: this.translate.instant('Bitte warten')
+        });
+        this.loader.present();
+
+        if (this.customerListAll.length > 0) {
             this.showLoader = true;
             this.generate_customerList(event.first, event.first + event.rows, event.sortField, event.sortOrder);
             this.showLoader = false;
@@ -260,6 +266,7 @@ export class CustomerTablePage implements OnInit {
             console.log('page_load result :', result);
 
             this.customerListAll = result.list;
+            console.log('total records :', this.customerListAll.length);
 
             // console.log(' customerListAll ', this.customerListAll );
             if (localStorage.getItem('filter_values') != undefined) {
@@ -274,6 +281,7 @@ export class CustomerTablePage implements OnInit {
            this.generate_customerList(0, this.rowCount, null, 0);
            this.funcHeightCalc();
            this.showLoader = false;
+           this.selectedColumns = this.cols;
         });
         this.funcHeightCalc();
     }
@@ -424,6 +432,7 @@ export class CustomerTablePage implements OnInit {
         if (localStorage.getItem('expanded_nodes') != undefined) {
             this.expandChildren(this.customerListView, JSON.parse(localStorage.getItem('expanded_nodes')));
         }
+        this.loader.dismiss();
     }
 
     nodeSelect() {
