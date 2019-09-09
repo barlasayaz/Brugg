@@ -400,6 +400,7 @@ export class CustomerTablePage implements OnInit {
             }
 
         }
+        this.rowRecords = this.customerListView.length;
         this.customerListView = this.customerListView.slice(start_index, end_index);
 
         if (this.customerListView.length > 0) {
@@ -412,7 +413,6 @@ export class CustomerTablePage implements OnInit {
             this.menuItems[7].items[3]['disabled'] = true;
         }
 
-        this.rowRecords = end_index;
         this.totalRecords = this.customerListAll.length;
         let progressBar;
         if (this.totalRecords > 0 ) {
