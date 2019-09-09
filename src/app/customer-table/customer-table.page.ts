@@ -370,10 +370,6 @@ export class CustomerTablePage implements OnInit {
         this.generate_customerList(0, this.rowCount, null, 0);
     }
 
-    isEmpty(str) {
-        return (!str || str == null || 0 === str.length);
-    }
-
     generate_customerList(start_index: number, end_index: number, sort_field, sort_order) {
         if (!this.isFilterOn()) {
             this.customerListView = JSON.parse(JSON.stringify(this.customerListAll));
@@ -387,11 +383,11 @@ export class CustomerTablePage implements OnInit {
                 const value1 = a.data[sort_field];
                 const value2 = b.data[sort_field];
 
-                if (this.isEmpty(value1) && !this.isEmpty(value2)) {
+                if (this.apiService.isEmpty(value1) && !this.apiService.isEmpty(value2)) {
                     return-1 * sort_order;
-                } else if (!this.isEmpty(value1) && this.isEmpty(value2)) {
+                } else if (!this.apiService.isEmpty(value1) && this.apiService.isEmpty(value2)) {
                     return 1 * sort_order;
-                } else if (this.isEmpty(value1) && this.isEmpty(value2)) {
+                } else if (this.apiService.isEmpty(value1) && this.apiService.isEmpty(value2)) {
                     return 0;
                 } else if ( value1.toLowerCase( ) > value2.toLowerCase( )) {
                     return 1 * sort_order;
