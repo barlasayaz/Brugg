@@ -76,7 +76,6 @@ export class CustomerTablePage implements OnInit {
     rowCount: number = 25;
     public totalRecords: number;
     public rowRecords: number;
-    public loader: any;
 
     public menuItems: MenuItem[] = [{
         label: this.translate.instant('Ansicht'),
@@ -223,19 +222,16 @@ export class CustomerTablePage implements OnInit {
         console.log('CustomerTablePage idCustomer:', this.idCustomer, this.system.platform);
         this.page_load();
     }
+
     onResize(event) {
         this.funcHeightCalc();
     }
 
     async loadNodes(event) {
-        this.loader = await this.loadingCtrl.create({
-            message: this.translate.instant('Bitte warten')
-        });
-        this.loader.present();
-
         if (this.customerListAll.length > 0) {
             this.generate_customerList(event.first, event.first + event.rows, event.sortField, event.sortOrder);
         }
+
         // in a production application, make a remote request to load data using state metadata from event
         // event.first = First row offset
         // event.rows = Number of rows per page
@@ -254,8 +250,14 @@ export class CustomerTablePage implements OnInit {
         console.log('funcHeightCalc:', x , this.heightCalc  );
     }
 
-    page_load() {
+    async page_load() {
         console.log('page_load CustomerTablePage');
+
+        const loader = await this.loadingCtrl.create({
+            message: this.translate.instant('Bitte warten')
+        });
+        loader.present();
+
         this.rowRecords = 0;
         this.totalRecords = 0;
         this.events.publish('prozCustomer', 0);
@@ -278,6 +280,7 @@ export class CustomerTablePage implements OnInit {
            this.generate_customerList(0, this.rowCount, null, 0);
            this.funcHeightCalc();
            this.selectedColumns = this.cols;
+           loader.dismiss();
         });
         this.funcHeightCalc();
     }
@@ -369,7 +372,7 @@ export class CustomerTablePage implements OnInit {
     }
 
     isEmpty(str) {
-        return (!str || str==null || 0 === str.length);
+        return (!str || str == null || 0 === str.length);
     }
 
     generate_customerList(start_index: number, end_index: number, sort_field, sort_order) {
@@ -380,27 +383,27 @@ export class CustomerTablePage implements OnInit {
             this.dir_try_filter(try_list);
             this.customerListView = try_list;
         }
-        if (sort_field != null)
-        {
+        if (sort_field != null) {
             this.customerListView = this.customerListView.sort((a, b) => {
                 let value1 = a.data[sort_field];
                 let value2 = b.data[sort_field];
-    
-                if (this.isEmpty(value1) && !this.isEmpty(value2))
-                    return-1*sort_order;
-                else if (!this.isEmpty(value1) && this.isEmpty(value2))
-                    return 1*sort_order;
-                else if (this.isEmpty(value1) && this.isEmpty(value2))
+
+                if (this.isEmpty(value1) && !this.isEmpty(value2)) {
+                    return-1 * sort_order;
+                } else if (!this.isEmpty(value1) && this.isEmpty(value2)) {
+                    return 1 * sort_order;
+                } else if (this.isEmpty(value1) && this.isEmpty(value2)) {
                     return 0;
-                else if ( value1.toLowerCase( ) > value2.toLowerCase( )) {
-                    return 1*sort_order;
+                } else if ( value1.toLowerCase( ) > value2.toLowerCase( )) {
+                    return 1 * sort_order;
                 } else if ( value1.toLowerCase( ) < value2.toLowerCase( )) {
-                    return -1*sort_order;
+                    return -1 * sort_order;
                 } else {
                     return 0;
                 }
             });
         }
+
         this.rowRecords = this.customerListView.length;
         this.customerListView = this.customerListView.slice(start_index, end_index);
 
@@ -428,7 +431,6 @@ export class CustomerTablePage implements OnInit {
         if (localStorage.getItem('expanded_nodes') != undefined) {
             this.expandChildren(this.customerListView, JSON.parse(localStorage.getItem('expanded_nodes')));
         }
-        this.loader.dismiss();
     }
 
     nodeSelect() {
@@ -451,10 +453,6 @@ export class CustomerTablePage implements OnInit {
             this.move_obj.parent = id_sn;
             this.apiService.pvs4_set_customer(this.move_obj).then(async (result: any) => {
                 console.log('result: ', result);
-                this.loader = await this.loadingCtrl.create({
-                    message: this.translate.instant('Bitte warten')
-                });
-                this.loader.present();
                 this.page_load();
             });
             this.menuItems[2].visible = this.userdata.role_set.edit_customer;
@@ -492,10 +490,6 @@ export class CustomerTablePage implements OnInit {
         });
         modal.onDidDismiss().then(async data => {
             if (data['data']) {
-                this.loader = await this.loadingCtrl.create({
-                    message: this.translate.instant('Bitte warten')
-                });
-                this.loader.present();
                 this.page_load();
             }
         });
@@ -518,10 +512,6 @@ export class CustomerTablePage implements OnInit {
 
                 modal.onDidDismiss().then(async data => {
                   if (data['data']) {
-                    this.loader = await this.loadingCtrl.create({
-                        message: this.translate.instant('Bitte warten')
-                    });
-                    this.loader.present();
                     this.page_load();
                   }
                 }); 
@@ -547,10 +537,6 @@ export class CustomerTablePage implements OnInit {
             this.move_obj.parent = 0;
             this.apiService.pvs4_set_customer(this.move_obj).then(async (result: any) => {
                 console.log('result: ', result);
-                this.loader = await this.loadingCtrl.create({
-                    message: this.translate.instant('Bitte warten')
-                });
-                this.loader.present();
                 this.page_load();
             });
             this.menuItems[2].visible = true;
@@ -595,8 +581,14 @@ export class CustomerTablePage implements OnInit {
         }
     }
 
-    excel_all() {
+    async excel_all() {
         console.log('excel_all');
+
+        const loader = await this.loadingCtrl.create({
+            message: this.translate.instant('Bitte warten')
+        });
+        loader.present();
+
         let data: any = [];
         this.allnodes = [];
         console.log('allnodes :', this.allnodes);
@@ -622,13 +614,24 @@ export class CustomerTablePage implements OnInit {
             data.push(json);
         }
         this.excelService.exportAsExcelFile(data, 'customer_all.xlsx');
+        loader.dismiss();
     }
 
-    excel_view() {
-        console.log('excel_view');
+    async excel_view() {
+        console.log('excel_view', this.isFilterOn());
+
+        const loader = await this.loadingCtrl.create({
+            message: this.translate.instant('Bitte warten')
+        });
+        loader.present();
+
         let data: any = [];
         this.allnodes = [];
-        this.data_tree(this.customerListView);
+        if (this.isFilterOn()) {
+            this.data_tree(this.customerListView);
+        } else {
+            this.data_tree(this.customerListAll);
+        }
         for (var i = 0, len = this.allnodes.length; i < len; i++) {
             let obj = this.allnodes[i];
             obj.company = obj.company.replace(/(\\r\\n|\\n|\\r)/gm, ' ');
@@ -649,20 +652,30 @@ export class CustomerTablePage implements OnInit {
             data.push(json);
         }
         this.excelService.exportAsExcelFile(data, 'customer_view.xlsx');
+        loader.dismiss();
     }
 
-    printPdf() {
+    async printPdf() {
+        const loader = await this.loadingCtrl.create({
+            message: this.translate.instant('Bitte warten')
+        });
+        loader.present();
+
         let columns: any[] = [];
         let widthsArray: string[] = [];
         let headerRowVisible: any = 1;
         for (var k = 0; k < this.selectedColumns.length; k++) {
             columns.push({ text: this.selectedColumns[k].header, style: 'header' });
-            widthsArray.push('*');
+            widthsArray.push('auto');
         }
         let bodyArray: any[] = [];
         bodyArray.push(columns);
         this.allnodes = [];
-        this.data_tree(this.customerListView);
+        if (this.isFilterOn()) {
+            this.data_tree(this.customerListView);
+        } else {
+            this.data_tree(this.customerListAll);
+        }
         let obj: any;
         let rowArray: any[] = [];
         for (var i = 0, len = this.allnodes.length; i < len; i++) {
@@ -683,6 +696,7 @@ export class CustomerTablePage implements OnInit {
                                        headerRowVisible,
                                        this.translate.instant('Kunde') + ' ' + this.translate.instant('Liste'),
                                        this.translate.instant('Kunde') + this.translate.instant('Liste') + '.pdf');
+        loader.dismiss();
     }
 
     data_tree(nodes: TreeNode[]): any {
