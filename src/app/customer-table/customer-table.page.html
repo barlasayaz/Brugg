@@ -68,8 +68,7 @@
                  [lazy]="true" 
                  (onLazyLoad)="loadNodes($event)" 
                  [totalRecords]="rowRecords" 
-                 [loading]="true"
-                 [showLoader]="showLoader" >      
+                 [loading]="false" >      
         <ng-template pTemplate="colgroup" let-columns="columns">
             <colgroup>
                 <col *ngFor="let col of selectedColumns" [ngStyle]="{width: col.width}">

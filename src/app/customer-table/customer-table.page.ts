@@ -193,7 +193,6 @@ export class CustomerTablePage implements OnInit {
     @ViewChild('divHeightCalc') divHeightCalc: any;
 
     ngOnInit(): void {
-        this.showLoader = true;
         this.cols = [
             { field: 'company', header: this.translate.instant('Firma'), width: '200px' },
             { field: 'id', header: 'DB-ID', width: '60px' },
@@ -235,9 +234,7 @@ export class CustomerTablePage implements OnInit {
         this.loader.present();
 
         if (this.customerListAll.length > 0) {
-            this.showLoader = true;
             this.generate_customerList(event.first, event.first + event.rows, event.sortField, event.sortOrder);
-            this.showLoader = false;
         }
         // in a production application, make a remote request to load data using state metadata from event
         // event.first = First row offset
@@ -280,7 +277,6 @@ export class CustomerTablePage implements OnInit {
             }
            this.generate_customerList(0, this.rowCount, null, 0);
            this.funcHeightCalc();
-           this.showLoader = false;
            this.selectedColumns = this.cols;
         });
         this.funcHeightCalc();
@@ -453,8 +449,12 @@ export class CustomerTablePage implements OnInit {
         } else if (this.move_id > 0) {
             console.log('move item :', this.move_id, this.move_obj);
             this.move_obj.parent = id_sn;
-            this.apiService.pvs4_set_customer(this.move_obj).then((result: any) => {
+            this.apiService.pvs4_set_customer(this.move_obj).then(async (result: any) => {
                 console.log('result: ', result);
+                this.loader = await this.loadingCtrl.create({
+                    message: this.translate.instant('Bitte warten')
+                });
+                this.loader.present();
                 this.page_load();
             });
             this.menuItems[2].visible = this.userdata.role_set.edit_customer;
@@ -490,9 +490,13 @@ export class CustomerTablePage implements OnInit {
             parent: parentCustomer
           }
         });
-        modal.onDidDismiss().then(data => {
+        modal.onDidDismiss().then(async data => {
             if (data['data']) {
-              this.page_load();
+                this.loader = await this.loadingCtrl.create({
+                    message: this.translate.instant('Bitte warten')
+                });
+                this.loader.present();
+                this.page_load();
             }
         });
         modal.present();
@@ -512,8 +516,12 @@ export class CustomerTablePage implements OnInit {
                   }
                 });
 
-                modal.onDidDismiss().then(data => {
+                modal.onDidDismiss().then(async data => {
                   if (data['data']) {
+                    this.loader = await this.loadingCtrl.create({
+                        message: this.translate.instant('Bitte warten')
+                    });
+                    this.loader.present();
                     this.page_load();
                   }
                 }); 
@@ -537,8 +545,12 @@ export class CustomerTablePage implements OnInit {
             // in Stammordner
             console.log('move item :', this.move_id, this.move_obj);
             this.move_obj.parent = 0;
-            this.apiService.pvs4_set_customer(this.move_obj).then((result: any) => {
+            this.apiService.pvs4_set_customer(this.move_obj).then(async (result: any) => {
                 console.log('result: ', result);
+                this.loader = await this.loadingCtrl.create({
+                    message: this.translate.instant('Bitte warten')
+                });
+                this.loader.present();
                 this.page_load();
             });
             this.menuItems[2].visible = true;
