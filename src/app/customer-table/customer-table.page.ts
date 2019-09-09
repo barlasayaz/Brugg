@@ -364,6 +364,10 @@ export class CustomerTablePage implements OnInit {
         this.generate_customerList(0, this.rowCount, null, 0);
     }
 
+    isEmpty(str) {
+        return (!str || str==null || 0 === str.length);
+    }
+
     generate_customerList(start_index: number, end_index: number, sort_field, sort_order) {
         if (!this.isFilterOn()) {
             this.customerListView = JSON.parse(JSON.stringify(this.customerListAll));
@@ -374,31 +378,24 @@ export class CustomerTablePage implements OnInit {
         }
         if (sort_field != null)
         {
-            if (sort_order == 1)
-            {
-                this.customerListView = this.customerListView.sort((a, b) => {
-                    if (a.data[sort_field].toLowerCase( ) > b.data[sort_field].toLowerCase( )) {
-                      return 1;
-                    } else if (a.data[sort_field].toLowerCase( ) < b.data[sort_field].toLowerCase( )) {
-                      return -1;
-                    } else {
-                      return 0;
-                    }
-                  });
-            }
-            else
-            {
-                this.customerListView = this.customerListView.sort((a, b) => {
-                    if (a.data[sort_field].toLowerCase( ) > b.data[sort_field].toLowerCase( )) {
-                      return -1;
-                    } else if (a.data[sort_field].toLowerCase( ) < b.data[sort_field].toLowerCase( )) {
-                      return 1;
-                    } else {
-                      return 0;
-                    }
-                  });
-            }
-
+            this.customerListView = this.customerListView.sort((a, b) => {
+                let value1 = a.data[sort_field];
+                let value2 = b.data[sort_field];
+    
+                if (this.isEmpty(value1) && !this.isEmpty(value2))
+                    return-1*sort_order;
+                else if (!this.isEmpty(value1) && this.isEmpty(value2))
+                    return 1*sort_order;
+                else if (this.isEmpty(value1) && this.isEmpty(value2))
+                    return 0;
+                else if ( value1.toLowerCase( ) > value2.toLowerCase( )) {
+                    return 1*sort_order;
+                } else if ( value1.toLowerCase( ) < value2.toLowerCase( )) {
+                    return -1*sort_order;
+                } else {
+                    return 0;
+                }
+            });
         }
         this.rowRecords = this.customerListView.length;
         this.customerListView = this.customerListView.slice(start_index, end_index);
