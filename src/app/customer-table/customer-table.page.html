@@ -63,13 +63,12 @@
                  [scrollHeight]="heightCalc"
                  [virtualRowHeight]="rowHeight"
                  [virtualScroll]="true" 
+                 [lazy]="true" 
+                 (onLazyLoad)="loadNodes($event)"  
+                 [loading]="false" 
                  columnResizeMode="fit"
                  [reorderableColumns]="true"
-                 [lazy]="true" 
-                 (onLazyLoad)="loadNodes($event)" 
-                 [totalRecords]="rowRecords" 
-                 [loading]="true"
-                 [showLoader]="showLoader" >      
+                 [totalRecords]="rowRecords" >      
         <ng-template pTemplate="colgroup" let-columns="columns">
             <colgroup>
                 <col *ngFor="let col of selectedColumns" [ngStyle]="{width: col.width}">

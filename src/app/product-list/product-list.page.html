@@ -71,9 +71,15 @@
                  styleClass="ui-treetable-scrollable-body"
                  [resizableColumns]="true"
                  [scrollable]="true"
+                 [paginator]="false" 
+                 [rows]="rowCount" 
                  [scrollHeight]="heightCalc"
-                 [rows]="25"
-                 [paginator]="true"
+                 [virtualRowHeight]="rowHeight"
+                 [virtualScroll]="true" 
+                 [lazy]="true" 
+                 (onLazyLoad)="loadNodes($event)"  
+                 [loading]="false" 
+                 [totalRecords]="rowRecords"
                  [reorderableColumns]="true">
         <ng-template pTemplate="colgroup" let-columns>
             <colgroup>
@@ -137,9 +143,15 @@
                  styleClass="ui-treetable-scrollable-body"
                  [resizableColumns]="true"
                  [scrollable]="true"
+                 [paginator]="false" 
+                 [rows]="rowCount" 
                  [scrollHeight]="heightCalc"
-                 [rows]="25"
-                 [paginator]="true"
+                 [virtualRowHeight]="rowHeight"
+                 [virtualScroll]="true" 
+                 [lazy]="true" 
+                 (onLazyLoad)="loadNodes($event)"  
+                 [loading]="false" 
+                 [totalRecords]="rowRecords"
                  [reorderableColumns]="true">
         <ng-template pTemplate="colgroup" let-columns>
             <colgroup>
@@ -188,6 +200,13 @@
 
                     <span *ngIf="(col.field != 'nfc_tag_id') && (col.field === 'last_protocol_next')" [ngStyle]="{'color': rowData.last_protocol_next_color  }" >{{rowData[col.field]}}</span>
 
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="loadingbody" let-columns="columns">
+            <tr style="height:34px">
+                <td *ngFor="let col of selectedColumns;">
+                    <div class="loading-text"></div>
                 </td>
             </tr>
         </ng-template>

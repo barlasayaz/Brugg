@@ -1066,7 +1066,9 @@ export class ApiService {
     });
   }
 
-
+  isEmpty(str) {
+    return (!str || str==null || 0 === str.length);
+}
   /********************************************************************************/
 
   mysql2view(timestamp, kurz) {

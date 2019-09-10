@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
-import { NavController, ModalController, AlertController, Events } from '@ionic/angular';
+import { NavController, ModalController, AlertController, Events, LoadingController } from '@ionic/angular';
 import { ApiService } from '../services/api';
 import { TranslateService } from '@ngx-translate/core';
 import { UserdataService } from '../services/userdata';
@@ -61,6 +61,9 @@ export class NoteListPage implements OnInit {
     public authorList: any = [];
     public pointofContactList: any = [];
     modelChanged: Subject<any> = new Subject<any>();
+    private rowHeight = 40;
+    private rowCount: number = 15;
+    public loader: any;
 
     public menuItems: MenuItem[] = [{
         label: this.translate.instant('Ansicht'),
@@ -159,7 +162,8 @@ export class NoteListPage implements OnInit {
         public pdf: PdfExportService,
         public events: Events,
         public system: SystemService,
-        private route: ActivatedRoute) {
+        private route: ActivatedRoute,
+        private loadingCtrl: LoadingController) {
             this.modelChanged.pipe(
                 debounceTime(700))
                 .subscribe(model => {
@@ -168,7 +172,7 @@ export class NoteListPage implements OnInit {
                     } else {
                         this.menuItems[5].items[2]['disabled'] = true;
                     }
-                    this.generate_noteList();
+                    this.generate_noteList(0, this.rowCount, null, 0);
                     localStorage.setItem('filter_values_note', JSON.stringify(this.columnFilterValues));
             });
 
@@ -198,6 +202,17 @@ export class NoteListPage implements OnInit {
         // console.log('onResize');
         this.funcHeightCalc();
      }
+
+     async loadNodes(event) {
+        this.loader = await this.loadingCtrl.create({
+            message: this.translate.instant('Bitte warten')
+        });
+        this.loader.present();
+
+        if (this.noteListAll.length > 0) {
+            this.generate_noteList(event.first, event.first + event.rows, event.sortField, event.sortOrder);
+        }
+    }
 
     funcHeightCalc() {
         let x = this.divHeightCalc.nativeElement.scrollHeight;
@@ -235,7 +250,7 @@ export class NoteListPage implements OnInit {
                 this.noteListAll[i].data.category = this.translate.instant(cn);
             }
 
-            this.generate_noteList();
+            this.generate_noteList(0, this.rowCount, null, 0);
         });
         this.funcHeightCalc();
     }
@@ -300,10 +315,10 @@ export class NoteListPage implements OnInit {
                                         name_contact: '',
                                         search_all: '' };
         }
-        this.generate_noteList();
+        this.generate_noteList(0, this.rowCount, null, 0);
     }
 
-    generate_noteList() {
+    generate_noteList(start_index: number, end_index: number, sort_field, sort_order) {
         console.log('generate_noteList', this.isFilterOn());
 
         if (!this.isFilterOn()) {
@@ -313,7 +328,35 @@ export class NoteListPage implements OnInit {
             this.dir_try_filter(try_list);
             this.noteListView = try_list;
         }
-
+        if (sort_field != null)
+        {
+            this.noteListView = this.noteListView.sort((a, b) => {
+                let value1 = a.data[sort_field];
+                let value2 = b.data[sort_field];
+    
+                if (this.apiService.isEmpty(value1) && !this.apiService.isEmpty(value2))
+                    return-1*sort_order;
+                else if (!this.apiService.isEmpty(value1) && this.apiService.isEmpty(value2))
+                    return 1*sort_order;
+                else if (this.apiService.isEmpty(value1) && this.apiService.isEmpty(value2))
+                    return 0;
+                else if ( value1.toLowerCase( ) > value2.toLowerCase( )) {
+                    return 1*sort_order;
+                } else if ( value1.toLowerCase( ) < value2.toLowerCase( )) {
+                    return -1*sort_order;
+                } else {
+                    return 0;
+                }
+            });
+        }
+        this.rowRecords = this.noteListView.length;
+        let endIndex = end_index;
+        if(end_index > this.noteListView.length)
+            endIndex =this.noteListView.length;
+        if(endIndex > 0)
+        {
+            this.noteListView = this.noteListView.slice(start_index, endIndex);
+        }
         if (this.noteListView.length > 0) {
             this.menuItems[5].items[0]['disabled'] = false;
             this.menuItems[5].items[1]['disabled'] = false;
@@ -324,7 +367,6 @@ export class NoteListPage implements OnInit {
             this.menuItems[5].items[3]['disabled'] = true;
         }
 
-        this.rowRecords = this.noteListView.length;
         this.totalRecords = this.noteListAll.length;
         let progressBar;
         if (this.totalRecords > 0 ) {
@@ -335,6 +377,8 @@ export class NoteListPage implements OnInit {
         this.events.publish('progressBar', progressBar);
         this.events.publish('rowRecords', this.rowRecords);
         this.events.publish('totalRecords', this.totalRecords);
+
+        this.loader.dismiss();
 
     }
 
@@ -361,9 +405,13 @@ export class NoteListPage implements OnInit {
                 }
             });
 
-            modal.onDidDismiss().then(data => {
+            modal.onDidDismiss().then(async data => {
                 console.log('menu_new ret:', data['data']);
                 if (data['data']) {
+                    this.loader = await this.loadingCtrl.create({
+                        message: this.translate.instant('Bitte warten')
+                    });
+                    this.loader.present();
                     this.page_load();
                 }
             });
@@ -382,9 +430,13 @@ export class NoteListPage implements OnInit {
                             id: id, idCustomer: this.idCustomer, redirect: 1
                         }
                     });
-                modal.onDidDismiss().then(data => {
+                modal.onDidDismiss().then(async data => {
                     console.log('menu_edit ret:', data['data']);
                     if (data['data']) {
+                        this.loader = await this.loadingCtrl.create({
+                            message: this.translate.instant('Bitte warten')
+                        });
+                        this.loader.present();
                         this.page_load();
                     }
                 });
