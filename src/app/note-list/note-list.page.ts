@@ -27,6 +27,7 @@ import { SystemService } from '../services/system';
 export class NoteListPage implements OnInit {
     public noteListAll: TreeNode[] = [];
     public noteListView: TreeNode[] = [];
+    public noteListSearch: TreeNode[] = [];
     public cols: any[] = [];
     public selectedNode: TreeNode;
     public allnodes: any[] = [];
@@ -63,7 +64,6 @@ export class NoteListPage implements OnInit {
     modelChanged: Subject<any> = new Subject<any>();
     private rowHeight = 40;
     private rowCount: number = 15;
-    public loader: any;
 
     public menuItems: MenuItem[] = [{
         label: this.translate.instant('Ansicht'),
@@ -112,20 +112,6 @@ export class NoteListPage implements OnInit {
         icon: 'pi pi-fw pi-cog',
         items: [
             {
-                label: this.translate.instant('XLSx Export') + ' ' + this.translate.instant('Alle'),
-                icon: 'pi pi-fw pi-save',
-                command: (event) => {
-                    this.excel_all();
-                }
-            },
-            {
-                label: this.translate.instant('XLSx Export') + ' ' + this.translate.instant('Ansicht'),
-                icon: 'pi pi-fw pi-save',
-                command: (event) => {
-                    this.excel_view();
-                }
-            },
-            {
                 label: this.translate.instant('Cancel filters'),
                 icon: 'pi pi-fw pi-filter',
                 disabled: true,
@@ -135,10 +121,17 @@ export class NoteListPage implements OnInit {
                 }
             },
             {
-                label: this.translate.instant('PDF Ansicht'),
+                label: this.translate.instant('XLSx Export'),
                 icon: 'pi pi-fw pi-save',
                 command: (event) => {
-                    this.printPdf();
+                    this.excel_export();
+                }
+            },
+            {
+                label: this.translate.instant('PDF Export'),
+                icon: 'pi pi-fw pi-save',
+                command: (event) => {
+                    this.pdf_export();
                 }
             }
         ]
@@ -168,9 +161,9 @@ export class NoteListPage implements OnInit {
                 debounceTime(700))
                 .subscribe(model => {
                     if (this.isFilterOn()) {
-                        this.menuItems[5].items[2]['disabled'] = false;
+                        this.menuItems[5].items[0]['disabled'] = false;
                     } else {
-                        this.menuItems[5].items[2]['disabled'] = true;
+                        this.menuItems[5].items[0]['disabled'] = true;
                     }
                     this.generate_noteList(0, this.rowCount, null, 0);
                     localStorage.setItem('filter_values_note', JSON.stringify(this.columnFilterValues));
@@ -188,7 +181,13 @@ export class NoteListPage implements OnInit {
         ];
 
         this.filterCols = [
-            'title', 'notes', 'notes_date', 'category', 'name_user', 'name_contact', 'search_all'
+            'title',
+            'notes',
+            'notes_date',
+            'category',
+            'name_user',
+            'name_contact',
+            'search_all'
         ];
         this.selectedColumns = JSON.parse(JSON.stringify(this.cols));
 
@@ -204,11 +203,6 @@ export class NoteListPage implements OnInit {
      }
 
      async loadNodes(event) {
-        this.loader = await this.loadingCtrl.create({
-            message: this.translate.instant('Bitte warten')
-        });
-        this.loader.present();
-
         if (this.noteListAll.length > 0) {
             this.generate_noteList(event.first, event.first + event.rows, event.sortField, event.sortOrder);
         }
@@ -224,7 +218,12 @@ export class NoteListPage implements OnInit {
         // console.log('heightCalc 4 :', x, this.heightCalc );
     }
 
-    page_load() {
+    async page_load() {
+        const loader = await this.loadingCtrl.create({
+            message: this.translate.instant('Bitte warten')
+        });
+        loader.present();
+
         this.rowRecords = 0;
         this.totalRecords = 0;
         this.events.publish('prozCustomer', 0);
@@ -251,6 +250,7 @@ export class NoteListPage implements OnInit {
             }
 
             this.generate_noteList(0, this.rowCount, null, 0);
+            loader.dismiss();
         });
         this.funcHeightCalc();
     }
@@ -301,7 +301,7 @@ export class NoteListPage implements OnInit {
 
     cancel_filters(cancel_type) {
         console.log('cancel_filters');
-        this.menuItems[5].items[2]['disabled'] = true;
+        this.menuItems[5].items[0]['disabled'] = true;
         if (cancel_type == 1) {
             for (let i = 0; i < this.cols.length; i++) {
                 this.columnFilterValues[this.cols[i].field] = '';
@@ -315,6 +315,7 @@ export class NoteListPage implements OnInit {
                                         name_contact: '',
                                         search_all: '' };
         }
+        localStorage.setItem('filter_values_note', JSON.stringify(this.columnFilterValues));
         this.generate_noteList(0, this.rowCount, null, 0);
     }
 
@@ -327,23 +328,23 @@ export class NoteListPage implements OnInit {
             let try_list = JSON.parse(JSON.stringify(this.noteListAll));
             this.dir_try_filter(try_list);
             this.noteListView = try_list;
+            this.noteListSearch = try_list;
         }
-        if (sort_field != null)
-        {
+        if (sort_field != null) {
             this.noteListView = this.noteListView.sort((a, b) => {
                 let value1 = a.data[sort_field];
                 let value2 = b.data[sort_field];
-    
-                if (this.apiService.isEmpty(value1) && !this.apiService.isEmpty(value2))
-                    return-1*sort_order;
-                else if (!this.apiService.isEmpty(value1) && this.apiService.isEmpty(value2))
-                    return 1*sort_order;
-                else if (this.apiService.isEmpty(value1) && this.apiService.isEmpty(value2))
+
+                if (this.apiService.isEmpty(value1) && !this.apiService.isEmpty(value2)) {
+                    return-1 * sort_order;
+                } else if (!this.apiService.isEmpty(value1) && this.apiService.isEmpty(value2)) {
+                    return 1 * sort_order;
+                } else if (this.apiService.isEmpty(value1) && this.apiService.isEmpty(value2)) {
                     return 0;
-                else if ( value1.toLowerCase( ) > value2.toLowerCase( )) {
-                    return 1*sort_order;
+                } else if ( value1.toLowerCase( ) > value2.toLowerCase( )) {
+                    return 1 * sort_order;
                 } else if ( value1.toLowerCase( ) < value2.toLowerCase( )) {
-                    return -1*sort_order;
+                    return -1 * sort_order;
                 } else {
                     return 0;
                 }
@@ -351,20 +352,24 @@ export class NoteListPage implements OnInit {
         }
         this.rowRecords = this.noteListView.length;
         let endIndex = end_index;
-        if(end_index > this.noteListView.length)
-            endIndex =this.noteListView.length;
-        if(endIndex > 0)
-        {
+        if (end_index > this.noteListView.length) {
+            endIndex = this.noteListView.length;
+        }
+        if (endIndex > 0) {
             this.noteListView = this.noteListView.slice(start_index, endIndex);
         }
         if (this.noteListView.length > 0) {
-            this.menuItems[5].items[0]['disabled'] = false;
+            if (this.isFilterOn()) {
+                this.menuItems[5].items[0]['disabled'] = false;
+            } else {
+                this.menuItems[5].items[0]['disabled'] = true;
+            }
             this.menuItems[5].items[1]['disabled'] = false;
-            this.menuItems[5].items[3]['disabled'] = false;
+            this.menuItems[5].items[2]['disabled'] = false;
         } else {
             this.menuItems[5].items[0]['disabled'] = true;
             this.menuItems[5].items[1]['disabled'] = true;
-            this.menuItems[5].items[3]['disabled'] = true;
+            this.menuItems[5].items[2]['disabled'] = true;
         }
 
         this.totalRecords = this.noteListAll.length;
@@ -377,9 +382,6 @@ export class NoteListPage implements OnInit {
         this.events.publish('progressBar', progressBar);
         this.events.publish('rowRecords', this.rowRecords);
         this.events.publish('totalRecords', this.totalRecords);
-
-        this.loader.dismiss();
-
     }
 
     nodeSelect(event) {
@@ -408,10 +410,6 @@ export class NoteListPage implements OnInit {
             modal.onDidDismiss().then(async data => {
                 console.log('menu_new ret:', data['data']);
                 if (data['data']) {
-                    this.loader = await this.loadingCtrl.create({
-                        message: this.translate.instant('Bitte warten')
-                    });
-                    this.loader.present();
                     this.page_load();
                 }
             });
@@ -433,10 +431,6 @@ export class NoteListPage implements OnInit {
                 modal.onDidDismiss().then(async data => {
                     console.log('menu_edit ret:', data['data']);
                     if (data['data']) {
-                        this.loader = await this.loadingCtrl.create({
-                            message: this.translate.instant('Bitte warten')
-                        });
-                        this.loader.present();
                         this.page_load();
                     }
                 });
@@ -456,34 +450,20 @@ export class NoteListPage implements OnInit {
         }
     }
 
-    excel_all() {
-        console.log('note-list excel_all');
-        let data: any = [];
-        this.allnodes = [];
-        console.log('allnodes :', this.allnodes);
-        this.data_tree(this.noteListAll);
-        for (var i = 0, len = this.allnodes.length; i < len; i++) {
-            let obj = this.allnodes[i];
-            obj.notes = obj.notes.replace(/(\\r\\n|\\n|\\r)/gm, ' ');
-            let json: any = {};
-            for (var j = 0; j < this.selectedColumns.length; j++) {
-                if (obj[this.selectedColumns[j].field]) {
-                    json[this.selectedColumns[j].header] = obj[this.selectedColumns[j].field];
-                } else {
-                    json[this.selectedColumns[j].header] = '';
-                }
-            }
-            // console.log('>>json :', json);
-            data.push(json);
-        }
-        this.excelService.exportAsExcelFile(data, 'note_all.xlsx');
-    }
-
-    excel_view() {
+    async excel_export() {
         console.log('excel_view');
+        const loader = await this.loadingCtrl.create({
+            message: this.translate.instant('Bitte warten')
+        });
+        loader.present();
+
         let data: any = [];
         this.allnodes = [];
-        this.data_tree(this.noteListView);
+        if (this.isFilterOn()) {
+            this.data_tree(this.noteListSearch);
+        } else {
+            this.data_tree(this.noteListAll);
+        }
         for (var i = 0, len = this.allnodes.length; i < len; i++) {
             let obj = this.allnodes[i];
             obj.notes = obj.notes.replace(/(\\r\\n|\\n|\\r)/gm, ' ');
@@ -499,9 +479,15 @@ export class NoteListPage implements OnInit {
             data.push(json);
         }
         this.excelService.exportAsExcelFile(data, 'note_view.xlsx');
+        loader.dismiss();
     }
 
-    printPdf() {
+    async pdf_export() {
+        const loader = await this.loadingCtrl.create({
+            message: this.translate.instant('Bitte warten')
+        });
+        loader.present();
+
         let columns: any[] = [];
         let widthsArray: string[] = [];
         let headerRowVisible: any = 1;
@@ -512,7 +498,11 @@ export class NoteListPage implements OnInit {
         let bodyArray: any[] = [];
         bodyArray.push(columns);
         this.allnodes = [];
-        this.data_tree(this.noteListView);
+        if (this.isFilterOn()) {
+            this.data_tree(this.noteListSearch);
+        } else {
+            this.data_tree(this.noteListAll);
+        }
         let obj: any;
         let rowArray: any[] = [];
         for (var i = 0, len = this.allnodes.length; i < len; i++) {
@@ -534,6 +524,7 @@ export class NoteListPage implements OnInit {
                                        headerRowVisible,
                                        this.translate.instant('Notiz') + ' ' + this.translate.instant('Liste'),
                                        this.translate.instant('Notiz') + this.translate.instant('Liste') + '.pdf');
+        loader.dismiss();
     }
 
     data_tree(nodes: TreeNode[]): any {

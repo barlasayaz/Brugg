@@ -25,6 +25,7 @@ import { SystemService } from '../services/system';
 export class ProductListPage implements OnInit {
     public productListAll: TreeNode[] = [];
     public productListView: TreeNode[] = [];
+    public productListSearch: TreeNode[] = [];
     public cols: any[] = [];
     public selectedNode: any;
     public allnodes: any[] = [];
@@ -55,7 +56,6 @@ export class ProductListPage implements OnInit {
     public selectMode: boolean = false;
     private rowHeight = 60;
     private rowCount: number = 15;
-    public loader: any;
 
     public menuItems: MenuItem[] = [{
         label: this.translate.instant('Ansicht'),
@@ -171,20 +171,6 @@ export class ProductListPage implements OnInit {
         icon: 'pi pi-fw pi-cog',
         items: [
             {
-                label: this.translate.instant('XLSx Export') + ' ' + this.translate.instant('Alle'),
-                icon: 'pi pi-fw pi-save',
-                command: (event) => {
-                    this.excel_all();
-                }
-            },
-            {
-                label: this.translate.instant('XLSx Export') + ' ' + this.translate.instant('Ansicht'),
-                icon: 'pi pi-fw pi-save',
-                command: (event) => {
-                    this.excel_view();
-                }
-            },
-            {
                 label: this.translate.instant('Cancel filters'),
                 icon: 'pi pi-fw pi-filter',
                 disabled: true,
@@ -194,10 +180,17 @@ export class ProductListPage implements OnInit {
                 }
             },
             {
-                label: this.translate.instant('PDF Ansicht'),
+                label: this.translate.instant('XLSx Export'),
                 icon: 'pi pi-fw pi-save',
                 command: (event) => {
-                    this.printPdf();
+                    this.excel_export();
+                }
+            },
+            {
+                label: this.translate.instant('PDF Export'),
+                icon: 'pi pi-fw pi-save',
+                command: (event) => {
+                    this.pdf_export();
                 }
             },
             {
@@ -257,14 +250,14 @@ export class ProductListPage implements OnInit {
         private dataService: DataService,
         public system: SystemService,
         private route: ActivatedRoute,
-        private loadingCtrl:LoadingController) {
+        private loadingCtrl: LoadingController) {
             this.modelChanged.pipe(
                 debounceTime(700))
                 .subscribe(model => {
                     if (this.isFilterOn()) {
-                        this.menuItems[8].items[2]['disabled'] = false;
+                        this.menuItems[8].items[0]['disabled'] = false;
                     } else {
-                        this.menuItems[8].items[2]['disabled'] = true;
+                        this.menuItems[8].items[0]['disabled'] = true;
                     }
                     this.generate_productList(0, this.rowCount, null, 0);
                     localStorage.setItem('filter_values_product', JSON.stringify(this.columnFilterValues));
@@ -273,24 +266,21 @@ export class ProductListPage implements OnInit {
 
     ngOnInit() {
         this.route.queryParams.subscribe(params => {
-            const refresh = params['refresh'];
-            if (refresh) {
-                this.cols = [
-                    { field: 'nfc_tag_id', header: 'NFC', width: '80px' },
-                    { field: 'title', header: this.translate.instant('Titel'), width: '220px' },
-                    // { field: 'id', header: 'DB-ID' },
-                    { field: 'id_number', header: '#', width: '85px' },
-                    { field: 'articel_no', header: this.translate.instant('Artikel-Nr.'), width: '100px' },
-                    { field: 'customer_description', header: this.translate.instant('Kundenbezeichnung'), width: '200px' },
-                    { field: 'last_protocol_date', header: '<<' + this.translate.instant('Termin'), width: '100px' },
-                    { field: 'last_protocol_next', header: this.translate.instant('Termin') + '>>', width: '100px' },
-                    { field: 'check_interval', header: this.translate.instant('Intervall Prüfen'), width: '130px' }
-                ];
-                this.idCustomer = parseInt(this.route.snapshot.paramMap.get('id'));
+            this.cols = [
+                { field: 'nfc_tag_id', header: 'NFC', width: '80px' },
+                { field: 'title', header: this.translate.instant('Titel'), width: '220px' },
+                // { field: 'id', header: 'DB-ID' },
+                { field: 'id_number', header: '#', width: '85px' },
+                { field: 'articel_no', header: this.translate.instant('Artikel-Nr.'), width: '100px' },
+                { field: 'customer_description', header: this.translate.instant('Kundenbezeichnung'), width: '200px' },
+                { field: 'last_protocol_date', header: '<<' + this.translate.instant('Termin'), width: '100px' },
+                { field: 'last_protocol_next', header: this.translate.instant('Termin') + '>>', width: '100px' },
+                { field: 'check_interval', header: this.translate.instant('Intervall Prüfen'), width: '130px' }
+            ];
+            this.idCustomer = parseInt(this.route.snapshot.paramMap.get('id'));
 
-                console.log('ProductListPage idCustomer:', this.idCustomer);
-                this.page_load();
-            }
+            console.log('ProductListPage idCustomer:', this.idCustomer);
+            this.page_load();
         });
     }
 
@@ -300,11 +290,6 @@ export class ProductListPage implements OnInit {
     }
 
     async loadNodes(event) {
-        this.loader = await this.loadingCtrl.create({
-            message: this.translate.instant('Bitte warten')
-        });
-        this.loader.present();
-
         if (this.productListAll.length > 0) {
             this.generate_productList(event.first, event.first + event.rows, event.sortField, event.sortOrder);
         }
@@ -320,8 +305,14 @@ export class ProductListPage implements OnInit {
         // console.log('heightCalc 2 :', x, this.heightCalc);
     }
 
-    page_load() {
+    async page_load() {
         console.log('page_load ProductListPage');
+
+        const loader = await this.loadingCtrl.create({
+            message: this.translate.instant('Bitte warten')
+        });
+        loader.present();
+
         this.rowRecords = 0;
         this.totalRecords = 0;
         this.childCount = 0;
@@ -334,9 +325,9 @@ export class ProductListPage implements OnInit {
         this.menuItems[5].items[0]['disabled'] = !this.userdata.role_set.edit_product_templates;
         this.menuItems[5].items[1]['disabled'] = false;
         this.menuItems[5].items[2]['disabled'] = true;
+        this.menuItems[8].items[3]['disabled'] = true;
         this.menuItems[8].items[4]['disabled'] = true;
         this.menuItems[8].items[5]['disabled'] = true;
-        this.menuItems[8].items[6]['disabled'] = true;
 
         this.events.publish('prozCustomer', 0);
         this.apiService.pvs4_get_product_list(this.idCustomer).then((result: any) => {
@@ -448,6 +439,7 @@ export class ProductListPage implements OnInit {
             }
 
             this.generate_productList(0, this.rowCount, null, 0);
+            loader.dismiss();
         });
         this.funcHeightCalc();
     }
@@ -477,9 +469,9 @@ export class ProductListPage implements OnInit {
                         this.menuItems[5].items[0]['disabled'] = !this.userdata.role_set.edit_product_templates;
                         this.menuItems[5].items[1]['disabled'] = false;
                         this.menuItems[5].items[2]['disabled'] = true;
+                        this.menuItems[8].items[3]['disabled'] = true;
                         this.menuItems[8].items[4]['disabled'] = true;
                         this.menuItems[8].items[5]['disabled'] = true;
-                        this.menuItems[8].items[6]['disabled'] = true;
                     }
                 }
                 ]
@@ -577,7 +569,7 @@ export class ProductListPage implements OnInit {
 
     cancel_filters(cancel_type) {
         console.log('cancel_filters');
-        this.menuItems[8].items[2]['disabled'] = true;
+        this.menuItems[8].items[0]['disabled'] = true;
         if (cancel_type == 1) {
             for (let i = 0; i < this.cols.length; i++) {
                 this.columnFilterValues[this.cols[i].field] = '';
@@ -591,6 +583,7 @@ export class ProductListPage implements OnInit {
             json += '"search_all":""}';
             this.columnFilterValues = JSON.parse(json);
         }
+        localStorage.setItem('filter_values_product', JSON.stringify(this.columnFilterValues));
         this.generate_productList(0, this.rowCount, null, 0);
     }
 
@@ -603,24 +596,24 @@ export class ProductListPage implements OnInit {
             const try_list = JSON.parse(JSON.stringify(this.productListAll));
             this.dir_try_filter(try_list);
             this.productListView = try_list;
+            this.productListSearch = try_list;
         }
 
-        if (sort_field != null)
-        {
+        if (sort_field != null) {
             this.productListView = this.productListView.sort((a, b) => {
                 let value1 = a.data[sort_field];
                 let value2 = b.data[sort_field];
-    
-                if (this.apiService.isEmpty(value1) && !this.apiService.isEmpty(value2))
-                    return-1*sort_order;
-                else if (!this.apiService.isEmpty(value1) && this.apiService.isEmpty(value2))
-                    return 1*sort_order;
-                else if (this.apiService.isEmpty(value1) && this.apiService.isEmpty(value2))
+
+                if (this.apiService.isEmpty(value1) && !this.apiService.isEmpty(value2)) {
+                    return-1 * sort_order;
+                } else if (!this.apiService.isEmpty(value1) && this.apiService.isEmpty(value2)) {
+                    return 1 * sort_order;
+                } else if (this.apiService.isEmpty(value1) && this.apiService.isEmpty(value2)) {
                     return 0;
-                else if ( value1.toLowerCase( ) > value2.toLowerCase( )) {
-                    return 1*sort_order;
+                } else if ( value1.toLowerCase( ) > value2.toLowerCase( )) {
+                    return 1 * sort_order;
                 } else if ( value1.toLowerCase( ) < value2.toLowerCase( )) {
-                    return -1*sort_order;
+                    return -1 * sort_order;
                 } else {
                     return 0;
                 }
@@ -628,20 +621,24 @@ export class ProductListPage implements OnInit {
         }
         this.rowRecords = this.productListView.length;
         let endIndex = end_index;
-        if(end_index > this.productListView.length)
-            endIndex =this.productListView.length;
-        if(endIndex > 0)
-        {
+        if (end_index > this.productListView.length) {
+            endIndex = this.productListView.length;
+        }
+        if (endIndex > 0) {
             this.productListView = this.productListView.slice(start_index, endIndex);
         }
         if (this.productListView.length > 0) {
-            this.menuItems[8].items[0]['disabled'] = false;
+            if (this.isFilterOn()) {
+                this.menuItems[8].items[0]['disabled'] = false;
+            } else {
+                this.menuItems[8].items[0]['disabled'] = true;
+            }
             this.menuItems[8].items[1]['disabled'] = false;
-            this.menuItems[8].items[3]['disabled'] = false;
+            this.menuItems[8].items[2]['disabled'] = false;
         } else {
             this.menuItems[8].items[0]['disabled'] = true;
             this.menuItems[8].items[1]['disabled'] = true;
-            this.menuItems[8].items[3]['disabled'] = true;
+            this.menuItems[8].items[2]['disabled'] = true;
         }
 
         this.totalRecords = this.productListAll.length;
@@ -659,7 +656,6 @@ export class ProductListPage implements OnInit {
             this.expandChildren(this.productListView, JSON.parse(localStorage.getItem('expanded_nodes_product')));
         }
 
-        this.loader.dismiss();
     }
 
     nodeSelect(event, selectedNode) {
@@ -679,9 +675,9 @@ export class ProductListPage implements OnInit {
         this.menuItems[5].items[0]['disabled'] = !this.userdata.role_set.edit_product_templates;
         this.menuItems[5].items[1]['disabled'] = false;
         this.menuItems[5].items[2]['disabled'] = false;
+        this.menuItems[8].items[3]['disabled'] = false;
         this.menuItems[8].items[4]['disabled'] = false;
         this.menuItems[8].items[5]['disabled'] = false;
-        this.menuItems[8].items[6]['disabled'] = false;
         let id_sn = 0;
 
         if (selectedNodeLength == 1) {
@@ -699,10 +695,6 @@ export class ProductListPage implements OnInit {
                     this.menuItems[4].visible = false;
                     this.menuItems[5].items[2]['disabled'] = true;
                     this.move_id = 0;
-                    this.loader = await this.loadingCtrl.create({
-                        message: this.translate.instant('Bitte warten')
-                    });
-                    this.loader.present();
                     this.page_load();
                 });
             }
@@ -713,18 +705,18 @@ export class ProductListPage implements OnInit {
             this.menuItems[3].disabled = true;
             this.menuItems[3].visible = this.userdata.role_set.edit_products;
             this.menuItems[4].visible = false;
+            this.menuItems[8].items[3]['disabled'] = true;
             this.menuItems[8].items[4]['disabled'] = true;
             this.menuItems[8].items[5]['disabled'] = true;
-            this.menuItems[8].items[6]['disabled'] = true;
         }
         if (selectedNodeLength == 0) {
             this.menuItems[2].disabled = true;
             this.menuItems[5].items[2]['disabled'] = true;
-            this.menuItems[8].items[4]['disabled'] = true;
+            this.menuItems[8].items[3]['disabled'] = true;
         } else {
             this.menuItems[2].disabled = false;
             this.menuItems[5].items[2]['disabled'] = false;
-            this.menuItems[8].items[4]['disabled'] = false;
+            this.menuItems[8].items[3]['disabled'] = false;
         }
         if (selectedNodeLength >= 2) {
             this.menuItems[5].items[1]['disabled'] = true;
@@ -734,7 +726,7 @@ export class ProductListPage implements OnInit {
             this.childCount++;
         }
         if (this.childCount > 0) {
-            this.menuItems[8].items[4]['disabled'] = true;
+            this.menuItems[8].items[3]['disabled'] = true;
         }
 
     }
@@ -754,7 +746,6 @@ export class ProductListPage implements OnInit {
             this.menuItems[8].items[0]['disabled'] = false;
             this.menuItems[8].items[1]['disabled'] = false;
             this.menuItems[8].items[2]['disabled'] = false;
-            this.menuItems[8].items[3]['disabled'] = false;
             this.selectMode = false;
             this.move_id = 0;
         } else {
@@ -769,9 +760,9 @@ export class ProductListPage implements OnInit {
             this.menuItems[5].items[0]['disabled'] = !this.userdata.role_set.edit_product_templates;
             this.menuItems[5].items[1]['disabled'] = false;
             this.menuItems[5].items[2]['disabled'] = false;
+            this.menuItems[8].items[3]['disabled'] = false;
             this.menuItems[8].items[4]['disabled'] = false;
             this.menuItems[8].items[5]['disabled'] = false;
-            this.menuItems[8].items[6]['disabled'] = false;
 
             if (selectedNodeLength == 0) {
                 this.menuItems[0].disabled = true;
@@ -779,17 +770,17 @@ export class ProductListPage implements OnInit {
                 this.menuItems[2].disabled = true;
                 this.menuItems[3].disabled = true;
                 this.menuItems[5].items[2]['disabled'] = true;
+                this.menuItems[8].items[3]['disabled'] = true;
                 this.menuItems[8].items[4]['disabled'] = true;
                 this.menuItems[8].items[5]['disabled'] = true;
-                this.menuItems[8].items[6]['disabled'] = true;
             }
             if (selectedNodeLength >= 2) {
                 this.menuItems[0].disabled = true;
                 this.menuItems[1].disabled = true;
                 this.menuItems[3].disabled = true;
                 this.menuItems[5].items[1]['disabled'] = true;
+                this.menuItems[8].items[4]['disabled'] = true;
                 this.menuItems[8].items[5]['disabled'] = true;
-                this.menuItems[8].items[6]['disabled'] = true;
             }
 
             if (event.node.data.parent != 0) {
@@ -867,10 +858,6 @@ export class ProductListPage implements OnInit {
 
             modal.onDidDismiss().then(async data => {
                 if (data['data']) {
-                    this.loader = await this.loadingCtrl.create({
-                        message: this.translate.instant('Bitte warten')
-                    });
-                    this.loader.present();
                     this.page_load();
                 }
             });
@@ -904,17 +891,12 @@ export class ProductListPage implements OnInit {
             this.menuItems[8].items[3]['disabled'] = true;
             this.menuItems[8].items[4]['disabled'] = true;
             this.menuItems[8].items[5]['disabled'] = true;
-            this.menuItems[8].items[6]['disabled'] = true;
             this.selectMode = true;
         } else if (n == 2) {
             // in Root
             this.move_obj.parent = 0;
             this.move_obj.title = JSON.stringify(this.move_obj.titleJson);
             this.apiService.pvs4_set_product(this.move_obj).then(async (result: any) => {
-                this.loader = await this.loadingCtrl.create({
-                    message: this.translate.instant('Bitte warten')
-                });
-                this.loader.present();
                 console.log('result: ', result);
                 this.page_load();
             });
@@ -976,35 +958,21 @@ export class ProductListPage implements OnInit {
         }
     }
 
-    excel_all() {
-        console.log('excel_all');
-        const data: any = [];
-        this.allnodes = [];
-        console.log('allnodes :', this.allnodes);
-        this.data_tree(this.productListAll);
-        for (let i = 0, len = this.allnodes.length; i < len; i++) {
-            const obj = this.allnodes[i];
-            obj.items = obj.items.replace(/(\\r\\n|\\n|\\r)/gm, ' ');
-            const json: any = {};
-            for (let j = 0; j < this.selectedColumns.length; j++) {
-                if (obj[this.selectedColumns[j].field]) {
-                    json[this.selectedColumns[j].header] = obj[this.selectedColumns[j].field];
-                } else {
-                    json[this.selectedColumns[j].header] = '';
-                }
-            }
-            // console.log('>>json :', json);
-            data.push(json);
-        }
-        console.log('excel_all data :', data);
-        this.excelService.exportAsExcelFile(data, 'product_all.xlsx');
-    }
-
-    excel_view() {
+    async excel_export() {
         console.log('excel_view');
+
+        const loader = await this.loadingCtrl.create({
+            message: this.translate.instant('Bitte warten')
+        });
+        loader.present();
+
         const data: any = [];
         this.allnodes = [];
-        this.data_tree(this.productListView);
+        if (this.isFilterOn()) {
+            this.data_tree(this.productListSearch);
+        } else {
+            this.data_tree(this.productListAll);
+        }
         for (let i = 0, len = this.allnodes.length; i < len; i++) {
             const obj = this.allnodes[i];
             obj.items = obj.items.replace(/(\\r\\n|\\n|\\r)/gm, ' ');
@@ -1020,16 +988,26 @@ export class ProductListPage implements OnInit {
             data.push(json);
         }
         this.excelService.exportAsExcelFile(data, 'product_view.xlsx');
+        loader.dismiss();
     }
 
-    printPdf() {
+    async pdf_export() {
+        const loader = await this.loadingCtrl.create({
+            message: this.translate.instant('Bitte warten')
+        });
+        loader.present();
+
         const pdfTitle: any = this.translate.instant('Produkt') + ' ' + this.translate.instant('Liste');
         let columns: any[] = [];
         const widthsArray: string[] = [];
         const bodyArray: any[] = [];
         this.allnodes = [];
         let rowArray: any[] = [];
-        this.data_tree(this.productListView);
+        if (this.isFilterOn()) {
+            this.data_tree(this.productListSearch);
+        } else {
+            this.data_tree(this.productListAll);
+        }
         let obj: any;
         const headerRowVisible: any = 0;
         widthsArray.push('*', 'auto', '*', '*', '*', '*', '*');
@@ -1082,10 +1060,11 @@ export class ProductListPage implements OnInit {
         }
 
         this.pdf.get_ListDocDefinition(bodyArray,
-            widthsArray,
-            headerRowVisible,
-            pdfTitle,
-            this.translate.instant('Produkt') + this.translate.instant('Liste') + '.pdf');
+                                        widthsArray,
+                                        headerRowVisible,
+                                        pdfTitle,
+                                        this.translate.instant('Produkt') + this.translate.instant('Liste') + '.pdf');
+            loader.dismiss();
     }
 
     data_tree(nodes: TreeNode[]): any {
@@ -1248,12 +1227,11 @@ export class ProductListPage implements OnInit {
                     activProduct.active = 0;
                     this.apiService.pvs4_set_product(activProduct).then((setResult: any) => {
                         console.log('result: ', setResult);
-                        this.ngOnInit();
+                        this.page_load();
                     });
                 });
             });
         }
-
     }
 
     showChildMsg() {

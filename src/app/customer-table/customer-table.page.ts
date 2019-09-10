@@ -35,16 +35,17 @@ export class CustomerTablePage implements OnInit {
                 debounceTime(700))
                 .subscribe(model => {
                     if (this.isFilterOn()) {
-                        this.menuItems[7].items[2]['disabled'] = false;
+                        this.menuItems[7].items[0]['disabled'] = false;
                     } else {
-                        this.menuItems[7].items[2]['disabled'] = true;
+                        this.menuItems[7].items[0]['disabled'] = true;
                     }
                     this.generate_customerList(0, this.rowCount, null, 0);
-                    localStorage.setItem('filter_values', JSON.stringify(this.columnFilterValues));
+                    localStorage.setItem('filter_values_customer', JSON.stringify(this.columnFilterValues));
             });
     }
     public customerListAll: TreeNode[] = [];
     public customerListView: TreeNode[] = [];
+    public customerListSearch: TreeNode[] = [];
     public cols: any[] = [];
     public selectedNode: TreeNode;
     public allnodes: any[] = [];
@@ -149,20 +150,6 @@ export class CustomerTablePage implements OnInit {
         icon: 'pi pi-fw pi-cog',
         items: [
             {
-                label: this.translate.instant('XLSx Export') + ' ' + this.translate.instant('Alle'),
-                icon: 'pi pi-fw pi-save',
-                command: (event) => {
-                    this.excel_all();
-                }
-            },
-            {
-                label: this.translate.instant('XLSx Export') + ' ' + this.translate.instant('Ansicht'),
-                icon: 'pi pi-fw pi-save',
-                command: (event) => {
-                    this.excel_view();
-                }
-            },
-            {
                 label: this.translate.instant('Cancel filters'),
                 icon: 'pi pi-fw pi-filter',
                 disabled: true,
@@ -172,10 +159,17 @@ export class CustomerTablePage implements OnInit {
                 }
             },
             {
-                label: this.translate.instant('PDF Ansicht'),
+                label: this.translate.instant('XLSx Export'),
                 icon: 'pi pi-fw pi-save',
                 command: (event) => {
-                    this.printPdf();
+                    this.excel_export();
+                }
+            },
+            {
+                label: this.translate.instant('PDF Export'),
+                icon: 'pi pi-fw pi-save',
+                command: (event) => {
+                    this.pdf_export();
                 }
             }
         ]
@@ -267,8 +261,8 @@ export class CustomerTablePage implements OnInit {
             console.log('total records :', this.customerListAll.length);
 
             // console.log(' customerListAll ', this.customerListAll );
-            if (localStorage.getItem('filter_values') != undefined) {
-                this.columnFilterValues = JSON.parse(localStorage.getItem('filter_values'));
+            if (localStorage.getItem('filter_values_customer') != undefined) {
+                this.columnFilterValues = JSON.parse(localStorage.getItem('filter_values_customer'));
             }
             if (localStorage.getItem('split_filter') != undefined) {
                 this.splitFilter = JSON.parse(localStorage.getItem('split_filter'));
@@ -348,7 +342,7 @@ export class CustomerTablePage implements OnInit {
 
     cancel_filters(cancel_type) {
         console.log('cancel_filters');
-        this.menuItems[7].items[2]['disabled'] = true;
+        this.menuItems[7].items[0]['disabled'] = true;
         if (cancel_type == 1) {
             for (let i = 0; i < this.cols.length; i++) {
                 this.columnFilterValues[this.cols[i].field] = '';
@@ -367,6 +361,7 @@ export class CustomerTablePage implements OnInit {
                                         sector: '',
                                         search_all: '' };
         }
+        localStorage.setItem('filter_values_customer', JSON.stringify(this.columnFilterValues));
         this.generate_customerList(0, this.rowCount, null, 0);
     }
 
@@ -377,6 +372,7 @@ export class CustomerTablePage implements OnInit {
             const try_list = JSON.parse(JSON.stringify(this.customerListAll));
             this.dir_try_filter(try_list);
             this.customerListView = try_list;
+            this.customerListSearch = try_list;
         }
         if (sort_field != null) {
             this.customerListView = this.customerListView.sort((a, b) => {
@@ -409,13 +405,17 @@ export class CustomerTablePage implements OnInit {
         }
 
         if (this.customerListView.length > 0) {
-            this.menuItems[7].items[0]['disabled'] = false;
+            if (this.isFilterOn()) {
+                this.menuItems[7].items[0]['disabled'] = false;
+            } else {
+                this.menuItems[7].items[0]['disabled'] = true;
+            }
             this.menuItems[7].items[1]['disabled'] = false;
-            this.menuItems[7].items[3]['disabled'] = false;
+            this.menuItems[7].items[2]['disabled'] = false;
         } else {
             this.menuItems[7].items[0]['disabled'] = true;
             this.menuItems[7].items[1]['disabled'] = true;
-            this.menuItems[7].items[3]['disabled'] = true;
+            this.menuItems[7].items[2]['disabled'] = true;
         }
 
         this.totalRecords = this.customerListAll.length;
@@ -582,43 +582,7 @@ export class CustomerTablePage implements OnInit {
         }
     }
 
-    async excel_all() {
-        console.log('excel_all');
-
-        const loader = await this.loadingCtrl.create({
-            message: this.translate.instant('Bitte warten')
-        });
-        loader.present();
-
-        const data: any = [];
-        this.allnodes = [];
-        console.log('allnodes :', this.allnodes);
-        this.data_tree(this.customerListAll);
-        for (let i = 0, len = this.allnodes.length; i < len; i++) {
-            const obj = this.allnodes[i];
-            obj.company = obj.company.replace(/(\\r\\n|\\n|\\r)/gm, ' ');
-            obj.country = obj.country.replace(/(\\r\\n|\\n|\\r)/gm, ' ');
-            obj.place   = obj.place.replace(/(\\r\\n|\\n|\\r)/gm, ' ');
-            obj.po_box  = obj.po_box.replace(/(\\r\\n|\\n|\\r)/gm, ' ');
-            obj.sector  = obj.sector.replace(/(\\r\\n|\\n|\\r)/gm, ' ');
-            obj.street  = obj.street.replace(/(\\r\\n|\\n|\\r)/gm, ' ');
-            // console.log('obj >>> ', obj);
-            const json: any = {};
-            for (let j = 0; j < this.selectedColumns.length; j++) {
-                if (obj[this.selectedColumns[j].field]) {
-                    json[this.selectedColumns[j].header] = obj[this.selectedColumns[j].field];
-                } else {
-                    json[this.selectedColumns[j].header] = '';
-                }
-            }
-            // console.log('>>json :', json);
-            data.push(json);
-        }
-        this.excelService.exportAsExcelFile(data, 'customer_all.xlsx');
-        loader.dismiss();
-    }
-
-    async excel_view() {
+    async excel_export() {
         console.log('excel_view', this.isFilterOn());
 
         const loader = await this.loadingCtrl.create({
@@ -629,7 +593,7 @@ export class CustomerTablePage implements OnInit {
         const data: any = [];
         this.allnodes = [];
         if (this.isFilterOn()) {
-            this.data_tree(this.customerListView);
+            this.data_tree(this.customerListSearch);
         } else {
             this.data_tree(this.customerListAll);
         }
@@ -656,7 +620,7 @@ export class CustomerTablePage implements OnInit {
         loader.dismiss();
     }
 
-    async printPdf() {
+    async pdf_export() {
         const loader = await this.loadingCtrl.create({
             message: this.translate.instant('Bitte warten')
         });
@@ -673,7 +637,7 @@ export class CustomerTablePage implements OnInit {
         bodyArray.push(columns);
         this.allnodes = [];
         if (this.isFilterOn()) {
-            this.data_tree(this.customerListView);
+            this.data_tree(this.customerListSearch);
         } else {
             this.data_tree(this.customerListAll);
         }
