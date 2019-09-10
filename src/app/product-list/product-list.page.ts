@@ -55,7 +55,7 @@ export class ProductListPage implements OnInit {
     public selectedRow: number;
     public selectMode: boolean = false;
     private rowHeight = 60;
-    private rowCount: number = 15;
+    private rowCount: number = 30;
 
     public menuItems: MenuItem[] = [{
         label: this.translate.instant('Ansicht'),

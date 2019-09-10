@@ -62,8 +62,8 @@ export class NoteListPage implements OnInit {
     public authorList: any = [];
     public pointofContactList: any = [];
     modelChanged: Subject<any> = new Subject<any>();
-    private rowHeight = 40;
-    private rowCount: number = 15;
+    public rowHeight = 40;
+    public rowCount: number = 30;
 
     public menuItems: MenuItem[] = [{
         label: this.translate.instant('Ansicht'),

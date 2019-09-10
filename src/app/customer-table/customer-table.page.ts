@@ -73,7 +73,7 @@ export class CustomerTablePage implements OnInit {
     public expendedNodes: string[] = [];
     modelChanged: Subject<any> = new Subject<any>();
     readonly rowHeight = 46;
-    readonly rowCount: number = 25;
+    readonly rowCount: number = 30;
     public totalRecords: number;
     public rowRecords: number;
 
