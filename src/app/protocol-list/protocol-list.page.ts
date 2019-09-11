@@ -42,7 +42,7 @@ export class ProtocolListPage implements OnInit {
     modelChanged: Subject<any> = new Subject<any>();
     public selectedRow: number;
     readonly rowHeight = 46;
-    readonly rowCount: number = 25;
+    readonly rowCount: number = 30;
 
     public menuItems: MenuItem[] = [
         {
