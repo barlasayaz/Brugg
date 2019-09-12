@@ -60,7 +60,6 @@ function processing($user, $customer) {
         echo json_encode($error);
         die;
     }
-
     // verify Brugg ID and token ------------------------
     $_POST['bruggid'] =  trim( mysqli_escape_string($con,$_POST['bruggid']));
     $_POST['token']=   trim( mysqli_escape_string($con,$_POST['token']));
@@ -86,7 +85,6 @@ function processing($user, $customer) {
         die;
     }
     //-----------------------------------------------------
-
     // escape the uemailid to prevent sql injection
     $user      = trim( mysqli_escape_string($con,$user) );
     $customer  = intval ( trim( mysqli_escape_string($con,$customer) ) );
@@ -135,9 +133,7 @@ function processing($user, $customer) {
         echo json_encode($error);
         mysqli_close($con);
         die;
-    }
- 
+    } 
 }
-
 // here you could write functions to update an existing contact or delete a contact. 
 // any information posted from you Ionic app would be in the object $_POST
