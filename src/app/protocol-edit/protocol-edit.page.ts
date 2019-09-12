@@ -175,14 +175,17 @@ export class ProtocolEditPage implements OnInit {
 
   loadProduct() {
     console.log('loadProduct() productList:', this.productList);
-    let interval: number = 36;
+    let interval: number = 12;
     this.productList.forEach(element => {
       let obj = element;
       if (element.data) { obj = element.data; }
       // obj.id = parseInt( obj.id ); //have to be a string
       this.products.push({'id': obj.id, 'id_number': obj.id_number});
-      obj.check_interval = parseInt(obj.check_interval);
-      if ((obj.check_interval  < interval) && (obj.check_interval > 1)) { interval = obj.check_interval; }
+
+      if (obj.check_interval && (obj.check_interval  < interval) && (obj.check_interval > 1)) 
+      { 
+        interval = parseInt(obj.check_interval); 
+      }
     });
     let date = new Date(this.activProtocol.protocol_date);
 
