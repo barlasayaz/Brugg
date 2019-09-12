@@ -34,7 +34,7 @@ export class ExcelService {
     }
     const workbook: XLSX.WorkBook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
 
-    if (this.platform.is('ios') || this.platform.is('android')) {
+    if (!document.URL.startsWith('http') || document.URL.startsWith('http://localhost:8080')) {
       const wbout = XLSX.write(workbook, {
         bookType: 'xlsx',
         bookSST: false,

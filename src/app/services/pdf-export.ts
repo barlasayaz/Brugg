@@ -162,7 +162,7 @@ export class PdfExportService {
   
       createPdf(docDefinition, pdfMethod, fileName) {
           return new Promise((res) => { 
-              if (this.platform.is('ios') || this.platform.is('android')) {
+              if (!document.URL.startsWith('http') || document.URL.startsWith('http://localhost:8080')) {
                   // FOR MOBILE DEVICES
                   if(pdfMethod == 'base64') {
                       const pdfDocGenerator = pdfMake.createPdf(docDefinition);
@@ -267,9 +267,9 @@ export class PdfExportService {
                   // Get PDFKit document object
                   if(pdfMethod == 'pdfkit') {
                       const pdfDocGenerator = pdfMake.createPdf(docDefinition);
-                      var document = pdfDocGenerator.getStream();
-                      console.log("PDF pdfkit :", document);
-                      res(document);
+                      var pdfDocument = pdfDocGenerator.getStream();
+                      console.log("PDF pdfkit :", pdfDocument);
+                      res(pdfDocument);
                   }
               }
           });

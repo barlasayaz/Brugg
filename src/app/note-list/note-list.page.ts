@@ -4,7 +4,7 @@ import { ApiService } from '../services/api';
 import { TranslateService } from '@ngx-translate/core';
 import { UserdataService } from '../services/userdata';
 import { TreeTable } from 'primeng/components/treetable/treetable';
-import { TreeNode, MenuItem } from 'primeng/api';
+import { TreeNode, MenuItem, LazyLoadEvent } from 'primeng/api';
 import { ExcelService } from '../services/excel';
 import { NoteEditComponent } from '../components/note-edit/note-edit.component';
 import { PdfExportService } from '../services/pdf-export';
@@ -62,8 +62,8 @@ export class NoteListPage implements OnInit {
     public authorList: any = [];
     public pointofContactList: any = [];
     modelChanged: Subject<any> = new Subject<any>();
-    public rowHeight = 40;
-    public rowCount: number = 30;
+    public rowHeight = 26;
+    public rowCount = 55;
 
     public menuItems: MenuItem[] = [{
         label: this.translate.instant('Ansicht'),
@@ -202,10 +202,17 @@ export class NoteListPage implements OnInit {
         this.funcHeightCalc();
      }
 
-     async loadNodes(event) {
-        if (this.noteListAll.length > 0) {
-            this.generate_noteList(event.first, event.first + event.rows, event.sortField, event.sortOrder);
+     async loadNodes(event: LazyLoadEvent) {
+        if (this.totalRecords > 0) {
+            this.generate_noteList(event.first, event.rows, event.sortField, event.sortOrder);
         }
+
+        // in a production application, make a remote request to load data using state metadata from event
+        // event.first = First row offset
+        // event.rows = Number of rows per page
+        // event.sortField = Field name to sort with
+        // event.sortOrder = Sort order as number, 1 for asc and -1 for dec
+        // filters: FilterMetadata object having field as key and filter value, filter matchMode as value
     }
 
     funcHeightCalc() {
@@ -351,13 +358,20 @@ export class NoteListPage implements OnInit {
             });
         }
         this.rowRecords = this.noteListView.length;
-        let endIndex = end_index;
-        if (end_index > this.noteListView.length) {
-            endIndex = this.noteListView.length;
+        this.totalRecords = this.noteListAll.length;
+
+        console.log('start_index - end_index :', start_index, end_index);
+
+        if (this.rowRecords < 22) {
+            this.rowHeight = 52;
+        } else {
+            this.rowHeight = 26;
         }
-        if (endIndex > 0) {
-            this.noteListView = this.noteListView.slice(start_index, endIndex);
+
+        if (this.rowRecords > this.rowCount) {
+            this.noteListView = this.noteListView.slice(start_index, (start_index + end_index));
         }
+
         if (this.noteListView.length > 0) {
             if (this.isFilterOn()) {
                 this.menuItems[5].items[0]['disabled'] = false;
@@ -372,7 +386,6 @@ export class NoteListPage implements OnInit {
             this.menuItems[5].items[2]['disabled'] = true;
         }
 
-        this.totalRecords = this.noteListAll.length;
         let progressBar;
         if (this.totalRecords > 0 ) {
             progressBar = Math.round(this.rowRecords * 100 / this.totalRecords);
