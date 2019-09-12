@@ -42,7 +42,7 @@ export class ProtocolListPage implements OnInit {
     modelChanged: Subject<any> = new Subject<any>();
     public selectedRow: number;
     public rowHeight = 26;
-    public rowCount = 55;
+    public rowCount = 100;
 
     public menuItems: MenuItem[] = [
         {
@@ -406,12 +406,14 @@ export class ProtocolListPage implements OnInit {
         console.log('start_index - end_index :', start_index, end_index);
 
         if (this.rowRecords < 22) {
-            this.rowHeight = 52;
+            this.rowHeight = 48;
         } else {
             this.rowHeight = 26;
         }
 
-        if (this.rowRecords > this.rowCount) {
+        if ((start_index + end_index + this.rowCount) >= this.rowRecords) {
+            this.protocolListView = this.protocolListView.slice(start_index, this.rowRecords);
+        } else {
             this.protocolListView = this.protocolListView.slice(start_index, (start_index + end_index));
         }
 

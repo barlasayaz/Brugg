@@ -55,7 +55,7 @@ export class ProductListPage implements OnInit {
     public selectedRow: number;
     public selectMode: boolean = false;
     public rowHeight = 26;
-    public rowCount = 55;
+    public rowCount = 100;
 
     public menuItems: MenuItem[] = [{
         label: this.translate.instant('Ansicht'),
@@ -632,12 +632,15 @@ export class ProductListPage implements OnInit {
         console.log('start_index - end_index :', start_index, end_index);
 
         if (this.rowRecords < 22) {
-            this.rowHeight = 52;
+            this.rowHeight = 48;
         } else {
             this.rowHeight = 26;
         }
 
-        if (this.rowRecords > this.rowCount) {
+        // console.log('aaa :', this.totalRecords, this.rowCount, start_index, end_index, (start_index + end_index + this.rowCount));
+        if ((start_index + end_index + this.rowCount) >= this.rowRecords) {
+            this.productListView = this.productListView.slice(start_index, this.rowRecords);
+        } else {
             this.productListView = this.productListView.slice(start_index, (start_index + end_index));
         }
 

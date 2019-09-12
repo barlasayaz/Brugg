@@ -76,7 +76,7 @@ export class CustomerTablePage implements OnInit {
     public totalRecords: number;
     public rowRecords: number;
     public rowHeight = 26;
-    public rowCount = 55;
+    public rowCount = 100;
 
     public menuItems: MenuItem[] = [{
         label: this.translate.instant('Ansicht'),
@@ -402,12 +402,14 @@ export class CustomerTablePage implements OnInit {
         console.log('start_index - end_index :', start_index, end_index);
 
         if (this.rowRecords < 22) {
-            this.rowHeight = 52;
+            this.rowHeight = 48;
         } else {
             this.rowHeight = 26;
         }
 
-        if (this.rowRecords > this.rowCount) {
+        if ((start_index + end_index + this.rowCount) >= this.rowRecords) {
+            this.customerListView = this.customerListView.slice(start_index, this.rowRecords);
+        } else {
             this.customerListView = this.customerListView.slice(start_index, (start_index + end_index));
         }
 

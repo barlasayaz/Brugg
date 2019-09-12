@@ -63,7 +63,7 @@ export class NoteListPage implements OnInit {
     public pointofContactList: any = [];
     modelChanged: Subject<any> = new Subject<any>();
     public rowHeight = 26;
-    public rowCount = 55;
+    public rowCount = 100;
 
     public menuItems: MenuItem[] = [{
         label: this.translate.instant('Ansicht'),
@@ -363,15 +363,16 @@ export class NoteListPage implements OnInit {
         console.log('start_index - end_index :', start_index, end_index);
 
         if (this.rowRecords < 22) {
-            this.rowHeight = 52;
+            this.rowHeight = 48;
         } else {
             this.rowHeight = 26;
         }
 
-        if (this.rowRecords > this.rowCount) {
+        if ((start_index + end_index + this.rowCount) >= this.rowRecords) {
+            this.noteListView = this.noteListView.slice(start_index, this.rowRecords);
+        } else {
             this.noteListView = this.noteListView.slice(start_index, (start_index + end_index));
         }
-
         if (this.noteListView.length > 0) {
             if (this.isFilterOn()) {
                 this.menuItems[5].items[0]['disabled'] = false;
