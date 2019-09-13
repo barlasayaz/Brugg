@@ -105,8 +105,10 @@
                     <p-treeTableToggler [rowNode]="rowNode" *ngIf="i == 0"></p-treeTableToggler>
                     <label *ngIf="(col.field == 'last_date')">{{rowData[col.field] | date : 'dd.MM.yyyy'}}</label>
                     <label *ngIf="(col.field == 'next_date')">{{rowData[col.field] | date : 'dd.MM.yyyy'}}</label>
-                    <label
-                        *ngIf="(col.field != 'last_date') && (col.field != 'next_date')">{{rowData[col.field]}}</label>
+                    <label *ngIf="(col.field == 'sector')">{{rowData[col.field] | translate}}</label>
+                    <label *ngIf="(col.field != 'last_date') &&
+                                  (col.field != 'next_date') &&
+                                  (col.field != 'sector')">{{rowData[col.field]}}</label>                    
                 </td>
             </tr>
         </ng-template>
