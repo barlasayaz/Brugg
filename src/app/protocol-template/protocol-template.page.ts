@@ -325,7 +325,7 @@ export class ProtocolTemplatePage implements OnInit {
     this.selectedTemplate[this.template.length - 1] = 0;
   }
 
-  /* option_deactive(option) {
+  option_deactive(option) {
     let alert = this.alertCtrl.create({
       header: this.translate.instant('Achtung'),
       message: this.translate.instant('Möchten Sie diesen Option wirklich deaktivieren?'),
@@ -363,20 +363,23 @@ export class ProtocolTemplatePage implements OnInit {
 
             obj.id = option['id'];
             obj.active = '0';
-            option.active = 0;
             console.log('deactive obj :', obj);
 
             this.apiService.pvs4_set_protocol_opt(obj).then((result: any) => {
               console.log('result: ', result);
+              this.selectedOption[option.id] = 0;
+              this.selectOption = 0;
+              this.selectedOptionId = 0;
+              this.editOption = [];
               this.loadOption();
             });
           }
         }
       ]
     }).then(x => x.present());
-  } */
+  }
 
-  option_deactive(option) {
+  /* option_deactive(option) {
     const obj = {
       user: 1,
       title: '',
@@ -406,7 +409,12 @@ export class ProtocolTemplatePage implements OnInit {
 
     this.apiService.pvs4_set_protocol_opt(obj).then((result: any) => {
       console.log('result: ', result);
+      this.selectedOption[option.id] = 0;
+      this.selectOption = 0;
+      this.selectedOptionId = 0;
+      this.editOption = [];
       this.loadOption();
     });
-  }
+  } */
+
 }
