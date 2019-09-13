@@ -398,6 +398,20 @@ export class NoteListPage implements OnInit {
         this.events.publish('totalRecords', this.totalRecords);
     }
 
+    onColResize(event) {
+        let index  = this.apiService.columnIndex(event.element);
+        this.selectedColumns[index].width = event.element.offsetWidth+"px";
+        let width2 = this.selectedColumns[index+1].width;
+        this.selectedColumns[index+1].width = parseInt(width2.replace('px',''))-event.delta + "px";
+        localStorage.setItem('show_columns_note', JSON.stringify(this.selectedColumns));
+    }
+
+    onColReorder(event) {
+        this.selectedColumns = event.columns;
+        localStorage.setItem('show_columns_note', JSON.stringify(this.selectedColumns));
+    }
+
+
     nodeSelect(event) {
         // console.log('nodeSelect:', event, this.menuItems);
         this.menuItems[0].disabled = false;

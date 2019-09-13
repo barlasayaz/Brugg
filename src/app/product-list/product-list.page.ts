@@ -1193,6 +1193,19 @@ export class ProductListPage implements OnInit {
         }
     }
 
+    onColResize(event) {
+        let index  = this.apiService.columnIndex(event.element);
+        this.selectedColumns[index].width = event.element.offsetWidth+"px";
+        let width2 = this.selectedColumns[index+1].width;
+        this.selectedColumns[index+1].width = parseInt(width2.replace('px',''))-event.delta + "px";
+        localStorage.setItem('show_columns_product', JSON.stringify(this.selectedColumns));
+    }
+
+    onColReorder(event) {
+        this.selectedColumns = event.columns;
+        localStorage.setItem('show_columns_product', JSON.stringify(this.selectedColumns));
+    }
+
     onNodeExpand(event) {
         this.expendedNodes.push(event.node.data['id']);
         localStorage.setItem('expanded_nodes_product', JSON.stringify(this.expendedNodes));

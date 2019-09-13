@@ -23,7 +23,7 @@ export class ApiService {
   public appointmentEndTime: string = '16:59';
   public appointmentMinTime: string = '07:00';
   public appointmentMaxTime: string = '17:59';
-  public version: any = '4.4.30';
+  public version: any = '4.4.31';
   
   constructor(public http: HttpClient, public userdata: UserdataService) {
     console.log('Start ApiProvider Provider');
@@ -1068,6 +1068,16 @@ export class ApiService {
 
   isEmpty(str) {
     return (!str || str==null || 0 === str.length);
+}
+
+ columnIndex(element: any): number {
+  let children = element.parentNode.childNodes;
+  let num = 0;
+  for (var i = 0; i < children.length; i++) {
+      if (children[i] == element) return num;
+      if (children[i].nodeType == 1) num++;
+  }
+  return -1;
 }
   /********************************************************************************/
 
