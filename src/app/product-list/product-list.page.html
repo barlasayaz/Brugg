@@ -80,7 +80,9 @@
                  (onLazyLoad)="loadNodes($event)"  
                  [loading]="false" 
                  [totalRecords]="rowRecords"
-                 [reorderableColumns]="true">
+                 [reorderableColumns]="true" 
+                 (onColReorder)="onColReorder($event)"
+                 (onColResize)="onColResize($event)" >
         <ng-template pTemplate="colgroup" let-columns>
             <colgroup>
                 <col *ngFor="let col of selectedColumns" [ngStyle]="{width: col.width}">
@@ -152,7 +154,9 @@
                  (onLazyLoad)="loadNodes($event)"  
                  [loading]="false" 
                  [totalRecords]="rowRecords"
-                 [reorderableColumns]="true">
+                 [reorderableColumns]="true"
+                 (onColReorder)="onColReorder($event)"
+                 (onColResize)="onColResize($event)" >
         <ng-template pTemplate="colgroup" let-columns>
             <colgroup>
                 <col *ngFor="let col of selectedColumns" [ngStyle]="{width: col.width}">

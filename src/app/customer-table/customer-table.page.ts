@@ -273,7 +273,7 @@ export class CustomerTablePage implements OnInit {
             }
            this.generate_customerList(0, this.rowCount, null, 0);
            this.funcHeightCalc();
-           this.selectedColumns = this.cols;
+          // this.selectedColumns = this.cols;
            loader.dismiss();
         });
         this.funcHeightCalc();
@@ -775,6 +775,19 @@ export class CustomerTablePage implements OnInit {
                 }
             }
         }
+    }
+
+    onColResize(event) {
+        let index  = this.apiService.columnIndex(event.element);
+        this.selectedColumns[index].width = event.element.offsetWidth+"px";
+        let width2 = this.selectedColumns[index+1].width;
+        this.selectedColumns[index+1].width = parseInt(width2.replace('px',''))-event.delta + "px";
+        localStorage.setItem('show_columns', JSON.stringify(this.selectedColumns));
+    }
+
+    onColReorder(event) {
+        this.selectedColumns = event.columns;
+        localStorage.setItem('show_columns', JSON.stringify(this.selectedColumns));
     }
 
     onNodeExpand(event) {
