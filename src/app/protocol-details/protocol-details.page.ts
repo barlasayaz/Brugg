@@ -226,7 +226,7 @@ export class ProtocolDetailsPage implements OnInit {
     protocolList.push({ 'title': this.translate.instant('Protokoll Nummer'), 'value': protocol.protocol_number});
     protocolList.push({ 'title': this.translate.instant('Datum'), 'value': pipe.transform(protocol.protocol_date, 'dd.MM.yyyy')});
     protocolList.push({ 'title': this.translate.instant('Prüfergebnis'), 'value': protocol.resultText});
-    protocolList.push({ 'title': this.translate.instant('nächste Prüfung'), 'value': pipe.transform(protocol.protocol_date_next, 'dd.MM.yyyy')});
+    protocolList.push({ 'title': this.translate.instant('Nächste prüfung'), 'value': pipe.transform(protocol.protocol_date_next, 'dd.MM.yyyy')});
     protocolList.push({ 'title': this.translate.instant('Autor'), 'value': protocol.author});
 
     protocolItems.forEach(elementItems => {

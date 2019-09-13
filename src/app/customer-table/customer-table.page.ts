@@ -194,8 +194,8 @@ export class CustomerTablePage implements OnInit {
             { field: 'zip_code', header: this.translate.instant('PLZ'), width: '85px'},
             { field: 'place', header: this.translate.instant('Ort'), width: '200px' },
             { field: 'employees', header: this.translate.instant('Mitarbeiter'), width: '170px' },
-            { field: 'last_date', header: '<< ' + this.translate.instant('Termin'), width: '120px' },
-            { field: 'next_date', header: '>> ' + this.translate.instant('Termin'), width: '120px' },
+            { field: 'last_date', header: this.translate.instant('Letzter besuch'), width: '120px' },
+            { field: 'next_date', header: this.translate.instant('Nächster besuch'), width: '120px' },
             { field: 'inspector', header: this.translate.instant('Prüfer'), width: '170px' },
             { field: 'sector', header: this.translate.instant('Branche'), width: '200px' }
         ];

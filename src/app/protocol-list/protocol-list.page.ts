@@ -163,7 +163,7 @@ export class ProtocolListPage implements OnInit {
             { field: 'id', header: 'DB-ID', width: '95px' },
             { field: 'protocol_date', header: this.translate.instant('Datum'), width: '95px'},
             { field: 'result', header: this.translate.instant('Prüfergebnis'), width: '160px' },
-            { field: 'protocol_date_next', header: this.translate.instant('nächste Prüfung'), width: '95px' }
+            { field: 'protocol_date_next', header: this.translate.instant('Nächste prüfung'), width: '95px' }
         ];
 
         console.log('ProductListPage idCustomer:', this.idCustomer, this.system.platform);

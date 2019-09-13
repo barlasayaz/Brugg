@@ -5,7 +5,7 @@ import { UserdataService } from './userdata';
 
 
 // const pvs4_apiURL = 'http://localhost/BruggPVS4/pvs4-api/';
- const pvs4_apiURL = "https://www.pvs2go.com/pvs4-api/";
+ const pvs4_apiURL = 'https://www.pvs2go.com/pvs4-api/';
 
 const brugg_id_api = 'https://www.bruggdigital.com/';
 const pvs4_client_id = 'brugg-pvs';
@@ -24,7 +24,7 @@ export class ApiService {
   public appointmentMinTime: string = '07:00';
   public appointmentMaxTime: string = '17:59';
   public version: any = '4.4.31';
-  
+
   constructor(public http: HttpClient, public userdata: UserdataService) {
     console.log('Start ApiProvider Provider');
   }

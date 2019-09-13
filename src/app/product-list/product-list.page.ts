@@ -273,8 +273,8 @@ export class ProductListPage implements OnInit {
                 { field: 'id_number', header: '#', width: '85px' },
                 { field: 'articel_no', header: this.translate.instant('Artikel-Nr.'), width: '100px' },
                 { field: 'customer_description', header: this.translate.instant('Kundenbezeichnung'), width: '200px' },
-                { field: 'last_protocol_date', header: '<<' + this.translate.instant('Termin'), width: '100px' },
-                { field: 'last_protocol_next', header: this.translate.instant('Termin') + '>>', width: '100px' },
+                { field: 'last_protocol_date', header: this.translate.instant('Letzter besuch'), width: '100px' },
+                { field: 'last_protocol_next', header: this.translate.instant('Nächster besuch'), width: '100px' },
                 { field: 'check_interval', header: this.translate.instant('Intervall Prüfen'), width: '130px' }
             ];
             this.idCustomer = parseInt(this.route.snapshot.paramMap.get('id'));
