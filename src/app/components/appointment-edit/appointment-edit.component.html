@@ -539,7 +539,7 @@
                           type="time"
                           id="end_time"
                           [(ngModel)]="activAppointment.end_time9"
-                          name="Notes"
+                          name="end_time"
                           displayFormat="HH:mm"
                           doneText="{{translate.instant('okay')}}"
                           cancelText="{{translate.instant('abbrechen')}}">
@@ -552,7 +552,7 @@
         <!-- Notes -->
         <ion-col size-xl="12" size-lg="12" size-md="12" size-sm="12" size="12">
           <ion-item lines="none">
-            <ion-label position="floating">{{translate.instant('Notes')}}</ion-label>
+            <ion-label position="floating">{{translate.instant('Notizen')}}</ion-label>
             <ion-textarea required
                           (ionChange)="inputErrorMsg()"
                           type="text" 
