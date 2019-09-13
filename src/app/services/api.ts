@@ -1069,6 +1069,16 @@ export class ApiService {
   isEmpty(str) {
     return (!str || str==null || 0 === str.length);
 }
+
+ columnIndex(element: any): number {
+  let children = element.parentNode.childNodes;
+  let num = 0;
+  for (var i = 0; i < children.length; i++) {
+      if (children[i] == element) return num;
+      if (children[i].nodeType == 1) num++;
+  }
+  return -1;
+}
   /********************************************************************************/
 
   mysql2view(timestamp, kurz) {

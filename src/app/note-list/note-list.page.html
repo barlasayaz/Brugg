@@ -67,7 +67,9 @@
                  [loading]="false" 
                  [totalRecords]="rowRecords"
                  columnResizeMode="fit"
-                 [reorderableColumns]="true">
+                 [reorderableColumns]="true" 
+                 (onColReorder)="onColReorder($event)"
+                 (onColResize)="onColResize($event)" >
         <ng-template pTemplate="colgroup" let-columns>
             <colgroup>
                 <col *ngFor="let col of selectedColumns" [ngStyle]="{width: col.width}">
