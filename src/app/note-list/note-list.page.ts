@@ -121,14 +121,14 @@ export class NoteListPage implements OnInit {
                 }
             },
             {
-                label: this.translate.instant('XLSx Export'),
+                label: this.translate.instant('XLSx export'),
                 icon: 'pi pi-fw pi-save',
                 command: (event) => {
                     this.excel_export();
                 }
             },
             {
-                label: this.translate.instant('PDF Export'),
+                label: this.translate.instant('PDF export'),
                 icon: 'pi pi-fw pi-save',
                 command: (event) => {
                     this.pdf_export();
