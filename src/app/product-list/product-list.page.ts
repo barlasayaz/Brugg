@@ -33,7 +33,7 @@ export class ProductListPage implements OnInit {
     public xlsHeader: any[];
     public splitFilter = false;
     public idCustomer = 0;
-    public heightCalc: any = '700px';
+    public heightCalc: any;
     public move_id = 0;
     public move_obj: any = {};
     public columnFilterValues = { title: '',
@@ -630,12 +630,6 @@ export class ProductListPage implements OnInit {
         this.totalRecords = this.productListAll.length;
 
         console.log('start_index - end_index :', start_index, end_index);
-
-        if (this.rowRecords < 22) {
-            this.rowHeight = 48;
-        } else {
-            this.rowHeight = 26;
-        }
 
         // console.log('aaa :', this.totalRecords, this.rowCount, start_index, end_index, (start_index + end_index + this.rowCount));
         if ((start_index + end_index + this.rowCount) >= this.rowRecords) {

@@ -54,7 +54,7 @@ export class CustomerTablePage implements OnInit {
     public customerList: any[];
     public splitFilter = false;
     public idCustomer = 0;
-    public heightCalc: any = '700px';
+    public heightCalc: any;
     public move_id = 0;
     public move_obj: any = {};
     public columnFilterValues = { company: '',
@@ -72,7 +72,6 @@ export class CustomerTablePage implements OnInit {
     public filterCols: string[];
     public expendedNodes: string[] = [];
     modelChanged: Subject<any> = new Subject<any>();
-
     public totalRecords: number;
     public rowRecords: number;
     public rowHeight = 26;
@@ -400,12 +399,6 @@ export class CustomerTablePage implements OnInit {
         this.totalRecords = this.customerListAll.length;
 
         console.log('start_index - end_index :', start_index, end_index);
-
-        if (this.rowRecords < 22) {
-            this.rowHeight = 48;
-        } else {
-            this.rowHeight = 26;
-        }
 
         if ((start_index + end_index + this.rowCount) >= this.rowRecords) {
             this.customerListView = this.customerListView.slice(start_index, this.rowRecords);
