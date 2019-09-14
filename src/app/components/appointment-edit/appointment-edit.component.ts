@@ -458,4 +458,8 @@ export class AppointmentEditComponent implements OnInit {
     this.addDate++;
   }
 
+  minusDate() {
+    this.addDate--;
+  }
+
 }
