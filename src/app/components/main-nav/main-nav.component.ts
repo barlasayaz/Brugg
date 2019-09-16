@@ -59,11 +59,11 @@ export class MainNavComponent implements OnInit {
 
     if (this.aktivPage != action) {
       switch (action) {
-        case 'StartscreenNew': // HOME
-          this.navCtrl.navigateRoot('/startscreen-new');
+        case 'Startscreen': // HOME
+          this.navCtrl.navigateRoot('/startscreen');
           break;
-        case 'DashboardNew':
-          this.navCtrl.navigateRoot('/dashboard-new');
+        case 'Dashboard':
+          this.navCtrl.navigateRoot('/dashboard');
           break;
         case 'CustomerTable':
           this.navCtrl.navigateRoot(['/customer-table']);
@@ -82,8 +82,8 @@ export class MainNavComponent implements OnInit {
         case 'ProtocolList':
           this.navCtrl.navigateRoot(['/protocol-list/' + id]);
           break;
-        case 'OrderFormNew':
-          this.navCtrl.navigateRoot(['/order-form-new', id]);
+        case 'OrderForm':
+          this.navCtrl.navigateRoot(['/order-form', id]);
           break;
         case 'NoteList':
           this.navCtrl.navigateRoot(['/note-list/' + id]);

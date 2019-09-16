@@ -7,14 +7,14 @@ import { Subscription } from 'rxjs/Subscription';
 import { ImprintPage } from '../login/imprint/imprint.page';
 import { NfcScanComponent } from '../components/nfc-scan/nfc-scan.component';
 import { QrBarcodeComponent } from '../components/qr-barcode/qr-barcode.component';
-import { ReboxNewPage } from '../rebox-new/rebox-new.page';
+import { ReboxPage } from '../rebox/rebox.page';
 
 @Component({
-  selector: 'app-startscreen-new',
-  templateUrl: './startscreen-new.page.html',
-  styleUrls: ['./startscreen-new.page.scss'],
+  selector: 'app-startscreen',
+  templateUrl: './startscreen.page.html',
+  styleUrls: ['./startscreen.page.scss'],
 })
-export class StartscreenNewPage {
+export class StartscreenPage {
   public subscription: Subscription = new Subscription;
   public ndeflistener: any;
   public tagId: string;
@@ -74,11 +74,11 @@ export class StartscreenNewPage {
       }
     }).then(x => x.present()); ;
   } 
- async reboxNew(userid) {
+ async rebox(userid) {
     const modal =
     await this.modalCtrl.create({
-      component: ReboxNewPage,
-      cssClass: 'reboxnew-modal-css',
+      component: ReboxPage,
+      cssClass: 'rebox-modal-css',
       componentProps: {
       }
     }).then(x => x.present());
@@ -104,14 +104,14 @@ export class StartscreenNewPage {
   go(action) {
     console.log(action);
     switch (action) {
-      case 'DashboardNewPage':
-        this.navCtrl.navigateForward('/dashboard-new');
+      case 'DashboardPage':
+        this.navCtrl.navigateForward('/dashboard');
         break;
       case 'CustomerTable':
         this.navCtrl.navigateForward('/customer-table');
         break;
-      case 'StartscreenNewPage':
-        this.navCtrl.navigateForward('/startscreen-new');
+      case 'StartscreenPage':
+        this.navCtrl.navigateForward('/startscreen');
         break;
       case 'MyDataPage':
         this.navCtrl.navigateForward('/my-data');

@@ -5,22 +5,22 @@ import { TranslateService } from '@ngx-translate/core';
 import { UserdataService } from '../services/userdata';
 import { DatePipe } from '@angular/common';
 import { PdfExportService } from '../services/pdf-export';
-import { OrderSendNewPage } from './order-send-new/order-send-new.page';
+import { OrderSendPage } from './order-send/order-send.page';
 import { ActivatedRoute } from '@angular/router';
 
 /**
- * Generated class for the OrderFormNewPage page.
+ * Generated class for the OrderFormPage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  */
 
 @Component({
-  selector: 'app-order-form-new',
-  templateUrl: 'order-form-new.page.html',
-  styleUrls: ['./order-form-new.page.scss'],
+  selector: 'app-order-form',
+  templateUrl: 'order-form.page.html',
+  styleUrls: ['./order-form.page.scss'],
 })
 
-export class OrderFormNewPage {
+export class OrderFormPage {
   public idCustomer: number;
   public company: string;
   public maxDate: string;
@@ -269,8 +269,8 @@ export class OrderFormNewPage {
     this.printPdf('base64').then(async (result: string) => {
       // console.log('pdf result :', result);
       const modalPage = await this.modalCtrl.create({
-        component: OrderSendNewPage,
-        cssClass: 'ordersendnew-modal-css',
+        component: OrderSendPage,
+        cssClass: 'ordersend-modal-css',
         componentProps: {
           'idCustomer': this.idCustomer,
           'company': this.activOrderForm.billing.company ,
@@ -280,7 +280,7 @@ export class OrderFormNewPage {
       });
       modalPage.onDidDismiss().then(ret => {
         if (ret) {
-          console.log('OrderSendNewPage ret', ret);
+          console.log('OrderSendPage ret', ret);
         }
       });
       modalPage.present();

@@ -10,12 +10,12 @@ import { debounceTime } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
 @Component({
-    selector: 'app-dashboard-new',
-    templateUrl: './dashboard-new.page.html',
-    styleUrls: ['./dashboard-new.page.scss'],
+    selector: 'app-dashboard',
+    templateUrl: './dashboard.page.html',
+    styleUrls: ['./dashboard.page.scss'],
 })
 
-export class DashboardNewPage implements OnInit {
+export class DashboardPage implements OnInit {
     public nextAppointment: any = [];
     public nextAppointmentAll: any = [];
     public params: any;

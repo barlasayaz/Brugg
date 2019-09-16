@@ -5,18 +5,18 @@ import { UserdataService } from '../../services/userdata';
 import { ApiService } from '../../services/api';
 
 /**
- * Generated class for the OrderSendNewPage page.
+ * Generated class for the OrderSendPage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
  */
 
 @Component({
-  selector: 'app-order-send-new',
-  templateUrl: './order-send-new.page.html',
-  styleUrls: ['./order-send-new.page.scss'],
+  selector: 'app-order-send',
+  templateUrl: './order-send.page.html',
+  styleUrls: ['./order-send.page.scss'],
 })
-export class OrderSendNewPage {
+export class OrderSendPage {
   public inputError: boolean = false;
   public Ziel_DropDown: any = '0';
   public Empfaenger: string = '';
@@ -51,7 +51,7 @@ export class OrderSendNewPage {
                 this.Copy = this.userdata.email;
                 this.Betreff = 'Brugg Drahtseil: ' +  this.company;
                 console.log('activOrderForm :', this.activOrderForm);
-                // console.log('order-send-new pdfRetVal :', this.pdfRetVal);
+                // console.log('order-send pdfRetVal :', this.pdfRetVal);
   }
 
   dismiss() {

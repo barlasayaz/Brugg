@@ -2,15 +2,14 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
-
+import { ComponentsModule } from '../components/components.module';
 import { IonicModule } from '@ionic/angular';
-
-import { OrderSendNewPage } from './order-send-new.page';
+import { StartscreenPage } from './startscreen.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: OrderSendNewPage
+    component: StartscreenPage
   }
 ];
 
@@ -19,8 +18,9 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
+    ComponentsModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [OrderSendNewPage]
+  declarations: [StartscreenPage]
 })
-export class OrderSendNewPageModule {}
+export class StartscreenPageModule {}
