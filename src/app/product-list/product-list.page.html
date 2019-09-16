@@ -82,9 +82,7 @@
                  [totalRecords]="rowRecords"
                  [reorderableColumns]="true" 
                  (onColReorder)="onColReorder($event)"
-                 (onColResize)="onColResize($event)" 
-                 [frozenColumns]="fixedColumns"
-                 frozenWidth="200px">
+                 (onColResize)="onColResize($event)" >
         <ng-template pTemplate="colgroup" let-columns>
             <colgroup>
                 <col *ngFor="let col of selectedColumns" [ngStyle]="{width: col.width}">
@@ -133,6 +131,13 @@
                 </td>
             </tr>
         </ng-template>
+        <ng-template pTemplate="loadingbody" let-columns="columns">
+            <tr style="height:34px">
+                <td *ngFor="let col of selectedColumns;">
+                    <div class="loading-text"></div>
+                </td>
+            </tr>
+        </ng-template>
     </p-treeTable>
     <p-treeTable *ngIf="!selectMode"
                  [value]="productListView"
@@ -158,9 +163,7 @@
                  [totalRecords]="rowRecords"
                  [reorderableColumns]="true"
                  (onColReorder)="onColReorder($event)"
-                 (onColResize)="onColResize($event)" 
-                 [frozenColumns]="fixedColumns"
-                 frozenWidth="200px">
+                 (onColResize)="onColResize($event)" >
         <ng-template pTemplate="colgroup" let-columns>
             <colgroup>
                 <col *ngFor="let col of selectedColumns" [ngStyle]="{width: col.width}">
@@ -210,8 +213,8 @@
 
                 </td>
             </tr>
-        </ng-template>BNM,IU
-        <!-- <ng-template pTemplOaPLSxc vbnm,Kte="loadingbody" let-columns="columns"> -->245100
+        </ng-template>
+        <ng-template pTemplate="loadingbody" let-columns="columns">
             <tr style="height:34px">
                 <td *ngFor="let col of selectedColumns;">
                     <div class="loading-text"></div>
