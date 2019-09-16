@@ -33,7 +33,7 @@ export class ProductListPage implements OnInit {
     public xlsHeader: any[];
     public splitFilter = false;
     public idCustomer = 0;
-    public heightCalc: any = '700px';
+    public heightCalc: any;
     public move_id = 0;
     public move_obj: any = {};
     public columnFilterValues = { title: '',
@@ -180,14 +180,14 @@ export class ProductListPage implements OnInit {
                 }
             },
             {
-                label: this.translate.instant('XLSx Export'),
+                label: this.translate.instant('XLSx export'),
                 icon: 'pi pi-fw pi-save',
                 command: (event) => {
                     this.excel_export();
                 }
             },
             {
-                label: this.translate.instant('PDF Export'),
+                label: this.translate.instant('PDF export'),
                 icon: 'pi pi-fw pi-save',
                 command: (event) => {
                     this.pdf_export();
@@ -273,8 +273,8 @@ export class ProductListPage implements OnInit {
                 { field: 'id_number', header: '#', width: '85px' },
                 { field: 'articel_no', header: this.translate.instant('Artikel-Nr.'), width: '100px' },
                 { field: 'customer_description', header: this.translate.instant('Kundenbezeichnung'), width: '200px' },
-                { field: 'last_protocol_date', header: '<<' + this.translate.instant('Termin'), width: '100px' },
-                { field: 'last_protocol_next', header: this.translate.instant('Termin') + '>>', width: '100px' },
+                { field: 'last_protocol_date', header: this.translate.instant('Letzter besuch'), width: '100px' },
+                { field: 'last_protocol_next', header: this.translate.instant('Nächster besuch'), width: '100px' },
                 { field: 'check_interval', header: this.translate.instant('Intervall Prüfen'), width: '130px' }
             ];
             this.idCustomer = parseInt(this.route.snapshot.paramMap.get('id'));
@@ -630,12 +630,6 @@ export class ProductListPage implements OnInit {
         this.totalRecords = this.productListAll.length;
 
         console.log('start_index - end_index :', start_index, end_index);
-
-        if (this.rowRecords < 22) {
-            this.rowHeight = 48;
-        } else {
-            this.rowHeight = 26;
-        }
 
         // console.log('aaa :', this.totalRecords, this.rowCount, start_index, end_index, (start_index + end_index + this.rowCount));
         if ((start_index + end_index + this.rowCount) >= this.rowRecords) {

@@ -201,7 +201,7 @@ export class ProductTemplatePage implements OnInit {
     }
   }
 
-  loadOption() {
+  async loadOption() {
     this.options = [];
     this.apiService.pvs4_get_product_opt(this.userdata.licensee, 0).then((result: any) => {
       result.list.forEach(element => {
@@ -209,8 +209,6 @@ export class ProductTemplatePage implements OnInit {
         element.data.title = JSON.parse(element.data.title);
         this.options.push(element.data);
         this.selectedOption[element.data.id] = 0;
-        // console.log('elemet data :', element.data.id);
-        // console.log('selectedOption :', this.selectedOption[element.data.id]);
       });
       this.optionsAll = JSON.parse(JSON.stringify(this.options));
       console.log('loadOption: ', result.list);
@@ -328,8 +326,8 @@ export class ProductTemplatePage implements OnInit {
     this.selectedTemplate[this.template.length - 1] = 0;
   }
 
-  /* option_deactive(option) {
-    let alert = this.alertCtrl.create({
+  async option_deactive(option) {
+    let alert = await this.alertCtrl.create({
       header: this.translate.instant('Achtung'),
       message: this.translate.instant('Möchten Sie diesen Option wirklich deaktivieren?'),
       buttons: [
@@ -366,20 +364,22 @@ export class ProductTemplatePage implements OnInit {
 
             obj.id = option['id'];
             obj.active = '0';
-            option.active = 0;
             console.log('deactive obj :', obj);
-
             this.apiService.pvs4_set_product_opt(obj).then((result: any) => {
               console.log('result: ', result);
+              this.selectedOption[option.id] = 0;
+              this.selectOption = 0;
+              this.selectedOptionId = 0;
+              this.editOption = [];
               this.loadOption();
             });
           }
         }
       ]
     }).then(x => x.present());
-  } */
+  }
 
-  option_deactive(option) {
+/*   option_deactive(option) {
     const obj = {
       user: 1,
       title: '',
@@ -409,8 +409,12 @@ export class ProductTemplatePage implements OnInit {
 
     this.apiService.pvs4_set_product_opt(obj).then((result: any) => {
       console.log('result: ', result);
+      this.selectedOption[option.id] = 0;
+      this.selectOption = 0;
+      this.selectedOptionId = 0;
+      this.editOption = [];
       this.loadOption();
     });
-  }
+  } */
 
 }

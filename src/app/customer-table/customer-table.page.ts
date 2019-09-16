@@ -54,7 +54,7 @@ export class CustomerTablePage implements OnInit {
     public customerList: any[];
     public splitFilter = false;
     public idCustomer = 0;
-    public heightCalc: any = '700px';
+    public heightCalc: any;
     public move_id = 0;
     public move_obj: any = {};
     public columnFilterValues = { company: '',
@@ -72,7 +72,6 @@ export class CustomerTablePage implements OnInit {
     public filterCols: string[];
     public expendedNodes: string[] = [];
     modelChanged: Subject<any> = new Subject<any>();
-
     public totalRecords: number;
     public rowRecords: number;
     public rowHeight = 26;
@@ -160,14 +159,14 @@ export class CustomerTablePage implements OnInit {
                 }
             },
             {
-                label: this.translate.instant('XLSx Export'),
+                label: this.translate.instant('XLSx export'),
                 icon: 'pi pi-fw pi-save',
                 command: (event) => {
                     this.excel_export();
                 }
             },
             {
-                label: this.translate.instant('PDF Export'),
+                label: this.translate.instant('PDF export'),
                 icon: 'pi pi-fw pi-save',
                 command: (event) => {
                     this.pdf_export();
@@ -194,8 +193,8 @@ export class CustomerTablePage implements OnInit {
             { field: 'zip_code', header: this.translate.instant('PLZ'), width: '85px'},
             { field: 'place', header: this.translate.instant('Ort'), width: '200px' },
             { field: 'employees', header: this.translate.instant('Mitarbeiter'), width: '170px' },
-            { field: 'last_date', header: '<< ' + this.translate.instant('Termin'), width: '120px' },
-            { field: 'next_date', header: '>> ' + this.translate.instant('Termin'), width: '120px' },
+            { field: 'last_date', header: this.translate.instant('Letzter besuch'), width: '120px' },
+            { field: 'next_date', header: this.translate.instant('Nächster besuch'), width: '120px' },
             { field: 'inspector', header: this.translate.instant('Prüfer'), width: '170px' },
             { field: 'sector', header: this.translate.instant('Branche'), width: '200px' }
         ];
@@ -400,12 +399,6 @@ export class CustomerTablePage implements OnInit {
         this.totalRecords = this.customerListAll.length;
 
         console.log('start_index - end_index :', start_index, end_index);
-
-        if (this.rowRecords < 22) {
-            this.rowHeight = 48;
-        } else {
-            this.rowHeight = 26;
-        }
 
         if ((start_index + end_index + this.rowCount) >= this.rowRecords) {
             this.customerListView = this.customerListView.slice(start_index, this.rowRecords);

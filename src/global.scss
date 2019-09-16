@@ -27,6 +27,10 @@ input:-webkit-autofill:active  {
   max-width: 90%;
 }
 
+.ui-treetable-scrollable-body {
+  height: 768px !important;
+}
+
 .promptClass .alert-wrapper{
   max-width: 500px !important;
   width: 100% !important;

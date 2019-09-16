@@ -58,7 +58,7 @@ export class NoteListPage implements OnInit {
     public rowRecords: number = 0;
     public totalRecords: number = 0;
     public company: string = '';
-    public heightCalc: any = '700px';
+    public heightCalc: any;
     public authorList: any = [];
     public pointofContactList: any = [];
     modelChanged: Subject<any> = new Subject<any>();
@@ -121,14 +121,14 @@ export class NoteListPage implements OnInit {
                 }
             },
             {
-                label: this.translate.instant('XLSx Export'),
+                label: this.translate.instant('XLSx export'),
                 icon: 'pi pi-fw pi-save',
                 command: (event) => {
                     this.excel_export();
                 }
             },
             {
-                label: this.translate.instant('PDF Export'),
+                label: this.translate.instant('PDF export'),
                 icon: 'pi pi-fw pi-save',
                 command: (event) => {
                     this.pdf_export();
@@ -361,12 +361,6 @@ export class NoteListPage implements OnInit {
         this.totalRecords = this.noteListAll.length;
 
         console.log('start_index - end_index :', start_index, end_index);
-
-        if (this.rowRecords < 22) {
-            this.rowHeight = 48;
-        } else {
-            this.rowHeight = 26;
-        }
 
         if ((start_index + end_index + this.rowCount) >= this.rowRecords) {
             this.noteListView = this.noteListView.slice(start_index, this.rowRecords);
