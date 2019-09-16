@@ -129,15 +129,22 @@ export class MyDataPage {
   }
 
   async open_mydataedit(pid: number, role: number, role_nr: number,  editType: number= 0 ) {
+    let cssClassText: string;
     if (this.userdata.role_set.edit_membership == false) {
       if (this.userdata.profile != pid) { return; }
     }
 
-    if (editType == 1) { role = this.userdata.role; }
+    if (editType == 1) {
+      role = this.userdata.role;
+      cssClassText = 'my-data-modal-1-css';
+    } else {
+      cssClassText = 'my-data-modal-2-css';
+    }
     console.log('open_mydataedit()', pid, role, role_nr, editType);
     const modal =
     await this.modalCtrl.create({
       component: MyDataEditPage,
+      cssClass: cssClassText,
       componentProps: {
         pid: pid, role: role, role_nr: role_nr , editType: editType
       }

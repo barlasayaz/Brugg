@@ -233,6 +233,7 @@ export class ProtocolTemplatePage implements OnInit {
   async option_new() {
     const modal: HTMLIonModalElement = await this.modalCtrl.create({
         component: ProtocolOptEditComponent,
+        cssClass: 'protocoloptedit-modal-css',
         componentProps: { id: 0, idCustomer: this.idCustomer }
       });
     modal.onDidDismiss().then(data => {
@@ -247,6 +248,7 @@ export class ProtocolTemplatePage implements OnInit {
     console.log('option :', option);
     const modal: HTMLIonModalElement = await this.modalCtrl.create({
       component: ProtocolOptEditComponent,
+      cssClass: 'protocoloptedit-modal-css',
       componentProps: { id: option.id, option: option, idCustomer: this.idCustomer }
     });
 

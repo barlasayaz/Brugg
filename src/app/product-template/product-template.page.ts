@@ -230,6 +230,7 @@ export class ProductTemplatePage implements OnInit {
   async option_new() {
     const modal: HTMLIonModalElement = await this.modalCtrl.create({
         component: ProductOptEditComponent,
+        cssClass: 'productoptedit-modal-css',
         componentProps: { id: 0, idCustomer: this.idCustomer }
     });
 
@@ -246,6 +247,7 @@ export class ProductTemplatePage implements OnInit {
     console.log('option :', option);
     const modal: HTMLIonModalElement = await this.modalCtrl.create({
       component: ProductOptEditComponent,
+      cssClass: 'productoptedit-modal-css',
       componentProps: { id: option.id, option: option, idCustomer: this.idCustomer }
     });
 

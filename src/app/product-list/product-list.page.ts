@@ -861,6 +861,7 @@ export class ProductListPage implements OnInit {
             const modal =
                 await this.modalCtrl.create({
                     component: ProductMigrationPage,
+                    cssClass: 'productmigration-modal-css',
                     componentProps: {
                         'idCustomer': this.idCustomer, productList: JSON.stringify(nodeList)
                     }
@@ -1276,6 +1277,7 @@ export class ProductListPage implements OnInit {
     const modal =
         await this.modalCtrl.create({
         component: ProductCopyPage,
+        cssClass: 'productcopy-modal-css',
         componentProps: {
             readOnly: false, idProduct: this.selectedNode.data.id, idCustomer: this.idCustomer
         }

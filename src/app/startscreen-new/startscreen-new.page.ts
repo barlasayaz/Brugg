@@ -58,6 +58,7 @@ export class StartscreenNewPage {
     const modal =
     await this.modalCtrl.create({
       component: NfcScanComponent,
+      cssClass: 'nfcscan-modal-css',
       componentProps: {
         readOnly: true
       }
@@ -67,6 +68,7 @@ export class StartscreenNewPage {
     const modal =
     await this.modalCtrl.create({
       component: QrBarcodeComponent,
+      cssClass: 'qrcode-modal-css',
       componentProps: {
         readOnly: true
       }
@@ -76,6 +78,7 @@ export class StartscreenNewPage {
     const modal =
     await this.modalCtrl.create({
       component: ReboxNewPage,
+      cssClass: 'reboxnew-modal-css',
       componentProps: {
       }
     }).then(x => x.present());
@@ -87,6 +90,7 @@ export class StartscreenNewPage {
     const modal =
     await this.modalCtrl.create({
       component: ImprintPage,
+      cssClass: 'imprint-modal-css',
       componentProps: {
       }
     }).then(x => x.present());

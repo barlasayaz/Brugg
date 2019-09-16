@@ -5,7 +5,6 @@ import { UserdataService } from '../services/userdata';
 import { TranslateService } from '@ngx-translate/core';
 import { AppointmentEditComponent } from '../components/appointment-edit/appointment-edit.component';
 import { FullCalendarComponent } from '@fullcalendar/angular';
-//import { EventInput, Calendar } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGrigPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction'; // for dateClick
@@ -15,6 +14,7 @@ import deLocale from '@fullcalendar/core/locales/de'
 import { DatePipe } from '@angular/common';
 import bootstrapPlugin from '@fullcalendar/bootstrap';
 import * as moment from 'moment';
+
 /**
  * Generated class for the TerminplanPage page.
  *
@@ -49,8 +49,8 @@ export class AppointmentPlanPage {
     };
     businessHours = {
         dow: [1, 2, 3, 4, 5], 
-        start: '05:00', // a start time 
-        end: '18:00', // an end time 
+        start: '05:00', // a start time
+        end: '18:00', // an end time
     };
     locales = [itLocale, frLocale, deLocale];
     lang = localStorage.getItem('lang');
@@ -228,7 +228,7 @@ export class AppointmentPlanPage {
     loadEvents(model: any) {
         console.log('loadEvents(): ', model);
         let pipe = new DatePipe('en-US');
-        
+
         const event_start = pipe.transform(model.view.activeStart, 'yyyy-MM-dd');
         const event_end = pipe.transform(model.view.activeEnd, 'yyyy-MM-dd');
         console.log('event_start: ', event_start);
@@ -241,6 +241,7 @@ export class AppointmentPlanPage {
             const modal: HTMLIonModalElement =
             await this.modalCtrl.create({
               component: AppointmentEditComponent,
+              cssClass: 'appointmentedit-modal-css',
               componentProps: {
                 appointment: result.obj,
                 redirect: 2
@@ -254,7 +255,6 @@ export class AppointmentPlanPage {
                     const newdate2 = new Date();
                     newdate2.setDate(today.getDate() - 30);
                     console.log(newdate + ' - ' + newdate2);
-            
                     this.eventsFunc(newdate2, newdate);
                 }
             });
@@ -265,7 +265,7 @@ export class AppointmentPlanPage {
     updateEvent(model: any) {
         console.log(model.event);
         let pipe = new DatePipe('en-US');
-        
+
         const event_date = pipe.transform(model.event.start, 'yyyy-MM-dd');
         const start_time = pipe.transform(model.event.start, 'HH:mm');
         const end_time = pipe.transform(model.event.end, 'HH:mm');
@@ -286,6 +286,7 @@ export class AppointmentPlanPage {
         const modal: HTMLIonModalElement =
         await this.modalCtrl.create({
           component: AppointmentEditComponent,
+          cssClass: 'appointmentedit-modal-css',
           componentProps: {
             redirect: 2
           }
@@ -298,7 +299,6 @@ export class AppointmentPlanPage {
                 const newdate2 = new Date();
                 newdate2.setDate(today.getDate() - 30);
                 console.log(newdate + ' - ' + newdate2);
-        
                 this.eventsFunc(newdate2, newdate);
             }
         });

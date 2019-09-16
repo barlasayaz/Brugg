@@ -175,6 +175,7 @@ export class ProductDetailsPage implements OnInit {
     const modal =
       await this.modalCtrl.create({
         component: NfcScanComponent,
+        cssClass: 'nfcscan-modal-css',
         componentProps: {
           readOnly: false, pid: this.activProduct.id
         }
@@ -188,6 +189,7 @@ export class ProductDetailsPage implements OnInit {
     const modal =
       await this.modalCtrl.create({
         component: QrBarcodeComponent,
+        cssClass: 'qrcode-modal-css',
         componentProps: {
           readOnly: false, pid: this.activProduct.id, qr_code: this.activProduct.qr_code
         }
@@ -469,6 +471,7 @@ export class ProductDetailsPage implements OnInit {
     const modal =
       await this.modalCtrl.create({
         component: ProductCopyPage,
+        cssClass: 'productcopy-modal-css',
         componentProps: {
           readOnly: false, idProduct: this.activProduct.id, idCustomer: this.idCustomer
         }
