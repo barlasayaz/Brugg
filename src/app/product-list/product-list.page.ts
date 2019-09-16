@@ -194,7 +194,7 @@ export class ProductListPage implements OnInit {
                 }
             },
             {
-                label: this.translate.instant('Produkt Migration'),
+                label: this.translate.instant('Produkt migration'),
                 icon: 'pi pi-fw pi-arrow-right',
                 visible: this.userdata.role_set.edit_products,
                 disabled: true,
