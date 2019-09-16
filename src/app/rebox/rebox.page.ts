@@ -6,19 +6,19 @@ import { UserdataService } from '../services/userdata';
 import { SystemService } from '../services/system';
 
 /**
- * Generated class for the ReboxNewPage page.
+ * Generated class for the ReboxPage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
  */
 
 @Component({
-  selector: 'app-rebox-new',
-  templateUrl: './rebox-new.page.html',
-  styleUrls: ['./rebox-new.page.scss'],
+  selector: 'app-rebox',
+  templateUrl: './rebox.page.html',
+  styleUrls: ['./rebox.page.scss'],
 })
 
-export class ReboxNewPage {
+export class ReboxPage {
   public params: any;
   public edit: any = [];
   public anzRebox: any = 1;

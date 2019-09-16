@@ -10,12 +10,12 @@ import { debounceTime } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
 @Component({
-    selector: 'app-dashboard-new',
-    templateUrl: './dashboard-new.page.html',
-    styleUrls: ['./dashboard-new.page.scss'],
+    selector: 'app-dashboard',
+    templateUrl: './dashboard.page.html',
+    styleUrls: ['./dashboard.page.scss'],
 })
 
-export class DashboardNewPage implements OnInit {
+export class DashboardPage implements OnInit {
     public nextAppointment: any = [];
     public nextAppointmentAll: any = [];
     public params: any;
@@ -395,6 +395,7 @@ export class DashboardNewPage implements OnInit {
             const modal =
             await this.modalCtrl.create({
                 component: AppointmentEditComponent,
+                cssClass: 'appointmentedit-modal-css',
                 componentProps: {
                     appointment: appointment, redirect: 1
                 }
@@ -426,7 +427,8 @@ export class DashboardNewPage implements OnInit {
 
         async newPrAppointment() {
             const modal = await this.modalCtrl.create({
-                component: AppointmentEditComponent
+                component: AppointmentEditComponent,
+                cssClass: 'appointmentedit-modal-css',
             });
             modal.onDidDismiss().then(data => {
                 if (data['data']) {
@@ -441,6 +443,7 @@ export class DashboardNewPage implements OnInit {
 
             const modal = await this.modalCtrl.create({
                 component: AppointmentEditComponent,
+                cssClass: 'appointmentedit-modal-css',
                 componentProps: {
                     idCustomer: row.idCustomer, appointmentType: '0', redirect: 3
                 }

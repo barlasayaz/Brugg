@@ -262,6 +262,7 @@ export class CustomerDetailsPage implements OnInit {
       const modal =
         await this.modalCtrl.create({
           component: ContactPersonPage,
+          cssClass: 'contactperson-modal-css',
           componentProps: {
             idCustomer: this.idCustomer
           }
@@ -297,6 +298,7 @@ export class CustomerDetailsPage implements OnInit {
       const modal =
         await this.modalCtrl.create({
           component: ContactPersonAddressPage,
+          cssClass: 'contactpersonaddress-modal-css',
           componentProps: {
             'idCustomer': this.idCustomer, 'contactPerson': this.contactPerson, 'contactPersonAddresses': this.contactPersonAddr
           }
@@ -409,6 +411,7 @@ export class CustomerDetailsPage implements OnInit {
       const modal =
         await this.modalCtrl.create({
           component: AppointmentEditComponent,
+          cssClass: 'appointmentedit-modal-css',
           componentProps: {
             idCustomer: this.idCustomer, appointmentType: '0', redirect: 3
           }
@@ -426,6 +429,7 @@ export class CustomerDetailsPage implements OnInit {
       const modal =
         await this.modalCtrl.create({
           component: NoteEditComponent,
+          cssClass: 'noteedit-modal-css',
           componentProps: {
             id: 0, idCustomer: this.idCustomer, redirect: 2
           }
@@ -437,6 +441,7 @@ export class CustomerDetailsPage implements OnInit {
       const modal =
         await this.modalCtrl.create({
           component: CustomerEditComponent,
+          cssClass: 'customeredit-modal-css',
           componentProps: {
             id: this.idCustomer, redirect: 3
           }
@@ -456,6 +461,7 @@ export class CustomerDetailsPage implements OnInit {
       const modal =
       await this.modalCtrl.create({
         component: AssignmentPage,
+        cssClass: 'assignment-modal-css',
         componentProps: {
           'activCustomer': JSON.stringify(this.activCustomer)
         }
@@ -474,6 +480,7 @@ export class CustomerDetailsPage implements OnInit {
       const modal =
       await this.modalCtrl.create({
         component: AppointmentEditComponent,
+        cssClass: 'appointmentedit-modal-css',
         componentProps: {
           idCustomer: this.idCustomer, appointmentType: appointmentType, redirect: 4
         }

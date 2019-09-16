@@ -431,6 +431,7 @@ export class ProductEditPage implements OnInit {
     const modal =
       await this.modalCtrl.create({
         component: DialogproduktbildmodalPage,
+        cssClass: 'getimage-modal-css',
         componentProps: {
           'redDirect': 1
         }
@@ -759,26 +760,6 @@ export class ProductEditPage implements OnInit {
     this.dataService.setData(data);
     this.navCtrl.navigateForward(['/product-template']);
   }
-
-  /*async new_Option() {
-    const modal =
-      await this.modalCtrl.create({
-        component: ProductNewPage,
-        componentProps: {
-          id: 0, idCustomer: this.idCustomer
-        }
-      });
-
-    modal.onDidDismiss().then(data => {
-      if (data['data']) {
-        if (this.activProduct.items == '') {
-          this.activProduct.items = [];
-        }
-        this.activProduct.items.push(data['data']);
-      }
-    });
-    modal.present();
-  }*/
 
   promptOptionTitle(title, type, index) {
     console.log('promptProductTitle(): ', title, type, index);

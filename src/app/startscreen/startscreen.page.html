@@ -1,4 +1,4 @@
-<main-nav aktivPage="StartscreenNewPage"></main-nav>
+<main-nav aktivPage="StartscreenPage"></main-nav>
 
 <ion-content>
 	<div class="ek-content">
@@ -7,7 +7,7 @@
 				<ion-row>
 					<!-- Dashboard -->
 					<ion-col size="6">
-						<ion-button icon-only class="startbtn" (click)="go('DashboardNewPage');">
+						<ion-button icon-only class="startbtn" (click)="go('DashboardPage');">
 							<div>
 								<ion-icon class="starticn" name="apps"></ion-icon><br><br>
 								<label class="startlbl">{{"Dashboard" | translate}}</label>
@@ -49,7 +49,7 @@
 					</ion-col>
 					<!-- REBOX -->
 					<ion-col size="6">
-						<ion-button icon-only class="startbtn" (click)="reboxNew(userdata.id);">
+						<ion-button icon-only class="startbtn" (click)="rebox(userdata.id);">
 							<div>
 								<ion-icon class="starticn" name="cube"></ion-icon><br><br>
 								<label class="startlbl">{{'ReBox' | translate}}</label>

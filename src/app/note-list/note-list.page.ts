@@ -424,6 +424,7 @@ export class NoteListPage implements OnInit {
         const modal =
             await this.modalCtrl.create({
                 component: NoteEditComponent,
+                cssClass: 'noteedit-modal-css',
                 componentProps: {
                     id: 0, idCustomer: this.idCustomer, redirect: 1
                 }
@@ -446,6 +447,7 @@ export class NoteListPage implements OnInit {
                 const modal =
                     await this.modalCtrl.create({
                         component: NoteEditComponent,
+                        cssClass: 'noteedit-modal-css',
                         componentProps: {
                             id: id, idCustomer: this.idCustomer, redirect: 1
                         }

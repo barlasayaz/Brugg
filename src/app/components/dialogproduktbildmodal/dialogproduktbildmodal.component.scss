@@ -1,22 +1,23 @@
-
     .modal-body div {
         text-align: center;
+        margin-top: -12px;
     }
 
     .dir, .file {
         float: left;  
-        padding: 5px;
-        text-align:center;
-        width:160px;
-        height:140px;
-        overflow:hidden;
+        padding: 10px;
+        width: 180px;
+        height: 170px;
+        overflow: hidden;
+        font-size: 13px;
     }
 
     .pb_box:hover {
-        background-color:#ccc;
+        background-color: #ccc;
     }
 
     .file img {
-        max-width:100px;
-        max-height:100px;
+        max-width: 100px;
+        max-height: 100px;
+        height: fit-content;
     }

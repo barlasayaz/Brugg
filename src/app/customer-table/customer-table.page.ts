@@ -485,6 +485,7 @@ export class CustomerTablePage implements OnInit {
         const modal =
         await this.modalCtrl.create({
           component: CustomerEditComponent,
+          cssClass: 'customeredit-modal-css',
           componentProps: {
             id: idCustomer,
             parent: parentCustomer
@@ -507,6 +508,7 @@ export class CustomerTablePage implements OnInit {
                 const modal =
                 await this.modalCtrl.create({
                   component: CustomerEditComponent,
+                  cssClass: 'customeredit-modal-css',
                   componentProps: {
                     id: id
                   }

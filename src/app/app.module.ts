@@ -27,12 +27,11 @@ import { AssignmentPageModule } from './customer-details/assignment/assignment.m
 import { ImprintPageModule } from './login/imprint/imprint.module';
 import { DialogproduktbildmodalPageModule } from'./components/dialogproduktbildmodal/dialogproduktbildmodal.module';
 import { MyDataEditPageModule } from './my-data/my-data-edit/my-data-edit.module';
-import { OrderSendNewPageModule } from './order-form-new/order-send-new/order-send-new.module';
-import { ProductNewPageModule } from'./product-new/product-new.module';
+import { OrderSendPageModule } from './order-form/order-send/order-send.module';
 import { AppointmentEditComponentModule } from './components/appointment-edit/appointment-edit.module';
 import { ContactPersonPageModule } from'./customer-details/contact-person/contact-person.module';
 import { ContactPersonAddressPageModule } from'./customer-details/contact-person-address/contact-person-address.module';
-import { ReboxNewPageModule } from'./rebox-new/rebox-new.module';
+import { ReboxPageModule } from'./rebox/rebox.module';
 import { NfcScanComponentModule } from './components/nfc-scan/nfc-scan.module';
 import { QrBarcodeComponentModule } from './components/qr-barcode/qr-barcode.module';
 import { CustomerEditComponentModule } from './components/customer-edit/customer-edit.module';
@@ -119,12 +118,11 @@ export function HttpLoaderFactory(http: HttpClient) {
     ImprintPageModule,
     DialogproduktbildmodalPageModule,
     MyDataEditPageModule,
-    OrderSendNewPageModule,
-    ProductNewPageModule,
+    OrderSendPageModule,
     AppointmentEditComponentModule,
     ContactPersonPageModule,
     ContactPersonAddressPageModule,
-    ReboxNewPageModule,
+    ReboxPageModule,
     ProtocolOptEditComponentModule,
     ProductOptEditComponentModule,
     CustomerEditComponentModule,

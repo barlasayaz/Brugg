@@ -2,15 +2,15 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
-import { ComponentsModule } from '../components/components.module';
+
 import { IonicModule } from '@ionic/angular';
 
-import { DashboardNewPage } from './dashboard-new.page';
+import { OrderSendPage } from './order-send.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: DashboardNewPage
+    component: OrderSendPage
   }
 ];
 
@@ -19,9 +19,8 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
-    ComponentsModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [DashboardNewPage]
+  declarations: [OrderSendPage]
 })
-export class DashboardNewPageModule {}
+export class OrderSendPageModule {}

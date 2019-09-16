@@ -28,7 +28,134 @@ input:-webkit-autofill:active  {
 }
 
 .ui-treetable-scrollable-body {
-  height: 768px !important;
+  height: 1024px !important;
+}
+
+.my-data-modal-1-css .modal-wrapper {
+  height: 75%;
+  position: absolute; 
+  display: block;
+  border-radius: 8px;
+}
+
+.my-data-modal-2-css .modal-wrapper {
+  height: 87%;
+  position: absolute; 
+  display: block;
+  border-radius: 8px;
+}
+
+.appointmentedit-modal-css .modal-wrapper {
+  height: 87%;
+  position: absolute; 
+  display: block;
+  border-radius: 8px;
+}
+
+.rebox-modal-css .modal-wrapper {
+  height: 76%;
+  position: absolute; 
+  display: block;
+  border-radius: 8px;
+}
+
+.nfcscan-modal-css .modal-wrapper {
+  height: 60%;
+  position: absolute; 
+  display: block;
+  border-radius: 8px;
+}
+
+.qrcode-modal-css .modal-wrapper {
+  height: 60%;
+  position: absolute; 
+  display: block;
+  border-radius: 8px;
+}
+
+.imprint-modal-css .modal-wrapper {
+  height: 80%;
+  position: absolute; 
+  display: block;
+  border-radius: 8px;
+}
+
+.contactperson-modal-css .modal-wrapper {
+  height: 95%;
+  position: absolute; 
+  display: block;
+  border-radius: 8px;
+}
+
+.contactpersonaddress-modal-css .modal-wrapper {
+  height: 95%;
+  position: absolute; 
+  display: block;
+  border-radius: 8px;
+}
+
+.noteedit-modal-css .modal-wrapper {
+  height: 79%;
+  position: absolute; 
+  display: block;
+  border-radius: 8px;
+}
+
+.customeredit-modal-css .modal-wrapper {
+  height: 95%;
+  position: absolute; 
+  display: block;
+  border-radius: 8px;
+}
+
+.assignment-modal-css .modal-wrapper {
+  height: 44%;
+  position: absolute; 
+  display: block;
+  border-radius: 8px;
+}
+
+.ordersend-modal-css .modal-wrapper {
+  height: 55%;
+  position: absolute; 
+  display: block;
+  border-radius: 8px;
+}
+
+.productcopy-modal-css .modal-wrapper {
+  height: 72%;
+  position: absolute; 
+  display: block;
+  border-radius: 8px;
+}
+
+.getimage-modal-css .modal-wrapper {
+  height: 81%;
+  position: absolute; 
+  display: block;
+  border-radius: 8px;
+  width: 630px;
+}
+
+.productmigration-modal-css .modal-wrapper {
+  height: 45%;
+  position: absolute; 
+  display: block;
+  border-radius: 8px;
+}
+
+.productoptedit-modal-css .modal-wrapper {
+  height: 57%;
+  position: absolute; 
+  display: block;
+  border-radius: 8px;
+}
+
+.protocoloptedit-modal-css .modal-wrapper {
+  height: 57%;
+  position: absolute; 
+  display: block;
+  border-radius: 8px;
 }
 
 .promptClass .alert-wrapper{
@@ -19712,9 +19839,9 @@ ion-select {
   }
 }
 
-body .ui-state-active, body .ui-state-highlight {
+/*body .ui-state-active, body .ui-state-highlight {
   background: rgba(#009de0, 0.2) !important;
-}
+}*/
 
 //DRAGULA
 .gu-mirror {
