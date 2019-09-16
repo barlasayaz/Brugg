@@ -562,6 +562,23 @@ export class ApiService {
     });
   }
 
+  pvs4_get_statistics(type: Number,user: Number,start: String,end: String) {
+    return new Promise((res, rej) => {
+      const data = {
+        user: user,
+        type: type,
+        start: start,
+        end: end
+      }
+      this.pvs4_api_post('get_statistics.php', data).then((done: any) => {// return the result
+        res(done);
+      },
+        err => { // return the error
+          rej(err);
+        });
+    });
+  }
+
   pvs4_set_protocol(obj: any) {
     obj.author = this.userdata.first_name + ' ' + this.userdata.last_name;
     console.log('pvs4_set_protocol():', obj);

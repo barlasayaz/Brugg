@@ -115,6 +115,13 @@ export class DashboardNewPage implements OnInit {
                 this.className = data;
                 console.log(this.className);
             });
+
+            console.log('pvs4_get_statistics() ');
+            // Date
+            this.apiService.pvs4_get_statistics(1, 22, "2019-09-09" ,"2019-09-13").then((result: any) => {
+                let notes = result.list;
+                console.log('list notes:', notes);
+            });
         }
 
         all_dates() {
