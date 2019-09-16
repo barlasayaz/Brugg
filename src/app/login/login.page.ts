@@ -195,6 +195,7 @@ export class LoginPage {
     const modal =
       await this.modalCtrl.create({
         component: ImprintPage,
+        cssClass: 'imprint-modal-css',
         componentProps: {
         }
       }).then(x => x.present());

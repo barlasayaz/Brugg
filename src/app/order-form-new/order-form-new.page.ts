@@ -270,6 +270,7 @@ export class OrderFormNewPage {
       // console.log('pdf result :', result);
       const modalPage = await this.modalCtrl.create({
         component: OrderSendNewPage,
+        cssClass: 'ordersendnew-modal-css',
         componentProps: {
           'idCustomer': this.idCustomer,
           'company': this.activOrderForm.billing.company ,
