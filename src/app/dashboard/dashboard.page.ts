@@ -117,11 +117,17 @@ export class DashboardPage implements OnInit {
             });
 
             console.log('pvs4_get_statistics() ');
-            // Date
+            // Date 
+            /*
             this.apiService.pvs4_get_statistics(1, 22, "2019-09-09" ,"2019-09-13").then((result: any) => {
                 let notes = result.list;
                 console.log('list notes:', notes);
             });
+            this.apiService.pvs4_get_statistics(2, 22, "2019-07-09" ,"2019-11-16").then((result: any) => {
+                let notes = result.list;
+                console.log('list notes:', notes);
+            });
+            */
         }
 
         all_dates() {
