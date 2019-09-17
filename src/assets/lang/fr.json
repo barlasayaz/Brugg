@@ -736,7 +736,7 @@
   "all": "Tous",
   "my Current Position": "Moi",
   "Customer data": "Données client",
-  "Wähle Dateien": "Choisir Des cichiers",
+  "Wähle Dateien": "Choisir des fichiers",
   "Wähle Bild": "Choisissez une Photo",
   "Cancel filters": "Annuler les filtres",
   "Spalten Auswählen": "Choisir des colonnes",
@@ -828,9 +828,10 @@
   "Post": "La Poste",
   "Express": "Express",
   "Überbracht": "A propos Bracht",
+  "LKW": "LKW",
   "Selbst Abholer": "Même Ramassage",
   "Bestellung Abschicken": "Soumettre Ordre",
-  "Bitte warten": "S'il vous plaît attendrez...",
+  "Bitte warten": "Attendrez s'il vous plaît...",
   "Bitte eine Vorlage wählen!": "Veuillez sélectionner un modèle!",
   "Autor": "Auteur",
   "Produktbild löschen": "Supprimer l'image du produit",
@@ -863,6 +864,7 @@
   "edit_product_templates": "Modifier les modèles de produit",
   "edit_contact_persons": "éditer les contacts",
   "edit_protocol_templates":"Modifier les modèles de protocole",
-  "Möchten Sie diesen Option wirklich deaktivieren?": "Voulez-vous vraiment supprimer ce roption de façon permanente?"
+  "Möchten Sie diesen Option wirklich deaktivieren?": "Voulez-vous vraiment supprimer ce roption de façon permanente?",
+  "Tage": "Journées"
   
 }

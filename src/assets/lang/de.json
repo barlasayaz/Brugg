@@ -830,6 +830,7 @@
     "Post": "Post",
     "Express": "Express",
     "Überbracht": "Überbracht",
+    "LKW": "LKW",
     "Selbst Abholer": "Selbst Abholer",
     "Bestellung Abschicken": "Bestellung Abschicken",
     "Bitte warten": "Bitte warten...",
@@ -864,5 +865,6 @@
     "edit_product_templates": "Produktvorlagen bearbeiten",
     "check_products": "Produkte prüfen",
     "edit_protocol_templates": "Protokollvorlagen bearbeiten",
-    "Möchten Sie diesen Option wirklich deaktivieren?": "Möchten Sie diesen Option wirklich deaktivieren?"
+    "Möchten Sie diesen Option wirklich deaktivieren?": "Möchten Sie diesen Option wirklich deaktivieren?",
+    "Tage": "Tage"
 }
