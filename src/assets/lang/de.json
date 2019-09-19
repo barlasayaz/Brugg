@@ -751,6 +751,8 @@
     "Standard": "Standard",
     "Wahr": "Wahr",
     "Falsch": "Falsch",
+    "true": "Wahr",
+    "false": "Falsch",
     "Art": "Art",
     "Charakter": "Charakter",
     "Produkt speichern short": "Produkt speichern",

@@ -751,6 +751,8 @@
   "Standard": "Default",
   "Wahr": "True",
   "Falsch": "False",
+  "true": "True",
+  "false": "False",
   "Art": "Type",
   "Charakter": "Character",
   "Produkt speichern short": "Product Save",

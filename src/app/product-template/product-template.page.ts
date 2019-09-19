@@ -206,6 +206,20 @@ export class ProductTemplatePage implements OnInit {
     this.apiService.pvs4_get_product_opt(this.userdata.licensee, 0).then((result: any) => {
       result.list.forEach(element => {
         element.data.options = JSON.parse(element.data.options);
+        if (element.data.mandatory == 1) {
+          element.data.mandatory = 'true';
+        }
+        if (element.data.mandatory == 0) {
+          element.data.mandatory = 'false';
+        }
+        if (element.data.type == '0') {
+          if (element.data.options.default == true) {
+            element.data.options.default = 'true';
+          }
+          if (element.data.options.default == false) {
+            element.data.options.default = 'false';
+          }
+        }
         element.data.title = JSON.parse(element.data.title);
         this.options.push(element.data);
         this.selectedOption[element.data.id] = 0;
@@ -220,9 +234,22 @@ export class ProductTemplatePage implements OnInit {
       this.template = this.activTemplate.options;
       for (let index = 0; index < this.template.length; index++) {
         this.selectedTemplate[index] = 0;
+        if (this.template[index].mandatory == 1) {
+          this.template[index].mandatory = 'true';
+        }
+        if (this.template[index].mandatory == 0) {
+          this.template[index].mandatory = 'false';
+        }
+        if (this.template[index].type == '0') {
+          if (this.template[index].options.default == true) {
+            this.template[index].options.default = 'true';
+          }
+          if (this.template[index].options.default == false) {
+            this.template[index].options.default = 'false';
+          }
+        }
       }
       this.templateTitleObj = this.activTemplate.title;
-
       console.log('Template Title :', this.template);
     } else if (this.itsNew == undefined) { this.promptTitel(); }
   }
@@ -350,17 +377,15 @@ export class ProductTemplatePage implements OnInit {
               licensee: this.userdata.licensee,
               type: 0,
               id: 0,
-              value: '',
               active: '0'
             };
 
             if (option['user']) { obj.user = option['user']; }
             if (option['licensee']) { obj.licensee = option['licensee']; }
             if (option['type']) { obj.type = option['type']; }
-            if (option['mandatory']) {
-              if (option['mandatory'] == true) { obj.mandatory = 1; }
-              if (option['mandatory'] == false) { obj.mandatory = 0; }
-            }
+            if (option['mandatory'] == 'true') { obj.mandatory = 1; }
+            if (option['mandatory'] == 'false') { obj.mandatory = 0; }
+
             if (option['title']) { obj.title = JSON.stringify(option['title']); }
             if (option['options']) { obj.options = JSON.stringify(option['options']); }
 

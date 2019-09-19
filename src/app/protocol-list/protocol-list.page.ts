@@ -239,6 +239,12 @@ export class ProtocolListPage implements OnInit {
                     if (!this.cols.find(x => x.field == options[i].title[this.lang])) {
                         this.cols.push({ field: options[i].title[this.lang], header: options[i].title[this.lang], width: '200px' });
                     }
+                    if (options[i].value == true) {
+                        options[i].value = this.translate.instant('Wahr');
+                    }
+                    if (options[i].value == false) {
+                        options[i].value = this.translate.instant('Falsch');
+                    }
                     this.protocolListAll[index].data[options[i].title[this.lang]] = options[i].value;
                 }
 

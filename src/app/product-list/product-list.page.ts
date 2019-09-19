@@ -375,7 +375,6 @@ export class ProductListPage implements OnInit {
                 let pr = this.productListAll[index].data.last_protocol;
                 if (pr) {
                     if (pr.length > 0) {
-                        // console.log("pr :", pr);
                         try {
                             pr = JSON.parse(pr);
                             if (pr.protocol_date) {
@@ -433,6 +432,12 @@ export class ProductListPage implements OnInit {
                     if (!this.cols.find(x => x.field == options[i].title[this.lang])) {
                         this.cols.push({ field: options[i].title[this.lang], header: options[i].title[this.lang] , width: '200px'});
                         //console.log('this.lang :', options[i].title[this.lang]);
+                    }
+                    if (options[i].value == true) {
+                        options[i].value = this.translate.instant('Wahr');
+                    }
+                    if (options[i].value == false) {
+                        options[i].value = this.translate.instant('Falsch');
                     }
                     const pipe = new DatePipe('en-US');
                     if (options[i].type == 5) {

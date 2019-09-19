@@ -750,6 +750,8 @@
   "Standard": "Predefinito",
   "Wahr":     "Vero",
   "Falsch":   "Falso",
+  "true": "Vero",
+  "false": "Falso",
   "Art":      "Genere",
   "Charakter": "Personaggio",
   "Produkt speichern short": "Risparmio del Prodotto",
