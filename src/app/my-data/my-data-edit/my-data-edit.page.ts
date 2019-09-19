@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, ModalController } from '@ionic/angular';
+import { NavController, NavParams, ModalController, AlertController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { ApiService } from '../../services/api';
 import { UserdataService } from '../../services/userdata';
@@ -38,6 +38,7 @@ export class MyDataEditPage {
     licensee: 5
   };
   public setRights: boolean;
+  editMembership = false;
   public emailToFind: string;
   public viewNewMode: number;
   public viewNewObj: any = {first_name: '', last_name: '' };
@@ -47,7 +48,8 @@ export class MyDataEditPage {
               public navParams: NavParams, 
               public translate: TranslateService,
               private api : ApiService,
-              public viewCtrl: ModalController) {
+              public viewCtrl: ModalController,
+              public alertCtrl: AlertController) {
     console.log('my-data-edit.ts');
     this.pid = 0;
     this.Farbe = '#000fff';
@@ -83,6 +85,8 @@ export class MyDataEditPage {
     this.setRights = false;
     if (pid != this.userdata.profile) {
       if (this.userdata.role_set.edit_rights) { this.setRights = true; }
+      if (this.userdata.role_set.edit_membership) { this.editMembership = true; }
+       
     }
     if (pid != 0) {
       this.api.pvs4_get_mydata(this.pid).then((result: any) => {
@@ -193,4 +197,36 @@ export class MyDataEditPage {
     });
   }
 
+  employeeDeactivate()
+  {
+    let alert = this.alertCtrl.create({
+        header: this.translate.instant('Achtung'),
+        message: this.translate.instant('Möchten Sie diesen Option wirklich deaktivieren?'),
+        buttons: [
+          {
+            text: this.translate.instant('nein'),
+            handler: () => {
+              console.log('Cancel clicked');
+            }
+          },
+          {
+            text: this.translate.instant('ja'),
+            handler: () => {
+              this.api.pvs4_get_profile(this.edit.email).then((done: any) => {
+                done = done.obj;
+                done.status = 0;
+                console.log('updateData pvs4_get_profile():', done);
+                this.api.pvs4_set_profile(done).then((done: any) => {
+                    console.log('updateData pvs4_set_profile() ok ');
+                    this.viewCtrl.dismiss({'update': true});
+                },
+                  err => { // return the error
+                    console.error('MyDataEditPage pvs4_set_profile() nok ', err);
+                });
+              });
+            }
+          }
+        ]
+    }).then(x => x.present());
+  }
 }
