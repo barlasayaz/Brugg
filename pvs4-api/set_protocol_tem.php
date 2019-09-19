@@ -82,17 +82,17 @@ function processing() {
     $id       	= intval( $_POST['id'] );
     $user   	= intval( $_POST['user'] );
     $licensee 	= intval( $_POST['licensee'] );
-
     $title      = trim( mysqli_escape_string($con,$_POST['title']));
-    $options 	= trim( mysqli_escape_string($con,$_POST['options'])); 
+    $options 	= trim( mysqli_escape_string($con,$_POST['options']));
+    $active     = intval( $_POST['active'] );
    
     if($id >0) {
         $sql="UPDATE protocol_templates 
-                SET licensee = $licensee, user=$user, title='$title', options='$options'
+                SET licensee = $licensee, user=$user, title='$title', options='$options', active=$active
                 WHERE id =$id";
     } else {
-        $sql="INSERT INTO protocol_templates (licensee,user,title,options)
-                VALUES($licensee,$user,'$title','$options')";
+        $sql="INSERT INTO protocol_templates (licensee,user,title,options,active)
+                VALUES($licensee,$user,'$title','$options',$active)";
     }
 	$ret_sql= mysqli_query( $con, $sql );
 

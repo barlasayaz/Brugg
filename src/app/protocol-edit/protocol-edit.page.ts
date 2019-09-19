@@ -441,7 +441,6 @@ export class ProtocolEditPage implements OnInit {
     }).then(x => x.present());
   }
 
-
   edit_template() {
     let activTemplate = this.templates.find(x => x.id == this.selectedTmplt);
     console.log('Active Template :', activTemplate);
@@ -453,4 +452,41 @@ export class ProtocolEditPage implements OnInit {
     this.dataService.setData(data);
     this.navCtrl.navigateForward(['/protocol-template']);
   }
+
+  templateDeactivate() {
+    console.log('delete template');
+    this.showConfirmDeleteTemplate();
+  }
+
+  showConfirmDeleteTemplate() {
+    let alert = this.alertCtrl.create({
+      header: this.translate.instant('Achtung'),
+      message: this.translate.instant('Möchten Sie dieses Vorlage wirklich deaktivieren'),
+      buttons: [
+        {
+          text: this.translate.instant('nein'),
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: this.translate.instant('ja'),
+          handler: () => {
+            let temp = JSON.parse(JSON.stringify(this.templates.find(x => x.id == this.selectedTmplt)));
+            temp.active = 0;
+            temp.title = JSON.stringify(temp.title);
+            temp.options = JSON.stringify(temp.options);
+            this.apiService.pvs4_set_protocol_tem(temp).then((result: any) => {
+              console.log('result: ', result);
+              let id = this.selectedTmplt;
+              this.templates = this.templates.filter(function (value: any, index: number, array: any[]) { return value.id != id; });
+              this.selectedTemplate[this.selectedTmplt] = 0;
+              this.selectTemplate = 0;
+            });
+          }
+        }
+      ]
+    }).then(x => x.present());
+  }
+
 }
