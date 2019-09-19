@@ -214,7 +214,10 @@ export class MyDataEditPage {
             handler: () => {
               this.api.pvs4_get_profile(this.edit.email).then((done: any) => {
                 done = done.obj;
-                done.status = 0;
+                done.licensee_role = JSON.parse(done.licensee_role );
+                done.licensee_role.splice(this.role_nr,1);
+                done.licensee_role = JSON.stringify(done.licensee_role );
+
                 console.log('updateData pvs4_get_profile():', done);
                 this.api.pvs4_set_profile(done).then((done: any) => {
                     console.log('updateData pvs4_set_profile() ok ');

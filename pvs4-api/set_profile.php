@@ -81,7 +81,6 @@ function processing() {
 
     // escape the uemailid to prevent sql injection
     $id           = intval( $_POST['id'] );
-    $status       = intval( $_POST['status'] );
     $short_code   = trim( mysqli_escape_string($con,$_POST['short_code']) );
     $colour       = trim( mysqli_escape_string($con,$_POST['colour']) );
     $last_login   = trim( mysqli_escape_string($con,$_POST['last_login']) );
@@ -91,7 +90,7 @@ function processing() {
    
     if($id >0) { //only update
         $sql="UPDATE profiles 
-                SET short_code='$short_code', colour='$colour', last_login='$last_login', system_role='$system_role', licensee_role='$licensee_role', customer_role='$customer_role',status =$status
+                SET short_code='$short_code', colour='$colour', last_login='$last_login', system_role='$system_role', licensee_role='$licensee_role', customer_role='$customer_role'
                 WHERE id =$id";
     }
 	$ret_sql= mysqli_query( $con, $sql );

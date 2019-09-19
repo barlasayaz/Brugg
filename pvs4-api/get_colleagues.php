@@ -96,7 +96,7 @@ function processing() {
     }
 
     if($role == 2) {
-        $all= mysqli_query($con,"SELECT * FROM profiles WHERE licensee_role != '[]' AND status = 1 ");
+        $all= mysqli_query($con,"SELECT * FROM profiles WHERE licensee_role != '[]' ");
         if($all) {             
             if(mysqli_num_rows($all) > 0){
                 $list= array();
