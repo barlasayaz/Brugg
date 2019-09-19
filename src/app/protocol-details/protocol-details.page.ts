@@ -105,23 +105,36 @@ export class ProtocolDetailsPage implements OnInit {
       this.activProtocol = result.obj;
       // console.log('loadProtocol :', this.activProtocol);
       this.activProtocol.items = JSON.parse(this.activProtocol.items);
+
+      let i: any = 0;
+      this.activProtocol.items.forEach(event => {
+        if (event.value == true) {
+          this.activProtocol.items[i].value = this.translate.instant('Wahr');
+        }
+        if (event.value == false) {
+          this.activProtocol.items[i].value = this.translate.instant('Falsch');
+        }
+        i++;
+      });
+
       let productList = JSON.parse(this.activProtocol.product);
       productList.forEach(element => {
         // console.log('product list :', element);
         this.loadProduct(element.id);
       });
 
-      this.activProtocol.items.forEach(element => {
-         if(element.value == true )
-            element.value = this.translate.instant('Wahr');
-         if(element.value == false)
-            element.value = this.translate.instant('Falsch');
-      });
-
-      if (this.activProtocol.result == 0) { this.activProtocol.resultText = this.translate.instant('betriebsbereit'); }
-      if (this.activProtocol.result == 1) { this.activProtocol.resultText = this.translate.instant('reparieren'); }
-      if (this.activProtocol.result == 3) { this.activProtocol.resultText = this.translate.instant('unauffindbar'); }
-      if ((this.activProtocol.result == 2) || (this.activProtocol.result == 4)) { this.activProtocol.resultText = this.translate.instant('ausmustern'); }
+      if (this.activProtocol.result == 0) {
+        this.activProtocol.resultText = this.translate.instant('betriebsbereit');
+      }
+      if (this.activProtocol.result == 1) {
+        this.activProtocol.resultText = this.translate.instant('reparieren');
+      }
+      if (this.activProtocol.result == 3) {
+        this.activProtocol.resultText = this.translate.instant('unauffindbar');
+      }
+      if ((this.activProtocol.result == 2) || (this.activProtocol.result == 4)) {
+        this.activProtocol.resultText = this.translate.instant('ausmustern');
+      }
 
       this.dateiListe();
     });
@@ -154,6 +167,12 @@ export class ProtocolDetailsPage implements OnInit {
       this.activProduct.items.forEach(event => {
         if (event.type == 5) {
           this.activProduct.items[i].value = this.datePipe.transform(event.value, 'dd.MM.yyyy');
+        }
+        if (event.value == true) {
+          this.activProtocol.items[i].value = this.translate.instant('Wahr');
+        }
+        if (event.value == false) {
+          this.activProtocol.items[i].value = this.translate.instant('Falsch');
         }
         i++;
       });

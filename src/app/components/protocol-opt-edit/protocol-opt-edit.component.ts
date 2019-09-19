@@ -26,8 +26,7 @@ export class ProtocolOptEditComponent implements OnInit {
     options: [],
     licensee: this.userdata.licensee,
     type: 0,
-    id: 0,
-    value: ''
+    id: 0
   };
   public inputError = false;
   public inputColor = '#EEEEEE';
@@ -40,11 +39,11 @@ export class ProtocolOptEditComponent implements OnInit {
   public maxChar: any = 100;
   public minNumber: any = 0;
   public maxNumber: any = 10;
-  public defaultToggle: boolean;
+  public defaultToggle: boolean = false;
   public defaultTime: string;
   public opdInd: any = 0;
   public lang = '';
-  public mandatoryToogle = false;
+  public mandatoryToogle: boolean = false;
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
@@ -74,7 +73,12 @@ export class ProtocolOptEditComponent implements OnInit {
         this.modalTitle = this.translate.instant('Option bearbeiten');
 
         if (this.activOption.type == 0) {
-          this.defaultToggle = this.activOption.options.default;
+          if (this.activOption.options.default == 'true') {
+            this.defaultToggle = true;
+          }
+          if (this.activOption.options.default == 'false') {
+            this.defaultToggle = false;
+          }
           this.inputColor = this.activOption.options.color;
         } else if (this.activOption.type == 1) {
           this.options = this.activOption.options;
@@ -87,12 +91,9 @@ export class ProtocolOptEditComponent implements OnInit {
           this.defaultTime = this.activOption.options.default;
         }
 
-        console.log('mandatory :', this.activOption.mandatory);
-        if (this.activOption.mandatory == 1 || this.activOption.mandatory == 'true') {
-          console.log('mandatory true');
+        if (this.activOption.mandatory == 'true') {
           this.mandatoryToogle = true;
         } else {
-          console.log('mandatory false');
           this.mandatoryToogle = false;
         }
 
@@ -106,13 +107,6 @@ export class ProtocolOptEditComponent implements OnInit {
 
       console.log('protocolOptEditComponent: ', this.idOption);
 
-    }
-
-    loadOption() {
-      this.apiService.pvs4_get_protocol_opt(1, 1).then((result: any) => {
-        this.activOption = result.list[0].data;
-        console.log('loadOption: ', this.activOption);
-      });
     }
 
     dismiss() {
@@ -131,7 +125,7 @@ export class ProtocolOptEditComponent implements OnInit {
 
       if (this.activOption.type == 1) {
         this.options.forEach(element => {
-          console.log('element["de"] :', element["de"]);
+          console.log('element["de"] :', element['de']);
           if (element['de'] == '') {
             this.inputError = true;
             return;
@@ -175,7 +169,6 @@ export class ProtocolOptEditComponent implements OnInit {
           licensee: this.userdata.licensee,
           type: 0,
           id: 0,
-          value: '',
           active: '1'
         };
 
@@ -184,7 +177,6 @@ export class ProtocolOptEditComponent implements OnInit {
             default: this.defaultToggle,
             color: this.inputColor
           };
-          this.activOption.value = this.defaultToggle;
         } else if (this.activOption.type == 1) {
           this.activOption.options = this.options;
         } else if (this.activOption.type == 2) {
@@ -203,14 +195,11 @@ export class ProtocolOptEditComponent implements OnInit {
         if (this.activOption['user']) { obj.user = this.activOption['user']; }
         if (this.activOption['licensee']) { obj.licensee = this.activOption['licensee']; }
         if (this.activOption['type']) { obj.type = this.activOption['type']; }
-        if (this.activOption['mandatory']) {
-          if (this.activOption['mandatory'] == true) { obj.mandatory = 1; }
-          if (this.activOption['mandatory'] == false) { obj.mandatory = 0; }
-        }
+        if (this.activOption['mandatory'] == true) { obj.mandatory = 1; }
+        if (this.activOption['mandatory'] == false) { obj.mandatory = 0; }
         if (this.activOption['title']) { obj.title = JSON.stringify(this.activOption['title']); }
         if (this.activOption['options']) { obj.options = JSON.stringify(this.activOption['options']); }
 
-        console.log(obj);
         if (!this.itsNew) {
           obj.id = this.activOption['id'];
           this.idOption = this.activOption['id'];
@@ -222,8 +211,19 @@ export class ProtocolOptEditComponent implements OnInit {
         this.apiService.pvs4_set_protocol_opt(obj).then((result: any) => {
           console.log('result: ', result);
           this.activOption.id = result.id;
+          if (obj.mandatory == 1) {
+            this.activOption.mandatory = 'true';
+          }
+          if (obj.mandatory == 0) {
+            this.activOption.mandatory = 'false';
+          }
+          if (this.activOption.options.default == true) {
+            this.activOption.options.default = 'true';
+          }
+          if (this.activOption.options.default == false) {
+            this.activOption.options.default = 'false';
+          }
           this.viewCtrl.dismiss(this.activOption);
-          // this.navCtrl.setRoot(ProtocolTemplatePage, { idCustomer: this.idCustomer, itsNew: false });
         });
       }
 
@@ -345,16 +345,14 @@ export class ProtocolOptEditComponent implements OnInit {
                 licensee: this.userdata.licensee,
                 type: 0,
                 id: 0,
-                value: '',
                 active: '0'
               };
-      
+
               if (this.activOption.type == 0) {
                 this.activOption.options = {
                   default: this.defaultToggle,
                   color: this.inputColor
                 };
-                this.activOption.value = this.defaultToggle;
               } else if (this.activOption.type == 1) {
                 this.activOption.options = this.options;
               } else if (this.activOption.type == 2) {
@@ -373,17 +371,14 @@ export class ProtocolOptEditComponent implements OnInit {
               if (this.activOption['user']) { obj.user = this.activOption['user']; }
               if (this.activOption['licensee']) { obj.licensee = this.activOption['licensee']; }
               if (this.activOption['type']) { obj.type = this.activOption['type']; }
-              if (this.activOption['mandatory']) {
-                if (this.activOption['mandatory'] == true) { obj.mandatory = 1; }
-                if (this.activOption['mandatory'] == false) { obj.mandatory = 0; }
-              }
+              if (this.activOption['mandatory'] == true) { obj.mandatory = 1; }
+              if (this.activOption['mandatory'] == false) { obj.mandatory = 0; }
               if (this.activOption['title']) { obj.title = JSON.stringify(this.activOption['title']); }
               if (this.activOption['options']) { obj.options = JSON.stringify(this.activOption['options']); }
 
               obj.id = this.activOption['id'];
               obj.active = '0';
               this.activOption.active = 0;
-              console.log('deactive obj :', obj);
 
               this.apiService.pvs4_set_protocol_opt(obj).then((result: any) => {
                 console.log('result: ', result);

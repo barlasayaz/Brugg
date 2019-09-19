@@ -3,7 +3,6 @@ import { NavController, NavParams, ModalController, AlertController } from '@ion
 import { UserdataService } from '../../services/userdata';
 import { TranslateService } from '@ngx-translate/core';
 import { ApiService } from '../../services/api';
-import { element } from '@angular/core/src/render3';
 
 @Component({
   selector: 'app-product-opt-edit',
@@ -27,8 +26,7 @@ export class ProductOptEditComponent implements OnInit {
     options: [],
     licensee: this.userdata.licensee,
     type: 0,
-    id: 0,
-    value: ''
+    id: 0
   };
   public inputError = false;
   public inputColor = '#EEEEEE';
@@ -41,7 +39,7 @@ export class ProductOptEditComponent implements OnInit {
   public maxChar: any = 100;
   public minNumber: any = 0;
   public maxNumber: any = 10;
-  public defaultToggle: boolean = true;
+  public defaultToggle: boolean = false;
   public defaultTime: any = '';
   public opdInd: any = 0;
   public lang: any = '';
@@ -57,8 +55,7 @@ export class ProductOptEditComponent implements OnInit {
 
     }
 
-    ngOnInit()
-    {
+    ngOnInit() {
       this.activOption.licensee = this.userdata.licensee;
       const op = this.navParams.get('option');
       if (op) { this.activOption = JSON.parse(JSON.stringify(op)); }
@@ -72,12 +69,14 @@ export class ProductOptEditComponent implements OnInit {
         console.log('Edit');
         this.itsNew = false;
         this.modalTitle = this.translate.instant('Option bearbeiten');
-        // this.activOption.options = JSON.parse(this.activOption.options);
-        // this.activOption.title = JSON.parse(this.activOption.title);
-        // this.loadOption();
 
         if (this.activOption.type == '0') {
-          this.defaultToggle = this.activOption.options.default;
+          if (this.activOption.options.default == 'true') {
+            this.defaultToggle = true;
+          }
+          if (this.activOption.options.default == 'false') {
+            this.defaultToggle = false;
+          }
           this.inputColor = this.activOption.options.color;
         } else if (this.activOption.type == '1') {
           this.options = this.activOption.options;
@@ -89,7 +88,8 @@ export class ProductOptEditComponent implements OnInit {
         } else if (this.activOption.type == '4') {
           this.defaultTime = this.activOption.options.default;
         }
-        if (this.activOption.mandatory == '1' || this.activOption.mandatory == 'true') {
+
+        if (this.activOption.mandatory == 'true') {
           this.mandatoryToogle = true;
         } else {
           this.mandatoryToogle = false;
@@ -104,13 +104,6 @@ export class ProductOptEditComponent implements OnInit {
       }
 
       console.log('ProductOptEditComponent: ', this.idOption);
-    }
-
-    loadOption() {
-      this.apiService.pvs4_get_product_opt(1, 1).then((result: any) => {
-        this.activOption = result.list[0].data;
-        console.log('loadOption: ', this.activOption);
-      });
     }
 
     dismiss() {
@@ -129,7 +122,7 @@ export class ProductOptEditComponent implements OnInit {
 
       if (this.activOption.type == 1) {
         this.options.forEach(element => {
-          console.log('element["de"] :', element["de"]);
+          console.log('element["de"] :', element['de']);
           if (element['de'] == '') {
             this.inputError = true;
             return;
@@ -173,7 +166,6 @@ export class ProductOptEditComponent implements OnInit {
           licensee: this.userdata.licensee,
           type: 0,
           id: 0,
-          value: '',
           active: '1'
         };
 
@@ -182,7 +174,6 @@ export class ProductOptEditComponent implements OnInit {
             default: this.defaultToggle,
             color: this.inputColor
           };
-          this.activOption.value = this.defaultToggle;
         } else if (this.activOption.type == '1') {
           this.activOption.options = this.options;
         } else if (this.activOption.type == '2') {
@@ -192,23 +183,20 @@ export class ProductOptEditComponent implements OnInit {
             min: this.minNumber,
             max: this.maxNumber
           };
-            } else if (this.activOption.type == '4') {
+        } else if (this.activOption.type == '4') {
           this.activOption.options = { default: this.defaultTime };
-            }
+        }
 
         this.activOption.mandatory = this.mandatoryToogle;
 
         if (this.activOption['user']) { obj.user = this.activOption['user']; }
         if (this.activOption['licensee']) { obj.licensee = this.activOption['licensee']; }
         if (this.activOption['type']) { obj.type = this.activOption['type']; }
-        if (this.activOption['mandatory']) {
-          if (this.activOption['mandatory'] == true) { obj.mandatory = 1; }
-          if (this.activOption['mandatory'] == false) { obj.mandatory = 0; }
-        }
+        if (this.activOption['mandatory'] == true) { obj.mandatory = 1; }
+        if (this.activOption['mandatory'] == false) { obj.mandatory = 0; }
         if (this.activOption['title']) { obj.title = JSON.stringify(this.activOption['title']); }
         if (this.activOption['options']) { obj.options = JSON.stringify(this.activOption['options']); }
 
-        console.log(obj);
         if (!this.itsNew) {
           obj.id = this.activOption['id'];
           this.idOption = this.activOption['id'];
@@ -220,8 +208,19 @@ export class ProductOptEditComponent implements OnInit {
         this.apiService.pvs4_set_product_opt(obj).then((result: any) => {
           console.log('result: ', result);
           this.activOption.id = result.id;
+          if (obj.mandatory == 1) {
+            this.activOption.mandatory = 'true';
+          }
+          if (obj.mandatory == 0) {
+            this.activOption.mandatory = 'false';
+          }
+          if (this.activOption.options.default == true) {
+            this.activOption.options.default = 'true';
+          }
+          if (this.activOption.options.default == false) {
+            this.activOption.options.default = 'false';
+          }
           this.viewCtrl.dismiss(this.activOption);
-          // this.navCtrl.setRoot(ProductTemplatePage, { idCustomer: this.idCustomer, itsNew: false });
         });
       }
 
@@ -241,7 +240,7 @@ export class ProductOptEditComponent implements OnInit {
     }
 
     remove_option(index) {
-      this.options.splice(index, 1); 
+      this.options.splice(index, 1);
       if (this.options.length == 0) {
         this.options.push({
           de: '',
@@ -254,7 +253,7 @@ export class ProductOptEditComponent implements OnInit {
 
     promptOptionTitle(title, type, index) {
       console.log('promptOptionTitle(): ', title, type, index);
-      console.log('this.activOption: ', this.activOption);      
+      console.log('this.activOption: ', this.activOption);
       let myTitel = this.translate.instant('Auswahlmöglichkeiten');
       if (type == 1) { myTitel = this.translate.instant('Titel'); }
 
@@ -344,7 +343,6 @@ export class ProductOptEditComponent implements OnInit {
                 licensee: this.userdata.licensee,
                 type: 0,
                 id: 0,
-                value: '',
                 active: '0'
               };
 
@@ -353,7 +351,6 @@ export class ProductOptEditComponent implements OnInit {
                   default: this.defaultToggle,
                   color: this.inputColor
                 };
-                this.activOption.value = this.defaultToggle;
               } else if (this.activOption.type == '1') {
                 this.activOption.options = this.options;
               } else if (this.activOption.type == '2') {
@@ -372,10 +369,8 @@ export class ProductOptEditComponent implements OnInit {
               if (this.activOption['user']) { obj.user = this.activOption['user']; }
               if (this.activOption['licensee']) { obj.licensee = this.activOption['licensee']; }
               if (this.activOption['type']) { obj.type = this.activOption['type']; }
-              if (this.activOption['mandatory']) {
-                if (this.activOption['mandatory'] == true) { obj.mandatory = 1; }
-                if (this.activOption['mandatory'] == false) { obj.mandatory = 0; }
-              }
+              if (this.activOption['mandatory'] == true) { obj.mandatory = 1; }
+              if (this.activOption['mandatory'] == false) { obj.mandatory = 0; }
               if (this.activOption['title']) { obj.title = JSON.stringify(this.activOption['title']); }
               if (this.activOption['options']) { obj.options = JSON.stringify(this.activOption['options']); }
 

@@ -750,6 +750,8 @@
   "Standard": "Défaut",
   "Wahr": "Vrai",
   "Falsch": "Faux",
+  "true": "Vrai",
+  "false": "Faux",
   "Art": "Type",
   "Charakter": "Personnage",
   "Produkt speichern short": "Sauvegarde du produit",
