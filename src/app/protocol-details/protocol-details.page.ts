@@ -123,17 +123,18 @@ export class ProtocolDetailsPage implements OnInit {
         this.loadProduct(element.id);
       });
 
-      this.activProtocol.items.forEach(element => {
-         if(element.value == true )
-            element.value = this.translate.instant('Wahr');
-         if(element.value == false)
-            element.value = this.translate.instant('Falsch');
-      });
-
-      if (this.activProtocol.result == 0) { this.activProtocol.resultText = this.translate.instant('betriebsbereit'); }
-      if (this.activProtocol.result == 1) { this.activProtocol.resultText = this.translate.instant('reparieren'); }
-      if (this.activProtocol.result == 3) { this.activProtocol.resultText = this.translate.instant('unauffindbar'); }
-      if ((this.activProtocol.result == 2) || (this.activProtocol.result == 4)) { this.activProtocol.resultText = this.translate.instant('ausmustern'); }
+      if (this.activProtocol.result == 0) {
+        this.activProtocol.resultText = this.translate.instant('betriebsbereit');
+      }
+      if (this.activProtocol.result == 1) {
+        this.activProtocol.resultText = this.translate.instant('reparieren');
+      }
+      if (this.activProtocol.result == 3) {
+        this.activProtocol.resultText = this.translate.instant('unauffindbar');
+      }
+      if ((this.activProtocol.result == 2) || (this.activProtocol.result == 4)) {
+        this.activProtocol.resultText = this.translate.instant('ausmustern');
+      }
 
       this.dateiListe();
     });

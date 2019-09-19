@@ -124,6 +124,19 @@ export class ProductDetailsPage implements OnInit {
       if (this.activProduct.items) {
         try {
           this.activProduct.items = JSON.parse(this.activProduct.items);
+          console.log('activProduct.items :', this.activProduct.items);
+
+          let i: any = 0;
+          this.activProduct.items.forEach(event => {
+            if (event.value == true) {
+              this.activProduct.items[i].value = this.translate.instant('Wahr');
+            }
+            if (event.value == false) {
+              this.activProduct.items[i].value = this.translate.instant('Falsch');
+            }
+            i++;
+          });
+
         } catch {
           console.log('loadProduct items JSON.parse:', this.activProduct.items);
           this.activProduct.items = [];
