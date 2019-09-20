@@ -201,7 +201,7 @@ export class MyDataEditPage {
   {
     let alert = this.alertCtrl.create({
         header: this.translate.instant('Achtung'),
-        message: this.translate.instant('Möchten Sie diesen Benutzer wirklich deaktivieren?'),
+        message: this.translate.instant('Möchten Sie diesen Mitarbeiter wirklich entfernen?'),
         buttons: [
           {
             text: this.translate.instant('nein'),
