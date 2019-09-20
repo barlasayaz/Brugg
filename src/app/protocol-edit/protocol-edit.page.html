@@ -7,7 +7,7 @@
         <ion-grid>
           <ion-row>
             <!-- Templates -->
-            <ion-col size-xl="5" size-lg="5" size-md="12" size-sm="12" size="12">
+            <ion-col size-xl="6" size-lg="6" size-md="12" size-sm="12" size="12">
               <div class="table-responsive" id="ps_protocol-template">
                 <div class="table table-striped" id="protocol-template">
                   <div class="thead">
@@ -19,6 +19,13 @@
                     <div class="tbody">
                       <div class="tr table-subheader table-subheader-fix">
                         <div class="table-subheader-buttons">
+                          <ion-button size="small" 
+                                      class="btn-red"
+                                      (click)="templateDeactivate()"
+                                      *ngIf="edit_protocol_templates" 
+                                      [disabled]="selectTemplate == 0">
+                            <ion-icon name="trash"></ion-icon>
+                          </ion-button>                            
                           <ion-button 
                                   size="small" 
                                   (click)="edit_template()"
@@ -76,7 +83,7 @@
             </ion-col>
 
             <!-- Protocol -->
-            <ion-col size-xl="7" size-lg="7" size-md="12" size-sm="12" size="12">
+            <ion-col size-xl="6" size-lg="6" size-md="12" size-sm="12" size="12">
               <div class="table-responsive" id="ps_protocol">
                 <div class="table table-striped" id="protocol-template">
                   <div class="thead">
