@@ -215,17 +215,23 @@ export class MyDataEditPage {
               this.api.pvs4_get_profile(this.edit.email).then((done: any) => {
                 done = done.obj;
                 done.licensee_role = JSON.parse(done.licensee_role );
-                done.licensee_role.splice(this.role_nr,1);
-                done.licensee_role = JSON.stringify(done.licensee_role );
-
-                console.log('updateData pvs4_get_profile():', done);
-                this.api.pvs4_set_profile(done).then((done: any) => {
-                    console.log('updateData pvs4_set_profile() ok ');
-                    this.viewCtrl.dismiss({'update': true});
-                },
-                  err => { // return the error
-                    console.error('MyDataEditPage pvs4_set_profile() nok ', err);
-                });
+                let x = done.licensee_role.length;
+                for (let i = 0; i < x; i++) {
+                  if (done.licensee_role[i].licensee == this.role_set.licensee) 
+                  {
+                    done.licensee_role.splice(i,1);
+                    done.licensee_role = JSON.stringify(done.licensee_role );
+                    console.log('updateData pvs4_get_profile():', done);
+                    this.api.pvs4_set_profile(done).then((done: any) => {
+                        console.log('updateData pvs4_set_profile() ok ');
+                        this.viewCtrl.dismiss({'update': true});
+                    },
+                      err => { // return the error
+                        console.error('MyDataEditPage pvs4_set_profile() nok ', err);
+                    });
+                    break;
+                  }
+                }
               });
             }
           }
