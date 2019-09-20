@@ -1,4 +1,3 @@
-import { AccordionModule } from 'primeng/accordion';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';

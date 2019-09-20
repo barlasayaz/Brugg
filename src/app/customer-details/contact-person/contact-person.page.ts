@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { NavController, NavParams, ModalController, AlertController } from '@ionic/angular';
+import { Component, OnInit } from '@angular/core';
+import { NavController, ModalController, AlertController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { UserdataService } from '../../services/userdata';
 import { ApiService } from '../../services/api';
@@ -17,7 +17,7 @@ import { ApiService } from '../../services/api';
     styleUrls: ['./contact-person.page.scss'],
 })
 
-export class ContactPersonPage {
+export class ContactPersonPage implements OnInit {
     public idCustomer: any;
     public contactPersonEdit: any = [];
     public kundendaten: any = 'person';
@@ -31,19 +31,20 @@ export class ContactPersonPage {
     public setRights: boolean = false;
 
     constructor(public navCtrl: NavController,
-        public navParams: NavParams,
         public translate: TranslateService,
         public userdata: UserdataService,
         public apiService: ApiService,
         private alertCtrl: AlertController,
         public viewCtrl: ModalController) {
 
-        this.idCustomer = this.navParams.get('idCustomer');
+    }
+
+    ngOnInit()
+    {
         this.getPointContact();
         if (this.userdata.role_set) {
             if (this.userdata.role_set.edit_rights) { this.setRights = true; }
         }
-
     }
 
     dismiss() {

@@ -1,10 +1,9 @@
-import { NavController, NavParams, AlertController, ModalController, ToastController, Platform } from '@ionic/angular';
+import { NavController, AlertController, ModalController, ToastController, Platform } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { Component, OnInit } from '@angular/core';
 import { BarcodeScanner, BarcodeScannerOptions } from '@ionic-native/barcode-scanner/ngx';
 import { ApiService } from '../../services/api';
 import { LoadingController } from '@ionic/angular';
-import { FileTransfer } from '@ionic-native/file-transfer/ngx';
 import { DataService } from '../../services/data.service';
 
 /**
@@ -34,14 +33,13 @@ export class QrBarcodeComponent implements OnInit {
   public lang: string = localStorage.getItem('lang');
   public mobilePlatform = false;
   public company: string = '';
+  qr_code: any;
 
   constructor(public translate: TranslateService,
     public apiService: ApiService,
     public scanner: BarcodeScanner,
-    private navParams: NavParams,
     private alertCtrl: AlertController,
     private viewCtrl: ModalController,
-    public transfer: FileTransfer,
     public loadingCtrl: LoadingController,
     public navCtrl: NavController,
     private toastCtrl: ToastController,
@@ -68,10 +66,9 @@ export class QrBarcodeComponent implements OnInit {
     this.listView = false;
     this.url = this.apiService.pvsApiURL;
     this.modalTitle = 'QR Code';
-    this.readOnly = this.navParams.get('readOnly');
-    this.pid = this.navParams.get('pid');
-    if (this.navParams.get('qr_code')) {
-      this.qrCodeText = this.navParams.get('qr_code');
+
+    if (this.qr_code) {
+      this.qrCodeText = this.qr_code;
       this.qrText = this.qrCodeText;
     }
     this.cols = [

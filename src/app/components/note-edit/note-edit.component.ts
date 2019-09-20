@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { NavController, NavParams, ModalController, AlertController } from '@ionic/angular';
+import { Component, OnInit } from '@angular/core';
+import { NavController, ModalController, AlertController } from '@ionic/angular';
 import { UserdataService } from '../../services/userdata';
 import { TranslateService } from '@ngx-translate/core';
 import { ApiService } from '../../services/api';
@@ -10,7 +10,7 @@ import { DatePipe } from '@angular/common';
   templateUrl: './note-edit.component.html',
   styleUrls: ['./note-edit.component.scss']
 })
-export class NoteEditComponent {
+export class NoteEditComponent implements OnInit {
 
   public inputError: boolean = false;
   public modalTitle: string;
@@ -30,29 +30,31 @@ export class NoteEditComponent {
   public maxDate: string;
   public userList: any = [];
   public selectedContact: any = {};
+  id:any;
 
   constructor(  public navCtrl: NavController,
-                public navParams: NavParams,
                 public translate: TranslateService,
                 public userdata: UserdataService,
                 public viewCtrl: ModalController,
                 public apiService: ApiService,
                 public alertCtrl: AlertController) {
+  }
+
+  ngOnInit()
+  {
     this.maxDate = this.apiService.maxDate;
-    this.idNote = this.navParams.get('id'); 
-    this.idCustomer = this.navParams.get('idCustomer');
-    this.redirect = this.navParams.get('redirect');
+    this.idNote = this.id; 
 
     this.selectedContact = '';
     this.activNote.category = '';
     if (this.idNote > 0) {
       this.itsNew = false;
-      this.modalTitle = translate.instant('Bearbeiten Notiz');
+      this.modalTitle = this.translate.instant('Bearbeiten Notiz');
       this.loadNote();
     } else {
       this.idNote = 0;
       this.itsNew = true;
-      this.modalTitle = translate.instant('Neue Notiz');
+      this.modalTitle = this.translate.instant('Neue Notiz');
       this.activNote.notes_date = new Date().toISOString();
       this.loadUserList(0);
     }

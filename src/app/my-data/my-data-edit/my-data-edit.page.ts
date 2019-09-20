@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { NavController, NavParams, ModalController, AlertController } from '@ionic/angular';
+import { Component,OnInit } from '@angular/core';
+import { NavController, ModalController, AlertController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { ApiService } from '../../services/api';
 import { UserdataService } from '../../services/userdata';
@@ -17,7 +17,7 @@ import { UserdataService } from '../../services/userdata';
   styleUrls: ['./my-data-edit.page.scss'],
 })
 
-export class MyDataEditPage {
+export class MyDataEditPage implements OnInit {
   public inputError: boolean = false;
   public params: any;
   public pid: number;
@@ -45,23 +45,21 @@ export class MyDataEditPage {
 
   constructor(public navCtrl: NavController, 
               public userdata: UserdataService, 
-              public navParams: NavParams, 
               public translate: TranslateService,
               private api : ApiService,
               public viewCtrl: ModalController,
               public alertCtrl: AlertController) {
+
+  }
+  
+  ngOnInit()
+  {
     console.log('my-data-edit.ts');
-    this.pid = 0;
+
     this.Farbe = '#000fff';
-    this.editType = 0;
-    this.role = 0;
-    this.role_nr = 0;
     this.setRights = false;
     this.viewNewMode = 0;
-    this.pid = parseInt( this.navParams.get('pid') );
-    this.role = parseInt( this.navParams.get('role') );
-    this.role_nr = parseInt( this.navParams.get('role_nr') );
-    this.editType = parseInt( this.navParams.get('editType') );
+
     if (this.role == 2) {
       this.role_set.edit_customer = false;
       this.role_set.edit_membership = false;

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController, ModalController, AlertController, NavParams } from '@ionic/angular';
+import { NavController, ModalController, AlertController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { UserdataService } from '../services/userdata';
 import { ApiService } from '../services/api';
@@ -23,13 +23,14 @@ export class ProductMigrationPage implements OnInit {
   public lang: string = localStorage.getItem('lang');
   public idCustomer: any;
   public activCustomer: any = {}; 
-  public productList: any[] = [];
+  public productList: any;
   public listCustomer: any[] = [];
   public targetCustomer: any = {};
   public url: any;
   public params: any = [];
   public file_link: any;
   public attachmentsFileCount: any = 0;
+  public list: any[] = [];
 
   constructor(public navCtrl: NavController, 
               public viewCtrl: ModalController,
@@ -37,20 +38,18 @@ export class ProductMigrationPage implements OnInit {
               public userdata: UserdataService,
               public apiService: ApiService,
               public alertCtrl: AlertController,
-              private navParams: NavParams,
               public file: File) {
 
   }
 
    ngOnInit() {
       this.url = this.apiService.pvsApiURL;
-      this.navParams.get('idCustomer');
-      let list = this.navParams.get('productList');
-      if (list) {
-        this.productList = JSON.parse(list);
+
+      if (this.productList) {
+         this.list = JSON.parse(this.productList);
       }
 
-      console.log('ProductMigrationPage productList:', this.productList);
+      console.log('ProductMigrationPage productList:', this.list);
       this.targetCustomer = '';
       this.loadSourceCustomer();
       this.loadTargetCustomer();
@@ -125,7 +124,7 @@ export class ProductMigrationPage implements OnInit {
   }
 
   productMigration() {
-    this.productList.forEach(element => {
+    this.list.forEach(element => {
       this.apiService.pvs4_get_product_parrent(element.id).then((resultParent: any) => {
         resultParent.obj.forEach(element => {
           this.apiService.pvs4_get_product(element.data.id).then((result: any) => {
