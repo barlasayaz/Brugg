@@ -1,0 +1,12 @@
+ionic cordova build  browser --prod --release
+
+Einmal um key zu generieren: keytool -genkey -v -keystore android.keystore -alias  sd-key-keyalg RSA -keysize 2048 -validity 10000
+
+
+jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore sd-key.keystore platforms\android\app\build\outputs\apk\release\app-release-unsigned.apk sd-key
+
+E:\Android_SDK\build-tools\28.0.3\zipalign -v 4 platforms\android\app\build\outputs\apk\release\app-release-unsigned.apk platforms/android/app/build/outputs/apk/release/brugg.apk
+
+E:\Android_SDK\build-tools\28.0.3\apksigner verify platforms/android/app/build/outputs/apk/release/brugg.apk
+
+12Android!

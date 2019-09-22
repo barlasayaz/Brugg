@@ -14,7 +14,8 @@
     <access launch-external="yes" origin="tel:*" />
     <preference name="windows-target-version" value="10.0" />
     <preference name="ScrollEnabled" value="false" />
-    <preference name="android-minSdkVersion" value="27" />
+    <preference name="android-minSdkVersion" value="19" />
+    <preference name="android-targetSdkVersion" value="28" />
     <preference name="BackupWebStorage" value="none" />
     <preference name="SplashMaintainAspectRatio" value="true" />
     <preference name="FadeSplashScreenDuration" value="300" />
@@ -129,5 +130,5 @@
     <engine name="browser" spec="5.0.4" />
     <engine name="ios" spec="5.0.1" />
     <engine name="windows" spec="^6.0.1" />
-    <engine name="android" spec="^8.0.0" />
+    <engine name="android" spec="^7.1.4" />
 </widget>
