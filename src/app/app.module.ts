@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
@@ -14,14 +14,6 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
-import { SystemService } from './services/system';
-import { ApiService } from './services/api';
-import { UserdataService } from './services/userdata';
-import { FilterPipe } from './components/filter.pipe';
-import { LoginPageModule } from './login/login.module';
-import { LoginPage } from './login/login.page';
-//import { MainNavComponent } from './components/main-nav/main-nav.component';
-//import { MainNavComponentModule } from './components/main-nav/main-nav.module';
 import { ProductMigrationPageModule } from './product-migration/product-migration.module';
 import { AssignmentPageModule } from './customer-details/assignment/assignment.module';
 import { ImprintPageModule } from './login/imprint/imprint.module';
@@ -38,41 +30,17 @@ import { CustomerEditComponentModule } from './components/customer-edit/customer
 import { ProductOptEditComponentModule } from './components/product-opt-edit/product-opt-edit.module';
 import { ProtocolOptEditComponentModule } from './components/protocol-opt-edit/protocol-opt-edit.module';
 import { NoteEditComponentModule } from './components/note-edit/note-edit.module';
-import { ButtonModule, ColorPickerModule, SharedModule } from 'primeng/primeng';
-import { TableModule } from 'primeng/table';
-import { OrderModule } from 'ngx-order-pipe';
-import { FullCalendarModule } from '@fullcalendar/angular';
-import { MultiSelectModule } from 'primeng/multiselect';
-import { ToggleButtonModule } from 'primeng/togglebutton';
-import { TreeTableModule } from 'primeng/treetable';
-import { MenubarModule } from 'primeng/menubar';
-import { TabMenuModule } from 'primeng/tabmenu';
-import { MenuModule } from 'primeng/menu';
-import { InputSwitchModule } from 'primeng/inputswitch';
-import { RoundProgressModule } from 'angular-svg-round-progressbar';
 import { ProductCopyPageModule } from './product-copy/product-copy.module';
 
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
-import { FileUploadModule } from 'primeng/fileupload';
-import { MessageService } from 'primeng/components/common/messageservice';
 import { FileTransferObject, FileTransfer } from '@ionic-native/file-transfer/ngx';
 import { File } from '@ionic-native/file/ngx';
 import { FileOpener } from '@ionic-native/file-opener/ngx';
-import { ExcelService } from './services/excel';
-import { PdfExportService } from './services/pdf-export';
 import { DragulaModule } from 'ng2-dragula';
-import { IonicSelectableModule } from 'ionic-selectable';
 import { NFC, Ndef } from '@ionic-native/nfc/ngx';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
-import { NgxQRCodeModule } from 'ngx-qrcode2';
-
-//import { HomePage } from './home/home';
-//import { ComponentsModule } from './components/components.module';
-
 import { Camera } from '@ionic-native/camera/ngx';
 import { Keyboard } from '@ionic-native/keyboard/ngx';
-
-import { AccordionModule } from 'primeng/accordion';
 import { ServiceWorkerModule } from '@angular/service-worker'; 
 import { environment } from '../environments/environment';
 export function HttpLoaderFactory(http: HttpClient) {
@@ -81,38 +49,15 @@ export function HttpLoaderFactory(http: HttpClient) {
 
 @NgModule({
   declarations: [
-    AppComponent,
-    FilterPipe,
-    /*HomePage ,
-    MainNavComponent,
-    LoginPage */
+    AppComponent
   ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
-    LoginPageModule,
     FormsModule,
-    ReactiveFormsModule,
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    ColorPickerModule,
-    ButtonModule,
-    TableModule,
-    OrderModule,
-    SharedModule,
-    FullCalendarModule,
-    MultiSelectModule,
-    ToggleButtonModule,
-    TreeTableModule,
-    InputSwitchModule,
-    MenuModule,
-    MenubarModule,
-    TabMenuModule,
-    FileUploadModule,
-    IonicSelectableModule,
-    //ComponentsModule,
-    //MainNavComponentModule,
     ProductMigrationPageModule,
     AssignmentPageModule,
     ImprintPageModule,
@@ -129,9 +74,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     QrBarcodeComponentModule,
     NfcScanComponentModule,
     NoteEditComponentModule,
-    AccordionModule,
-    NgxQRCodeModule,
-    RoundProgressModule,
     ProductCopyPageModule,
     DragulaModule.forRoot(),
     TranslateModule.forRoot({
@@ -145,29 +87,22 @@ export function HttpLoaderFactory(http: HttpClient) {
   ],
   bootstrap: [AppComponent],
   entryComponents: [
-   // NoteEditComponent
   ],
   providers: [
     StatusBar,
     SplashScreen,
     { provide: ErrorHandler, useClass: ErrorHandler },
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    SystemService,
-    ApiService,
-    UserdataService,
     InAppBrowser,
     DatePipe,
-    MessageService,
     File,
     NFC,
     Ndef,
     FileOpener,
-    ExcelService,
     FileTransfer,
     FileTransferObject,
     Camera,
     BarcodeScanner,
-    PdfExportService,
     Keyboard
   ],
   schemas: [

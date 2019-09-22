@@ -1,5 +1,5 @@
 import { Component, NgZone, OnInit } from '@angular/core';
-import { NavParams, Platform, ModalController, AlertController, NavController } from '@ionic/angular';
+import { Platform, ModalController, AlertController, NavController } from '@ionic/angular';
 import { ToastController } from '@ionic/angular';
 import { NFC, Ndef } from '@ionic-native/nfc/ngx';
 import { Subscription } from 'rxjs/Subscription';
@@ -46,16 +46,12 @@ export class NfcScanComponent implements OnInit {
     public zone: NgZone,
     public ndef: Ndef,
     public platform: Platform,
-    private navParams: NavParams,
     private apiService: ApiService,
     private navCtrl: NavController) {
 
   }
 
   ngOnInit() {
-    this.readonly = this.navParams.get('readOnly');
-    this.pid = this.navParams.get('pid');
-
     this.cols = [
       { field: 'id_number', header: '#', width: '300px' },
       { field: 'title', header: this.translate.instant('Produkt') },

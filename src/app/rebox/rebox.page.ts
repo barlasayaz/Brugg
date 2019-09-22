@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, ModalController, AlertController } from '@ionic/angular';
+import { NavController, ModalController, AlertController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { ApiService } from '../services/api';
 import { UserdataService } from '../services/userdata';
@@ -34,7 +34,6 @@ export class ReboxPage {
   public inputError: boolean = false;
 
   constructor(public navCtrl: NavController, 
-              public navParams: NavParams,
               public translate: TranslateService,
               public userdata: UserdataService,
               public system: SystemService,

@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { NavController, NavParams, ModalController, AlertController,LoadingController } from '@ionic/angular';
+import { Component, OnInit } from '@angular/core';
+import { NavController, ModalController, AlertController,LoadingController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { UserdataService } from '../../services/userdata';
 import { ApiService } from '../../services/api';
@@ -16,7 +16,7 @@ import { ApiService } from '../../services/api';
   templateUrl: './order-send.page.html',
   styleUrls: ['./order-send.page.scss'],
 })
-export class OrderSendPage {
+export class OrderSendPage implements OnInit {
   public inputError: boolean = false;
   public Ziel_DropDown: any = '0';
   public Empfaenger: string = '';
@@ -35,23 +35,21 @@ export class OrderSendPage {
   public email_felder: any = 0;
 
   constructor(public navCtrl: NavController, 
-              public navParams: NavParams,
               public userdata: UserdataService,
               public translate: TranslateService,
               public apiProvider: ApiService,
               public alertCtrl: AlertController,
               public modalCtrl: ModalController,
-              public loadingCtrl: LoadingController,) {
+              public loadingCtrl: LoadingController) {
+  }
 
-                this.idCustomer = this.navParams.get('idCustomer');
-                this.company = this.navParams.get('company');
-                this.activOrderForm = this.navParams.get('activOrderForm');
-                this.pdfRetVal = this.navParams.get('pdfRetVal');
-                this.getContactList();
-                this.Copy = this.userdata.email;
-                this.Betreff = 'Brugg Drahtseil: ' +  this.company;
-                console.log('activOrderForm :', this.activOrderForm);
-                // console.log('order-send pdfRetVal :', this.pdfRetVal);
+  ngOnInit()
+  {
+    this.getContactList();
+    this.Copy = this.userdata.email;
+    this.Betreff = 'Brugg Drahtseil: ' +  this.company;
+    console.log('activOrderForm :', this.activOrderForm);
+    // console.log('order-send pdfRetVal :', this.pdfRetVal);
   }
 
   dismiss() {

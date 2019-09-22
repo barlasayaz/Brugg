@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController, NavParams, ModalController, AlertController } from '@ionic/angular';
+import { NavController, ModalController, AlertController } from '@ionic/angular';
 import { UserdataService } from '../../services/userdata';
 import { TranslateService } from '@ngx-translate/core';
 import { ApiService } from '../../services/api';
@@ -52,9 +52,10 @@ export class AppointmentEditComponent implements OnInit {
   public Date_9: Date = null;
   public minTime: string = this.apiService.appointmentMinTime;
   public maxTime: string = this.apiService.appointmentMaxTime;
+  appointment:any;
+  appointmentType:any;
 
   constructor(public navCtrl: NavController,
-    public navParams: NavParams,
     public translate: TranslateService,
     public userdata: UserdataService,
     public viewCtrl: ModalController,
@@ -69,8 +70,8 @@ export class AppointmentEditComponent implements OnInit {
     this.employeesList();
        this.loadCustomer();
 
-    if (this.navParams.get('appointment')) {
-      this.activAppointment = this.navParams.get('appointment');
+    if (this.appointment) {
+      this.activAppointment = this.appointment;
       this.idAppointment = this.activAppointment.id;
       this.idCustomer = this.activAppointment.idCustomer;
       if (this.activAppointment.idUser == null) {
@@ -83,19 +84,15 @@ export class AppointmentEditComponent implements OnInit {
       if (this.activAppointment.end_time == null) { this.activAppointment.end_time = this.apiService.appointmentEndTime; }
     }
 
-    if (this.navParams.get('redirect')) {
-      this.redirect = this.navParams.get('redirect');
       if (this.redirect == 3) {
-        this.idCustomer = this.navParams.get('idCustomer');
         this.customerDisabled = true;
       }
       if (this.redirect == 4) {
-        this.idCustomer = this.navParams.get('idCustomer');
-        this.activAppointment.appointment_type = this.navParams.get('appointmentType');
+        this.activAppointment.appointment_type = this.appointmentType;
         this.customerDisabled = true;
         this.appointmentTypeDisabled = true;
       }
-    }
+    
     if (this.idAppointment > 0) {
       this.itsNew = false;
       this.modalTitle = this.translate.instant('Termin bearbeiten');

@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, OnInit } from '@angular/core';
 import { NavController, ModalController , Platform } from '@ionic/angular';
 import { ApiService } from '../services/api';
 import { UserdataService } from '../services/userdata';
@@ -27,7 +27,7 @@ import * as moment from 'moment';
     templateUrl: './appointment-plan.page.html',
     styleUrls: ['./appointment-plan.page.scss'],
 })
-export class AppointmentPlanPage {
+export class AppointmentPlanPage implements OnInit {
     public events: any[] = [];
     public allEvents: any[] = [];
     public people: any[] = [];
@@ -61,9 +61,12 @@ export class AppointmentPlanPage {
         public userdata: UserdataService,
         public modalCtrl: ModalController,
         private translate: TranslateService,
-        public platform: Platform
-        // private datePipe: DatePipe
-    ) {
+        public platform: Platform ) {
+
+    }
+
+    ngOnInit()
+    {
         console.log(this.lang);
         const today = new Date();
         const newdate = new Date();
@@ -75,7 +78,7 @@ export class AppointmentPlanPage {
 
         this.eventsFunc(newdate2, newdate);
 
-        platform.ready().then(() => {
+        this.platform.ready().then(() => {
             if ( this.platform.is('ios') ||
               this.platform.is('android') ) {
               this.mobilePlatform = true;
