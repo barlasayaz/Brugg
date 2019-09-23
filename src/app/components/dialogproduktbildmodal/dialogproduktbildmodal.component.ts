@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, ModalController } from '@ionic/angular';
+import { NavController, NavParams, ModalController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
@@ -25,6 +25,7 @@ export class DialogproduktbildmodalPage {
   public redDirect: any;
 
   constructor(public navCtrl: NavController,
+              public navParams: NavParams,
               public translate: TranslateService,
               public modalCtrl: ModalController,
               private httpService: HttpClient) {
@@ -33,6 +34,7 @@ export class DialogproduktbildmodalPage {
 
   ngOnInit () {
 
+    this.redDirect = this.navParams.get('redDirect');
     if (this.redDirect == 1) {
       this.modalTitle = this.translate.instant('Produktbild');
     }
@@ -44,6 +46,7 @@ export class DialogproduktbildmodalPage {
       data => {
         this.plist = data as object [];
         this.plist_old = this.plist;
+        this.Bild = this.navParams.get('Bild');
       },
       (err: HttpErrorResponse) => {
         console.log (err.message);

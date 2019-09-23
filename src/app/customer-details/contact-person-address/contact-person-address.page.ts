@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { NavController, ModalController } from '@ionic/angular';
+import { Component } from '@angular/core';
+import { NavController, NavParams, ModalController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { UserdataService } from '../../services/userdata';
 import { ApiService } from '../../services/api';
@@ -16,7 +16,7 @@ import { ApiService } from '../../services/api';
   templateUrl: './contact-person-address.page.html',
   styleUrls: ['./contact-person-address.page.scss'],
 })
-export class ContactPersonAddressPage implements OnInit {
+export class ContactPersonAddressPage {
   public idCustomer: any;
   public contactPerson: any = [];
   public kundendaten: any = 'person';
@@ -31,17 +31,19 @@ export class ContactPersonAddressPage implements OnInit {
   public contactPersonAddress: any;
 
   constructor(public navCtrl: NavController,
+    public navParams: NavParams,
     public translate: TranslateService,
     public userdata: UserdataService,
     public apiService: ApiService,
     public viewCtrl: ModalController) {
 
-  }
-
-  ngOnInit()
-  {
+    this.idCustomer = this.navParams.get('idCustomer');
+    this.contactPerson = this.navParams.get('contactPerson');
+    this.contactPersonAddresses = [];
+    this.contactPersonAddresses = this.navParams.get('contactPersonAddresses');
     this.contactPersonAddress = 'Rechnungsadresse';
     console.log('contactPersonAddresses :', this.contactPerson, this.contactPersonAddresses);
+
   }
 
   dismiss() {

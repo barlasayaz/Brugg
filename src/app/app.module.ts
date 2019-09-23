@@ -9,14 +9,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ErrorHandler, NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { FilterPipe } from './components/filter.pipe';
+
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
-import { ButtonModule, SharedModule } from 'primeng/primeng';
-import { TableModule } from 'primeng/table';
-import { OrderModule } from 'ngx-order-pipe';
+import { FilterPipe } from './components/filter.pipe';
+import { LoginPageModule } from './login/login.module';
+
 import { ProductMigrationPageModule } from './product-migration/product-migration.module';
 import { AssignmentPageModule } from './customer-details/assignment/assignment.module';
 import { ImprintPageModule } from './login/imprint/imprint.module';
@@ -34,7 +34,6 @@ import { ProductOptEditComponentModule } from './components/product-opt-edit/pro
 import { ProtocolOptEditComponentModule } from './components/protocol-opt-edit/protocol-opt-edit.module';
 import { NoteEditComponentModule } from './components/note-edit/note-edit.module';
 import { ProductCopyPageModule } from './product-copy/product-copy.module';
-
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { FileTransferObject, FileTransfer } from '@ionic-native/file-transfer/ngx';
 import { File } from '@ionic-native/file/ngx';
@@ -44,8 +43,7 @@ import { NFC, Ndef } from '@ionic-native/nfc/ngx';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { Camera } from '@ionic-native/camera/ngx';
 import { Keyboard } from '@ionic-native/keyboard/ngx';
-import { ServiceWorkerModule } from '@angular/service-worker'; 
-import { environment } from '../environments/environment';
+
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, "assets/lang/");
 }
@@ -59,13 +57,10 @@ export function HttpLoaderFactory(http: HttpClient) {
     BrowserModule,
     IonicModule.forRoot(),
     FormsModule,
-    SharedModule,
-    OrderModule,
-    ButtonModule,
-    TableModule,
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    LoginPageModule,
     ProductMigrationPageModule,
     AssignmentPageModule,
     ImprintPageModule,
@@ -90,8 +85,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         useFactory: HttpLoaderFactory,
         deps: [HttpClient]
       }
-    }),
-     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }) 
+    })
   ],
   bootstrap: [AppComponent],
   entryComponents: [
