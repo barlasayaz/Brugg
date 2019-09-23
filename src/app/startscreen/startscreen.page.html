@@ -16,7 +16,7 @@
 					</ion-col>
 					<!-- NFC -->
 					<ion-col size="6">
-						<ion-button icon-only [disabled]="!mobilePlatform" class="startbtn" (click)="nfc_scan();">
+						<ion-button icon-only [disabled]="!isNFC" class="startbtn" (click)="nfc_scan();">
 							<div>
 								<ion-icon class="starticn" name="wifi"></ion-icon><br><br>
 								<label class="startlbl">{{'NFC Scan' | translate}}</label>

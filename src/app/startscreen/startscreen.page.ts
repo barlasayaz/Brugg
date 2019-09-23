@@ -21,6 +21,7 @@ export class StartscreenPage {
   public readingTag: boolean;
   public  timeout: any;
   public mobilePlatform: boolean;
+  public isNFC: boolean;
 
   constructor(public navCtrl: NavController,
     public userdata: UserdataService,
@@ -29,14 +30,13 @@ export class StartscreenPage {
     // private alertCtrl: AlertController,
     public nfc: NFC,
     public ndef: Ndef,
-    public platform: Platform
-  ) {
-
+    public platform: Platform) {
     console.log(this.translate.defaultLang);
 
     this.tagId = '??';
     this.readingTag = false;
     this.mobilePlatform = false;
+    this.isNFC = false;
 
     console.log('platform :', this.platform);
     platform.ready().then(() => {
@@ -48,12 +48,24 @@ export class StartscreenPage {
           this.platform.is('phablet') ||
           this.platform.is('tablet')) {
         this.mobilePlatform = true;
+        console.log('mobile platform');
+        this.nfc.addNdefListener(() => {
+          this.isNFC = true;
+          console.log('successfully attached ndef listener');
+        }, (err) => {
+          this.isNFC = false;
+          console.log('error attaching ndef listener', err);
+        }).subscribe((event) => {
+          console.log('NFC event: ', event);
+        });
       } else {
         console.log('platform : other');
       }
     });
-    console.log('platform :', this.mobilePlatform);
+    console.log('mobilePlatform :', this.mobilePlatform);
+
   }
+
   async nfc_scan() {
     const modal =
     await this.modalCtrl.create({
@@ -64,6 +76,7 @@ export class StartscreenPage {
       }
     }).then(x => x.present());
   }
+
  async qr_barcode() {
     const modal =
     await this.modalCtrl.create({
@@ -73,7 +86,8 @@ export class StartscreenPage {
         readOnly: true
       }
     }).then(x => x.present()); ;
-  } 
+  }
+
  async rebox(userid) {
     const modal =
     await this.modalCtrl.create({
