@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController, ModalController, AlertController } from '@ionic/angular';
+import { NavController, ModalController, AlertController, NavParams } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { UserdataService } from '../services/userdata';
 import { ApiService } from '../services/api';
@@ -40,6 +40,7 @@ export class ProductCopyPage implements OnInit {
               public userdata: UserdataService,
               public apiService: ApiService,
               public alertCtrl: AlertController,
+              private navParams: NavParams,
               public file: File,
               private dataService: DataService,
               private toastCtrl: ToastController) {
@@ -48,6 +49,8 @@ export class ProductCopyPage implements OnInit {
 
    ngOnInit() {
       this.url = this.apiService.pvsApiURL;
+      this.idProduct = this.navParams.get('idProduct');
+      this.idCustomer = this.navParams.get('idCustomer');
 
       console.log('ProductCopyPage :');
       this.loadCustomer();

@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { NavController, ModalController } from '@ionic/angular';
+import { Component } from '@angular/core';
+import { NavController, ModalController, NavParams } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { UserdataService } from '../../services/userdata';
 import { ApiService } from '../../services/api';
@@ -16,7 +16,7 @@ import { ApiService } from '../../services/api';
   templateUrl: './assignment.page.html',
   styleUrls: ['./assignment.page.scss']
 })
-export class AssignmentPage implements OnInit {
+export class AssignmentPage {
   public idSales = 0;
   public idTester = 0;
   public activCustomer: any = {};
@@ -26,18 +26,16 @@ export class AssignmentPage implements OnInit {
   public inputError: boolean = false;
 
   constructor(public navCtrl: NavController,
+    public navParams: NavParams,
     public translate: TranslateService,
     public userdata: UserdataService,
     public apiService: ApiService,
     public viewCtrl: ModalController) {
-  }
 
-  ngOnInit()
-  {
     if (this.userdata.role == 3) {
       this.userdata.licensee = 0;
     }
-
+    this.activCustomer = this.navParams.get('activCustomer');
     if (this.activCustomer) {
       try
       {

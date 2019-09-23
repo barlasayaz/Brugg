@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController, ModalController, AlertController } from '@ionic/angular';
+import { NavController, NavParams, ModalController, AlertController } from '@ionic/angular';
 import { UserdataService } from '../../services/userdata';
 import { TranslateService } from '@ngx-translate/core';
 import { ApiService } from '../../services/api';
@@ -44,10 +44,9 @@ export class ProtocolOptEditComponent implements OnInit {
   public opdInd: any = 0;
   public lang = '';
   public mandatoryToogle: boolean = false;
-  option:any;
-  id:any;
 
   constructor(public navCtrl: NavController,
+    public navParams: NavParams,
     public translate: TranslateService,
     public userdata: UserdataService,
     public viewCtrl: ModalController,
@@ -60,11 +59,11 @@ export class ProtocolOptEditComponent implements OnInit {
       this.defaultTime = '';
       this.defaultToggle = false;
       this.activOption.licensee = this.userdata.licensee;
-      const op = this.option;
+      const op = this.navParams.get('option');
       if (op) { this.activOption = JSON.parse(JSON.stringify(op)); }
       console.log('activOption op: ', this.activOption);
-
-      this.idOption = this.id;
+      this.idCustomer = this.navParams.get('idCustomer');
+      this.idOption = this.navParams.get('id');
       this.lang = localStorage.getItem('lang');
       console.log('idOption :', this.idCustomer, this.idOption, this.lang);
 

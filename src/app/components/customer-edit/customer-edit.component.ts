@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController,ModalController, AlertController } from '@ionic/angular';
+import { NavController, NavParams, ModalController, AlertController } from '@ionic/angular';
 import { UserdataService } from '../../services/userdata';
 import { TranslateService } from '@ngx-translate/core';
 import { ApiService } from '../../services/api';
@@ -28,10 +28,9 @@ export class CustomerEditComponent implements OnInit {
   public customerDisabled: boolean = false;
   public salesListe: any = [];
   public testerListe: any = [];
-  parent:any;
-  id:any;
-  
+
   constructor(public navCtrl: NavController,
+    public navParams: NavParams,
     public translate: TranslateService,
     public userdata: UserdataService,
     public viewCtrl: ModalController,
@@ -41,8 +40,9 @@ export class CustomerEditComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.idCustomer = this.id;
-    this.parentCustomer = this.parent;
+    this.idCustomer = this.navParams.get('id');
+    this.redirect = this.navParams.get('redirect');
+    this.parentCustomer = this.navParams.get('parent');
     this.salesTesterList();
     this.activCustomer.company = '';
     this.activCustomer.rating = 'C';
