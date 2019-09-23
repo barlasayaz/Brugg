@@ -14,6 +14,9 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
+import { ButtonModule, SharedModule } from 'primeng/primeng';
+import { TableModule } from 'primeng/table';
+import { OrderModule } from 'ngx-order-pipe';
 import { ProductMigrationPageModule } from './product-migration/product-migration.module';
 import { AssignmentPageModule } from './customer-details/assignment/assignment.module';
 import { ImprintPageModule } from './login/imprint/imprint.module';
@@ -56,6 +59,10 @@ export function HttpLoaderFactory(http: HttpClient) {
     BrowserModule,
     IonicModule.forRoot(),
     FormsModule,
+    SharedModule,
+    OrderModule,
+    ButtonModule,
+    TableModule,
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,

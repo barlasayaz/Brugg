@@ -329,34 +329,6 @@ export class ApiService {
     });
   }
 
-  pvs4_get_pvs3_list() {
-    return new Promise((res, rej) => {
-      const data = { };
-      this.pvs4_api_post('move_pvs3_list.php', data).then((done: any) => { // return the result
-          res(done);
-      },
-        err => { // return the error
-          rej(err);
-      });
-    });
-  }
-  pvs4_move_pvs3_customer(pvs3_id: number) { 
-    console.log('move_pvs3_customer() ', pvs3_id);
-    return new Promise((res, rej) => {
-      const data = {
-        pvs3_id: pvs3_id
-      }
-      this.pvs4_api_post('move_pvs3_customer.php', data).then((done: any) => { // return the result
-        console.log('move_pvs3_customer done ok: ', done);
-        res(done);
-      },
-        err => { // return the error
-          console.log('move_pvs3_customer error: ', err);
-          rej(err);
-      });
-    });
-  }
-
   pvs4_get_colleagues_list(role: number, role_set: any, licensee: number) {
     // let userID = this.userdata.id;
     return new Promise((res, rej) => {
