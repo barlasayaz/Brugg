@@ -5,7 +5,7 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { DataResolverService } from './services/data-resolver.service';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', loadChildren: './login/login.module#LoginPageModule' },
   { path: 'startscreen', loadChildren: './startscreen/startscreen.module#StartscreenPageModule' },
   { path: 'my-data', loadChildren: './my-data/my-data.module#MyDataPageModule' },

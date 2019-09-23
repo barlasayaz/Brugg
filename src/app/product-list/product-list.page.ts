@@ -389,7 +389,7 @@ export class ProductListPage implements OnInit {
                                 let diffDays = x.diff(y, 'days');
                                 if(diffDays<90) this.productListAll[index].data.last_protocol_next_color = "#f1c40f";
                                 if(diffDays<30) this.productListAll[index].data.last_protocol_next_color = "#e74c3c";
-                                console.log('x :', pr.protocol_date_next ,  diffDays);
+                                //console.log('x :', pr.protocol_date_next ,  diffDays);
                             }
                             
                             if (pr.result) {

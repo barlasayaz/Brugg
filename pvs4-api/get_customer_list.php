@@ -62,6 +62,15 @@ function processing($user) {
     }
 
     // verify Brugg ID and token ------------------------
+    if( !isset( $_POST['bruggid'] ) || !isset( $_POST['token'] ) ){
+        http_response_code($response->code);
+        $error = new \stdClass();
+        $error->message = 'not verified';
+        $error->error = 5;
+        $error->oauth2 = $response->body;
+        echo json_encode($error);
+        die;
+    }
     $_POST['bruggid'] =  trim( mysqli_escape_string($con,$_POST['bruggid']));
     $email = $_POST['bruggid'];
     $_POST['token']=   trim( mysqli_escape_string($con,$_POST['token']));
