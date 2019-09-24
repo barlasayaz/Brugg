@@ -18584,111 +18584,7 @@ tbody.ui-table-tbody {
     -webkit-box-shadow: 0px 2px 7px rgba(0,0,0,0.05);
     box-shadow: 0px 2px 7px rgba(0,0,0,0.05);
   }
-  .kunden-grid {
-    display: -webkit-box;
-    display: -moz-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-justify-content: space-between;
-    -webkit-box-pack: justify;
-    -moz-box-pack: justify;
-    -o-box-pack: justify;
-    -ms-flex-pack: justify;
-    -webkit-justify-content: space-between;
-    justify-content: space-between;
-    margin: 20px 0px 120px 0px;
-  }
-  @media only screen and (min-width: 992px) {
-    .kunden-grid {
-      padding: 0px 3px;
-    }
-  }
-  @media only screen and (max-width: 992px) {
-    .kunden-grid {
-      -webkit-box-orient: vertical;
-      -moz-box-orient: vertical;
-      -o-box-orient: vertical;
-      -webkit-flex-direction: column;
-      -ms-flex-direction: column;
-      flex-direction: column;
-    }
-  }
-  @media only screen and (min-width: 992px) {
-    .kunden-grid .kunden-wrap:first-child {
-      width: 60%;
-    }
-    .kunden-grid .kunden-wrap:last-child {
-      width: 37%;
-    }
-  }
-  @media only screen and (max-width: 767px) {
-    .kunden-grid .kunden-wrap {
-      margin-bottom: 20px;
-    }
-  }
-  .kunden-grid .kunden-col {
-    margin: 20px 0px;
-  }
-  .kunden-grid .kunden-col:first-child {
-    margin-top: 0px;
-  }
-  .kunden-grid .kunden-col:last-child {
-    margin-bottom: 0px;
-  }
-  @media only screen and (min-width: 767px) {
-    .kunden-grid .kunden-col.produkt-img .whitebox img {
-      max-height: 400px;
-    }
-  }
-  .kunden-grid input,
-  .kunden-grid select,
-  .kunden-grid textarea {
-    width: 100%;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    border-radius: 3px;
-    padding: 0px 10px;
-    border: 1px solid #e6e8e8;
-    background: #f4f5f5;
-    font-size: 16px;
-    color: #4a5356;
-  }
-  .kunden-grid input.required,
-  .kunden-grid select.required,
-  .kunden-grid textarea.required {
-    border: 1px solid #e74c3c;
-  }
-  .kunden-grid input:disabled,
-  .kunden-grid select:disabled,
-  .kunden-grid textarea:disabled {
-    opacity: 0.4;
-    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=round(40))";
-    filter: alpha(opacity=round(40));
-    background-image: none !important;
-    cursor: not-allowed;
-  }
-  .kunden-grid input[type="file"],
-  .kunden-grid select[type="file"],
-  .kunden-grid textarea[type="file"] {
-    background: none;
-    border: none;
-    padding: 0;
-  }
-  .kunden-grid input.disabledfix,
-  .kunden-grid select.disabledfix,
-  .kunden-grid textarea.disabledfix {
-    opacity: 1 !important;
-    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=round(100))" !important;
-    filter: alpha(opacity=round(100)) !important;
-    cursor: default !important;
-    padding: 20px;
-    background: #fff;
-  }
-  .kunden-grid textarea {
-    padding: 20px;
-  }
+  
   .termin-add {
     display: -webkit-box;
     display: -moz-box;
@@ -19546,20 +19442,7 @@ tbody.ui-table-tbody {
     .quant-rm {
       width: 55px;
     }
-    .kunden-grid {
-      display: -webkit-box;
-      display: -moz-box;
-      display: -webkit-flex;
-      display: -ms-flexbox;
-      display: flex;
-    }
-    .kunden-grid .kunden-wrap:first-child {
-      width: 60%;
-      margin-right: 5%;
-    }
-    .kunden-grid .kunden-wrap:last-child {
-      width: 35%;
-    }
+
     .kow {
       display: -webkit-box;
       display: -moz-box;
@@ -19607,11 +19490,7 @@ tbody.ui-table-tbody {
       height: calc(100vh - 65px - 60px) !important;
     }
   }
-  @media only screen and (-ms-high-contrast: none) and (max-width: 767px) {
-    .kunden-grid {
-      display: block !important;
-    }
-  }
+
   @media only screen and (-ms-high-contrast: none) and (max-width: 767px) {
     .kunden-wrap:first-child {
       margin-right: 0 !important;

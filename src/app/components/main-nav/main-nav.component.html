@@ -4,7 +4,7 @@
       <ion-grid class="topbar-ion-grid">
         <ion-row>
           <!-- TOP LEFT -->
-          <ion-col size="7" size-md="7" size-sm="12" class="topBar-sm topBar-left">
+          <ion-col size="8" size-md="8" size-sm="12" class="topBar-sm topBar-left">
             <div class="topBar-outer">
               <div class="topBar-inner">
                 
@@ -51,7 +51,6 @@
                       </li>
                     </a>
                   </ul>
-
               </div>
               <!-- DASHBOARD NAVIGATION -->
               <ul class="dashboard-nav hidden-lg-up" *ngIf="aktivPage == 'Dashboard'">
@@ -69,17 +68,16 @@
                   </li>
                 </a>
               </ul>
+              <div id="customerName" class="main-nav-fix">
+                  <div class="comp-name">
+                  {{customerName}}
+                </div>
+              </div>
             </div>
           </ion-col>
           <!-- Status Bar  -->
-          <ion-col size="5" size-md="5" size-sm="12" class="hidden-sm-down" style="text-align:right;" >
+          <ion-col size="4" size-md="4" size-sm="12" class="hidden-sm-down" >
             <div class="main-nav-fix">
-              <!-- <div class="comp-name"
-              *ngIf="aktivPage != 'KundenuebersichtPage' &&
-                     aktivPage != 'CustomerTable' &&
-                     aktivPage != 'CustomerDetails'">
-                   {{company}}
-              </div> -->
 
               <div
                    *ngIf="aktivPage == 'CustomerTable' ||

@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { UserdataService } from '../../services/userdata';
+import { ApiService } from '../../services/api';
 import { NavController, Events } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { NavigationExtras } from '@angular/router';
@@ -21,12 +22,14 @@ export class MainNavComponent implements OnInit {
   public progressBar: any = 0;
   public rowRecords: any = 0;
   public totalRecords: any = 0;
+  public customerName = "";
 
   constructor(
     public userdata: UserdataService,
     public navCtrl: NavController,
     public translate: TranslateService,
-    public events: Events) {
+    public events: Events,
+    public apiService :ApiService) {
 
     console.log('Hello MainNavComponent Component');
     this.events.subscribe('progressBar', (progressBar) => {
@@ -43,7 +46,15 @@ export class MainNavComponent implements OnInit {
 
   }
 
-  ngOnInit() { }
+  ngOnInit() { 
+    if(this.idCustomer > 0)
+    {
+      this.apiService.pvs4_get_customer(this.idCustomer).then((result: any) => {
+        if(result && result.obj)
+        this.customerName = result.obj.company;
+      });
+    }
+  }
 
   getClass(path) {
     if (this.aktivPage == path) {

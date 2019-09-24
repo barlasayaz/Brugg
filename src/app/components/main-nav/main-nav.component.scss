@@ -185,8 +185,19 @@
       font-size: 12px;
     }
   }
+  #customerName {
+    width: 150px;
+    text-align: right;
+
+  }
 
   @media (max-width: 767px) {
+    #customerName {
+      width: 300px;
+      text-align: right;
+    }
+
+  
     .topBar-sm {
       position: initial !important;
     }
@@ -222,3 +233,4 @@
   {
     height: 1.75em !important;
   }
+

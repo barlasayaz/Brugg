@@ -167,6 +167,7 @@ export class ProtocolListPage implements OnInit {
         ];
 
         console.log('ProductListPage idCustomer:', this.idCustomer, this.system.platform);
+        this.idCustomer = parseInt(this.route.snapshot.paramMap.get('id'));
         this.page_load();
     }
 
@@ -213,7 +214,7 @@ export class ProtocolListPage implements OnInit {
         this.selectedNode = [];
         this.selectedRow = 0;
         this.events.publish('prozCustomer', 0);
-        this.idCustomer = parseInt(this.route.snapshot.paramMap.get('id'));
+
         this.apiService.pvs4_get_customer(this.idCustomer).then((result: any) => {
             this.activCustomer = result.obj;
             this.customer_number = this.activCustomer.customer_number;
