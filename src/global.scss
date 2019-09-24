@@ -430,6 +430,13 @@ ion-item {
 }
  */
 
+ .container {
+  padding-right: 0px !important;
+  padding-left: 0px !important;
+ }
+ .item.sc-ion-label-md-h, .item .sc-ion-label-md-h {
+  font-size: 14px !important;
+ }
 .label-floating.sc-ion-label-md-h, .label-stacked.sc-ion-label-md-h {    
   margin: 1px 5px -3px 5px;
   padding: 0px 5px 0px 5px !important;
@@ -647,7 +654,7 @@ ion-select {
     height: 100%;
     ion-input {
       top: 0;
-      padding: 0;
+      padding-left: 10px !important;
       border: none !important;
       height: 100%;
       input {
@@ -18335,7 +18342,6 @@ tbody.ui-table-tbody {
   .settings-delete ion-button {
     width: 200px !important;
     position: absolute;
-    right: -7px;
     margin: 0 !important;
     border-radius: 3px 3px 0px 0px;
   }
