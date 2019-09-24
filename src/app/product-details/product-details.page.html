@@ -177,7 +177,7 @@
 		</ion-fab-button>
 		<ion-fab-button color="primary"						
 						(click)="nfc_scan()"
-						[disabled]="!mobilePlatform"
+						[disabled]="!isNFC"
 						(mouseover)="mouseover(5)"
 						(mouseout)="mouseout(5)"
 						[class.mouse-over]="mouseoverButton5"
@@ -186,6 +186,7 @@
 		</ion-fab-button>
 		<ion-fab-button color="primary"
 						(click)="qr_code()"
+						[disabled]="!mobilePlatform"
 						(mouseover)="mouseover(6)"
 						(mouseout)="mouseout(6)"
 						[class.mouse-over]="mouseoverButton6"

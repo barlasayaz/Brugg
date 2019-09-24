@@ -7,12 +7,12 @@ import { QrBarcodeComponent } from '../components/qr-barcode/qr-barcode.componen
 import { NfcScanComponent } from '../components/nfc-scan/nfc-scan.component';
 import { CameraOptions, Camera } from '@ionic-native/camera/ngx';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
-
 import { DatePipe } from '@angular/common';
 import { PdfExportService } from '../services/pdf-export';
 import { ActivatedRoute } from '@angular/router';
 import { DataService } from '../services/data.service';
 import { ProductCopyPage } from '../product-copy/product-copy.page';
+import { NFC, Ndef } from '@ionic-native/nfc/ngx';
 
 /**
  * Generated class for the ProductDetailsPage page.
@@ -48,6 +48,7 @@ export class ProductDetailsPage implements OnInit {
   public mouseoverButton4: boolean;
   public mouseoverButton5: boolean;
   public mouseoverButton6: boolean;
+  public isNFC: boolean;
 
   constructor(public navCtrl: NavController,
     public userdata: UserdataService,
@@ -62,10 +63,13 @@ export class ProductDetailsPage implements OnInit {
     public loadingCtrl: LoadingController,
     public transfer: FileTransfer,
     private dataService: DataService,
-    private route: ActivatedRoute) {
+    private route: ActivatedRoute,
+    public nfc: NFC,
+    public ndef: Ndef) {
 
   }
   ngOnInit() {
+    this.isNFC = false;
     this.platform.ready().then(() => {
       if ( this.platform.is('ios') ||
         this.platform.is('android') ) {
@@ -77,6 +81,15 @@ export class ProductDetailsPage implements OnInit {
         this.mouseoverButton5 = true;
         this.mouseoverButton6 = true;
         console.log('platform mobile:', this.platform.platforms());
+        this.nfc.addNdefListener(() => {
+          this.isNFC = true;
+          console.log('successfully attached ndef listener');
+        }, (err) => {
+          this.isNFC = false;
+          console.log('error attaching ndef listener', err);
+        }).subscribe((event) => {
+          console.log('NFC event: ', event);
+        });
       } else {
         console.log('platform not mobile:', this.platform.platforms());
         this.mobilePlatform = false;
