@@ -4,7 +4,7 @@
       <ion-grid class="topbar-ion-grid">
         <ion-row>
           <!-- TOP LEFT -->
-          <ion-col size="8" size-md="8" size-sm="12" class="topBar-sm topBar-left">
+          <ion-col size-xl="9" size-lg="9" size-md="9" size-sm="12" size="12" class="topBar-sm topBar-left">
             <div class="topBar-outer">
               <div class="topBar-inner">
                 
@@ -69,14 +69,19 @@
                 </a>
               </ul>
               <div id="customerName" class="main-nav-fix">
-                  <div class="comp-name">
+                <div class="comp-name"
+                    *ngIf="aktivPage == 'CustomerTable' ||
+                              aktivPage == 'ProductList' ||
+                              aktivPage == 'ProtocolList' ||
+                              aktivPage == 'OrderForm' ||
+                              aktivPage == 'NoteList'">
                   {{customerName}}
                 </div>
               </div>
             </div>
           </ion-col>
           <!-- Status Bar  -->
-          <ion-col size="4" size-md="4" size-sm="12" class="hidden-sm-down" >
+          <ion-col size-xl="3" size-lg="3" size-md="3" size-sm="12" size="12" class="hidden-sm-down">
             <div class="main-nav-fix">
 
               <div

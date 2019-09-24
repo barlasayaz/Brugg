@@ -28,16 +28,19 @@
       justify-content: flex-end;
       align-items: center;
       height: 65px - 3px;
+      font-size: 14px;
 
       .posek {
         margin-left: 10px;
       }
 
       .comp-name {
+        margin-left: 10px;
         margin-right: 10px;
         height: 65px;
         display: flex;
         align-items: center;
+        width: max-content;
       }
   }
 
@@ -186,9 +189,20 @@
     }
   }
   #customerName {
-    width: 150px;
-    text-align: right;
+    width: auto;
+    justify-content: left;
+    height: 45px;
+    font-size: 14px;
 
+    @media (max-width: 576px) {
+      font-size: 13px;
+    }
+    @media (max-width: 367px) {
+      font-size: 12px;
+    }
+    @media (max-width: 320px) {
+      font-size: 9px;
+    }
   }
 
   @media (max-width: 767px) {

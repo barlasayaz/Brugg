@@ -817,6 +817,7 @@ ul.ui-widget-content {
     input {
       padding: 5px 10px !important;
       border: none !important;
+      width: 120px !important;
       -webkit-border-radius: 3px !important;
               border-radius: 3px !important;
     }
@@ -19561,7 +19562,7 @@ tbody.ui-table-tbody {
   }
 }
 
-@media (max-width: 767px) {
+@media (max-width: 991px) {
   .hidden-sm-down {
     display: none !important;
   }
