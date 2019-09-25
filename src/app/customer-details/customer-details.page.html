@@ -14,13 +14,10 @@
                     <div class="table-info">
                       <div class="thead">
                         <div class="tr table-header">
-                          <div class="th" style="max-width: 200px;">{{'Firma' | translate}}</div>
+                          <div class="th" style="min-width: fit-content;">{{'Firma' | translate}} {{'information' | translate}}</div>
                           <div class="th">
-                            <div>
-                              {{activCustomer.company}}
-                            </div>
                             <div class="icon"
-                              style="top:-10px; background:#005e86;border-radius: 3px; color:#fff; padding:10px 15px;"
+                              style="top:-20px; background:#005e86;border-radius: 3px; color:#fff; padding:10px 15px;"
                               *ngIf="userdata.Type<20">
                               {{activCustomer.rating}}
                             </div>
@@ -28,6 +25,10 @@
                         </div>
                       </div>
                       <div class="tbody">
+                        <div class="tr table-body">
+                          <div class="td">{{'Firma' | translate}}</div>
+                          <div class="td"><span>{{activCustomer.company}}</span></div>
+                        </div>
                         <div class="tr table-body">
                           <div class="td">{{'Strasse' | translate}}</div>
                           <div class="td"><span>{{activCustomer.street}}</span></div>
@@ -138,22 +139,20 @@
                       </div>
                       <div class="thead">
                         <div class="tr table-subheader table-subheader-fix">
-                          <div class="th" style="padding-left: 10px;">{{'Adressen' | translate}}</div>
+                          <div class="th" style="padding-right: 5px;">{{'Adressen' | translate}}</div>
                           <ion-button [disabled]="contactPersonCount == 0" (click)="addAddress()">
                             <ion-icon name="md-create"></ion-icon>
                           </ion-button>
-                          &nbsp;&nbsp;
                           <ion-button [disabled]="pageCount<=0" (click)="pageBack()">
                             <ion-icon name="arrow-back"></ion-icon>
                           </ion-button>
-                          &nbsp;&nbsp;
                           <ion-button [disabled]="pageCount+1>=pageTotalCount" (click)="pageForward()">
                             <ion-icon name="arrow-forward"></ion-icon>
                           </ion-button>
-                          &nbsp;&nbsp;&nbsp;
-                          <div *ngIf="pageTotalCount == 0" style="color: #fff; font-size: 14px;"> [ {{pageCount}} / {{pageTotalCount}} ]
+                          &nbsp;
+                          <div *ngIf="pageTotalCount == 0" style="color: #fff; font-size: 13px;"> [ {{pageCount}} / {{pageTotalCount}} ]
                           </div>
-                          <div *ngIf="pageTotalCount > 0" style="color: #fff; font-size: 14px;"> [ {{pageCount+1}} / {{pageTotalCount}} ]
+                          <div *ngIf="pageTotalCount > 0" style="color: #fff; font-size: 13px;"> [ {{pageCount+1}} / {{pageTotalCount}} ]
                           </div>
                         </div>
                       </div>
