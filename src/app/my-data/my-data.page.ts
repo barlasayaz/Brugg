@@ -85,8 +85,8 @@ export class MyDataPage {
 
   delLocalAll() {
     console.log('delLocalAll()');
-    this.userdata.delStorage();
-    this.navCtrl.navigateForward('/Login');
+    this.userdata.delAllStorage();
+    this.navCtrl.navigateForward('/login');
   }
 
   mw_test_a(nr: number) {

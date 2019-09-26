@@ -30,7 +30,6 @@ export class ProductDetailsPage implements OnInit {
   public idProduct = 0;
   public activProduct: any = {};
   public idCustomer = 0;
-  public company = '';
   public lang: string = localStorage.getItem('lang');
   public uploadedFiles: any[] = [];
   public params: any = [];
@@ -486,7 +485,6 @@ export class ProductDetailsPage implements OnInit {
             id: this.activProduct.id,
             idCustomer: this.idCustomer,
             parent: this.activProduct.parent,
-            company: this.company
         };
         this.dataService.setData(data);
         this.navCtrl.navigateForward(['/product-edit']);

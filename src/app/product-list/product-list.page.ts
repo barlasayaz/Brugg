@@ -49,7 +49,6 @@ export class ProductListPage implements OnInit {
     public totalRecords: number;
     public rowRecords: number;
     public lang: string = localStorage.getItem('lang');
-    public company = '';
     public navigationSubscription: any;
     public childCount: number;
     modelChanged: Subject<any> = new Subject<any>();
@@ -57,6 +56,7 @@ export class ProductListPage implements OnInit {
     public selectMode: boolean = false;
     public rowHeight = 26;
     public rowCount = 100;
+    public sortedColumn = { sort_field : null, sort_order : 0 };
 
     public menuItems: MenuItem[] = [{
         label: this.translate.instant('Ansicht'),
@@ -260,7 +260,7 @@ export class ProductListPage implements OnInit {
                     } else {
                         this.menuItems[8].items[0]['disabled'] = true;
                     }
-                    this.generate_productList(0, this.rowCount, null, 0);
+                    this.generate_productList(0, this.rowCount, this.sortedColumn.sort_field, this.sortedColumn.sort_order);
                     localStorage.setItem('filter_values_product', JSON.stringify(this.columnFilterValues));
             });
         }
@@ -279,7 +279,9 @@ export class ProductListPage implements OnInit {
                 { field: 'check_interval', header: this.translate.instant('Intervall Prüfen'), width: '130px' }
             ];
             this.idCustomer = parseInt(this.route.snapshot.paramMap.get('id'));
-
+            if (localStorage.getItem('sort_column_product') != undefined) {
+                this.sortedColumn = JSON.parse(localStorage.getItem('sort_column_product'));
+            }
             console.log('ProductListPage idCustomer:', this.idCustomer);
             this.page_load();
         });
@@ -291,7 +293,13 @@ export class ProductListPage implements OnInit {
     }
 
     async loadNodes(event: LazyLoadEvent) {
-        if (this.totalRecords > 0) {
+        if (this.totalRecords > 0) {            
+            if(event.sortField && event.sortField.length>0)
+            {
+                this.sortedColumn.sort_field = event.sortField;
+                this.sortedColumn.sort_order = event.sortOrder;
+                localStorage.setItem('sort_column_product', JSON.stringify(this.sortedColumn));
+            }
             this.generate_productList(event.first, event.rows, event.sortField, event.sortOrder);
         }
 
@@ -458,7 +466,7 @@ export class ProductListPage implements OnInit {
                 // console.log("index :", index);
             }
 
-            this.generate_productList(0, this.rowCount, null, 0);
+            this.generate_productList(0, this.rowCount, this.sortedColumn.sort_field, this.sortedColumn.sort_order);
             loader.dismiss();
         });
         this.funcHeightCalc();
@@ -604,7 +612,7 @@ export class ProductListPage implements OnInit {
             this.columnFilterValues = JSON.parse(json);
         }
         localStorage.setItem('filter_values_product', JSON.stringify(this.columnFilterValues));
-        this.generate_productList(0, this.rowCount, null, 0);
+        this.generate_productList(0, this.rowCount, this.sortedColumn.sort_field, this.sortedColumn.sort_order);
     }
 
     generate_productList(start_index: number, end_index: number, sort_field, sort_order) {
@@ -630,6 +638,10 @@ export class ProductListPage implements OnInit {
                     return 1 * sort_order;
                 } else if (this.apiService.isEmpty(value1) && this.apiService.isEmpty(value2)) {
                     return 0;
+                } else if ( !isNaN(Number(value1)) && !isNaN(Number(value2)) && Number(value1) > Number(value2)) {
+                    return 1 * sort_order;
+                } else if ( !isNaN(Number(value1)) && !isNaN(Number(value2)) && Number(value1) < Number(value2)) {
+                    return -1 * sort_order;
                 } else if ( value1.toLowerCase( ) > value2.toLowerCase( )) {
                     return 1 * sort_order;
                 } else if ( value1.toLowerCase( ) < value2.toLowerCase( )) {
@@ -835,8 +847,7 @@ export class ProductListPage implements OnInit {
                 const data = {
                     id: this.selectedNode.data.id,
                     idCustomer: this.idCustomer,
-                    parent: this.selectedNode.data.parent,
-                    company: this.company
+                    parent: this.selectedNode.data.parent
                 };
                 this.dataService.setData(data);
                 this.navCtrl.navigateForward(['/product-edit']);
@@ -854,8 +865,7 @@ export class ProductListPage implements OnInit {
                 const data = {
                     idCustomer: this.idCustomer,
                     idProduct: id,
-                    titleProduct: this.selectedNode.data.title,
-                    company: this.company
+                    titleProduct: this.selectedNode.data.title
                 };
                 this.dataService.setData(data);
                 this.navCtrl.navigateForward(['/protocol-history']);
@@ -1305,8 +1315,7 @@ export class ProductListPage implements OnInit {
             const data = {
                 id: this.selectedNode.data.id,
                 idCustomer: this.idCustomer,
-                parent: this.selectedNode.data.parent,
-                company: this.company
+                parent: this.selectedNode.data.parent
             };
             this.dataService.setData(data);
             this.navCtrl.navigateForward(['/product-edit']);

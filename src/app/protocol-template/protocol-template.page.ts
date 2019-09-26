@@ -44,7 +44,6 @@ export class ProtocolTemplatePage implements OnInit {
   public lang = '';
   public itsNew = true;
   public activTemplate: any = {};
-  public company = '';
   public mandatory = 'false';
   public opdInd: any;
 

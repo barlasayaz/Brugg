@@ -52,7 +52,6 @@ export class ProductEditPage implements OnInit {
   public searchText: string = '';
   public lang: string = '';
   public options: Array<any> = [];
-  public company: string = '';
   public downClick: any = 0;
   public mobilePlatform: boolean = false;
   public imageURI: any;

@@ -139,4 +139,12 @@ export class UserdataService {
     sessionStorage.clear();
   }
 
+  delAllStorage() {
+    console.log('UserdataProvider delAllStorage()');
+    // todo: let xin = $rootScope.getAjax('login.php' , { logout:1 });
+    this.reset();
+    localStorage.clear(); 
+    sessionStorage.clear();
+  }
+
 }

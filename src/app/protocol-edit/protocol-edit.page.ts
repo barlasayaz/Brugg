@@ -45,7 +45,6 @@ export class ProtocolEditPage implements OnInit {
   public selectTemplate: any = 0;
   public searchText: string = '';
   public lang: string = '';
-  public company: string = '';
   public downClick: any = 0;
   public maxDate: string;
   public mandatoryControl: boolean = false;

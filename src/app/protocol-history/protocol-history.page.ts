@@ -34,7 +34,6 @@ export class ProtocolHistoryPage implements OnInit {
     public idProduct = 0;
     public titleProduct: any;
     public lang: string = localStorage.getItem('lang');
-    public company = '';
     public url: any;
     public listCount: any[] = [];
     public pageCount: any;

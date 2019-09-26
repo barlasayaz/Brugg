@@ -22,7 +22,6 @@ import { ActivatedRoute } from '@angular/router';
 
 export class OrderFormPage {
   public idCustomer: number;
-  public company: string;
   public maxDate: string;
   public deliveryDate: any;
   public mouseoverButton1: boolean;
@@ -102,7 +101,6 @@ export class OrderFormPage {
               private route: ActivatedRoute) {
 
                 this.idCustomer = 0;
-                this.company = '';
                 this.mobilePlatform = false;
 
                 platform.ready().then(() => {
