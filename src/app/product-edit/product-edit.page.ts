@@ -68,6 +68,7 @@ export class ProductEditPage implements OnInit {
   public idnumberControl: boolean = false;
   public uploadedFiles: any[] = [];
   public edit_product_templates: boolean=false;
+  public opdInd: any;
 
   constructor(public navCtrl: NavController,
     public route: ActivatedRoute,
@@ -154,7 +155,8 @@ export class ProductEditPage implements OnInit {
     }
   }
 
-  onclickTemplate(tmpId) {
+  onclickTemplate(tmpId, opdInd) {
+    this.opdInd = opdInd;
     if (tmpId != this.selectedTmplt) {
       this.selectedTemplate[this.selectedTmplt] = 0;
     }
@@ -661,11 +663,10 @@ export class ProductEditPage implements OnInit {
             temp.options = JSON.stringify(temp.options);
             this.apiService.pvs4_set_product_tem(temp).then((result: any) => {
               console.log('result: ', result);
-              let id = this.selectedTmplt;
-              this.templates = this.templates.filter(function (value: any, index: number, array: any[]) { return value.id != id; });
-              this.selectedTemplate[this.selectedTmplt] = 0;
-              this.selectTemplate = 0;
             });
+            this.templates.splice(this.opdInd, 1);
+            this.selectedTemplate[temp.id] = 0;
+            this.selectTemplate = 0;
           }
         }
       ]

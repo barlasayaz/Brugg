@@ -68,7 +68,7 @@
                         <div style="padding: 10px; cursor: pointer; background: white;">
                           <div class="product-edit-item" 
                                *ngFor="let group of templates; let opdInd = index"
-                               (click)="onclickTemplate(group.id)" 
+                               (click)="onclickTemplate(group.id, opdInd)" 
                                [ngClass]="selectedTemplate[group.id]!=0 ? 'selectTemplate' : 'unselectTemplate'">
                             <div class="group-handle">
                               <span class="group-handle">{{group.title[lang]}}</span>

@@ -59,7 +59,7 @@
                           <div style="padding: 10px; background: white;">
                             <div dragula="COLUMNS" [(dragulaModel)]="options" id="options">
                               <div *ngFor="let group of options; let opdInd = index"
-                                   (click)="onclickOption(group)"
+                                   (click)="onclickOption(group, opdInd)"
                                    [ngClass]="selectedOption[group.id]!=0 ? 'selectOption' : 'unselectOption'">                                
                                 <div class="product-temp-item" *ngIf="group.type == 0">
                                   <p-accordionTab styleClass="ui-accordion-header" header="{{group.title[lang]}}">

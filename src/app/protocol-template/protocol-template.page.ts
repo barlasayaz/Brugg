@@ -46,6 +46,7 @@ export class ProtocolTemplatePage implements OnInit {
   public activTemplate: any = {};
   public company = '';
   public mandatory = 'false';
+  public opdInd: any;
 
   constructor(public navCtrl: NavController,
     public route: ActivatedRoute,
@@ -177,8 +178,9 @@ export class ProtocolTemplatePage implements OnInit {
     this.selectedTmplt = tmpId;
   }
 
-  onclickOption(option) {
+  onclickOption(option, opdInd) {
     this.editOption = option;
+    this.opdInd = opdInd;
     if (option.id != this.selectedOptionId) {
       this.selectedOption[this.selectedOptionId] = 0;
     }
@@ -393,54 +395,17 @@ export class ProtocolTemplatePage implements OnInit {
 
             this.apiService.pvs4_set_protocol_opt(obj).then((result: any) => {
               console.log('result: ', result);
-              this.selectedOption[option.id] = 0;
-              this.selectOption = 0;
-              this.selectedOptionId = 0;
-              this.editOption = [];
               this.loadOption();
             });
+            this.options.splice(this.opdInd, 1);
+            this.selectedOption[option.id] = 0;
+            this.selectOption = 0;
+            this.selectedOptionId = 0;
+            this.editOption = [];
           }
         }
       ]
     }).then(x => x.present());
   }
-
-  /* option_deactive(option) {
-    const obj = {
-      user: 1,
-      title: '',
-      mandatory: 0,
-      options: '',
-      licensee: this.userdata.licensee,
-      type: 0,
-      id: 0,
-      value: '',
-      active: '0'
-    };
-
-    if (option['user']) { obj.user = option['user']; }
-    if (option['licensee']) { obj.licensee = option['licensee']; }
-    if (option['type']) { obj.type = option['type']; }
-    if (option['mandatory']) {
-      if (option['mandatory'] == true) { obj.mandatory = 1; }
-      if (option['mandatory'] == false) { obj.mandatory = 0; }
-    }
-    if (option['title']) { obj.title = JSON.stringify(option['title']); }
-    if (option['options']) { obj.options = JSON.stringify(option['options']); }
-
-    obj.id = option['id'];
-    obj.active = '0';
-    option.active = 0;
-    console.log('deactive obj :', obj);
-
-    this.apiService.pvs4_set_protocol_opt(obj).then((result: any) => {
-      console.log('result: ', result);
-      this.selectedOption[option.id] = 0;
-      this.selectOption = 0;
-      this.selectedOptionId = 0;
-      this.editOption = [];
-      this.loadOption();
-    });
-  } */
 
 }
