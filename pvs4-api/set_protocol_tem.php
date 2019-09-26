@@ -102,6 +102,7 @@ function processing() {
         $ok = new \stdClass();
         $ok->amount = 1;
         $ok->id = $id;
+        //$ok->sql = $sql;
         echo json_encode($ok);
         mysqli_close($con);
         die;

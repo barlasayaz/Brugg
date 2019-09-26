@@ -141,10 +141,10 @@ export class ProductDetailsPage implements OnInit {
 
           let i: any = 0;
           this.activProduct.items.forEach(event => {
-            if (event.value == true) {
+            if (event.value === true) {
               this.activProduct.items[i].value = this.translate.instant('Wahr');
             }
-            if (event.value == false) {
+            if (event.value === false) {
               this.activProduct.items[i].value = this.translate.instant('Falsch');
             }
             i++;
