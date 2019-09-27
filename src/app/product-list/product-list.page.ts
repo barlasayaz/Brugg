@@ -381,29 +381,29 @@ export class ProductListPage implements OnInit {
                             if (pr.protocol_date) {
                                 this.productListAll[index].data.last_protocol_date = this.apiService.mysqlDate2view(pr.protocol_date);
                             }
-                            this.productListAll[index].data.last_protocol_next_color = "rgb(74, 83, 86)";
+                            this.productListAll[index].data.last_protocol_next_color = 'rgb(74, 83, 86)';
                             if (pr.protocol_date_next) {
                                 this.productListAll[index].data.last_protocol_next = this.apiService.mysqlDate2view(pr.protocol_date_next);
-                                let x = moment(pr.protocol_date_next,'YYYY-M-D');
+                                let x = moment(pr.protocol_date_next, 'YYYY-M-D');
                                 let y = moment();
                                 let diffDays = x.diff(y, 'days');
-                                if(diffDays<90) this.productListAll[index].data.last_protocol_next_color = "#f1c40f";
-                                if(diffDays<30) this.productListAll[index].data.last_protocol_next_color = "#e74c3c";
-                                //console.log('x :', pr.protocol_date_next ,  diffDays);
+                                if (diffDays < 90) { this.productListAll[index].data.last_protocol_next_color = '#f1c40f'; }
+                                if (diffDays < 30) { this.productListAll[index].data.last_protocol_next_color = '#e74c3c'; }
+                                // console.log('x :', pr.protocol_date_next ,  diffDays);
                             }
-                            
+
                             if (pr.result) {
                                 if (pr.result == 1) {
                                     this.productListAll[index].data.last_protocol_next = this.translate.instant('reparieren');
-                                    this.productListAll[index].data.last_protocol_next_color = "#f1c40f";
+                                    this.productListAll[index].data.last_protocol_next_color = '#f1c40f';
                                 }
                                 if (pr.result == 3) {
                                     this.productListAll[index].data.last_protocol_next = this.translate.instant('unauffindbar');
-                                    this.productListAll[index].data.last_protocol_next_color = "#e74c3c";
+                                    this.productListAll[index].data.last_protocol_next_color = '#e74c3c';
                                 }
                                 if ((pr.result == 2) || (pr.result == 4)) {
                                     this.productListAll[index].data.last_protocol_next = this.translate.instant('ausmustern');
-                                    this.productListAll[index].data.last_protocol_next_color = "#C558D3";
+                                    this.productListAll[index].data.last_protocol_next_color = '#C558D3';
                                 }
                             }
                         } catch (e) {
@@ -432,27 +432,44 @@ export class ProductListPage implements OnInit {
                 if (options == null) { options = []; }
 
                 for (let i = 0; i < options.length; i++) {
-                    //console.log('options :', options[i]);
+                    // console.log('options :', options[i]);
                     // console.log('options :', options[i].id);
                     // console.log('options :', options[i].title);
 
-                    //console.log('this.lang :', this.lang);
+                    // console.log('this.lang :', this.lang);
                     if (!this.cols.find(x => x.field == options[i].title[this.lang])) {
                         this.cols.push({ field: options[i].title[this.lang], header: options[i].title[this.lang] , width: '200px'});
-                        //console.log('this.lang :', options[i].title[this.lang]);
+                        // console.log('this.lang :', options[i].title[this.lang]);
                     }
-                    if (options[i].value == true) {
-                        options[i].value = this.translate.instant('Wahr');
-                    }
-                    if (options[i].value == false) {
-                        options[i].value = this.translate.instant('Falsch');
-                    }
-                    const pipe = new DatePipe('en-US');
-                    if (options[i].type == 5) {
+                    console.log('type :', options[i].type);
+                    if (options[i].type == 0) {
+                        console.log('value :', options[i].value);
+                        if (options[i].value == true) {
+                            options[i].value = this.translate.instant('Wahr');
+                        }
+                        if (options[i].value == false) {
+                            options[i].value = this.translate.instant('Falsch');
+                        }
+                        this.productListAll[index].data[options[i].title[this.lang]] = options[i].value;
+                    } else if (options[i].type == 1) {
+                        for (let j = 0; j < options[i].options.length; j++) {
+                            if (options[i].value == options[i].options[j].de ||
+                                options[i].value == options[i].options[j].en ||
+                                options[i].value == options[i].options[j].fr ||
+                                options[i].value == options[i].options[j].it
+                                ) {
+                                options[i].value = options[i].options[j][this.lang];
+                            }
+                        }
+                        this.productListAll[index].data[options[i].title[this.lang]] = options[i].value;
+                    } else if (options[i].type == 4) {
+                        const pipe = new DatePipe('en-US');
+                        this.productListAll[index].data[options[i].title[this.lang]] = pipe.transform(options[i].value, 'HH:mm');
+                    } else if (options[i].type == 5) {
+                        const pipe = new DatePipe('en-US');
                         this.productListAll[index].data[options[i].title[this.lang]] = pipe.transform(options[i].value, 'dd.MM.yyyy');
-                    }
-                    if (options[i].type != 5) {
-                        this.productListAll[index].data[ options[i].title[this.lang] ] = options[i].value;
+                    } else {
+                        this.productListAll[index].data[options[i].title[this.lang]] = options[i].value;
                     }
                 }
                 // console.log("index :", index);
@@ -898,8 +915,8 @@ export class ProductListPage implements OnInit {
                     this.move_obj = JSON.parse(JSON.stringify(this.selectedNode.data));
                 }
             }
-            //this.menuItems[3].visible = false;
-            //this.menuItems[4].visible = true;
+            // this.menuItems[3].visible = false;
+            // this.menuItems[4].visible = true;
             // this.selectMulti = 0;
             this.menuItems[0].disabled = true;
             this.menuItems[1].disabled = true;
@@ -1203,9 +1220,9 @@ export class ProductListPage implements OnInit {
 
     onColResize(event) {
         let index  = this.apiService.columnIndex(event.element);
-        this.selectedColumns[index].width = event.element.offsetWidth+"px";
-        let width2 = this.selectedColumns[index+1].width;
-        this.selectedColumns[index+1].width = parseInt(width2.replace('px',''))-event.delta + "px";
+        this.selectedColumns[index].width = event.element.offsetWidth + 'px';
+        let width2 = this.selectedColumns[index + 1].width;
+        this.selectedColumns[index + 1].width = parseInt(width2.replace('px', '')) - event.delta + 'px';
         localStorage.setItem('show_columns_product', JSON.stringify(this.selectedColumns));
     }
 

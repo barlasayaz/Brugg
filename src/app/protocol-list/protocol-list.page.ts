@@ -7,6 +7,7 @@ import { TreeTable } from 'primeng/components/treetable/treetable';
 import { TreeNode, MenuItem, LazyLoadEvent } from 'primeng/api';
 import { ExcelService } from '../services/excel';
 import { PdfExportService } from '../services/pdf-export';
+import { DatePipe } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { DataService } from '../services/data.service';
 import { Subject } from 'rxjs';
@@ -240,13 +241,36 @@ export class ProtocolListPage implements OnInit {
                     if (!this.cols.find(x => x.field == options[i].title[this.lang])) {
                         this.cols.push({ field: options[i].title[this.lang], header: options[i].title[this.lang], width: '200px' });
                     }
-                    if (options[i].value == true) {
-                        options[i].value = this.translate.instant('Wahr');
+                    console.log('type :', options[i].type);
+                    if (options[i].type == 0) {
+                        if (options[i].value == 'true') {
+                            options[i].value = this.translate.instant('Wahr');
+                        }
+                        if (options[i].value == 'false') {
+                            options[i].value = this.translate.instant('Falsch');
+                        }
+                        this.protocolListAll[index].data[options[i].title[this.lang]] = options[i].value;
+                    } else if (options[i].type == 1) {
+                        options[i].value = options[i].value.trim();
+                        for (let j = 0; j < options[i].options.length; j++) {
+                            if (options[i].value == options[i].options[j].de ||
+                                options[i].value == options[i].options[j].en ||
+                                options[i].value == options[i].options[j].fr ||
+                                options[i].value == options[i].options[j].it
+                                ) {
+                                options[i].value = options[i].options[j][this.lang];
+                            }
+                        }
+                        this.protocolListAll[index].data[options[i].title[this.lang]] = options[i].value;
+                    } else if (options[i].type == 4) {
+                        const pipe = new DatePipe('en-US');
+                        this.protocolListAll[index].data[options[i].title[this.lang]] = pipe.transform(options[i].value, 'HH:mm');
+                    } else if (options[i].type == 5) {
+                        const pipe = new DatePipe('en-US');
+                        this.protocolListAll[index].data[options[i].title[this.lang]] = pipe.transform(options[i].value, 'dd.MM.yyyy');
+                    } else {
+                        this.protocolListAll[index].data[options[i].title[this.lang]] = options[i].value;
                     }
-                    if (options[i].value == false) {
-                        options[i].value = this.translate.instant('Falsch');
-                    }
-                    this.protocolListAll[index].data[options[i].title[this.lang]] = options[i].value;
                 }
 
                 if (this.protocolListAll[index].data.result == 0) {

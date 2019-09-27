@@ -335,7 +335,7 @@ export class ProductTemplatePage implements OnInit {
       }
 
       this.apiService.pvs4_set_product_tem(obj).then((result: any) => {
-        this.idTemplate = result.id;
+        this.idTemplate = result.id; 
         const alert = this.alertCtrl.create({
           header: this.translate.instant('information'),
           message: this.translate.instant('Vorlage wurde erfolgreich gespeichert'),
