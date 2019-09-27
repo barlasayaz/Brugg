@@ -312,6 +312,7 @@ export class ProtocolTemplatePage implements OnInit {
     console.log('templateTitle : ', this.templateTitleObj[this.lang]);
     if (this.templateTitleObj[this.lang] != '') {
       const obj = {
+        active: 1,
         user: this.userdata.id,
         title: '',
         options: '',
