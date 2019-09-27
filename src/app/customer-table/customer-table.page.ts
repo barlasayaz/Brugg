@@ -39,7 +39,7 @@ export class CustomerTablePage implements OnInit {
                     } else {
                         this.menuItems[7].items[0]['disabled'] = true;
                     }
-                    this.generate_customerList(0, this.rowCount, null, 0);
+                    this.generate_customerList(0, this.rowCount, this.sortedColumn.sort_field, this.sortedColumn.sort_order);
                     localStorage.setItem('filter_values_customer', JSON.stringify(this.columnFilterValues));
             });
     }
@@ -76,6 +76,7 @@ export class CustomerTablePage implements OnInit {
     public rowRecords: number;
     public rowHeight = 26;
     public rowCount = 100;
+    public sortedColumn = { sort_field : null, sort_order : 0 };
 
     public menuItems: MenuItem[] = [{
         label: this.translate.instant('Ansicht'),
@@ -213,6 +214,9 @@ export class CustomerTablePage implements OnInit {
                            'search_all'];
         this.selectedColumns = this.cols;
         console.log('CustomerTablePage idCustomer:', this.idCustomer, this.system.platform);
+        if (localStorage.getItem('sort_column_customer') != undefined) {
+            this.sortedColumn = JSON.parse(localStorage.getItem('sort_column_customer'));
+        }
         this.page_load();
     }
 
@@ -222,6 +226,12 @@ export class CustomerTablePage implements OnInit {
 
     async loadNodes(event: LazyLoadEvent) {
         if (this.totalRecords > 0) {
+            if(event.sortField && event.sortField.length>0)
+            {
+                this.sortedColumn.sort_field = event.sortField;
+                this.sortedColumn.sort_order = event.sortOrder;
+                localStorage.setItem('sort_column_customer', JSON.stringify(this.sortedColumn));
+            }
             this.generate_customerList(event.first, event.rows, event.sortField, event.sortOrder);
         }
 
@@ -270,7 +280,8 @@ export class CustomerTablePage implements OnInit {
             if (localStorage.getItem('show_columns') != undefined) {
                 this.selectedColumns = JSON.parse(localStorage.getItem('show_columns'));
             }
-           this.generate_customerList(0, this.rowCount, null, 0);
+
+           this.generate_customerList(0, this.rowCount, this.sortedColumn.sort_field, this.sortedColumn.sort_order);
            this.funcHeightCalc();
           // this.selectedColumns = this.cols;
            loader.dismiss();
@@ -362,7 +373,7 @@ export class CustomerTablePage implements OnInit {
                                         search_all: '' };
         }
         localStorage.setItem('filter_values_customer', JSON.stringify(this.columnFilterValues));
-        this.generate_customerList(0, this.rowCount, null, 0);
+        this.generate_customerList(0, this.rowCount, this.sortedColumn.sort_field, this.sortedColumn.sort_order);
     }
 
     generate_customerList(start_index: number, end_index: number, sort_field, sort_order) {
@@ -385,6 +396,10 @@ export class CustomerTablePage implements OnInit {
                     return 1 * sort_order;
                 } else if (this.apiService.isEmpty(value1) && this.apiService.isEmpty(value2)) {
                     return 0;
+                } else if ( !isNaN(Number(value1)) && !isNaN(Number(value2)) && Number(value1) > Number(value2)) {
+                    return 1 * sort_order;
+                } else if ( !isNaN(Number(value1)) && !isNaN(Number(value2)) && Number(value1) < Number(value2)) {
+                    return -1 * sort_order;
                 } else if ( value1.toLowerCase( ) > value2.toLowerCase( )) {
                     return 1 * sort_order;
                 } else if ( value1.toLowerCase( ) < value2.toLowerCase( )) {

@@ -36,7 +36,6 @@ export class ProtocolListPage implements OnInit {
     public rowRecords = 0;
     public totalRecords = 0;
     public lang: string = localStorage.getItem('lang');
-    public company = '';
     public heightCalc: any;
     public activCustomer: any = {};
     public customer_number: any;
@@ -44,6 +43,7 @@ export class ProtocolListPage implements OnInit {
     public selectedRow: number;
     public rowHeight = 26;
     public rowCount = 100;
+    public sortedColumn = { sort_field : null, sort_order : 0 };
 
     public menuItems: MenuItem[] = [
         {
@@ -151,7 +151,7 @@ export class ProtocolListPage implements OnInit {
                     } else {
                         this.menuItems[5].items[0]['disabled'] = true;
                     }
-                    this.generate_protocolList(0, this.rowCount, null, 0);
+                    this.generate_protocolList(0, this.rowCount, this.sortedColumn.sort_field, this.sortedColumn.sort_order);
                     localStorage.setItem('filter_values_protocol', JSON.stringify(this.columnFilterValues));
             });
     }
@@ -169,6 +169,9 @@ export class ProtocolListPage implements OnInit {
 
         console.log('ProductListPage idCustomer:', this.idCustomer, this.system.platform);
         this.idCustomer = parseInt(this.route.snapshot.paramMap.get('id'));
+        if (localStorage.getItem('sort_column_protocol') != undefined) {
+            this.sortedColumn = JSON.parse(localStorage.getItem('sort_column_protocol'));
+        }
         this.page_load();
     }
 
@@ -179,6 +182,12 @@ export class ProtocolListPage implements OnInit {
 
     async loadNodes(event: LazyLoadEvent) {
         if (this.totalRecords > 0) {
+            if(event.sortField && event.sortField.length>0)
+            {
+                this.sortedColumn.sort_field = event.sortField;
+                this.sortedColumn.sort_order = event.sortOrder;
+                localStorage.setItem('sort_column_protocol', JSON.stringify(this.sortedColumn));
+            }
             this.generate_protocolList(event.first, event.rows, event.sortField, event.sortOrder);
         }
 
@@ -302,7 +311,7 @@ export class ProtocolListPage implements OnInit {
                 this.selectedColumns = JSON.parse(localStorage.getItem('show_columns_protocol'));
             }
 
-            this.generate_protocolList(0, this.rowCount, null, 0);
+            this.generate_protocolList(0, this.rowCount, this.sortedColumn.sort_field, this.sortedColumn.sort_order);
             this.funcHeightCalc();
             loader.dismiss();
         });
@@ -396,7 +405,7 @@ export class ProtocolListPage implements OnInit {
             this.columnFilterValues = JSON.parse(json);
         }
         localStorage.setItem('filter_values_protocol', JSON.stringify(this.columnFilterValues));
-        this.generate_protocolList(0, this.rowCount, null, 0);
+        this.generate_protocolList(0, this.rowCount, this.sortedColumn.sort_field, this.sortedColumn.sort_order);
     }
 
     generate_protocolList(start_index: number, end_index: number, sort_field, sort_order) {
@@ -420,9 +429,13 @@ export class ProtocolListPage implements OnInit {
                     return-1 * sort_order;
                 } else if (!this.apiService.isEmpty(value1) && this.apiService.isEmpty(value2)) {
                     return 1 * sort_order;
-                     } else if (this.apiService.isEmpty(value1) && this.apiService.isEmpty(value2)) {
+                } else if (this.apiService.isEmpty(value1) && this.apiService.isEmpty(value2)) {
                     return 0;
-                     } else if ( value1.toLowerCase( ) > value2.toLowerCase( )) {
+                } else if ( !isNaN(Number(value1)) && !isNaN(Number(value2)) && Number(value1) > Number(value2)) {
+                    return 1 * sort_order;
+                } else if ( !isNaN(Number(value1)) && !isNaN(Number(value2)) && Number(value1) < Number(value2)) {
+                    return -1 * sort_order;
+                } else if ( value1.toLowerCase( ) > value2.toLowerCase( )) {
                     return 1 * sort_order;
                 } else if ( value1.toLowerCase( ) < value2.toLowerCase( )) {
                     return -1 * sort_order;

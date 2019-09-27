@@ -69,7 +69,9 @@
                  columnResizeMode="fit"
                  [reorderableColumns]="true" 
                  (onColReorder)="onColReorder($event)"
-                 (onColResize)="onColResize($event)" >
+                 (onColResize)="onColResize($event)"
+                 [sortField] = "sortedColumn['sort_field']"
+                 [sortOrder] = "sortedColumn['sort_order']" >    
         <ng-template pTemplate="colgroup" let-columns>
             <colgroup>
                 <col *ngFor="let col of selectedColumns" [ngStyle]="{width: col.width}">

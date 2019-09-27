@@ -131,7 +131,19 @@ export class UserdataService {
     console.log('UserdataProvider delStorage()');
     // todo: let xin = $rootScope.getAjax('login.php' , { logout:1 });
     this.reset();
-    localStorage.clear();
+    localStorage.removeItem('pvs4_user');
+    localStorage.removeItem('pvs4_login');
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('refresh_token');
+    localStorage.removeItem('pvs4_bruggid');    
+    sessionStorage.clear();
+  }
+
+  delAllStorage() {
+    console.log('UserdataProvider delAllStorage()');
+    // todo: let xin = $rootScope.getAjax('login.php' , { logout:1 });
+    this.reset();
+    localStorage.clear(); 
     sessionStorage.clear();
   }
 

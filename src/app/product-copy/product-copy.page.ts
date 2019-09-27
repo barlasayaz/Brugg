@@ -161,7 +161,7 @@ export class ProductCopyPage implements OnInit {
             console.log('obj :', newObj);
             this.apiService.pvs4_set_product(newObj).then((result: any) => {
               console.log('product result: ', result, result.amount);
-              this.editProduct(result['id'], this.idCustomer, 0, '');
+              this.editProduct(result['id'], this.idCustomer, 0);
               if (result.amount == 1) {
                 const toast = this.toastCtrl.create({
                   message: this.translate.instant('Produkt kopieren erfolgreich.'),
@@ -175,14 +175,13 @@ export class ProductCopyPage implements OnInit {
       });
   }
 
-  editProduct(id: any, idCustomer: any, parent: any, company: any) {
+  editProduct(id: any, idCustomer: any, parent: any) {
     console.log('editProduct', this.activProduct);
     if (id) {
         let data = {
             id: id,
             idCustomer: idCustomer,
             parent: parent,
-            company: company
         };
         this.dataService.setData(data);
         this.navCtrl.navigateForward(['/product-edit']);

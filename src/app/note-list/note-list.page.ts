@@ -57,13 +57,13 @@ export class NoteListPage implements OnInit {
     public expendedNodes: string[] = [];
     public rowRecords: number = 0;
     public totalRecords: number = 0;
-    public company: string = '';
     public heightCalc: any;
     public authorList: any = [];
     public pointofContactList: any = [];
     modelChanged: Subject<any> = new Subject<any>();
     public rowHeight = 26;
     public rowCount = 100;
+    public sortedColumn = { sort_field : null, sort_order : 0 };
 
     public menuItems: MenuItem[] = [{
         label: this.translate.instant('Ansicht'),
@@ -165,7 +165,7 @@ export class NoteListPage implements OnInit {
                     } else {
                         this.menuItems[5].items[0]['disabled'] = true;
                     }
-                    this.generate_noteList(0, this.rowCount, null, 0);
+                    this.generate_noteList(0, this.rowCount, this.sortedColumn.sort_field, this.sortedColumn.sort_order);
                     localStorage.setItem('filter_values_note', JSON.stringify(this.columnFilterValues));
             });
 
@@ -192,7 +192,10 @@ export class NoteListPage implements OnInit {
         this.selectedColumns = JSON.parse(JSON.stringify(this.cols));
 
         this.idCustomer = parseInt(this.route.snapshot.paramMap.get('id'));
-       // this.company = params["company"];
+
+       if (localStorage.getItem('sort_column_note') != undefined) {
+            this.sortedColumn = JSON.parse(localStorage.getItem('sort_column_note'));
+        }
        console.log('NoteListPage idCustomer:', this.idCustomer);
        this.page_load();
 
@@ -204,6 +207,12 @@ export class NoteListPage implements OnInit {
 
      async loadNodes(event: LazyLoadEvent) {
         if (this.totalRecords > 0) {
+            if(event.sortField && event.sortField.length>0)
+            {
+                this.sortedColumn.sort_field = event.sortField;
+                this.sortedColumn.sort_order = event.sortOrder;
+                localStorage.setItem('sort_column_note', JSON.stringify(this.sortedColumn));
+            }
             this.generate_noteList(event.first, event.rows, event.sortField, event.sortOrder);
         }
 
@@ -256,7 +265,7 @@ export class NoteListPage implements OnInit {
                 this.noteListAll[i].data.category = this.translate.instant(cn);
             }
 
-            this.generate_noteList(0, this.rowCount, null, 0);
+            this.generate_noteList(0, this.rowCount, this.sortedColumn.sort_field, this.sortedColumn.sort_order);
             loader.dismiss();
         });
         this.funcHeightCalc();
@@ -323,7 +332,7 @@ export class NoteListPage implements OnInit {
                                         search_all: '' };
         }
         localStorage.setItem('filter_values_note', JSON.stringify(this.columnFilterValues));
-        this.generate_noteList(0, this.rowCount, null, 0);
+        this.generate_noteList(0, this.rowCount, this.sortedColumn.sort_field, this.sortedColumn.sort_order);
     }
 
     generate_noteList(start_index: number, end_index: number, sort_field, sort_order) {
@@ -348,6 +357,10 @@ export class NoteListPage implements OnInit {
                     return 1 * sort_order;
                 } else if (this.apiService.isEmpty(value1) && this.apiService.isEmpty(value2)) {
                     return 0;
+                } else if ( !isNaN(Number(value1)) && !isNaN(Number(value2)) && Number(value1) > Number(value2)) {
+                    return 1 * sort_order;
+                } else if ( !isNaN(Number(value1)) && !isNaN(Number(value2)) && Number(value1) < Number(value2)) {
+                    return -1 * sort_order;
                 } else if ( value1.toLowerCase( ) > value2.toLowerCase( )) {
                     return 1 * sort_order;
                 } else if ( value1.toLowerCase( ) < value2.toLowerCase( )) {
