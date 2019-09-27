@@ -449,7 +449,7 @@ export class ProductListPage implements OnInit {
                         this.cols.push({ field: options[i].title[this.lang], header: options[i].title[this.lang] , width: '200px'});
                         // console.log('this.lang :', options[i].title[this.lang]);
                     }
-                    console.log('type :', options[i].type);
+
                     if (options[i].type == 0) {
                         console.log('value :', options[i].value);
                         if (options[i].value == true) {

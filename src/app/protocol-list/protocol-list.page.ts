@@ -250,17 +250,19 @@ export class ProtocolListPage implements OnInit {
                     if (!this.cols.find(x => x.field == options[i].title[this.lang])) {
                         this.cols.push({ field: options[i].title[this.lang], header: options[i].title[this.lang], width: '200px' });
                     }
-                    console.log('type :', options[i].type);
+
                     if (options[i].type == 0) {
-                        if (options[i].value == 'true') {
+                        if (options[i].value == true) {
                             options[i].value = this.translate.instant('Wahr');
                         }
-                        if (options[i].value == 'false') {
+                        if (options[i].value == false) {
                             options[i].value = this.translate.instant('Falsch');
                         }
                         this.protocolListAll[index].data[options[i].title[this.lang]] = options[i].value;
                     } else if (options[i].type == 1) {
-                        options[i].value = options[i].value.trim();
+                        if (options[i].value != null) {
+                            options[i].value = options[i].value.trim();
+                        }
                         for (let j = 0; j < options[i].options.length; j++) {
                             if (options[i].value == options[i].options[j].de ||
                                 options[i].value == options[i].options[j].en ||
