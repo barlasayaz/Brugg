@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component,OnInit } from '@angular/core';
 import { NavController, ModalController, AlertController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { ApiService } from '../services/api';
 import { UserdataService } from '../services/userdata';
 import { SystemService } from '../services/system';
+import { TreeNode } from 'primeng/api';
 
 /**
  * Generated class for the ReboxPage page.
@@ -18,7 +19,7 @@ import { SystemService } from '../services/system';
   styleUrls: ['./rebox.page.scss'],
 })
 
-export class ReboxPage {
+export class ReboxPage implements OnInit {
   public params: any;
   public edit: any = [];
   public anzRebox: any = 1;
@@ -32,6 +33,8 @@ export class ReboxPage {
   public maxDate: string;
   public platform_version: number;
   public inputError: boolean = false;
+  public listCustomer: any[] = [];
+  public customer: any = {};
 
   constructor(public navCtrl: NavController, 
               public translate: TranslateService,
@@ -40,7 +43,7 @@ export class ReboxPage {
               private apiService: ApiService,
               public viewCtrl: ModalController,
               public alertCtrl: AlertController) {
-
+                console.log("ReBox load");
                 this.platform_version = this.system.platform;
                 this.maxDate = this.apiService.maxDate;
                 // this.translate.use(this.translate.defaultLang);
@@ -54,6 +57,33 @@ export class ReboxPage {
                 this.rebox.Notiz = '';
                 this.anzRebox = 1;
                 this.rebox.ReBoxDate = new Date().toISOString().substring(0, 10);
+  }
+
+  ngOnInit()
+  {
+    this.loadCustomer();
+  }
+
+  loadCustomer() {
+    this.apiService.pvs4_get_customer_list(0).then((result: any) => {
+        this.listCustomer = [];
+        this.data_tree(result.list);
+        console.log("Load Customer");
+    });
+  }
+
+  data_tree(nodes: TreeNode[]): any {
+    for (let i = 0; i < nodes.length; i++) {
+      let obj = nodes[i].data;
+      obj['listText'] = obj['company'];
+      /*if (obj['zip_code'].length) { obj['listText'] += ', ' + obj['zip_code']; }
+      if (obj['place'].length) { obj['listText'] += ' ' + obj['place']; }
+      if (obj['customer_number'].length) { obj['listText'] += ', #' + obj['customer_number']; }*/
+      this.listCustomer.push(obj);
+      if (nodes[i].children && nodes[i].children.length > 0) {
+        this.data_tree(nodes[i].children);
+      }
+    }
   }
 
   dismiss() {
@@ -132,7 +162,10 @@ export class ReboxPage {
     console.log('send()');
     localStorage.setItem('ReBox_Str', this.rebox.Str);
     localStorage.setItem('ReBox_Ort', this.rebox.Ort);
-
+    if(this.customer.listText)
+    {
+      this.rebox.Firma = this.customer.listText;
+    }
     if (!this.latitude) {
       this.latitude = '';
     }
