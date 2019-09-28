@@ -451,13 +451,6 @@ export class ProductListPage implements OnInit {
                     }
 
                     if (options[i].type == 0) {
-                        console.log('value :', options[i].value);
-                        if (options[i].value == true) {
-                            options[i].value = this.translate.instant('Wahr');
-                        }
-                        if (options[i].value == false) {
-                            options[i].value = this.translate.instant('Falsch');
-                        }
                         this.productListAll[index].data[options[i].title[this.lang]] = options[i].value;
                     } else if (options[i].type == 1) {
                         for (let j = 0; j < options[i].options.length; j++) {
@@ -648,6 +641,20 @@ export class ProductListPage implements OnInit {
             this.productListView = this.productListView.sort((a, b) => {
                 let value1 = a.data[sort_field];
                 let value2 = b.data[sort_field];
+                if (typeof value1 === "boolean"){
+                    if(value1 === true) value1="1";
+                    else value1="0";
+                }
+                if (typeof value2 === "boolean"){
+                    if(value2 === true) value2="1";
+                    else value2="0";                
+                } 
+                if (typeof value1 === "undefined"){
+                    return -1 * sort_order;
+                }
+                if (typeof value2 === "undefined"){                 
+                    return 1 * sort_order;
+                }
 
                 if (this.apiService.isEmpty(value1) && !this.apiService.isEmpty(value2)) {
                     return-1 * sort_order;
@@ -655,9 +662,9 @@ export class ProductListPage implements OnInit {
                     return 1 * sort_order;
                 } else if (this.apiService.isEmpty(value1) && this.apiService.isEmpty(value2)) {
                     return 0;
-                } else if ( !isNaN(Number(value1)) && !isNaN(Number(value2)) && Number(value1) > Number(value2)) {
+                } else if ( !isNaN(Number(value1)) && !isNaN(Number(value2)) && (Number(value1) > Number(value2))) {
                     return 1 * sort_order;
-                } else if ( !isNaN(Number(value1)) && !isNaN(Number(value2)) && Number(value1) < Number(value2)) {
+                } else if ( !isNaN(Number(value1)) && !isNaN(Number(value2)) && (Number(value1) < Number(value2))) {
                     return -1 * sort_order;
                 } else if ( value1.toLowerCase( ) > value2.toLowerCase( )) {
                     return 1 * sort_order;

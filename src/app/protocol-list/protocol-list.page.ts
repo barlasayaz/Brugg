@@ -251,8 +251,7 @@ export class ProtocolListPage implements OnInit {
                         this.cols.push({ field: options[i].title[this.lang], header: options[i].title[this.lang], width: '200px' });
                     }
                     options[i].type = parseInt(options[i].type);
-                    if (options[i].type == 0) {
-                        
+                    if (options[i].type == 0) {                        
                         this.protocolListAll[index].data[options[i].title[this.lang]] = options[i].value;
                     } else if (options[i].type == 1) {
                         if (options[i].value != null) {

@@ -210,11 +210,15 @@
                             <ion-icon name="wifi" *ngIf="rowData[col.field]" [ngStyle]="{'color':'rgb(0, 157, 224)'}">
                             </ion-icon>
                         </span>
-                    </span>
-                    <span *ngIf="(col.field != 'nfc_tag_id') && (col.field != 'last_protocol_next')">{{rowData[col.field]}}</span>
-
+                    </span>                    
                     <span *ngIf="(col.field != 'nfc_tag_id') && (col.field === 'last_protocol_next')" [ngStyle]="{'color': rowData.last_protocol_next_color  }" >{{rowData[col.field]}}</span>
-
+                    <span *ngIf="(col.field != 'nfc_tag_id') && (col.field != 'last_protocol_next')">
+                        <span *ngIf="(rowData[col.field]!==false) && (rowData[col.field]!==true)" >{{rowData[col.field]}}</span>
+                        <span *ngIf="(rowData[col.field]===false) || (rowData[col.field]===true)" >
+                                <img *ngIf="rowData[col.field]===true" src="/assets/imgs/available.jpg" alt="" height="17px" />
+                                <img *ngIf="rowData[col.field]===false" src="/assets/imgs/not_available.jpg" alt="" height="17px" />
+                        </span>
+                    </span>
                 </td>
             </tr>
         </ng-template>
