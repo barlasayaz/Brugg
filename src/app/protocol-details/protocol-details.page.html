@@ -55,7 +55,11 @@
 											</div>
 											<div class="tr table-body" *ngFor="let item of activProtocol.items">
 												<div class="td">{{item.title[lang]}}</div>
-												<div class="td">{{item.value}}</div> 
+												<div class="td" *ngIf="item.type!=0">{{item.value}}</div> 
+												<div class="td" *ngIf="item.type==0">
+													<img *ngIf="item.value" src="/assets/imgs/available.jpg" alt="" height="17px" />
+													<img *ngIf="!item.value" src="/assets/imgs/not_available.jpg" alt="" height="17px" />
+												</div>
 											</div>
 										</div>
 									</div>
@@ -141,7 +145,11 @@
 															</div>
 															<div class="tr table-body" *ngFor="let items of item.items">
 																<div class="td">{{items.title[lang]}}</div>
-																<div class="td">{{items.value}}</div>  
+																<div class="td" *ngIf="items.type!==0">{{items.value}}</div> 
+																<div class="td" *ngIf="items.type==0">
+																	<img *ngIf="items.value" src="/assets/imgs/available.jpg" alt="" height="17px" />
+																	<img *ngIf="!items.value" src="/assets/imgs/not_available.jpg" alt="" height="17px" />
+																</div>
 															</div>
 														</div>
 													</p-accordionTab>

@@ -47,10 +47,12 @@
 											</div>
 											<div class="tr table-body" *ngFor="let item of activProduct.items">
 												<div class="td">{{item.title[lang]}}</div>
-												<div *ngIf="item.type != 5" class="td">{{item.value}}</div>											
-												<div *ngIf="item.type == 5" class="td">{{item.value | date : 'dd.MM.yyyy'}}
+												<div class="td" *ngIf="item.type!==0">{{item.value}}</div> 
+												<div class="td" *ngIf="item.type==0">
+													<img *ngIf="item.value" src="/assets/imgs/available.jpg" alt="" height="17px" />
+													<img *ngIf="!item.value" src="/assets/imgs/not_available.jpg" alt="" height="17px" />
 												</div>
-											</div>
+											</div> 
 										</div>
 									</div>
 								</div>

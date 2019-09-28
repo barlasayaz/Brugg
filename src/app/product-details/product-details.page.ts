@@ -138,15 +138,16 @@ export class ProductDetailsPage implements OnInit {
           this.activProduct.items = JSON.parse(this.activProduct.items);
           console.log('activProduct.items :', this.activProduct.items);
 
-          let i: any = 0;
+
           this.activProduct.items.forEach(event => {
-            if (event.value === true) {
-              this.activProduct.items[i].value = this.translate.instant('Wahr');
-            }
-            if (event.value === false) {
-              this.activProduct.items[i].value = this.translate.instant('Falsch');
-            }
-            i++;
+              event.type = parseInt(event.type);
+              if (event.type == 5) {
+                event.value = this.datePipe.transform(event.value, 'dd.MM.yyyy');
+              }
+              if (event.type == 0) {
+                if(event.value ==="true") event.value=true;
+                if(event.value ==="false") event.value=false;
+              }            
           });
 
         } catch {

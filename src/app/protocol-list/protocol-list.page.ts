@@ -229,10 +229,10 @@ export class ProtocolListPage implements OnInit {
             this.activCustomer = result.obj;
             this.customer_number = this.activCustomer.customer_number;
         });
-        console.log('ProtocolListPage idCustomer:', this.idCustomer);
+        //console.log('ProtocolListPage idCustomer:', this.idCustomer);
 
         this.apiService.pvs4_get_protocol_list(this.idCustomer).then((result: any) => {
-            console.log('result protocol :', result);
+            //console.log('result protocol :', result);
             this.protocolListAll = JSON.parse(JSON.stringify(result.list));
             // console.log('protocolListAll :', this.protocolListAll);
 
@@ -250,14 +250,9 @@ export class ProtocolListPage implements OnInit {
                     if (!this.cols.find(x => x.field == options[i].title[this.lang])) {
                         this.cols.push({ field: options[i].title[this.lang], header: options[i].title[this.lang], width: '200px' });
                     }
-
+                    options[i].type = parseInt(options[i].type);
                     if (options[i].type == 0) {
-                        if (options[i].value == true) {
-                            options[i].value = this.translate.instant('Wahr');
-                        }
-                        if (options[i].value == false) {
-                            options[i].value = this.translate.instant('Falsch');
-                        }
+                        
                         this.protocolListAll[index].data[options[i].title[this.lang]] = options[i].value;
                     } else if (options[i].type == 1) {
                         if (options[i].value != null) {
@@ -426,22 +421,35 @@ export class ProtocolListPage implements OnInit {
             this.protocolListView = this.protocolListView.sort((a, b) => {
                 let value1 = a.data[sort_field];
                 let value2 = b.data[sort_field];
-
+                if (typeof value1 === "boolean"){
+                    if(value1 === true) value1="1";
+                    else value1="0";
+                }
+                if (typeof value2 === "boolean"){
+                    if(value2 === true) value2="1";
+                    else value2="0";                
+                } 
+                if (typeof value1 === "undefined"){
+                    return -1 * sort_order;
+                }
+                if (typeof value2 === "undefined"){                 
+                    return 1 * sort_order;
+                }
                 if (this.apiService.isEmpty(value1) && !this.apiService.isEmpty(value2)) {
                     return-1 * sort_order;
                 } else if (!this.apiService.isEmpty(value1) && this.apiService.isEmpty(value2)) {
                     return 1 * sort_order;
                 } else if (this.apiService.isEmpty(value1) && this.apiService.isEmpty(value2)) {
                     return 0;
-                } else if ( !isNaN(Number(value1)) && !isNaN(Number(value2)) && Number(value1) > Number(value2)) {
+                } else if ( !isNaN(Number(value1)) && !isNaN(Number(value2)) && (Number(value1) > Number(value2))) {
                     return 1 * sort_order;
-                } else if ( !isNaN(Number(value1)) && !isNaN(Number(value2)) && Number(value1) < Number(value2)) {
+                } else if ( !isNaN(Number(value1)) && !isNaN(Number(value2)) && (Number(value1) < Number(value2))) {
                     return -1 * sort_order;
                 } else if ( value1.toLowerCase( ) > value2.toLowerCase( )) {
                     return 1 * sort_order;
                 } else if ( value1.toLowerCase( ) < value2.toLowerCase( )) {
                     return -1 * sort_order;
-                } else {
+                } else {                    
                     return 0;
                 }
             });
@@ -449,7 +457,7 @@ export class ProtocolListPage implements OnInit {
         this.rowRecords = this.protocolListView.length;
         this.totalRecords = this.protocolListAll.length;
 
-        console.log('start_index - end_index :', start_index, end_index);
+        //console.log('start_index - end_index :', start_index, end_index, this.protocolListView );
 
         if ((start_index + end_index + this.rowCount) >= this.rowRecords) {
             this.protocolListView = this.protocolListView.slice(start_index, this.rowRecords);
@@ -487,6 +495,7 @@ export class ProtocolListPage implements OnInit {
     }
 
     nodeSelect(event, selectedNode) {
+        console.log('selectedNode :', selectedNode);
         this.selectedNode.data = event.node.data;
         this.selectedRow = selectedNode.length;
         if (selectedNode.length == 0) {
