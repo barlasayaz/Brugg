@@ -4,12 +4,14 @@ import { ApiService } from '../../services/api';
 import { NavController, Events } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { NavigationExtras } from '@angular/router';
+
 /**
  * Generated class for the MainNavComponent component.
  *
  * See https://angular.io/api/core/Component for more info on Angular
  * Components.
  */
+
 @Component({
   selector: 'main-nav',
   templateUrl: './main-nav.component.html',
@@ -22,14 +24,14 @@ export class MainNavComponent implements OnInit {
   public progressBar: any = 0;
   public rowRecords: any = 0;
   public totalRecords: any = 0;
-  public customerName = "";
+  public customerName = '';
 
   constructor(
     public userdata: UserdataService,
     public navCtrl: NavController,
     public translate: TranslateService,
     public events: Events,
-    public apiService :ApiService) {
+    public apiService: ApiService) {
 
     console.log('Hello MainNavComponent Component');
     this.events.subscribe('progressBar', (progressBar) => {
@@ -46,12 +48,12 @@ export class MainNavComponent implements OnInit {
 
   }
 
-  ngOnInit() { 
-    if(this.idCustomer > 0)
-    {
+  ngOnInit() {
+    if (this.idCustomer > 0) {
       this.apiService.pvs4_get_customer(this.idCustomer).then((result: any) => {
-        if(result && result.obj)
+        if (result && result.obj) {
         this.customerName = result.obj.company;
+        }
       });
     }
   }
@@ -83,12 +85,12 @@ export class MainNavComponent implements OnInit {
           this.navCtrl.navigateRoot(['/customer-details', id]);
           break;
         case 'ProductList':
-            let navigationExtras: NavigationExtras = {
+            const navigationExtras: NavigationExtras = {
               queryParams: {
                 refresh: new Date().getTime()
               }
             };
-          this.navCtrl.navigateRoot(['/product-list/' + id],navigationExtras);
+          this.navCtrl.navigateRoot(['/product-list/' + id], navigationExtras);
           break;
         case 'ProtocolList':
           this.navCtrl.navigateRoot(['/protocol-list/' + id]);
@@ -108,13 +110,13 @@ export class MainNavComponent implements OnInit {
     this.events.publish('className', 'showdashfirst');
     document.getElementById('dashfirst').className = 'active';
     document.getElementById('dashsecond').className = 'inactive';
-  };
+  }
 
   showdashsecond() {
     this.events.publish('className', 'showdashsecond');
     document.getElementById('dashsecond').className = 'active';
     document.getElementById('dashfirst').className = 'inactive';
-  };
+  }
 
 
 }

@@ -102,8 +102,11 @@ export class ProductDetailsPage implements OnInit {
     });
 
       this.url = this.apiService.pvsApiURL;
-      this.idProduct = parseInt(this.route.snapshot.paramMap.get('id'));
-
+      if (this.route.snapshot.data['special']) {
+        let params = this.route.snapshot.data['special'];
+        this.idProduct = params['id'];
+        this.idCustomer = params['idCustomer'];
+      }
       this.dateiListe();
       this.nocache = new Date().getTime();
   }
@@ -123,7 +126,7 @@ export class ProductDetailsPage implements OnInit {
     this.apiService.pvs4_get_product(id).then((result: any) => {
       this.activProduct = result.obj;
       this.idCustomer = this.activProduct.customer;
-      let title = "";
+      let title = '';
       try {
         title = JSON.parse(this.activProduct.title);
         title = title[this.lang]
@@ -141,13 +144,16 @@ export class ProductDetailsPage implements OnInit {
 
           this.activProduct.items.forEach(event => {
               event.type = parseInt(event.type);
+              if (event.type == 4) {
+                event.value = this.datePipe.transform(event.value, 'HH:ss');
+              }
               if (event.type == 5) {
                 event.value = this.datePipe.transform(event.value, 'dd.MM.yyyy');
               }
               if (event.type == 0) {
-                if(event.value ==="true") event.value=true;
-                if(event.value ==="false") event.value=false;
-              }            
+                if (event.value === 'true') { event.value = true; }
+                if (event.value === 'false') { event.value = false; }
+              }
           });
 
         } catch {
@@ -350,9 +356,9 @@ export class ProductDetailsPage implements OnInit {
         productList.push({ 'title': this.translate.instant('Kundenbezeichnung'), 'value': ' ' });
       }
       if (element.author != undefined) {
-         productList.push({ "title": this.translate.instant('Autor'), "value": element.author });
+         productList.push({ 'title': this.translate.instant('Autor'), 'value': element.author });
       } else {
-         productList.push({ "title": this.translate.instant('Autor'), "value": ' ' });
+         productList.push({ 'title': this.translate.instant('Autor'), 'value': ' ' });
       }
       if (element.check_interval != undefined) {
         productList.push({ 'title': this.translate.instant('Intervall Prüfen'), 'value': element.check_interval });

@@ -579,6 +579,7 @@ export class ProtocolListPage implements OnInit {
         for (let i = 0, len = this.allnodes.length; i < len; i++) {
             const obj = this.allnodes[i];
             obj.items = obj.items.replace(/(\\r\\n|\\n|\\r)/gm, ' ');
+            console.log('items :', obj.items);
             const json: any = {};
             for (let j = 0; j < this.selectedColumns.length; j++) {
                 if (obj[this.selectedColumns[j].field]) {
