@@ -1,7 +1,6 @@
 
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-
 import { DataResolverService } from './services/data-resolver.service';
 
 const routes: Routes = [
@@ -17,10 +16,15 @@ const routes: Routes = [
   { path: 'customer-table', loadChildren: './customer-table/customer-table.module#CustomerTablePageModule' },
   { path: 'dashboard', loadChildren: './dashboard/dashboard.module#DashboardPageModule' },
   { path: 'imprint', loadChildren: './login/imprint/imprint.module#ImprintPageModule' },
-  { path: 'note-details/:id', loadChildren: './note-details/note-details.module#NoteDetailsPageModule' },
   { path: 'note-list/:id', loadChildren: './note-list/note-list.module#NoteListPageModule' },
   { path: 'order-form/:id', loadChildren: './order-form/order-form.module#OrderFormPageModule' },
-  { path: 'product-details/:id', loadChildren: './product-details/product-details.module#ProductDetailsPageModule' },
+  {
+    path: 'product-details',
+    resolve: {
+      special: DataResolverService
+    },
+    loadChildren: './product-details/product-details.module#ProductDetailsPageModule'
+  },
   {
     path: 'product-edit',
     resolve: {
@@ -68,14 +72,13 @@ const routes: Routes = [
   },
   { path: 'rebox', loadChildren: './rebox/rebox.module#ReboxPageModule' },
   { path: 'product-copy', loadChildren: './product-copy/product-copy.module#ProductCopyPageModule' },
-  // ,{ path: 'appointment-edit', loadChildren: './components/appointment-edit/appointment-edit.module#AppointmentEditComponentModule' },
-  // { path: 'customer-edit', loadChildren: './components/customer-edit/customer-edit.module#CustomerEditComponentModule' },
-  // { path: 'dialogproduktbildmodal', loadChildren: './components/dialogproduktbildmodal/dialogproduktbildmodal.module#DialogproduktbildmodalPageModule' },
-  // { path: 'nfc-scan', loadChildren: './components/nfc-scan/nfc-scan.module#NfcScanComponentModule' },
-  // { path: 'note-edit', loadChildren: './components/note-edit/note-edit.module#NoteEditComponentModule' },
-  // { path: 'product-opt-edit', loadChildren: './components/product-opt-edit/product-opt-edit.module#ProductOptEditComponentModule' },
-  // { path: 'protocol-opt-edit', loadChildren: './components/protocol-opt-edit/protocol-opt-edit.module#ProtocolOptEditComponentModule' },
-  // { path: 'qr-barcode', loadChildren: './components/qr-barcode/qr-barcode.module#QrBarcodeComponentModule' }
+  {
+    path: 'note-details',
+    resolve: {
+      special: DataResolverService
+    },
+    loadChildren: './note-details/note-details.module#NoteDetailsPageModule'
+  },
 ];
 @NgModule({
   imports: [

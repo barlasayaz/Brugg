@@ -31,7 +31,11 @@ export class NoteDetailsPage {
               public translate: TranslateService,
               private route: ActivatedRoute) {
 
-      this.idNote = parseInt(this.route.snapshot.paramMap.get('id'));
+      if (this.route.snapshot.data['special']) {
+        let params = this.route.snapshot.data['special'];
+        this.idNote = params['id'];
+        this.idCustomer = params['idCustomer'];
+      }
       this.loadNote(this.idNote);
 
   }

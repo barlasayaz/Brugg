@@ -12,6 +12,8 @@ import { ActivatedRoute } from '@angular/router';
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { SystemService } from '../services/system';
+import { DataService } from '../services/data.service';
+
 /**
  * Generated class for the NoteListPage page.
  *
@@ -156,7 +158,8 @@ export class NoteListPage implements OnInit {
         public events: Events,
         public system: SystemService,
         private route: ActivatedRoute,
-        private loadingCtrl: LoadingController) {
+        private loadingCtrl: LoadingController,
+        private dataService: DataService) {
             this.modelChanged.pipe(
                 debounceTime(700))
                 .subscribe(model => {
@@ -480,9 +483,12 @@ export class NoteListPage implements OnInit {
         console.log('menu_view', this.selectedNode);
         if (this.selectedNode) {
             if (this.selectedNode.data.id) {
-                let id = parseInt(this.selectedNode.data.id);
-                console.log('menu_view id', id);
-                this.navCtrl.navigateForward(['/note-details/' + id]);
+                const data = {
+                    id: parseInt(this.selectedNode.data.id),
+                    idCustomer: this.idCustomer
+                };
+                this.dataService.setData(data);
+                this.navCtrl.navigateForward(['/note-details']);
             }
         }
     }

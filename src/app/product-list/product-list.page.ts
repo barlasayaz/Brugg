@@ -293,9 +293,8 @@ export class ProductListPage implements OnInit {
     }
 
     async loadNodes(event: LazyLoadEvent) {
-        if (this.totalRecords > 0) {            
-            if(event.sortField && event.sortField.length>0)
-            {
+        if (this.totalRecords > 0) {
+            if (event.sortField && event.sortField.length > 0) {
                 this.sortedColumn.sort_field = event.sortField;
                 this.sortedColumn.sort_order = event.sortOrder;
                 localStorage.setItem('sort_column_product', JSON.stringify(this.sortedColumn));
@@ -451,12 +450,11 @@ export class ProductListPage implements OnInit {
                     }
 
                     if (options[i].type == 0) {
-                        console.log('value :', options[i].value);
                         if (options[i].value == true) {
                             options[i].value = this.translate.instant('Wahr');
                         }
                         if (options[i].value == false) {
-                            options[i].value = this.translate.instant('Falsch');
+                             options[i].value = this.translate.instant('Falsch');
                         }
                         this.productListAll[index].data[options[i].title[this.lang]] = options[i].value;
                     } else if (options[i].type == 1) {
@@ -648,6 +646,18 @@ export class ProductListPage implements OnInit {
             this.productListView = this.productListView.sort((a, b) => {
                 let value1 = a.data[sort_field];
                 let value2 = b.data[sort_field];
+                if (typeof value1 === 'boolean') {
+                    if (value1 === true) { value1 = '1'; } else { value1 = '0'; }
+                }
+                if (typeof value2 === 'boolean') {
+                    if (value2 === true) { value2 = '1'; } else { value2 = '0'; }
+                } 
+                if (typeof value1 === 'undefined') {
+                    return -1 * sort_order;
+                }
+                if (typeof value2 === 'undefined') {
+                    return 1 * sort_order;
+                }
 
                 if (this.apiService.isEmpty(value1) && !this.apiService.isEmpty(value2)) {
                     return-1 * sort_order;
@@ -655,9 +665,9 @@ export class ProductListPage implements OnInit {
                     return 1 * sort_order;
                 } else if (this.apiService.isEmpty(value1) && this.apiService.isEmpty(value2)) {
                     return 0;
-                } else if ( !isNaN(Number(value1)) && !isNaN(Number(value2)) && Number(value1) > Number(value2)) {
+                } else if ( !isNaN(Number(value1)) && !isNaN(Number(value2)) && (Number(value1) > Number(value2))) {
                     return 1 * sort_order;
-                } else if ( !isNaN(Number(value1)) && !isNaN(Number(value2)) && Number(value1) < Number(value2)) {
+                } else if ( !isNaN(Number(value1)) && !isNaN(Number(value2)) && (Number(value1) < Number(value2))) {
                     return -1 * sort_order;
                 } else if ( value1.toLowerCase( ) > value2.toLowerCase( )) {
                     return 1 * sort_order;
@@ -966,10 +976,13 @@ export class ProductListPage implements OnInit {
         console.log('menu_view', this.selectedNode[0]);
         if (this.selectedNode) {
             if (this.selectedNode.data.id) {
-                const id = parseInt(this.selectedNode.data.id);
-                // console.log('menu_view :', id, JSON.stringify(this.selectedNode.data));
-
-                this.navCtrl.navigateForward(['/product-details', id] );
+                const data = {
+                    id: this.selectedNode.data.id,
+                    idCustomer: this.idCustomer,
+                    parent: this.selectedNode.data.parent
+                };
+                this.dataService.setData(data);
+                this.navCtrl.navigateForward(['/product-details']);
             }
         }
     }
@@ -1115,7 +1128,7 @@ export class ProductListPage implements OnInit {
                                         headerRowVisible,
                                         pdfTitle,
                                         this.translate.instant('Produkt') + this.translate.instant('Liste') + '.pdf');
-            loader.dismiss();
+        loader.dismiss();
     }
 
     data_tree(nodes: TreeNode[]): any {
