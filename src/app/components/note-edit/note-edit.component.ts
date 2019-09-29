@@ -133,6 +133,25 @@ export class NoteEditComponent {
 
     this.apiService.pvs4_set_note(obj).then((result: any) => {
       console.log('result - redirect: ', result, '- ', this.redirect);
+      if (this.itsNew && obj.category == 1)
+      {
+        let appointmentObj = {
+          active: 1,
+          appointment_type: 0,
+          idCustomer: this.idCustomer,
+          idContactPerson: this.selectedContact.id,
+          idUser: this.userdata.id,
+          licensee: this.userdata.licensee,
+          notes: obj.notes,
+          appointment_date: obj.notes_date,
+          id: 0,
+          start_time: pipe.transform(this.activNote['notes_date'], 'HH:mm'),
+          end_time: pipe.transform(this.activNote['notes_date'], 'HH:mm')
+        };
+        this.apiService.pvs4_set_appointment(appointmentObj).then((result: any) => {
+          console.log('create appointment ');
+        });
+      }
       if (this.redirect == 1) {
         this.viewCtrl.dismiss(true);
       }
