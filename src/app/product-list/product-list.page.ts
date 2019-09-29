@@ -293,9 +293,8 @@ export class ProductListPage implements OnInit {
     }
 
     async loadNodes(event: LazyLoadEvent) {
-        if (this.totalRecords > 0) {            
-            if(event.sortField && event.sortField.length>0)
-            {
+        if (this.totalRecords > 0) {
+            if (event.sortField && event.sortField.length > 0) {
                 this.sortedColumn.sort_field = event.sortField;
                 this.sortedColumn.sort_order = event.sortOrder;
                 localStorage.setItem('sort_column_product', JSON.stringify(this.sortedColumn));
@@ -451,6 +450,12 @@ export class ProductListPage implements OnInit {
                     }
 
                     if (options[i].type == 0) {
+                        if (options[i].value == true) {
+                            options[i].value = this.translate.instant('Wahr');
+                        }
+                        if (options[i].value == false) {
+                             options[i].value = this.translate.instant('Falsch');
+                        }
                         this.productListAll[index].data[options[i].title[this.lang]] = options[i].value;
                     } else if (options[i].type == 1) {
                         for (let j = 0; j < options[i].options.length; j++) {
@@ -641,18 +646,16 @@ export class ProductListPage implements OnInit {
             this.productListView = this.productListView.sort((a, b) => {
                 let value1 = a.data[sort_field];
                 let value2 = b.data[sort_field];
-                if (typeof value1 === "boolean"){
-                    if(value1 === true) value1="1";
-                    else value1="0";
+                if (typeof value1 === 'boolean') {
+                    if (value1 === true) { value1 = '1'; } else { value1 = '0'; }
                 }
-                if (typeof value2 === "boolean"){
-                    if(value2 === true) value2="1";
-                    else value2="0";                
+                if (typeof value2 === 'boolean') {
+                    if (value2 === true) { value2 = '1'; } else { value2 = '0'; }
                 } 
-                if (typeof value1 === "undefined"){
+                if (typeof value1 === 'undefined') {
                     return -1 * sort_order;
                 }
-                if (typeof value2 === "undefined"){                 
+                if (typeof value2 === 'undefined') {
                     return 1 * sort_order;
                 }
 
@@ -1125,7 +1128,7 @@ export class ProductListPage implements OnInit {
                                         headerRowVisible,
                                         pdfTitle,
                                         this.translate.instant('Produkt') + this.translate.instant('Liste') + '.pdf');
-            loader.dismiss();
+        loader.dismiss();
     }
 
     data_tree(nodes: TreeNode[]): any {
