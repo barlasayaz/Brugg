@@ -251,7 +251,13 @@ export class ProtocolListPage implements OnInit {
                         this.cols.push({ field: options[i].title[this.lang], header: options[i].title[this.lang], width: '200px' });
                     }
                     options[i].type = parseInt(options[i].type);
-                    if (options[i].type == 0) {                        
+                    if (options[i].type == 0) {
+                        if (options[i].value == true) {
+                            options[i].value = this.translate.instant('Wahr');
+                        }
+                        if (options[i].value == false) {
+                             options[i].value = this.translate.instant('Falsch');
+                        }
                         this.protocolListAll[index].data[options[i].title[this.lang]] = options[i].value;
                     } else if (options[i].type == 1) {
                         if (options[i].value != null) {
@@ -578,6 +584,7 @@ export class ProtocolListPage implements OnInit {
         for (let i = 0, len = this.allnodes.length; i < len; i++) {
             const obj = this.allnodes[i];
             obj.items = obj.items.replace(/(\\r\\n|\\n|\\r)/gm, ' ');
+
             const json: any = {};
             for (let j = 0; j < this.selectedColumns.length; j++) {
                 if (obj[this.selectedColumns[j].field]) {
