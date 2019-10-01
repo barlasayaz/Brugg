@@ -263,22 +263,22 @@ export class ProductOptEditComponent implements OnInit {
         inputs: [
           {
             name: 'de',
-            placeholder:  this.translate.instant('Titel') + ' (de)',
+            placeholder: this.translate.instant('German'),
             value: title.de
           },
           {
             name: 'en',
-            placeholder: this.translate.instant('Titel') + ' (en)',
+            placeholder: this.translate.instant('English'),
             value: title.en
           },
           {
             name: 'fr',
-            placeholder: this.translate.instant('Titel') + ' (fr)',
+            placeholder: this.translate.instant('French'),
             value: title.fr
           },
           {
             name: 'it',
-            placeholder: this.translate.instant('Titel') + ' (it)',
+            placeholder: this.translate.instant('Italian'),
             value: title.it
           }
         ],

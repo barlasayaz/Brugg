@@ -100,22 +100,22 @@ export class ProtocolTemplatePage implements OnInit {
       inputs: [
         {
           name: 'de',
-          placeholder: 'German',
+          placeholder: this.translate.instant('German'),
           value: this.templateTitleObj.de
         },
         {
           name: 'en',
-          placeholder: 'English',
+          placeholder: this.translate.instant('English'),
           value: this.templateTitleObj.en
         },
         {
           name: 'fr',
-          placeholder: 'French',
+          placeholder: this.translate.instant('French'),
           value: this.templateTitleObj.fr
         },
         {
           name: 'it',
-          placeholder: 'Italian',
+          placeholder: this.translate.instant('Italian'),
           value: this.templateTitleObj.it
         }
       ],

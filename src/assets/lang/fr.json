@@ -868,6 +868,10 @@
   "edit_protocol_templates":"Modifier les modèles de protocole",
   "Möchten Sie diesen Option wirklich deaktivieren?": "Voulez-vous vraiment supprimer ce roption de façon permanente?",
   "Möchten Sie diesen Mitarbeiter wirklich entfernen?": "Voulez-vous vraiment supprimer cet employé?",
-  "Tage": "Journées"
+  "Tage": "Journées",
+  "German": "Allemand",
+  "English": "Anglais",
+  "French": "Français",
+  "Italian": "Italien"
   
 }

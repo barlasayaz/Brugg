@@ -869,5 +869,9 @@
   "edit_protocol_templates": "Edit Protocol Templates",
   "Möchten Sie diesen Option wirklich deaktivieren?": "Are you sure you want to deactivate this option?",
   "Möchten Sie diesen Mitarbeiter wirklich entfernen?": "Do you really want to remove this employee?",
-  "Tage": "Days"
+  "Tage": "Days",
+  "German": "German",
+  "English": "English",
+  "French": "French",
+  "Italian": "Italian"
 }
