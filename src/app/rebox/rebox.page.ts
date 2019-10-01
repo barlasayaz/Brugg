@@ -35,6 +35,11 @@ export class ReboxPage implements OnInit {
   public inputError: boolean = false;
   public listCustomer: any[] = [];
   public customer: any = {};
+  public pickUpValue = "";
+  public pickUpOptions: any[] = [
+    this.translate.instant('Hol dir die volle ReBox'),
+    this.translate.instant('Fordern Sie leere ReBox'),
+    this.translate.instant('Senden Sie selbst eine vollständige ReBox')];
 
   constructor(public navCtrl: NavController, 
               public translate: TranslateService,
@@ -75,10 +80,6 @@ export class ReboxPage implements OnInit {
   data_tree(nodes: TreeNode[]): any {
     for (let i = 0; i < nodes.length; i++) {
       let obj = nodes[i].data;
-      obj['listText'] = obj['company'];
-      /*if (obj['zip_code'].length) { obj['listText'] += ', ' + obj['zip_code']; }
-      if (obj['place'].length) { obj['listText'] += ' ' + obj['place']; }
-      if (obj['customer_number'].length) { obj['listText'] += ', #' + obj['customer_number']; }*/
       this.listCustomer.push(obj);
       if (nodes[i].children && nodes[i].children.length > 0) {
         this.data_tree(nodes[i].children);
@@ -162,9 +163,9 @@ export class ReboxPage implements OnInit {
     console.log('send()');
     localStorage.setItem('ReBox_Str', this.rebox.Str);
     localStorage.setItem('ReBox_Ort', this.rebox.Ort);
-    if(this.customer.listText)
+    if(this.customer.company)
     {
-      this.rebox.Firma = this.customer.listText;
+      this.rebox.Firma = this.customer.company;
     }
     if (!this.latitude) {
       this.latitude = '';
@@ -175,11 +176,11 @@ export class ReboxPage implements OnInit {
     this.MsgHTML = '<h2>pvs2go.com - ReBox - Abholung</h2>';
     if (this.userdata.Type < 20) {
       this.MsgHTML += '<p>Beauftragt vom Brugg-Mitarbeiter: ' + this.userdata.Name + ', ' + this.userdata.Vorname + ' (' + this.userdata.eMail + ')</p>';
-      this.MsgHTML += '<p>Firma: ' + this.rebox.Firma + '</p>';
+      this.MsgHTML += '<p>Firma: ' + this.rebox.Firma + '- DB-ID: '+ this.customer.id + '- #:' + this.customer.customer_number +'</p>';
       this.MsgHTML += '<p>Notiz: ' + this.rebox.Notiz + '</p>';
     } else {
       this.MsgHTML += '<p>Beauftragt vom Kunde: ' + this.userdata.Name + ', ' + this.userdata.Vorname + ' (' + this.userdata.eMail + ')<br>';
-      this.MsgHTML += 'Firma:' + this.rebox.Firma + ')</p>';
+      this.MsgHTML += '<p>Firma: ' + this.rebox.Firma + '- DB-ID: '+ this.customer.id + '- #:' + this.customer.customer_number +'</p>';
     }
     if (this.GPS == 0) {
       this.MsgHTML += '<h2>Adresse für die Abholung</h2>';
@@ -191,6 +192,8 @@ export class ReboxPage implements OnInit {
       this.MsgHTML += '<p>Position: <a href="http://www.google.com/maps/place/' + this.latitude + ',' + this.longitude + '">' + this.latitude + ',' + this.longitude + '</a><br>';
       this.MsgHTML += 'Anzahl: ' + this.rebox.anzRebox + '<br></p>';
     }
+    this.MsgHTML += 'Wahl der Abholung: ' + this.pickUpValue + '<br></p>';
+    
     let userInfo = {'Begrenzt': this.userdata.Begrenzt, 'eMail': this.userdata.eMail, 'Extras': this.userdata.Extras, 'id': this.userdata.id, 'Name': this.userdata.Name, 'OpcUa': this.userdata.OpcUa, 'Prueferservice': this.userdata.Prueferservice , 'token': this.userdata.token, 'Type': this.userdata.Type, 'Vorname': this.userdata.Vorname};
     this.params = {'MsgHTML': this.MsgHTML, 'latitude': this.latitude, 'longitude': this.longitude, 'UserInfo': JSON.stringify(userInfo), 'Betreff': 'pvs2go.com - ReBox - Abholung', 'ReBoxDate': this.rebox.ReBoxDate, 'Copy': this.Copy, 'Empfaenger': this.Empfaenger};
 

@@ -873,5 +873,8 @@
   "German": "German",
   "English": "English",
   "French": "French",
-  "Italian": "Italian"
+  "Italian": "Italian",
+  "Hol dir die volle ReBox":"Pick up full ReBox",
+  "Fordern Sie leere ReBox":"Demand Empty ReBox",
+  "Senden Sie selbst eine vollständige ReBox":"Send a full ReBox on your own"
 }
