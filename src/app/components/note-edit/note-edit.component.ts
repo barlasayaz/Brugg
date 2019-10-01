@@ -135,22 +135,39 @@ export class NoteEditComponent {
       console.log('result - redirect: ', result, '- ', this.redirect);
       if (this.itsNew && obj.category == 1)
       {
-        let appointmentObj = {
-          active: 1,
-          appointment_type: 0,
-          idCustomer: this.idCustomer,
-          idContactPerson: this.selectedContact.id,
-          idUser: this.userdata.id,
-          licensee: this.userdata.licensee,
-          notes: obj.notes,
-          appointment_date: obj.notes_date,
-          id: 0,
-          start_time: pipe.transform(this.activNote['notes_date'], 'HH:mm'),
-          end_time: pipe.transform(this.activNote['notes_date'], 'HH:mm')
-        };
-        this.apiService.pvs4_set_appointment(appointmentObj).then((result: any) => {
+        this.apiService.pvs4_get_appointment_list().then((result: any) => {
           console.log('create appointment ');
-        });
+          let appointments: any = result.list;
+          let existingAppointment = false;
+          let today = pipe.transform(new Date(), 'yyyy-MM-dd');
+          for (let index = 0; index < appointments.length; index++) {
+            const element = appointments[index].data;
+            if(element.appointment_date == today && element.appointment_type == 0 && element.idCustomer == this.idCustomer)
+            {
+              existingAppointment = true;
+              break;
+            }
+          }
+          if(!existingAppointment)
+          {
+            let appointmentObj = {
+              active: 1,
+              appointment_type: 0,
+              idCustomer: this.idCustomer,
+              idContactPerson: this.selectedContact.id,
+              idUser: this.userdata.id,
+              licensee: this.userdata.licensee,
+              notes: obj.notes,
+              appointment_date: pipe.transform(obj.notes_date, 'yyyy-MM-dd'),
+              id: 0,
+              start_time: pipe.transform(this.activNote['notes_date'], 'HH:mm'),
+              end_time: pipe.transform(this.activNote['notes_date'], 'HH:mm')
+            };
+            this.apiService.pvs4_set_appointment(appointmentObj).then((result: any) => {
+              console.log('create appointment ');
+            });
+          }
+      });
       }
       if (this.redirect == 1) {
         this.viewCtrl.dismiss(true);
