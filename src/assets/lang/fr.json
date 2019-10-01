@@ -868,6 +868,9 @@
   "edit_protocol_templates":"Modifier les modèles de protocole",
   "Möchten Sie diesen Option wirklich deaktivieren?": "Voulez-vous vraiment supprimer ce roption de façon permanente?",
   "Möchten Sie diesen Mitarbeiter wirklich entfernen?": "Voulez-vous vraiment supprimer cet employé?",
-  "Tage": "Journées"
+  "Tage": "Journées",
+  "Hol dir die volle ReBox":"Ramassez la ReBox complète",
+  "Fordern Sie leere ReBox":"Demande vide ReBox",
+  "Senden Sie selbst eine vollständige ReBox":"Envoyer une Rebox complète par vos propres moyens"
   
 }

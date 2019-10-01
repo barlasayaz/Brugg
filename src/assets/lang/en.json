@@ -869,5 +869,8 @@
   "edit_protocol_templates": "Edit Protocol Templates",
   "Möchten Sie diesen Option wirklich deaktivieren?": "Are you sure you want to deactivate this option?",
   "Möchten Sie diesen Mitarbeiter wirklich entfernen?": "Do you really want to remove this employee?",
-  "Tage": "Days"
+  "Tage": "Days",
+  "Hol dir die volle ReBox":"Pick up full ReBox",
+  "Fordern Sie leere ReBox":"Demand Empty ReBox",
+  "Senden Sie selbst eine vollständige ReBox":"Send a full ReBox on your own"
 }

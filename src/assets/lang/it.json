@@ -868,5 +868,9 @@
   "edit_protocol_templates":"Modifica ve modelli di protocollo",
   "Möchten Sie diesen Option wirklich deaktivieren?": "Sei sicuro di voler disattivare questo option?",
   "Möchten Sie diesen Mitarbeiter wirklich entfernen?": "Vuoi veramente rimuovere questo dipendente?",
-  "Tage": "Giorni"
+  "Tage": "Giorni",
+  "Hol dir die volle ReBox":"Prendi ReBox completo",
+  "Fordern Sie leere ReBox":"Richiedi ReBox vuoto",
+  "Senden Sie selbst eine vollständige ReBox":"Invia un Rebox completo da solo"
+  
 }
