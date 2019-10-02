@@ -6,6 +6,7 @@ import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/fo
 import { UserdataService } from '../services/userdata';
 import { SystemService } from '../services/system';
 import { ImprintPage } from './imprint/imprint.page';
+import { OldBrowserPage } from './old-browser/old-browser.page';
 
 /**
  * Generated class for the LoginPage page.
@@ -125,6 +126,44 @@ export class LoginPage {
               }); // error path);
           }
       }
+
+      // Get IE or Edge browser version
+      var version = detectIE();
+
+      if (version === false) {
+        console.log('kein IE/EDGE');
+      } else if (version >= 12) {
+        console.log('Edge ' + version);
+      } else {
+        console.log('IE ' + version);
+        this.oldBrowserModal();
+      }
+
+      function detectIE() {
+        var ua = window.navigator.userAgent;
+
+        var msie = ua.indexOf('MSIE ');
+        if (msie > 0) {
+          // IE 10 or older => return version number
+          return parseInt(ua.substring(msie + 5, ua.indexOf('.', msie)), 10);
+        }
+
+        var trident = ua.indexOf('Trident/');
+        if (trident > 0) {
+          // IE 11 => return version number
+          var rv = ua.indexOf('rv:');
+          return parseInt(ua.substring(rv + 3, ua.indexOf('.', rv)), 10);
+        }
+
+        var edge = ua.indexOf('Edge/');
+        if (edge > 0) {
+          // Edge (IE 12+) => return version number
+          return parseInt(ua.substring(edge + 5, ua.indexOf('.', edge)), 10);
+        }
+
+        // other browser
+        return false;
+      }
     });
   }
 
@@ -201,4 +240,17 @@ export class LoginPage {
       }).then(x => x.present());
   }
 
+  // OLD-Browser-Info
+  async oldBrowserModal() {
+    const modal =
+      await this.modalCtrl.create({
+        component: OldBrowserPage,
+        cssClass: 'oldbrowser-modal-css',
+        backdropDismiss:false,
+        componentProps: {
+        }
+      }).then(x => x.present());
+  }
+  
 }
+

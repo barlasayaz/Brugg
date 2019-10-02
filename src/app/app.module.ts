@@ -20,6 +20,7 @@ import { LoginPageModule } from './login/login.module';
 import { ProductMigrationPageModule } from './product-migration/product-migration.module';
 import { AssignmentPageModule } from './customer-details/assignment/assignment.module';
 import { ImprintPageModule } from './login/imprint/imprint.module';
+import { OldBrowserPageModule } from './login/old-browser/old-browser.module';
 import { DialogproduktbildmodalPageModule } from'./components/dialogproduktbildmodal/dialogproduktbildmodal.module';
 import { MyDataEditPageModule } from './my-data/my-data-edit/my-data-edit.module';
 import { OrderSendPageModule } from './order-form/order-send/order-send.module';
@@ -64,6 +65,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     ProductMigrationPageModule,
     AssignmentPageModule,
     ImprintPageModule,
+    OldBrowserPageModule,
     DialogproduktbildmodalPageModule,
     MyDataEditPageModule,
     OrderSendPageModule,

@@ -16,6 +16,7 @@ const routes: Routes = [
   { path: 'customer-table', loadChildren: './customer-table/customer-table.module#CustomerTablePageModule' },
   { path: 'dashboard', loadChildren: './dashboard/dashboard.module#DashboardPageModule' },
   { path: 'imprint', loadChildren: './login/imprint/imprint.module#ImprintPageModule' },
+  { path: 'old-browser', loadChildren: './login/old-browser/old-browser.module#OldBrowserPageModule' },
   { path: 'note-list/:id', loadChildren: './note-list/note-list.module#NoteListPageModule' },
   { path: 'order-form/:id', loadChildren: './order-form/order-form.module#OrderFormPageModule' },
   {
@@ -78,7 +79,7 @@ const routes: Routes = [
       special: DataResolverService
     },
     loadChildren: './note-details/note-details.module#NoteDetailsPageModule'
-  },
+  }
 ];
 @NgModule({
   imports: [
