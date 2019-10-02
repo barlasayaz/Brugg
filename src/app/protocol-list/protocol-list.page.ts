@@ -584,11 +584,14 @@ export class ProtocolListPage implements OnInit {
         for (let i = 0, len = this.allnodes.length; i < len; i++) {
             const obj = this.allnodes[i];
             obj.items = obj.items.replace(/(\\r\\n|\\n|\\r)/gm, ' ');
-
             const json: any = {};
+            let objStr: any;
             for (let j = 0; j < this.selectedColumns.length; j++) {
                 if (obj[this.selectedColumns[j].field]) {
-                    json[this.selectedColumns[j].header] = obj[this.selectedColumns[j].field];
+                    objStr = obj[this.selectedColumns[j].field];
+                    objStr = objStr.replace(/(Wahr|True|Vrai|Vero|true)/gm, '√');
+                    objStr = objStr.replace(/(Falsch|False|Faux|Falso|false)/gm, 'x');
+                    json[this.selectedColumns[j].header] = objStr;
                 } else {
                     json[this.selectedColumns[j].header] = '';
                 }
@@ -642,11 +645,15 @@ export class ProtocolListPage implements OnInit {
             }
             bodyArray.push(rowArray);
 
+            let objStr: any;
             for (let l = 7; l < this.selectedColumns.length; l++) {
                 rowArray = [];
                 rowArray.push({ text: this.selectedColumns[l].header, style: 'header' });
                 if (obj[this.selectedColumns[l].field]) {
-                    rowArray.push(obj[this.selectedColumns[l].field]);
+                    objStr = obj[this.selectedColumns[l].field];
+                    objStr = objStr.replace(/(Wahr|True|Vrai|Vero|true)/gm, '√');
+                    objStr = objStr.replace(/(Falsch|False|Faux|Falso|false)/gm, 'x');
+                    rowArray.push(objStr);
                 } else {
                     rowArray.push('');
                 }

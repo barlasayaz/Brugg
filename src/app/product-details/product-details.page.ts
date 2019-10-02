@@ -371,14 +371,10 @@ export class ProductDetailsPage implements OnInit {
         productImagePath = '';
       }
       // product options
+
       element.items.forEach(elementItems => {
         if (elementItems.title[this.lang] != '' && elementItems.value != undefined) {
-          if (elementItems.type == 5) {
-            productList.push({ 'title': elementItems.title[this.lang],
-                               'value': this.datePipe.transform(elementItems.value, 'dd.MM.yyyy') });
-          } else {
-            productList.push({ 'title': elementItems.title[this.lang], 'value': elementItems.value });
-          }
+          productList.push({ 'title': elementItems.title[this.lang], 'value': elementItems.value });
         } else {
           productList.push({ 'title': elementItems.title[this.lang], 'value': ' ' });
         }
@@ -388,9 +384,13 @@ export class ProductDetailsPage implements OnInit {
 
     productList.forEach(function (row) {
       const dataRow = [];
+      let objStr: any;
 
       columns.forEach(function (column) {
-        dataRow.push(row[column].toString());
+        objStr = row[column].toString();
+        objStr = objStr.replace(/(Wahr|True|Vrai|Vero|true)/gm, '√');
+        objStr = objStr.replace(/(Falsch|False|Faux|Falso|false)/gm, 'x');
+        dataRow.push(objStr);
       });
 
       bodyProduct.push(dataRow);

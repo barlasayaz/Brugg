@@ -683,8 +683,7 @@ export class ProductListPage implements OnInit {
 
         console.log('start_index - end_index :', start_index, end_index);
 
-        // console.log('aaa :', this.totalRecords, this.rowCount, start_index, end_index, (start_index + end_index + this.rowCount));
-        if ((start_index + end_index + this.rowCount) >= this.rowRecords) {
+       if ((start_index + end_index + this.rowCount) >= this.rowRecords) {
             this.productListView = this.productListView.slice(start_index, this.rowRecords);
         } else {
             this.productListView = this.productListView.slice(start_index, (start_index + end_index));
@@ -1041,9 +1040,13 @@ export class ProductListPage implements OnInit {
             const obj = this.allnodes[i];
             obj.items = obj.items.replace(/(\\r\\n|\\n|\\r)/gm, ' ');
             const json: any = {};
+            let objStr: any;
             for (let j = 0; j < this.selectedColumns.length; j++) {
                 if (obj[this.selectedColumns[j].field]) {
-                    json[this.selectedColumns[j].header] = obj[this.selectedColumns[j].field];
+                    objStr = obj[this.selectedColumns[j].field];
+                    objStr = objStr.replace(/(Wahr|True|Vrai|Vero|true)/gm, '√');
+                    objStr = objStr.replace(/(Falsch|False|Faux|Falso|false)/gm, 'x');
+                    json[this.selectedColumns[j].header] = objStr;
                 } else {
                     json[this.selectedColumns[j].header] = '';
                 }
@@ -1096,11 +1099,15 @@ export class ProductListPage implements OnInit {
             }
             bodyArray.push(rowArray);
 
+            let objStr: any;
             for (let l = 7; l < this.selectedColumns.length; l++) {
                 rowArray = [];
                 rowArray.push({ text: this.selectedColumns[l].header, style: 'header' });
                 if (obj[this.selectedColumns[l].field]) {
-                    rowArray.push(obj[this.selectedColumns[l].field]);
+                    objStr = obj[this.selectedColumns[l].field];
+                    objStr = objStr.replace(/(Wahr|True|Vrai|Vero|true)/gm, '√');
+                    objStr = objStr.replace(/(Falsch|False|Faux|Falso|false)/gm, 'x');
+                    rowArray.push(objStr);
                 } else {
                     rowArray.push('');
                 }

@@ -250,10 +250,14 @@ export class ProtocolDetailsPage implements OnInit {
     });
 
     protocolList.forEach(function (row) {
-      var dataRow = [];
+      const dataRow = [];
+      let objStr: any;
 
       columns.forEach(function (column) {
-        dataRow.push(row[column].toString());
+        objStr = row[column].toString();
+        objStr = objStr.replace(/(Wahr|True|Vrai|Vero|true)/gm, '√');
+        objStr = objStr.replace(/(Falsch|False|Faux|Falso|false)/gm, 'x');
+        dataRow.push(objStr);
       });
 
       bodyProtocol.push(dataRow);
