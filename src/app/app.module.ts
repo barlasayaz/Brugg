@@ -43,6 +43,7 @@ import { DragulaModule } from 'ng2-dragula';
 import { NFC, Ndef } from '@ionic-native/nfc/ngx';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { Camera } from '@ionic-native/camera/ngx';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { Keyboard } from '@ionic-native/keyboard/ngx';
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -107,7 +108,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     FileTransferObject,
     Camera,
     BarcodeScanner,
-    Keyboard
+    Keyboard,
+    Geolocation
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
