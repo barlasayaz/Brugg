@@ -194,6 +194,7 @@ export class ApiService {
             res(done_json);
           }catch{
             console.error(func, done);
+            rej(done);
           }
         },
           err => {

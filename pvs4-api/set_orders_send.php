@@ -88,13 +88,13 @@ function processing() {
     }
     
     // ---------------------------------------------------------------------------------------------- //  
-    function upload_file($encoded_string){
+    function upload_file($encoded_string, $pvs_order_nr){
         $target_dir = '../attachments/orders/'; // add the specific path to save the file
         $decoded_file = base64_decode($encoded_string); // decode the file
         $mime_type = finfo_buffer(finfo_open(), $decoded_file, FILEINFO_MIME_TYPE); // extract mime type
         $extension = mime2ext($mime_type); // extract extension from mime type
-        $file = 'Bestellung_' . uniqid() . '.' . $extension; // rename file as a unique name
-        $file_dir = $target_dir . 'Bestellung_' . uniqid() . '.' . $extension;
+        $file = 'Bestellung_' . $pvs_order_nr . '.' . $extension; // rename file as a unique name
+        $file_dir = $target_dir . 'Bestellung_' . $pvs_order_nr. '.' . $extension;
         try {
             file_put_contents($file_dir, $decoded_file); // save
             //header('Content-Type: application/json');
@@ -175,10 +175,13 @@ function processing() {
     $text ="";    
     $_POST['Empfaenger']=   trim( mysqli_escape_string($con,$_POST['Empfaenger']));
     $_POST['Copy']=   trim( mysqli_escape_string($con,$_POST['Copy']));
+    $pvs_order_nr = 0;
+    if(isset($_POST['pvs_order_nr']) ) { $pvs_order_nr = intval($_POST['pvs_order_nr']); }
+    if($pvs_order_nr<= 0) $pvs_order_nr=uniqid();
 
     global $mail;  
           
-    $fileattach = upload_file($encoded_string);
+    $fileattach = upload_file($encoded_string, $pvs_order_nr);
 
     $mail->CharSet = "utf-8";
     $mail->IsSendmail();
@@ -189,7 +192,7 @@ function processing() {
     $mail->AddReplyTo('info@pvs2go.com');
 
     $mail->AddAttachment($fileattach);  // Attachment
-    $mail->Subject = $_POST['Betreff'];
+    $mail->Subject = $_POST['Betreff']." - ".$pvs_order_nr;
     $mail->AltBody = 'To view the message, please use an HTML compatible email viewer!'; // optional - MsgHTML will create an alternate automatically
     
     $meinText = "<strong>www.pvs2go.com - Bestellformular</strong><br><br>";
