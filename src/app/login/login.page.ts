@@ -35,8 +35,8 @@ export class LoginPage {
   login_nok: boolean;
   saveLogin: boolean;
   private loader: HTMLIonLoadingElement;
-  timeoutShow: any;
-  show_hide_err: boolean = false;
+  private timeoutShow: any = 0;
+  show_hide_err: boolean = true;
   construction: boolean = false;
 
   constructor(public navCtrl: NavController,
@@ -168,9 +168,11 @@ export class LoginPage {
   }
 
   showHideErrors() {
-    clearTimeout(this.timeoutShow);
+    console.log('showHideErrors() ' , this.timeoutShow );
+    if(this.timeoutShow) clearTimeout(this.timeoutShow);
     this.show_hide_err = true;
     this.timeoutShow = setTimeout(() => {
+      console.log('timeoutShow ');
       this.show_hide_err = false;
     }, 8000);
   }
@@ -191,6 +193,7 @@ export class LoginPage {
   }
 
   async signIn() {
+    console.log('this.authForm.valid: ', this.authForm.valid);
     if (!this.authForm.valid) {
       this.showHideErrors();
       return;
@@ -217,6 +220,7 @@ export class LoginPage {
         error => {
           // connection failed
           this.login_nok = true;
+          this.showHideErrors();
           this.userdata.reset();
           loader.dismiss();
         }); // error path);

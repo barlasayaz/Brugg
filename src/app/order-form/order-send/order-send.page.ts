@@ -141,6 +141,7 @@ export class OrderSendPage {
           RE_Ansp: this.RE_Ansp,
           Betreff: this.Betreff,
           Empfaenger: this.Empfaenger,
+          pvs_order_nr: this.activOrderForm.pvs_order_nr,
           Copy: this.Copy,
           pdfBase64: this.pdfRetVal,
           UserVorname: this.userdata.first_name,
@@ -206,6 +207,7 @@ export class OrderSendPage {
                                               }
                                             ]
         });
+        loader.dismiss();
         alert.present();
         this.modalCtrl.dismiss(false);
       }

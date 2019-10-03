@@ -32,7 +32,7 @@
           </div>
         </ion-row>
     
-        <ion-row style="margin-top:10px" *ngIf="login_nok">
+        <ion-row style="margin-top:10px" *ngIf="login_nok && show_hide_err">
           <ion-col>
             <div class="text-center alert alert-danger wrong-log">{{'Ihre Zugangsdaten sind nicht korrekt.' | translate}}</div>
           </ion-col>
@@ -82,7 +82,7 @@
     
           <ion-row  *ngIf="!construction" style="margin-top: 10px;margin-bottom: 10px">
             <ion-col>
-              <ion-button class="pvs4-btn pvs4-btn-full pvs4-btn-green" type="submit">{{ "Login" | translate }} </ion-button>
+              <ion-button class="pvs4-btn pvs4-btn-full pvs4-btn-green" [disabled]="!authForm.valid" type="submit">{{ "Login" | translate }} </ion-button>
               <!-- <button style="visibility: hidden" type="submit"></button> -->
             </ion-col>
           </ion-row>

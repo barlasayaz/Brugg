@@ -24,6 +24,8 @@ export class ApiService {
   public appointmentMinTime: string = '07:00';
   public appointmentMaxTime: string = '17:59';
   public version: any = '4.4.35';
+  private reset_semaphor = false;
+  private reset_timeout:any = 0;
 
   constructor(public http: HttpClient, public userdata: UserdataService) {
     console.log('Start ApiProvider Provider');
@@ -100,50 +102,75 @@ export class ApiService {
     });
   }
 
-  bid_reset(orig_url: string, orig_data: any, orig_headers: any) {
-    console.log('pvs4_api_reset():', orig_url, orig_data);
-    return new Promise((res, rej) => {
-      // inject our access token
-      const tick = Date.now().toString(16).toUpperCase();
-      const url = brugg_id_api + 'token.php?tick=' + tick;
-      const data = {
-        'client_id'    : pvs4_client_id, 
-        'client_secret': pvs4_client_secret,
-        'grant_type': 'refresh_token',
-        'refresh_token' : window.localStorage['refresh_token']
+  async test_semaphor() {
+  console.log('test_semaphor()  this.reset_semaphor', this.reset_semaphor);
+    return new Promise(resolve => {
+      if(this.reset_semaphor){
+        setTimeout(() => {
+          console.log('test_semaphor() timeout resolve ');
+          let r = this.test_semaphor();
+          resolve(r);
+        }, 1000);
+      }else{
+        resolve();
+        console.log('test_semaphor() resolve ');
       }
-      // call  endpoint
-      this.http.post(url, data, { responseType: 'text' })
-        .subscribe(
-          (data: any) => {
-            data = JSON.parse(data);
-            console.log('api bid_reset() post data: ', data);
-            window.localStorage['access_token'] = data.access_token;
-            window.localStorage['refresh_token'] = data.refresh_token;
-            orig_data.token  = data.access_token;
-            this.http.post(orig_url, orig_data, { headers: orig_headers , responseType: 'text' }).subscribe((done: any) => {
-              // return the result
-              try{
-                let done_json = JSON.parse(done);
-                console.log('bid_reset() ok: ',orig_url, done_json);
-                res(done_json);
-              }catch{
-                console.error('bid_reset() JSON.parse orig_url error:', orig_url, done);
-              }
-            },
-            err => {
-                console.error('bid_reset() post orig_url error:', orig_url, err);
-                rej(err);
-            });
-          }, // success path
-          error => {
-            console.log('api bid_reset() nok :', error);
-            // res(error);
-            this.userdata.delStorage();
-            location.reload();
-          }// error path
-        );
     });
+  }
+
+
+  async bid_reset(orig_url: string, orig_data: any, orig_headers: any) {
+    console.log('pvs4_api_reset():', orig_url, orig_data);
+    //nur ein Rest zur gleichen zeit
+    await this.test_semaphor();
+    if(this.reset_semaphor){
+      console.error('error reset_semaphor');
+    }else{
+      this.reset_semaphor = true;
+      let my_prom =  new Promise((res, rej) => {
+        // inject our access token
+        const tick = Date.now().toString(16).toUpperCase();
+        const url = brugg_id_api + 'token.php?tick=' + tick;
+        const data = {
+          'client_id'    : pvs4_client_id, 
+          'client_secret': pvs4_client_secret,
+          'grant_type': 'refresh_token',
+          'refresh_token' : window.localStorage['refresh_token']
+        }
+        // call  endpoint
+        this.http.post(url, data, { responseType: 'text' }).subscribe( (data: any) => {
+              this.reset_semaphor = false;
+              data = JSON.parse(data);
+              console.log('api bid_reset() post data: ', data);
+              window.localStorage['access_token'] = data.access_token;
+              window.localStorage['refresh_token'] = data.refresh_token;
+              orig_data.token  = data.access_token;
+              this.http.post(orig_url, orig_data, { headers: orig_headers , responseType: 'text' }).subscribe((done: any) => {
+                // return the result
+                try{
+                  let done_json = JSON.parse(done);
+                  console.log('bid_reset() ok: ',orig_url, done_json);
+                  res(done_json);
+                }catch{
+                  console.error('bid_reset() JSON.parse orig_url error:', orig_url, done);
+                }
+              },
+              err => {
+                  console.error('bid_reset() post orig_url error:', orig_url, err);
+                  rej(err);
+              });
+            }, // success path
+            error => {
+              console.log('api bid_reset() nok :', error);
+              this.reset_semaphor = false;
+              // res(error);
+              this.userdata.delStorage();
+              location.reload();
+            }// error path
+          );
+      });
+      return my_prom;
+    }
   }
   /*
   bid_userdata(email: string) {
@@ -194,9 +221,10 @@ export class ApiService {
             res(done_json);
           }catch{
             console.error(func, done);
+            rej(done);
           }
         },
-          err => {
+        err => {
             console.log('pvs4_api_post error:', func, err);
             if (err.status == 401) {
               this.bid_reset(url, data, headers).then((done: any) => { // return the result

@@ -63,7 +63,7 @@ export class OrderFormPage {
     },
     order_nr: '',
     contract_nr: '',
-    pvs_order_nr: '',
+    pvs_order_nr: Date.now(),
     commission: '',
     order_date: '',
     delivery_date: '',
