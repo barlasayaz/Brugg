@@ -213,25 +213,13 @@
                     </span>                    
                     <span *ngIf="(col.field != 'nfc_tag_id') && (col.field === 'last_protocol_next')" [ngStyle]="{'color': rowData.last_protocol_next_color  }" >{{rowData[col.field]}}</span>
                     <span *ngIf="(col.field != 'nfc_tag_id') && (col.field != 'last_protocol_next')">
-                        <span *ngIf="(rowData[col.field]!=='Falsch') && (rowData[col.field]!=='Wahr') &&
-                                     (rowData[col.field]!=='False') && (rowData[col.field]!=='True') &&
-                                     (rowData[col.field]!=='Faux') && (rowData[col.field]!=='Vrai') &&
-                                     (rowData[col.field]!=='Falso') && (rowData[col.field]!=='Vero')">
+                        <span *ngIf="(rowData[col.field]!=='x') && (rowData[col.field]!=='√')">
                             {{rowData[col.field]}}
                         </span>
-                        <span *ngIf="(rowData[col.field]==='Falsch') || (rowData[col.field]==='Wahr') ||
-                                     (rowData[col.field]==='False') || (rowData[col.field]==='True') ||
-                                     (rowData[col.field]==='Faux') || (rowData[col.field]==='Vrai') ||
-                                     (rowData[col.field]==='Falso') || (rowData[col.field]==='Vero')">                        
-                                <img *ngIf="rowData[col.field]==='Wahr' ||
-                                            rowData[col.field]==='True' ||
-                                            rowData[col.field]==='Vrai' ||
-                                            rowData[col.field]==='Vero'"
+                        <span *ngIf="(rowData[col.field]==='x') || (rowData[col.field]==='√')">                        
+                                <img *ngIf="rowData[col.field]==='√'"
                                     src="/assets/imgs/available.png" alt="" height="17px"/>
-                                <img *ngIf="rowData[col.field]==='Falsch' ||
-                                            rowData[col.field]==='False' ||
-                                            rowData[col.field]==='Faux' ||
-                                            rowData[col.field]==='Falso'"
+                                <img *ngIf="rowData[col.field]==='x'"
                                     src="/assets/imgs/not_available.png" alt="" height="17px"/>
                         </span>
                     </span>
