@@ -374,7 +374,16 @@ export class ProductDetailsPage implements OnInit {
 
       element.items.forEach(elementItems => {
         if (elementItems.title[this.lang] != '' && elementItems.value != undefined) {
-          productList.push({ 'title': elementItems.title[this.lang], 'value': elementItems.value });
+          if (elementItems.type == 0) {
+            if (elementItems.value == true) {
+              productList.push({ 'title': elementItems.title[this.lang], 'value': '√' });
+            }
+            if (elementItems.value == false) {
+              productList.push({ 'title': elementItems.title[this.lang], 'value': 'x' });
+            }
+          } else {
+            productList.push({ 'title': elementItems.title[this.lang], 'value': elementItems.value });
+          }
         } else {
           productList.push({ 'title': elementItems.title[this.lang], 'value': ' ' });
         }
@@ -384,13 +393,9 @@ export class ProductDetailsPage implements OnInit {
 
     productList.forEach(function (row) {
       const dataRow = [];
-      let objStr: any;
 
       columns.forEach(function (column) {
-        objStr = row[column].toString();
-        objStr = objStr.replace(/(Wahr|True|Vrai|Vero|true)/gm, '√');
-        objStr = objStr.replace(/(Falsch|False|Faux|Falso|false)/gm, 'x');
-        dataRow.push(objStr);
+        dataRow.push(row[column].toString());
       });
 
       bodyProduct.push(dataRow);

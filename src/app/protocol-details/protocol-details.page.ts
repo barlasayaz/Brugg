@@ -243,7 +243,16 @@ export class ProtocolDetailsPage implements OnInit {
 
     protocolItems.forEach(elementItems => {
       if (elementItems.title[this.lang] != '' && elementItems.value != undefined) {
-        protocolList.push({ 'title': elementItems.title[this.lang], 'value': elementItems.value });
+        if (elementItems.type == 0) {
+          if (elementItems.value == true) {
+            protocolList.push({ 'title': elementItems.title[this.lang], 'value': '√'});
+          }
+          if (elementItems.value == false) {
+            protocolList.push({ 'title': elementItems.title[this.lang], 'value': 'x'});
+          }
+        } else {
+          protocolList.push({ 'title': elementItems.title[this.lang], 'value': elementItems.value });
+        }
       } else {
         protocolList.push({ 'title': elementItems.title[this.lang], 'value': ' ' });
       }
@@ -251,13 +260,9 @@ export class ProtocolDetailsPage implements OnInit {
 
     protocolList.forEach(function (row) {
       const dataRow = [];
-      let objStr: any;
 
       columns.forEach(function (column) {
-        objStr = row[column].toString();
-        objStr = objStr.replace(/(Wahr|True|Vrai|Vero|true)/gm, '√');
-        objStr = objStr.replace(/(Falsch|False|Faux|Falso|false)/gm, 'x');
-        dataRow.push(objStr);
+        dataRow.push(row[column].toString());
       });
 
       bodyProtocol.push(dataRow);
@@ -324,9 +329,17 @@ export class ProtocolDetailsPage implements OnInit {
 
       // product oprtions
       element.items.forEach(elementItems => {
-        // console.log('product oprtions :', elementItems.title, '- ', elementItems.title[this.lang], ' - ', elementItems.value);
         if (elementItems.title[this.lang] != '' && elementItems.value != undefined) {
-          bodyProduct.push([{ text: elementItems.title[this.lang]}, {text: elementItems.value }]);
+          if (elementItems.type == 0) {
+            if (elementItems.value == true) {
+              bodyProduct.push([{ text: elementItems.title[this.lang]}, {text: '√' }]);
+            }
+            if (elementItems.value == false) {
+              bodyProduct.push([{ text: elementItems.title[this.lang]}, {text: 'x' }]);
+            }
+          } else {
+            bodyProduct.push([{ text: elementItems.title[this.lang]}, {text: elementItems.value }]);
+          }
         } else {
           bodyProduct.push([{ text: elementItems.title[this.lang]}, {text: '' }]);
         }
