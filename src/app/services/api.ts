@@ -25,6 +25,7 @@ export class ApiService {
   public appointmentMaxTime: string = '17:59';
   public version: any = '4.4.35';
   private reset_semaphor = false;
+  private reset_timeout:any = 0;
 
   constructor(public http: HttpClient, public userdata: UserdataService) {
     console.log('Start ApiProvider Provider');
@@ -101,17 +102,32 @@ export class ApiService {
     });
   }
 
-  bid_reset(orig_url: string, orig_data: any, orig_headers: any) {
+  async test_semaphor() {
+  console.log('test_semaphor()  this.reset_semaphor', this.reset_semaphor);
+    return new Promise(resolve => {
+      if(this.reset_semaphor){
+        setTimeout(() => {
+          console.log('test_semaphor() timeout resolve ');
+          let r = this.test_semaphor();
+          resolve(r);
+        }, 1000);
+      }else{
+        resolve();
+        console.log('test_semaphor() resolve ');
+      }
+    });
+  }
+
+
+  async bid_reset(orig_url: string, orig_data: any, orig_headers: any) {
     console.log('pvs4_api_reset():', orig_url, orig_data);
     //nur ein Rest zur gleichen zeit
+    await this.test_semaphor();
     if(this.reset_semaphor){
       console.error('error reset_semaphor');
-      setTimeout(() => {
-        this.bid_reset(orig_url, orig_data, orig_headers);
-      }, 1000);
     }else{
       this.reset_semaphor = true;
-      return new Promise((res, rej) => {
+      let my_prom =  new Promise((res, rej) => {
         // inject our access token
         const tick = Date.now().toString(16).toUpperCase();
         const url = brugg_id_api + 'token.php?tick=' + tick;
@@ -122,8 +138,7 @@ export class ApiService {
           'refresh_token' : window.localStorage['refresh_token']
         }
         // call  endpoint
-        this.http.post(url, data, { responseType: 'text' })
-          .subscribe( (data: any) => {
+        this.http.post(url, data, { responseType: 'text' }).subscribe( (data: any) => {
               this.reset_semaphor = false;
               data = JSON.parse(data);
               console.log('api bid_reset() post data: ', data);
@@ -154,6 +169,7 @@ export class ApiService {
             }// error path
           );
       });
+      return my_prom;
     }
   }
   /*
@@ -208,10 +224,10 @@ export class ApiService {
             rej(done);
           }
         },
-        async err => {
+        err => {
             console.log('pvs4_api_post error:', func, err);
             if (err.status == 401) {
-              await this.bid_reset(url, data, headers).then((done: any) => { // return the result
+              this.bid_reset(url, data, headers).then((done: any) => { // return the result
                 res(done);
               },
                 err => { // return the error

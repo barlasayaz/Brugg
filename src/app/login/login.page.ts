@@ -175,7 +175,6 @@ export class LoginPage {
       console.log('timeoutShow ');
       this.show_hide_err = false;
     }, 8000);
-    console.log('showHideErrors() 333' , this.timeoutShow );
   }
 
   changeLanguage() {
