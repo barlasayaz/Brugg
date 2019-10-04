@@ -474,7 +474,9 @@ export class ProductListPage implements OnInit {
                     } else if (options[i].type == 5) {
                         const pipe = new DatePipe('en-US');
                         this.productListAll[index].data[options[i].title[this.lang]] = pipe.transform(options[i].value, 'dd.MM.yyyy');
-                    } else {
+                    } else if (options[i].type == 6) {
+                        this.productListAll[index].data[options[i].title[this.lang]] = "("+options[i].value.lat.toString().substring(0, 6) + ","+options[i].value.long.toString().substring(0, 6) +")";
+                    }else {
                         this.productListAll[index].data[options[i].title[this.lang]] = options[i].value;
                     }
                 }

@@ -147,10 +147,13 @@ export class ProductDetailsPage implements OnInit {
               if (event.type == 4) {
                 event.value = this.datePipe.transform(event.value, 'HH:ss');
               }
-              if (event.type == 5) {
+              else if (event.type == 5) {
                 event.value = this.datePipe.transform(event.value, 'dd.MM.yyyy');
               }
-              if (event.type == 0) {
+              else if (event.type == 6) {
+                event.value = "("+event.value.lat.toString().substring(0, 6) + ","+event.value.long.toString().substring(0, 6) +")";
+              }
+              else if (event.type == 0) {
                 if (event.value === 'true') { event.value = true; }
                 if (event.value === 'false') { event.value = false; }
               }
