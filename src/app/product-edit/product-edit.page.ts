@@ -9,6 +9,7 @@ import { LoadingController } from '@ionic/angular';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
 import { ActivatedRoute, NavigationExtras } from '@angular/router';
 import { DataService } from '../services/data.service';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
 
 /**
  * Generated class for the ProductEditPage page.
@@ -80,7 +81,8 @@ export class ProductEditPage implements OnInit {
     public camera: Camera,
     public transfer: FileTransfer,
     public dataService: DataService,
-    public loadingCtrl: LoadingController) {
+    public loadingCtrl: LoadingController,
+    private geolocation: Geolocation) {
 
   }
 
@@ -294,6 +296,13 @@ export class ProductEditPage implements OnInit {
           this.mandatoryControl = true;
         }
       }
+      // GPS
+      if (element.type == 6) {
+        // console.log('date :', element.mandatory, element.value);
+        if (element.mandatory == 'true' && element.value.lat == null) {
+          this.mandatoryControl = true;
+        }
+      }
 
     });
 
@@ -428,6 +437,28 @@ export class ProductEditPage implements OnInit {
     }
   }
 
+  keyDownNumber(event: any) {
+    // const pattern = /^(\d*\,)?\d+$/;
+    let regex = new RegExp(/[0-9]/g);
+    let inputChar = String.fromCharCode(event.keyCode);
+    if (event.keyCode == 37 ||
+        event.keyCode == 39 ||
+        event.keyCode == 8 ||
+        event.keyCode == 46 ||
+        event.keyCode == 188 ||
+        event.keyCode == 110 ||
+        event.keyCode == 109 ||
+        event.keyCode == 189 ||
+        (event.keyCode >= 96 && event.keyCode <= 105)) {  // Left / Up / Right / Down Arrow, Backspace, Delete keys
+      return;
+    }
+
+    if (!inputChar.match(regex)) {
+      // invalid character, prevent input
+      event.preventDefault();
+    }
+  }
+
   async getImage() {
     const modal =
       await this.modalCtrl.create({
@@ -472,6 +503,16 @@ export class ProductEditPage implements OnInit {
     modal.present();
 
     console.log('get images :', this.imagesSave);
+  }
+
+  getGps(value:any)
+  {
+    this.geolocation.getCurrentPosition().then((resp) => {
+      value.lat = resp.coords.latitude;
+      value.long =  resp.coords.longitude;
+     }).catch((error) => {
+       console.log('Error getting location', error);
+     });
   }
 
   getCamera() {
@@ -703,6 +744,8 @@ export class ProductEditPage implements OnInit {
               if (temp.options[index].type == 0 || temp.options[index].type == 4) {
                 temp.options[index].value = temp.options[index].options.default;
                 // this.activProduct.items[index].value = temp.options[index].options.default;
+              } else if (temp.options[index].type == 6) {
+                temp.options[index].value = {};
               } else {
                 temp.options[index].value = null;
               }

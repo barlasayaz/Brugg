@@ -127,8 +127,10 @@
     <plugin name="cordova-plugin-inappbrowser" spec="^3.1.0" />
     <plugin name="cordova-plugin-statusbar" spec="^2.4.3" />
     <plugin name="cordova-plugin-dialogs" spec="^2.0.2" />
-    <engine name="browser" spec="5.0.4" />
     <engine name="ios" spec="5.0.1" />
     <engine name="windows" spec="^6.0.1" />
-    <engine name="android" spec="7.1.4" />
+    <plugin name="cordova-android-support-gradle-release" spec="^2.1.0" />
+    <engine name="android" spec="~7.1.4" />
+    <engine name="browser" spec="~5.0.4" />
+    <plugin name="cordova-plugin-geolocation" spec="^4.0.2" />
 </widget>

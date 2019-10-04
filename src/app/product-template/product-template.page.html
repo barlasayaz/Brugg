@@ -122,7 +122,15 @@
                                       <div><div class="temp-content-title">{{'Verpflichtend' | translate}}</div>{{group.mandatory | translate}}</div>
                                     </div>
                                   </p-accordionTab>
-                                </div>                                
+                                </div>
+                                <div class="product-temp-item" *ngIf="group.type == 6">
+                                  <p-accordionTab styleClass="ui-accordion-header" header="{{group.title[lang]}}">
+                                    <div class="product-temp-content">
+                                      <div><div class="temp-content-title">{{'Art' | translate}}</div>{{types[group.type]}}</div>
+                                      <div><div class="temp-content-title">{{'Verpflichtend' | translate}}</div>{{group.mandatory | translate}}</div>
+                                    </div>
+                                  </p-accordionTab>
+                                </div>                                     
                               </div>
                               <span class="group-handle" style="display: block; height:40px;width: 100%"></span>
                             </div>
@@ -229,6 +237,14 @@
                                   </p-accordionTab>
                                 </div>
                                 <div class="product-temp-item" *ngIf="group.type == 5">
+                                  <p-accordionTab styleClass="ui-accordion-header" header="{{group.title[lang]}}">
+                                    <div class="product-temp-content">
+                                      <div><div class="temp-content-title">{{'Art' | translate}}</div>{{types[group.type]}}</div>
+                                      <div><div class="temp-content-title">{{'Verpflichtend' | translate}}</div>{{group.mandatory | translate}}</div>
+                                    </div>
+                                  </p-accordionTab>
+                                </div>
+                                <div class="product-temp-item" *ngIf="group.type == 6">
                                   <p-accordionTab styleClass="ui-accordion-header" header="{{group.title[lang]}}">
                                     <div class="product-temp-content">
                                       <div><div class="temp-content-title">{{'Art' | translate}}</div>{{types[group.type]}}</div>
