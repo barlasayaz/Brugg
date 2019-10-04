@@ -1,13 +1,8 @@
 <ion-content>
   <div class="pvs4-login-container">
     <div class="pvs4-login-wrapper">
-      
-      <div class="login-intro-text">
-        <!-- <h1>{{'IHR PVS LOGIN' | translate}}</h1>  -->
-      </div>
 
-      <ion-grid class="pvs4-login-inner">
-    
+      <ion-grid class="pvs4-login-inner">    
         <ion-row>
           <div class="pvs4-lang-select">
             <ion-col size="6">
@@ -16,16 +11,16 @@
              </div>
             </ion-col>
             <ion-col size="6">
-              <ion-item lines="none" class="pvs4-full-select">
+              <ion-item lines="none">
                 <ion-label position="floating">{{'Sprache' | translate}}</ion-label>
                 <ion-select [(ngModel)]="lang"
                             (ionChange)="changeLanguage()"
                             okText="{{'okay' | translate}}"
                             cancelText="{{'dismiss' | translate}}">
-                  <ion-select-option value="de" ng-selected="de">{{'German' | translate}}</ion-select-option>
-                  <ion-select-option value="en" ng-selected="en">{{'English' | translate}}</ion-select-option>
-                  <ion-select-option value="fr" ng-selected="fr">{{'French' | translate}}</ion-select-option>
-                  <ion-select-option value="it" ng-selected="it">{{'Italian' | translate}}</ion-select-option>                  
+                  <ion-select-option value="de">{{'German' | translate}}</ion-select-option>
+                  <ion-select-option value="en">{{'English' | translate}}</ion-select-option>
+                  <ion-select-option value="fr">{{'French' | translate}}</ion-select-option>
+                  <ion-select-option value="it">{{'Italian' | translate}}</ion-select-option>                  
                 </ion-select>
               </ion-item>
             </ion-col>
@@ -41,29 +36,28 @@
         <form (ngSubmit)="signIn()" [formGroup]="authForm">
           <ion-row *ngIf="construction" class="construct">
             <ion-col>
-              <ion-item lines="none">
-                  
-                      <ion-icon name="construct"  ></ion-icon><br>
-                    </ion-item>  
-               <ion-item lines="none">   
-                  <p *ngIf="lang=='de'">
-                      Webseite ist in Bearbeitung, vom 20.07.2019 bis zum 21.07.2019. Wir bitten um Ihre Verständnis.
-                  </p>
-                  <p *ngIf="lang=='en'">
-                      Website is under construction, from 20.07.2019 to 21.07.2019. We ask for your understanding.
-                  </p>
-                  <p *ngIf="lang=='fr'">
-                      Le site est en construction, du 20.07.2019 au 21.07.2019. Nous vous demandons votre compréhension.
-                  </p>
-                  <p *ngIf="lang=='it'">
-                      Il sito web è in costruzione, dal 20.07.2019 al 21.07.2019. Vi chiediamo la vostra comprensione.
-                  </p>
+              <ion-item lines="none">                  
+                <ion-icon name="construct"  ></ion-icon><br>
+              </ion-item>  
+              <ion-item lines="none">   
+                <p *ngIf="lang=='de'">
+                    Webseite ist in Bearbeitung, vom 20.07.2019 bis zum 21.07.2019. Wir bitten um Ihre Verständnis.
+                </p>
+                <p *ngIf="lang=='en'">
+                    Website is under construction, from 20.07.2019 to 21.07.2019. We ask for your understanding.
+                </p>
+                <p *ngIf="lang=='fr'">
+                    Le site est en construction, du 20.07.2019 au 21.07.2019. Nous vous demandons votre compréhension.
+                </p>
+                <p *ngIf="lang=='it'">
+                    Il sito web è in costruzione, dal 20.07.2019 al 21.07.2019. Vi chiediamo la vostra comprensione.
+                </p>
               </ion-item>
             </ion-col>
           </ion-row>
 
           <ion-row *ngIf="!construction">
-            <ion-col>
+            <ion-col style="max-height: 65px;">
               <ion-item lines="none">
                 <ion-label position="floating">{{ "E-Mail" | translate }}</ion-label>
                 <ion-input type="email" formControlName="pvs4_username" required></ion-input>
@@ -72,7 +66,7 @@
           </ion-row>
     
           <ion-row *ngIf="!construction">
-            <ion-col>              
+            <ion-col style="max-height: 70px;">              
               <ion-item lines="none">
                 <ion-label position="floating">{{ "Passwort" | translate }}</ion-label>
                 <ion-input type="password" formControlName="pvs4_password" required></ion-input>
@@ -83,44 +77,60 @@
           <ion-row  *ngIf="!construction" style="margin-top: 10px;margin-bottom: 10px">
             <ion-col>
               <ion-button class="pvs4-btn pvs4-btn-full pvs4-btn-green" [disabled]="!authForm.valid" type="submit">{{ "Login" | translate }} </ion-button>
-              <!-- <button style="visibility: hidden" type="submit"></button> -->
             </ion-col>
           </ion-row>
-    
-          <ion-row>
-            <ion-col text-center class="pvs4-register-text">
-              <a href="https://www.bruggdigital.com/bid_pw_new.php" target="_blank" rel="noopener" class="signup-btn">{{ "Passwort vergessen?" |  translate }}</a>
-            </ion-col>
-          </ion-row>
-
-          <ion-row>
-            <ion-col text-center class="pvs4-register-text">
-              <a href="https://www.bruggdigital.com/bid_reg.php" target="_blank" rel="noopener" class="signup-btn">{{ "Sie haben noch kein Account?" |  translate }}</a>
-            </ion-col>
-          </ion-row>
-
-          <ion-row>
-            <ion-col text-center class="pvs4-register-text"> 
-                <br>
-                Support:<br>
-                {{'German' | translate}} : <a href="tel:+41788869267 ">+41 78 886 92 67 </a>   <br>  
-                {{'English' | translate}} : <a href="tel:+41788869267 ">+41 78 886 92 67 </a> <br>
-                {{'French' | translate}} : <a href="tel:+41216342021">+41 21 634 20 21 </a>  <br>
-                {{'Italian' | translate}} : <a href="tel:+41919102400">+41 91 910 24 00</a>  <br>
-            </ion-col>
-          </ion-row>
-
-          <ion-row>
-            <ion-col text-center class="pvs4-register-text">
-              <a href="https://www.youtube.com/channel/UCUPzbGz5pdCrRtk8Z74yaNg/featured" target="_blank" rel="noopener" class="signup-btn"><ion-icon class="youtube" name="logo-youtube"></ion-icon><br>{{ "Youtube Support" |  translate }}</a>
-            </ion-col>
-          </ion-row>          
-    
-
         </form>
+
+        <ion-row>
+          <ion-col text-center class="pvs4-register-text">
+            <a href="https://www.bruggdigital.com/bid_pw_new.php" target="_blank" rel="noopener" class="signup-btn">{{ "Passwort vergessen?" |  translate }}</a>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col text-center class="pvs4-register-text">
+            <a href="https://www.bruggdigital.com/bid_reg.php" target="_blank" rel="noopener" class="signup-btn">{{ "Sie haben noch kein Account?" |  translate }}</a>
+          </ion-col>
+        </ion-row>
+
+        <ion-row class="pvs4-register-text">
+          <ion-col size="12" style="text-align: center; max-height: 22px;">
+            Support:
+          </ion-col>
+          <ion-col size="5" style="text-align: right; max-height: 22px;">
+            {{'German' | translate}} :
+          </ion-col>
+          <ion-col size="7" style="text-align: left; max-height: 22px;">
+            <a href="tel:+41788869267 ">+41 78 886 92 67 </a>
+          </ion-col>
+          <ion-col size="5" style="text-align: right; max-height: 22px;">
+            {{'English' | translate}} :
+          </ion-col>
+          <ion-col size="7" style="text-align: left; max-height: 22px;">
+            <a href="tel:+41788869267 ">+41 78 886 92 67 </a>
+          </ion-col>
+          <ion-col size="5" style="text-align: right; max-height: 22px;">
+            {{'French' | translate}} :
+          </ion-col>
+          <ion-col size="7" style="text-align: left; max-height: 22px;">
+            <a href="tel:+41216342021">+41 21 634 20 21 </a>
+          </ion-col>
+          <ion-col size="5" style="text-align: right; max-height: 22px;">
+            {{'Italian' | translate}} :
+          </ion-col>
+          <ion-col size="7" style="text-align: left; max-height: 22px;">
+            <a href="tel:+41919102400">+41 91 910 24 00 </a>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col text-center class="pvs4-register-text">
+            <a href="https://www.youtube.com/channel/UCUPzbGz5pdCrRtk8Z74yaNg/featured" target="_blank" rel="noopener" class="signup-btn"><ion-icon class="youtube" name="logo-youtube"></ion-icon><br>{{ "Youtube Support" |  translate }}</a>
+          </ion-col>
+        </ion-row>              
     
         <ion-row>
-          <ion-col>
+          <ion-col size="12" style="max-height: 80px;">
             <div class="logov">
               <span>{{'Ein Produkt von' | translate}}</span>
               <img src="assets/imgs/brugg-lifting-logo.svg" alt="Logo">
@@ -129,25 +139,17 @@
           </ion-col>
         </ion-row>
     
-        <ion-row class="pvs4-login-infobar" style="margin-bottom: -10px">
+        <ion-row class="pvs4-login-infobar">
           <ion-col size="5" text-left (click)="imprintModal()"><a>{{ "Impressum" | translate }}</a></ion-col>
           <ion-col size="7" text-right><a href="https://www.brugg.com/portal/pics/Documents/Datenschutzerklaerung-DSGVO-Gruppe-Brugg-10-04-2018-DE.pdf" target="_blank" rel="noopener">{{"Datenschutzerklärung" | translate}} <small>(PDF)</small></a></ion-col>
         </ion-row>
-    
-        <!-- <ion-row class="pvs4-login-infobar2">
-          <ion-col>
-            <a target="_blank" href="http://www.brugglifting.com/liftingtec/images/downloads/Brugg_PVS3_Manual_EN.pdf">
-              {{ "Handbuch" | translate }}
-            </a>
-            <ion-icon width="100" height="100" name="book"></ion-icon>
-          </ion-col>
-        </ion-row> -->
-    
+
       </ion-grid>
       <span class="version">
         {{'Version' | translate}} {{api.version}}
       </span>
     </div>
+    
     <div class="pvs4-info-wrapper">
       <div class="login-log-container">
         <h1 style="margin-top: 40px">PVS – {{'Die Produktverwaltungssoftware' | translate}}</h1>

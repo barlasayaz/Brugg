@@ -22,27 +22,26 @@ import { OldBrowserPage } from './old-browser/old-browser.page';
 })
 
 export class LoginPage {
-  // public loc: any = [];
-  username: AbstractControl;
-  password: AbstractControl;
-  pvs4_username: AbstractControl;
-  pvs4_password: AbstractControl;
+  public username: AbstractControl;
+  public password: AbstractControl;
+  public pvs4_username: AbstractControl;
+  public pvs4_password: AbstractControl;
 
-  lang: string;
-  authForm: FormGroup;
-  pushRegister: any;
-  userData: any;
-  login_nok: boolean;
-  saveLogin: boolean;
-  private loader: HTMLIonLoadingElement;
-  private timeoutShow: any = 0;
-  show_hide_err: boolean = true;
-  construction: boolean = false;
+  public lang: string;
+  public authForm: FormGroup;
+  public pushRegister: any;
+  public userData: any;
+  public login_nok: boolean;
+  public saveLogin: boolean;
+  public loader: HTMLIonLoadingElement;
+  public timeoutShow: any = 0;
+  public show_hide_err = true;
+  public construction = false;
 
   constructor(public navCtrl: NavController,
     public api: ApiService,
-    private translate: TranslateService,
-    private loadingCtrl: LoadingController,
+    public translate: TranslateService,
+    public loadingCtrl: LoadingController,
     public userdata: UserdataService,
     public system: SystemService,
     public platform: Platform,
@@ -50,16 +49,12 @@ export class LoginPage {
     public modalCtrl: ModalController) {
 
     this.authForm = formBuilder.group({
-      /*
-      username: ['', Validators.compose([Validators.required, Validators.minLength(5)])],
-      password: ['', Validators.compose([Validators.required, Validators.minLength(1)])],
-      */
       pvs4_username: ['', Validators.compose([Validators.required, Validators.minLength(5)])],
       pvs4_password: ['', Validators.compose([Validators.required, Validators.minLength(1)])]
     });
 
     if (localStorage.getItem('lang')) {
-      let x = localStorage.getItem('lang');
+      const x = localStorage.getItem('lang');
       console.log('localStorage.getItem(\'lang\'): ' + x);
       if ((x == 'de') || (x == 'en') || (x == 'fr') || (x == 'it')) {
         this.translate.use(x);
@@ -70,7 +65,7 @@ export class LoginPage {
         this.lang = 'en';
       }
     } else {
-      let x = translate.getBrowserLang();
+      const x = translate.getBrowserLang();
       console.log('translate.getBrowserLang(): ' + x);
       if ((x == 'de') || (x == 'en') || (x == 'fr') || (x == 'it')) {
         this.translate.use(x);
@@ -84,8 +79,9 @@ export class LoginPage {
     }
 
     platform.ready().then(() => {
-      let isin: boolean = false;
-      if (!this.construction){
+      let isin: boolean;
+      isin = false;
+      if (!this.construction) {
           let slUser: any = localStorage.getItem('UserInfo');
           if (slUser) {
             slUser = JSON.parse(slUser);
@@ -128,7 +124,7 @@ export class LoginPage {
       }
 
       // Get IE or Edge browser version
-      var version = detectIE();
+      const version = detectIE();
 
       if (version === false) {
         console.log('kein IE/EDGE');
@@ -140,22 +136,22 @@ export class LoginPage {
       }
 
       function detectIE() {
-        var ua = window.navigator.userAgent;
+        const ua = window.navigator.userAgent;
 
-        var msie = ua.indexOf('MSIE ');
+        const msie = ua.indexOf('MSIE ');
         if (msie > 0) {
           // IE 10 or older => return version number
           return parseInt(ua.substring(msie + 5, ua.indexOf('.', msie)), 10);
         }
 
-        var trident = ua.indexOf('Trident/');
+        const trident = ua.indexOf('Trident/');
         if (trident > 0) {
           // IE 11 => return version number
-          var rv = ua.indexOf('rv:');
+          const rv = ua.indexOf('rv:');
           return parseInt(ua.substring(rv + 3, ua.indexOf('.', rv)), 10);
         }
 
-        var edge = ua.indexOf('Edge/');
+        const edge = ua.indexOf('Edge/');
         if (edge > 0) {
           // Edge (IE 12+) => return version number
           return parseInt(ua.substring(edge + 5, ua.indexOf('.', edge)), 10);
@@ -169,7 +165,7 @@ export class LoginPage {
 
   showHideErrors() {
     console.log('showHideErrors() ' , this.timeoutShow );
-    if(this.timeoutShow) clearTimeout(this.timeoutShow);
+    if (this.timeoutShow) { clearTimeout(this.timeoutShow); }
     this.show_hide_err = true;
     this.timeoutShow = setTimeout(() => {
       console.log('timeoutShow ');
@@ -178,7 +174,7 @@ export class LoginPage {
   }
 
   changeLanguage() {
-    let x = this.lang;
+    const x = this.lang;
     console.log('changeLanguage(): ' + x);
     if ((x == 'de') || (x == 'en') || (x == 'fr') || (x == 'it')) {
       this.translate.use(x);
@@ -189,7 +185,7 @@ export class LoginPage {
     }
 
     localStorage.removeItem('split_filter_product');
-    localStorage.removeItem('show_columns_product');  
+    localStorage.removeItem('show_columns_product');
   }
 
   async signIn() {
@@ -200,14 +196,13 @@ export class LoginPage {
     }
     this.pvs4_username = this.authForm.get('pvs4_username');
     this.pvs4_password = this.authForm.get('pvs4_password');
-    // this.saveLogin = this.authForm.controls['saveLogin'].value;
     this.userData = {
       info: 'WebVersion 4.1.8',
       user: 'test-1',
       password: '1234test'
     };
 
-    let loader = await this.loadingCtrl.create({ spinner: 'circles' });
+    const loader = await this.loadingCtrl.create({ spinner: 'circles' });
 
     loader.present().then(done => {
       this.userdata.reset();
@@ -250,11 +245,11 @@ export class LoginPage {
       await this.modalCtrl.create({
         component: OldBrowserPage,
         cssClass: 'oldbrowser-modal-css',
-        backdropDismiss:false,
+        backdropDismiss: false,
         componentProps: {
         }
       }).then(x => x.present());
   }
-  
+
 }
 

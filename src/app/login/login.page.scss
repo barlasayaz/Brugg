@@ -10,8 +10,10 @@ ion-content {
 } 
 
 .pvs4-login-container {
-	display: flex;
-	height: 100%;
+	display: flex;	
+	@media screen and (min-width: 767px) {
+		height: 100%;
+  	}
 }	
 
 .version {
@@ -20,7 +22,6 @@ ion-content {
 			border-radius: var(--global-radius);
 	padding: 5px;
 	width: 100%;
-	max-width: 400px;
 	text-align: right;
 	display: flex;
 	justify-content: flex-end;
@@ -28,7 +29,6 @@ ion-content {
 }
 
 .pvs4-lang-select {
-	margin-bottom: 5px;
 	display: flex;
 	align-items: flex-end;
 	width: 100%;
@@ -37,6 +37,7 @@ ion-content {
 .logo {
 	width: 100%;
 	max-width: 100px;
+	margin-bottom: -10px;
 	@media screen and (max-width: 767px) {
 		text-align: left;
 		max-height: 100%;
@@ -69,13 +70,11 @@ ion-content {
 .pvs4-register-text {
 	font-size: 14px;
 	color: var(--ion-color-main);
-	&:hover {
-		cursor: pointer;
-	}
 }
 
 .pvs4-login-infobar {
 	font-size: 12px;
+	margin-bottom: -10px;
 	color: var(--ion-color-grey);
 	a {
 		color: var(--ion-color-grey);
@@ -206,7 +205,6 @@ p {
 	text-align: left;
 	max-width: 400px;
 	width: 100%;
-	/* margin-bottom: 10px; */
 	h1 {
 		color: #FFF;
 		margin-top: 0px;
@@ -227,7 +225,7 @@ p {
 	align-content: center;
 	width: 100%;
 	text-align: center;
-	margin-top: 20px;
+	margin-top: 5px;
 	margin-bottom: 20px;
 	@media screen and (max-width: 767px) {
 		margin: 20px 0px;
@@ -247,7 +245,6 @@ p {
 		}
 	}
 }
-
 
 .login-log-container {
 	max-width: 800px;
@@ -299,20 +296,15 @@ p {
 		width: 100%;
 		min-width: auto;
 		padding: 20px;
+		height: 100%;
 	}
 }
 
 .pvs4-login-inner {
 	background: #FFF;
-	padding: 15px;
-/* 	max-width: 375px;
-	width: 335px; */
+	padding: 5px 15px 15px 15px;
 	-webkit-border-radius: var(--global-radius);
 	        border-radius: var(--global-radius);
-}
-
-.pvs4-full-select {
-	margin-top: -15px;
 }
 
 .youtube {
@@ -332,4 +324,10 @@ p {
 	margin: auto auto 20px auto;
 	border: #009de0 solid 1px;
 	padding: 3px;
+}
+
+.item-select.label-floating.sc-ion-label-md-h, .item-select .label-floating.sc-ion-label-md-h {
+    -webkit-transform: translate3d(0,130%,0) !important;
+    transform: translate3d(0,130%,0) !important;
+    margin: 1px 5px 17px 5px !important;
 }
