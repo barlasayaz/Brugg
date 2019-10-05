@@ -17,6 +17,7 @@ import { debounceTime } from 'rxjs/operators';
 import { ProductCopyPage } from '../product-copy/product-copy.page';
 import { SystemService } from '../services/system';
 import * as moment from 'moment';
+import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
 
 @Component({
     selector: 'app-product-list',
@@ -251,7 +252,8 @@ export class ProductListPage implements OnInit {
         private dataService: DataService,
         public system: SystemService,
         private route: ActivatedRoute,
-        private loadingCtrl: LoadingController) {
+        private loadingCtrl: LoadingController,
+        private screenOrientation: ScreenOrientation) {
             this.modelChanged.pipe(
                 debounceTime(700))
                 .subscribe(model => {
@@ -311,13 +313,42 @@ export class ProductListPage implements OnInit {
     }
 
     funcHeightCalc() {
+        /*
+        console.log('screenOrientation :', this.screenOrientation.type); // logs the current orientation, example: 'landscape'
+
+        // set to landscape
+        this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.LANDSCAPE);
+
+        // allow user rotate
+        this.screenOrientation.unlock();
+
+        // detect orientation changes
+        this.screenOrientation.onChange().subscribe(() => {
+            console.log('Orientation Changed');
+        });
+        */
+
         let x = this.divHeightCalc.nativeElement.scrollHeight;
+        let y = x;
         if (x == 0) { x = 550; }
-        if (x > 572 && this.system.platform == 2) { x = 600; }
+        if (this.system.platform == 2) {
+            if (this.screenOrientation.type == 'portrait-primary') {
+                x = 875;
+                if (y > x) {
+                    x = y - 5;
+                }
+            }
+            if (this.screenOrientation.type == 'landscape-primary') {
+                x = 615;
+                if (y > x) {
+                    x = y - 5;
+                }
+            }
+        }
         if (this.splitFilter) { x = x - 51; }
         // if (x < 80) { x = 80; }
         this.heightCalc = x + 'px';
-        // console.log('heightCalc 2 :', x, this.heightCalc);
+        console.log('funcHeightCalc:', x , this.heightCalc  );
     }
 
     async page_load() {

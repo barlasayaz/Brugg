@@ -45,6 +45,7 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner/ngx';
 import { Camera } from '@ionic-native/camera/ngx';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { Keyboard } from '@ionic-native/keyboard/ngx';
+import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, "assets/lang/");
@@ -109,7 +110,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     Camera,
     BarcodeScanner,
     Keyboard,
-    Geolocation
+    Geolocation,
+    ScreenOrientation
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA

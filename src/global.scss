@@ -27,6 +27,13 @@ input:-webkit-autofill:active  {
   max-width: 90%;
 }
 
+.ion-page {    
+  zoom: 100% !important;
+  @media (max-width: 767px) {
+    zoom: 95% !important;
+  }
+}
+
 .ui-treetable-scrollable-body {
   height: 3840px !important;
 }
@@ -814,6 +821,7 @@ ul.ui-widget-content {
   padding: 0 !important;
   .ui-inputgroup.search-search {
     height: 100%;
+    margin-top: 2px;
     input {
       padding: 5px 10px !important;
       border: none !important;
@@ -15830,9 +15838,9 @@ tbody.ui-table-tbody {
   }
   .navbar-ek {
     background: #fff;
-    height: 65px;
+    height: 61px;
     border-radius: 0px !important;
-    border-bottom: 3px solid #009de0;
+    // border-bottom: 3px solid #009de0;
     margin-bottom: 0 !important;
     z-index: 2;
     -webkit-transform: translate3d(0, 0, 0) translate(0);
