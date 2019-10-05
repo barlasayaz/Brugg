@@ -57,7 +57,7 @@
                           </ion-input> 
                         </div> 
                       </div>
-                      <div style="max-height: 590px; overflow-x: auto;"> 
+                      <div style="max-height: 529px; overflow-x: auto;"> 
                         <div style="padding: 10px; cursor: pointer; background: white;">
                             <div class="product-edit-item" 
                                  *ngFor="let group of templates; let opdInd = index"  
@@ -238,6 +238,7 @@
                           </ion-col> 
                           <ion-col size="5" size-md="5" *ngIf="item.type == 6">
                             <ion-item lines="none">
+                               <!--<ion-label position="floating">{{item.title[lang]}}</ion-label>--> 
                                 <ion-label position="floating">Lat</ion-label>
                                 <ion-input required="{{item.mandatory}}"
                                            type="text" 
@@ -252,19 +253,20 @@
                             <ion-item lines="none">
                                 <ion-label position="floating">Long</ion-label>
                                 <ion-input required="{{item.mandatory}}"
-                                           type="text" 
-                                           (keydown)="keyDownNumber($event)" 
-                                           [(ngModel)]="item.value.long"
-                                           min="-180" 
-                                           max="180">
+                                            type="text" 
+                                            (keydown)="keyDownNumber($event)" 
+                                            [(ngModel)]="item.value.long"
+                                            min="-180" 
+                                            max="180">
                                 </ion-input>
                             </ion-item>
                         </ion-col> 
-                        <ion-col size="2" size-md="2" *ngIf="item.type == 6" style="padding-left: 5px; padding-top: 23px;">
+                        <ion-col size="2" size-md="2" *ngIf="item.type == 6">
                             <ion-item lines="none">
                                 <ion-button size="small" 
-                                            (click)="getGps(item.value)">
-                                <ion-icon name="locate"></ion-icon>
+                                (click)="getGps(item.value)"
+                                style="margin-top: 30px">
+                                <ion-icon name="locate"></ion-icon> 
                                 </ion-button>
                             </ion-item>
                         </ion-col> 

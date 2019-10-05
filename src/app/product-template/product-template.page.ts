@@ -40,7 +40,7 @@ export class ProductTemplatePage implements OnInit {
   public template: Array<any> = [];
   public options: Array<any> = [];
   public optionsAll: Array<any> = [];
-  public types: Array<string> = ['Toggle', 'Select', 'Textarea', 'Number', 'Time', 'Date'];
+  public types: Array<string> = ['Toggle', 'Select', 'Textarea', 'Number', 'Time', 'Date','GPS'];
   public lang = '';
   public itsNew = true;
   public activTemplate: any = {};
