@@ -20,7 +20,7 @@ const routes: Routes = [
     FormsModule,
     IonicModule,
     AgmCoreModule.forRoot({
-        apiKey: 'AIzaSyCqF8nVyOY_QFhaDKpFhHFnjT7mHR0koKE'
+        apiKey: 'AIzaSyAkpR6Cay995gCK-4pNxhkfDhJ8G04Tfao'
       }),
     RouterModule.forChild(routes)
   ],

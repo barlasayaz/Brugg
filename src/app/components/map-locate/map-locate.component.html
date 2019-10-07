@@ -1,3 +1,17 @@
-<agm-map [latitude]="lat" [zoom]="zoom" [longitude]="long">
-  <agm-marker  [latitude]="lat" [longitude]="long"></agm-marker>
-</agm-map>
+<ion-header>
+  <ion-toolbar color="primary">
+      <ion-buttons slot="primary">
+          <ion-button icon-only (click)="dismiss()">
+              <ion-icon name="close"></ion-icon>
+          </ion-button>
+      </ion-buttons>
+      <ion-title>{{modalTitle}}</ion-title>
+  </ion-toolbar>
+</ion-header>	
+
+
+<ion-content>
+  <agm-map [latitude]="lat" [zoom]="zoom" [longitude]="long">
+    <agm-marker  [latitude]="lat" [longitude]="long"></agm-marker>
+  </agm-map>
+</ion-content>
