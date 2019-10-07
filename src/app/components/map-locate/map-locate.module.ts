@@ -20,7 +20,7 @@ const routes: Routes = [
     FormsModule,
     IonicModule,
     AgmCoreModule.forRoot({
-        apiKey: 'GOOGLE_MAPS_KEY'
+        apiKey: 'AIzaSyCqF8nVyOY_QFhaDKpFhHFnjT7mHR0koKE'
       }),
     RouterModule.forChild(routes)
   ],
