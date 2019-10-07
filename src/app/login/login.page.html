@@ -1,7 +1,8 @@
 <ion-content>
   <div class="pvs4-login-container">
-    <div class="pvs4-login-wrapper">
 
+    <!-- Left panel -->
+    <div class="pvs4-login-wrapper">
       <ion-grid class="pvs4-login-inner">    
         <ion-row>
           <div class="pvs4-lang-select">
@@ -123,14 +124,19 @@
           </ion-col>
         </ion-row>
 
-        <ion-row>
-          <ion-col text-center class="pvs4-register-text">
-            <a href="https://www.youtube.com/channel/UCUPzbGz5pdCrRtk8Z74yaNg/featured" target="_blank" rel="noopener" class="signup-btn"><ion-icon class="youtube" name="logo-youtube"></ion-icon><br>{{ "Youtube Support" |  translate }}</a>
+        <ion-row class="pvs4-register-text">
+          <ion-col size="6" style="text-align: right; padding-top: 25px;">
+            {{ "Youtube Support" | translate }}
+          </ion-col>
+          <ion-col size="6" style="text-align: left; padding-top: 10px;">
+            <a href="https://www.youtube.com/channel/UCUPzbGz5pdCrRtk8Z74yaNg/featured" target="_blank" rel="noopener" class="signup-btn">
+              <ion-icon class="youtube" name="logo-youtube"></ion-icon>
+            </a>
           </ion-col>
         </ion-row>              
     
         <ion-row>
-          <ion-col size="12" style="max-height: 80px;">
+          <ion-col size="12" style="max-height: 80px; margin-top: -16px;">
             <div class="logov">
               <span>{{'Ein Produkt von' | translate}}</span>
               <img src="assets/imgs/brugg-lifting-logo.svg" alt="Logo">
@@ -150,7 +156,8 @@
       </span>
     </div>
     
-    <div class="pvs4-info-wrapper">
+    <!-- Right panel -->
+    <div class="pvs4-info-wrapper" [ngStyle]="{'max-height': winHeight + 'px'}">
       <div class="login-log-container">
         <h1 style="margin-top: 40px">PVS – {{'Die Produktverwaltungssoftware' | translate}}</h1>
         <p style="font-size: 80%">

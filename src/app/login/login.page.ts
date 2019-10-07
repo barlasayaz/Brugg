@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, NgZone } from '@angular/core';
 import { Platform, NavController, LoadingController, ModalController } from '@ionic/angular';
 import { ApiService } from '../services/api';
 import { TranslateService } from '@ngx-translate/core';
@@ -37,6 +37,8 @@ export class LoginPage {
   public timeoutShow: any = 0;
   public show_hide_err = true;
   public construction = false;
+  public winWidth: any;
+  public winHeight: any;
 
   constructor(public navCtrl: NavController,
     public api: ApiService,
@@ -46,7 +48,20 @@ export class LoginPage {
     public system: SystemService,
     public platform: Platform,
     public formBuilder: FormBuilder,
-    public modalCtrl: ModalController) {
+    public modalCtrl: ModalController,
+    private ngZone: NgZone) {
+
+    this.winWidth = 1037;
+    this.winHeight = 718;
+    window.onresize = (e) => {
+        // ngZone.run will help to run change detection
+        this.ngZone.run(() => {
+            this.winWidth = window.innerWidth;
+            this.winHeight = window.innerHeight;
+            console.log('Width: ' + this.winWidth);
+            console.log('Height: ' + this.winHeight);
+        });
+    };
 
     this.authForm = formBuilder.group({
       pvs4_username: ['', Validators.compose([Validators.required, Validators.minLength(5)])],
