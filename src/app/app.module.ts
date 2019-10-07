@@ -34,6 +34,7 @@ import { CustomerEditComponentModule } from './components/customer-edit/customer
 import { ProductOptEditComponentModule } from './components/product-opt-edit/product-opt-edit.module';
 import { ProtocolOptEditComponentModule } from './components/protocol-opt-edit/protocol-opt-edit.module';
 import { NoteEditComponentModule } from './components/note-edit/note-edit.module';
+import { MapLocateComponentModule } from './components/map-locate/map-locate.module';
 import { ProductCopyPageModule } from './product-copy/product-copy.module';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { FileTransferObject, FileTransfer } from '@ionic-native/file-transfer/ngx';
@@ -81,6 +82,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     QrBarcodeComponentModule,
     NfcScanComponentModule,
     NoteEditComponentModule,
+    MapLocateComponentModule,
     ProductCopyPageModule,
     DragulaModule.forRoot(),
     TranslateModule.forRoot({

@@ -10,6 +10,7 @@ import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-nati
 import { ActivatedRoute, NavigationExtras } from '@angular/router';
 import { DataService } from '../services/data.service';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { MapLocateComponent } from '../components/map-locate/map-locate.component';
 
 /**
  * Generated class for the ProductEditPage page.
@@ -918,6 +919,19 @@ export class ProductEditPage implements OnInit {
         console.log('result: ', result);
       });
     }
+  }
+
+  async openMap(value:any)
+  {
+     let model = await this.modalCtrl.create({
+      component: MapLocateComponent,
+      cssClass: 'maplocate-modal-css',
+      componentProps: {
+        'lat': value.lat, 'long': value.long
+      }
+    });
+    model.present();
+    
   }
 
 }

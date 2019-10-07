@@ -268,7 +268,13 @@
                                 style="margin-top: 30px">
                                 <ion-icon name="locate"></ion-icon> 
                                 </ion-button>
-                            </ion-item>
+
+                                <ion-button size="small" 
+                                (click)="openMap(item.value)"
+                                style="margin-top: 30px">
+                                <ion-icon name="navigate"></ion-icon> 
+                                </ion-button>
+                          </ion-item>
                         </ion-col> 
                         </ion-row>
                       </div>
