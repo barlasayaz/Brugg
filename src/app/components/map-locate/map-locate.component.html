@@ -11,7 +11,13 @@
 
 
 <ion-content>
-  <agm-map [latitude]="lat" [zoom]="zoom" [longitude]="long">
-    <agm-marker  [latitude]="lat" [longitude]="long"></agm-marker>
-  </agm-map>
+    <ion-card>
+        <ion-item>
+          <ion-label>{{translate.instant('Adressen')}} : {{address}}</ion-label>
+        </ion-item>
+      </ion-card>
+        <agm-map [latitude]="lat" [zoom]="zoom" [longitude]="long" >
+            <agm-marker  [latitude]="lat" [longitude]="long"></agm-marker>
+        </agm-map>
+
 </ion-content>
