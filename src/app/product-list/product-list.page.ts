@@ -40,6 +40,7 @@ export class ProductListPage implements OnInit {
     public move_obj: any = {};
     public columnFilterValues = { title: '',
                                   nfc_tag_id: '',
+                                  id: '',
                                   id_number: '',
                                   articel_no: '',
                                   customer_description: '',
@@ -272,7 +273,7 @@ export class ProductListPage implements OnInit {
             this.cols = [
                 { field: 'nfc_tag_id', header: 'NFC', width: '80px' },
                 { field: 'title', header: this.translate.instant('Titel'), width: '220px' },
-                // { field: 'id', header: 'DB-ID' },
+                { field: 'id', header: 'DB-ID', width: '85px' },
                 { field: 'id_number', header: '#', width: '85px' },
                 { field: 'articel_no', header: this.translate.instant('Artikel-Nr.'), width: '100px' },
                 { field: 'customer_description', header: this.translate.instant('Kundenbezeichnung'), width: '200px' },
@@ -1107,20 +1108,20 @@ export class ProductListPage implements OnInit {
         }
         let obj: any;
         const headerRowVisible: any = 0;
-        widthsArray.push('*', 'auto', '*', '*', '*', '*', '*');
+        widthsArray.push('*', 'auto', '*', '*', '*', '*', '*', '*', '*');
 
         for (let i = 0, len = this.allnodes.length; i < len; i++) {
             obj = this.allnodes[i];
             obj.items = obj.items.replace(/(\\r\\n|\\n|\\r)/gm, ' ');
 
             columns = [];
-            for (let k = 0; k < 7; k++) {
+            for (let k = 0; k < 9; k++) {
                 columns.push({ text: this.selectedColumns[k].header, style: 'header' });
             }
             bodyArray.push(columns);
 
             rowArray = [];
-            for (let j = 0; j < 7; j++) {
+            for (let j = 0; j < 9; j++) {
                 if (obj[this.selectedColumns[j].field]) {
                     rowArray.push(obj[this.selectedColumns[j].field]);
                 } else {
@@ -1129,7 +1130,7 @@ export class ProductListPage implements OnInit {
             }
             bodyArray.push(rowArray);
 
-            for (let l = 7; l < this.selectedColumns.length; l++) {
+            for (let l = 9; l < this.selectedColumns.length; l++) {
                 rowArray = [];
                 rowArray.push({ text: this.selectedColumns[l].header, style: 'header' });
                 if (obj[this.selectedColumns[l].field]) {
@@ -1142,10 +1143,14 @@ export class ProductListPage implements OnInit {
                 rowArray.push({ text: '', border: [false, false, false, false] });
                 rowArray.push({ text: '', border: [false, false, false, false] });
                 rowArray.push({ text: '', border: [false, false, false, false] });
+                rowArray.push({ text: '', border: [false, false, false, false] });
+                rowArray.push({ text: '', border: [false, false, false, false] });
                 bodyArray.push(rowArray);
             }
 
             rowArray = [];
+            rowArray.push({ text: '', border: [false, false, false, false] });
+            rowArray.push({ text: '', border: [false, false, false, false] });
             rowArray.push({ text: '', border: [false, false, false, false] });
             rowArray.push({ text: '', border: [false, false, false, false] });
             rowArray.push({ text: '', border: [false, false, false, false] });
