@@ -48,6 +48,12 @@
 											<div class="tr table-body" *ngFor="let item of activProduct.items">
 												<div class="td">{{item.title[lang]}}</div>
 												<div class="td" *ngIf="item.type!==0">{{item.value}}</div> 
+												<div class="td" *ngIf="item.type==6">
+														<ion-button size="small" 
+															(click)="openMap(item.latlng)">
+															<ion-icon name="navigate"></ion-icon> 
+														</ion-button>
+												</div>
 												<div class="td" *ngIf="item.type==0">
 													<img *ngIf="item.value" src="/assets/imgs/available.png" alt="" height="17px" />
 													<img *ngIf="!item.value" src="/assets/imgs/not_available.png" alt="" height="17px" />

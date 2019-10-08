@@ -13,6 +13,7 @@ import { ActivatedRoute } from '@angular/router';
 import { DataService } from '../services/data.service';
 import { ProductCopyPage } from '../product-copy/product-copy.page';
 import { NFC, Ndef } from '@ionic-native/nfc/ngx';
+import { MapLocateComponent } from '../components/map-locate/map-locate.component';
 
 /**
  * Generated class for the ProductDetailsPage page.
@@ -151,6 +152,7 @@ export class ProductDetailsPage implements OnInit {
                 event.value = this.datePipe.transform(event.value, 'dd.MM.yyyy');
               }
               else if (event.type == 6) {
+                event.latlng = event.value;
                 event.value = "("+event.value.lat.toString().substring(0, 6) + ","+event.value.long.toString().substring(0, 6) +")";
               }
               else if (event.type == 0) {
@@ -628,6 +630,19 @@ export class ProductDetailsPage implements OnInit {
         this.activProduct.images = '';
         loader.dismiss();
       });
+  }
+
+  async openMap(value:any)
+  {
+     let model = await this.modalCtrl.create({
+      component: MapLocateComponent,
+      cssClass: 'maplocate-modal-css',
+      componentProps: {
+        'lat': value.lat, 'long': value.long
+      }
+    });
+    model.present();
+    
   }
 
 }
