@@ -11,6 +11,7 @@ import { ActivatedRoute, NavigationExtras } from '@angular/router';
 import { DataService } from '../services/data.service';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { MapLocateComponent } from '../components/map-locate/map-locate.component';
+import { LocationAccuracy } from '@ionic-native/location-accuracy/ngx';
 
 /**
  * Generated class for the ProductEditPage page.
@@ -83,6 +84,7 @@ export class ProductEditPage implements OnInit {
     public transfer: FileTransfer,
     public dataService: DataService,
     public loadingCtrl: LoadingController,
+    private locationAccuracy: LocationAccuracy,
     private geolocation: Geolocation) {
 
   }
@@ -508,12 +510,17 @@ export class ProductEditPage implements OnInit {
 
   getGps(value:any)
   {
-    this.geolocation.getCurrentPosition().then((resp) => {
-      value.lat = resp.coords.latitude;
-      value.long =  resp.coords.longitude;
-     }).catch((error) => {
-       console.log('Error getting location', error);
-     });
+    this.locationAccuracy.request(this.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY).then(
+      () => {
+        this.geolocation.getCurrentPosition().then((resp) => {
+          value.lat = resp.coords.latitude;
+          value.long =  resp.coords.longitude;
+        }).catch((error) => {
+          console.log('Error getting location', error);
+        });
+    },
+    error => alert('Error requesting location permissions ' + JSON.stringify(error))
+  );
   }
 
   getCamera() {
