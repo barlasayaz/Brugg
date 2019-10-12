@@ -180,7 +180,7 @@
                             </ion-col>
                             <ion-col size="12" size-md="10" *ngIf="item.type == 1">
                                 <ion-item lines="none">
-                                   <ion-label position="floating">{{item.title[lang]}}</ion-label>
+                                   <ion-label *ngIf="item.title[lang] != ''" position="floating">{{item.title[lang]}}</ion-label>
                                     <ion-select required="{{item.mandatory}}"
                                                 class="form-control"
                                                 [(ngModel)]="item.value"
@@ -192,7 +192,7 @@
                             </ion-col>  
                             <ion-col size="12" size-md="10" *ngIf="item.type == 2">
                                 <ion-item lines="none">
-                                    <ion-label position="floating">{{item.title[lang]}}</ion-label>
+                                    <ion-label *ngIf="item.title[lang] != ''" position="floating">{{item.title[lang]}}</ion-label>
                                     <ion-textarea required="{{item.mandatory}}"
                                                   [(ngModel)]="item.value"
                                                   maxlength="{{item.options.max}}">
@@ -201,7 +201,7 @@
                             </ion-col> 
                             <ion-col size="12" size-md="10" *ngIf="item.type == 3">
                                 <ion-item lines="none">
-                                    <ion-label position="floating">{{item.title[lang]}}</ion-label>
+                                    <ion-label *ngIf="item.title[lang] != ''" position="floating">{{item.title[lang]}}</ion-label>
                                     <ion-input required="{{item.mandatory}}"
                                                type="text" 
                                                (keydown)="keyDown($event)" 
@@ -213,7 +213,7 @@
                             </ion-col> 
                             <ion-col size="12" size-md="10" *ngIf="item.type == 4">
                               <ion-item lines="none">
-                                  <ion-label position="floating">{{item.title[lang]}}</ion-label>
+                                  <ion-label *ngIf="item.title[lang] != ''" position="floating">{{item.title[lang]}}</ion-label>
                                       <ion-datetime  mode="ios"  required="{{item.mandatory}}"
                                                     type="time"
                                                     [(ngModel)]="item.value"
@@ -226,7 +226,7 @@
                           </ion-col> 
                           <ion-col size="12" size-md="10" *ngIf="item.type == 5">
                             <ion-item lines="none">
-                                <ion-label position="floating">{{item.title[lang]}}</ion-label>
+                                <ion-label *ngIf="item.title[lang] != ''" position="floating">{{item.title[lang]}}</ion-label>
                                 <ion-datetime  mode="ios"  required="{{item.mandatory}}"
                                               [(ngModel)]="item.value"
                                               displayFormat="DD.MM.YYYY"
@@ -238,7 +238,7 @@
                           </ion-col> 
                           <ion-col size="4" size-md="4" *ngIf="item.type == 6">
                             <ion-item lines="none">
-                               <!--<ion-label position="floating">{{item.title[lang]}}</ion-label>--> 
+                               <!--<ion-label *ngIf="item.title[lang] != ''" position="floating">{{item.title[lang]}}</ion-label>--> 
                                 <ion-label position="floating">Lat</ion-label>
                                 <ion-input required="{{item.mandatory}}"
                                            type="text" 
