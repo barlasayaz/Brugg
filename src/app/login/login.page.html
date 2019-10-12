@@ -58,7 +58,7 @@
           </ion-row>
 
           <ion-row *ngIf="!construction">
-            <ion-col style="max-height: 65px;">
+            <ion-col>
               <ion-item lines="none">
                 <ion-label position="floating">{{ "E-Mail" | translate }}</ion-label>
                 <ion-input type="email" formControlName="pvs4_username" required></ion-input>
@@ -67,7 +67,7 @@
           </ion-row>
     
           <ion-row *ngIf="!construction">
-            <ion-col style="max-height: 70px;">              
+            <ion-col>              
               <ion-item lines="none">
                 <ion-label position="floating">{{ "Passwort" | translate }}</ion-label>
                 <ion-input type="password" formControlName="pvs4_password" required></ion-input>
@@ -160,7 +160,7 @@
     <div class="pvs4-info-wrapper" [ngStyle]="{'max-height': winHeight + 'px'}">
       <div class="login-log-container">
         <h1 style="margin-top: 40px">PVS – {{'Die Produktverwaltungssoftware' | translate}}</h1>
-        <p style="font-size: 80%">
+        <p style="font-size: 80%; text-align: justify;">
           <strong>{{'WAS IST PVS?' | translate}}</strong><br>
           {{'was-ist-pvs-text' | translate}}
         </p>
@@ -170,7 +170,7 @@
 
         <div class="brugg-digital-wrapper">
           <ion-icon name="warning" ></ion-icon>
-          <p>
+          <p style="text-align: justify;">
             {{'was-ist-brugg-digital-text-1' | translate}} <br><br>
             {{'was-ist-brugg-digital-text-2' | translate}} <br><br>
             {{'Was ist BRUGG Digital?' | translate}} <br>

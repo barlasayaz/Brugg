@@ -51,16 +51,17 @@ export class LoginPage {
     public modalCtrl: ModalController,
     private ngZone: NgZone) {
 
-    this.winWidth = 1037;
-    this.winHeight = 718;
+    this.winWidth = window.innerWidth;
+    this.winHeight = window.innerHeight;
+    console.log('with - height 1:', this.winWidth, this.winHeight);
+
     window.onresize = (e) => {
-        // ngZone.run will help to run change detection
-        this.ngZone.run(() => {
-            this.winWidth = window.innerWidth;
-            this.winHeight = window.innerHeight;
-            console.log('Width: ' + this.winWidth);
-            console.log('Height: ' + this.winHeight);
-        });
+      // ngZone.run will help to run change detection
+      this.ngZone.run(() => {
+          this.winWidth = window.innerWidth;
+          this.winHeight = window.innerHeight;
+          console.log('with - height 2:', this.winWidth, this.winHeight);
+      });
     };
 
     this.authForm = formBuilder.group({
