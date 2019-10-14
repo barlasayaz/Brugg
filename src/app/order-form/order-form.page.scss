@@ -207,3 +207,16 @@
     text-transform: uppercase;
     color: rgba(207, 207, 26, 0.753);
   }
+
+    .container {
+      @media only screen and (min-width: 1200px) {
+        max-width: 1140px !important;
+      }
+      @media only screen and (min-width: 768px) and (max-width: 1199px) {
+        max-width: 929px !important;
+      }
+      @media only screen and (max-width: 768px) {
+        max-width: inherit !important;
+      }
+    }
+  

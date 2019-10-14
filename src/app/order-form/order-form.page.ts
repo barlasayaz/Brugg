@@ -695,7 +695,7 @@ export class OrderFormPage {
                   },
                   table: {
                     headerRows: 1,
-                    widths: ['*', '*'],
+                    widths: ['auto', '*'],
                     body: bodyInvoiceAddress
                   }
                 },
@@ -712,7 +712,7 @@ export class OrderFormPage {
                   },
                   table: {
                     headerRows: 1,
-                    widths: ['*', '*'],
+                    widths: ['auto', '*'],
                     body: bodyShippingAddress
                   }
                 }
