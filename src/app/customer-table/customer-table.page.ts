@@ -191,7 +191,7 @@ export class CustomerTablePage implements OnInit {
         this.cols = [
             { field: 'company', header: this.translate.instant('Firma'), width: '200px' },
             { field: 'id', header: 'DB-ID', width: '60px' },
-            { field: 'customer_number', header: '#', width: '85px'},
+            { field: 'customer_number', header: 'ID', width: '85px'},
             { field: 'rating', header: this.translate.instant('Typ'), width: '100px' },
             { field: 'zip_code', header: this.translate.instant('PLZ'), width: '85px'},
             { field: 'place', header: this.translate.instant('Ort'), width: '200px' },

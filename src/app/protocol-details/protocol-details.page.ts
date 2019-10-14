@@ -302,9 +302,9 @@ export class ProtocolDetailsPage implements OnInit {
                           { text: '', color: '#000000', fillColor: '#8bd8f9' }]);
       }
       if (element.id_number) {
-        bodyProduct.push([{ text: '#' }, { text: element.id_number }]);
+        bodyProduct.push([{ text: 'ID' }, { text: element.id_number }]);
       } else {
-        bodyProduct.push([{ text: '#' }, { text: '' }]);
+        bodyProduct.push([{ text: 'ID' }, { text: '' }]);
       }
       if (element.articel_no) {
         bodyProduct.push([{ text: this.translate.instant('Articel No') }, { text: element.articel_no }]);

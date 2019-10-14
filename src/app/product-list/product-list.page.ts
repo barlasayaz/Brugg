@@ -274,7 +274,7 @@ export class ProductListPage implements OnInit {
                 { field: 'nfc_tag_id', header: 'NFC', width: '80px' },
                 { field: 'title', header: this.translate.instant('Titel'), width: '220px' },
                 { field: 'id', header: 'DB-ID', width: '85px' },
-                { field: 'id_number', header: '#', width: '85px' },
+                { field: 'id_number', header: 'ID', width: '85px' },
                 { field: 'articel_no', header: this.translate.instant('Artikel-Nr.'), width: '100px' },
                 { field: 'customer_description', header: this.translate.instant('Kundenbezeichnung'), width: '200px' },
                 { field: 'last_protocol_date', header: this.translate.instant('Letzter besuch'), width: '100px' },
