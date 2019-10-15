@@ -346,9 +346,9 @@ export class ProductDetailsPage implements OnInit {
         productList.push({ 'title': 'DB-ID', 'value': ' ' });
       }
       if (element.id_number != undefined) {
-        productList.push({ 'title': '#', 'value': element.id_number });
+        productList.push({ 'title': 'ID', 'value': element.id_number });
       } else {
-        productList.push({ 'title': '#', 'value': ' ' });
+        productList.push({ 'title': 'ID', 'value': ' ' });
       }
       if (element.articel_no != undefined) {
         productList.push({ 'title': this.translate.instant('Articel No'), 'value': element.articel_no });

@@ -161,7 +161,7 @@ export class ProtocolListPage implements OnInit {
     ngOnInit() {
         this.cols = [
             { field: 'protocol_number', header: this.translate.instant('Protokoll'), width: '100px' },
-            { field: 'title', header: this.translate.instant('Titel'), width: '200px' },
+            { field: 'title', header: this.translate.instant('Bezeichnung'), width: '200px' },
             { field: 'product', header: this.translate.instant('Produkt'), width: '200px' },
             { field: 'id', header: 'DB-ID', width: '95px' },
             { field: 'protocol_date', header: this.translate.instant('Datum'), width: '95px'},

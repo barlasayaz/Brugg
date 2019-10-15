@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs/Subscription';
 import { TranslateService } from '@ngx-translate/core';
 import { ApiService } from '../../services/api';
 import { DataService } from '../../services/data.service';
+import * as moment from 'moment';
 /**
  * Generated class for the NfcScanComponent component.
  *
@@ -29,7 +30,7 @@ export class NfcScanComponent implements OnInit {
   public readonly: boolean;
   public scanList: any = [];
   public isWritable: boolean;
-  public listView = true;
+  public listView = false;
   public tagId = '';
   public cols: any[];
   public result = '';
@@ -57,13 +58,15 @@ export class NfcScanComponent implements OnInit {
     this.pid = this.navParams.get('pid');
 
     this.cols = [
-      { field: 'id_number', header: '#', width: '300px' },
+      { field: 'id_number', header: 'ID', width: '60px' },
       { field: 'title', header: this.translate.instant('Produkt') },
-      { field: 'details', header: this.translate.instant('Produktdetails')  }
+      { field: 'next_protocol', header: this.translate.instant('Nächster besuch') },
+      { field: 'details', header: this.translate.instant('Produktdetails') },
+
+      
     ];
     this.procedure = 0;
     this.isWritable = true;
-    if (!this.readonly) { this.listView = false; }
 
     this.platform.ready().then(() => {
       if (this.platform.is('ios') ||
@@ -141,7 +144,11 @@ export class NfcScanComponent implements OnInit {
                 if (!this.listView) {
                   // result.obj.title = JSON.parse(result.obj.title);
                   this.viewCtrl.dismiss();
-                  this.navCtrl.navigateForward(['/product-details', result.obj.id ] );
+                  const data = {
+                    id: result.obj.id,
+                  };
+                  this.dataService.setData(data);
+                  this.navCtrl.navigateForward(['/product-details'] );
                 } else {
                   let rein = true;
                   for (let i = 0; i < this.scanList.length; i++) {
@@ -168,6 +175,41 @@ export class NfcScanComponent implements OnInit {
                       } catch {
                          console.error('JSON.parse err title', result.obj.title) ;
                       }
+                      let pr = result.obj.last_protocol;
+                      if (pr &&  pr.length > 0) {
+                              try {
+                                  pr = JSON.parse(pr);
+                                  result.obj.next_protocol_color = 'rgb(74, 83, 86)';
+                                  if (pr.protocol_date_next) {
+                                      result.obj.next_protocol = this.apiService.mysqlDate2view(pr.protocol_date_next);
+                                      let x = moment(pr.protocol_date_next, 'YYYY-M-D');
+                                      let y = moment();
+                                      let diffDays = x.diff(y, 'days');
+                                      if (diffDays < 90) { result.obj.next_protocol_color = '#f1c40f'; }
+                                      if (diffDays < 30) { result.obj.next_protocol_color = '#e74c3c'; }
+                                      // console.log('x :', pr.protocol_date_next ,  diffDays);
+                                  }
+      
+                                  if (pr.result) {
+                                      if (pr.result == 1) {
+                                          result.obj.next_protocol = this.translate.instant('reparieren');
+                                          result.obj.next_protocol_color = '#f1c40f';
+                                      }
+                                      if (pr.result == 3) {
+                                          result.obj.next_protocol = this.translate.instant('unauffindbar');
+                                          result.obj.next_protocol_color = '#e74c3c';
+                                      }
+                                      if ((pr.result == 2) || (pr.result == 4)) {
+                                          result.obj.next_protocol = this.translate.instant('ausmustern');
+                                          result.obj.next_protocol_color = '#C558D3';
+                                      }
+                                  }
+                              } catch (e) {
+                                  console.error('JSON.parse(pr) err :', e);
+                                  console.log('pr :', pr);
+                              }
+                      }
+
                       let details = '';
                       try {
                         const items = JSON.parse(result.obj.items);
@@ -197,7 +239,9 @@ export class NfcScanComponent implements OnInit {
                         title: result.obj.title,
                         company: customer.obj.company,
                         idCustomer: customer.obj.id,
-                        details: details
+                        details: details,
+                        next_protocol: result.obj.next_protocol,
+                        next_protocol_color: result.obj.next_protocol_color 
                       };
                       this.zone.run(() => {
                         this.scanList.push(new_obj);

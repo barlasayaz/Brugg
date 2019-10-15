@@ -2,7 +2,7 @@
 
   <ion-toolbar color="primary">
     <div class="modal-header" *ngIf="readonly" >
-      <ion-toggle class="schalter" [(ngModel)]="listView" checked="true">
+      <ion-toggle class="schalter" [(ngModel)]="listView" checked="false">
       </ion-toggle>
       <ion-label class="headerText">{{'Listenansicht'| translate}}</ion-label>
     </div>
@@ -26,8 +26,11 @@
         </ng-template>
         <ng-template pTemplate="body" let-scanList let-columns="cols">
           <tr>
-            <td *ngFor="let col of cols">{{scanList[col.field]}}</td>
-            <td>
+            <td *ngFor="let col of cols" [ngStyle]="{width: col.width}">
+              <span *ngIf="(col.field === 'next_protocol')" [ngStyle]="{'color': scanList.next_protocol_color}">{{scanList[col.field]}}</span>
+              <span *ngIf="(col.field != 'next_protocol')" >{{scanList[col.field]}}</span>
+            </td>
+            <td [style]="{'width':'30px'}">
               <ion-button icon-only (click)="delScanList(scanList)">
                 <ion-icon name="trash"></ion-icon>
               </ion-button>

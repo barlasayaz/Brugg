@@ -131,7 +131,7 @@
 									<div class="tbody scrollcontent">
 										<div class="tr table-subheader hidden-sm-down">
 											<div class="th time" [ngClass]="{secondary: sortCustomerType=='customer_number'}"
-												(click)="sortCustomerStr('customer_number')">#</div>
+												(click)="sortCustomerStr('customer_number')">ID</div>
 											<div class="th name" [ngClass]="{secondary: sortCustomerType=='company'}"
 												(click)="sortCustomerStr('company')" translate='Firma'>
 												{{'Firma' | translate}}</div>
@@ -153,7 +153,7 @@
 										  <ion-virtual-scroll [items]="listInspection">
 											<div class="tr table-body" *virtualItem="let row">
 												<div class="td time">
-													<div class="before">#</div>
+													<div class="before">ID</div>
 													<div class="after">{{row.customer_number}}</div>
 												</div>
 												<div class="td clickable name" (click)="editPrAppointment(row)">

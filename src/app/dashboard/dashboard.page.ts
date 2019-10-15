@@ -100,7 +100,7 @@ export class DashboardPage implements OnInit {
 
         ngOnInit() {
             this.cols = [
-                { field: 'customer_number', header: '#' },
+                { field: 'customer_number', header: 'ID' },
                 { field: 'company', header: this.translate.instant('Firma') },
                 { field: 'zip_code', header: this.translate.instant('PLZ') },
                 { field: 'place', header: this.translate.instant('Ort') },

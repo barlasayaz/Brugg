@@ -75,7 +75,7 @@ export class QrBarcodeComponent implements OnInit {
       this.qrText = this.qrCodeText;
     }
     this.cols = [
-      { field: 'id_number', header: '#', width: '300px' },
+      { field: 'id_number', header: 'ID', width: '300px' },
       { field: 'title', header: this.translate.instant('Produkt') },
       { field: 'details', header: this.translate.instant('Produktdetails') }
     ];
@@ -91,7 +91,11 @@ export class QrBarcodeComponent implements OnInit {
       if (barcodeData.text != '') {
         this.apiService.pvs4_get_qr_product_list(barcodeData.text).then(async (result: any) => {
           if (result.list.length == 1) {
-            this.navCtrl.navigateForward(['/product-details', result.list[0].id]);
+            const data = {
+              id: result.list[0].id,
+            };
+            this.dataService.setData(data);
+            this.navCtrl.navigateForward(['/product-details'] );
             this.viewCtrl.dismiss();
           } else if (result.list.length > 1) {
             let buttons: any[] = [];
@@ -107,7 +111,11 @@ export class QrBarcodeComponent implements OnInit {
               buttons.push({
                 text: title + ' - ' + product.id_number,
                 handler: id => {
-                  this.navCtrl.navigateForward(['/product-details', product.id]);
+                  const data = {
+                    id: product.id,
+                  };
+                  this.dataService.setData(data);
+                  this.navCtrl.navigateForward(['/product-details'] );
                   this.viewCtrl.dismiss();
                 }
               });
