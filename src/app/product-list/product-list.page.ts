@@ -272,7 +272,7 @@ export class ProductListPage implements OnInit {
         this.route.queryParams.subscribe(params => {
             this.cols = [
                 { field: 'nfc_tag_id', header: 'NFC', width: '80px' },
-                { field: 'title', header: this.translate.instant('Titel'), width: '220px' },
+                { field: 'title', header: this.translate.instant('Bezeichnung'), width: '220px' }, 
                 { field: 'id', header: 'DB-ID', width: '85px' },
                 { field: 'id_number', header: 'ID', width: '85px' },
                 { field: 'articel_no', header: this.translate.instant('Artikel-Nr.'), width: '100px' },
