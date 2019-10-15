@@ -384,7 +384,7 @@ export class ProductDetailsPage implements OnInit {
               productList.push({ 'title': elementItems.title[this.lang], 'value': '√' });
             }
             if (elementItems.value == false) {
-              productList.push({ 'title': elementItems.title[this.lang], 'value': 'x' });
+              productList.push({ 'title': elementItems.title[this.lang], 'value': 'O' });
             }
           } else {
             productList.push({ 'title': elementItems.title[this.lang], 'value': elementItems.value });

@@ -248,7 +248,7 @@ export class ProtocolDetailsPage implements OnInit {
             protocolList.push({ 'title': elementItems.title[this.lang], 'value': '√'});
           }
           if (elementItems.value == false) {
-            protocolList.push({ 'title': elementItems.title[this.lang], 'value': 'x'});
+            protocolList.push({ 'title': elementItems.title[this.lang], 'value': 'O'});
           }
         } else {
           protocolList.push({ 'title': elementItems.title[this.lang], 'value': elementItems.value });
@@ -335,7 +335,7 @@ export class ProtocolDetailsPage implements OnInit {
               bodyProduct.push([{ text: elementItems.title[this.lang]}, {text: '√' }]);
             }
             if (elementItems.value == false) {
-              bodyProduct.push([{ text: elementItems.title[this.lang]}, {text: 'x' }]);
+              bodyProduct.push([{ text: elementItems.title[this.lang]}, {text: 'O' }]);
             }
           } else {
             bodyProduct.push([{ text: elementItems.title[this.lang]}, {text: elementItems.value }]);
