@@ -1,23 +1,24 @@
 <ion-header>
   <ion-toolbar color="primary">
-      <ion-buttons slot="primary">
-          <ion-button icon-only (click)="dismiss()">
-              <ion-icon name="close"></ion-icon>
-          </ion-button>
-      </ion-buttons>
-      <ion-title>{{modalTitle}}</ion-title>
+    <ion-buttons slot="primary">
+      <ion-button icon-only (click)="dismiss()">
+        <ion-icon name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>{{modalTitle}}</ion-title>
   </ion-toolbar>
-</ion-header>	
+</ion-header>
 
 
 <ion-content>
-    <ion-card>
-        <ion-item>
-          <ion-label>{{translate.instant('Adressen')}} : {{address}}</ion-label>
-        </ion-item>
-      </ion-card>
-        <agm-map [latitude]="lat" [zoom]="zoom" [longitude]="long" >
-            <agm-marker  [latitude]="lat" [longitude]="long"></agm-marker>
-        </agm-map>
+  <ion-card>
+    <ion-item>
+      <ion-label position="floating"> {{translate.instant('Adresse')}}</ion-label>
+      <ion-input [(ngModel)]="address" type="text" readonly="true"></ion-input>
+    </ion-item>
+  </ion-card>
+  <agm-map [latitude]="lat" [zoom]="zoom" [longitude]="long">
+    <agm-marker [latitude]="lat" [longitude]="long"></agm-marker>
+  </agm-map>
 
 </ion-content>
