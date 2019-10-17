@@ -273,8 +273,8 @@ export class ProductListPage implements OnInit {
             this.cols = [
                 { field: 'nfc_tag_id', header: 'NFC', width: '80px' },
                 { field: 'title', header: this.translate.instant('Bezeichnung'), width: '220px' }, 
-                { field: 'id', header: 'DB-ID', width: '85px' },
                 { field: 'id_number', header: 'ID', width: '85px' },
+                { field: 'id', header: 'DB-ID', width: '85px' },
                 { field: 'articel_no', header: this.translate.instant('Artikel-Nr.'), width: '100px' },
                 { field: 'customer_description', header: this.translate.instant('Kundenbezeichnung'), width: '200px' },
                 { field: 'last_protocol_date', header: this.translate.instant('Letzter besuch'), width: '100px' },
@@ -401,6 +401,7 @@ export class ProductListPage implements OnInit {
                 }
                 if (localStorage.getItem('show_columns_product') != undefined) {
                     this.selectedColumns = JSON.parse(localStorage.getItem('show_columns_product'));
+                    this.fixReorder();
                 }
             } catch (e) {
                 console.error('JSON.parse filter err :', e);
@@ -469,7 +470,7 @@ export class ProductListPage implements OnInit {
                 // console.log('options :', options);
 
                 if (options == null) { options = []; }
-
+                let info ="";
                 for (let i = 0; i < options.length; i++) {
                     // console.log('options :', options[i]);
                     // console.log('options :', options[i].id);
@@ -500,6 +501,11 @@ export class ProductListPage implements OnInit {
                             }
                         }
                         this.productListAll[index].data[options[i].title[this.lang]] = options[i].value;
+                        let h = options[i].value.trim();
+                        if( h!==""){
+                            if( info!=="") info +=", ";
+                            info += h;  
+                        }                         
                     } else if (options[i].type == 4) {
                         const pipe = new DatePipe('en-US');
                         this.productListAll[index].data[options[i].title[this.lang]] = pipe.transform(options[i].value, 'HH:mm');
@@ -510,9 +516,18 @@ export class ProductListPage implements OnInit {
                         this.productListAll[index].data[options[i].title[this.lang]] = "("+options[i].value.lat.toString().substring(0, 6) + ","+options[i].value.long.toString().substring(0, 6) +")";
                     } else {
                         this.productListAll[index].data[options[i].title[this.lang]] = options[i].value;
+                        let h = options[i].value.trim();
+                        if( h!==""){
+                            if( info!=="") info +=", ";
+                            info += h;  
+                        } 
                     }
                 }
                 // console.log("index :", index);
+                if (info.length > 83) {
+                    info = info.substring(0, 80) + '...';
+                }
+                this.productListAll[index].data['_basic_info_'] = info;
             }
 
             this.generate_productList(0, this.rowCount, this.sortedColumn.sort_field, this.sortedColumn.sort_order);
@@ -643,7 +658,10 @@ export class ProductListPage implements OnInit {
     search_all() {
         this.modelChanged.next(this.columnFilterValues);
     }
-
+    
+    test(x){
+console.log(x);
+    }
     cancel_filters(cancel_type) {
         console.log('cancel_filters');
         this.menuItems[8].items[0]['disabled'] = true;
@@ -1190,6 +1208,9 @@ export class ProductListPage implements OnInit {
     async show_columns() {
         let inputs: any[] = [];
         for (let i = 0; i < this.cols.length; i++) {
+            if(this.cols[i].field === 'nfc_tag_id') continue;
+            if(this.cols[i].field === 'title') continue;
+            if(this.cols[i].field === 'id_number') continue;
             inputs.push({
                 type: 'checkbox',
                 label: this.cols[i].header,
@@ -1209,6 +1230,9 @@ export class ProductListPage implements OnInit {
                     handler: data => {
                         inputs = [];
                         for (let i = 0; i < this.cols.length; i++) {
+                            if(this.cols[i].field === 'nfc_tag_id') continue;
+                            if(this.cols[i].field === 'title') continue;
+                            if(this.cols[i].field === 'id_number') continue;
                             inputs.push({
                                 type: 'checkbox',
                                 label: this.cols[i].header,
@@ -1224,6 +1248,9 @@ export class ProductListPage implements OnInit {
                     handler: data => {
                         inputs = [];
                         for (let i = 0; i < this.cols.length; i++) {
+                            if(this.cols[i].field === 'nfc_tag_id') continue;
+                            if(this.cols[i].field === 'title') continue;
+                            if(this.cols[i].field === 'id_number') continue;
                             inputs.push({
                                 type: 'checkbox',
                                 label: this.cols[i].header,
@@ -1245,6 +1272,10 @@ export class ProductListPage implements OnInit {
                     handler: data => {
                         console.log('Checkbox data:', data );
                         this.selectedColumns = this.cols.filter(function (element, index, array) { return data.includes(element.field); });
+                        this.selectedColumns.unshift(this.cols[2]);
+                        this.selectedColumns.unshift(this.cols[1]);
+                        this.selectedColumns.unshift(this.cols[0]);
+                        console.log('Checkbox data:', this.selectedColumns );
                         localStorage.setItem('show_columns_product', JSON.stringify(this.selectedColumns));
                     }
                 }
@@ -1288,8 +1319,25 @@ export class ProductListPage implements OnInit {
     }
 
     onColReorder(event) {
-        this.selectedColumns = event.columns;
+        console.log('onColReorder()', event );
+        this.selectedColumns = event.columns;    
+        this.fixReorder();    
         localStorage.setItem('show_columns_product', JSON.stringify(this.selectedColumns));
+    }
+    fixReorder(){
+        console.log('fixReorder()', this.selectedColumns );
+        let cols = [
+            { field: 'nfc_tag_id', header: 'NFC', width: '80px' },
+            { field: 'title', header: this.translate.instant('Bezeichnung'), width: '220px' }, 
+            { field: 'id_number', header: 'ID', width: '85px' }
+        ];
+        for (let i = 0; i < this.selectedColumns.length; i++) {
+            if(this.selectedColumns[i].field === 'nfc_tag_id') continue;
+            if(this.selectedColumns[i].field === 'title') continue;
+            if(this.selectedColumns[i].field === 'id_number') continue;
+            cols.push(this.selectedColumns[i]);
+        }    
+        this.selectedColumns = cols;
     }
 
     onNodeExpand(event) {
