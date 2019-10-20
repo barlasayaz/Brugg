@@ -180,10 +180,12 @@
                 <th *ngFor="let col of selectedColumns" 
                     ttResizableColumn
                     [ttSortableColumn]="col.field" 
-                    ttReorderableColumn > {{col.header}}
+                    ttReorderableColumn 
+                    > {{col.header}}
                     <p-treeTableSortIcon [field]="col.field">
                     </p-treeTableSortIcon>
                 </th>
+                
             </tr>
             <tr [hidden]="!splitFilter">
                 <th *ngFor="let col of selectedColumns" 
@@ -199,12 +201,13 @@
             </tr>
         </ng-template>
         <ng-template pTemplate="body" 
-                    let-rowNode 
+                    let-rowIndex
+                    let-rowNode
                     let-rowData="rowData" 
-                    let-columns="columns">
-            <tr [ttSelectableRow]="rowNode">
-                <td *ngFor="let col of selectedColumns; let i = index">
-                    <p-treeTableToggler [rowNode]="rowNode" *ngIf="i == 0"></p-treeTableToggler>
+                    let-columns="columns"> 
+            <tr [ttSelectableRow]="rowNode" >
+                <td *ngFor="let col of selectedColumns; let i = index" >
+                   <p-treeTableToggler [rowNode]="rowNode" *ngIf="i == 0"></p-treeTableToggler>
 
                     <span *ngIf="col.field == 'nfc_tag_id'">
                         <span>
@@ -226,8 +229,18 @@
                                 height="17px" />
                         </span>
                     </span>
+                    <div *ngIf="i == 1" style="font-size: 85%;  ">
+                            {{rowData['_basic_info_']}}
+                    </div>
                 </td>
             </tr>
+            <!--
+            <tr >
+                    <td (click)="test(rowIndex)" >{{'ffffffffffff'}} </td>
+                    <td colspan="2" > {{rowData['_basic_info_']}}</td>  
+                    <td [attr.colspan]="selectedColumns.length-3"></td>                 
+            </tr>
+            -->
         </ng-template>
         <ng-template pTemplate="loadingbody" let-columns="columns">
             <tr style="height:34px">

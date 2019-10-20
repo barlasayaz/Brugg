@@ -171,8 +171,8 @@
     "platforms": [
       "browser",
       "ios",
-      "windows",
-      "android"
+      "android",
+      "windows"
     ]
   }
 }
