@@ -4,47 +4,49 @@
     <p-menubar id="menuMin" class="wideMenu">
         <div>
             <button type="button" 
-                    pButton
-                    icon="fa fa-fw fa-list"
-                    label="Menu"
+                    pButton 
+                    icon="fa fa-fw fa-list" 
+                    label="Menu" 
                     id="btnMenu"
                     (click)="menu.toggle($event)">
                 <span class="ui-submenu-icon pi pi-fw pi-caret-down slide-caret"></span>
-            </button>            
+            </button>
         </div>
         <div style="padding-top: 5px; padding-right: 10px; margin-left: auto; color: white;">
-            <button type="button" pButton (click)="deSelectAll()" >
+            <button type="button" 
+                    pButton 
+                    (click)="deSelectAll()">
                 {{'selektiert' |translate }}: {{selectedRow}}
             </button>
- 
+
         </div>
-        <div class="ui-inputgroup search-search">            
+        <div class="ui-inputgroup search-search">
             <input type="text" 
-                   pInputText
-                   placeholder="{{'Suche' |translate }}"
-                   [(ngModel)]="columnFilterValues['search_all']" 
-                   (input)="search_all()">
+                    pInputText 
+                    placeholder="{{'Suche' |translate }}"
+                    [(ngModel)]="columnFilterValues['search_all']" 
+                    (input)="search_all()">
         </div>
     </p-menubar>
-    <p-slideMenu [model]="menuItems"
-                 popup="false"
+    <p-slideMenu [model]="menuItems" 
+                 popup="false" 
                  [viewportHeight]="280" 
-                 [style]="{'width':'200px'}" 
-                 #menu>
+                 [style]="{'width':'200px'}"
+                  #menu>
     </p-slideMenu>
-    <p-menubar [model]="menuItems"
-               [autoDisplay]="false"
+    <p-menubar [model]="menuItems" 
+               [autoDisplay]="false" 
                id="menuMax">
         <div style="padding-top: 5px; padding-right: 10px; color: white;">
-            <button type="button" pButton (click)="deSelectAll()" >
-             {{'selektiert' |translate }}: {{selectedRow}}
+            <button type="button" pButton (click)="deSelectAll()">
+                {{'selektiert' |translate }}: {{selectedRow}}
             </button>
         </div>
-        <div class="ui-inputgroup search-search">           
-            <input type="text"
-                   pInputText
+        <div class="ui-inputgroup search-search">
+            <input type="text" 
+                   pInputText 
                    placeholder="{{'Suche' |translate }}"
-                   [(ngModel)]="columnFilterValues['search_all']"
+                   [(ngModel)]="columnFilterValues['search_all']" 
                    (input)="search_all()">
             <!-- <button (click)="search_all()" 
                     pButton type="button" 
@@ -55,36 +57,36 @@
     </p-menubar>
 
     <div id="heightCalc" 
-         class="heightCalc"
+         class="heightCalc" 
          #divHeightCalc>
-    </div>    
-    <p-treeTable *ngIf="selectMode"
-                 [value]="productListView"
-                 [columns]="selectedColumns"
+    </div>
+    <p-treeTable *ngIf="selectMode&&!editMode" 
+                 [value]="productListView" 
+                 [columns]="selectedColumns" 
                  selectionMode="single"
-                 [(selection)]="selectedNode"
+                 [(selection)]="selectedNode" 
                  (onNodeSelect)="nodeSelect($event, selectedNode)"
-                 (onNodeUnselect)="onNodeUnselect($event, selectedNode)"
-                 dataKey="id"
+                 (onNodeUnselect)="onNodeUnselect($event, selectedNode)" 
+                 dataKey="id" 
                  (onNodeExpand)="onNodeExpand($event)"
-                 (onNodeCollapse)="onNodeCollapse($event)"
-                 styleClass="ui-treetable-scrollable-body"
+                 (onNodeCollapse)="onNodeCollapse($event)" 
+                 styleClass="ui-treetable-scrollable-body" 
                  [resizableColumns]="true"
-                 [scrollable]="true"
+                 [scrollable]="true" 
                  [paginator]="false" 
                  [rows]="rowCount" 
                  [scrollHeight]="heightCalc"
-                 [virtualRowHeight]="rowHeight"
+                 [virtualRowHeight]="rowHeight" 
                  [virtualScroll]="true" 
                  [lazy]="true" 
-                 (onLazyLoad)="loadNodes($event)"  
+                 (onLazyLoad)="loadNodes($event)"
                  [loading]="false" 
                  [totalRecords]="rowRecords"
                  [reorderableColumns]="true" 
                  (onColReorder)="onColReorder($event)"
-                 (onColResize)="onColResize($event)"
-                 [sortField] = "sortedColumn['sort_field']"
-                 [sortOrder] = "sortedColumn['sort_order']" >   
+                 (onColResize)="onColResize($event)" 
+                 [sortField]="sortedColumn['sort_field']"
+                 [sortOrder]="sortedColumn['sort_order']">
         <ng-template pTemplate="colgroup" let-columns>
             <colgroup>
                 <col *ngFor="let col of selectedColumns" [ngStyle]="{width: col.width}">
@@ -93,15 +95,15 @@
         <ng-template pTemplate="header" let-columns>
             <tr>
                 <th *ngFor="let col of selectedColumns" 
-                    ttResizableColumn
-                    [ttSortableColumn]="col.field" 
+                    ttResizableColumn 
+                    [ttSortableColumn]="col.field"
                     ttReorderableColumn > {{col.header}}
                     <p-treeTableSortIcon [field]="col.field">
                     </p-treeTableSortIcon>
                 </th>
             </tr>
             <tr [hidden]="!splitFilter">
-                <th *ngFor="let col of selectedColumns" 
+                    <th *ngFor="let col of selectedColumns" 
                     nowrap 
                     [ngSwitch]="col.field" 
                     class="p-table-filter">
@@ -141,7 +143,7 @@
             </tr>
         </ng-template>
     </p-treeTable>
-    <p-treeTable *ngIf="!selectMode"
+    <p-treeTable *ngIf="!selectMode&&!editMode"
                  [value]="productListView"
                  [columns]="selectedColumns"
                  selectionMode="multiple"
@@ -202,7 +204,7 @@
                     let-columns="columns">
             <tr [ttSelectableRow]="rowNode">
                 <td *ngFor="let col of selectedColumns; let i = index">
-                   <p-treeTableToggler [rowNode]="rowNode" *ngIf="i == 0"></p-treeTableToggler>
+                    <p-treeTableToggler [rowNode]="rowNode" *ngIf="i == 0"></p-treeTableToggler>
 
                     <span *ngIf="col.field == 'nfc_tag_id'">
                         <span>
@@ -210,20 +212,109 @@
                             <ion-icon name="wifi" *ngIf="rowData[col.field]" [ngStyle]="{'color':'rgb(0, 157, 224)'}">
                             </ion-icon>
                         </span>
-                    </span>                    
-                    <span *ngIf="(col.field != 'nfc_tag_id') && (col.field === 'last_protocol_next')" [ngStyle]="{'color': rowData.last_protocol_next_color  }" >{{rowData[col.field]}}</span>
+                    </span>
+                    <span *ngIf="(col.field != 'nfc_tag_id') && (col.field === 'last_protocol_next')"
+                        [ngStyle]="{'color': rowData.last_protocol_next_color  }">{{rowData[col.field]}}</span>
                     <span *ngIf="(col.field != 'nfc_tag_id') && (col.field != 'last_protocol_next')">
                         <span *ngIf="(rowData[col.field]!=='x') && (rowData[col.field]!=='√')">
                             {{rowData[col.field]}}
                         </span>
-                        <span *ngIf="(rowData[col.field]==='x') || (rowData[col.field]==='√')">                        
-                                <img *ngIf="rowData[col.field]==='√'"
-                                    src="/assets/imgs/available.png" alt="" height="17px"/>
-                                <img *ngIf="rowData[col.field]==='x'"
-                                    src="/assets/imgs/not_available.png" alt="" height="17px"/>
+                        <span *ngIf="(rowData[col.field]==='x') || (rowData[col.field]==='√')">
+                            <img *ngIf="rowData[col.field]==='√'" src="/assets/imgs/available.png" alt=""
+                                height="17px" />
+                            <img *ngIf="rowData[col.field]==='x'" src="/assets/imgs/not_available.png" alt=""
+                                height="17px" />
                         </span>
                     </span>
                 </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="loadingbody" let-columns="columns">
+            <tr style="height:34px">
+                <td *ngFor="let col of selectedColumns;">
+                    <div class="loading-text"></div>
+                </td>
+            </tr>
+        </ng-template>
+    </p-treeTable>
+    <p-treeTable *ngIf="!selectMode&&editMode" 
+                 [value]="productListView" 
+                 [columns]="selectedColumns" 
+                 dataKey="id"
+                 (onNodeExpand)="onNodeExpand($event)" 
+                 (onNodeCollapse)="onNodeCollapse($event)"
+                 styleClass="ui-treetable-scrollable-body" 
+                 [resizableColumns]="true" 
+                 [scrollable]="true" 
+                 [paginator]="false"
+                 [rows]="rowCount" 
+                 [scrollHeight]="heightCalc" 
+                 [virtualRowHeight]="rowHeight" 
+                 [virtualScroll]="true"
+                 [lazy]="true" 
+                 (onLazyLoad)="loadNodes($event)" 
+                 [loading]="false" 
+                 [totalRecords]="rowRecords"
+                 [reorderableColumns]="true" 
+                 (onColReorder)="onColReorder($event)" 
+                 (onColResize)="onColResize($event)"
+                 [sortField]="sortedColumn['sort_field']" 
+                 [sortOrder]="sortedColumn['sort_order']"
+                 (onEditComplete)="onEditComplete($event)">
+        <ng-template pTemplate="colgroup" let-columns>
+            <colgroup>
+                <col *ngFor="let col of selectedColumns" [ngStyle]="{width: col.width}">
+            </colgroup>
+        </ng-template>
+        <ng-template pTemplate="header" let-columns>
+            <tr>
+                <th *ngFor="let col of selectedColumns" ttResizableColumn [ttSortableColumn]="col.field"
+                    ttReorderableColumn> {{col.header}}
+                    <p-treeTableSortIcon [field]="col.field">
+                    </p-treeTableSortIcon>
+                </th>
+            </tr>
+            <tr [hidden]="!splitFilter">
+                <th *ngFor="let col of selectedColumns" nowrap [ngSwitch]="col.field" class="p-table-filter">
+                    <input pInputText type="text" class="filter-search" (input)="search_all()"
+                        [(ngModel)]="columnFilterValues[col.field]">
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowNode let-rowData="rowData" let-columns="columns">
+            <tr>
+                    <td  *ngFor="let col of selectedColumns; let i = index" [ttEditableColumn]="rowData[col.field]" [ttEditableColumnField]="rowData[col.field]">
+                        <p-treeTableToggler [rowNode]="rowNode" *ngIf="i == 0"></p-treeTableToggler>
+                        <p-treeTableCellEditor>
+                            <ng-template pTemplate="input" *ngIf="col.editable">
+                                <input pInputText type="text" [(ngModel)]="rowData[col.field]"
+                                    [ngStyle]="{'width': i == 0 ? '90%': '100%'}">
+                            </ng-template>
+                            <ng-template pTemplate="output"
+                                *ngIf="(col.field != 'nfc_tag_id') && (col.field != 'last_protocol_next') && (rowData[col.field]!=='x') && (rowData[col.field]!=='√')">
+                                {{rowData[col.field]}}</ng-template>
+                        </p-treeTableCellEditor>
+                        <span *ngIf="col.field == 'nfc_tag_id'">
+                            <span>
+                                <ion-icon name="wifi" *ngIf="!rowData[col.field]" [ngStyle]="{'color':'#ccc'}">
+                                </ion-icon>
+                                <ion-icon name="wifi" *ngIf="rowData[col.field]"
+                                    [ngStyle]="{'color':'rgb(0, 157, 224)'}">
+                                </ion-icon>
+                            </span>
+                        </span>
+                        <span *ngIf="(col.field != 'nfc_tag_id') && (col.field === 'last_protocol_next')"
+                            [ngStyle]="{'color': rowData.last_protocol_next_color  }">{{rowData[col.field]}}</span>
+                        <span *ngIf="(col.field != 'nfc_tag_id') && (col.field != 'last_protocol_next')">
+                            <span *ngIf="(rowData[col.field]==='x') || (rowData[col.field]==='√')">
+                                <img *ngIf="rowData[col.field]==='√'" src="/assets/imgs/available.png" alt=""
+                                    height="17px" />
+                                <img *ngIf="rowData[col.field]==='x'" src="/assets/imgs/not_available.png" alt=""
+                                    height="17px" />
+                            </span>
+                        </span>
+
+                    </td>
             </tr>
         </ng-template>
         <ng-template pTemplate="loadingbody" let-columns="columns">
