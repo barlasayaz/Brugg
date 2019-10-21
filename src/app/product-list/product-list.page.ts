@@ -56,6 +56,7 @@ export class ProductListPage implements OnInit {
     modelChanged: Subject<any> = new Subject<any>();
     public selectedRow: number;
     public selectMode: boolean = false;
+    public editMode: boolean = false;  
     public rowHeight = 26;
     public rowCount = 100;
     public sortedColumn = { sort_field : null, sort_order : 0 };
@@ -226,6 +227,24 @@ export class ProductListPage implements OnInit {
                     console.log('command menuitem:', event.item);
                     this.menu_history();
                 }
+            },
+            {
+                label: this.translate.instant('Edit Mode'),
+                icon: 'pi pi-fw pi-pencil',
+                visible: this.userdata.role_set.edit_products,
+                command: (event) => {
+                    console.log('command menuitem:', event.item);
+                    this.open_edit_mode();
+                }
+            },
+            {
+                label: this.translate.instant('Cancel Edit Mode'),
+                icon: 'pi pi-fw pi-pencil',
+                visible: false,
+                command: (event) => {
+                    console.log('command menuitem:', event.item);
+                    this.quit_edit_mode();
+                }
             }
         ]
     }
@@ -276,7 +295,7 @@ export class ProductListPage implements OnInit {
                 { field: 'id_number', header: 'ID', width: '85px' },
                 { field: 'id', header: 'DB-ID', width: '85px' },
                 { field: 'articel_no', header: this.translate.instant('Artikel-Nr.'), width: '100px' },
-                { field: 'customer_description', header: this.translate.instant('Kundenbezeichnung'), width: '200px' },
+                { field: 'customer_description', header: this.translate.instant('Kundenbezeichnung'), width: '200px', editable:true },
                 { field: 'last_protocol_date', header: this.translate.instant('Letzter besuch'), width: '100px' },
                 { field: 'last_protocol_next', header: this.translate.instant('Nächster besuch'), width: '100px' },
                 { field: 'check_interval', header: this.translate.instant('Intervall Prüfen'), width: '130px' }
@@ -1438,4 +1457,18 @@ console.log(x);
         }
     }
 
+    open_edit_mode()
+    {
+        this.editMode = true;
+        this.menuItems[8].items[6]['visible'] = false;
+        this.menuItems[8].items[7]['visible'] = true;
+    }
+
+    quit_edit_mode()
+    {
+        this.editMode = false;
+        this.menuItems[8].items[6]['visible'] = true;
+        this.menuItems[8].items[7]['visible'] = false;
+    }
+    onEditComplete (event) {console.log("event:",event);}
 }
