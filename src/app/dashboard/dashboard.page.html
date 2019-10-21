@@ -1,4 +1,5 @@
 <main-nav aktivPage="Dashboard"></main-nav>
+
 <ion-content>
 	<div class="ek-content">
 		<div class="container container-fix">
@@ -199,3 +200,29 @@
 
 	</div>
 </ion-content>
+
+<ion-fab slot="fixed" horizontal="end" vertical="bottom">
+	<ion-fab-button color="tertiary">
+		<ion-icon name="menu"></ion-icon>
+	</ion-fab-button>
+	<ion-fab-list side="top">
+		<ion-fab-button 
+				(click)="newPrAppointment()" 
+				color="primary"
+				(mouseover)="mouseover(1)"
+				(mouseout)="mouseout(1)"
+				[class.mouse-over]="mouseoverButton1"
+				[labelFab]="'Termin hinzufügen'">				
+			<ion-icon name="time"></ion-icon>
+		</ion-fab-button>
+		<ion-fab-button 
+				(click)="getStatistik()" 
+				color="primary"
+				(mouseover)="mouseover(2)"
+				(mouseout)="mouseout(2)"
+				[class.mouse-over]="mouseoverButton2"
+				[labelFab]="'Statistik'">  				
+			<ion-icon name="stats"></ion-icon>
+		</ion-fab-button>		
+	</ion-fab-list>
+</ion-fab>

@@ -19,6 +19,7 @@ const routes: Routes = [
   { path: 'old-browser', loadChildren: './login/old-browser/old-browser.module#OldBrowserPageModule' },
   { path: 'note-list/:id', loadChildren: './note-list/note-list.module#NoteListPageModule' },
   { path: 'order-form/:id', loadChildren: './order-form/order-form.module#OrderFormPageModule' },
+  { path: 'statistics', loadChildren: './statistics/statistics.module#StatisticsPageModule' },
   {
     path: 'product-details',
     resolve: {
@@ -79,7 +80,8 @@ const routes: Routes = [
       special: DataResolverService
     },
     loadChildren: './note-details/note-details.module#NoteDetailsPageModule'
-  }
+  },
+  { path: 'statistics', loadChildren: './statistics/statistics.module#StatisticsPageModule' }
 ];
 @NgModule({
   imports: [

@@ -102,6 +102,10 @@ export class MainNavComponent implements OnInit {
           this.navCtrl.navigateRoot(['/note-list/' + id]);
           break;
       }
+    } else {
+      if (this.aktivPage == 'Statistics') {
+        this.navCtrl.navigateRoot('/dashboard');
+      }
     }
     this.aktivPage = action;
   }

@@ -1,0 +1,147 @@
+<main-nav aktivPage="Statistics"></main-nav>
+
+<ion-content>
+  <div class="ek-content">
+    <div class="container">
+      <div class="mt20 content-sm">  
+        <ion-grid style="margin-left: -5px;">
+          <ion-row>
+            <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12">
+              <div class="kunden-wrap" style="padding-bottom: 12px;">
+                <!-- COMPANY -->
+                <div class="kunden-col">
+                  <div class="table-info">
+                    <div class="thead">
+                      <div class="tr table-header">
+                        <div class="th" 
+                             style="min-width: fit-content;">
+                             {{'Auswertungen' | translate}}
+                        </div>
+                      </div>
+                    </div>
+                    <div class="tbody">
+                      <div class="tr table-subheader table-subheader-fix">
+                        <div class="table-subheader-buttons">
+                          <ion-button size="small"
+                                      class="btn-view"
+                                      (click)="sendEmail()">
+                            <ion-icon name="send"></ion-icon> &nbsp; {{'E-Mail' | translate}}
+                          </ion-button>
+                          <ion-button size="small"
+                                      class="btn-view"
+                                      (click)="exportExcel()">
+                            <ion-icon name="pie"></ion-icon> &nbsp; {{'XLSx Export' | translate}}
+                          </ion-button>
+                        </div>
+                      </div>  
+                      <div class="tr table-body">           
+                          <div class="td">
+                            <ion-item lines="none">
+                              <ion-label position="floating">{{'Anfang datum' | translate}}</ion-label>
+                              <ion-datetime (ionChange)="statistic()"
+                                            mode="ios" 
+                                            [(ngModel)]="startDate"
+                                            max = {{maxStartDate}}
+                                            displayFormat="DD.MM.YYYY"
+                                            doneText="{{translate.instant('okay')}}"
+                                            cancelText="{{translate.instant('abbrechen')}}">
+                              </ion-datetime>
+                            </ion-item>
+                          </div>
+                      </div>
+                        <div class="tr table-body">
+                          <div class="td">
+                            <ion-item lines="none">
+                              <ion-label position="floating">{{'Ende datum' | translate}}</ion-label>
+                              <ion-datetime (ionChange)="statistic()"
+                                            mode="ios" 
+                                            [(ngModel)]="endDate"
+                                            min = {{minEndDate}}
+                                            max = {{maxEndDate}}
+                                            displayFormat="DD.MM.YYYY"
+                                            doneText="{{translate.instant('okay')}}"
+                                            cancelText="{{translate.instant('abbrechen')}}">
+                              </ion-datetime>
+                            </ion-item>
+                          </div>
+                        </div>
+                        <div class="tr table-body">
+                          <div class="td">
+                            <ion-item lines="none">
+                                <ion-label position="floating">{{'Statistik' | translate}}</ion-label>
+                                <ion-select (ionChange)="statistic()"
+                                            [(ngModel)]="statistics"
+                                            okText="{{translate.instant('okay')}}"
+                                            cancelText="{{translate.instant('abbrechen')}}">
+                                  <ion-select-option value="0">{{translate.instant('Besuchsberichte pro Monat')}}</ion-select-option>
+                                  <ion-select-option value="1">{{translate.instant('AD-Termine pro Monat')}}</ion-select-option>
+                                  <ion-select-option value="2">{{translate.instant('PR dates per month')}}</ion-select-option>
+                                </ion-select>
+                              </ion-item>
+                          </div>
+                        </div>
+                        <div class="tr table-body">
+                          <div class="td">
+                            <ion-item lines="none">
+                              <ion-label position="floating">{{'E-Mail' | translate}}</ion-label>
+                              <ion-input required="true" 
+                                        type="text"
+                                        [(ngModel)]="email">
+                              </ion-input>
+                            </ion-item>
+                          </div>
+                        </div>                
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ion-col>            
+            <ion-col size-xl="8" size-lg="8" size-md="8" size-sm="12" size="12">
+              <div class="kunden-col" style="padding-bottom: 12px;">
+                <div class="table-info">
+                  <div class="thead">
+                    <div class="tr table-header">                        
+                      <div class="th" 
+                          style="max-width: 400px;">
+                        {{'Statistiken' | translate }}
+                      </div>
+                    </div>
+                  </div>
+                  <div class="tbody">
+                    <div class="tr table-subheader table-subheader-fix">
+                      <div class="statistic-title">
+                        {{'Firma' | translate}}
+                      </div>
+                      <div class="statistic-title">
+                        {{'Wertung' | translate}}
+                      </div>
+                      <div class="statistic-title">
+                        {{'PLZ' | translate}}
+                      </div>                          
+                      <div class="statistic-title">
+                        {{'Branche' | translate}}
+                      </div>
+                      <div class="statistic-title">
+                        {{'Anzahl Besuchsberichte' | translate}}
+                      </div>
+                    </div>
+                    <div style="height: 525px; overflow: scroll; margin-bottom: -15px;">
+                      <div class="tr table-body" *ngFor="let item of listStatistic">
+                        <div class="td">{{item.company}}</div>
+                        <div class="td">{{item.name_user}}</div>
+                        <div class="td">{{item.name_contact}}</div>
+                        <div class="td">{{item.category}}</div>
+                        <div class="td">{{item.appointment_type}}</div>
+                      </div>                                            
+                    </div>
+                  </div>                 
+                </div>
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </div>
+    </div>
+  </div>
+</ion-content>
+
