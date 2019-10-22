@@ -520,7 +520,9 @@ export class ProductListPage implements OnInit {
                             }
                         }
                         this.productListAll[index].data[options[i].title[this.lang]] = options[i].value;
-                        let h = options[i].value.trim();
+                        let h = "";
+                        if(options[i].value)
+                            h = options[i].value.trim();
                         if( h!==""){
                             if( info!=="") info +=", ";
                             info += h;  
@@ -535,7 +537,9 @@ export class ProductListPage implements OnInit {
                         this.productListAll[index].data[options[i].title[this.lang]] = "("+options[i].value.lat.toString().substring(0, 6) + ","+options[i].value.long.toString().substring(0, 6) +")";
                     } else {
                         this.productListAll[index].data[options[i].title[this.lang]] = options[i].value;
-                        let h = options[i].value.trim();
+                        let h = "";
+                        if(options[i].value)
+                            h = options[i].value.trim();
                         if( h!==""){
                             if( info!=="") info +=", ";
                             info += h;  
