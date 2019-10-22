@@ -315,6 +315,7 @@ export class ProductListPage implements OnInit {
     }
 
     async loadNodes(event: LazyLoadEvent) {
+        setTimeout(() => {
         if (this.totalRecords > 0) {
             if (event.sortField && event.sortField.length > 0) {
                 this.sortedColumn.sort_field = event.sortField;
@@ -323,7 +324,7 @@ export class ProductListPage implements OnInit {
             }
             this.generate_productList(event.first, event.rows, event.sortField, event.sortOrder);
         }
-
+    }, 0);
         // in a production application, make a remote request to load data using state metadata from event
         // event.first = First row offset
         // event.rows = Number of rows per page
@@ -529,7 +530,10 @@ export class ProductListPage implements OnInit {
                         }                         
                     } else if (options[i].type == 4) {
                         const pipe = new DatePipe('en-US');
-                        this.productListAll[index].data[options[i].title[this.lang]] = pipe.transform(options[i].value, 'HH:mm');
+                        if(options[i].value && options[i].value.length ==5 )
+                            this.productListAll[index].data[options[i].title[this.lang]] = options[i].value;
+                        else
+                            this.productListAll[index].data[options[i].title[this.lang]] = pipe.transform(options[i].value, 'HH:mm');
                     } else if (options[i].type == 5) {
                         const pipe = new DatePipe('en-US');
                         this.productListAll[index].data[options[i].title[this.lang]] = pipe.transform(options[i].value, 'dd.MM.yyyy');
@@ -1474,5 +1478,14 @@ console.log(x);
         this.menuItems[8].items[6]['visible'] = true;
         this.menuItems[8].items[7]['visible'] = false;
     }
-    onEditComplete (event) {console.log("event:",event);}
+    onEditComplete (event) {
+        console.log("event:",event);
+      let value = event.data[event.field];
+      let field = event.field;
+      let id = event.data.id;
+
+      let obj = { value : value, field: field, id: id}
+
+      this.apiService.pvs4_set_product_dynamic(obj);
+    }
 }
