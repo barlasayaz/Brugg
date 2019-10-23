@@ -47,8 +47,11 @@ switch ($_SERVER['REQUEST_METHOD']) {
 }
 
 function processing($id) {
-    global $brugg_id_api,$database_location,$database_username,$database_password,$database_name;
+    global $brugg_id_api,$database_location,$database_username,$database_password,$database_name;   
     $con=mysqli_connect($database_location,$database_username,$database_password,$database_name);
+
+
+
     mysqli_query($con,"SET NAMES 'utf8'");
     if (mysqli_connect_errno()){
         http_response_code(500);

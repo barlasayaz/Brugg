@@ -226,8 +226,8 @@
                                     src="/assets/imgs/not_available.png" alt="" height="17px"/>
                         </span>
                     </span>
-                    <div *ngIf="i == 1" style="font-size: 85%;  ">
-                            {{rowData['_basic_info_']}}
+                    <div *ngIf="(i===1) && showBasicInfo" style="font-size: 85%;  ">
+                            {{rowData['_basic_info_show_']}}
                     </div>
                 </td>
             </tr>

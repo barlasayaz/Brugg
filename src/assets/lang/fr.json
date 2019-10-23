@@ -876,6 +876,11 @@
   "Italian": "Italien",
   "Hol dir die volle ReBox":"Ramassez la ReBox complète",
   "Fordern Sie leere ReBox":"Demande vide ReBox",
-  "Senden Sie selbst eine vollständige ReBox":"Envoyer une Rebox complète par vos propres moyens"
+  "Senden Sie selbst eine vollständige ReBox":"Envoyer une Rebox complète par vos propres moyens",
+
+  "zeige Basisinformation":"afficher les informations de base",
+    "Basisinformation ausblenden":"Masquer les informations de base",
+    "Basisinformation":"informations de base",
+    "Anzahl der maximal angezeigten Zeichen (min:10, max:300)":"Nombre maximum de caractères affichés (min:10, max:300)"
   
 }

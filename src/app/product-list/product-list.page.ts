@@ -57,7 +57,9 @@ export class ProductListPage implements OnInit {
     public selectedRow: number;
     public selectMode: boolean = false;
     public rowHeight = 26;
-    public rowCount = 100;
+    public rowCount = 100;    
+    public showBasicInfo= true;
+    public lengthBasicInfo= 90;
     public sortedColumn = { sort_field : null, sort_order : 0 };
 
     public menuItems: MenuItem[] = [{
@@ -225,6 +227,56 @@ export class ProductListPage implements OnInit {
                 command: (event) => {
                     console.log('command menuitem:', event.item);
                     this.menu_history();
+                }
+            },
+            {
+                label: this.translate.instant('zeige Basisinformation'),
+                icon: 'pi pi-fw pi-info-circle',
+                disabled: this.showBasicInfo,
+                command: (event) => {
+                    console.log('command menuitem:', event.item);
+                    const alert = this.alertCtrl.create({
+                        header: this.translate.instant('Basisinformation'),
+                        message: this.translate.instant('Anzahl der maximal angezeigten Zeichen (min:10, max:300)'),
+                        inputs: [
+                            {
+                              name: 'countC',
+                              placeholder: String(this.lengthBasicInfo)
+                            }
+                          ],
+                        buttons: [
+                            {
+                                text: this.translate.instant('okay'),
+                                handler: (e) => {
+                                    console.log('alert menuitem:', e.countC);
+                                    let x = parseInt(e.countC);
+                                    if((x>=10) && (x<=300)) this.lengthBasicInfo = x;
+                                    for (let i = 0; i<this.productListView.length; i++ ){
+                                        let info = this.productListView[i].data['_basic_info_'];
+                                        if (info.length > this.lengthBasicInfo+3) {
+                                            info = info.substring(0, this.lengthBasicInfo) + '...';
+                                        }
+                                        this.productListView[i].data['_basic_info_show_'] = info;
+                                    }
+                                }
+                            }
+                        ]
+                    }).then(x => x.present());
+                    this.showBasicInfo = true;
+                    this.menuItems[8].items[6]['disabled'] = true;
+                    this.menuItems[8].items[7]['disabled'] = false;
+                }
+            },
+            {
+                label: this.translate.instant('Basisinformation ausblenden'),
+                icon: 'pi pi-fw pi-info-circle',
+                disabled: !this.showBasicInfo,
+                command: (event) => {
+                    console.log('command menuitem:', event.item);
+                    this.showBasicInfo = false;
+                    this.menuItems[8].items[6]['disabled'] = false;
+                    this.menuItems[8].items[7]['disabled'] = true;
+                    
                 }
             }
         ]
@@ -501,7 +553,8 @@ export class ProductListPage implements OnInit {
                             }
                         }
                         this.productListAll[index].data[options[i].title[this.lang]] = options[i].value;
-                        let h = options[i].value.trim();
+                        let h = "";
+                        if(options[i].value) h = options[i].value.trim();
                         if( h!==""){
                             if( info!=="") info +=", ";
                             info += h;  
@@ -516,7 +569,8 @@ export class ProductListPage implements OnInit {
                         this.productListAll[index].data[options[i].title[this.lang]] = "("+options[i].value.lat.toString().substring(0, 6) + ","+options[i].value.long.toString().substring(0, 6) +")";
                     } else {
                         this.productListAll[index].data[options[i].title[this.lang]] = options[i].value;
-                        let h = options[i].value.trim();
+                        let h = "";
+                        if(options[i].value) h = options[i].value.trim();
                         if( h!==""){
                             if( info!=="") info +=", ";
                             info += h;  
@@ -524,10 +578,11 @@ export class ProductListPage implements OnInit {
                     }
                 }
                 // console.log("index :", index);
-                if (info.length > 83) {
-                    info = info.substring(0, 80) + '...';
-                }
                 this.productListAll[index].data['_basic_info_'] = info;
+                if (info.length > this.lengthBasicInfo+3) {
+                    info = info.substring(0, this.lengthBasicInfo) + '...';
+                }
+                this.productListAll[index].data['_basic_info_show_'] = info;
             }
 
             this.generate_productList(0, this.rowCount, this.sortedColumn.sort_field, this.sortedColumn.sort_order);
