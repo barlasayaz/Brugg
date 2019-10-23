@@ -189,6 +189,10 @@
                                       <ion-select-option *ngFor="let option of item.options" >{{option[lang]}}</ion-select-option>
                                     </ion-select> 
                                 </ion-item>
+                                <ion-item lines="none">
+                                    <ion-label>{{"Basis"|translate}}</ion-label>
+                                    <ion-toggle [(ngModel)]="item.base" ></ion-toggle>
+                                </ion-item>
                             </ion-col>  
                             <ion-col size="12" size-md="10" *ngIf="item.type == 2">
                                 <ion-item lines="none">
@@ -197,6 +201,10 @@
                                                   [(ngModel)]="item.value"
                                                   maxlength="{{item.options.max}}">
                                   </ion-textarea> 
+                                </ion-item>
+                                <ion-item lines="none">
+                                    <ion-label>{{"Basis"|translate}}</ion-label>
+                                    <ion-toggle [(ngModel)]="item.base" ></ion-toggle>
                                 </ion-item>
                             </ion-col> 
                             <ion-col size="12" size-md="10" *ngIf="item.type == 3">
@@ -209,7 +217,11 @@
                                                min="{{item.options.min}}" 
                                                max="{{item.options.max}}">
                                     </ion-input>
-                                </ion-item>
+                                  </ion-item>
+                                  <ion-item lines="none">
+                                      <ion-label>{{"Basis"|translate}}</ion-label>
+                                      <ion-toggle [(ngModel)]="item.base" ></ion-toggle>
+                                  </ion-item>
                             </ion-col> 
                             <ion-col size="12" size-md="10" *ngIf="item.type == 4">
                               <ion-item lines="none">
@@ -223,6 +235,10 @@
                                                     cancelText="{{translate.instant('abbrechen')}}">
                                       </ion-datetime>  
                               </ion-item>
+                              <ion-item lines="none">
+                                  <ion-label>{{"Basis"|translate}}</ion-label>
+                                  <ion-toggle [(ngModel)]="item.base" ></ion-toggle>
+                              </ion-item>
                           </ion-col> 
                           <ion-col size="12" size-md="10" *ngIf="item.type == 5">
                             <ion-item lines="none">
@@ -234,6 +250,10 @@
                                               doneText="{{translate.instant('okay')}}"
                                               cancelText="{{translate.instant('abbrechen')}}">
                                 </ion-datetime>
+                            </ion-item>
+                            <ion-item lines="none">
+                                <ion-label>{{"Basis"|translate}}</ion-label>
+                                <ion-toggle [(ngModel)]="item.base" ></ion-toggle>
                             </ion-item>
                           </ion-col> 
                           <ion-col size="4" size-md="4" *ngIf="item.type == 6">

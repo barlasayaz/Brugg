@@ -180,6 +180,9 @@ export class ProductEditPage implements OnInit {
       this.activProduct = result.obj;
       this.activProduct.title = JSON.parse(result.obj.title);
       this.activProduct.items = JSON.parse(result.obj.items);
+      for(let i=0; i<this.activProduct.items.length; i++ ){
+        if(this.activProduct.items[i].base === undefined) this.activProduct.items[i].base=true;
+      }
       console.log('loadProduct: ', this.activProduct, this.activProduct.items);
       this.imagesSave = this.activProduct.images;
       var str: string = this.activProduct.images;

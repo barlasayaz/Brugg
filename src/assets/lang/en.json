@@ -883,9 +883,11 @@
   "Senden Sie selbst eine vollständige ReBox":"Send a full ReBox on your own",
 
   "zeige Basisinformation":"show basic information",
-    "Basisinformation ausblenden":"Hide basic information",
-    "Basisinformation":"basic information",
-    "Anzahl der maximal angezeigten Zeichen (min:10, max:300)":"Maximum number of characters displayed (min:10, max:300)",
+  "Basisinformation ausblenden":"Hide basic information",
+  "Basisinformation":"basic information",
+  "Anzahl der maximal angezeigten Zeichen (min:10, max:300)":"Maximum number of characters displayed (min:10, max:300)",
+  "Basis":"Base",
+
   "Bearbeitungsmodus" : "Edit Mode",
   "Bearbeitungsmodus abbrechen" : "Cancel Edit Mode"
 }
