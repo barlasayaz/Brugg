@@ -6,29 +6,26 @@
       <div class="mt20 content-sm">  
         <ion-grid style="margin-left: -5px;">
           <ion-row>
-            <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12">
+            <ion-col size-xl="3" size-lg="3" size-md="3" size-sm="12" size="12">
               <div class="kunden-wrap" style="padding-bottom: 12px;">
                 <!-- COMPANY -->
                 <div class="kunden-col">
                   <div class="table-info">
                     <div class="thead">
                       <div class="tr table-header">
-                        <div class="th" 
-                             style="min-width: fit-content;">
-                             {{'Auswertungen' | translate}}
-                        </div>
+                        <div class="th">{{'Auswertungen' | translate}}</div>
                       </div>
                     </div>
                     <div class="tbody">
                       <div class="tr table-subheader table-subheader-fix">
                         <div class="table-subheader-buttons">
                           <ion-button size="small"
-                                      class="btn-view"
+                                      class="btn-email-view"
                                       (click)="sendEmail()">
                             <ion-icon name="send"></ion-icon> &nbsp; {{'E-Mail' | translate}}
                           </ion-button>
                           <ion-button size="small"
-                                      class="btn-view"
+                                      class="btn-excel-view"
                                       (click)="exportExcel()">
                             <ion-icon name="pie"></ion-icon> &nbsp; {{'XLSx Export' | translate}}
                           </ion-button>
@@ -70,12 +67,12 @@
                             <ion-item lines="none">
                                 <ion-label position="floating">{{'Statistik' | translate}}</ion-label>
                                 <ion-select (ionChange)="statistic()"
-                                            [(ngModel)]="statistics"
+                                            [(ngModel)]="statisticType"
                                             okText="{{translate.instant('okay')}}"
                                             cancelText="{{translate.instant('abbrechen')}}">
-                                  <ion-select-option value="0">{{translate.instant('Besuchsberichte pro Monat')}}</ion-select-option>
-                                  <ion-select-option value="1">{{translate.instant('AD-Termine pro Monat')}}</ion-select-option>
-                                  <ion-select-option value="2">{{translate.instant('PR dates per month')}}</ion-select-option>
+                                  <ion-select-option value="1">{{translate.instant('Notizen')}}</ion-select-option>
+                                  <ion-select-option value="2">{{translate.instant('Termin')}}</ion-select-option>
+                                  <ion-select-option value="3">{{translate.instant('Notizen')}} & {{translate.instant('Termin')}}</ion-select-option>
                                 </ion-select>
                               </ion-item>
                           </div>
@@ -96,42 +93,34 @@
                 </div>
               </div>
             </ion-col>            
-            <ion-col size-xl="8" size-lg="8" size-md="8" size-sm="12" size="12">
+            <ion-col size-xl="9" size-lg="9" size-md="9" size-sm="12" size="12">
               <div class="kunden-col" style="padding-bottom: 12px;">
                 <div class="table-info">
                   <div class="thead">
                     <div class="tr table-header">                        
-                      <div class="th" 
-                          style="max-width: 400px;">
-                        {{'Statistiken' | translate }}
-                      </div>
+                      <div class="th" style="max-width: 120px;">{{'Statistiken' | translate }}</div>
+                      <div class="th" style="text-align: right;">[ {{'Firma' | translate}}: {{companyCount}} &nbsp;&nbsp;&nbsp; (A-B-C-D-{{ratingA}}-{{ratingB}}-{{ratingC}}-{{ratingD}}) &nbsp;&nbsp;&nbsp; {{'Besuchsberichte' | translate}}: {{visitReportSum}} ]</div>
                     </div>
                   </div>
                   <div class="tbody">
-                    <div class="tr table-subheader table-subheader-fix">
-                      <div class="statistic-title">
-                        {{'Firma' | translate}}
-                      </div>
-                      <div class="statistic-title">
-                        {{'Wertung' | translate}}
-                      </div>
-                      <div class="statistic-title">
-                        {{'PLZ' | translate}}
-                      </div>                          
-                      <div class="statistic-title">
-                        {{'Branche' | translate}}
-                      </div>
-                      <div class="statistic-title">
-                        {{'Anzahl Besuchsberichte' | translate}}
-                      </div>
+                    <div class="tr table-subheader statistic-title">
+                      <div class="td" style="width: 125px;">{{'Benutzername' | translate}}</div>
+                      <div class="td" style="width: 162px;">{{'Firma' | translate}}</div>
+                      <div class="td" style="width: 75px;">{{'Wertung' | translate}}</div>
+                      <div class="td" style="width: 110px;">{{'PLZ' | translate}}</div>                          
+                      <div class="td" style="width: 95px;">{{'Branche' | translate}}</div>
+                      <div class="td" style="width: 125px;">{{'Ansprechpartner' | translate}}</div>
+                      <div class="td" style="width: 128px; text-align: center;">{{'Besuchsberichte' | translate}}</div>
                     </div>
                     <div style="height: 525px; overflow: scroll; margin-bottom: -15px;">
                       <div class="tr table-body" *ngFor="let item of listStatistic">
-                        <div class="td">{{item.company}}</div>
-                        <div class="td">{{item.name_user}}</div>
-                        <div class="td">{{item.name_contact}}</div>
-                        <div class="td">{{item.category}}</div>
-                        <div class="td">{{item.appointment_type}}</div>
+                        <div class="td" style="flex: none; width: 125px;">{{item.name_user}}</div>
+                        <div class="td" style="flex: none; width: 162px;">{{item.company}}</div>
+                        <div class="td" style="flex: none; width: 75px;">{{item.rating}}</div>
+                        <div class="td" style="flex: none; width: 110px;">{{item.zipcode_place}}</div>
+                        <div class="td" style="flex: none; width: 95px;">{{item.sector}}</div>
+                        <div class="td" style="flex: none; width: 125px;">{{item.name_contact}}</div>
+                        <div class="td" style="flex: none; width: 128px; text-align: center;">{{item.visitReport}}</div>
                       </div>                                            
                     </div>
                   </div>                 

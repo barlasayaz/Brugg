@@ -24,7 +24,14 @@
     --background: #005e86;
 }
 
-.btn-view {
+.btn-email-view {
+    text-transform: none;
+    height: 40px;
+    width: 110px;
+    margin: 10px;
+}
+
+.btn-excel-view {
     text-transform: none;
     height: 40px;
     width: 130px;
@@ -71,7 +78,7 @@ ion-input {
 }
 
 div.table-info div.tbody div.tr.table-body {
-    padding: 15px 20px !important;
+    padding: 15px 10px !important;
 }
 
 .item-has-focus.label-floating.sc-ion-label-md-h, .item-has-focus .label-floating.sc-ion-label-md-h, .item-has-placeholder.label-floating.sc-ion-label-md-h, .item-has-placeholder .label-floating.sc-ion-label-md-h, .item-has-value.label-floating.sc-ion-label-md-h, .item-has-value .label-floating.sc-ion-label-md-h {
@@ -82,8 +89,28 @@ div.table-info div.tbody div.tr.table-body {
 .statistic-title {
     color: white;
     font-size: 14px;
+    display: flex;
+    background: #005e86;
+    height: 55px !important;
+    padding: 10px !important;
+    align-items: center !important;
 }
 
 .table-info, .table-info>th, .table-info>td {
     background-color: white;
 }
+
+.ui-accordion .ui-accordion-header {
+    -webkit-border-radius: 0 !important;
+            border-radius: 0 !important;
+    padding: 5px 10px !important;
+    &.ui-state-active {
+        border: none !important;
+    }
+    a {
+        -webkit-border-radius: 0 !important;
+                border-radius: 0 !important;
+        padding: 0 !important;
+    }
+  }
+  

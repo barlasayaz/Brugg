@@ -80,16 +80,16 @@ function processing() {
     //-----------------------------------------------------
 
     // escape the uemailid to prevent sql injection
-    $type = intval ( trim( mysqli_escape_string($con,$_POST['type']) ));
-    $user = intval ( trim( mysqli_escape_string($con,$_POST['user']) ));
-    $start =  trim( mysqli_escape_string($con,$_POST['start']) );
-    $end =   trim( mysqli_escape_string($con,$_POST['end']) );
+    $type  = intval ( trim( mysqli_escape_string($con,$_POST['type']) ));
+    $user  = intval ( trim( mysqli_escape_string($con,$_POST['user']) ));
+    $start = trim( mysqli_escape_string($con,$_POST['start']) );
+    $end   = trim( mysqli_escape_string($con,$_POST['end']) );
 
     $liste = [];
     $anz_liste = 0;
 
     if($type==1){
-        $sql    = "SELECT id, customer,user,contact_person, category FROM `notes` WHERE `active` = 1 and `user` = $user and `notes_date` BETWEEN '$start' AND '$end';";
+        $sql    = "SELECT id, customer,user,contact_person,category FROM `notes` WHERE `active` = 1 and `user` = $user and `notes_date` BETWEEN '$start' AND '$end';";
         $ret_sql= mysqli_query( $con, $sql );    
         if($ret_sql) {
  
@@ -117,10 +117,13 @@ function processing() {
                 $obj["company"] = "";
                 if($obj['customer']>0){
                     $id = intval($obj['customer']);
-                    $k= mysqli_query( $con, "SELECT company,id FROM `customer` where `id` = $id ;");
+                    $k= mysqli_query( $con, "SELECT company,id,rating,sector,zip_code,place FROM `customer` where `id` = $id ;");
                     if($k) {
                         $k = mysqli_fetch_assoc($k);
                         $obj["company"] = $k['company'];
+                        $obj["rating"] = $k['rating'];
+                        $obj["sector"] = $k['sector'];
+                        $obj["zipcode_place"] = $k['zip_code']." ".$k['place'];
                     }
                 }
 
@@ -145,7 +148,7 @@ function processing() {
             die;
         }
     }  else if($type==2){
-        $sql    = "SELECT id, idCustomer,idUser,idContactPerson, appointment_type FROM `appointment` WHERE `active` = 1 and `idUser` = $user and `appointment_date` BETWEEN '$start' AND '$end';";
+        $sql    = "SELECT id, idCustomer,idUser,idContactPerson,appointment_type FROM `appointment` WHERE `active` = 1 and `idUser` = $user and `appointment_date` BETWEEN '$start' AND '$end';";
         $ret_sql= mysqli_query( $con, $sql );    
         if($ret_sql) {
  
@@ -173,10 +176,13 @@ function processing() {
                 $obj["company"] = "";
                 if($obj['idCustomer']>0){
                     $id = intval($obj['idCustomer']);
-                    $k= mysqli_query( $con, "SELECT company,id FROM `customer` where `id` = $id ;");
+                    $k= mysqli_query( $con, "SELECT company,id,rating,sector,zip_code,place FROM `customer` where `id` = $id ;");
                     if($k) {
                         $k = mysqli_fetch_assoc($k);
                         $obj["company"] = $k['company'];
+                        $obj["rating"] = $k['rating'];
+                        $obj["sector"] = $k['sector'];
+                        $obj["zipcode_place"] = $k['zip_code']." ".$k['place'];
                     }
                 }
 
