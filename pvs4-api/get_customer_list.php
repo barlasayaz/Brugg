@@ -107,7 +107,7 @@ function processing($user) {
     $limit  = 9999;
     $offset = $offset * $limit ;
     if(($role==1)||($role==2)){
-        // $sql    = "SELECT * FROM `customer` where (`active` = 1) AND (`licensee` = $licensee) ORDER BY `parent` LIMIT $limit OFFSET $offset;";
+        /*
         $sql = "SELECT cr.*, 
                        concat(ps_emp.first_name,' ', ps_emp.last_name) as employees,
                        concat(ps_tst.first_name,' ', ps_tst.last_name) as inspector,
@@ -131,6 +131,26 @@ function processing($user) {
                  WHERE cr.active = 1 
                    AND cr.licensee = $licensee
               ORDER BY cr.parent LIMIT $limit OFFSET $offset;";
+              */
+
+              /*
+              $sql = "SELECT cr.*
+                            FROM `customer` as cr
+                            WHERE cr.active = 1 
+                            AND cr.licensee = $licensee
+                      ORDER BY cr.parent LIMIT $limit OFFSET $offset;";
+            
+                      */     
+                      
+            $sql = "SELECT cr.*, 
+                      concat(ps_emp.first_name,' ', ps_emp.last_name) as employees,
+                      concat(ps_tst.first_name,' ', ps_tst.last_name) as inspector                  
+                 FROM `customer` as cr
+                      LEFT JOIN profiles as ps_emp ON ps_emp.id = cr.sales
+                      LEFT JOIN profiles as ps_tst ON ps_tst.id = cr.tester
+                WHERE cr.active = 1 
+                  AND cr.licensee = $licensee
+             ORDER BY cr.parent LIMIT $limit OFFSET $offset;";                               
     }else{
         $cp= mysqli_query($con,"SELECT * FROM contact_persons WHERE active = 1 AND email = '$email'");
         if($cp) {
@@ -176,6 +196,22 @@ function processing($user) {
             return 0;
         }
         while ($row = mysqli_fetch_assoc($ret_sql)) {
+            if( strlen($row['sales_dates'])>3){
+                $x = json_decode($row['sales_dates'], true);
+                //print_r($x);
+                if (strpos($x['last_date'], '.') != false) {
+                    $st = explode('.',$x['last_date']);
+                    $row['last_date'] = $st[2].'-'.$st[1].'-'.$st[0];
+                }else{
+                    $row['last_date'] = "";
+                }
+                if (strpos($x['next_date'], '.') != false) {
+                    $st = explode('.',$x['next_date']);
+                    $row['next_date'] = $st[2].'-'.$st[1].'-'.$st[0];
+                }else{
+                    $row['next_date'] = "";
+                }
+            }
             if($row['parent']==0){
                 $liste[] = array('data' => $row);
             }else{
@@ -189,7 +225,7 @@ function processing($user) {
         $ok = new \stdClass();
         $ok->amount = $anz_liste;
         $ok->list = $liste;
-        //$ok->sql = $sql;
+        $ok->sql = $sql;
         echo json_encode($ok);
         mysqli_close($con);
         die;
@@ -197,8 +233,9 @@ function processing($user) {
         // return 500 problem with query.
         http_response_code(500);
         $error = new \stdClass();
+        $error->amount = 0; 
         $error->message = 'Internal Server Error';
-        //$error->sql = $sql;
+        $error->sql = $sql;
         echo json_encode($error);
         mysqli_close($con);
         die;

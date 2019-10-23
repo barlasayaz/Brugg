@@ -298,7 +298,7 @@
     "Land": "Land",
     "letzte Pr.Tr.": "letzte Pr.Tr.",
     "letzte Prüfung": "letzte Prüfung",
-    "Letzter besuch": "letzte Prüfung",
+    "Letzter besuch": "letzter Besuch",
     "letzter Kontrollbesuch": "letzter Kontrollbesuch",
     "letzter Ter.": "letzter Ter.",
     "Liste der Ansprechpartner": "Liste der Ansprechpartner",
@@ -319,7 +319,7 @@
     "Mustertexte": "Mustertexte",
     "nächste Pr.Tr.": "nächste Pr.Tr.",
     "Nächste prüfung": "nächste Prüfung",
-    "Nächster besuch": "nächste Prüfung",
+    "Nächster besuch": "nächster Besuch",
     "nächster Kontrollbesuch": "nächster Kontrollbesuch",
     "nächster Ter.": "nächster Ter.",
     "Name": "Name",
@@ -880,5 +880,14 @@
     "Italian": "Italienisch",
     "Hol dir die volle ReBox":"Hol dir die volle ReBox",
     "Fordern Sie leere ReBox":"Fordern Sie leere ReBox",
-    "Senden Sie selbst eine vollständige Rebox":"Senden Sie selbst eine vollständige Rebox"
+    "Senden Sie selbst eine vollständige Rebox":"Senden Sie selbst eine vollständige Rebox",
+  
+    "zeige Basisinformation":"zeige Basisinformation",
+    "Basisinformation ausblenden":"Basisinformation ausblenden",
+    "Basisinformation":"Basisinformation",
+    "Anzahl der maximal angezeigten Zeichen (min:10, max:300)":"Anzahl der maximal angezeigten Zeichen (min:10, max:300)",
+    "Basis":"Basis",
+
+    "Bearbeitungsmodus" : "Bearbeitungsmodus",
+    "Bearbeitungsmodus abbrechen" : "Bearbeitungsmodus abbrechen"
 }

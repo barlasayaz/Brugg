@@ -879,6 +879,15 @@
   "Italian": "Italiano",
   "Hol dir die volle ReBox":"Prendi ReBox completo",
   "Fordern Sie leere ReBox":"Richiedi ReBox vuoto",
-  "Senden Sie selbst eine vollständige ReBox":"Invia un Rebox completo da solo"
+  "Senden Sie selbst eine vollständige ReBox":"Invia un Rebox completo da solo",
+
+  "zeige Basisinformation":"mostra informazioni di base",
+  "Basisinformation ausblenden":"Nascondi informazioni di base",
+  "Basisinformation":"informazioni di base",
+  "Anzahl der maximal angezeigten Zeichen (min:10, max:300)":"Numero massimo di caratteri visualizzati (min:10, max:300)",
+  "Basis":"Base",
+  
+  "Bearbeitungsmodus" : "modalità Modifica",
+  "Bearbeitungsmodus abbrechen" : "Annulla la modalità di modifica"
   
 }

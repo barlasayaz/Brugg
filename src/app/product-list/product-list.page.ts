@@ -58,7 +58,9 @@ export class ProductListPage implements OnInit {
     public selectMode: boolean = false;
     public editMode: boolean = false;  
     public rowHeight = 26;
-    public rowCount = 100;
+    public rowCount = 100;    
+    public showBasicInfo= true;
+    public lengthBasicInfo= 90;
     public sortedColumn = { sort_field : null, sort_order : 0 };
 
     public menuItems: MenuItem[] = [{
@@ -229,7 +231,57 @@ export class ProductListPage implements OnInit {
                 }
             },
             {
-                label: this.translate.instant('Edit Mode'),
+                label: this.translate.instant('zeige Basisinformation'),
+                icon: 'pi pi-fw pi-info-circle',
+                disabled: this.showBasicInfo,
+                command: (event) => {
+                    console.log('command menuitem:', event.item);
+                    const alert = this.alertCtrl.create({
+                        header: this.translate.instant('Basisinformation'),
+                        message: this.translate.instant('Anzahl der maximal angezeigten Zeichen (min:10, max:300)'),
+                        inputs: [
+                            {
+                              name: 'countC',
+                              placeholder: String(this.lengthBasicInfo)
+                            }
+                          ],
+                        buttons: [
+                            {
+                                text: this.translate.instant('okay'),
+                                handler: (e) => {
+                                    console.log('alert menuitem:', e.countC);
+                                    let x = parseInt(e.countC);
+                                    if((x>=10) && (x<=300)) this.lengthBasicInfo = x;
+                                    for (let i = 0; i<this.productListView.length; i++ ){
+                                        let info = this.productListView[i].data['_basic_info_'];
+                                        if (info.length > this.lengthBasicInfo+3) {
+                                            info = info.substring(0, this.lengthBasicInfo) + '...';
+                                        }
+                                        this.productListView[i].data['_basic_info_show_'] = info;
+                                    }
+                                }
+                            }
+                        ]
+                    }).then(x => x.present());
+                    this.showBasicInfo = true;
+                    this.menuItems[8].items[6]['disabled'] = true;
+                    this.menuItems[8].items[7]['disabled'] = false;
+                }
+            },
+            {
+                label: this.translate.instant('Basisinformation ausblenden'),
+                icon: 'pi pi-fw pi-info-circle',
+                disabled: !this.showBasicInfo,
+                command: (event) => {
+                    console.log('command menuitem:', event.item);
+                    this.showBasicInfo = false;
+                    this.menuItems[8].items[6]['disabled'] = false;
+                    this.menuItems[8].items[7]['disabled'] = true;
+                }
+            }
+            /*,
+            {
+                label: this.translate.instant('Bearbeitungsmodus'),
                 icon: 'pi pi-fw pi-pencil',
                 visible: this.userdata.role_set.edit_products,
                 command: (event) => {
@@ -238,7 +290,7 @@ export class ProductListPage implements OnInit {
                 }
             },
             {
-                label: this.translate.instant('Cancel Edit Mode'),
+                label: this.translate.instant('Bearbeitungsmodus abbrechen'),
                 icon: 'pi pi-fw pi-pencil',
                 visible: false,
                 command: (event) => {
@@ -246,6 +298,7 @@ export class ProductListPage implements OnInit {
                     this.quit_edit_mode();
                 }
             }
+            */
         ]
     }
 ];
@@ -315,6 +368,7 @@ export class ProductListPage implements OnInit {
     }
 
     async loadNodes(event: LazyLoadEvent) {
+        setTimeout(() => {
         if (this.totalRecords > 0) {
             if (event.sortField && event.sortField.length > 0) {
                 this.sortedColumn.sort_field = event.sortField;
@@ -323,7 +377,7 @@ export class ProductListPage implements OnInit {
             }
             this.generate_productList(event.first, event.rows, event.sortField, event.sortOrder);
         }
-
+    }, 0);
         // in a production application, make a remote request to load data using state metadata from event
         // event.first = First row offset
         // event.rows = Number of rows per page
@@ -521,15 +575,17 @@ export class ProductListPage implements OnInit {
                         }
                         this.productListAll[index].data[options[i].title[this.lang]] = options[i].value;
                         let h = "";
-                        if(options[i].value)
-                            h = options[i].value.trim();
+                        if(options[i].value) h = options[i].value.trim();
                         if( h!==""){
                             if( info!=="") info +=", ";
                             info += h;  
                         }                         
                     } else if (options[i].type == 4) {
                         const pipe = new DatePipe('en-US');
-                        this.productListAll[index].data[options[i].title[this.lang]] = pipe.transform(options[i].value, 'HH:mm');
+                        if(options[i].value && options[i].value.length ==5 )
+                            this.productListAll[index].data[options[i].title[this.lang]] = options[i].value;
+                        else
+                            this.productListAll[index].data[options[i].title[this.lang]] = pipe.transform(options[i].value, 'HH:mm');
                     } else if (options[i].type == 5) {
                         const pipe = new DatePipe('en-US');
                         this.productListAll[index].data[options[i].title[this.lang]] = pipe.transform(options[i].value, 'dd.MM.yyyy');
@@ -538,8 +594,7 @@ export class ProductListPage implements OnInit {
                     } else {
                         this.productListAll[index].data[options[i].title[this.lang]] = options[i].value;
                         let h = "";
-                        if(options[i].value)
-                            h = options[i].value.trim();
+                        if(options[i].value) h = options[i].value.trim();
                         if( h!==""){
                             if( info!=="") info +=", ";
                             info += h;  
@@ -547,10 +602,11 @@ export class ProductListPage implements OnInit {
                     }
                 }
                 // console.log("index :", index);
-                if (info.length > 83) {
-                    info = info.substring(0, 80) + '...';
-                }
                 this.productListAll[index].data['_basic_info_'] = info;
+                if (info.length > this.lengthBasicInfo+3) {
+                    info = info.substring(0, this.lengthBasicInfo) + '...';
+                }
+                this.productListAll[index].data['_basic_info_show_'] = info;
             }
 
             this.generate_productList(0, this.rowCount, this.sortedColumn.sort_field, this.sortedColumn.sort_order);
@@ -1474,5 +1530,14 @@ console.log(x);
         this.menuItems[8].items[6]['visible'] = true;
         this.menuItems[8].items[7]['visible'] = false;
     }
-    onEditComplete (event) {console.log("event:",event);}
+    onEditComplete (event) {
+        console.log("event:",event);
+      let value = event.data[event.field];
+      let field = event.field;
+      let id = event.data.id;
+
+      let obj = { value : value, field: field, id: id}
+
+      this.apiService.pvs4_set_product_dynamic(obj);
+    }
 }

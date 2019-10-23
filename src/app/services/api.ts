@@ -4,9 +4,10 @@ import 'rxjs/add/operator/timeout';
 import { UserdataService } from './userdata';
 
 
- const pvs4_apiURL = 'http://localhost/BruggPVS4/pvs4-api/';
-// const pvs4_apiURL = 'https://www.pvs2go.com/pvs4-api/';
-
+// const pvs4_apiURL = 'http://localhost/BruggPVS4/pvs4-api/';
+const pvs4_apiURL = 'https://www.pvs2go.com/pvs4-api/';
+//const pvs4_apiURL = 'http://s802403063.online.de/pvs4-api/';
+ 
 const brugg_id_api = 'https://www.bruggdigital.com/';
 const pvs4_client_id = 'brugg-pvs';
 const pvs4_client_secret = 'b23c8hfqnvd3qt7865uiat';
@@ -23,7 +24,7 @@ export class ApiService {
   public appointmentEndTime: string = '16:59';
   public appointmentMinTime: string = '07:00';
   public appointmentMaxTime: string = '17:59';
-  public version: any = '4.4.37';
+  public version: any = '4.4.38';
   private reset_semaphor = false;
   private reset_timeout: any = 0;
 
@@ -636,6 +637,18 @@ export class ApiService {
     console.log('pvs4_set_product():', obj);
     return new Promise((res, rej) => {
       this.pvs4_api_post('set_product.php', obj).then((done: any) => {// return the result
+        res(done);
+      },
+        err => { // return the error
+          rej(err);
+        });
+    });
+  }
+
+  pvs4_set_product_dynamic(obj: any) {
+    console.log('pvs4_set_product_dynamic():', obj);
+    return new Promise((res, rej) => {
+      this.pvs4_api_post('set_product_dynamic.php', obj).then((done: any) => {// return the result
         res(done);
       },
         err => { // return the error
