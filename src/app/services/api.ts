@@ -26,7 +26,7 @@ export class ApiService {
   public appointmentMaxTime: string = '17:59';
   public version: any = '4.4.38';
   private reset_semaphor = false;
-  private reset_timeout:any = 0;
+  private reset_timeout: any = 0;
 
   constructor(public http: HttpClient, public userdata: UserdataService) {
     console.log('Start ApiProvider Provider');
@@ -44,7 +44,7 @@ export class ApiService {
         'grant_type'   : 'password',
         'username'     : email,
         'password'     : password
-      }
+      };
       // call  endpoint
       this.http.post(url, data, { responseType: 'text' })
         .subscribe(
@@ -79,7 +79,7 @@ export class ApiService {
                   rej(err);
               });
             } else {
-              console.log('api bid_login() nok ');
+              console.log('api bid_login() nok_1 ');
               window.localStorage['pvs4_login'] = 0;
               localStorage.removeItem('user_info');
               localStorage.removeItem('pvs4_user');
@@ -96,7 +96,7 @@ export class ApiService {
             localStorage.removeItem('access_token');
             localStorage.removeItem('refresh_token');
             window.localStorage['pvs4_bruggid'] = '';
-            console.log('api bid_login() nok :', error);
+            console.log('api bid_login() nok_2 :', error);
             rej(error);
           }// error path
         );
@@ -106,13 +106,13 @@ export class ApiService {
   async test_semaphor() {
   console.log('test_semaphor()  this.reset_semaphor', this.reset_semaphor);
     return new Promise(resolve => {
-      if(this.reset_semaphor){
+      if (this.reset_semaphor) {
         setTimeout(() => {
           console.log('test_semaphor() timeout resolve ');
           let r = this.test_semaphor();
           resolve(r);
         }, 1000);
-      }else{
+      } else {
         resolve();
         console.log('test_semaphor() resolve ');
       }
@@ -124,9 +124,9 @@ export class ApiService {
     console.log('pvs4_api_reset():', orig_url, orig_data);
     //nur ein Rest zur gleichen zeit
     await this.test_semaphor();
-    if(this.reset_semaphor){
+    if (this.reset_semaphor) {
       console.error('error reset_semaphor');
-    }else{
+    } else {
       this.reset_semaphor = true;
       let my_prom =  new Promise((res, rej) => {
         // inject our access token
@@ -137,7 +137,7 @@ export class ApiService {
           'client_secret': pvs4_client_secret,
           'grant_type': 'refresh_token',
           'refresh_token' : window.localStorage['refresh_token']
-        }
+        };
         // call  endpoint
         this.http.post(url, data, { responseType: 'text' }).subscribe( (data: any) => {
               this.reset_semaphor = false;
@@ -148,11 +148,11 @@ export class ApiService {
               orig_data.token  = data.access_token;
               this.http.post(orig_url, orig_data, { headers: orig_headers , responseType: 'text' }).subscribe((done: any) => {
                 // return the result
-                try{
+                try {
                   let done_json = JSON.parse(done);
-                  console.log('bid_reset() ok: ',orig_url, done_json);
+                  console.log('bid_reset() ok: ', orig_url, done_json);
                   res(done_json);
-                }catch{
+                } catch {
                   console.error('bid_reset() JSON.parse orig_url error:', orig_url, done);
                 }
               },
@@ -216,11 +216,11 @@ export class ApiService {
       // call  endpoint
       this.http.post(url, data, { headers: headers, responseType: 'text' }).subscribe((done: any) => {
           // return the result
-          try{
+          try {
             let done_json = JSON.parse(done);
             console.log(func, done_json);
             res(done_json);
-          }catch{
+          } catch {
             console.error(func, done);
             rej(done);
           }
@@ -245,7 +245,8 @@ export class ApiService {
     return new Promise((res, rej) => {
       const post_data = {
         email: email
-      }
+      };
+      console.log('pvs4_get_my_profile post_data :', post_data);
       this.pvs4_api_post('get_profile.php', post_data).then((done: any) => { // return the result
         console.log('pvs4_getprofile done ok: ', done);
         let system_role = [];
@@ -275,7 +276,7 @@ export class ApiService {
           edit_rights: false,
           edit_product_templates: false,
           edit_protocol_templates: false
-        }; 
+        };
         this.userdata.short_code = done.obj.short_code;
         this.userdata.colour = done.obj.colour;
         if (system_role.length > 0) {
@@ -304,7 +305,7 @@ export class ApiService {
         res(done);
       },
         err => { // return the error
-          console.log('api bid_login() nok ');
+          console.log('api bid_login() nok_3 ');
           window.localStorage['pvs4_login'] = 0;
           localStorage.removeItem('user_info');
           localStorage.removeItem('pvs4_user');
@@ -335,7 +336,7 @@ export class ApiService {
       const post_data = {
         email: email,
         check: check
-      }
+      };
       this.pvs4_api_post('get_profile.php', post_data).then((done: any) => { // return the result
         console.log('pvs4_get_profile done ok: ', done);
         res(done);
@@ -366,7 +367,7 @@ export class ApiService {
         role: role,
         role_set: role_set,
         licensee: licensee
-      }
+      };
       this.pvs4_api_post('get_colleagues.php', data).then((done: any) => { // return the result
           res(done);
       },
@@ -387,7 +388,7 @@ export class ApiService {
         licensee: licensee,
         offset : offset,
         role: role
-      }
+      };
       this.pvs4_api_post('get_customer_list.php', data).then((done: any) => { // return the result
           res(done);
           // console.log("get_customer_list offset:", offset);
@@ -407,7 +408,7 @@ export class ApiService {
         user: userID,
         licensee: licenseeID,
         view: viewID,
-      }
+      };
       this.pvs4_api_post('get_product_opt.php', data).then((done: any) => {// return the result
         res(done);
       },
@@ -436,7 +437,7 @@ export class ApiService {
         user: userID,
         licensee: licenseeID,
         view: viewID,
-      }
+      };
       this.pvs4_api_post('get_product_tem.php', data).then((done: any) => {// return the result
         res(done);
       },
@@ -466,7 +467,7 @@ export class ApiService {
         user: userID,
         licensee: licenseeID,
         view: viewID,
-      }
+      };
       this.pvs4_api_post('get_protocol_opt.php', data).then((done: any) => {// return the result
         res(done);
       },
@@ -496,7 +497,7 @@ export class ApiService {
         user: userID,
         licensee: licenseeID,
         view: viewID,
-      }
+      };
       this.pvs4_api_post('get_protocol_tem.php', data).then((done: any) => {// return the result
         res(done);
       },
@@ -534,7 +535,7 @@ export class ApiService {
     return new Promise((res, rej) => {
       const data = {
         id: noteID
-      }
+      };
       this.pvs4_api_post('get_note.php', data).then((done: any) => {// return the result
         done.obj.id = parseInt(done.obj.id);
         done.obj.customer = parseInt(done.obj.customer);
@@ -553,7 +554,7 @@ export class ApiService {
       const data = {
         user: userID,
         customer: customerID
-      }
+      };
       this.pvs4_api_post('get_note_list.php', data).then((done: any) => {// return the result
         res(done);
       },
@@ -563,14 +564,15 @@ export class ApiService {
     });
   }
 
-  pvs4_get_statistics(type: Number,user: Number,start: String,end: String) {
+  pvs4_get_statistics(type: Number, user: Number, start: String, end: String) {
     return new Promise((res, rej) => {
       const data = {
         user: user,
         type: type,
         start: start,
         end: end
-      }
+      };
+
       this.pvs4_api_post('get_statistics.php', data).then((done: any) => {// return the result
         res(done);
       },
@@ -599,7 +601,7 @@ export class ApiService {
       const data = {
         user: userID,
         id: protocolID
-      }
+      };
       this.pvs4_api_post('get_protocol.php', data).then((done: any) => {// return the result
         done.obj.id = parseInt(done.obj.id);
         done.obj.customer = parseInt(done.obj.customer);
@@ -620,7 +622,7 @@ export class ApiService {
       const data = {
         user: userID,
         customer: customerID
-      }
+      };
       this.pvs4_api_post('get_protocol_list.php', data).then((done: any) => {// return the result
         res(done);
       },
@@ -635,6 +637,18 @@ export class ApiService {
     console.log('pvs4_set_product():', obj);
     return new Promise((res, rej) => {
       this.pvs4_api_post('set_product.php', obj).then((done: any) => {// return the result
+        res(done);
+      },
+        err => { // return the error
+          rej(err);
+        });
+    });
+  }
+
+  pvs4_set_product_dynamic(obj: any) {
+    console.log('pvs4_set_product_dynamic():', obj);
+    return new Promise((res, rej) => {
+      this.pvs4_api_post('set_product_dynamic.php', obj).then((done: any) => {// return the result
         res(done);
       },
         err => { // return the error
@@ -661,7 +675,7 @@ export class ApiService {
       const data = {
         user: userID,
         tagID: tagID
-      }
+      };
       this.pvs4_api_post('get_nfc_product.php', data).then((done: any) => {// return the result
         done.amount = parseInt(done.amount);
         if (done.amount > 0) {
@@ -685,7 +699,7 @@ export class ApiService {
       const data = {
         user: userID,
         qrCode: qrCode
-      }
+      };
       this.pvs4_api_post('get_qr_product_list.php', data).then((done: any) => {// return the result
         /*
         done.obj.id = parseInt(done.obj.id);
@@ -708,7 +722,7 @@ export class ApiService {
       const data = {
         user: userID,
         id: productID
-      }
+      };
       this.pvs4_api_post('get_product.php', data).then((done: any) => {// return the result
         // console.log('get_product :', done);
         if (done.amount) {
@@ -734,7 +748,7 @@ export class ApiService {
       const data = {
         user: userID,
         customer: customerID
-      }
+      };
       this.pvs4_api_post('get_product_list.php', data).then((done: any) => {// return the result
         res(done);
       },
@@ -748,7 +762,7 @@ export class ApiService {
     return new Promise((res, rej) => {
       const data = {
         id: customerID
-      }
+      };
       this.pvs4_api_post('get_customer.php', data).then((done: any) => {// return the result
         if (done.obj != null) {
           done.obj.id = parseInt(done.obj.id);
@@ -769,7 +783,7 @@ export class ApiService {
       const data = {
         id: customerID,
         mode: mode
-      }
+      };
       this.pvs4_api_post('set_inspection_service.php', data).then((done: any) => {// return the result
         res(done);
       },
@@ -800,7 +814,7 @@ export class ApiService {
         user: userID
         , licensee: licensee
         , role: role
-      }
+      };
       this.pvs4_api_post('get_appointment_list.php', data).then((done: any) => {// return the result
         res(done);
       },
@@ -822,7 +836,7 @@ export class ApiService {
         , all: all
         , licensee: licensee
         , role: role
-      }
+      };
       this.pvs4_api_post('get_customer_list_app.php', data).then((done: any) => {// return the result
         res(done);
       },
@@ -840,7 +854,7 @@ export class ApiService {
         licensee: this.userdata.licensee,
         date_start: date_start,
         date_end: date_end
-      }
+      };
       this.pvs4_api_post('get_appointment_list_ps.php', data).then((done: any) => {// return the result
         res(done);
       },
@@ -866,7 +880,7 @@ export class ApiService {
     return new Promise((res, rej) => {
       const data = {
         id: appointmentID
-      }
+      };
       this.pvs4_api_post('get_appointment.php', data).then((done: any) => {// return the result
         res(done);
       },
@@ -881,7 +895,7 @@ export class ApiService {
       const data = {
         id: id,
         type: type
-      }
+      };
       this.pvs4_api_post('dateiliste.php', data).then((done: any) => {// return the result
         res(done);
       },
@@ -897,7 +911,7 @@ export class ApiService {
         id: parameters.id,
         type: parameters.type,
         dateiname: parameters.dateiname
-      }
+      };
       this.pvs4_api_post('del_file.php', data).then((done: any) => {// return the result
         res(done);
       },
@@ -936,7 +950,7 @@ export class ApiService {
     return new Promise((res, rej) => {
       const data = {
         id_nr: nr
-      }
+      };
       this.pvs4_api_post('get_baan.php', data).then((done: any) => {// return the result
         res(done);
       },
@@ -951,7 +965,7 @@ export class ApiService {
       const data = {
         id: id,
         licensee: this.userdata.licensee
-      }
+      };
       this.pvs4_api_post('get_mydata.php', data).then((done: any) => {// return the result
         res(done);
       },
@@ -980,7 +994,7 @@ export class ApiService {
         user: userID,
         customer: customerID,
         product: productID
-      }
+      };
       this.pvs4_api_post('get_protocol_history.php', data).then((done: any) => {// return the result
         res(done);
       },
@@ -996,7 +1010,7 @@ export class ApiService {
       const data = {
         user: userID,
         parentId: parentID
-      }
+      };
       this.pvs4_api_post('get_product_parrent.php', data).then((done: any) => {// return the result
         // done.obj.id = parseInt(done.obj.id);
         res(done);
@@ -1012,7 +1026,7 @@ export class ApiService {
       const data = {
         sourceFile: parameters.sourceFile,
         targetFile: parameters.targetFile
-      }
+      };
       this.pvs4_api_post('copy_file.php', data).then((done: any) => {// return the result
         res(done);
       },
@@ -1028,7 +1042,7 @@ export class ApiService {
       const data = {
         user: userID,
         customer: customerID
-      }
+      };
       this.pvs4_api_post('get_contact_person.php', data).then((done: any) => {// return the result
         res(done);
       },
@@ -1058,7 +1072,7 @@ export class ApiService {
         user: userID
         , licensee: licensee
         , idCustomer: idCustomer
-      }
+      };
       this.pvs4_api_post('get_appointment_date.php', data).then((done: any) => {// return the result
         res(done);
       },
@@ -1085,7 +1099,7 @@ export class ApiService {
   }
 
   isEmpty(str) {
-    return (!str || str==null || 0 === str.length);
+    return (!str || str == null || 0 === str.length);
 }
 
  columnIndex(element: any): number {

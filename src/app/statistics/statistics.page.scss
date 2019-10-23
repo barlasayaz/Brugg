@@ -1,0 +1,89 @@
+@media only screen and (max-width: 767px) {
+    .content-sm {
+        padding-top: 0px !important;
+    }
+}
+
+.container-fix {
+    padding: 0 2px !important;
+    
+    @media only screen and (max-width: 767px) {
+        padding: 47px 5px 0px 5px !important;
+    }
+}
+
+.topBar-outer {
+    margin-bottom: 3px;
+}
+
+.btn-primary:disabled {
+    background-color: rgb(136, 177, 221) !important;
+}
+
+.btn-assign {
+    --background: #005e86;
+}
+
+.btn-view {
+    text-transform: none;
+    height: 40px;
+    width: 130px;
+    margin: 10px;
+}
+
+.ion-invalid:not(.ion-valid) {
+    border-color: var(--ion-color-green) !important;
+    &.has-focus {
+      border-color: var(--ion-color-red) !important;
+    }
+} 
+ 
+  .ion-valid:not(.ion-invalid) {
+    border-color: var(--ion-color-green) !important;
+}     
+
+ion-input {
+    position: relative !important;
+    display: block !important;
+    -webkit-box-flex: 1 !important;
+    -webkit-flex: 1 !important;
+    -ms-flex: 1 !important;
+    flex: 1 !important;
+    border: 1px solid #ccc !important;
+    width: 100% !important;
+    font-size: 14px !important;        
+}
+
+div.table-info div.tbody div.tr.table-body div.td:first-child {
+    max-width: inherit !important;
+}
+
+ion-select {
+    margin-top: -18px !important;
+}
+
+ion-datetime {
+    margin-top: -18px !important;
+}
+
+ion-input {
+    margin-top: -18px !important;
+}
+
+div.table-info div.tbody div.tr.table-body {
+    padding: 15px 20px !important;
+}
+
+.item-has-focus.label-floating.sc-ion-label-md-h, .item-has-focus .label-floating.sc-ion-label-md-h, .item-has-placeholder.label-floating.sc-ion-label-md-h, .item-has-placeholder .label-floating.sc-ion-label-md-h, .item-has-value.label-floating.sc-ion-label-md-h, .item-has-value .label-floating.sc-ion-label-md-h {
+    -webkit-transform: translate3d(0,25%,0) scale(.85) !important;
+    transform: translate3d(0,-25%,0) scale(.85) !important;
+}
+
+.statistic-title {
+    color: white;
+    font-size: 14px;
+}
+
+.table-info, .table-info>th, .table-info>td {
+    background-color: white;
+}

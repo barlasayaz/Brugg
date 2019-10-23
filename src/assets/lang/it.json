@@ -197,6 +197,8 @@
   "Daten": "Dati",
   "Datensätze von":"Registri da",
   "Datum": "Data",
+  "Anfang datum": "Data d'inizio",
+  "Ende datum": "Data di fine",
   "Datum bis ...": "Data fino a \u2026.",
   "Datum vom ...": "Data del \u2026",
   "dayNames": "['Domenica','Luned\u00ec','Marted\u00ec','Mercoled\u00ec','Gioved\u00ec','Venerd\u00ec','Sabato']",
@@ -309,8 +311,8 @@
   "Mitarbeiter-Daten": "Dati del dipendente",
   "Mitbewerber": "Concorrente",
   "Mobiltelefon": "Cellulare",
-  "monthNames": "['Gennaio','Febbraio','Marzo','Aprile','Maggio','Giugno','Luglio','Agosto','Settembre','Ottobre','Novembre','Dicembre']",
-  "monthNamesShort": "['gen.',' feb.','mar.',' apr.',' mag.',' giu.',' lug.','ago.',' sett.',' ott.',' nov.',' dic.']",
+  "monthNames": ["Gennaio","Febbraio","Marzo","Aprile","Maggio","Giugno","Luglio","Agosto","Settembre","Ottobre","Novembre","Dicembre"],
+  "monthNamesShort": ["gen."," feb.","mar."," apr."," mag."," giu."," lug.","ago."," sett."," ott."," nov."," dic."],
   "Motor-Kettenhebezug": "Paranco a catena motorizzato",
   "Mustertext bitte wählen": "Seleziona testi campione",
   "Mustertexte": "Testi campione",
@@ -702,6 +704,7 @@
   "Auftragsnr": "N. d'ordine",
   "Auswertungen": "Valutazioni",
   "Jahr": "Anno",
+  "Monat": "Mese",
   "Statistik": "Statistica",
   "Besuchsberichte pro Monat": "Rapporti di visite mensili",
   "AD-Termine pro Monat": "Appuntamenti AD al mese",
@@ -881,6 +884,8 @@
   "zeige Basisinformation":"mostra informazioni di base",
     "Basisinformation ausblenden":"Nascondi informazioni di base",
     "Basisinformation":"informazioni di base",
-    "Anzahl der maximal angezeigten Zeichen (min:10, max:300)":"Numero massimo di caratteri visualizzati (min:10, max:300)"
+    "Anzahl der maximal angezeigten Zeichen (min:10, max:300)":"Numero massimo di caratteri visualizzati (min:10, max:300)",
+  "Bearbeitungsmodus" : "modalità Modifica",
+  "Bearbeitungsmodus abbrechen" : "Annulla la modalità di modifica"
   
 }

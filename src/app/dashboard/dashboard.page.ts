@@ -1,5 +1,5 @@
 import { Component, NgZone, OnInit } from '@angular/core';
-import { NavController, LoadingController, ModalController, AlertController, Events } from '@ionic/angular';
+import { NavController, LoadingController, ModalController, AlertController, Events, Platform } from '@ionic/angular';
 import { ApiService } from '../services/api';
 import { UserdataService } from '../services/userdata';
 import { TranslateService } from '@ngx-translate/core';
@@ -28,7 +28,6 @@ export class DashboardPage implements OnInit {
     public filterValueApp: string = '';
     public selectedEmployee: string = '0';
     public listeEmployee: any = [];
-    // public display = 0;
     public className: string = 'showdashfirst';
     public selectedMitarbeiter: any;
     public progressBarAppointment: any = 0;
@@ -44,9 +43,12 @@ export class DashboardPage implements OnInit {
     public all_dates_view = false;
     public sortCustomerType = 'customer_number';
     public sortAppointmentType = 'appointment_date';
+    public mouseoverButton1: boolean;
+    public mouseoverButton2: boolean;
+    public mobilePlatform = false;
     modelAppChanged: Subject<any> = new Subject<any>();
     modelChanged: Subject<any> = new Subject<any>();
-    
+
     constructor(public navCtrl: NavController,
         public apiService: ApiService,
         public excelService: ExcelService,
@@ -57,303 +59,133 @@ export class DashboardPage implements OnInit {
         private translate: TranslateService,
         public modalCtrl: ModalController,
         private keyboard: Keyboard,
-        public events: Events) {
-            this.modelAppChanged.pipe(
-                debounceTime(700))
-                .subscribe(model => {
-                    console.log('modelAppChanged:',model);
-                    this.nextAppointment = JSON.parse(JSON.stringify(this.nextAppointmentAll));
-                    for (let i = this.nextAppointment.length - 1; i >= 0; i--) {
-                        let s = this.filterValueApp.toLowerCase();
-                        let a = this.nextAppointment[i];
-                        let del = true;
-                        if (a.company && a.company != null && a.company.toLowerCase().indexOf(s) >= 0) { del = false; }
-                        if (a.appointment_type_text &&
-                            a.appointment_type_text != null &&
-                            a.appointment_type_text.toLowerCase().indexOf(s) >= 0) { del = false; }
-                        if (this.all_dates_view) { if (a.last_name.toLowerCase().indexOf(s) >= 0) { del = false; } }
-                        // console.log(a, s, del, i);
-                        if (del) { this.nextAppointment.splice(i, 1); }
-                    }
-                    this.progress_appointment(this.nextAppointment.length, this.nextAppointmentAll.length);
-            });
+        public events: Events,
+        public platform: Platform) {
 
-            this.modelChanged.pipe(
-                debounceTime(700))
-                .subscribe(model => {
-                    console.log('modelChanged:',model);
-                    this.listInspection = JSON.parse(JSON.stringify(this.listInspectionAll));
-                    for (let i = this.listInspection.length - 1; i >= 0; i--) {
-                        let s = this.filterValue.toLowerCase();
-                        let a = this.listInspection[i];
-                        let del = true;
-                        if (a.company && a.company != null && a.company.toLowerCase().indexOf(s) >= 0) { del = false; }
-                        if (a.place && a.place != null && a.place.toLowerCase().indexOf(s) >= 0) { del = false; }
-                        if (a.customer_number && a.customer_number != null && a.customer_number.toLowerCase().indexOf(s) >= 0) { del = false; }
-                        if (a.zip_code && a.zip_code != null && a.zip_code.toLowerCase().indexOf(s) >= 0) { del = false; }
-                        // console.log(a, s, del, i);
-                        if (del) { this.listInspection.splice(i, 1); }
-                    }
-                    this.progress_inspection(this.listInspection.length, this.listInspectionAll.length);
-            });
-        }
-
-        ngOnInit() {
-            this.cols = [
-                { field: 'customer_number', header: 'ID' },
-                { field: 'company', header: this.translate.instant('Firma') },
-                { field: 'zip_code', header: this.translate.instant('PLZ') },
-                { field: 'place', header: this.translate.instant('Ort') },
-                { field: 'days10', header: this.translate.instant('10T') },
-                { field: 'days30', header: this.translate.instant('30T') },
-                { field: 'days90', header: this.translate.instant('90T') }
-            ];
-
-            this.loadTable();
-            // this.loadListeEmployee();
-            this.events.subscribe('className', (data) => {
-                this.className = data;
-                console.log(this.className);
-            });
-
-            console.log('pvs4_get_statistics() ');
-            // Date 
-            /*
-            this.apiService.pvs4_get_statistics(1, 22, "2019-09-09" ,"2019-09-13").then((result: any) => {
-                let notes = result.list;
-                console.log('list notes:', notes);
-            });
-            this.apiService.pvs4_get_statistics(2, 22, "2019-07-09" ,"2019-11-16").then((result: any) => {
-                let notes = result.list;
-                console.log('list notes:', notes);
-            });
-            */
-        }
-
-        all_dates() {
-            this.all_dates_view = !this.all_dates_view;
-            console.log('all_dates() ', this.all_dates_view);
-            this.nextAppointment = [];
-            this.nextAppointmentAll = [];
-            if (this.all_dates_view) {
-                var today = new Date();
-                var date_end = new Date();
-                date_end.setDate(today.getDate() + 30);
-                var date_start = new Date();
-                date_start.setDate(today.getDate() - 1);
-
-                this.apiService.pvs4_get_appointment_list_ps(this.apiService.date2mysql(date_start,true),this.apiService.date2mysql(date_end,true)).then((done: any) => {// return the result
-                    let appointments: any = done.list;
-                    for (let i = 0; i < appointments.length; i++) {
-                        let item = appointments[i].data;
-                        if (!item.company) { item.company = ''; }
-                        if (!item.place) { item.place = ''; }
-                        let obj = {id: item.id,
-                                   idUser: item.idUser,
-                                   appointment_date: item.appointment_date,
-                                   start_time: item.start_time.slice(0, 5),
-                                   end_time: item.end_time.slice(0, 5),
-                                   company: item.company,
-                                   idCustomer: item.idCustomer,
-                                   idContactPerson: item.idContactPerson,
-                                   place: item.place,
-                                   appointment_type: item.appointment_type,
-                                   appointment_type_text: item.appointment_type,
-                                   notes: item.notes,
-                                   last_name: item.last_name};
-
-                        if (item.appointment_type == 0) {
-                            obj.appointment_type_text = this.translate.instant('Kundenbesuch');
-                        } else if (item.appointment_type == 1) {
-                            obj.appointment_type_text = this.translate.instant('Prüfung');
-                        } else if (item.appointment_type == 2) {
-                            obj.appointment_type_text = this.translate.instant('Urlaub');
-                            obj.company = '';
-                            obj.place = '';
-                        }
-                        this.nextAppointment.push(obj);
-                    }
-                    this.nextAppointment = JSON.parse(JSON.stringify(this.nextAppointment));
-                    this.nextAppointmentAll = JSON.parse(JSON.stringify(this.nextAppointment));
-                    this.progress_appointment(this.nextAppointment.length, this.nextAppointmentAll.length);
-                    this.search_all_app();
-                },
-                err => { // return the error
-                    console.log('err get_appointment_list_ps.php ', err);
-                });
+        platform.ready().then(() => {
+            if (this.platform.is('ios') ||
+                this.platform.is('android') ) {
+                this.mobilePlatform = true;
+                this.mouseoverButton1 = true;
+                this.mouseoverButton2 = true;
+                console.log('platform mobile:', this.platform.platforms());
             } else {
-                this.loadAppointment();
+                console.log('platform not mobile:', this.platform.platforms());
+                this.mobilePlatform = false;
+                this.mouseoverButton1 = false;
+                this.mouseoverButton2 = false;
             }
-        }
+        });
 
-        sortCustomerNum(type: string) {
-            console.log('sortCustomer', type);
-            this.sortCustomerType = type;
-                this.listInspection.sort((a, b) => {
-                    let c = b[type] - a[type];
-                    //console.log('b[type] -  a[type] , c', b[type], a[type] , c);
-                    return c;
-                });    
-                this.listInspection = JSON.parse(JSON.stringify(this.listInspection));
-        }
-
-        sortCustomerStr(type: string) {
-            console.log('sortCustomer', type);
-            this.sortCustomerType = type;
-                this.listInspection.sort((a, b) => {
-                    let c = a[type].localeCompare(b[type]);
-                    // console.log('b[type] -  a[type] , c', b[type], a[type] , c);
-                    return c;
-                });              
-                this.listInspection = JSON.parse(JSON.stringify(this.listInspection));
-        }
-
-        sortAppointment(type: string) {
-            console.log('sortAppointment', type);
-            this.sortAppointmentType = type;
-                this.nextAppointment.sort((a, b) => {
-                    let c = a[type].localeCompare(b[type]);
-                    return c;
-                });           
-                this.nextAppointment = JSON.parse(JSON.stringify(this.nextAppointment));
-        }
-
-        all_customer() {
-            this.all_customer_view = !this.all_customer_view;
-            this.get_customer_list_app();
-        }
-        show_disponent() {
-            this.disponent_view = !this.disponent_view;
-            if (this.disponent_view) {
-                this.sortCustomerNum('days10');
-            } else {
-                this.sortCustomerStr('customer_number');
-            }
-        }
-
-        downloadXLS() {
-            let data: any = [];
-            for (var i = 0, len = this.listInspection.length; i < len; i++) {
-                let obj = this.listInspection[i];
-                if (!obj.company) { obj.company = ''; }
-                if (!obj.place) { obj.place = ''; }
-                obj.company = obj.company.replace(/(\\r\\n|\\n|\\r)/gm, ' ');
-                obj.place = obj.place.replace(/(\\r\\n|\\n|\\r)/gm, ' ');
-                let json: any = {};
-                for (var j = 0; j < this.cols.length; j++) {
-                    if (obj[this.cols[j].field]) {
-                        json[this.cols[j].header] = obj[this.cols[j].field];
-                    } else {
-                        json[this.cols[j].header] = '';
-                    }
+        this.modelAppChanged.pipe(
+            debounceTime(700))
+            .subscribe(model => {
+                console.log('modelAppChanged:',model);
+                this.nextAppointment = JSON.parse(JSON.stringify(this.nextAppointmentAll));
+                for (let i = this.nextAppointment.length - 1; i >= 0; i--) {
+                    let s = this.filterValueApp.toLowerCase();
+                    let a = this.nextAppointment[i];
+                    let del = true;
+                    if (a.company && a.company != null && a.company.toLowerCase().indexOf(s) >= 0) { del = false; }
+                    if (a.appointment_type_text &&
+                        a.appointment_type_text != null &&
+                        a.appointment_type_text.toLowerCase().indexOf(s) >= 0) { del = false; }
+                    if (this.all_dates_view) { if (a.last_name.toLowerCase().indexOf(s) >= 0) { del = false; } }
+                    // console.log(a, s, del, i);
+                    if (del) { this.nextAppointment.splice(i, 1); }
                 }
-                // console.log('>>json :', json);
-                data.push(json);
-            }
-            this.excelService.exportAsExcelFile(data, 'upcoming_inspections.xlsx');
-            this.selectedMitarbeiter = 0;
-        }
+                this.progress_appointment(this.nextAppointment.length, this.nextAppointmentAll.length);
+        });
 
-        async loadTable() {
-            console.log('loadTable()');
-            let loader = await this.loadingCtrl.create({ spinner: 'circles' });
-            loader.present().then(done => {
-                this.get_customer_list_app();
-                this.loadAppointment();
-                loader.dismiss();
-            }, (err) => {
-                loader.dismiss();
-                console.log('Error: ', err);
-                let alert = this.alertCtrl.create({ header: this.translate.instant('information'), message: err.message }).then(x => x.present());;
-            });
-        }
-
-        get_appointment_list_ps(days) {
-            console.log('get_appointment_list_ps() : ', days);
-            let dat = new Date();
-            dat.setDate(dat.getDate() + days);
-            let dat2 = new Date();
-            let date1 = this.apiService.date2mysql(new Date(dat2.getFullYear(), 0, 1), true);
-            let date2 = this.apiService.date2mysql(dat, true);
-            console.log('date1 : ', date1, date2);
-            // Date
-            this.apiService.pvs4_get_appointment_list_ps(date1, date2).then((result: any) => {
-                let appointments = result.list;
-                for (let i = 0; i < appointments.length; i++) {
-                    let item = appointments[i].data;
-                    if (item.appointment_type == 1) {
-                        if (!item.company) { item.company = ''; }
-                        if (!item.place) { item.place = ''; }
-                        var obj = { id: item.id,
-                                    idUser: item.idUser,
-                                    company: item.company,
-                                    idContactPerson: item.idContactPerson,
-                                    place: item.place,
-                                    date: item.appointment_date,
-                                    time: item.start_time.slice(0, 5) };
-                        this.listInspection.push(obj);
-                    }
+        this.modelChanged.pipe(
+            debounceTime(700))
+            .subscribe(model => {
+                console.log('modelChanged:',model);
+                this.listInspection = JSON.parse(JSON.stringify(this.listInspectionAll));
+                for (let i = this.listInspection.length - 1; i >= 0; i--) {
+                    let s = this.filterValue.toLowerCase();
+                    let a = this.listInspection[i];
+                    let del = true;
+                    if (a.company && a.company != null && a.company.toLowerCase().indexOf(s) >= 0) { del = false; }
+                    if (a.place && a.place != null && a.place.toLowerCase().indexOf(s) >= 0) { del = false; }
+                    if (a.customer_number && a.customer_number != null && a.customer_number.toLowerCase().indexOf(s) >= 0) { del = false; }
+                    if (a.zip_code && a.zip_code != null && a.zip_code.toLowerCase().indexOf(s) >= 0) { del = false; }
+                    // console.log(a, s, del, i);
+                    if (del) { this.listInspection.splice(i, 1); }
                 }
-                console.log('listInspection:', this.listInspection);
-                this.listInspectionAll = JSON.parse(JSON.stringify(this.listInspection));
-            });
-
-            this.progress_inspection(this.listInspection.length, this.listInspectionAll.length);
-        }
-
-        get_customer_list_app() {
-            this.listInspection = [];
-            this.listInspectionAll = [];
-            this.apiService.pvs4_get_customer_list_app(this.all_customer_view).then((result: any) => {
-                let customers = result.list;
-                for (let i = 0; i < customers.length; i++) {
-                    let item = customers[i].data;
-                    let days10 = 0;
-                    let days30 = 0;
-                    let days90 = 0;
-                    try {
-                        if(item.days && item.days!= "")
-                        {
-                            let days = JSON.parse(item.days);
-                            days10 = days.days10;
-                            days30 = days.days30;
-                            days90 = days.days90;
-                        }
-                    } catch (e) {
-                        console.error("days", item.days);
-                    }
-                    if (!item.company) { item.company = ''; }
-                    if (!item.place) { item.place = ''; }
-                    var obj = {
-                        idCustomer: item.idCustomer, company: item.company, place: item.place, customer_number: item.customer_number
-                        , zip_code: item.zip_code, days10: days10, days30: days30, days90: days90
-                    };
-                    this.listInspection.push(obj);
-                }
-                console.log('listInspection:', this.listInspection);
-                this.listInspectionAll = JSON.parse(JSON.stringify(this.listInspection));
                 this.progress_inspection(this.listInspection.length, this.listInspectionAll.length);
-                this.search_all();
-                if ((this.sortCustomerType == 'days10') || (this.sortCustomerType == 'days30') || (this.sortCustomerType == 'days90')) {
-                    this.sortCustomerNum(this.sortCustomerType);
-                } else {
-                    this.sortCustomerStr(this.sortCustomerType);
-                }
-            });
+        });
+    }
 
+    mouseover(buttonNumber) {
+        if (buttonNumber == 1) {
+            this.mouseoverButton1 = true;
+        } else if (buttonNumber == 2) {
+            this.mouseoverButton2 = true;
         }
+    }
 
-        loadAppointment() {
-            console.log('loadAppointment');
+    mouseout(buttonNumber) {
+        if (this.mobilePlatform == false) {
+            if (buttonNumber == 1) {
+                this.mouseoverButton1 = false;
+            } else if (buttonNumber == 2) {
+                this.mouseoverButton2 = false;
+            }
+        }
+    }
 
-            this.apiService.pvs4_get_appointment_list().then((result: any) => {
-                let appointments: any = result.list;
-                this.nextAppointment = [];
+    ngOnInit() {
+        this.cols = [
+            { field: 'customer_number', header: 'ID' },
+            { field: 'company', header: this.translate.instant('Firma') },
+            { field: 'zip_code', header: this.translate.instant('PLZ') },
+            { field: 'place', header: this.translate.instant('Ort') },
+            { field: 'days10', header: this.translate.instant('10T') },
+            { field: 'days30', header: this.translate.instant('30T') },
+            { field: 'days90', header: this.translate.instant('90T') }
+        ];
+
+        this.loadTable();
+        // this.loadListeEmployee();
+        this.events.subscribe('className', (data) => {
+            this.className = data;
+            console.log(this.className);
+        });
+
+        console.log('pvs4_get_statistics() ');
+        // Date 
+        /*
+        this.apiService.pvs4_get_statistics(1, 22, "2019-09-09" ,"2019-09-13").then((result: any) => {
+            let notes = result.list;
+            console.log('list notes:', notes);
+        });
+        this.apiService.pvs4_get_statistics(2, 22, "2019-07-09" ,"2019-11-16").then((result: any) => {
+            let notes = result.list;
+            console.log('list notes:', notes);
+        });
+        */
+    }
+
+    all_dates() {
+        this.all_dates_view = !this.all_dates_view;
+        console.log('all_dates() ', this.all_dates_view);
+        this.nextAppointment = [];
+        this.nextAppointmentAll = [];
+        if (this.all_dates_view) {
+            var today = new Date();
+            var date_end = new Date();
+            date_end.setDate(today.getDate() + 30);
+            var date_start = new Date();
+            date_start.setDate(today.getDate() - 1);
+
+            this.apiService.pvs4_get_appointment_list_ps(this.apiService.date2mysql(date_start,true),this.apiService.date2mysql(date_end,true)).then((done: any) => {// return the result
+                let appointments: any = done.list;
                 for (let i = 0; i < appointments.length; i++) {
                     let item = appointments[i].data;
                     if (!item.company) { item.company = ''; }
                     if (!item.place) { item.place = ''; }
-                    let obj = { id: item.id,
+                    let obj = {id: item.id,
                                 idUser: item.idUser,
                                 appointment_date: item.appointment_date,
                                 start_time: item.start_time.slice(0, 5),
@@ -364,7 +196,8 @@ export class DashboardPage implements OnInit {
                                 place: item.place,
                                 appointment_type: item.appointment_type,
                                 appointment_type_text: item.appointment_type,
-                                notes: item.notes };
+                                notes: item.notes,
+                                last_name: item.last_name};
 
                     if (item.appointment_type == 0) {
                         obj.appointment_type_text = this.translate.instant('Kundenbesuch');
@@ -377,125 +210,326 @@ export class DashboardPage implements OnInit {
                     }
                     this.nextAppointment.push(obj);
                 }
-                
                 this.nextAppointment = JSON.parse(JSON.stringify(this.nextAppointment));
                 this.nextAppointmentAll = JSON.parse(JSON.stringify(this.nextAppointment));
                 this.progress_appointment(this.nextAppointment.length, this.nextAppointmentAll.length);
                 this.search_all_app();
+            },
+            err => { // return the error
+                console.log('err get_appointment_list_ps.php ', err);
             });
-        }
-
-        maskDate(date: any) {
-            let date_js = this.apiService.mysql2date(date + ' 00:00:00');
-            let Weekday = new Array('So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa');
-            let day: any = date_js.getDate();
-            if (day < 10) { day = '0' + day; }
-            let month: any = date_js.getMonth() + 1;
-            if (month < 10) { month = '0' + month; }
-            let year: any = date_js.getFullYear();
-            return Weekday[date_js.getDay()] + ' ' + day + '.' + month + '.' + year;
-        }
-
-        async editAppointment(appointment) {
-            console.log('editAppointment() : ', appointment);
-            const modal =
-            await this.modalCtrl.create({
-                component: AppointmentEditComponent,
-                cssClass: 'appointmentedit-modal-css',
-                componentProps: {
-                    appointment: appointment, redirect: 1
-                }
-            });
-            modal.onDidDismiss().then(data => {
-                if (data['data']) {
-                    this.loadTable();
-                }
-            });
-            modal.present();
-        }
-
-        go(rowID) {
-            // console.log('go():', rowID);
-            if (rowID > 0) { this.navCtrl.navigateForward('/customer-details/' + rowID); }
-        }
-
-        getEnterKeyboardClose(event) {
-            // console.log('getEnterKeyboardClose():', event.keyCode);
-            if (event.keyCode == 13) { this.keyboard.hide(); }
-        }
-
-        saveFilter() {
-            // console.log('saveFilter()');
-            localStorage.setItem('stateDashboardFilter', JSON.stringify(this.selectedFilter));
-            localStorage.setItem('stateDashboardFilterValue', JSON.stringify(this.filterValue));
-            // this.customerFilters();
-        }
-
-        async newPrAppointment() {
-            const modal = await this.modalCtrl.create({
-                component: AppointmentEditComponent,
-                cssClass: 'appointmentedit-modal-css',
-            });
-            modal.onDidDismiss().then(data => {
-                if (data['data']) {
-                    this.loadTable();
-                }
-            });
-            modal.present();
-        }
-
-        async editPrAppointment(row:any) {
-            console.log('editPrAppointment', row);
-
-            const modal = await this.modalCtrl.create({
-                component: AppointmentEditComponent,
-                cssClass: 'appointmentedit-modal-css',
-                componentProps: {
-                    idCustomer: row.idCustomer, appointmentType: '0', redirect: 3
-                }
-            });
-            modal.onDidDismiss().then(data => {
-                if (data['data']) {
-                    this.loadTable();
-                }
-            });
-            modal.present();
-        }
-
-        search_all() {
-            this.modelChanged.next(this.filterValue);
-        }
-
-
-        search_all_app() {
-            this.modelAppChanged.next(this.filterValueApp);
-        }
-
-        progress_appointment(rowRecords, totalRecords) {
-            this.rowRecordsAppointment = rowRecords;
-            this.totalRecordsAppointment = totalRecords;
-            if (totalRecords > 0) {
-                this.progressBarAppointment = Math.round(rowRecords * 100 / totalRecords);
-            } else {
-                this.progressBarAppointment = 0;
-            }
-        }
-
-        progress_inspection(rowRecords, totalRecords) {
-            this.rowRecordsInspection = rowRecords;
-            this.totalRecordsInspection = totalRecords;
-            if (totalRecords > 0) {
-                this.progressBarInspection = Math.round(rowRecords * 100 / totalRecords);
-            } else {
-                this.progressBarInspection = 0;
-            }
-        }
-
-        onSelectClose() {
-
-        }
-
-        goStatistik() {
-
+        } else {
+            this.loadAppointment();
         }
     }
+
+    sortCustomerNum(type: string) {
+        console.log('sortCustomer', type);
+        this.sortCustomerType = type;
+            this.listInspection.sort((a, b) => {
+                let c = b[type] - a[type];
+                //console.log('b[type] -  a[type] , c', b[type], a[type] , c);
+                return c;
+            });    
+            this.listInspection = JSON.parse(JSON.stringify(this.listInspection));
+    }
+
+    sortCustomerStr(type: string) {
+        console.log('sortCustomer', type);
+        this.sortCustomerType = type;
+            this.listInspection.sort((a, b) => {
+                let c = a[type].localeCompare(b[type]);
+                // console.log('b[type] -  a[type] , c', b[type], a[type] , c);
+                return c;
+            });              
+            this.listInspection = JSON.parse(JSON.stringify(this.listInspection));
+    }
+
+    sortAppointment(type: string) {
+        console.log('sortAppointment', type);
+        this.sortAppointmentType = type;
+            this.nextAppointment.sort((a, b) => {
+                let c = a[type].localeCompare(b[type]);
+                return c;
+            });           
+            this.nextAppointment = JSON.parse(JSON.stringify(this.nextAppointment));
+    }
+
+    all_customer() {
+        this.all_customer_view = !this.all_customer_view;
+        this.get_customer_list_app();
+    }
+    show_disponent() {
+        this.disponent_view = !this.disponent_view;
+        if (this.disponent_view) {
+            this.sortCustomerNum('days10');
+        } else {
+            this.sortCustomerStr('customer_number');
+        }
+    }
+
+    downloadXLS() {
+        let data: any = [];
+        for (var i = 0, len = this.listInspection.length; i < len; i++) {
+            let obj = this.listInspection[i];
+            if (!obj.company) { obj.company = ''; }
+            if (!obj.place) { obj.place = ''; }
+            obj.company = obj.company.replace(/(\\r\\n|\\n|\\r)/gm, ' ');
+            obj.place = obj.place.replace(/(\\r\\n|\\n|\\r)/gm, ' ');
+            let json: any = {};
+            for (var j = 0; j < this.cols.length; j++) {
+                if (obj[this.cols[j].field]) {
+                    json[this.cols[j].header] = obj[this.cols[j].field];
+                } else {
+                    json[this.cols[j].header] = '';
+                }
+            }
+            // console.log('>>json :', json);
+            data.push(json);
+        }
+        this.excelService.exportAsExcelFile(data, 'upcoming_inspections.xlsx');
+        this.selectedMitarbeiter = 0;
+    }
+
+    async loadTable() {
+        console.log('loadTable()');
+        let loader = await this.loadingCtrl.create({ spinner: 'circles' });
+        loader.present().then(done => {
+            this.get_customer_list_app();
+            this.loadAppointment();
+            loader.dismiss();
+        }, (err) => {
+            loader.dismiss();
+            console.log('Error: ', err);
+            let alert = this.alertCtrl.create({ header: this.translate.instant('information'), message: err.message }).then(x => x.present());;
+        });
+    }
+
+    get_appointment_list_ps(days) {
+        console.log('get_appointment_list_ps() : ', days);
+        let dat = new Date();
+        dat.setDate(dat.getDate() + days);
+        let dat2 = new Date();
+        let date1 = this.apiService.date2mysql(new Date(dat2.getFullYear(), 0, 1), true);
+        let date2 = this.apiService.date2mysql(dat, true);
+        console.log('date1 : ', date1, date2);
+        // Date
+        this.apiService.pvs4_get_appointment_list_ps(date1, date2).then((result: any) => {
+            let appointments = result.list;
+            for (let i = 0; i < appointments.length; i++) {
+                let item = appointments[i].data;
+                if (item.appointment_type == 1) {
+                    if (!item.company) { item.company = ''; }
+                    if (!item.place) { item.place = ''; }
+                    var obj = { id: item.id,
+                                idUser: item.idUser,
+                                company: item.company,
+                                idContactPerson: item.idContactPerson,
+                                place: item.place,
+                                date: item.appointment_date,
+                                time: item.start_time.slice(0, 5) };
+                    this.listInspection.push(obj);
+                }
+            }
+            console.log('listInspection:', this.listInspection);
+            this.listInspectionAll = JSON.parse(JSON.stringify(this.listInspection));
+        });
+
+        this.progress_inspection(this.listInspection.length, this.listInspectionAll.length);
+    }
+
+    get_customer_list_app() {
+        this.listInspection = [];
+        this.listInspectionAll = [];
+        this.apiService.pvs4_get_customer_list_app(this.all_customer_view).then((result: any) => {
+            let customers = result.list;
+            for (let i = 0; i < customers.length; i++) {
+                let item = customers[i].data;
+                let days10 = 0;
+                let days30 = 0;
+                let days90 = 0;
+                try {
+                    if(item.days && item.days!= "")
+                    {
+                        let days = JSON.parse(item.days);
+                        days10 = days.days10;
+                        days30 = days.days30;
+                        days90 = days.days90;
+                    }
+                } catch (e) {
+                    console.error("days", item.days);
+                }
+                if (!item.company) { item.company = ''; }
+                if (!item.place) { item.place = ''; }
+                var obj = {
+                    idCustomer: item.idCustomer, company: item.company, place: item.place, customer_number: item.customer_number
+                    , zip_code: item.zip_code, days10: days10, days30: days30, days90: days90
+                };
+                this.listInspection.push(obj);
+            }
+            console.log('listInspection:', this.listInspection);
+            this.listInspectionAll = JSON.parse(JSON.stringify(this.listInspection));
+            this.progress_inspection(this.listInspection.length, this.listInspectionAll.length);
+            this.search_all();
+            if ((this.sortCustomerType == 'days10') || (this.sortCustomerType == 'days30') || (this.sortCustomerType == 'days90')) {
+                this.sortCustomerNum(this.sortCustomerType);
+            } else {
+                this.sortCustomerStr(this.sortCustomerType);
+            }
+        });
+
+    }
+
+    loadAppointment() {
+        console.log('loadAppointment');
+
+        this.apiService.pvs4_get_appointment_list().then((result: any) => {
+            let appointments: any = result.list;
+            this.nextAppointment = [];
+            for (let i = 0; i < appointments.length; i++) {
+                let item = appointments[i].data;
+                if (!item.company) { item.company = ''; }
+                if (!item.place) { item.place = ''; }
+                let obj = { id: item.id,
+                            idUser: item.idUser,
+                            appointment_date: item.appointment_date,
+                            start_time: item.start_time.slice(0, 5),
+                            end_time: item.end_time.slice(0, 5),
+                            company: item.company,
+                            idCustomer: item.idCustomer,
+                            idContactPerson: item.idContactPerson,
+                            place: item.place,
+                            appointment_type: item.appointment_type,
+                            appointment_type_text: item.appointment_type,
+                            notes: item.notes };
+
+                if (item.appointment_type == 0) {
+                    obj.appointment_type_text = this.translate.instant('Kundenbesuch');
+                } else if (item.appointment_type == 1) {
+                    obj.appointment_type_text = this.translate.instant('Prüfung');
+                } else if (item.appointment_type == 2) {
+                    obj.appointment_type_text = this.translate.instant('Urlaub');
+                    obj.company = '';
+                    obj.place = '';
+                }
+                this.nextAppointment.push(obj);
+            }
+
+            this.nextAppointment = JSON.parse(JSON.stringify(this.nextAppointment));
+            this.nextAppointmentAll = JSON.parse(JSON.stringify(this.nextAppointment));
+            this.progress_appointment(this.nextAppointment.length, this.nextAppointmentAll.length);
+            this.search_all_app();
+        });
+    }
+
+    maskDate(date: any) {
+        let date_js = this.apiService.mysql2date(date + ' 00:00:00');
+        let Weekday = new Array('So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa');
+        let day: any = date_js.getDate();
+        if (day < 10) { day = '0' + day; }
+        let month: any = date_js.getMonth() + 1;
+        if (month < 10) { month = '0' + month; }
+        let year: any = date_js.getFullYear();
+        return Weekday[date_js.getDay()] + ' ' + day + '.' + month + '.' + year;
+    }
+
+    async editAppointment(appointment) {
+        console.log('editAppointment() : ', appointment);
+        const modal =
+        await this.modalCtrl.create({
+            component: AppointmentEditComponent,
+            cssClass: 'appointmentedit-modal-css',
+            componentProps: {
+                appointment: appointment, redirect: 1
+            }
+        });
+        modal.onDidDismiss().then(data => {
+            if (data['data']) {
+                this.loadTable();
+            }
+        });
+        modal.present();
+    }
+
+    go(rowID) {
+        // console.log('go():', rowID);
+        if (rowID > 0) { this.navCtrl.navigateForward('/customer-details/' + rowID); }
+    }
+
+    getEnterKeyboardClose(event) {
+        // console.log('getEnterKeyboardClose():', event.keyCode);
+        if (event.keyCode == 13) { this.keyboard.hide(); }
+    }
+
+    saveFilter() {
+        // console.log('saveFilter()');
+        localStorage.setItem('stateDashboardFilter', JSON.stringify(this.selectedFilter));
+        localStorage.setItem('stateDashboardFilterValue', JSON.stringify(this.filterValue));
+        // this.customerFilters();
+    }
+
+    async newPrAppointment() {
+        const modal = await this.modalCtrl.create({
+            component: AppointmentEditComponent,
+            cssClass: 'appointmentedit-modal-css',
+        });
+        modal.onDidDismiss().then(data => {
+            if (data['data']) {
+                this.loadTable();
+            }
+        });
+        modal.present();
+    }
+
+    async editPrAppointment(row:any) {
+        console.log('editPrAppointment', row);
+
+        const modal = await this.modalCtrl.create({
+            component: AppointmentEditComponent,
+            cssClass: 'appointmentedit-modal-css',
+            componentProps: {
+                idCustomer: row.idCustomer, appointmentType: '0', redirect: 3
+            }
+        });
+        modal.onDidDismiss().then(data => {
+            if (data['data']) {
+                this.loadTable();
+            }
+        });
+        modal.present();
+    }
+
+    search_all() {
+        this.modelChanged.next(this.filterValue);
+    }
+
+
+    search_all_app() {
+        this.modelAppChanged.next(this.filterValueApp);
+    }
+
+    progress_appointment(rowRecords, totalRecords) {
+        this.rowRecordsAppointment = rowRecords;
+        this.totalRecordsAppointment = totalRecords;
+        if (totalRecords > 0) {
+            this.progressBarAppointment = Math.round(rowRecords * 100 / totalRecords);
+        } else {
+            this.progressBarAppointment = 0;
+        }
+    }
+
+    progress_inspection(rowRecords, totalRecords) {
+        this.rowRecordsInspection = rowRecords;
+        this.totalRecordsInspection = totalRecords;
+        if (totalRecords > 0) {
+            this.progressBarInspection = Math.round(rowRecords * 100 / totalRecords);
+        } else {
+            this.progressBarInspection = 0;
+        }
+    }
+
+    getStatistik() {
+        this.navCtrl.navigateRoot('/statistics');
+    }
+
+}

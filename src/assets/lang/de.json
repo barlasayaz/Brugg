@@ -198,6 +198,8 @@
     "Daten": "Daten",
     "Datensätze von":"Datensätze von",
     "Datum": "Datum",
+    "Anfang datum": "Anfang datum",
+    "Ende datum": "Ende datum",
     "Datum bis ...": "Datum bis ...",
     "Datum vom ...": "Datum vom ...",
     "dayNames": "['Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag']",
@@ -310,8 +312,8 @@
     "Mitarbeiter-Daten": "Mitarbeiter-Daten",
     "Mitbewerber": "Mitbewerber",
     "Mobiltelefon": "Mobiltelefon",
-    "monthNames": "['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember']",
-    "monthNamesShort": "['Jan','Feb','Mär','Apr','Mai','Jun','Jul','Aug','Sep','Okt','Nov','Dez']",
+    "monthNames": ["Januar","Februar","März","April","Mai","Juni","Juli","August","September","Oktober","November","Dezember"],
+    "monthNamesShort": ["Jan","Feb","Mär","Apr","Mai","Jun","Jul","Aug","Sep","Okt","Nov","Dez"],
     "Motor-Kettenhebezug": "Motor-Kettenhebezug",
     "Mustertext bitte wählen": "Mustertext bitte wählen",
     "Mustertexte": "Mustertexte",
@@ -703,6 +705,7 @@
     "Auftragsnr": "Auftragsnr.",
     "Auswertungen": "Auswertungen",
     "Jahr": "Jahr",
+    "Monat": "Monat",
     "Statistik": "Statistik",
     "Besuchsberichte pro Monat": "Besuchsberichte pro Monat",
     "AD-Termine pro Monat": "AD-Termine pro Monat",
@@ -882,6 +885,8 @@
     "zeige Basisinformation":"zeige Basisinformation",
     "Basisinformation ausblenden":"Basisinformation ausblenden",
     "Basisinformation":"Basisinformation",
-    "Anzahl der maximal angezeigten Zeichen (min:10, max:300)":"Anzahl der maximal angezeigten Zeichen (min:10, max:300)"
+    "Anzahl der maximal angezeigten Zeichen (min:10, max:300)":"Anzahl der maximal angezeigten Zeichen (min:10, max:300)",
 
+    "Bearbeitungsmodus" : "Bearbeitungsmodus",
+    "Bearbeitungsmodus abbrechen" : "Bearbeitungsmodus abbrechen"
 }

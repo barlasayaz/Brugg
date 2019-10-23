@@ -56,6 +56,7 @@ export class ProductListPage implements OnInit {
     modelChanged: Subject<any> = new Subject<any>();
     public selectedRow: number;
     public selectMode: boolean = false;
+    public editMode: boolean = false;  
     public rowHeight = 26;
     public rowCount = 100;    
     public showBasicInfo= true;
@@ -276,9 +277,28 @@ export class ProductListPage implements OnInit {
                     this.showBasicInfo = false;
                     this.menuItems[8].items[6]['disabled'] = false;
                     this.menuItems[8].items[7]['disabled'] = true;
-                    
                 }
             }
+            /*,
+            {
+                label: this.translate.instant('Bearbeitungsmodus'),
+                icon: 'pi pi-fw pi-pencil',
+                visible: this.userdata.role_set.edit_products,
+                command: (event) => {
+                    console.log('command menuitem:', event.item);
+                    this.open_edit_mode();
+                }
+            },
+            {
+                label: this.translate.instant('Bearbeitungsmodus abbrechen'),
+                icon: 'pi pi-fw pi-pencil',
+                visible: false,
+                command: (event) => {
+                    console.log('command menuitem:', event.item);
+                    this.quit_edit_mode();
+                }
+            }
+            */
         ]
     }
 ];
@@ -328,7 +348,7 @@ export class ProductListPage implements OnInit {
                 { field: 'id_number', header: 'ID', width: '85px' },
                 { field: 'id', header: 'DB-ID', width: '85px' },
                 { field: 'articel_no', header: this.translate.instant('Artikel-Nr.'), width: '100px' },
-                { field: 'customer_description', header: this.translate.instant('Kundenbezeichnung'), width: '200px' },
+                { field: 'customer_description', header: this.translate.instant('Kundenbezeichnung'), width: '200px', editable:true },
                 { field: 'last_protocol_date', header: this.translate.instant('Letzter besuch'), width: '100px' },
                 { field: 'last_protocol_next', header: this.translate.instant('Nächster besuch'), width: '100px' },
                 { field: 'check_interval', header: this.translate.instant('Intervall Prüfen'), width: '130px' }
@@ -348,6 +368,7 @@ export class ProductListPage implements OnInit {
     }
 
     async loadNodes(event: LazyLoadEvent) {
+        setTimeout(() => {
         if (this.totalRecords > 0) {
             if (event.sortField && event.sortField.length > 0) {
                 this.sortedColumn.sort_field = event.sortField;
@@ -356,7 +377,7 @@ export class ProductListPage implements OnInit {
             }
             this.generate_productList(event.first, event.rows, event.sortField, event.sortOrder);
         }
-
+    }, 0);
         // in a production application, make a remote request to load data using state metadata from event
         // event.first = First row offset
         // event.rows = Number of rows per page
@@ -561,7 +582,10 @@ export class ProductListPage implements OnInit {
                         }                         
                     } else if (options[i].type == 4) {
                         const pipe = new DatePipe('en-US');
-                        this.productListAll[index].data[options[i].title[this.lang]] = pipe.transform(options[i].value, 'HH:mm');
+                        if(options[i].value && options[i].value.length ==5 )
+                            this.productListAll[index].data[options[i].title[this.lang]] = options[i].value;
+                        else
+                            this.productListAll[index].data[options[i].title[this.lang]] = pipe.transform(options[i].value, 'HH:mm');
                     } else if (options[i].type == 5) {
                         const pipe = new DatePipe('en-US');
                         this.productListAll[index].data[options[i].title[this.lang]] = pipe.transform(options[i].value, 'dd.MM.yyyy');
@@ -1493,4 +1517,27 @@ console.log(x);
         }
     }
 
+    open_edit_mode()
+    {
+        this.editMode = true;
+        this.menuItems[8].items[6]['visible'] = false;
+        this.menuItems[8].items[7]['visible'] = true;
+    }
+
+    quit_edit_mode()
+    {
+        this.editMode = false;
+        this.menuItems[8].items[6]['visible'] = true;
+        this.menuItems[8].items[7]['visible'] = false;
+    }
+    onEditComplete (event) {
+        console.log("event:",event);
+      let value = event.data[event.field];
+      let field = event.field;
+      let id = event.data.id;
+
+      let obj = { value : value, field: field, id: id}
+
+      this.apiService.pvs4_set_product_dynamic(obj);
+    }
 }
