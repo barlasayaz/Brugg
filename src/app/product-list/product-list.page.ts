@@ -229,7 +229,7 @@ export class ProductListPage implements OnInit {
                 }
             },
             {
-                label: this.translate.instant('Edit Mode'),
+                label: this.translate.instant('Bearbeitungsmodus'),
                 icon: 'pi pi-fw pi-pencil',
                 visible: this.userdata.role_set.edit_products,
                 command: (event) => {
@@ -238,7 +238,7 @@ export class ProductListPage implements OnInit {
                 }
             },
             {
-                label: this.translate.instant('Cancel Edit Mode'),
+                label: this.translate.instant('Bearbeitungsmodus abbrechen'),
                 icon: 'pi pi-fw pi-pencil',
                 visible: false,
                 command: (event) => {

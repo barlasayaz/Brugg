@@ -879,6 +879,8 @@
   "Italian": "Italiano",
   "Hol dir die volle ReBox":"Prendi ReBox completo",
   "Fordern Sie leere ReBox":"Richiedi ReBox vuoto",
-  "Senden Sie selbst eine vollständige ReBox":"Invia un Rebox completo da solo"
+  "Senden Sie selbst eine vollständige ReBox":"Invia un Rebox completo da solo",
+  "Bearbeitungsmodus" : "modalità Modifica",
+  "Bearbeitungsmodus abbrechen" : "Annulla la modalità di modifica"
   
 }
