@@ -177,6 +177,11 @@ input:-webkit-autofill:active  {
   padding-bottom: 15px !important;
 }
 
+.item-select.label-floating.sc-ion-label-md-h, .item-select .label-floating.sc-ion-label-md-h {
+  -webkit-transform: translate3d(0,37%,0) !important;
+  transform: translate3d(0,37%,0) !important;
+}
+
 .alert-sub-title.sc-ion-alert-md, .alert-title.sc-ion-alert-md {
   color: var(--ion-text-color,#fff) !important;
 }
