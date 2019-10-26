@@ -93,18 +93,17 @@
                 </div>
               </div>
             </ion-col>            
-            <ion-col size-xl="9" size-lg="9" size-md="9" size-sm="12" size="12">
-              <div class="kunden-col" style="padding-bottom: 12px;">
+            <ion-col size-xl="9" size-lg="9" size-md="9" size-sm="12" size="12">  
+              <div  class="kunden-col" style="padding-bottom: 12px;" >
                 <div class="table-info">
                   <div class="thead">
                     <div class="tr table-header">                        
-                      <div class="th" style="max-width: 120px;">{{'Statistiken' | translate }}</div>
-                      <div class="th" style="text-align: right;">[ {{'Firma' | translate}}: {{companyCount}} &nbsp;&nbsp;&nbsp; (A-B-C-D-{{ratingA}}-{{ratingB}}-{{ratingC}}-{{ratingD}}) &nbsp;&nbsp;&nbsp; {{'Besuchsberichte' | translate}}: {{visitReportSum}} ]</div>
+                      <div class="th" style="max-width: 120px;">{{'Statistiken' | translate }}</div>                        
                     </div>
                   </div>
                   <div class="tbody">
                     <div class="tr table-subheader statistic-title">
-                      <div class="td" style="width: 125px;">{{'Benutzername' | translate}}</div>
+                      <!-- <div class="td" style="width: 125px;">{{'Benutzername' | translate}}</div> -->
                       <div class="td" style="width: 162px;">{{'Firma' | translate}}</div>
                       <div class="td" style="width: 75px;">{{'Wertung' | translate}}</div>
                       <div class="td" style="width: 110px;">{{'PLZ' | translate}}</div>                          
@@ -112,17 +111,29 @@
                       <div class="td" style="width: 125px;">{{'Ansprechpartner' | translate}}</div>
                       <div class="td" style="width: 128px; text-align: center;">{{'Besuchsberichte' | translate}}</div>
                     </div>
-                    <div style="height: 525px; overflow: scroll; margin-bottom: -15px;">
-                      <div class="tr table-body" *ngFor="let item of listStatistic">
-                        <div class="td" style="flex: none; width: 125px;">{{item.name_user}}</div>
-                        <div class="td" style="flex: none; width: 162px;">{{item.company}}</div>
-                        <div class="td" style="flex: none; width: 75px;">{{item.rating}}</div>
-                        <div class="td" style="flex: none; width: 110px;">{{item.zipcode_place}}</div>
-                        <div class="td" style="flex: none; width: 95px;">{{item.sector}}</div>
-                        <div class="td" style="flex: none; width: 125px;">{{item.name_contact}}</div>
-                        <div class="td" style="flex: none; width: 128px; text-align: center;">{{item.visitReport}}</div>
-                      </div>                                            
-                    </div>
+                    <p-accordion>
+                      <div *ngFor="let item of listStatisticMaster">                        
+                        <p-accordionTab *ngIf="item.count>0" styleClass="ui-accordion-header" >
+                          <p-header>                            
+                            <span style="display:inline-block; width:180px;"> {{item.header}} </span>
+                            <span style="display:inline-block; width:120px;"> {{'Firma' | translate}}: {{item.companyCount}} </span>
+                            <span style="display:inline-block; width:180px;"> (A-B-C-D-{{item.ratingA}}-{{item.ratingB}}-{{item.ratingC}}-{{item.ratingD}}) </span>
+                            <span style="display:inline-block; width:120px;"> {{'Besuchsberichte' | translate}}: {{item.visitReportSum}} </span>                          
+                          </p-header>
+                          <div style="overflow: scroll; margin-bottom: -15px;">
+                            <div class="tr table-body" *ngFor="let itemx of item.data">
+                              <!-- <div class="td" style="flex: none; width: 125px;">{{itemx.name_user}}</div> -->
+                              <div class="td" style="flex: none; width: 162px;">{{itemx.company}}</div>
+                              <div class="td" style="flex: none; width: 75px;">{{itemx.rating}}</div>
+                              <div class="td" style="flex: none; width: 110px;">{{itemx.zipcode_place}}</div>
+                              <div class="td" style="flex: none; width: 95px;">{{itemx.sector}}</div>
+                              <div class="td" style="flex: none; width: 125px;">{{itemx.name_contact}}</div>
+                              <div class="td" style="flex: none; width: 128px; text-align: center;">{{itemx.visitReport}}</div>
+                            </div>                                            
+                          </div>
+                        </p-accordionTab>
+                      </div>
+                    </p-accordion>
                   </div>                 
                 </div>
               </div>
@@ -134,3 +145,34 @@
   </div>
 </ion-content>
 
+<ion-fab slot="fixed" vertical="bottom" horizontal="end">
+    <ion-fab-button color="tertiary">
+      <ion-icon name="menu"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list side="top">
+      <ion-fab-button color="primary" 
+                      (click)="sendEmail()" 
+                      (mouseover)="mouseover(1)" 
+                      (mouseout)="mouseout(1)"
+                      [class.mouse-over]="mouseoverButton1"
+                      [labelFab]="'E-Mail'">
+        <ion-icon name="send"></ion-icon>        
+      </ion-fab-button>
+      <ion-fab-button color="primary"
+                      (click)="exportExcel()"
+                      (mouseover)="mouseover(2)" 
+                      (mouseout)="mouseout(2)"
+                      [class.mouse-over]="mouseoverButton2"
+                      [labelFab]="'XLSx Export'">
+        <ion-icon name="document"></ion-icon>        
+      </ion-fab-button>
+      <ion-fab-button color="primary"
+                      (click)="pdf_export()"
+                      (mouseover)="mouseover(3)" 
+                      (mouseout)="mouseout(3)"
+                      [class.mouse-over]="mouseoverButton3"
+                      [labelFab]="'PDF Ansicht'">
+        <ion-icon name="document"></ion-icon>        
+      </ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
