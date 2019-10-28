@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { UserdataService } from '../services/userdata';
 import { AlertController, LoadingController, Platform } from '@ionic/angular';
@@ -37,6 +37,9 @@ export class StatisticsPage implements OnInit {
   public mouseoverButton3: boolean;
   public mobilePlatform: boolean;
   public specialCustomer: any = [];
+  public winWidth: any;
+  public winHeight: any;
+  public statisticHeight: any;
 
   constructor(public userdata: UserdataService,
               public translate: TranslateService,
@@ -45,26 +48,41 @@ export class StatisticsPage implements OnInit {
               public excelService: ExcelService,
               private loadingCtrl: LoadingController,
               public platform: Platform,
-              public pdf: PdfExportService) {
+              public pdf: PdfExportService,
+              private ngZone: NgZone) {
 
-                this.mobilePlatform = false;
+      this.mobilePlatform = false;
 
-                platform.ready().then(() => {
-                  if ( this.platform.is('ios') ||
-                    this.platform.is('android') ) {
-                    this.mobilePlatform = true;
-                    this.mouseoverButton1 = true;
-                    this.mouseoverButton2 = true;
-                    this.mouseoverButton3 = true;
-                    console.log('platform mobile:', this.platform.platforms());
-                  } else {
-                    console.log('platform not mobile:', this.platform.platforms());
-                    this.mobilePlatform = false;
-                    this.mouseoverButton1 = false;
-                    this.mouseoverButton2 = false;
-                    this.mouseoverButton3 = false;
-                  }
-                });
+      platform.ready().then(() => {
+        if ( this.platform.is('ios') ||
+          this.platform.is('android') ) {
+          this.mobilePlatform = true;
+          this.mouseoverButton1 = true;
+          this.mouseoverButton2 = true;
+          this.mouseoverButton3 = true;
+          console.log('platform mobile:', this.platform.platforms());
+        } else {
+          console.log('platform not mobile:', this.platform.platforms());
+          this.mobilePlatform = false;
+          this.mouseoverButton1 = false;
+          this.mouseoverButton2 = false;
+          this.mouseoverButton3 = false;
+        }
+      });
+
+      this.winWidth = window.innerWidth;
+      this.winHeight = window.innerHeight;
+      this.statisticHeight = this.winHeight - 190;
+      window.onresize = (e) => {
+        // ngZone.run will help to run change detection
+        this.ngZone.run(() => {
+            this.winWidth = window.innerWidth;
+            this.winHeight = window.innerHeight;
+        });
+        console.log('with - height :', this.winWidth, this.winHeight);
+        this.statisticHeight = this.winHeight - 190;
+        console.log('statisticHeight :', this.statisticHeight);
+      };
 
    }
 
@@ -137,7 +155,12 @@ export class StatisticsPage implements OnInit {
     }).then(x => x.present());
   }
 
-  statistic() {
+  async statistic() {
+    const loader = await this.loadingCtrl.create({
+        message: this.translate.instant('Bitte warten')
+    });
+    loader.present();
+
     this.maxStartDate = this.endDate;
     this.minEndDate = this.startDate;
     this.maxEndDate = new Date().toISOString();
@@ -198,6 +221,7 @@ export class StatisticsPage implements OnInit {
             this.statisticSummaryItem(eventX, this.listStatisticMasterDetail);
             eventX.data = this.listStatisticMasterDetail;
             eventX.count = this.listStatisticMasterDetail.length;
+            loader.dismiss();
           });
         } else {
           this.apiService.pvs4_get_statistics(this.statisticType,
@@ -218,12 +242,12 @@ export class StatisticsPage implements OnInit {
             this.statisticSummaryItem(eventX, this.listStatisticMasterDetail);
             eventX.data = this.listStatisticMasterDetail;
             eventX.count = this.listStatisticMasterDetail.length;
-
+            loader.dismiss();
           });
         }
       });
-
     }).catch(err => {
+      loader.dismiss();
       console.log('pvs4_get_colleagues_list err: ', err);
     });
   }
@@ -376,7 +400,7 @@ export class StatisticsPage implements OnInit {
               UserEmail: this.userdata.email,
               Type: this.userdata.licensee
             };
-            console.log("params", params);
+            console.log('params', params);
             this.send(params);
           });
         } else {
@@ -391,15 +415,7 @@ export class StatisticsPage implements OnInit {
   }
 
   async send(params) {
-    console.log('send()');
-
-    let loader = await this.loadingCtrl.create({
-      message: this.translate.instant('Bitte warten')
-    });
-
-    loader.present();
-
-    console.log('params :', params);
+    console.log('send params :', params);
 
     console.log(JSON.stringify(params));
     this.apiService.pvs4_set_statistic_send(params).then(async (result: any) => {
@@ -418,7 +434,6 @@ export class StatisticsPage implements OnInit {
                 }
               ]
           });
-          loader.dismiss();
           alert.present();
         } else {
           // NOK
@@ -434,7 +449,6 @@ export class StatisticsPage implements OnInit {
                                                 }
                                               ]
           });
-          loader.dismiss();
           alert.present();
         }
       } else {
@@ -451,7 +465,6 @@ export class StatisticsPage implements OnInit {
                                               }
                                             ]
         });
-        loader.dismiss();
         alert.present();
       }
     });
@@ -496,25 +509,25 @@ export class StatisticsPage implements OnInit {
       this.specialCustomer = [
         {
             kid: 92734,
-            line1: "Musterfirma",
-            line2: "Musterstr 12",
-            line3: "PLZ Musterland",
-            line4: " ",
-            logo: "logo_musterfirma.jpg",
-            banner: "banner_musterfirma.jpg"
+            line1: 'Musterfirma',
+            line2: 'Musterstr 12',
+            line3: 'PLZ Musterland',
+            line4: ' ',
+            logo: 'logo_musterfirma.jpg',
+            banner: 'banner_musterfirma.jpg'
         },
         {
             kid: 29328,
-            line1: " ",
-            line2: " ",
-            line3: " ",
-            line4: " ",
-            logo: "bischag-logo.svg",
-            banner: "banner_bischag.jpg"
+            line1: ' ',
+            line2: ' ',
+            line3: ' ',
+            line4: ' ',
+            logo: 'bischag-logo.svg',
+            banner: 'banner_bischag.jpg'
         }
       ];
 
-      let src = 'assets/imgs/banner_'+this.userdata.licensee+'.jpg';
+      let src = 'assets/imgs/banner_' + this.userdata.licensee + '.jpg';
       let pageDesc: string = this.translate.instant('Seite');
 
       if (this.userdata.Type >= 20) {
@@ -571,7 +584,7 @@ export class StatisticsPage implements OnInit {
               },
               header: {
                   fontSize: 10,
-                  //bold: true,
+                  // bold: true,
                   color: '#ffffff',
                   fillColor: '#009de0'
               }

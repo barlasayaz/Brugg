@@ -99,18 +99,3 @@ div.table-info div.tbody div.tr.table-body {
 .table-info, .table-info>th, .table-info>td {
     background-color: white;
 }
-
-.ui-accordion .ui-accordion-header {
-    -webkit-border-radius: 0 !important;
-            border-radius: 0 !important;
-    padding: 5px 10px !important;
-    &.ui-state-active {
-        border: none !important;
-    }
-    a {
-        -webkit-border-radius: 0 !important;
-                border-radius: 0 !important;
-        padding: 0 !important;
-    }
-  }
-  

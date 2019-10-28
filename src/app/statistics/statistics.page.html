@@ -6,7 +6,7 @@
       <div class="mt20 content-sm">  
         <ion-grid style="margin-left: -5px;">
           <ion-row>
-            <ion-col size-xl="3" size-lg="3" size-md="3" size-sm="12" size="12">
+            <ion-col size-xl="3" size-lg="3" size-md="12" size-sm="12" size="12">
               <div class="kunden-wrap" style="padding-bottom: 12px;">
                 <!-- COMPANY -->
                 <div class="kunden-col">
@@ -93,8 +93,8 @@
                 </div>
               </div>
             </ion-col>            
-            <ion-col size-xl="9" size-lg="9" size-md="9" size-sm="12" size="12">  
-              <div  class="kunden-col" style="padding-bottom: 12px;" >
+            <ion-col size-xl="9" size-lg="9" size-md="12" size-sm="12" size="12">  
+              <div style="padding-bottom: 12px;">
                 <div class="table-info">
                   <div class="thead">
                     <div class="tr table-header">                        
@@ -103,37 +103,38 @@
                   </div>
                   <div class="tbody">
                     <div class="tr table-subheader statistic-title">
-                      <!-- <div class="td" style="width: 125px;">{{'Benutzername' | translate}}</div> -->
-                      <div class="td" style="width: 162px;">{{'Firma' | translate}}</div>
-                      <div class="td" style="width: 75px;">{{'Wertung' | translate}}</div>
-                      <div class="td" style="width: 110px;">{{'PLZ' | translate}}</div>                          
-                      <div class="td" style="width: 95px;">{{'Branche' | translate}}</div>
-                      <div class="td" style="width: 125px;">{{'Ansprechpartner' | translate}}</div>
-                      <div class="td" style="width: 128px; text-align: center;">{{'Besuchsberichte' | translate}}</div>
+                      <div class="td" style="width: 190px;">{{'Firma' | translate}}</div>
+                      <div class="td" style="width: 70px;">{{'Wertung' | translate}}</div>
+                      <div class="td" style="width: 160px;">{{'PLZ' | translate}}</div>
+                      <div class="td" style="width: 160px;">{{'Branche' | translate}}</div>
+                      <div class="td" style="width: 160px;">{{'Ansprechpartner' | translate}}</div>
+                      <div class="td" style="width: 100px; text-align: center;">{{'Besuchsberichte' | translate}}</div>
                     </div>
-                    <p-accordion>
-                      <div *ngFor="let item of listStatisticMaster">                        
-                        <p-accordionTab *ngIf="item.count>0" styleClass="ui-accordion-header" >
-                          <p-header>                            
-                            <span style="display:inline-block; width:180px;"> {{item.header}} </span>
-                            <span style="display:inline-block; width:120px;"> {{'Firma' | translate}}: {{item.companyCount}} </span>
-                            <span style="display:inline-block; width:180px;"> (A-B-C-D-{{item.ratingA}}-{{item.ratingB}}-{{item.ratingC}}-{{item.ratingD}}) </span>
-                            <span style="display:inline-block; width:120px;"> {{'Besuchsberichte' | translate}}: {{item.visitReportSum}} </span>                          
-                          </p-header>
-                          <div style="overflow: scroll; margin-bottom: -15px;">
-                            <div class="tr table-body" *ngFor="let itemx of item.data">
-                              <!-- <div class="td" style="flex: none; width: 125px;">{{itemx.name_user}}</div> -->
-                              <div class="td" style="flex: none; width: 162px;">{{itemx.company}}</div>
-                              <div class="td" style="flex: none; width: 75px;">{{itemx.rating}}</div>
-                              <div class="td" style="flex: none; width: 110px;">{{itemx.zipcode_place}}</div>
-                              <div class="td" style="flex: none; width: 95px;">{{itemx.sector}}</div>
-                              <div class="td" style="flex: none; width: 125px;">{{itemx.name_contact}}</div>
-                              <div class="td" style="flex: none; width: 128px; text-align: center;">{{itemx.visitReport}}</div>
-                            </div>                                            
-                          </div>
-                        </p-accordionTab>
-                      </div>
-                    </p-accordion>
+                    <div [style.height.px]="statisticHeight" style="overflow: scroll; margin-bottom: -15px;">
+                      <p-accordion [multiple]="true">
+                        <div *ngFor="let item of listStatisticMaster">
+                          <p-accordionTab *ngIf="item.count>0">
+                            <p-header styleClass="ui-accordion-header-a">
+                              <span>
+                                  {{item.header}}
+                                  ({{'Firma' | translate}}: {{item.companyCount}}) &nbsp;&nbsp;
+                                  (A-B-C-D-{{item.ratingA}}-{{item.ratingB}}-{{item.ratingC}}-{{item.ratingD}}) &nbsp;&nbsp;
+                                  {{'Besuchsberichte' | translate}}: {{item.visitReportSum}}
+                              </span>                     
+                            </p-header>
+                              <div class="tr table-body" *ngFor="let itemx of item.data">
+                                <div class="td" style="flex: none; width: 23%;">{{itemx.company}}</div>
+                                <div class="td" style="flex: none; width: 8%;">{{itemx.rating}}</div>
+                                <div class="td" style="flex: none; width: 19%;">{{itemx.zipcode_place}}</div>
+                                <div class="td" style="flex: none; width: 19%;">{{itemx.sector}}</div>
+                                <div class="td" style="flex: none; width: 19%;">{{itemx.name_contact}}</div>
+                                <div class="td" style="flex: none; width: 15%; text-align: center;">{{itemx.visitReport}}</div>
+                              </div>                                            
+                            <!-- </div> -->
+                          </p-accordionTab>
+                        </div>
+                      </p-accordion>
+                    </div>
                   </div>                 
                 </div>
               </div>
