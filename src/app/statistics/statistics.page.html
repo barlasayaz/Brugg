@@ -103,11 +103,10 @@
                   </div>
                   <div class="tbody">
                     <div class="tr table-subheader statistic-title">
-                      <div class="td" style="width: 190px;">{{'Firma' | translate}}</div>
-                      <div class="td" style="width: 70px;">{{'Wertung' | translate}}</div>
-                      <div class="td" style="width: 160px;">{{'PLZ' | translate}}</div>
-                      <div class="td" style="width: 160px;">{{'Branche' | translate}}</div>
-                      <div class="td" style="width: 160px;">{{'Ansprechpartner' | translate}}</div>
+                      <div class="td" style="width: 260px;">{{'Firma' | translate}}</div>
+                      <div class="td" style="width: 80px;">{{'Wertung' | translate}}</div>
+                      <div class="td" style="width: 180px;">{{'PLZ' | translate}}</div>
+                      <div class="td" style="width: 200px;">{{'Branche' | translate}}</div>
                       <div class="td" style="width: 100px; text-align: center;">{{'Besuchsberichte' | translate}}</div>
                     </div>
                     <div [style.height.px]="statisticHeight" style="overflow: scroll; margin-bottom: -15px;">
@@ -123,12 +122,11 @@
                               </span>                     
                             </p-header>
                               <div class="tr table-body" *ngFor="let itemx of item.data">
-                                <div class="td" style="flex: none; width: 23%;">{{itemx.company}}</div>
-                                <div class="td" style="flex: none; width: 8%;">{{itemx.rating}}</div>
-                                <div class="td" style="flex: none; width: 19%;">{{itemx.zipcode_place}}</div>
-                                <div class="td" style="flex: none; width: 19%;">{{itemx.sector}}</div>
-                                <div class="td" style="flex: none; width: 19%;">{{itemx.name_contact}}</div>
-                                <div class="td" style="flex: none; width: 15%; text-align: center;">{{itemx.visitReport}}</div>
+                                <div class="td" style="flex: none; padding-right: 5px; width: 34%;">{{itemx.company}}</div>
+                                <div class="td" style="flex: none; padding-right: 5px; width: 8%;">{{itemx.rating}}</div>
+                                <div class="td" style="flex: none; padding-right: 5px; width: 22%;">{{itemx.zipcode_place}}</div>
+                                <div class="td" style="flex: none; padding-right: 5px; width: 23%;">{{itemx.sector}}</div>
+                                <div class="td" style="flex: none; padding-right: 5px; width: 15%; text-align: center;">{{itemx.visitReport}}</div>
                               </div>                                            
                             <!-- </div> -->
                           </p-accordionTab>

@@ -116,7 +116,6 @@ export class StatisticsPage implements OnInit {
       { field: 'rating', header: this.translate.instant('Wertung') },
       { field: 'zipcode_place', header: this.translate.instant('PLZ') },
       { field: 'sector', header: this.translate.instant('Branche') },
-      { field: 'name_contact', header: this.translate.instant('Ansprechpartner') },
       { field: 'visitReport', header: this.translate.instant('Besuchsberichte') },
     ];
     this.startDate = new Date();
@@ -221,7 +220,7 @@ export class StatisticsPage implements OnInit {
             });
 
             //this.statisticSummary(this.listStatistic);
-            this.statisticSummaryItem(eventX, this.listStatisticMasterDetail);
+            //this.statisticSummaryItem(eventX, this.listStatisticMasterDetail);
             eventX.data = this.listStatisticMasterDetail;
             eventX.count = this.listStatisticMasterDetail.length;
             if (x==y) {
@@ -247,7 +246,7 @@ export class StatisticsPage implements OnInit {
             });
 
             //this.statisticSummary(this.listStatistic);
-            this.statisticSummaryItem(eventX, this.listStatisticMasterDetail);
+            //this.statisticSummaryItem(eventX, this.listStatisticMasterDetail);
             eventX.data = this.listStatisticMasterDetail;
             eventX.count = this.listStatisticMasterDetail.length;
             if (x==y) {
@@ -321,6 +320,7 @@ export class StatisticsPage implements OnInit {
     let ratingC = 0;
     let ratingD = 0;
     let visitReportSum = 0;
+    let companyCount = 0;
     statisticList.forEach(event => {
       if (event.rating == 'A') {
         ratingA++;
@@ -334,20 +334,22 @@ export class StatisticsPage implements OnInit {
       if (event.rating == 'D') {
         ratingD++;
       }
-      companyArr[i] = event.company;
+      companyCount++;
+      //companyArr[i] = event.company;
       i++;
       visitReportSum = visitReportSum + parseInt(event.visitReport);
     });
     companyArr = companyArr.sort();
 
-    let companyName = '';
-    let companyCount = 0;
-    companyArr.forEach(event => {
-      if (event != companyName) {
-        companyCount++;
-        companyName = event;
-      }
-    });
+    // let companyName = '';
+    // let companyCount = 0;
+    // companyArr.forEach(event => {
+    //   if (event != companyName) {
+    //     companyCount++;
+    //    companyName = event;
+    //   }
+    //   console.log('companyName', event, companyCount)
+    // });
 
     item.ratingA = ratingA;
     item.ratingB = ratingB;
@@ -374,10 +376,11 @@ export class StatisticsPage implements OnInit {
     for (let i = 0; i < this.listStatisticMaster.length; i++ ) {
       this.listStatisticMaster[i].data.sort((a, b) => a.company.localeCompare(b.company));
       this.listStatisticMaster[i].data = groupBy(this.listStatisticMaster[i].data, ['company', 'rating', 'zipcode_place', 
-      'sector', 'name_contact', 'name_user']);
+      'sector', 'name_user']);
       this.listStatisticMaster[i].data.forEach(event => {
         this.listStatistic.push(event);
       });
+      this.statisticSummaryItem(this.listStatisticMaster[i], this.listStatisticMaster[i].data);
     }
     console.log('listStatistic', this.listStatistic);
   }
