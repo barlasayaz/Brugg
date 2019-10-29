@@ -218,9 +218,76 @@ export class AppointmentPlanPage {
                             backgroundColor: liste[k].colour,
                             borderColor: liste[k].colour };
                 t.id = parseInt(t.id);
+
                 this.events.push( JSON.parse(JSON.stringify(t)) );
                 this.allEvents.push( JSON.parse(JSON.stringify(t)));
             }
+
+            let startLastYear = moment(start,'YYYY-MM-DD').subtract(1,'years').format('YYYY-MM-DD');
+            let endLastYear = moment(end,'YYYY-MM-DD').subtract(1,'years').format('YYYY-MM-DD');
+            this.apiService.pvs4_get_appointment_list_ps(startLastYear, endLastYear).then((result: any) => {
+                for (let i = 0; i < result.list.length; i++) {
+                    const obj = result.list[i].data;
+
+                    let nextYear = moment(obj.appointment_date,'YYYY-MM-DD').add(1,'years').format('YYYY-MM-DD');
+                    let nextYearDate = moment(obj.appointment_date,'YYYY-MM-DD').add(1,'years').toDate();
+                    let nextMonth = moment(new Date()).add(1,'months').toDate();
+                    if(nextYearDate > new Date() && nextYearDate <= nextMonth)
+                    {
+                        let appointment = liste.find(function (element, index, array) 
+                                    { return element.idCustomer == obj.idCustomer &&
+                                    element.appointment_date == nextYear; });
+                        if(!appointment )
+                        {
+                            let title = obj.short_code;
+                            if (obj.appointment_type == 2) {
+                                title += ' (' + this.translate.instant('Urlaub') + ')';
+                            } else {
+                                if ( obj.zip_code) title += ' ' + obj.zip_code;
+                                if ( obj.company) title += ' ' + obj.company;
+                            }
+                            let note = obj.notes;
+                            if (note.length > 33) {
+                                note = note.substr(0, 30) + '...';
+                            }
+                            title += ' ' + note;
+
+                            let z1 = moment(obj.appointment_date + ' ' + obj.start_time, 'YYYY-MM-DD HH:mm:ss').add(1,'years').toDate();
+                            let z2 = moment(obj.appointment_date + ' ' + obj.end_time, 'YYYY-MM-DD HH:mm:ss').add(1,'years').toDate();
+            
+                            if (z1.getHours() < 7) {
+                                z1.setHours(7);
+                                z1.setMinutes(0);
+                            }
+                            if (z1.getHours() > 19) {
+                                z1.setHours(18);
+                                z1.setMinutes(30);
+                            }
+                            if (z2.getHours() < 7) {
+                                z2.setHours(7);
+                                z2.setMinutes(30);
+                            }
+                            if (z2.getHours() > 19) {
+                                z2.setHours(19);
+                                z2.setMinutes(0);
+                            }
+                            const t = { id: 0,
+                                email: obj.email,
+                                type: obj.appointment_type,
+                                title: title,
+                                start: z1,
+                                end: z2,
+                                allDay: false,
+                                textColor: '#000',
+                                backgroundColor: "white",
+                                borderColor: "white" };
+
+                            this.events.push(t);
+                            this.allEvents.push( JSON.parse(JSON.stringify(t)));
+                        }
+                    }
+                }
+            });
             console.log('events: ',  this.allEvents);
             this.changeFilter();
         });
@@ -237,29 +304,32 @@ export class AppointmentPlanPage {
     }
      handleEventClick(model: any) {
         console.log(model.event);
-        this.apiService.pvs4_get_appointment(model.event.id).then(async (result: any) => {
-            const modal: HTMLIonModalElement =
-            await this.modalCtrl.create({
-              component: AppointmentEditComponent,
-              cssClass: 'appointmentedit-modal-css',
-              componentProps: {
-                appointment: result.obj,
-                redirect: 2
-              }
-            });
-            modal.onDidDismiss().then((data) => {
-                if (data['data']) {
-                    const today = new Date();
-                    const newdate = new Date();
-                    newdate.setDate(today.getDate() + 30);
-                    const newdate2 = new Date();
-                    newdate2.setDate(today.getDate() - 30);
-                    console.log(newdate + ' - ' + newdate2);
-                    this.eventsFunc(newdate2, newdate);
+        if(model.event.id != "0")
+        {
+            this.apiService.pvs4_get_appointment(model.event.id).then(async (result: any) => {
+                const modal: HTMLIonModalElement =
+                await this.modalCtrl.create({
+                component: AppointmentEditComponent,
+                cssClass: 'appointmentedit-modal-css',
+                componentProps: {
+                    appointment: result.obj,
+                    redirect: 2
                 }
+                });
+                modal.onDidDismiss().then((data) => {
+                    if (data['data']) {
+                        const today = new Date();
+                        const newdate = new Date();
+                        newdate.setDate(today.getDate() + 30);
+                        const newdate2 = new Date();
+                        newdate2.setDate(today.getDate() - 30);
+                        console.log(newdate + ' - ' + newdate2);
+                        this.eventsFunc(newdate2, newdate);
+                    }
+                });
+            modal.present();
             });
-          modal.present();
-        });
+        }
     }
 
     updateEvent(model: any) {
