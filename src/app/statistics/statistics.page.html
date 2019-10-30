@@ -113,20 +113,17 @@
                       <p-accordion [multiple]="true">
                         <div *ngFor="let item of listStatisticMaster">
                           <p-accordionTab *ngIf="item.count>0">
-                            <p-header styleClass="ui-accordion-header-a">
-                              <span>
-                                  {{item.header}}
-                                  ({{'Firma' | translate}}: {{item.companyCount}}) &nbsp;&nbsp;
-                                  (A-B-C-D-{{item.ratingA}}-{{item.ratingB}}-{{item.ratingC}}-{{item.ratingD}}) &nbsp;&nbsp;
-                                  {{'Besuchsberichte' | translate}}: {{item.visitReportSum}}
-                              </span>                     
+                            <p-header>  
+                              <span style="display: inline-block; width: 30%;">{{item.header}}  ({{'Firma' | translate}}: {{item.companyCount}})</span>
+                              <span style="display: inline-block; width: 32%;">(A-B-C-D-{{item.ratingA}}-{{item.ratingB}}-{{item.ratingC}}-{{item.ratingD}})</span>
+                              <span style="display: inline-block; width: 31%; text-align: right;">{{item.visitReportSum}}</span>
                             </p-header>
                               <div class="tr table-body" *ngFor="let itemx of item.data">
-                                <div class="td" style="flex: none; padding-right: 5px; width: 34%;">{{itemx.company}}</div>
-                                <div class="td" style="flex: none; padding-right: 5px; width: 8%;">{{itemx.rating}}</div>
+                                <div class="td" style="flex: none; padding-right: 5px; width: 32%;">{{itemx.company}}</div>
+                                <div class="td" style="flex: none; padding-right: 5px; width: 10%;">{{itemx.rating}}</div>
                                 <div class="td" style="flex: none; padding-right: 5px; width: 22%;">{{itemx.zipcode_place}}</div>
                                 <div class="td" style="flex: none; padding-right: 5px; width: 23%;">{{itemx.sector}}</div>
-                                <div class="td" style="flex: none; padding-right: 5px; width: 15%; text-align: center;">{{itemx.visitReport}}</div>
+                                <div class="td" style="flex: none; width: 8%; text-align: right;">{{itemx.visitReport}}</div>
                               </div>                                            
                             <!-- </div> -->
                           </p-accordionTab>
@@ -163,7 +160,7 @@
                       (mouseout)="mouseout(2)"
                       [class.mouse-over]="mouseoverButton2"
                       [labelFab]="'XLSx Export'">
-        <ion-icon name="document"></ion-icon>        
+        <ion-icon name="pie"></ion-icon>        
       </ion-fab-button>
       <ion-fab-button color="primary"
                       (click)="pdf_export()"
