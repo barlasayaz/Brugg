@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController, AlertController, Platform, LoadingController, ModalController } from '@ionic/angular';
+import { NavController, AlertController, Platform, LoadingController, ModalController, ToastController } from '@ionic/angular';
 import { CameraOptions, Camera } from '@ionic-native/camera/ngx';
 import { ApiService } from '../services/api';
 import { TranslateService } from '@ngx-translate/core';
@@ -48,6 +48,7 @@ export class ProtocolDetailsPage implements OnInit {
     public apiService: ApiService,
     public translate: TranslateService,
     public alertCtrl: AlertController,
+    private toastCtrl: ToastController,
     public datePipe: DatePipe,
     public pdf: PdfExportService,
     public platform: Platform,
@@ -429,6 +430,16 @@ export class ProtocolDetailsPage implements OnInit {
 
     this.dateiListe();
 
+  }
+
+  validateFileSize(event: any, maxFileSize: number) {
+    if (event.files[0].size > maxFileSize) {
+      const toast = this.toastCtrl.create({
+        message: this.translate.instant('Die Dateigröße die Sie hochladen sollte höchstens 5 MB betragen'),
+        cssClass: 'toast-warning',
+        duration: 3500
+      }).then(x => x.present());
+    }
   }
 
   delFile(datei) {
