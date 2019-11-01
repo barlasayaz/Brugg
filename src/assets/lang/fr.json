@@ -888,6 +888,7 @@
   "Basis":"Base",
   
   "Bearbeitungsmodus" : "Mode édition",
-  "Bearbeitungsmodus abbrechen" : "Annuler le mode d'édition"
+  "Bearbeitungsmodus abbrechen" : "Annuler le mode d'édition",
+  "Die Dateigröße die Sie hochladen sollte höchstens 5 MB betragen" : "La taille du fichier que vous téléchargez doit être d'au plus 5 Mo." 
   
 }

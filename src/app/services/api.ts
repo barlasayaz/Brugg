@@ -4,7 +4,7 @@ import 'rxjs/add/operator/timeout';
 import { UserdataService } from './userdata';
 
 
-// const pvs4_apiURL = 'http://localhost/BruggPVS4/pvs4-api/';
+ //const pvs4_apiURL = 'http://localhost/BruggPVS4/pvs4-api/';
 const pvs4_apiURL = 'https://www.pvs2go.com/pvs4-api/';
 //const pvs4_apiURL = 'http://s802403063.online.de/pvs4-api/';
  
@@ -938,6 +938,19 @@ export class ApiService {
     return new Promise((res, rej) => {
       this.pvs4_api_post('set_orders_send.php', obj).then((done: any) => {// return the result
         console.log('pvs4_set_orders_send', done);
+        res(done);
+      },
+        err => { // return the error
+          rej(err);
+        });
+    });
+  }
+
+  pvs4_set_statistic_send(obj: any) {
+    console.log('pvs4_set_statistic_send():', obj);
+    return new Promise((res, rej) => {
+      this.pvs4_api_post('set_statistic_send.php', obj).then((done: any) => {// return the result
+        console.log('pvs4_set_statistic_send', done);
         res(done);
       },
         err => { // return the error
