@@ -116,7 +116,7 @@ export class StatisticsPage implements OnInit {
       { field: 'rating', header: this.translate.instant('Wertung') },
       { field: 'zipcode_place', header: this.translate.instant('PLZ') },
       { field: 'sector', header: this.translate.instant('Branche') },
-      { field: 'visitReport', header: this.translate.instant('Besuchsberichte') },
+      { field: 'visitReport', header: this.translate.instant('Anzahl') },
     ];
     this.startDate = new Date();
     this.endDate = new Date();
