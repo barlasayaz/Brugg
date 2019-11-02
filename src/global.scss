@@ -773,6 +773,14 @@ ion-button {
   --background: var(--ion-color-red) !important;
 }
 
+.btn-yellow {
+  --background: var(--ion-color-warning) !important;
+}
+
+.btn-grey {
+  --background: var(--ion-color-grey) !important;
+}
+
 body .ui-fileupload .ui-fileupload-buttonbar {
   padding: 10px 10px !important;
 }

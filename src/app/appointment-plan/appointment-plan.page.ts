@@ -232,7 +232,7 @@ export class AppointmentPlanPage {
                     let nextYear = moment(obj.appointment_date,'YYYY-MM-DD').add(1,'years').format('YYYY-MM-DD');
                     let nextYearDate = moment(obj.appointment_date,'YYYY-MM-DD').add(1,'years').toDate();
                     let nextMonth = moment(new Date()).add(1,'months').toDate();
-                    if(nextYearDate > new Date() && nextYearDate <= nextMonth)
+                    if(nextYearDate > new Date() && nextYearDate <= nextMonth && obj.reminder == 1)
                     {
                         let appointment = liste.find(function (element, index, array) 
                                     { return element.idCustomer == obj.idCustomer &&

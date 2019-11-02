@@ -86,7 +86,7 @@ function processing() {
     $idUser     = intval( $_POST['idUser'] );
     $appointment_type = intval( $_POST['appointment_type'] );
     $idContactPerson  = intval( $_POST['idContactPerson'] );
-
+    $reminder  = intval( $_POST['reminder'] );
 
     $notes  = trim( mysqli_escape_string($con,$_POST['notes']) );
     $appointment_date = trim( mysqli_escape_string($con,$_POST['appointment_date']));
@@ -104,11 +104,12 @@ function processing() {
                     appointment_date = '$appointment_date',
                     start_time = '$start_time',
                     end_time = '$end_time',
-                    notes = '$notes'
+                    notes = '$notes',
+                    reminder = $reminder
               WHERE id =$id";
     } else {
-        $sql="INSERT INTO appointment (active,licensee,idCustomer,idContactPerson,idUser,appointment_type,notes,appointment_date,start_time,end_time)
-                VALUES($active,$licensee,$idCustomer,$idContactPerson,$idUser,$appointment_type,'$notes','$appointment_date','$start_time','$end_time')";
+        $sql="INSERT INTO appointment (active,licensee,idCustomer,idContactPerson,idUser,appointment_type,notes,appointment_date,start_time,end_time,reminder)
+                VALUES($active,$licensee,$idCustomer,$idContactPerson,$idUser,$appointment_type,'$notes','$appointment_date','$start_time','$end_time',$reminder)";
     }
 	$ret_sql= mysqli_query( $con, $sql );
 

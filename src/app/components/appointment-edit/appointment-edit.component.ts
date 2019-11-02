@@ -27,7 +27,8 @@ export class AppointmentEditComponent implements OnInit {
     appointment_date: new Date().toISOString(),
     id: 0,
     start_time: this.apiService.appointmentStartTime,
-    end_time: this.apiService.appointmentEndTime
+    end_time: this.apiService.appointmentEndTime,
+    reminder: 0
   };
 
   public inputError: boolean = false;
@@ -52,6 +53,7 @@ export class AppointmentEditComponent implements OnInit {
   public Date_9: Date = null;
   public minTime: string = this.apiService.appointmentMinTime;
   public maxTime: string = this.apiService.appointmentMaxTime;
+  public reminder = {1:0, 2:0, 3:0, 4:0, 5:0, 6:0, 7:0, 8:0, 9:0}
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
@@ -81,6 +83,7 @@ export class AppointmentEditComponent implements OnInit {
       if (this.activAppointment.appointment_date == null) { this.activAppointment.appointment_date = new Date().toISOString(); }
       if (this.activAppointment.start_time == null) { this.activAppointment.start_time = this.apiService.appointmentStartTime; }
       if (this.activAppointment.end_time == null) { this.activAppointment.end_time = this.apiService.appointmentEndTime; }
+      if (this.activAppointment.reminder) this.reminder[1] = this.activAppointment.reminder;
     }
 
     if (this.navParams.get('redirect')) {
@@ -188,9 +191,11 @@ export class AppointmentEditComponent implements OnInit {
     }
 
     if (this.activAppointment.appointment_date) {
+      this.activAppointment.reminder = this.reminder[1];
       this.appointmentSave();
     }
     if (this.Date_2 != null) {
+      this.activAppointment.reminder = this.reminder[2];
       this.activAppointment.appointment_date = this.Date_2;
       this.itsNew = true;
       this.appointmentSave();
@@ -198,6 +203,7 @@ export class AppointmentEditComponent implements OnInit {
       return;
     }
     if (this.Date_3 != null) {
+      this.activAppointment.reminder = this.reminder[3];
       this.activAppointment.appointment_date = this.Date_3;
       this.itsNew = true;
       this.appointmentSave();
@@ -205,6 +211,7 @@ export class AppointmentEditComponent implements OnInit {
       return;
     }
     if (this.Date_4 != null) {
+      this.activAppointment.reminder = this.reminder[4];
       this.activAppointment.appointment_date = this.Date_4;
       this.itsNew = true;
       this.appointmentSave();
@@ -212,12 +219,14 @@ export class AppointmentEditComponent implements OnInit {
       return;
     }
     if (this.Date_5 != null) {
+      this.activAppointment.reminder = this.reminder[5];
       this.activAppointment.appointment_date = this.Date_5;
       this.appointmentSave();
     } else {
       return;
     }
     if (this.Date_6 != null) {
+      this.activAppointment.reminder = this.reminder[6];
       this.activAppointment.appointment_date = this.Date_6;
       this.itsNew = true;
       this.appointmentSave();
@@ -225,6 +234,7 @@ export class AppointmentEditComponent implements OnInit {
       return;
     }
     if (this.Date_7 != null) {
+      this.activAppointment.reminder = this.reminder[7];
       this.activAppointment.appointment_date = this.Date_7;
       this.itsNew = true;
       this.appointmentSave();
@@ -232,6 +242,7 @@ export class AppointmentEditComponent implements OnInit {
       return;
     }
     if (this.Date_8 != null) {
+      this.activAppointment.reminder = this.reminder[8];
       this.activAppointment.appointment_date = this.Date_8;
       this.itsNew = true;
       this.appointmentSave();
@@ -239,6 +250,7 @@ export class AppointmentEditComponent implements OnInit {
       return;
     }
     if (this.Date_9 != null) {
+      this.activAppointment.reminder = this.reminder[9];
       this.activAppointment.appointment_date = this.Date_9;
       this.itsNew = true;
       this.appointmentSave();
@@ -261,7 +273,8 @@ export class AppointmentEditComponent implements OnInit {
       appointment_date: '',
       id: 0,
       start_time: '',
-      end_time: ''
+      end_time: '',
+      reminder: 0
     };
 
     if (this.activAppointment['licensee']) { obj.licensee = this.activAppointment['licensee']; }
@@ -274,6 +287,7 @@ export class AppointmentEditComponent implements OnInit {
     if (this.activAppointment['appointment_date']) { obj.appointment_date = pipe.transform(this.activAppointment['appointment_date'], 'yyyy-MM-dd HH:mm:ss'); }
     if (this.activAppointment['start_time']) { obj.start_time = this.activAppointment['start_time']; }
     if (this.activAppointment['end_time']) { obj.end_time = this.activAppointment['end_time']; }
+    if (this.activAppointment['reminder']) { obj.reminder = this.activAppointment['reminder']; }
 
     console.log('obj :', obj);
     if (!this.itsNew) {
@@ -461,5 +475,22 @@ export class AppointmentEditComponent implements OnInit {
   minusDate() {
     this.addDate--;
   }
+
+  setReminder(num:number)
+  {
+    if(this.reminder[num] == 0)
+      this.reminder[num] = 1;
+    else
+      this.reminder[num] = 0;
+  }
+
+  getReminderClass(num:number)
+  {
+    if(this.reminder[num] == 1)
+      return "btn-yellow";
+    else
+      return "btn-grey";
+  }
+
 
 }
