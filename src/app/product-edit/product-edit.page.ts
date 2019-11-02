@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController, ModalController, AlertController, Platform } from '@ionic/angular';
+import { NavController, ModalController, AlertController, Platform, ToastController } from '@ionic/angular';
 import { UserdataService } from '../services/userdata';
 import { TranslateService } from '@ngx-translate/core';
 import { ApiService } from '../services/api';
@@ -79,6 +79,7 @@ export class ProductEditPage implements OnInit {
     public apiService: ApiService,
     public modalCtrl: ModalController,
     public alertCtrl: AlertController,
+    private toastCtrl: ToastController,
     public platform: Platform,
     public camera: Camera,
     public transfer: FileTransfer,
@@ -651,6 +652,16 @@ export class ProductEditPage implements OnInit {
 
     });
 
+  }
+
+  validateFileSize(event: any, maxFileSize: number) {
+    if (event.files[0].size > maxFileSize) {
+      const toast = this.toastCtrl.create({
+        message: this.translate.instant('Die Dateigröße die Sie hochladen sollte höchstens 5 MB betragen'),
+        cssClass: 'toast-warning',
+        duration: 3500
+      }).then(x => x.present());
+    }
   }
 
   async hideLoader() {
