@@ -86,7 +86,8 @@ function processing() {
     $idUser     = intval( $_POST['idUser'] );
     $appointment_type = intval( $_POST['appointment_type'] );
     $idContactPerson  = intval( $_POST['idContactPerson'] );
-    $reminder  = intval( $_POST['reminder'] );
+    $reminder  = 0 ;
+    if($_POST['reminder'])  $reminder  = intval( $_POST['reminder'] );
 
     $notes  = trim( mysqli_escape_string($con,$_POST['notes']) );
     $appointment_date = trim( mysqli_escape_string($con,$_POST['appointment_date']));
