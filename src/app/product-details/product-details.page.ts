@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController, AlertController, ModalController, Platform, LoadingController } from '@ionic/angular';
+import { NavController, AlertController, ModalController, Platform, LoadingController, ToastController } from '@ionic/angular';
 import { ApiService } from '../services/api';
 import { TranslateService } from '@ngx-translate/core';
 import { UserdataService } from '../services/userdata';
@@ -55,6 +55,7 @@ export class ProductDetailsPage implements OnInit {
     public apiService: ApiService,
     public translate: TranslateService,
     public alertCtrl: AlertController,
+    private toastCtrl: ToastController,
     public pdf: PdfExportService,
     public datePipe: DatePipe,
     private modalCtrl: ModalController,
@@ -206,6 +207,16 @@ export class ProductDetailsPage implements OnInit {
 
     this.dateiListe();
 
+  }
+
+  validateFileSize(event: any, maxFileSize: number) {
+    if (event.files[0].size > maxFileSize) {
+      const toast = this.toastCtrl.create({
+        message: this.translate.instant('Die Dateigröße die Sie hochladen sollte höchstens 5 MB betragen'),
+        cssClass: 'toast-warning',
+        duration: 3500
+      }).then(x => x.present());
+    }
   }
 
   async nfc_scan() {

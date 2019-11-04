@@ -48,7 +48,7 @@
       display: flex;
       -webkit-align-items: flex-end;
               align-items: flex-end;
-      height: 59px - 3px; // 3PX Bottomborder
+      height: 68px - 3px; // 3PX Bottomborder
 
       &-right {
         -webkit-justify-content: flex-end;
@@ -218,7 +218,7 @@
 
     .kundendaten-nav, .produktdaten-nav, .dashboard-nav {
       position: absolute;
-      top: 62px;
+      top: 71px;
       width: 100%;
       margin: 0;
       left: 0;

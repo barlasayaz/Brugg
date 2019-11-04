@@ -92,11 +92,11 @@ function processing() {
     $licensee = intval( mysqli_escape_string($con,$_POST['licensee']));
 
     if($licensee >0) {
-        $sql = "SELECT appointment.id,idUser,idCustomer,idContactPerson,customer.licensee,start_time,appointment_date,place,company,zip_code,end_time,appointment_type,notes,profiles.email,profiles.first_name,profiles.last_name,profiles.short_code,profiles.colour  
+        $sql = "SELECT appointment.id,idUser,idCustomer,idContactPerson,customer.licensee,start_time,appointment_date,place,company,zip_code,end_time,appointment_type,notes,profiles.email,profiles.first_name,profiles.last_name,profiles.short_code,profiles.colour,reminder  
            FROM appointment  LEFT JOIN customer ON appointment.idCustomer = customer.id LEFT JOIN profiles ON appointment.idUser = profiles.id  
            where appointment_date >= '".$date_start."'  AND appointment_date <= '".$date_end."' AND appointment.licensee=$licensee and appointment.active = 1 ORDER by appointment_date ASC, start_time ASC; ";
     }else{
-        $sql = "SELECT appointment.id,idUser,idCustomer,idContactPerson,customer.licensee,start_time,appointment_date,place,company,zip_code,end_time,appointment_type,notes,profiles.email,profiles.first_name,profiles.last_name,profiles.short_code,profiles.colour  
+        $sql = "SELECT appointment.id,idUser,idCustomer,idContactPerson,customer.licensee,start_time,appointment_date,place,company,zip_code,end_time,appointment_type,notes,profiles.email,profiles.first_name,profiles.last_name,profiles.short_code,profiles.colour,reminder
            FROM appointment  LEFT JOIN customer ON appointment.idCustomer = customer.id LEFT JOIN profiles ON appointment.idUser = profiles.id  
            where appointment_date >= '".$date_start."'  AND appointment_date <= '".$date_end."' AND appointment.idUser=$userid and appointment.active = 1 ORDER by appointment_date ASC, start_time ASC; ";
     }

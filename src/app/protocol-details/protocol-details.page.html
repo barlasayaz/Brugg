@@ -82,11 +82,12 @@
 																	name="file" 
 																	class="btn-primary"
 																	url="{{url}}upload.php" 
+																	(onSelect)="validateFileSize($event, fubauto.maxFileSize)"
 																	(onUpload)="onUpload($event)"
 																	(onBeforeUpload)="onBeforeUpload($event)"
 																	method="POST"
 																	accept="image/*,application/*,audio/*,message/*,text/*,video/*" 
-																	maxFileSize="3000000"
+																	maxFileSize="5000000"
 																	chooseLabel="{{'Wähle Dateien' | translate}}">
 														</p-fileUpload>
 													</div>

@@ -116,8 +116,7 @@ export class StatisticsPage implements OnInit {
       { field: 'rating', header: this.translate.instant('Wertung') },
       { field: 'zipcode_place', header: this.translate.instant('PLZ') },
       { field: 'sector', header: this.translate.instant('Branche') },
-      { field: 'name_contact', header: this.translate.instant('Ansprechpartner') },
-      { field: 'visitReport', header: this.translate.instant('Besuchsberichte') },
+      { field: 'visitReport', header: this.translate.instant('Anzahl') },
     ];
     this.startDate = new Date();
     this.endDate = new Date();
@@ -185,6 +184,8 @@ export class StatisticsPage implements OnInit {
       }
       console.log('listStatisticMaster', this.listStatisticMaster);
 
+      const x = this.listStatisticMaster.length;
+      let y = 0;
       this.listStatisticMaster.forEach(eventX => {
         console.log('listStatisticMaster event ', eventX);
 
@@ -200,7 +201,7 @@ export class StatisticsPage implements OnInit {
             console.log('list notes:', statisticList);
             statisticList.forEach(event => {
               event.data.visitReport = '1';
-              this.listStatistic.push(event.data);
+              //this.listStatistic.push(event.data);
               this.listStatisticMasterDetail.push(event.data);
             });
           });
@@ -210,17 +211,22 @@ export class StatisticsPage implements OnInit {
                                               this.startDate.substr(0, 10),
                                               this.endDate.substr(0, 10)).then((result: any) => {
             let statisticList = result.list;
+            y++;
             console.log('list appointment:', statisticList);
             statisticList.forEach(event => {
               event.data.visitReport = '1';
-              this.listStatistic.push(event.data);
+              //this.listStatistic.push(event.data);
               this.listStatisticMasterDetail.push(event.data);
             });
 
-            this.statisticSummary(this.listStatistic);
-            this.statisticSummaryItem(eventX, this.listStatisticMasterDetail);
+            //this.statisticSummary(this.listStatistic);
+            //this.statisticSummaryItem(eventX, this.listStatisticMasterDetail);
             eventX.data = this.listStatisticMasterDetail;
             eventX.count = this.listStatisticMasterDetail.length;
+            if (x==y) {
+              console.log('OK NOTE & APP', x, y);
+              this.listItemGroup();
+            }
             loader.dismiss();
           });
         } else {
@@ -229,19 +235,24 @@ export class StatisticsPage implements OnInit {
                                               this.startDate.substr(0, 10),
                                               this.endDate.substr(0, 10)).then((result: any) => {
             this.listStatisticMasterDetail = [];
+            y++;
             let statisticList = result.list;
             console.log('list notes:', statisticList);
 
             statisticList.forEach(event => {
               event.data.visitReport = '1';
-              this.listStatistic.push(event.data);
+              //this.listStatistic.push(event.data);
               this.listStatisticMasterDetail.push(event.data);
             });
 
-            this.statisticSummary(this.listStatistic);
-            this.statisticSummaryItem(eventX, this.listStatisticMasterDetail);
+            //this.statisticSummary(this.listStatistic);
+            //this.statisticSummaryItem(eventX, this.listStatisticMasterDetail);
             eventX.data = this.listStatisticMasterDetail;
             eventX.count = this.listStatisticMasterDetail.length;
+            if (x==y) {
+              console.log('OK NOTE', x, y);
+              this.listItemGroup();
+            }
             loader.dismiss();
           });
         }
@@ -252,42 +263,54 @@ export class StatisticsPage implements OnInit {
     });
   }
 
-  statisticSummary(statisticList: any) {
-    let i: any = 0;
-    let companyArr: any = [];
-    this.ratingA = 0;
-    this.ratingB = 0;
-    this.ratingC = 0;
-    this.ratingD = 0;
-    this.visitReportSum = 0;
-    statisticList.forEach(event => {
-      if (event.rating == 'A') {
-        this.ratingA++;
-      }
-      if (event.rating == 'B') {
-        this.ratingB++;
-      }
-      if (event.rating == 'C') {
-        this.ratingC++;
-      }
-      if (event.rating == 'D') {
-        this.ratingD++;
-      }
-      companyArr[i] = event.company;
-      i++;
-      this.visitReportSum = this.visitReportSum + parseInt(event.visitReport);
-    });
-    companyArr = companyArr.sort();
+  // statisticSummary(statisticList: any) {
+  //   var sortarray = [{field:'name_user', direction:'asc'}, {field:'company', direction:'asc'}];
+  //   statisticList.sort(function(a,b){
+  //     for(var i=0; i<sortarray.length; i++){
+  //         let retval = a[sortarray[i].field] < b[sortarray[i].field] ? -1 : a[sortarray[i].field] > b[sortarray[i].field] ? 1 : 0;
+  //         if (sortarray[i].direction == "desc") {
+  //             retval = retval * -1;
+  //         }
+  //         if (retval !== 0) {
+  //             return retval;
+  //         }
+  //     }
+  //   });
+  //   let i: any = 0;
+  //   let companyArr: any = [];
+  //   this.ratingA = 0;
+  //   this.ratingB = 0;
+  //   this.ratingC = 0;
+  //   this.ratingD = 0;
+  //   this.visitReportSum = 0;
+  //   statisticList.forEach(event => {
+  //     if (event.rating == 'A') {
+  //       this.ratingA++;
+  //     }
+  //     if (event.rating == 'B') {
+  //       this.ratingB++;
+  //     }
+  //     if (event.rating == 'C') {
+  //       this.ratingC++;
+  //     }
+  //     if (event.rating == 'D') {
+  //       this.ratingD++;
+  //     }
+  //     companyArr[i] = event.company;
+  //     i++;
+  //     this.visitReportSum = this.visitReportSum + parseInt(event.visitReport);
+  //   });
+  //   companyArr = companyArr.sort();
 
-    let companyName = '';
-    this.companyCount = 0;
-    companyArr.forEach(event => {
-      if (event != companyName) {
-        this.companyCount++;
-        companyName = event;
-      }
-    });
-  }
+  //   let companyName = '';
+  //   this.companyCount = 0;
+  //   companyArr.forEach(event => {
+  //     if (event != companyName) {
+  //       this.companyCount++;
+  //       companyName = event;
+  //     }
+  //   });
+  // }
 
   statisticSummaryItem(item, statisticList: any) {
     let i: any = 0;
@@ -297,6 +320,7 @@ export class StatisticsPage implements OnInit {
     let ratingC = 0;
     let ratingD = 0;
     let visitReportSum = 0;
+    let companyCount = 0;
     statisticList.forEach(event => {
       if (event.rating == 'A') {
         ratingA++;
@@ -310,20 +334,22 @@ export class StatisticsPage implements OnInit {
       if (event.rating == 'D') {
         ratingD++;
       }
-      companyArr[i] = event.company;
+      companyCount++;
+      //companyArr[i] = event.company;
       i++;
       visitReportSum = visitReportSum + parseInt(event.visitReport);
     });
     companyArr = companyArr.sort();
 
-    let companyName = '';
-    let companyCount = 0;
-    companyArr.forEach(event => {
-      if (event != companyName) {
-        companyCount++;
-        companyName = event;
-      }
-    });
+    // let companyName = '';
+    // let companyCount = 0;
+    // companyArr.forEach(event => {
+    //   if (event != companyName) {
+    //     companyCount++;
+    //    companyName = event;
+    //   }
+    //   console.log('companyName', event, companyCount)
+    // });
 
     item.ratingA = ratingA;
     item.ratingB = ratingB;
@@ -331,6 +357,32 @@ export class StatisticsPage implements OnInit {
     item.ratingD = ratingD;
     item.visitReportSum = visitReportSum;
     item.companyCount = companyCount;
+  }
+
+  listItemGroup() {
+    console.log('this.listStatisticMaster', this.listStatisticMaster);
+    function groupBy(data, fields, sumBy = 'visitReport') {
+      const r = [], cmp = (x, y) => fields.reduce((a, b) => a && x[b]==y[b], true);
+      data.forEach(x => {
+        const y = r.find(z => cmp(x, z));
+        const w = [...fields, sumBy].reduce((a, b) => (a[b] = x[b], a), {})
+        y ? y[sumBy] = +y[sumBy] + (+x[sumBy]) : r.push(w);
+      });
+      return r;
+    }
+
+    this.listStatistic = [];
+
+    for (let i = 0; i < this.listStatisticMaster.length; i++ ) {
+      this.listStatisticMaster[i].data.sort((a, b) => a.company.localeCompare(b.company));
+      this.listStatisticMaster[i].data = groupBy(this.listStatisticMaster[i].data, ['company', 'rating', 'zipcode_place', 
+      'sector', 'name_user']);
+      this.listStatisticMaster[i].data.forEach(event => {
+        this.listStatistic.push(event);
+      });
+      this.statisticSummaryItem(this.listStatisticMaster[i], this.listStatisticMaster[i].data);
+    }
+    console.log('listStatistic', this.listStatistic);
   }
 
   async exportExcel() {

@@ -573,13 +573,7 @@ export class ProductListPage implements OnInit {
                                 options[i].value = options[i].options[j][this.lang];
                             }
                         }
-                        this.productListAll[index].data[options[i].title[this.lang]] = options[i].value;
-                        let h = "";
-                        if(options[i].value) h = options[i].value.trim();
-                        if( h!==""){
-                            if( info!=="") info +=", ";
-                            info += h;  
-                        }                         
+                        this.productListAll[index].data[options[i].title[this.lang]] = options[i].value;                                                 
                     } else if (options[i].type == 4) {
                         const pipe = new DatePipe('en-US');
                         if(options[i].value && options[i].value.length ==5 )
@@ -592,13 +586,21 @@ export class ProductListPage implements OnInit {
                     } else if (options[i].type == 6) {
                         this.productListAll[index].data[options[i].title[this.lang]] = "("+options[i].value.lat.toString().substring(0, 6) + ","+options[i].value.long.toString().substring(0, 6) +")";
                     } else {
-                        this.productListAll[index].data[options[i].title[this.lang]] = options[i].value;
+                        this.productListAll[index].data[options[i].title[this.lang]] = options[i].value;                         
+                    }
+
+                    if ((options[i].type != 0) && (options[i].type != 6)) {
+                        let t = this.productListAll[index].data[options[i].title[this.lang]] ;
                         let h = "";
-                        if(options[i].value) h = options[i].value.trim();
-                        if( h!==""){
-                            if( info!=="") info +=", ";
-                            info += h;  
-                        } 
+                        console.log(options[i].base);
+                        if(options[i].base === undefined) options[i].base=true;
+                        if(options[i].base){
+                            if(t) h = t.trim();
+                            if( h!==""){
+                                if( info!=="") info +=", ";
+                                info += h;  
+                            }
+                        }                        
                     }
                 }
                 // console.log("index :", index);

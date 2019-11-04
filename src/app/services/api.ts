@@ -24,7 +24,7 @@ export class ApiService {
   public appointmentEndTime: string = '16:59';
   public appointmentMinTime: string = '07:00';
   public appointmentMaxTime: string = '17:59';
-  public version: any = '4.4.38';
+  public version: any = '4.4.39';
   private reset_semaphor = false;
   private reset_timeout: any = 0;
 

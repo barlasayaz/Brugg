@@ -346,8 +346,9 @@
                                         url="{{url}}upload.php"
                                         method="POST"
                                         accept="image/*"
-                                        maxFileSize="3000000"
+                                        maxFileSize="5000000"
                                         customUpload="true"
+                                        (onSelect)="validateFileSize($event, fubauto.maxFileSize)"
                                         (uploadHandler)="onFileUpload($event)"
                                         [auto]="true"
                                         chooseLabel="{{'Wähle Bild' | translate}}">

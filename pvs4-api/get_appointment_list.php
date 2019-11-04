@@ -94,7 +94,7 @@ function processing($user) {
     if(isset($_POST['licensee'])) $licensee = intval ( trim( mysqli_escape_string($con,$_POST['licensee']) ));
     if(isset($_POST['offset'])) $offset = intval ( trim( mysqli_escape_string($con,$_POST['offset']) ));
 
-    $sql = "SELECT appointment.id,appointment.idUser,idCustomer,idContactPerson,start_time,appointment_date,place,company,end_time,appointment_type,notes FROM appointment  
+    $sql = "SELECT appointment.id,appointment.idUser,idCustomer,idContactPerson,start_time,appointment_date,place,company,end_time,appointment_type,notes,reminder  FROM appointment  
             LEFT JOIN customer ON appointment.idCustomer = customer.id 
             where (appointment_date >= CURDATE()) AND appointment.idUser=$user and appointment.active = 1 ORDER by appointment_date, start_time Limit 50;"; 
     $ret_sql= mysqli_query( $con, $sql );
