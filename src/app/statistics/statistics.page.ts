@@ -27,7 +27,7 @@ export class StatisticsPage implements OnInit {
   public ratingA: any;
   public ratingB: any;
   public ratingC: any;
-  public ratingD: any;
+  public ratingF: any;
   public visitReport: any;
   public visitReportSum: any;
   public listStatisticMaster: any[] = [];
@@ -281,7 +281,7 @@ export class StatisticsPage implements OnInit {
   //   this.ratingA = 0;
   //   this.ratingB = 0;
   //   this.ratingC = 0;
-  //   this.ratingD = 0;
+  //   this.ratingF = 0;
   //   this.visitReportSum = 0;
   //   statisticList.forEach(event => {
   //     if (event.rating == 'A') {
@@ -293,8 +293,8 @@ export class StatisticsPage implements OnInit {
   //     if (event.rating == 'C') {
   //       this.ratingC++;
   //     }
-  //     if (event.rating == 'D') {
-  //       this.ratingD++;
+  //     if (event.rating == 'F') {
+  //       this.ratingF++;
   //     }
   //     companyArr[i] = event.company;
   //     i++;
@@ -318,7 +318,7 @@ export class StatisticsPage implements OnInit {
     let ratingA = 0;
     let ratingB = 0;
     let ratingC = 0;
-    let ratingD = 0;
+    let ratingF = 0;
     let visitReportSum = 0;
     let companyCount = 0;
     statisticList.forEach(event => {
@@ -331,8 +331,8 @@ export class StatisticsPage implements OnInit {
       if (event.rating == 'C') {
         ratingC++;
       }
-      if (event.rating == 'D') {
-        ratingD++;
+      if (event.rating == 'F') {
+        ratingF++;
       }
       companyCount++;
       //companyArr[i] = event.company;
@@ -354,7 +354,7 @@ export class StatisticsPage implements OnInit {
     item.ratingA = ratingA;
     item.ratingB = ratingB;
     item.ratingC = ratingC;
-    item.ratingD = ratingD;
+    item.ratingF = ratingF;
     item.visitReportSum = visitReportSum;
     item.companyCount = companyCount;
   }
