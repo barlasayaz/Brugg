@@ -7,6 +7,7 @@
 	.startbtn {
 		height: 125px;
 		width: 100%;
+		--box-shadow: none;
 		--background: var(--ion-color-main);
 		&:hover, &:focus {
 			--background: var(--ion-color-main-shade);
@@ -19,9 +20,18 @@
 	}
 
 	.startlbl {
-		font-weight: normal;
+		font-weight: medium;
 		margin-bottom: 0 !important;
-		text-transform: uppercase;
+		text-transform: normal;
+		letter-spacing: normal;
+	}
+
+	.pvs4-btn-red {
+		--box-shadow: none;
+		&:hover,
+		&:focus {
+			--background: #e33422 !important;
+		}
 	}
 
 	.logoutlbl {

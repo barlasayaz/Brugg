@@ -130,7 +130,8 @@ export class LoginPage {
             console.log('userdata: pvs4_user ', pvs4_user);
             this.api.pvs4_get_my_profile(pvs4_user.email).then((result: any) => {
               console.log('pvs4_get_my_profile ok: ', result);
-              this.navCtrl.navigateRoot('/customer-table');
+              //this.navCtrl.navigateRoot('/customer-table');
+              this.navCtrl.navigateRoot('/startscreen');
             }, // success path
               error => {
                 // connection failed

@@ -27,6 +27,10 @@ input:-webkit-autofill:active  {
   max-width: 90%;
 }
 
+.button-native {
+  --box-shadow: none !important;
+}
+
 .ion-page {    
   zoom: 100% !important;
   @media (max-width: 767px) {
@@ -942,7 +946,9 @@ ion-button.button,button.button {
   &-red {
     --background: var(--ion-color-red);
     &:hover, &:focus {
-      --background: var(--ion-color-red-shade) !important;
+      --background-activated: var(--ion-color-red-shade) !important;
+      --background-hover: var(--ion-color-red-shade) !important;
+      --background-focus: var(--ion-color-red-shade) !important;
     }
   }
 
