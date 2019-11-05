@@ -101,6 +101,7 @@
                       <div class="th" style="max-width: 120px;">{{'Statistiken' | translate }}</div>                        
                     </div>
                   </div>
+                  <app-chart-horizontal *ngIf="pieOK"  [data]="listStatisticMaster" width="50" height="50"></app-chart-horizontal>
                   <div class="tbody">
                     <div class="tr table-subheader statistic-title">
                       <div class="td" style="width: 260px;">{{'Firma' | translate}}</div>
@@ -115,8 +116,11 @@
                           <p-accordionTab *ngIf="item.count>0">
                             <p-header>  
                               <span style="display: inline-block; width: 30%;">{{item.header}}  ({{'Firma' | translate}}: {{item.companyCount}})</span>
-                              <span style="display: inline-block; width: 32%;">(A-B-C-F-{{item.ratingA}}-{{item.ratingB}}-{{item.ratingC}}-{{item.ratingF}})</span>
-                              <span style="display: inline-block; width: 31%; text-align: right;">{{item.visitReportSum}}</span>
+                              <span style="display: inline-block; width: 30%;">(A-B-C-F-{{item.ratingA}}-{{item.ratingB}}-{{item.ratingC}}-{{item.ratingF}})</span>
+                              <span style="display: inline-block; width: 25%; ">
+                                <app-chart-pie *ngIf="pieOK" id="chart{{i}}" [data]="item" width="50" height="50"></app-chart-pie>
+                              </span>
+                              <span style="display: inline-block; width: 10%; text-align: right;">{{item.visitReportSum}}</span>
                             </p-header>
                               <div class="tr table-body" *ngFor="let itemx of item.data">
                                 <div class="td" style="flex: none; padding-right: 5px; width: 32%;">{{itemx.company}}</div>

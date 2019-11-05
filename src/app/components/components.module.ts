@@ -14,16 +14,20 @@ import { AccordionModule } from 'primeng/accordion';
 import { FileUploadModule } from 'primeng/fileupload';
 import { DragulaModule } from 'ng2-dragula';
 import { FabDirective } from '../directives/fab.directive';
+import { ChartModule } from 'primeng/chart';
+import { ChartPieComponent } from './chart-pie/chart-pie.component';
+import { ChartHorizontalComponent } from './chart-horizontal/chart-horizontal.component';
 
 @NgModule({
-    declarations: [MainNavComponent,FabDirective],
+    declarations: [MainNavComponent,ChartPieComponent, ChartHorizontalComponent,FabDirective],
     imports: [IonicModule, TranslateModule,
         CommonModule, RoundProgressModule,
         MenubarModule, TreeTableModule,
         IonicSelectableModule, NgxQRCodeModule,
         ColorPickerModule,AccordionModule,
         FileUploadModule,DragulaModule,
-        SlideMenuModule],
+        SlideMenuModule,ChartModule
+        ],
     exports: [
         //IonicModule,
         MainNavComponent,
@@ -34,7 +38,9 @@ import { FabDirective } from '../directives/fab.directive';
         IonicSelectableModule,NgxQRCodeModule,
         ColorPickerModule,AccordionModule,
         FileUploadModule,DragulaModule,
-        FabDirective,SlideMenuModule
+        FabDirective,SlideMenuModule,
+        ChartModule,
+        ChartPieComponent, ChartHorizontalComponent
     ]
 })
 export class ComponentsModule { }

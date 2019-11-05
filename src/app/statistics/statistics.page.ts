@@ -40,6 +40,7 @@ export class StatisticsPage implements OnInit {
   public winWidth: any;
   public winHeight: any;
   public statisticHeight: any;
+  public pieOK: boolean;
 
   constructor(public userdata: UserdataService,
               public translate: TranslateService,
@@ -52,6 +53,7 @@ export class StatisticsPage implements OnInit {
               private ngZone: NgZone) {
 
       this.mobilePlatform = false;
+      this.pieOK = false;
 
       platform.ready().then(() => {
         if ( this.platform.is('ios') ||
@@ -155,6 +157,7 @@ export class StatisticsPage implements OnInit {
   }
 
   async statistic() {
+    this.pieOK = false;
     const loader = await this.loadingCtrl.create({
         message: this.translate.instant('Bitte warten')
     });
@@ -183,6 +186,14 @@ export class StatisticsPage implements OnInit {
         }
       }
       console.log('listStatisticMaster', this.listStatisticMaster);
+
+      this.listStatisticMaster.sort((a, b) => {
+        if (a.header != null) {
+          return a.header.localeCompare(b.header);
+        } else if (b.header != null) {
+          return b.header.localeCompare(a.header);
+        }
+      });
 
       const x = this.listStatisticMaster.length;
       let y = 0;
@@ -374,7 +385,13 @@ export class StatisticsPage implements OnInit {
     this.listStatistic = [];
 
     for (let i = 0; i < this.listStatisticMaster.length; i++ ) {
-      this.listStatisticMaster[i].data.sort((a, b) => a.company.localeCompare(b.company));
+      this.listStatisticMaster[i].data.sort((a, b) => {
+        if (a.company != null) {
+          return a.company.localeCompare(b.company);
+        } else if (b.company != null) {
+          return b.company.localeCompare(a.company);
+        }
+      });
       this.listStatisticMaster[i].data = groupBy(this.listStatisticMaster[i].data, ['company', 'rating', 'zipcode_place', 
       'sector', 'name_user']);
       this.listStatisticMaster[i].data.forEach(event => {
@@ -382,6 +399,7 @@ export class StatisticsPage implements OnInit {
       });
       this.statisticSummaryItem(this.listStatisticMaster[i], this.listStatisticMaster[i].data);
     }
+    this.pieOK = true;
     console.log('listStatistic', this.listStatistic);
   }
 
