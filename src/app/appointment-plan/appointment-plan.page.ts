@@ -65,15 +65,17 @@ export class AppointmentPlanPage {
         // private datePipe: DatePipe
     ) {
         console.log(this.lang);
-        const today = new Date();
+        this.peopleFilter = this.userdata.email.toLocaleLowerCase();
+      /*  const today = new Date();
         const newdate = new Date();
         newdate.setDate(today.getDate() + 30);
         const newdate2 = new Date();
         newdate2.setDate(today.getDate() - 30);
         console.log(newdate + ' - ' + newdate2);
-        this.peopleFilter = this.userdata.email.toLocaleLowerCase();
+        
+        this.eventsFunc(newdate2, newdate); */
 
-        this.eventsFunc(newdate2, newdate);
+
 
         platform.ready().then(() => {
             if ( this.platform.is('ios') ||
@@ -272,6 +274,7 @@ export class AppointmentPlanPage {
                                 z2.setMinutes(0);
                             }
                             const t = { id: 0,
+                                old_id: obj.id,
                                 email: obj.email,
                                 type: obj.appointment_type,
                                 title: title,
@@ -304,9 +307,19 @@ export class AppointmentPlanPage {
     }
      handleEventClick(model: any) {
         console.log(model.event);
-        if(model.event.id != "0")
+        let id = model.event.id;
+        if(id == "0" && model.event.extendedProps.old_id)
         {
-            this.apiService.pvs4_get_appointment(model.event.id).then(async (result: any) => {
+            id = model.event.extendedProps.old_id;
+        }
+
+        this.apiService.pvs4_get_appointment(id).then(async (result: any) => {
+                if(model.event.extendedProps.old_id)
+                {
+                    result.obj.id = 0;
+                    result.obj.appointment_date = moment(result.obj.appointment_date,'YYYY-MM-DD').add(1,'years').format('YYYY-MM-DD');
+                }
+
                 const modal: HTMLIonModalElement =
                 await this.modalCtrl.create({
                 component: AppointmentEditComponent,
@@ -328,8 +341,7 @@ export class AppointmentPlanPage {
                     }
                 });
             modal.present();
-            });
-        }
+        });
     }
 
     updateEvent(model: any) {
