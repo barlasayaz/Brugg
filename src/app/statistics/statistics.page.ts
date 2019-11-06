@@ -156,6 +156,23 @@ export class StatisticsPage implements OnInit {
     }).then(x => x.present());
   }
 
+  getStatistic(ref, id) : Promise<any> {
+    return new Promise((resolve) => {
+      this.apiService.pvs4_get_statistics(ref,
+                      id,
+                      this.startDate.substr(0, 10),
+                      this.endDate.substr(0, 10)).then((result: any) => {
+        const statisticList = result.list;
+        const MasterDetail = [];
+        statisticList.forEach(event => {
+          event.data.visitReport = '1';
+          MasterDetail.push(event.data);
+        });
+        resolve(MasterDetail);
+      });
+    });
+  }
+
   async statistic() {
     this.pieOK = false;
     const loader = await this.loadingCtrl.create({
@@ -202,69 +219,47 @@ export class StatisticsPage implements OnInit {
 
         this.listStatistic = [];
         this.listStatisticMasterDetail = [];
+
         if (this.statisticType == '3') {
-          this.apiService.pvs4_get_statistics(1,
-                                              eventX.id,
-                                              this.startDate.substr(0, 10),
-                                              this.endDate.substr(0, 10)).then((result: any) => {
-            this.listStatisticMasterDetail = [];
-            let statisticList = result.list;
-            console.log('list notes:', statisticList);
-            statisticList.forEach(event => {
-              event.data.visitReport = '1';
-              //this.listStatistic.push(event.data);
-              this.listStatisticMasterDetail.push(event.data);
-            });
-          });
-
-          this.apiService.pvs4_get_statistics(2,
-                                              eventX.id,
-                                              this.startDate.substr(0, 10),
-                                              this.endDate.substr(0, 10)).then((result: any) => {
-            let statisticList = result.list;
+          const staNote = this.getStatistic(1, eventX.id);
+          const staAPP = this.getStatistic(2, eventX.id);
+          Promise.all([
+            staNote,
+            staAPP
+          ]).then((resultX) => {
             y++;
-            console.log('list appointment:', statisticList);
-            statisticList.forEach(event => {
-              event.data.visitReport = '1';
-              //this.listStatistic.push(event.data);
-              this.listStatisticMasterDetail.push(event.data);
-            });
-
-            //this.statisticSummary(this.listStatistic);
-            //this.statisticSummaryItem(eventX, this.listStatisticMasterDetail);
-            eventX.data = this.listStatisticMasterDetail;
-            eventX.count = this.listStatisticMasterDetail.length;
-            if (x==y) {
-              console.log('OK NOTE & APP', x, y);
-              this.listItemGroup();
+             this.listStatisticMasterDetail = [];
+            for (let i = 0; i < resultX[0].length; i++ ) {
+              this.listStatisticMasterDetail.push(resultX[0][i]);
             }
-            loader.dismiss();
-          });
-        } else {
-          this.apiService.pvs4_get_statistics(this.statisticType,
-                                              eventX.id,
-                                              this.startDate.substr(0, 10),
-                                              this.endDate.substr(0, 10)).then((result: any) => {
-            this.listStatisticMasterDetail = [];
-            y++;
-            let statisticList = result.list;
-            console.log('list notes:', statisticList);
-
-            statisticList.forEach(event => {
-              event.data.visitReport = '1';
-              //this.listStatistic.push(event.data);
-              this.listStatisticMasterDetail.push(event.data);
-            });
-
-            //this.statisticSummary(this.listStatistic);
-            //this.statisticSummaryItem(eventX, this.listStatisticMasterDetail);
+            for (let i = 0; i < resultX[1].length; i++ ) {
+              this.listStatisticMasterDetail.push(resultX[1][i]);
+            }
             eventX.data = this.listStatisticMasterDetail;
             eventX.count = this.listStatisticMasterDetail.length;
             if (x==y) {
               console.log('OK NOTE', x, y);
+              loader.dismiss();
               this.listItemGroup();
             }
-            loader.dismiss();
+          });
+        } else {
+          const staNote = this.getStatistic(2, eventX.id);
+          Promise.all([
+            staNote
+          ]).then((resultX) => {
+            y++;
+            this.listStatisticMasterDetail = [];
+            for (let i = 0; i < resultX[0].length; i++ ) {
+              this.listStatisticMasterDetail.push(resultX[0][i]);
+            }
+            eventX.data = this.listStatisticMasterDetail;
+            eventX.count = this.listStatisticMasterDetail.length;
+            if (x==y) {
+              console.log('OK NOTE', x, y);
+              loader.dismiss();
+              this.listItemGroup();
+            }
           });
         }
       });
