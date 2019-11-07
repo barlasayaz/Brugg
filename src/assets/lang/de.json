@@ -890,5 +890,7 @@
 
     "Bearbeitungsmodus" : "Bearbeitungsmodus",
     "Bearbeitungsmodus abbrechen" : "Bearbeitungsmodus abbrechen",
-    "Die Dateigröße die Sie hochladen sollte höchstens 5 MB betragen" : "Die Dateigröße, die Sie hochladen, sollte höchstens 5 MB betragen"    
+    "Die Dateigröße die Sie hochladen sollte höchstens 5 MB betragen" : "Die Dateigröße, die Sie hochladen, sollte höchstens 5 MB betragen",
+
+    "Erinnerung":"Erinnerung"
 }

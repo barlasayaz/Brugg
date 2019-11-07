@@ -889,6 +889,8 @@
   
   "Bearbeitungsmodus" : "modalità Modifica",
   "Bearbeitungsmodus abbrechen" : "Annulla la modalità di modifica",
-  "Die Dateigröße die Sie hochladen sollte höchstens 5 MB betragen" : "La dimensione del file che carichi dovrebbe essere al massimo di 5 MB"  
+  "Die Dateigröße die Sie hochladen sollte höchstens 5 MB betragen" : "La dimensione del file che carichi dovrebbe essere al massimo di 5 MB"  ,
+
+  "Erinnerung":"Promemoria"
   
 }
