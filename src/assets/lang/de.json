@@ -880,17 +880,17 @@
     "Italian": "Italienisch",
     "Hol dir die volle ReBox":"Hol dir die volle ReBox",
     "Fordern Sie leere ReBox":"Fordern Sie leere ReBox",
-    "Senden Sie selbst eine vollständige Rebox":"Senden Sie selbst eine vollständige Rebox",
-  
+    "Senden Sie selbst eine vollständige Rebox":"Senden Sie selbst eine vollständige Rebox",  
     "zeige Basisinformation":"zeige Basisinformation",
     "Basisinformation ausblenden":"Basisinformation ausblenden",
     "Basisinformation":"Basisinformation",
     "Anzahl der maximal angezeigten Zeichen (min:10, max:300)":"Anzahl der maximal angezeigten Zeichen (min:10, max:300)",
     "Basis":"Basis",
-
     "Bearbeitungsmodus" : "Bearbeitungsmodus",
     "Bearbeitungsmodus abbrechen" : "Bearbeitungsmodus abbrechen",
     "Die Dateigröße die Sie hochladen sollte höchstens 5 MB betragen" : "Die Dateigröße, die Sie hochladen, sollte höchstens 5 MB betragen",
+    "Zeige nur aktives produkte": "Zeige nur aktives produkte",
+    "Zeige nur passive produkte": "Zeige nur passive produkte",
+    "Erinnerung": "Erinnerung"
 
-    "Erinnerung":"Erinnerung"
 }

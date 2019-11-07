@@ -881,16 +881,15 @@
   "Hol dir die volle ReBox":"Pick up full ReBox",
   "Fordern Sie leere ReBox":"Demand Empty ReBox",
   "Senden Sie selbst eine vollständige ReBox":"Send a full ReBox on your own",
-
   "zeige Basisinformation":"show basic information",
   "Basisinformation ausblenden":"Hide basic information",
   "Basisinformation":"basic information",
   "Anzahl der maximal angezeigten Zeichen (min:10, max:300)":"Maximum number of characters displayed (min:10, max:300)",
   "Basis":"Base",
-
   "Bearbeitungsmodus" : "Edit Mode",
   "Bearbeitungsmodus abbrechen" : "Cancel Edit Mode",
   "Die Dateigröße die Sie hochladen sollte höchstens 5 MB betragen" : "The file size you upload should be at most 5 MB.",
-
-  "Erinnerung":"Reminder"
+  "Zeige nur aktives produkte": "Show only active products",
+  "Zeige nur passive produkte": "Show only passive products",
+  "Erinnerung": "Reminder"
 }

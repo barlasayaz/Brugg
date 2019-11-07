@@ -880,17 +880,16 @@
   "Hol dir die volle ReBox":"Prendi ReBox completo",
   "Fordern Sie leere ReBox":"Richiedi ReBox vuoto",
   "Senden Sie selbst eine vollständige ReBox":"Invia un Rebox completo da solo",
-
   "zeige Basisinformation":"mostra informazioni di base",
   "Basisinformation ausblenden":"Nascondi informazioni di base",
   "Basisinformation":"informazioni di base",
   "Anzahl der maximal angezeigten Zeichen (min:10, max:300)":"Numero massimo di caratteri visualizzati (min:10, max:300)",
-  "Basis":"Base",
-  
+  "Basis":"Base",  
   "Bearbeitungsmodus" : "modalità Modifica",
   "Bearbeitungsmodus abbrechen" : "Annulla la modalità di modifica",
-  "Die Dateigröße die Sie hochladen sollte höchstens 5 MB betragen" : "La dimensione del file che carichi dovrebbe essere al massimo di 5 MB"  ,
-
-  "Erinnerung":"Promemoria"
+  "Die Dateigröße die Sie hochladen sollte höchstens 5 MB betragen" : "La dimensione del file che carichi dovrebbe essere al massimo di 5 MB",
+  "Zeige nur aktives produkte": "Mostra solo prodotti attivi",
+  "Zeige nur passive produkte": "Mostra solo prodotti passivi",
+  "Erinnerung": "Promemoria"
   
 }
