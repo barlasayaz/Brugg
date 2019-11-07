@@ -7,78 +7,21 @@
           <ion-col size-xl="9" size-lg="9" size-md="9" size-sm="12" size="12" class="topBar-sm topBar-left">
             <div class="topBar-outer">
               <div class="topBar-inner">
-                
-                <!-- new PVS4 -->
-                  <div class="topBar-btn" (click)="go('Startscreen');" [ngClass]="getClass('StartscreenPage')">
-                    <li class="main-nav-icon">
-                      <ion-icon class="headerIcon" name="home"></ion-icon>
-                    </li>
-                  </div>
-                  <div class="topBar-btn" (click)="go('Dashboard');" [ngClass]="getClass('Dashboard')" >
-                      <li class="main-nav-icon">
-                        <ion-icon name="apps"></ion-icon>
-                      </li>
-                  </div>
-                  <div class="topBar-btn" (click)="go('CustomerTable',idCustomer);" [ngClass]="getClass('CustomerTable')" >
-                      <li class="main-nav-icon">
-                        <ion-icon name="people"></ion-icon>
-                      </li>
-                  </div>
-                  <ul class=" kundendaten-nav " *ngIf="idCustomer > 0">
-                    <a (click)="go('CustomerDetails', idCustomer);" [ngClass]="getClass('CustomerDetails')">
-                      <li class="main-nav-icon">
-                        <ion-icon name="person"></ion-icon>
-                      </li>
-                    </a>
-                    <a (click)="go('ProductList',idCustomer);" [ngClass]="getClass('ProductList')">
-                        <li class="main-nav-icon">
-                          <i class="fas fa-tags"></i>
-                        </li>
-                    </a>
-                    <a (click)="go('ProtocolList',idCustomer);" [ngClass]="getClass('ProtocolList')">
-                      <li class="main-nav-icon">
-                        <i class="fas fa-file-alt"></i>
-                      </li>
-                    </a>
-                    <a (click)="go('OrderForm',idCustomer);" [ngClass]="getClass('OrderForm')">
-                      <li class="main-nav-icon">
-                        <ion-icon name="basket"></ion-icon>
-                      </li>
-                    </a>
-                    <a (click)="go('NoteList',idCustomer);" [ngClass]="getClass('NoteList')" *ngIf="(userdata.role==1)||(userdata.role==2)" >
-                      <li class="main-nav-icon">
-                        <i class="fas fa-comment"></i>
-                      </li>
-                    </a>
-                  </ul>
+                <div class="menuIcon" (click)="openMenu()">
+                  <ion-icon name="menu"></ion-icon>
+                </div>
               </div>
-              <!-- DASHBOARD NAVIGATION -->
-              <ul class="dashboard-nav hidden-lg-up" *ngIf="aktivPage == 'Dashboard'">
-                <a (click)="showdashfirst()" class="active" id="dashfirst">
-                  <li>
-                    <ion-icon class="headerIcon" name="calendar"></ion-icon>
-                  </li>
-                </a>
-                <a (click)="showdashsecond()" id="dashsecond">
-                  <li *ngIf="userdata.Prueferservice">
-                    <ion-icon class="headerIcon" name="briefcase"></ion-icon>
-                  </li>
-                  <li *ngIf="!userdata.Prueferservice">
-                    <ion-icon class="headerIcon" name="contact"></ion-icon>
-                  </li>
-                </a>
-              </ul>
+
               <div id="customerName" class="main-nav-fix">
-                <div class="comp-name"
-                    *ngIf="aktivPage == 'CustomerTable' ||
-                           aktivPage == 'ProductList' ||
-                           aktivPage == 'ProductDetails' ||
-                           aktivPage == 'ProductEdit' ||
-                           aktivPage == 'ProtocolList' ||
-                           aktivPage == 'ProtocolDetails' ||
-                           aktivPage == 'OrderForm' ||
-                           aktivPage == 'NoteList' ||
-                           aktivPage == 'NoteDetails'">
+                <div class="comp-name" *ngIf="aktivPage == 'CustomerTable' ||
+                          aktivPage == 'ProductList' ||
+                          aktivPage == 'ProductDetails' ||
+                          aktivPage == 'ProductEdit' ||
+                          aktivPage == 'ProtocolList' ||
+                          aktivPage == 'ProtocolDetails' ||
+                          aktivPage == 'OrderForm' ||
+                          aktivPage == 'NoteList' ||
+                          aktivPage == 'NoteDetails'">
                   {{customerName}}
                 </div>
               </div>
@@ -88,29 +31,24 @@
           <ion-col size-xl="3" size-lg="3" size-md="3" size-sm="12" size="12" class="hidden-sm-down">
             <div class="main-nav-fix">
 
-              <div
-                   *ngIf="aktivPage == 'CustomerTable' ||
+              <div *ngIf="aktivPage == 'CustomerTable' ||
                           aktivPage == 'ProductList' ||
                           aktivPage == 'ProtocolList' ||
                           aktivPage == 'NoteList'">
-                   {{rowRecords}} {{'Datensätze von' | translate}} {{totalRecords}}
+                {{rowRecords}} {{'Datensätze von' | translate}} {{totalRecords}}
               </div>
 
-              <div class="topBar-inner posek"
-                  *ngIf="aktivPage == 'CustomerTable' ||
-                         aktivPage == 'ProductList' ||
-                         aktivPage == 'ProtocolList' ||
-                         aktivPage == 'NoteList'">
+              <div class="topBar-inner posek" *ngIf="aktivPage == 'CustomerTable' ||
+                        aktivPage == 'ProductList' ||
+                        aktivPage == 'ProtocolList' ||
+                        aktivPage == 'NoteList'">
                 <div class="progress-wrapper">
                   <div class="current">{{progressBar}}%</div>
-                  <round-progress [current]="progressBar"
-                                  [max]="100"
-                                  [responsive]="true"
-                                  [color]="'#009de0'">
+                  <round-progress [current]="progressBar" [max]="100" [responsive]="true" [color]="'#009de0'">
                   </round-progress>
                 </div>
               </div>
-              
+
             </div>
           </ion-col>
         </ion-row>
@@ -119,5 +57,3 @@
     </div>
   </nav>
 </ion-header>
-
-
