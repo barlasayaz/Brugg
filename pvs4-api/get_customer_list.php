@@ -225,7 +225,7 @@ function processing($user) {
         $ok = new \stdClass();
         $ok->amount = $anz_liste;
         $ok->list = $liste;
-        $ok->sql = $sql;
+        //$ok->sql = $sql;
         echo json_encode($ok);
         mysqli_close($con);
         die;
