@@ -156,9 +156,9 @@
         </ion-item>
       </ion-col>
       <ion-col size-xl="2.5" size-lg="2.5" size-md="2.5" size-sm="2.5" size="2.5" *ngIf="activAppointment.appointment_type<2">
-          <ion-item lines="none">
-            <ion-label position="floating" >{{translate.instant('Erinnerung')}}</ion-label>
-            <ion-toggle [(ngModel)]="reminder[0]"  class="item-border" >  </ion-toggle>
+          <ion-item lines="none" style="margin-top: 5px !important;">
+            <ion-label position="floating" style="font-size: 11px !important; transform: translate3d(0,35%,0) !important;">{{translate.instant('Erinnerung')}}</ion-label>
+            <ion-toggle [(ngModel)]="reminder[0]" class="item-border">  </ion-toggle>
 <!--
             <ion-button size="small"
                         [ngClass]="getReminderClass(1)"

@@ -880,15 +880,16 @@
   "Hol dir die volle ReBox":"Ramassez la ReBox complète",
   "Fordern Sie leere ReBox":"Demande vide ReBox",
   "Senden Sie selbst eine vollständige ReBox":"Envoyer une Rebox complète par vos propres moyens",
-
   "zeige Basisinformation":"afficher les informations de base",
   "Basisinformation ausblenden":"Masquer les informations de base",
   "Basisinformation":"informations de base",
   "Anzahl der maximal angezeigten Zeichen (min:10, max:300)":"Nombre maximum de caractères affichés (min:10, max:300)",
-  "Basis":"Base",
-  
+  "Basis":"Base",  
   "Bearbeitungsmodus" : "Mode édition",
   "Bearbeitungsmodus abbrechen" : "Annuler le mode d'édition",
-  "Die Dateigröße die Sie hochladen sollte höchstens 5 MB betragen" : "La taille du fichier que vous téléchargez doit être d'au plus 5 Mo." 
+  "Die Dateigröße die Sie hochladen sollte höchstens 5 MB betragen" : "La taille du fichier que vous téléchargez doit être d'au plus 5 Mo.",
+  "Zeige nur aktives produkte": "Afficher uniquement le produits actifs",
+  "Zeige nur passive produkte": "Afficher uniquement les produits passifs",
+  "Erinnerung": "Rappel"
   
 }
