@@ -1,3 +1,74 @@
 <ion-app>
-  <ion-router-outlet></ion-router-outlet>
+  <ion-split-pane contentId="main-content">
+  <ion-menu content-id="menue" type="reveal" side="start" menuId="menu" class="sideMenu-inner">
+    <div class="sideMenu">
+      <div class="sideMenu-header">
+        <img class="sideMenu-logo" src="assets/imgs/pvs2go-logo.svg" alt="PVS2GO Logo">
+        <div class="sideMenu-version">4.4.1.2</div>
+      </div>
+      <div class="sideMenu-content">
+        <ul class="sideMenu-nav">
+
+          <li (click)="go('Startscreen');" [ngClass]="getClass('StartscreenPage')">
+            <ion-icon name="home"></ion-icon>
+            Startseite
+          </li>
+
+          <li (click)="go('Dashboard');" [ngClass]="getClass('Dashboard')">
+            <ion-icon name="apps"></ion-icon>
+            Dashboard
+          </li>
+
+          <li (click)="go('CustomerTable',idCustomer);" [ngClass]="getClass('CustomerTable')">
+            <ion-icon name="people"></ion-icon>
+            Kundenübersicht
+          </li>
+
+          <ul class="sideMenu-subnav"> <!--  *ngIf="idCustomer > 0"-->
+  
+              <li (click)="go('CustomerDetails', idCustomer);" [ngClass]="getClass('CustomerDetails')">
+                <ion-icon name="person"></ion-icon>
+                Kundendetails
+              </li>
+
+              <li (click)="go('ProductList',idCustomer);" [ngClass]="getClass('ProductList')">
+                <ion-icon name="pricetags"></ion-icon>
+                Produkte
+              </li>
+
+              <li (click)="go('ProtocolList',idCustomer);" [ngClass]="getClass('ProtocolList')">
+                <ion-icon name="document"></ion-icon>
+                Protokolle
+              </li>
+
+              <li (click)="go('OrderForm',idCustomer);" [ngClass]="getClass('OrderForm')">
+                <ion-icon name="basket"></ion-icon>
+                Bestellformular
+              </li>
+
+            <!-- *ngIf="(userdata.role==1)||(userdata.role==2)" -->
+              <li (click)="go('NoteList',idCustomer);" [ngClass]="getClass('NoteList')" >
+                <ion-icon name="bookmarks"></ion-icon>
+                Notizen
+              </li>
+
+          </ul>
+
+          <li (click)="go('AppointmentplanPage');" [ngClass]="getClass('AppointmentplanPage')">
+            <ion-icon name="time"></ion-icon>
+            Terminpläne
+          </li>
+
+          <li (click)="go('MyDataPage');" [ngClass]="getClass('MyDataPage')">
+            <ion-icon name="settings"></ion-icon>
+            Einstellungen
+          </li>
+
+        </ul>
+      </div>
+    </div>
+  </ion-menu>
+
+  <ion-router-outlet id="menue"></ion-router-outlet>
+  </ion-split-pane>
 </ion-app>
