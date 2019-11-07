@@ -53,7 +53,7 @@ export class AppointmentEditComponent implements OnInit {
   public Date_9: Date = null;
   public minTime: string = this.apiService.appointmentMinTime;
   public maxTime: string = this.apiService.appointmentMaxTime;
-  public reminder = {1:0, 2:0, 3:0, 4:0, 5:0, 6:0, 7:0, 8:0, 9:0}
+  public reminder = {1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0};
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
@@ -83,7 +83,7 @@ export class AppointmentEditComponent implements OnInit {
       if (this.activAppointment.appointment_date == null) { this.activAppointment.appointment_date = new Date().toISOString(); }
       if (this.activAppointment.start_time == null) { this.activAppointment.start_time = this.apiService.appointmentStartTime; }
       if (this.activAppointment.end_time == null) { this.activAppointment.end_time = this.apiService.appointmentEndTime; }
-      if (this.activAppointment.reminder) this.reminder[1] = this.activAppointment.reminder;
+      if (this.activAppointment.reminder) { this.reminder[1] = this.activAppointment.reminder; }
     }
 
     if (this.navParams.get('redirect')) {
@@ -146,7 +146,7 @@ export class AppointmentEditComponent implements OnInit {
             console.log('customer: ', this.customer);
           }
         }
-        this.contactPersonsList(this.idCustomer); 
+        this.contactPersonsList(this.idCustomer);
       }
     });
   }
@@ -402,8 +402,8 @@ export class AppointmentEditComponent implements OnInit {
       for (var i = 0, len = result.list.length; i < len; i++) {
         var item = result.list[i].data;
         try {
-          item.addresses = JSON.parse(item.addresses);      
-        } catch{
+          item.addresses = JSON.parse(item.addresses);
+        } catch {
            console.error('JSON.parse err', item.addresses) ;
         }
         this.contactPersonList.push(item);
@@ -476,20 +476,20 @@ export class AppointmentEditComponent implements OnInit {
     this.addDate--;
   }
 
-  setReminder(num:number)
-  {
-    if(this.reminder[num] == 0)
+  setReminder(num: number) {
+    if (this.reminder[num] == 0) {
       this.reminder[num] = 1;
-    else
+    } else {
       this.reminder[num] = 0;
+    }
   }
 
-  getReminderClass(num:number)
-  {
-    if(this.reminder[num] == 1)
-      return "btn-yellow";
-    else
-      return "btn-grey";
+  getReminderClass(num: number) {
+    if (this.reminder[num] == 1) {
+      return 'btn-yellow';
+    } else {
+      return 'btn-grey';
+    }
   }
 
 
