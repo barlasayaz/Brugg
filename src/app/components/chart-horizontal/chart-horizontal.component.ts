@@ -33,10 +33,10 @@ export class ChartHorizontalComponent implements OnInit {
       labels: this.labelsData,
       datasets: [
         {
-        label: "Company",
+        label: 'Company',
         data: this.barData,
-        backgroundColor: "#FF5722",
-        hoverBackgroundColor: "#FFAA7F"
+        backgroundColor: '#FF5722',
+        hoverBackgroundColor: '#FFAA7F'
         }]
     };
 

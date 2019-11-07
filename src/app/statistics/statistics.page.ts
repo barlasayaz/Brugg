@@ -394,7 +394,10 @@ export class StatisticsPage implements OnInit {
       });
       this.statisticSummaryItem(this.listStatisticMaster[i], this.listStatisticMaster[i].data);
     }
-    this.pieOK = true;
+    setTimeout(() => {
+      console.log('TIMEOUT');
+      this.pieOK = true;
+    }, 1000);
     console.log('listStatistic', this.listStatistic);
   }
 
