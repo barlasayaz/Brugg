@@ -236,9 +236,8 @@ export class AppointmentPlanPage {
                     let nextMonth = moment(new Date()).add(1,'months').toDate();
                     if(nextYearDate > new Date() && nextYearDate <= nextMonth && obj.reminder == 1)
                     {
-                        let appointment = liste.find(function (element, index, array) 
-                                    { return element.idCustomer == obj.idCustomer &&
-                                    element.appointment_date == nextYear; });
+                        console.log('reminder: ',  obj);
+                        let appointment = liste.find(function (element, index, array){ return element.idCustomer == obj.idCustomer && element.appointment_date == nextYear; });
                         if(!appointment )
                         {
                             let title = obj.short_code;
@@ -280,10 +279,11 @@ export class AppointmentPlanPage {
                                 title: title,
                                 start: z1,
                                 end: z2,
+                                reminder: true,
                                 allDay: false,
-                                textColor: '#000',
+                                textColor: '#999',
                                 backgroundColor: "white",
-                                borderColor: "white" };
+                                borderColor: "#bbb" };
 
                             this.events.push(t);
                             this.allEvents.push( JSON.parse(JSON.stringify(t)));

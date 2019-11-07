@@ -200,7 +200,6 @@ export class LoginPage {
       this.translate.use('en');
       localStorage.setItem('lang', x);
     }
-
     localStorage.removeItem('split_filter_product');
     localStorage.removeItem('show_columns_product');
   }
@@ -226,8 +225,8 @@ export class LoginPage {
       this.api.bid_login(this.pvs4_username.value, this.pvs4_password.value).then((result: any) => {
         console.log('bid_login OK: ', result);
         loader.dismiss();
-        this.navCtrl.navigateRoot('/customer-table');
-
+        //this.navCtrl.navigateRoot('/customer-table');
+        this.navCtrl.navigateRoot('/startscreen');
       }, // success path
         error => {
           // connection failed
@@ -236,9 +235,7 @@ export class LoginPage {
           this.userdata.reset();
           loader.dismiss();
         }); // error path);
-
     });
-
   }
 
   signUp() {
