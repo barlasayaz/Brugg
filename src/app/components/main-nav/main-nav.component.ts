@@ -3,7 +3,7 @@ import { UserdataService } from '../../services/userdata';
 import { ApiService } from '../../services/api';
 import { NavController, Events, MenuController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
-import { SystemService } from './services/system';
+import { SystemService } from '../../services/system';
 
 /**
  * Generated class for the MainNavComponent component.
