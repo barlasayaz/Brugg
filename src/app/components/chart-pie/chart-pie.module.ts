@@ -22,6 +22,6 @@ const routes: Routes = [
     ChartModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [ChartPieComponent]
+  declarations: []
 })
 export class ChartPieComponentModule {}
