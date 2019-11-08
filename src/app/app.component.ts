@@ -27,8 +27,7 @@ export class AppComponent {
   ) {
     
     this.router.events.subscribe((event: RouterEvent) => {
-      console.log('RouterEvent:',event);
-      
+      //console.log('RouterEvent:',event);      
       if(this.router.isActive("/startscreen", false) ){
         this.menuCtrl.enable(false);
       }if(this.router.isActive("/startscreen", false) ){
