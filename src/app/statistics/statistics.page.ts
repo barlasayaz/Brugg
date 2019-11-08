@@ -201,6 +201,9 @@ export class StatisticsPage implements OnInit {
           obj.header = item.first_name + ' ' + item.last_name;
           this.listStatisticMaster.push(obj);
         }
+      } else {
+        loader.dismiss();
+        return;
       }
       console.log('listStatisticMaster', this.listStatisticMaster);
 
