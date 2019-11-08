@@ -31,6 +31,29 @@ input:-webkit-autofill:active {
 .split-pane-visible .sideMenu-inner {
   min-width: auto !important;
   max-width: 200px !important;
+  transition: max-width 0.2s ease;
+}
+
+.split-pane-visible .sideMenu-inner.shrinked {
+  min-width: auto !important;
+  max-width: 50px !important;
+  transition: max-width 0.2s ease;
+}
+
+.split-pane-visible .sideMenu-inner.shrinked .sideMenu-logo {
+  max-width: 35px;
+  transition: max-width 0.2s ease;
+}
+
+.split-pane-visible .sideMenu-inner.shrinked ul.sideMenu-nav li > ion-icon {
+  margin-right: 0;
+}
+
+.split-pane-visible .sideMenu-inner.shrinked ul.sideMenu-nav li > span {
+  display:none;
+}
+.split-pane-visible .sideMenu-inner.shrinked .sideMenu-version {
+  display:none;
 }
 
 .sideMenu {
@@ -44,6 +67,7 @@ input:-webkit-autofill:active {
 
   &-logo {
     max-width: 100px;
+    transition: max-width 0.2s ease;
   }
 
   &-version {

@@ -12,57 +12,57 @@
 
           <li routerLink="/startscreen" [ngClass]="getClass('/startscreen')">
             <ion-icon name="home"></ion-icon>
-            Startseite
+            <span>Startseite</span>
           </li>
 
           <li routerLink="/dashboard"  [ngClass]="getClass('/dashboard')">
             <ion-icon name="apps"></ion-icon>
-            Dashboard
+            <span>Dashboard</span>
           </li>
 
           <li routerLink="/customer-table"  [ngClass]="getClass('/customer-table')">
             <ion-icon name="people"></ion-icon>
-            Kundenübersicht
+            <span>Kundenübersicht</span>
           </li>
 
           <ul class="sideMenu-subnav"  *ngIf="systemService.customerId > 0" >
 
               <li  [routerLink]="['/customer-details/',systemService.customerId]"   [ngClass]="getClass('/customer-details')">
                 <ion-icon name="person"></ion-icon>
-                Kundendetails
+                <span>Kundendetails</span>
               </li>
 
               <li [routerLink]="['/product-list/',systemService.customerId]"   [ngClass]="getClass('/product-list')">
                 <ion-icon name="pricetags"></ion-icon>
-                Produkte
+                <span>Produkte</span>
               </li>
 
               <li [routerLink]="['/protocol-list/',systemService.customerId]"  [ngClass]="getClass('/protocol-list')">
                 <ion-icon name="document"></ion-icon>
-                Protokolle
+                <span>Protokolle</span>
               </li>
 
               <li [routerLink]="['/order-form/',systemService.customerId]"  [ngClass]="getClass('/order-form')">
                 <ion-icon name="basket"></ion-icon>
-                Bestellformular
+                <span>Bestellformular</span>
               </li>
 
 
               <li [routerLink]="['/note-list/',systemService.customerId]"  [ngClass]="getClass('/note-list')" *ngIf="(userdata.role==1)||(userdata.role==2)">
                 <ion-icon name="bookmarks"></ion-icon>
-                Notizen
+                <span>Notizen</span>
               </li>
 
           </ul>
 
           <li routerLink="/appointment-plan"  [ngClass]="getClass('/appointment-plan')">
             <ion-icon name="time"></ion-icon>
-            Terminpläne
+            <span>Terminpläne</span>
           </li>
 
           <li routerLink="/my-data"  [ngClass]="getClass('//my-data')">
             <ion-icon name="settings"></ion-icon>
-            Einstellungen
+            <span>Einstellungen</span>
           </li>
 
         </ul>
