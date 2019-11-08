@@ -90,7 +90,7 @@ function processing($user, $customer) {
     $user      = trim( mysqli_escape_string($con,$user) );
     $customer  = intval ( trim( mysqli_escape_string($con,$customer) ) );
     
-    $sql    = "SELECT * FROM `products` where `customer` = $customer and `active` = 1 ORDER BY `parent`, `id` desc;";
+    $sql    = "SELECT * FROM `products` where `customer` = $customer ORDER BY `parent`, `id` desc;";
     $ret_sql= mysqli_query( $con, $sql );
 
     $liste = [];

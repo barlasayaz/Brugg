@@ -56,12 +56,13 @@ export class ProductListPage implements OnInit {
     modelChanged: Subject<any> = new Subject<any>();
     public selectedRow: number;
     public selectMode: boolean = false;
-    public editMode: boolean = false;  
+    public editMode: boolean = false;
     public rowHeight = 26;
     public rowCount = 100;    
-    public showBasicInfo= true;
-    public lengthBasicInfo= 90;
+    public showBasicInfo = true;
+    public lengthBasicInfo = 90;
     public sortedColumn = { sort_field : null, sort_order : 0 };
+    public showActivePassiveProduct: boolean = false;
 
     public menuItems: MenuItem[] = [{
         label: this.translate.instant('Ansicht'),
@@ -251,10 +252,10 @@ export class ProductListPage implements OnInit {
                                 handler: (e) => {
                                     console.log('alert menuitem:', e.countC);
                                     let x = parseInt(e.countC);
-                                    if((x>=10) && (x<=300)) this.lengthBasicInfo = x;
-                                    for (let i = 0; i<this.productListView.length; i++ ){
+                                    if ((x >= 10) && (x <= 300)) { this.lengthBasicInfo = x; }
+                                    for (let i = 0; i < this.productListView.length; i++ ) {
                                         let info = this.productListView[i].data['_basic_info_'];
-                                        if (info.length > this.lengthBasicInfo+3) {
+                                        if (info.length > this.lengthBasicInfo + 3) {
                                             info = info.substring(0, this.lengthBasicInfo) + '...';
                                         }
                                         this.productListView[i].data['_basic_info_show_'] = info;
@@ -277,6 +278,30 @@ export class ProductListPage implements OnInit {
                     this.showBasicInfo = false;
                     this.menuItems[8].items[6]['disabled'] = false;
                     this.menuItems[8].items[7]['disabled'] = true;
+                }
+            },
+            {
+                label: this.translate.instant('Zeige nur aktives produkte'),
+                icon: 'pi pi-fw pi-search',
+                visible: this.showActivePassiveProduct,
+                command: (event) => {
+                    console.log('command menuitem:', event.item);
+                    this.showActivePassiveProduct = false;
+                    this.menuItems[8].items[8]['visible'] = false;
+                    this.menuItems[8].items[9]['visible'] = true;
+                    this.activePassiveProduct();
+                }
+            },
+            {
+                label: this.translate.instant('Zeige nur passive produkte'),
+                icon: 'pi pi-fw pi-search',
+                visible: !this.showActivePassiveProduct,
+                command: (event) => {
+                    console.log('command menuitem:', event.item);
+                    this.showActivePassiveProduct = true;
+                    this.menuItems[8].items[8]['visible'] = true;
+                    this.menuItems[8].items[9]['visible'] = false;
+                    this.activePassiveProduct();
                 }
             }
             /*,
@@ -348,7 +373,7 @@ export class ProductListPage implements OnInit {
                 { field: 'id_number', header: 'ID', width: '85px' },
                 { field: 'id', header: 'DB-ID', width: '85px' },
                 { field: 'articel_no', header: this.translate.instant('Artikel-Nr.'), width: '100px' },
-                { field: 'customer_description', header: this.translate.instant('Kundenbezeichnung'), width: '200px', editable:true },
+                { field: 'customer_description', header: this.translate.instant('Kundenbezeichnung'), width: '200px', editable: true },
                 { field: 'last_protocol_date', header: this.translate.instant('Letzter besuch'), width: '100px' },
                 { field: 'last_protocol_next', header: this.translate.instant('Nächster besuch'), width: '100px' },
                 { field: 'check_interval', header: this.translate.instant('Intervall Prüfen'), width: '130px' }
@@ -543,7 +568,7 @@ export class ProductListPage implements OnInit {
                 // console.log('options :', options);
 
                 if (options == null) { options = []; }
-                let info ="";
+                let info = '';
                 for (let i = 0; i < options.length; i++) {
                     // console.log('options :', options[i]);
                     // console.log('options :', options[i].id);
@@ -573,39 +598,40 @@ export class ProductListPage implements OnInit {
                                 options[i].value = options[i].options[j][this.lang];
                             }
                         }
-                        this.productListAll[index].data[options[i].title[this.lang]] = options[i].value;                                                 
+                        this.productListAll[index].data[options[i].title[this.lang]] = options[i].value;
                     } else if (options[i].type == 4) {
                         const pipe = new DatePipe('en-US');
-                        if(options[i].value && options[i].value.length ==5 )
+                        if (options[i].value && options[i].value.length == 5 ) {
                             this.productListAll[index].data[options[i].title[this.lang]] = options[i].value;
-                        else
+                        } else {
                             this.productListAll[index].data[options[i].title[this.lang]] = pipe.transform(options[i].value, 'HH:mm');
+                        }
                     } else if (options[i].type == 5) {
                         const pipe = new DatePipe('en-US');
                         this.productListAll[index].data[options[i].title[this.lang]] = pipe.transform(options[i].value, 'dd.MM.yyyy');
                     } else if (options[i].type == 6) {
-                        this.productListAll[index].data[options[i].title[this.lang]] = "("+options[i].value.lat.toString().substring(0, 6) + ","+options[i].value.long.toString().substring(0, 6) +")";
+                        this.productListAll[index].data[options[i].title[this.lang]] = '(' + options[i].value.lat.toString().substring(0, 6) + ',' + options[i].value.long.toString().substring(0, 6) + ')';
                     } else {
-                        this.productListAll[index].data[options[i].title[this.lang]] = options[i].value;                         
+                        this.productListAll[index].data[options[i].title[this.lang]] = options[i].value;
                     }
 
                     if ((options[i].type != 0) && (options[i].type != 6)) {
                         let t = this.productListAll[index].data[options[i].title[this.lang]] ;
-                        let h = "";
+                        let h = '';
                         console.log(options[i].base);
-                        if(options[i].base === undefined) options[i].base=true;
-                        if(options[i].base){
-                            if(t) h = t.trim();
-                            if( h!==""){
-                                if( info!=="") info +=", ";
+                        if (options[i].base === undefined) { options[i].base = true; }
+                        if (options[i].base) {
+                            if (t) { h = t.trim(); }
+                            if ( h !== '') {
+                                if ( info !== '') { info += ', '; }
                                 info += h;  
                             }
-                        }                        
+                        }
                     }
                 }
                 // console.log("index :", index);
                 this.productListAll[index].data['_basic_info_'] = info;
-                if (info.length > this.lengthBasicInfo+3) {
+                if (info.length > this.lengthBasicInfo + 3) {
                     info = info.substring(0, this.lengthBasicInfo) + '...';
                 }
                 this.productListAll[index].data['_basic_info_show_'] = info;
@@ -739,10 +765,11 @@ export class ProductListPage implements OnInit {
     search_all() {
         this.modelChanged.next(this.columnFilterValues);
     }
-    
-    test(x){
-console.log(x);
+
+    test(x) {
+        console.log(x);
     }
+
     cancel_filters(cancel_type) {
         console.log('cancel_filters');
         this.menuItems[8].items[0]['disabled'] = true;
@@ -766,10 +793,22 @@ console.log(x);
     generate_productList(start_index: number, end_index: number, sort_field, sort_order) {
         console.log('generate_productList', this.isFilterOn());
 
+        const actvPssvProduct = JSON.parse(JSON.stringify(this.productListAll));
+        for (let index = 0; index < actvPssvProduct.length; index++) {
+            if (actvPssvProduct[index].data.active == 0 && !this.showActivePassiveProduct) {
+                actvPssvProduct.splice(index, 1);
+                index--;
+            }
+            if (actvPssvProduct[index].data.active == 1 && this.showActivePassiveProduct) {
+                actvPssvProduct.splice(index, 1);
+                index--;
+            }
+        }
+
         if (!this.isFilterOn()) {
-            this.productListView = JSON.parse(JSON.stringify(this.productListAll));
+            this.productListView = JSON.parse(JSON.stringify(actvPssvProduct));
         } else {
-            const try_list = JSON.parse(JSON.stringify(this.productListAll));
+            const try_list = JSON.parse(JSON.stringify(actvPssvProduct));
             this.dir_try_filter(try_list);
             this.productListView = try_list;
             this.productListSearch = try_list;
@@ -812,7 +851,7 @@ console.log(x);
             });
         }
         this.rowRecords = this.productListView.length;
-        this.totalRecords = this.productListAll.length;
+        this.totalRecords = actvPssvProduct.length;
 
         console.log('start_index - end_index :', start_index, end_index);
 
@@ -921,6 +960,15 @@ console.log(x);
         }
         if (this.childCount > 0) {
             this.menuItems[8].items[3]['disabled'] = true;
+        }
+
+        if (this.showActivePassiveProduct) {
+            this.menuItems[2].disabled = true;
+            this.menuItems[3].disabled = true;
+            this.menuItems[5].items[2]['disabled'] = true;
+            this.menuItems[8].items[3]['disabled'] = true;
+            this.menuItems[8].items[4]['disabled'] = true;
+            this.menuItems[8].items[5]['disabled'] = true;
         }
 
     }
@@ -1289,9 +1337,9 @@ console.log(x);
     async show_columns() {
         let inputs: any[] = [];
         for (let i = 0; i < this.cols.length; i++) {
-            if(this.cols[i].field === 'nfc_tag_id') continue;
-            if(this.cols[i].field === 'title') continue;
-            if(this.cols[i].field === 'id_number') continue;
+            if (this.cols[i].field === 'nfc_tag_id') { continue; }
+            if (this.cols[i].field === 'title') { continue; }
+            if (this.cols[i].field === 'id_number') { continue; }
             inputs.push({
                 type: 'checkbox',
                 label: this.cols[i].header,
@@ -1311,9 +1359,9 @@ console.log(x);
                     handler: data => {
                         inputs = [];
                         for (let i = 0; i < this.cols.length; i++) {
-                            if(this.cols[i].field === 'nfc_tag_id') continue;
-                            if(this.cols[i].field === 'title') continue;
-                            if(this.cols[i].field === 'id_number') continue;
+                            if (this.cols[i].field === 'nfc_tag_id') { continue; }
+                            if (this.cols[i].field === 'title') { continue; }
+                            if (this.cols[i].field === 'id_number') { continue; }
                             inputs.push({
                                 type: 'checkbox',
                                 label: this.cols[i].header,
@@ -1329,9 +1377,9 @@ console.log(x);
                     handler: data => {
                         inputs = [];
                         for (let i = 0; i < this.cols.length; i++) {
-                            if(this.cols[i].field === 'nfc_tag_id') continue;
-                            if(this.cols[i].field === 'title') continue;
-                            if(this.cols[i].field === 'id_number') continue;
+                            if (this.cols[i].field === 'nfc_tag_id') { continue; }
+                            if (this.cols[i].field === 'title') { continue; }
+                            if (this.cols[i].field === 'id_number') { continue; }
                             inputs.push({
                                 type: 'checkbox',
                                 label: this.cols[i].header,
@@ -1401,23 +1449,23 @@ console.log(x);
 
     onColReorder(event) {
         console.log('onColReorder()', event );
-        this.selectedColumns = event.columns;    
-        this.fixReorder();    
+        this.selectedColumns = event.columns;
+        this.fixReorder();
         localStorage.setItem('show_columns_product', JSON.stringify(this.selectedColumns));
     }
-    fixReorder(){
+    fixReorder() {
         console.log('fixReorder()', this.selectedColumns );
         let cols = [
             { field: 'nfc_tag_id', header: 'NFC', width: '80px' },
-            { field: 'title', header: this.translate.instant('Bezeichnung'), width: '220px' }, 
+            { field: 'title', header: this.translate.instant('Bezeichnung'), width: '220px' },
             { field: 'id_number', header: 'ID', width: '85px' }
         ];
         for (let i = 0; i < this.selectedColumns.length; i++) {
-            if(this.selectedColumns[i].field === 'nfc_tag_id') continue;
-            if(this.selectedColumns[i].field === 'title') continue;
-            if(this.selectedColumns[i].field === 'id_number') continue;
+            if (this.selectedColumns[i].field === 'nfc_tag_id') { continue; }
+            if (this.selectedColumns[i].field === 'title') { continue; }
+            if (this.selectedColumns[i].field === 'id_number') { continue; }
             cols.push(this.selectedColumns[i]);
-        }    
+        }
         this.selectedColumns = cols;
     }
 
@@ -1519,21 +1567,19 @@ console.log(x);
         }
     }
 
-    open_edit_mode()
-    {
+    open_edit_mode() {
         this.editMode = true;
         this.menuItems[8].items[6]['visible'] = false;
         this.menuItems[8].items[7]['visible'] = true;
     }
 
-    quit_edit_mode()
-    {
+    quit_edit_mode() {
         this.editMode = false;
         this.menuItems[8].items[6]['visible'] = true;
         this.menuItems[8].items[7]['visible'] = false;
     }
     onEditComplete (event) {
-        console.log("event:",event);
+        console.log('event:', event);
       let value = event.data[event.field];
       let field = event.field;
       let id = event.data.id;
@@ -1541,5 +1587,23 @@ console.log(x);
       let obj = { value : value, field: field, id: id}
 
       this.apiService.pvs4_set_product_dynamic(obj);
+    }
+
+    activePassiveProduct() {
+        this.selectedNode = [];
+        this.selectedRow = 0;
+        this.menuItems[0].disabled = true;
+        this.menuItems[1].disabled = true;
+        this.menuItems[2].disabled = true;
+        this.menuItems[3].disabled = true;
+        this.menuItems[3].visible = this.userdata.role_set.edit_products;
+        this.menuItems[4].visible = false;
+        this.menuItems[5].items[0]['disabled'] = !this.userdata.role_set.edit_product_templates;
+        this.menuItems[5].items[1]['disabled'] = false;
+        this.menuItems[5].items[2]['disabled'] = true;
+        this.menuItems[8].items[3]['disabled'] = true;
+        this.menuItems[8].items[4]['disabled'] = true;
+        this.menuItems[8].items[5]['disabled'] = true;
+        this.generate_productList(0, this.rowCount, this.sortedColumn.sort_field, this.sortedColumn.sort_order);
     }
 }
