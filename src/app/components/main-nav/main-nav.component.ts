@@ -1,9 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { UserdataService } from '../../services/userdata';
 import { ApiService } from '../../services/api';
-import { NavController, Events } from '@ionic/angular';
+import { NavController, Events, MenuController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
-import { NavigationExtras } from '@angular/router';
 
 /**
  * Generated class for the MainNavComponent component.
@@ -31,6 +30,7 @@ export class MainNavComponent implements OnInit {
     public navCtrl: NavController,
     public translate: TranslateService,
     public events: Events,
+    private menu: MenuController,
     public apiService: ApiService) {
 
     console.log('Hello MainNavComponent Component');
@@ -58,56 +58,10 @@ export class MainNavComponent implements OnInit {
     }
   }
 
-  getClass(path) {
-    if (this.aktivPage == path) {
-      return 'active';
-    } else {
-      return '';
-    }
-  }
-
-  go(action: any, id: number = 0) {
-    // Navigation
-    console.log('app.go: ', action, id, this.aktivPage);
-
-    if (this.aktivPage != action) {
-      switch (action) {
-        case 'Startscreen': // HOME
-          this.navCtrl.navigateRoot('/startscreen');
-          break;
-        case 'Dashboard':
-          this.navCtrl.navigateRoot('/dashboard');
-          break;
-        case 'CustomerTable':
-          this.navCtrl.navigateRoot(['/customer-table']);
-          break;
-        case 'CustomerDetails':
-          this.navCtrl.navigateRoot(['/customer-details', id]);
-          break;
-        case 'ProductList':
-            const navigationExtras: NavigationExtras = {
-              queryParams: {
-                refresh: new Date().getTime()
-              }
-            };
-          this.navCtrl.navigateRoot(['/product-list/' + id], navigationExtras);
-          break;
-        case 'ProtocolList':
-          this.navCtrl.navigateRoot(['/protocol-list/' + id]);
-          break;
-        case 'OrderForm':
-          this.navCtrl.navigateRoot(['/order-form', id]);
-          break;
-        case 'NoteList':
-          this.navCtrl.navigateRoot(['/note-list/' + id]);
-          break;
-      }
-    } else {
-      if (this.aktivPage == 'Statistics') {
-        this.navCtrl.navigateRoot('/dashboard');
-      }
-    }
-    this.aktivPage = action;
+  openMenu() {
+    this.menu.enable(true, 'menu');
+    this.menu.open('menu');
+    console.log('menu opend');
   }
 
   showdashfirst() {

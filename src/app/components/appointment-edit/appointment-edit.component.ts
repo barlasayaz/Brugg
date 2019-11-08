@@ -67,10 +67,10 @@ export class AppointmentEditComponent implements OnInit {
 
   ngOnInit() {
     this.maxDate = this.apiService.maxDate;
-
+  
     this.employeesList();
-       this.loadCustomer();
-
+    this.loadCustomer();
+  
     if (this.navParams.get('appointment')) {
       this.activAppointment = this.navParams.get('appointment');
       this.idAppointment = this.activAppointment.id;
@@ -307,8 +307,8 @@ export class AppointmentEditComponent implements OnInit {
     console.log('appointmentEdit obj :', obj, this.activAppointment.appointment_date);
     this.apiService.pvs4_set_appointment(obj).then((result: any) => {
       console.log('result: ', result);
+      this.viewCtrl.dismiss(true);
     });
-    this.viewCtrl.dismiss(true);
   }
 
   appointmentDeactivate() {
