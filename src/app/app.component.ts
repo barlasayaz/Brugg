@@ -13,8 +13,6 @@ import { Router } from '@angular/router';
   templateUrl: 'app.component.html'
 })
 export class AppComponent {
-  @Input() aktivPage: string;
-  @Input() idCustomer: number;
  
   constructor(
     private platform: Platform,
@@ -25,15 +23,22 @@ export class AppComponent {
     public userdata: UserdataService,
     private navCtrl: NavController,
     private router: Router,
-    private menu: MenuController
+    public menuCtrl: MenuController
   ) {
     this.initializeApp();
+    if(this.router.isActive("/startscreen", false) ){
+      this.menuCtrl.enable(false);
+    }if(this.router.isActive("/startscreen", false) ){
+      this.menuCtrl.enable(false);
+    }else{
+      this.menuCtrl.enable(true);
+    }
   }
 
   initializeApp() {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
-      this.splashScreen.hide();
+      this.splashScreen.hide();      
       this.navCtrl.navigateRoot('/login');
     });
   }
@@ -47,53 +52,5 @@ export class AppComponent {
     }
   }
 
-  go(action: any, id: number = 0) {
-    // Navigation
-    console.log('app.go: ', action, id, this.aktivPage);
-
-    if (this.aktivPage != action) {
-      switch (action) {
-        case 'Dashboard':
-          this.navCtrl.navigateRoot('/dashboard');
-          break;
-        case 'CustomerTable':
-          this.navCtrl.navigateRoot(['/customer-table']);
-          break;
-        case 'CustomerDetails':
-          this.navCtrl.navigateRoot(['/customer-details', id]);
-          break;
-        case 'ProductList':
-          const navigationExtras: NavigationExtras = {
-            queryParams: {
-              refresh: new Date().getTime()
-            }
-          };
-          this.navCtrl.navigateRoot(['/product-list/' + id], navigationExtras);
-          break;
-        case 'ProtocolList':
-          this.navCtrl.navigateRoot(['/protocol-list/' + id]);
-          break;
-        case 'OrderForm':
-          this.navCtrl.navigateRoot(['/order-form', id]);
-          break;
-        case 'NoteList':
-          this.navCtrl.navigateRoot(['/note-list/' + id]);
-          break;
-        case 'StartscreenPage':
-          this.navCtrl.navigateRoot('/startscreen');
-          break;
-        case 'MyDataPage':
-          this.navCtrl.navigateRoot('/my-data');
-          break;
-        case 'AppointmentplanPage':
-          this.navCtrl.navigateRoot('/appointment-plan');
-          break;
-      }
-    } else {
-      if (this.aktivPage == 'Statistics') {
-        this.navCtrl.navigateRoot('/dashboard');
-      }
-    }
-    this.aktivPage = action;
-  }
+  
 }

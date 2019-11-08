@@ -54,20 +54,7 @@ export class LoginPage {
     public router: Router,
     private ngZone: NgZone) {
 
-    this.router.events.subscribe((event: RouterEvent) => {
-      if (event instanceof NavigationEnd && event.url === '/login') {
-        this.menuCtrl.enable(false);
-        //console.log('ist login');
-      }
-      else if (event instanceof NavigationEnd && event.url === '/startscreen') {
-        this.menuCtrl.enable(false);
-        //console.log('ist startscreen');
-      }
-      else {
-        this.menuCtrl.enable(true);
-        //console.log('ist kein login');
-      }
-    });
+    
 
     this.winWidth = window.innerWidth;
     this.winHeight = window.innerHeight;
