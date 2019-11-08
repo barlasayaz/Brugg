@@ -51,9 +51,6 @@ export class AppComponent {
 
     if (this.aktivPage != action) {
       switch (action) {
-        case 'Startscreen': // HOME
-          this.navCtrl.navigateRoot('/startscreen');
-          break;
         case 'Dashboard':
           this.navCtrl.navigateRoot('/dashboard');
           break;
@@ -79,6 +76,15 @@ export class AppComponent {
           break;
         case 'NoteList':
           this.navCtrl.navigateRoot(['/note-list/' + id]);
+          break;
+        case 'StartscreenPage':
+          this.navCtrl.navigateRoot('/startscreen');
+          break;
+        case 'MyDataPage':
+          this.navCtrl.navigateRoot('/my-data');
+          break;
+        case 'AppointmentplanPage':
+          this.navCtrl.navigateRoot('/appointment-plan');
           break;
       }
     } else {
