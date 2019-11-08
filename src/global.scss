@@ -28,14 +28,9 @@ input:-webkit-autofill:active {
   max-width: 90%;
 }
 
-.sideMenu-inner {
-
-
-  .menu-inner {
-    --max-width: 200px !important;
-    --width: 200px;
-    max-width: 200px !important;
-  }
+.split-pane-visible .sideMenu-inner {
+  min-width: auto !important;
+  max-width: 200px !important;
 }
 
 .sideMenu {
@@ -20104,6 +20099,11 @@ div.schnellPr:hover div {
 }
 
 @media only screen and (max-width: 992px) {
+
+  #na_dashboard_termine,
+  #ps_dashboard_pruefungen {
+    margin-top: 60px;
+  }
 
   #ps_dashboard_pruefungen,
   #na_dashboard_kunden,

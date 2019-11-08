@@ -6,7 +6,6 @@ import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/fo
 import { UserdataService } from '../services/userdata';
 import { SystemService } from '../services/system';
 import { ImprintPage } from './imprint/imprint.page';
-import { Router, RouterEvent, NavigationEnd } from '@angular/router';
 import { OldBrowserPage } from './old-browser/old-browser.page';
 
 /**
@@ -51,7 +50,6 @@ export class LoginPage {
     public formBuilder: FormBuilder,
     public modalCtrl: ModalController,
     public menuCtrl: MenuController,
-    public router: Router,
     private ngZone: NgZone) {
 
     

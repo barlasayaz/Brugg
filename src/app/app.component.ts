@@ -44,12 +44,18 @@ export class AppComponent {
   }
 
   getClass(path) {
-    console.log('this.router.isActive : ',path, this.router.isActive(path, false) );
+    //console.log('this.router.isActive : ',path, this.router.isActive(path, false) );
     if (this.router.isActive(path, false)) {
       return 'active';
     } else {
       return '';
     }
+  }
+
+  status: boolean = false;
+  shrinkMenu() {
+    console.log('menu shrinked');
+    this.status = !this.status;
   }
 
   

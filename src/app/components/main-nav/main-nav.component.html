@@ -7,9 +7,13 @@
           <ion-col size-xl="9" size-lg="9" size-md="9" size-sm="12" size="12" class="topBar-sm topBar-left">
             <div class="topBar-outer">
               <div class="topBar-inner">
-                <div class="menuIcon" (click)="openMenu()">
+                <div class="menuIcon menuIcon-xs" (click)="openMenu()">
                   <ion-icon name="menu"></ion-icon>
                 </div>
+                <div class="menuIcon menuIcon-md" (click)="shrinkMenu()">
+                  <ion-icon name="menu"></ion-icon>
+                </div>
+
               </div>
 
               <div id="customerName" class="main-nav-fix">
@@ -56,4 +60,20 @@
 
     </div>
   </nav>
+
+  <ul class="dashboard-nav hidden-lg-up" *ngIf="aktivPage == 'Dashboard'">
+    <a (click)="showdashfirst()" class="active" id="dashfirst">
+      <li>
+        <ion-icon class="headerIcon" name="calendar"></ion-icon>
+      </li>
+    </a>
+    <a (click)="showdashsecond()" id="dashsecond">
+      <li *ngIf="userdata.Prueferservice">
+        <ion-icon class="headerIcon" name="briefcase"></ion-icon>
+      </li>
+      <li *ngIf="!userdata.Prueferservice">
+        <ion-icon class="headerIcon" name="contact"></ion-icon>
+      </li>
+    </a>
+  </ul>
 </ion-header>

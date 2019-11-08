@@ -64,6 +64,12 @@ export class MainNavComponent implements OnInit {
     console.log('menu opend');
   }
 
+  private status: boolean = false;
+  shrinkMenu() {
+    console.log('menu shrinked');
+    this.status != this.status;
+  }
+
   showdashfirst() {
     this.events.publish('className', 'showdashfirst');
     document.getElementById('dashfirst').className = 'active';

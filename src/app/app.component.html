@@ -1,6 +1,7 @@
 <ion-app>
   <ion-split-pane content-id="menue" when="(min-width: 400px)">
-  <ion-menu content-id="menue" type="overlay" side="start" menuId="menu" class="sideMenu-inner">
+  <ion-menu content-id="menue" type="overlay" side="start" menuId="menu" class="sideMenu-inner"
+    [ngClass]="className=='status' ? 'shrinked' : 'normal'">
     <div class="sideMenu">
       <div class="sideMenu-header">
         <img class="sideMenu-logo" src="assets/imgs/pvs2go-logo.svg" alt="PVS2GO Logo">
