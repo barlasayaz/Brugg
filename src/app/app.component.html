@@ -1,6 +1,6 @@
 <ion-app>
-
-  <ion-menu content-id="menue" type="reveal" side="start" menuId="menu" class="sideMenu-inner">
+  <ion-split-pane content-id="menue" when="(min-width: 400px)">
+  <ion-menu content-id="menue" type="overlay" side="start" menuId="menu" class="sideMenu-inner">
     <div class="sideMenu">
       <div class="sideMenu-header">
         <img class="sideMenu-logo" src="assets/imgs/pvs2go-logo.svg" alt="PVS2GO Logo">
@@ -9,7 +9,7 @@
       <div class="sideMenu-content">
         <ul class="sideMenu-nav">
 
-          <li (click)="go('Startscreen');" [ngClass]="getClass('StartscreenPage')">
+          <li routerLink="/startscreen" [ngClass]="getClass('StartscreenPage')">
             <ion-icon name="home"></ion-icon>
             Startseite
           </li>
@@ -70,5 +70,5 @@
   </ion-menu>
 
   <ion-router-outlet id="menue"></ion-router-outlet>
-
+  </ion-split-pane>
 </ion-app>

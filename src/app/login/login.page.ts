@@ -1,11 +1,12 @@
 import { Component, NgZone } from '@angular/core';
-import { Platform, NavController, LoadingController, ModalController } from '@ionic/angular';
+import { Platform, NavController, LoadingController, ModalController, MenuController } from '@ionic/angular';
 import { ApiService } from '../services/api';
 import { TranslateService } from '@ngx-translate/core';
 import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { UserdataService } from '../services/userdata';
 import { SystemService } from '../services/system';
 import { ImprintPage } from './imprint/imprint.page';
+import { Router, RouterEvent, NavigationEnd } from '@angular/router';
 import { OldBrowserPage } from './old-browser/old-browser.page';
 
 /**
@@ -49,7 +50,24 @@ export class LoginPage {
     public platform: Platform,
     public formBuilder: FormBuilder,
     public modalCtrl: ModalController,
+    public menuCtrl: MenuController,
+    public router: Router,
     private ngZone: NgZone) {
+
+    this.router.events.subscribe((event: RouterEvent) => {
+      if (event instanceof NavigationEnd && event.url === '/login') {
+        this.menuCtrl.enable(false);
+        //console.log('ist login');
+      }
+      else if (event instanceof NavigationEnd && event.url === '/startscreen') {
+        this.menuCtrl.enable(false);
+        //console.log('ist startscreen');
+      }
+      else {
+        this.menuCtrl.enable(true);
+        //console.log('ist kein login');
+      }
+    });
 
     this.winWidth = window.innerWidth;
     this.winHeight = window.innerHeight;
@@ -178,6 +196,7 @@ export class LoginPage {
         return false;
       }
     });
+    
   }
 
   showHideErrors() {
