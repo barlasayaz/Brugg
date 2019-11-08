@@ -93,6 +93,5 @@ export class AppComponent {
       }
     }
     this.aktivPage = action;
-    this.menu.close('menu');
   }
 }
