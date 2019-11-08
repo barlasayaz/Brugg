@@ -1,6 +1,7 @@
 <ion-app>
-  <ion-split-pane contentId="main-content">
-  <ion-menu content-id="menue" type="reveal" side="start" menuId="menu" class="sideMenu-inner">
+  <ion-split-pane content-id="menue" when="(min-width: 400px)">
+  <ion-menu content-id="menue" type="overlay" side="start" menuId="menu" class="sideMenu-inner"
+    [ngClass]="className=='status' ? 'shrinked' : 'normal'">
     <div class="sideMenu">
       <div class="sideMenu-header">
         <img class="sideMenu-logo" src="assets/imgs/pvs2go-logo.svg" alt="PVS2GO Logo">
@@ -9,57 +10,57 @@
       <div class="sideMenu-content">
         <ul class="sideMenu-nav">
 
-          <li (click)="go('Startscreen');" [ngClass]="getClass('StartscreenPage')">
+          <li routerLink="/startscreen" [ngClass]="getClass('/startscreen')">
             <ion-icon name="home"></ion-icon>
             Startseite
           </li>
 
-          <li (click)="go('Dashboard');" [ngClass]="getClass('Dashboard')">
+          <li routerLink="/dashboard"  [ngClass]="getClass('/dashboard')">
             <ion-icon name="apps"></ion-icon>
             Dashboard
           </li>
 
-          <li (click)="go('CustomerTable',systemService.customerId);" [ngClass]="getClass('CustomerTable')">
+          <li routerLink="/customer-table"  [ngClass]="getClass('/customer-table')">
             <ion-icon name="people"></ion-icon>
             Kundenübersicht
           </li>
 
           <ul class="sideMenu-subnav"  *ngIf="systemService.customerId > 0" >
-  
-              <li (click)="go('CustomerDetails', systemService.customerId);" [ngClass]="getClass('CustomerDetails')">
+
+              <li  routerLink="/customer-details/{{customerId}}"  [ngClass]="getClass('/customer-details')">
                 <ion-icon name="person"></ion-icon>
                 Kundendetails
               </li>
 
-              <li (click)="go('ProductList',systemService.customerId);" [ngClass]="getClass('ProductList')">
+              <li routerLink="/product-list/{{customerId}}" [ngClass]="getClass('/product-list')">
                 <ion-icon name="pricetags"></ion-icon>
                 Produkte
               </li>
 
-              <li (click)="go('ProtocolList',systemService.customerId);" [ngClass]="getClass('ProtocolList')">
+              <li routerLink="/protocol-list/{{customerId}}" [ngClass]="getClass('/protocol-list')">
                 <ion-icon name="document"></ion-icon>
                 Protokolle
               </li>
 
-              <li (click)="go('OrderForm',systemService.customerId);" [ngClass]="getClass('OrderForm')">
+              <li routerLink="/order-form/{{customerId}}" [ngClass]="getClass('/order-form')">
                 <ion-icon name="basket"></ion-icon>
                 Bestellformular
               </li>
 
-             
-              <li (click)="go('NoteList',systemService.customerId);" [ngClass]="getClass('NoteList')" *ngIf="(userdata.role==1)||(userdata.role==2)">
+
+              <li routerLink="/note-list/{{customerId}}" [ngClass]="getClass('/note-list')" *ngIf="(userdata.role==1)||(userdata.role==2)">
                 <ion-icon name="bookmarks"></ion-icon>
                 Notizen
               </li>
 
           </ul>
 
-          <li (click)="go('AppointmentplanPage');" [ngClass]="getClass('AppointmentplanPage')">
+          <li routerLink="/appointment-plan"  [ngClass]="getClass('/appointment-plan')">
             <ion-icon name="time"></ion-icon>
             Terminpläne
           </li>
 
-          <li (click)="go('MyDataPage');" [ngClass]="getClass('MyDataPage')">
+          <li routerLink="/my-data"  [ngClass]="getClass('//my-data')">
             <ion-icon name="settings"></ion-icon>
             Einstellungen
           </li>

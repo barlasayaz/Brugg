@@ -1,4 +1,15 @@
 .menuIcon {
+  &-xs {
+    @media (min-width: 400px) {
+      display: none;
+    }
+  }
+
+  &-md {
+    @media (max-width: 400px) {
+      display: none;
+    }
+  }
   ion-icon {
     font-size: 24px;
     color: #009de0;
@@ -155,6 +166,31 @@
     .select-icon-inner {
       color: white !important;
     }
+  }
+}
+
+.dashboard-nav {
+  position: absolute;
+  top: 71px;
+  width: 100%;
+  margin: 0!important;
+  left: 0;
+
+  ul {
+    display: flex;
+    -webkit-flex: 1 auto;
+    -ms-flex: 1 auto;
+    flex: 1 auto;
+  }
+
+  a {
+    -webkit-border-radius: 0px !important;
+    border-radius: 0px !important;
+    width: 100% !important;
+  }
+
+  a+a {
+    margin-left: 0 !important;
   }
 }
 

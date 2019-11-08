@@ -1,5 +1,5 @@
 import { Component, NgZone } from '@angular/core';
-import { Platform, NavController, LoadingController, ModalController } from '@ionic/angular';
+import { Platform, NavController, LoadingController, ModalController, MenuController } from '@ionic/angular';
 import { ApiService } from '../services/api';
 import { TranslateService } from '@ngx-translate/core';
 import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
@@ -49,7 +49,10 @@ export class LoginPage {
     public platform: Platform,
     public formBuilder: FormBuilder,
     public modalCtrl: ModalController,
+    public menuCtrl: MenuController,
     private ngZone: NgZone) {
+
+    
 
     this.winWidth = window.innerWidth;
     this.winHeight = window.innerHeight;
@@ -178,6 +181,7 @@ export class LoginPage {
         return false;
       }
     });
+    
   }
 
   showHideErrors() {
