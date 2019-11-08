@@ -27,28 +27,28 @@
 
           <ul class="sideMenu-subnav"  *ngIf="systemService.customerId > 0" >
 
-              <li  routerLink="/customer-details/{{customerId}}"  [ngClass]="getClass('/customer-details')">
+              <li  [routerLink]="['/customer-details/',systemService.customerId]"   [ngClass]="getClass('/customer-details')">
                 <ion-icon name="person"></ion-icon>
                 Kundendetails
               </li>
 
-              <li routerLink="/product-list/{{customerId}}" [ngClass]="getClass('/product-list')">
+              <li [routerLink]="['/product-list/',systemService.customerId]"   [ngClass]="getClass('/product-list')">
                 <ion-icon name="pricetags"></ion-icon>
                 Produkte
               </li>
 
-              <li routerLink="/protocol-list/{{customerId}}" [ngClass]="getClass('/protocol-list')">
+              <li [routerLink]="['/protocol-list/',systemService.customerId]"  [ngClass]="getClass('/protocol-list')">
                 <ion-icon name="document"></ion-icon>
                 Protokolle
               </li>
 
-              <li routerLink="/order-form/{{customerId}}" [ngClass]="getClass('/order-form')">
+              <li [routerLink]="['/order-form/',systemService.customerId]"  [ngClass]="getClass('/order-form')">
                 <ion-icon name="basket"></ion-icon>
                 Bestellformular
               </li>
 
 
-              <li routerLink="/note-list/{{customerId}}" [ngClass]="getClass('/note-list')" *ngIf="(userdata.role==1)||(userdata.role==2)">
+              <li [routerLink]="['/note-list/',systemService.customerId]"  [ngClass]="getClass('/note-list')" *ngIf="(userdata.role==1)||(userdata.role==2)">
                 <ion-icon name="bookmarks"></ion-icon>
                 Notizen
               </li>

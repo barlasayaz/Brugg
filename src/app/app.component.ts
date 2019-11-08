@@ -6,7 +6,7 @@ import { NavigationExtras } from '@angular/router';
 import { ApiService } from './services/api';
 import { SystemService } from './services/system';
 import { UserdataService } from './services/userdata';
-import { Router } from '@angular/router';
+import { Router , RouterEvent} from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -25,14 +25,21 @@ export class AppComponent {
     private router: Router,
     public menuCtrl: MenuController
   ) {
+    
+    this.router.events.subscribe((event: RouterEvent) => {
+      console.log('RouterEvent:',event);
+      
+      if(this.router.isActive("/startscreen", false) ){
+        this.menuCtrl.enable(false);
+      }if(this.router.isActive("/startscreen", false) ){
+        this.menuCtrl.enable(false);
+      }else{
+        this.menuCtrl.enable(true);
+      }
+    }); 
+    
     this.initializeApp();
-    if(this.router.isActive("/startscreen", false) ){
-      this.menuCtrl.enable(false);
-    }if(this.router.isActive("/startscreen", false) ){
-      this.menuCtrl.enable(false);
-    }else{
-      this.menuCtrl.enable(true);
-    }
+
   }
 
   initializeApp() {
@@ -42,6 +49,8 @@ export class AppComponent {
       this.navCtrl.navigateRoot('/login');
     });
   }
+
+  
 
   getClass(path) {
     //console.log('this.router.isActive : ',path, this.router.isActive(path, false) );
