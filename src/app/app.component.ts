@@ -1,5 +1,4 @@
 import { Component, Input } from '@angular/core';
-
 import { Platform, NavController, MenuController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
@@ -7,6 +6,7 @@ import { NavigationExtras } from '@angular/router';
 import { ApiService } from './services/api';
 import { SystemService } from './services/system';
 import { UserdataService } from './services/userdata';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -15,7 +15,7 @@ import { UserdataService } from './services/userdata';
 export class AppComponent {
   @Input() aktivPage: string;
   @Input() idCustomer: number;
-
+ 
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
@@ -24,6 +24,7 @@ export class AppComponent {
     public systemService: SystemService,
     public userdata: UserdataService,
     private navCtrl: NavController,
+    private router: Router,
     private menu: MenuController
   ) {
     this.initializeApp();
@@ -38,7 +39,8 @@ export class AppComponent {
   }
 
   getClass(path) {
-    if (this.aktivPage == path) {
+    console.log('this.router.isActive : ',path, this.router.isActive(path, false) );
+    if (this.router.isActive(path, false)) {
       return 'active';
     } else {
       return '';
