@@ -19,6 +19,7 @@ export class SystemService {
   public opcuaServerPfad: string;
   public customerId: number;
   public customerText: string;
+  public shrinkMenu:boolean = false;
 
   //public opcuaServerUri:string  = "opc.tcp://192.168.178.124:49320/Kepware.KEPServerEX.V6";
   //public opcuaServerPfad:string = "Hebemittel.SPS"; 

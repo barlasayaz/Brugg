@@ -3,6 +3,7 @@ import { UserdataService } from '../../services/userdata';
 import { ApiService } from '../../services/api';
 import { NavController, Events, MenuController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
+import { SystemService } from './services/system';
 
 /**
  * Generated class for the MainNavComponent component.
@@ -30,6 +31,7 @@ export class MainNavComponent implements OnInit {
     public navCtrl: NavController,
     public translate: TranslateService,
     public events: Events,
+    public systemService: SystemService,
     private menu: MenuController,
     public apiService: ApiService) {
 
@@ -64,10 +66,10 @@ export class MainNavComponent implements OnInit {
     console.log('menu opend');
   }
 
-  private status: boolean = false;
+  
   shrinkMenu() {
     console.log('menu shrinked');
-    this.status != this.status;
+    this.systemService.shrinkMenu = !this.systemService.shrinkMenu ;
   }
 
   showdashfirst() {

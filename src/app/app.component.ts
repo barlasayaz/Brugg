@@ -61,10 +61,10 @@ export class AppComponent {
     }
   }
 
-  status: boolean = false;
+  
   shrinkMenu() {
     console.log('menu shrinked');
-    this.status = !this.status;
+    this.systemService.shrinkMenu = !this.systemService.shrinkMenu ;
   }
 
   

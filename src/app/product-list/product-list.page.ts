@@ -618,7 +618,7 @@ export class ProductListPage implements OnInit {
                     if ((options[i].type != 0) && (options[i].type != 6)) {
                         let t = this.productListAll[index].data[options[i].title[this.lang]] ;
                         let h = '';
-                        console.log(options[i].base);
+                        //console.log(options[i].base);
                         if (options[i].base === undefined) { options[i].base = true; }
                         if (options[i].base) {
                             if (t) { h = t.trim(); }
