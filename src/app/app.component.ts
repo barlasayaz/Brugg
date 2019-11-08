@@ -4,6 +4,9 @@ import { Platform, NavController, MenuController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { NavigationExtras } from '@angular/router';
+import { ApiService } from './services/api';
+import { SystemService } from './services/system';
+import { UserdataService } from './services/userdata';
 
 @Component({
   selector: 'app-root',
@@ -17,6 +20,9 @@ export class AppComponent {
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
+    public apiService: ApiService,
+    public systemService: SystemService,
+    public userdata: UserdataService,
     private navCtrl: NavController,
     private menu: MenuController
   ) {

@@ -4,7 +4,7 @@
     <div class="sideMenu">
       <div class="sideMenu-header">
         <img class="sideMenu-logo" src="assets/imgs/pvs2go-logo.svg" alt="PVS2GO Logo">
-        <div class="sideMenu-version">4.4.1.2</div>
+        <div class="sideMenu-version">{{apiService.version}}</div>
       </div>
       <div class="sideMenu-content">
         <ul class="sideMenu-nav">
@@ -19,35 +19,35 @@
             Dashboard
           </li>
 
-          <li (click)="go('CustomerTable',idCustomer);" [ngClass]="getClass('CustomerTable')">
+          <li (click)="go('CustomerTable',systemService.customerId);" [ngClass]="getClass('CustomerTable')">
             <ion-icon name="people"></ion-icon>
             Kundenübersicht
           </li>
 
-          <ul class="sideMenu-subnav"> <!--  *ngIf="idCustomer > 0"-->
+          <ul class="sideMenu-subnav"  *ngIf="systemService.customerId > 0" >
   
-              <li (click)="go('CustomerDetails', idCustomer);" [ngClass]="getClass('CustomerDetails')">
+              <li (click)="go('CustomerDetails', systemService.customerId);" [ngClass]="getClass('CustomerDetails')">
                 <ion-icon name="person"></ion-icon>
                 Kundendetails
               </li>
 
-              <li (click)="go('ProductList',idCustomer);" [ngClass]="getClass('ProductList')">
+              <li (click)="go('ProductList',systemService.customerId);" [ngClass]="getClass('ProductList')">
                 <ion-icon name="pricetags"></ion-icon>
                 Produkte
               </li>
 
-              <li (click)="go('ProtocolList',idCustomer);" [ngClass]="getClass('ProtocolList')">
+              <li (click)="go('ProtocolList',systemService.customerId);" [ngClass]="getClass('ProtocolList')">
                 <ion-icon name="document"></ion-icon>
                 Protokolle
               </li>
 
-              <li (click)="go('OrderForm',idCustomer);" [ngClass]="getClass('OrderForm')">
+              <li (click)="go('OrderForm',systemService.customerId);" [ngClass]="getClass('OrderForm')">
                 <ion-icon name="basket"></ion-icon>
                 Bestellformular
               </li>
 
-            <!-- *ngIf="(userdata.role==1)||(userdata.role==2)" -->
-              <li (click)="go('NoteList',idCustomer);" [ngClass]="getClass('NoteList')" >
+             
+              <li (click)="go('NoteList',systemService.customerId);" [ngClass]="getClass('NoteList')" *ngIf="(userdata.role==1)||(userdata.role==2)">
                 <ion-icon name="bookmarks"></ion-icon>
                 Notizen
               </li>
