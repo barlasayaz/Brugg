@@ -12,12 +12,12 @@
                 <span class="ui-submenu-icon pi pi-fw pi-caret-down slide-caret"></span>
             </button>
         </div>
-        <div class="ui-inputgroup search-search">
+        <!-- <div class="ui-inputgroup search-search">
             <input type="text"
                    pInputText placeholder="{{'Suche' |translate }}"
                    [(ngModel)]="columnFilterValues['search_all']"
                    (input)="search_all()">
-        </div>
+        </div> -->
     </p-menubar>
     <p-slideMenu [model]="menuItems"
                  popup="false"
@@ -124,3 +124,23 @@
     </p-treeTable>
 
 </div>
+
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+        <ion-fab-button>
+            <ion-icon name="menu"></ion-icon>
+        </ion-fab-button>
+        <ion-fab-list side="top">
+            <!-- BUTTON -->
+            <ion-fab-button>
+                <ion-icon name="add"></ion-icon>
+            </ion-fab-button>
+            <!-- BUTTON -->
+            <ion-fab-button>
+                <ion-icon name="add"></ion-icon>
+            </ion-fab-button>
+            <!-- BUTTON -->
+            <ion-fab-button>
+                <ion-icon name="add"></ion-icon>
+            </ion-fab-button>
+        </ion-fab-list>
+    </ion-fab>
