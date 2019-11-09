@@ -12,57 +12,57 @@
 
           <li routerLink="/startscreen" [ngClass]="getClass('/startscreen')">
             <ion-icon name="home"></ion-icon>
-            <span>Startseite</span>
+            <span style="font-size: 14px;">{{'Startseite'| translate}}</span>
           </li>
 
           <li routerLink="/dashboard" [ngClass]="getClass('/dashboard')">
             <ion-icon name="apps"></ion-icon>
-            <span>Dashboard</span>
+            <span style="font-size: 14px;">{{'Dashboard'| translate}}</span>
           </li>
 
           <li [routerLink]="['/customer-table/',systemService.customerName]" [ngClass]="getClass('/customer-table')">
             <ion-icon name="people"></ion-icon>
-            <span>Kundenübersicht</span>
+            <span style="font-size: 14px;">{{'Kundenübersicht'| translate}}</span>
           </li>
 
           <ul class="sideMenu-subnav" *ngIf="systemService.customerId > 0" >
 
               <li  [routerLink]="['/customer-details/',systemService.customerId]" [ngClass]="getClass('/customer-details')">
                 <ion-icon name="person"></ion-icon>
-                <span>Kundendetails</span>
+                <span style="font-size: 14px;">{{'Kundendetails'| translate}}</span>
               </li>
 
               <li [routerLink]="['/product-list/',systemService.customerId]" [ngClass]="getClass('/product-list')">
                 <ion-icon name="pricetags"></ion-icon>
-                <span>Produkte</span>
+                <span style="font-size: 14px;">{{'Produkte'| translate}}</span>
               </li>
 
               <li [routerLink]="['/protocol-list/',systemService.customerId]" [ngClass]="getClass('/protocol-list')">
                 <ion-icon name="document"></ion-icon>
-                <span>Protokolle</span>
+                <span style="font-size: 14px;">{{'Protokolle'| translate}}</span>
               </li>
 
               <li [routerLink]="['/order-form/',systemService.customerId]" [ngClass]="getClass('/order-form')">
                 <ion-icon name="basket"></ion-icon>
-                <span>Bestellformular</span>
+                <span style="font-size: 14px;">{{'Bestellformular'| translate}}</span>
               </li>
 
 
               <li [routerLink]="['/note-list/',systemService.customerId]" [ngClass]="getClass('/note-list')" *ngIf="(userdata.role==1)||(userdata.role==2)">
                 <ion-icon name="bookmarks"></ion-icon>
-                <span>Notizen</span>
+                <span style="font-size: 14px;">{{'Notizen'| translate}}</span>
               </li>
 
           </ul>
 
           <li routerLink="/appointment-plan"  [ngClass]="getClass('/appointment-plan')">
             <ion-icon name="time"></ion-icon>
-            <span>Terminpläne</span>
+            <span style="font-size: 14px;">{{'Terminpläne'| translate}}</span>
           </li>
 
           <li routerLink="/my-data"  [ngClass]="getClass('//my-data')">
             <ion-icon name="settings"></ion-icon>
-            <span>Einstellungen</span>
+            <span style="font-size: 14px;">{{'Einstellungen'| translate}}</span>
           </li>
 
         </ul>
