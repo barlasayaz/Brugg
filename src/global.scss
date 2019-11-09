@@ -24,6 +24,10 @@ input:-webkit-autofill:active {
   box-shadow: 0 0 0 30px white inset !important;
 }
 
+ion-button {
+  --box-shadow: none !important;
+}
+
 .alert-md .alert-wrapper {
   max-width: 90%;
 }
@@ -1963,6 +1967,7 @@ select.ng-invalid {
 .btn-modal-success:focus {
   color: #fff;
   --background: #3d8c40 !important;
+  --background-activated: #3d8c40 !important;
 }
 
 .btn-modal-dark-main {

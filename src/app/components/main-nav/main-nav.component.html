@@ -7,11 +7,21 @@
           <ion-col size-xl="9" size-lg="9" size-md="9" size-sm="12" size="12" class="topBar-sm topBar-left">
             <div class="topBar-outer">
               <div class="topBar-inner">
-                <div class="menuIcon menuIcon-xs" (click)="openMenu()">
-                  <ion-icon name="menu"></ion-icon>
+
+                <div class="topMenu">
+                  <div class="menuIcon menuIcon-xs" (click)="openMenu()">
+                    <ion-icon name="menu"></ion-icon>
+                  </div>
+                  <div class="menuIcon menuIcon-md" (click)="shrinkMenu()">
+                    <ion-icon name="menu"></ion-icon>
+                  </div>
                 </div>
-                <div class="menuIcon menuIcon-md" (click)="shrinkMenu()">
-                  <ion-icon name="menu"></ion-icon>
+                
+                <div class="topsearch">
+                  <input type="search" name="topsearch" id="topsearch" placeholder="suche...">
+                  <div class="search-filter">
+                    <i class="pi pi-filter"></i>
+                  </div>
                 </div>
 
               </div>
