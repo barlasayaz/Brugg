@@ -12,12 +12,12 @@
                 <span class="ui-submenu-icon pi pi-fw pi-caret-down slide-caret"></span>
             </button>
         </div>
-        <!-- <div class="ui-inputgroup search-search">
+        <div class="ui-inputgroup search-search">
             <input type="text"
                    pInputText placeholder="{{'Suche' |translate }}"
                    [(ngModel)]="columnFilterValues['search_all']"
                    (input)="search_all()">
-        </div> -->
+        </div>
     </p-menubar>
     <p-slideMenu [model]="menuItems"
                  popup="false"
@@ -34,11 +34,11 @@
                    placeholder="{{'Suche' |translate }}"
                    [(ngModel)]="columnFilterValues['search_all']"
                    (input)="search_all()">
-            <!-- <button (click)="search_all()" 
+            <button (click)="search_all()" 
                     pButton type="button" 
                     icon="fa fa-search" 
                     class="ui-button-warn">
-            </button> -->
+            </button>
         </div>
     </p-menubar>
 
@@ -125,22 +125,42 @@
 
 </div>
 
-    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-        <ion-fab-button>
-            <ion-icon name="menu"></ion-icon>
+<ion-fab vertical="bottom" horizontal="end" slot="fixed" class="liftiball">
+    <ion-fab-button color="tertiary">
+        <ion-icon name="menu"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list side="top">
+        <!-- BUTTON -->
+        <ion-fab-button color="primary" data-desc="Ansicht">
+            <i class="pi pi-eye"></i>
         </ion-fab-button>
-        <ion-fab-list side="top">
-            <!-- BUTTON -->
-            <ion-fab-button>
-                <ion-icon name="add"></ion-icon>
-            </ion-fab-button>
-            <!-- BUTTON -->
-            <ion-fab-button>
-                <ion-icon name="add"></ion-icon>
-            </ion-fab-button>
-            <!-- BUTTON -->
-            <ion-fab-button>
-                <ion-icon name="add"></ion-icon>
-            </ion-fab-button>
-        </ion-fab-list>
-    </ion-fab>
+        <!-- BUTTON -->
+        <ion-fab-button color="primary" data-desc="Bearbeiten">
+            <i class="pi pi-pencil"></i>
+        </ion-fab-button>
+        <!-- BUTTON -->
+        <ion-fab-button color="primary" data-desc="Bewegen">
+            <i class="pi pi-chevron-up"></i>
+        </ion-fab-button>
+        <!-- BUTTON -->
+        <ion-fab-button color="primary" data-desc="Neu">
+            <i class="pi pi-plus"></i>
+        </ion-fab-button>
+        <!-- BUTTON -->
+        <ion-fab-button color="primary" data-desc="Spalten">
+            <i class="pi pi-eject"></i>
+        </ion-fab-button>
+        <!-- BUTTON -->
+        <ion-fab-button color="primary" data-desc="Filter zurücksetzen">
+            <i class="pi pi-filter"></i>
+        </ion-fab-button>
+        <!-- BUTTON -->
+        <ion-fab-button color="primary" data-desc="PDF Export">
+            <i class="pi pi-save"></i>
+        </ion-fab-button>
+        <!-- BUTTON -->
+        <ion-fab-button color="primary" data-desc="XLS Export">
+            <i class="pi pi-save"></i>
+        </ion-fab-button>
+    </ion-fab-list>
+</ion-fab>

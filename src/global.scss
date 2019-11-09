@@ -60,6 +60,23 @@ ion-button {
   display:none;
 }
 
+.liftiball {
+  ion-fab-list.fab-list-active {
+    max-height: 277px;
+    overflow: scroll;
+    display: block;
+    padding-left: 300px;
+    padding-right: 9px;
+    right: -10px;
+    bottom: -20px;
+    ion-fab-button {
+      height:45px;
+      width:45px;
+      font-size: 18px;
+    }
+  }
+}
+
 .sideMenu {
   &-header {
     display:flex;
@@ -92,7 +109,7 @@ ion-button {
       display: flex;
       flex-direction: row;
       align-items: center;
-      margin-bottom: 10px;
+      margin-bottom: 2px;
       background: #eee;
 
       &:hover,
@@ -121,7 +138,7 @@ ion-button {
   }
 
   &-subnav {
-    margin: -10px 0 10px 0;
+    margin: -2px 0 10px 0;
     padding: 0;
     li {
       margin:0;
@@ -373,8 +390,10 @@ ion-button {
   display: block;
   position: absolute;
   top: calc(65px + 55px + 41px);
+  //top: calc(65px + 55px + 41px);
   left: 0;
   height: calc(100% - 65px - 55px - 41px);
+  //height: calc(100% - 65px - 55px );
   width: 100%;
   //background: #333;
   z-index: -55;
@@ -1968,6 +1987,24 @@ select.ng-invalid {
   color: #fff;
   --background: #3d8c40 !important;
   --background-activated: #3d8c40 !important;
+}
+
+ion-fab-button[data-desc] {
+  position: relative;
+}
+
+ion-fab-button[data-desc]::after {
+  position: absolute;
+  content: attr(data-desc);
+  z-index: 1;
+  right: 55px;
+  bottom: 4px;
+  background-color: #005E86;
+  padding: 6px 12px;
+  border-radius: 3px;
+  color: white;
+  font-size:15px;
+  box-shadow: 0 3px 5px -1px rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12);
 }
 
 .btn-modal-dark-main {

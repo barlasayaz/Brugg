@@ -17,12 +17,17 @@
                   </div>
                 </div>
                 
-                <div class="topsearch">
+                <div class="topsearch" *ngIf="aktivPage == 'CustomerTable' ||
+                  aktivPage == 'ProductList' ||
+                  aktivPage == 'ProtocolList' ||
+                  aktivPage == 'NoteList' ">
                   <input type="search" name="topsearch" id="topsearch" placeholder="suche...">
                   <div class="search-filter">
                     <i class="pi pi-filter"></i>
                   </div>
                 </div>
+
+                
 
               </div>
 
