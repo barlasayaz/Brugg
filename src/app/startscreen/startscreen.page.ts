@@ -8,6 +8,7 @@ import { ImprintPage } from '../login/imprint/imprint.page';
 import { NfcScanComponent } from '../components/nfc-scan/nfc-scan.component';
 import { QrBarcodeComponent } from '../components/qr-barcode/qr-barcode.component';
 import { ReboxPage } from '../rebox/rebox.page';
+import { SystemService } from '../services/system';
 
 @Component({
   selector: 'app-startscreen',
@@ -22,21 +23,24 @@ export class StartscreenPage {
   public  timeout: any;
   public mobilePlatform: boolean;
   public isNFC: boolean;
+  public customerSearch: any;
 
   constructor(public navCtrl: NavController,
-    public userdata: UserdataService,
-    public translate: TranslateService,
-    public modalCtrl: ModalController,
-    // private alertCtrl: AlertController,
-    public nfc: NFC,
-    public ndef: Ndef,
-    public platform: Platform) {
+              public userdata: UserdataService,
+              public translate: TranslateService,
+              public modalCtrl: ModalController,
+              // private alertCtrl: AlertController,
+              public nfc: NFC,
+              public ndef: Ndef,
+              public platform: Platform,
+              public systemService: SystemService) {
     console.log(this.translate.defaultLang);
 
     this.tagId = '??';
     this.readingTag = false;
     this.mobilePlatform = false;
     this.isNFC = false;
+    this.customerSearch = '';
 
     console.log('platform :', this.platform);
     platform.ready().then(() => {
@@ -121,9 +125,17 @@ export class StartscreenPage {
       case 'DashboardPage':
         this.navCtrl.navigateForward('/dashboard');
         break;
-      case 'CustomerTable':
-        this.navCtrl.navigateForward('/customer-table');
+      case 'CustomerTable': {
+        this.systemService.customerId = 0;
+        if (this.customerSearch == '') {
+          this.systemService.customerName = '';
+          this.navCtrl.navigateForward(['/customer-table', '']);
+        } else {
+          this.systemService.customerName = this.customerSearch;
+          this.navCtrl.navigateForward(['/customer-table', this.customerSearch]);
+        }
         break;
+      }
       case 'StartscreenPage':
         this.navCtrl.navigateForward('/startscreen');
         break;

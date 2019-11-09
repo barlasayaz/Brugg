@@ -130,13 +130,13 @@ export class AppointmentEditComponent implements OnInit {
   }
 
   loadCustomer() {
-    this.apiService.pvs4_get_customer_list(0).then((result: any) => {
+    this.apiService.pvs4_get_customer_list(0, '').then((result: any) => {
       this.listCustomer = [];
       this.data_tree(result.list);
       /*
       if(this.listCustomer.filter(x=> x.id == this.idCustomer).length>=1){
         this.customer = this.listCustomer.filter(x=> x.id == this.idCustomer)[0];
-      } 
+      }
       */
       this.customer = null;
       if (this.idCustomer > 0) { 

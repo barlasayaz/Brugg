@@ -19,10 +19,11 @@ export class SystemService {
   public opcuaServerPfad: string;
   public customerId: number;
   public customerText: string;
-  public shrinkMenu:boolean = false;
+  public shrinkMenu: boolean;
+  public customerName: string;
 
-  //public opcuaServerUri:string  = "opc.tcp://192.168.178.124:49320/Kepware.KEPServerEX.V6";
-  //public opcuaServerPfad:string = "Hebemittel.SPS"; 
+  // public opcuaServerUri:string  = "opc.tcp://192.168.178.124:49320/Kepware.KEPServerEX.V6";
+  // public opcuaServerPfad:string = "Hebemittel.SPS";
 
   constructor(public http: HttpClient, public plt: Platform) {
     console.log('Hello SystemProvider Provider');
@@ -31,6 +32,8 @@ export class SystemService {
     this.opcuaServerUri = 'opc.tcp://172.16.9.150:4840';
     this.opcuaServerPfad = 'Application.VARVISU';
     this.customerId = 0;
+    this.shrinkMenu = false;
+    this.customerName = '';
 
     if (this.plt.is('ios')) {
       console.log('I\'m an iOS device!');
@@ -43,12 +46,20 @@ export class SystemService {
 
   }
 
-  setCustomerId(id:number){
+  setCustomerId(id: number) {
     this.customerId = id;
   }
 
-  getCustomerId():number{
+  getCustomerId(): number {
     return this.customerId ;
+  }
+
+  setCustomerName(customerName: string) {
+    this.customerName = customerName;
+  }
+
+  getCustomerName(): string {
+    return this.customerName ;
   }
 
 }

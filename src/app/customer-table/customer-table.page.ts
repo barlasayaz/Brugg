@@ -13,6 +13,7 @@ import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { SystemService } from '../services/system';
 import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
     selector: 'app-customer-table',
@@ -32,7 +33,8 @@ export class CustomerTablePage implements OnInit {
         public system: SystemService,
         public events: Events,
         public loadingCtrl: LoadingController,
-        private screenOrientation: ScreenOrientation) {
+        private screenOrientation: ScreenOrientation,
+        private route: ActivatedRoute) {
             this.modelChanged.pipe(
                 debounceTime(700))
                 .subscribe(model => {
@@ -79,6 +81,7 @@ export class CustomerTablePage implements OnInit {
     public rowHeight = 26;
     public rowCount = 100;
     public sortedColumn = { sort_field : null, sort_order : 0 };
+    public customerName: any;
 
     public menuItems: MenuItem[] = [{
         label: this.translate.instant('Ansicht'),
@@ -219,6 +222,8 @@ export class CustomerTablePage implements OnInit {
         if (localStorage.getItem('sort_column_customer') != undefined) {
             this.sortedColumn = JSON.parse(localStorage.getItem('sort_column_customer'));
         }
+        this.customerName = this.route.snapshot.paramMap.get('customerName');
+        console.log('customerName :', this.customerName);
         this.page_load();
     }
 
@@ -295,7 +300,7 @@ export class CustomerTablePage implements OnInit {
         this.rowRecords = 0;
         this.totalRecords = 0;
         this.events.publish('prozCustomer', 0);
-        this.apiService.pvs4_get_customer_list(0).then((result: any) => {
+        this.apiService.pvs4_get_customer_list(0, this.customerName).then((result: any) => {
             console.log('page_load result :', result);
 
             this.customerListAll = result.list;

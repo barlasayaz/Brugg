@@ -377,7 +377,7 @@ export class ApiService {
     });
   }
 
-  pvs4_get_customer_list(parentID: number, offset: number= 0) {
+  pvs4_get_customer_list(parentID: number, csutomerName: string, offset: number= 0) {
     const userID = this.userdata.id;
     const licensee = this.userdata.licensee;
     const role = this.userdata.role;
@@ -387,7 +387,8 @@ export class ApiService {
         parent: parentID,
         licensee: licensee,
         offset : offset,
-        role: role
+        role: role,
+        customerName: csutomerName
       };
       this.pvs4_api_post('get_customer_list.php', data).then((done: any) => { // return the result
           res(done);

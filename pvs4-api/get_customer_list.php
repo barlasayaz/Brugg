@@ -101,9 +101,11 @@ function processing($user) {
     $licensee = 0;
     $offset = 0;
     $role = 0;
+    $customerName = '';
     if(isset($_POST['licensee'])) $licensee = intval ( trim( mysqli_escape_string($con,$_POST['licensee']) ));
     if(isset($_POST['offset'])) $offset = intval ( trim( mysqli_escape_string($con,$_POST['offset']) ));
     if(isset($_POST['role'])) $role = intval ( trim( mysqli_escape_string($con,$_POST['role']) ));
+    if(isset($_POST['customerName'])) $customerName = trim(mysqli_escape_string($con,$_POST['customerName']));
     $limit  = 9999;
     $offset = $offset * $limit ;
     if(($role==1)||($role==2)){
@@ -150,6 +152,7 @@ function processing($user) {
                       LEFT JOIN profiles as ps_tst ON ps_tst.id = cr.tester
                 WHERE cr.active = 1 
                   AND cr.licensee = $licensee
+                  AND cr.company LIKE '$customerName%'
              ORDER BY cr.parent LIMIT $limit OFFSET $offset;";                               
     }else{
         $cp= mysqli_query($con,"SELECT * FROM contact_persons WHERE active = 1 AND email = '$email'");
@@ -167,6 +170,7 @@ function processing($user) {
                            LEFT JOIN profiles as ps_emp ON ps_emp.id = cr.sales
                            LEFT JOIN profiles as ps_tst ON ps_tst.id = cr.tester
                      WHERE cr.active = 1
+                       AND cr.company LIKE '$customerName%'
                        AND cr.id IN (".implode(',',$arr).")";
         }
     }
