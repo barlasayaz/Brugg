@@ -15,11 +15,11 @@
 </ion-header>
 
 <ion-content>
-    <div *ngIf="readOnly" text-center>
+    <div *ngIf="readOnly" class="text-center">
         <div *ngIf="!listView">
             <ion-grid style="padding-top: 0px; padding-bottom: 0px; padding-left: 5px; padding-right: 5px;">
                 <ion-row>
-                    <ion-col size="12" text-center>
+                    <ion-col size="12" class="ion-text-center">
                         <ion-item lines="none">
                             <ion-button size="large"
                                 (click)="scanQr()">{{translate.instant('QR-Code scannen')}}</ion-button>
@@ -28,7 +28,7 @@
                 </ion-row>
             </ion-grid>
         </div>
-        <div *ngIf="listView" text-center>
+        <div *ngIf="listView" class="text-center">
             <div>
                 <p-table class="scanList" [columns]="cols" [value]="scanList">
                     <ng-template pTemplate="header" let-columns>
@@ -62,10 +62,10 @@
             </div>
         </div>
     </div>
-    <div *ngIf="!readOnly" text-center>
+    <div *ngIf="!readOnly" class="ion-text-center">
         <ion-grid style="padding-top: 0px; padding-bottom: 0px; padding-left: 5px; padding-right: 5px;">
             <ion-row>
-                <ion-col size="12" text-center>
+                <ion-col size="12" class="ion-text-center">
                     <ion-item lines="none">
                         <ion-label position="floating">Text</ion-label>
                         <ion-input type="text" [(ngModel)]="qrText"></ion-input>
@@ -73,7 +73,7 @@
                 </ion-col>
             </ion-row>
             <ion-row>
-                <ion-col size="12" text-center>
+                <ion-col size="12" class="ion-text-center">
                     <ion-item lines="none">
                         <ion-button (click)="scanQrToDb()" [disabled]="!mobilePlatform">{{translate.instant('Scannen')}}</ion-button>
                         <ion-button (click)="encodeText()">{{translate.instant('QR Erstellen')}}</ion-button>
