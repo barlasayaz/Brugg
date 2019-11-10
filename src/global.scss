@@ -83,7 +83,7 @@ ion-button {
     justify-content:center;
     align-items:center;
     flex-direction:column;
-    margin: 20px 0px;
+    margin: 18px 0px;
   }
 
   &-logo {
@@ -138,7 +138,7 @@ ion-button {
   }
 
   &-subnav {
-    margin: -2px 0 10px 0;
+    margin: -2px 0 2px 0;
     padding: 0;
     li {
       margin:0;
@@ -390,12 +390,11 @@ ion-button {
   display: block;
   position: absolute;
   top: calc(65px + 55px + 41px);
-  //top: calc(65px + 55px + 41px);
+  //top: calc(65px + 55px);
   left: 0;
   height: calc(100% - 65px - 55px - 41px);
   //height: calc(100% - 65px - 55px );
   width: 100%;
-  //background: #333;
   z-index: -55;
 }
 
