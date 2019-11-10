@@ -390,12 +390,11 @@ ion-button {
   display: block;
   position: absolute;
   top: calc(65px + 55px + 41px);
-  //top: calc(65px + 55px + 41px);
+  //top: calc(65px + 55px);
   left: 0;
   height: calc(100% - 65px - 55px - 41px);
   //height: calc(100% - 65px - 55px );
   width: 100%;
-  //background: #333;
   z-index: -55;
 }
 

@@ -1,4 +1,6 @@
 .menuIcon {
+  display: flex;
+  align-items: center;
   &-xs {
     @media (min-width: 400px) {
       display: none;
@@ -65,7 +67,7 @@
 .topBar-outer {
   display: flex;
   align-items: center;
-  height: 68px - 3px; // 3PX Bottomborder
+  height: 100%;
 
   &-right {
     -webkit-justify-content: flex-end;
@@ -75,6 +77,8 @@
 
 .topBar-inner {
   display: flex;
+  align-items: center;
+  height: 100%;
 }
 
 .topBar-btn {
@@ -170,7 +174,23 @@
 }
 
 .topMenu {
-  margin-right: 20px;
+  margin-right: 10px;
+}
+
+.topbuttons {
+  ion-button {
+    --border-radius: 3000px;
+    height:40px;
+    width: 40px;
+    font-size: 0px;
+    margin-right:5px;
+    &:last-child {
+      margin-right: 0;
+    }
+    ion-icon {
+      font-size: 18px;
+    }
+  }
 }
 
 .topsearch {
@@ -178,11 +198,17 @@
   display: flex;
   align-items: center;
   .search-filter {
-    position: absolute;
-    right: 0px;
-    top: 1px;
-    padding: 5px 10px;
+    height: 40px;
+    display: flex;
+    margin-left: -40px;
     color: #009de0;
+    margin-right: 10px;
+    align-items: center;
+    width: 40px;
+    justify-content: center;
+    &:hover, &:focus {
+      cursor: pointer;
+    }
   }
   input {
     border: 1px solid #E8E8E8;
@@ -190,7 +216,8 @@
     width: 200px;
     border-radius: 3px;
     padding: 5px 10px;
-    font-size: 12px;
+    font-size: 13px;
+    height: 40px;
   }
 }
 

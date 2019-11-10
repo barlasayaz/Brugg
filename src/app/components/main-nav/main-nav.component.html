@@ -22,32 +22,18 @@
                   aktivPage == 'ProtocolList' ||
                   aktivPage == 'NoteList' ">            
                   <input type="text" (input)="search($event)" id="topsearch" [value]="searchText"  placeholder="{{'Suche' |translate }}">
-                  <div class="search-filter" >
-                    <i class="pi pi-search"></i>
+                  
+                  <div class="search-filter" (click)="sendPing('toggleFilter')" *ngIf="aktivPage == 'CustomerTable'">
+                    <i class="pi pi-filter"></i>
                   </div>
                 </div>
 
-                <div class="topsearch" *ngIf="aktivPage == 'CustomerTable'" >
-                    <ion-button size="medium" 
-                    (click)="sendPing('newCustomer')" 
-                    style="padding-left: 0.2em; padding-right: 0.2em;"
-                    class="btn-assign">
+                <div class="topbuttons" *ngIf="aktivPage == 'CustomerTable'" >
+                    <ion-button size="medium" (click)="sendPing('newCustomer')" class="btn-assign">
                     <ion-icon name="md-add"></ion-icon>
                   </ion-button>
-                </div>
-                <div class="topsearch" *ngIf="aktivPage == 'CustomerTable'" >
-                    <ion-button size="medium" 
-                    (click)="sendPing('toggleFilter')" 
-                    style="padding-left: 0.2em; padding-right: 0.2em;"
-                    class="btn-assign">
-                    <ion-icon name="md-funnel"></ion-icon>
-                  </ion-button>
-                </div>
-                <div class="topsearch" *ngIf="aktivPage == 'CustomerTable'" >
-                    <ion-button size="medium" 
-                    (click)="sendPing('showColumns')" 
-                    style="padding-left: 0.2em; padding-right: 0.2em;"
-                    class="btn-assign">
+
+                  <ion-button size="medium" (click)="sendPing('showColumns')" class="btn-assign">
                     <ion-icon name="md-list-box"></ion-icon>
                   </ion-button>
                 </div>
