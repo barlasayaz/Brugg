@@ -22,12 +22,12 @@ export class MainNavComponent implements OnInit {
   @Input() aktivPage: string;
   @Input() idCustomer: number;
   @Output() ping: EventEmitter<any> = new EventEmitter<any>();
+  @Input() searchText: string = "";
 
   public progressBar: any = 0;
   public rowRecords: any = 0;
   public totalRecords: any = 0;
   public customerName = '';
-  public searchText="";
  
   constructor(
     public userdata: UserdataService,
@@ -70,6 +70,10 @@ export class MainNavComponent implements OnInit {
       lable:"searchText",
       text:this.searchText
     }
+    this.ping.emit(eventObj);
+  }
+  sendPing(ping){
+    const eventObj = { lable:ping };
     this.ping.emit(eventObj);
   }
 

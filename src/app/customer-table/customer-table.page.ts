@@ -191,7 +191,7 @@ export class CustomerTablePage implements OnInit {
     @ViewChild('divHeightCalc') divHeightCalc: any;
 
     update(data:any):void{
-        console.log('searchAll():',data );
+        console.log('update():',data );
         if(data.lable==="searchText"){
             this.columnFilterValues['search_all'] = data.text;
             if (this.isFilterOn()) {
@@ -202,6 +202,18 @@ export class CustomerTablePage implements OnInit {
             this.generate_customerList(0, this.rowCount, this.sortedColumn.sort_field, this.sortedColumn.sort_order);
             localStorage.setItem('filter_values_customer', JSON.stringify(this.columnFilterValues));
         }  
+        if(data.lable==="newCustomer"){
+            if (this.userdata.role_set.edit_customer != true) { return; }
+            this.menu_new();
+        }
+        if(data.lable==="toggleFilter"){
+            this.menu_filter();
+        }
+        if(data.lable==="showColumns"){
+            this.show_columns();
+        }
+
+        
     }
 
     ngOnInit(): void {
@@ -503,15 +515,22 @@ export class CustomerTablePage implements OnInit {
 
     nodeSelect() {
         console.log('nodeSelect:', this.menuItems);
+        let id_sn = 0;
+        id_sn = this.selectedNode.data.id;
+        this.menu_view();
+
+        /* todo */
+        
         this.menuItems[0].disabled = false;
         this.menuItems[1].disabled = false;
         this.menuItems[2].disabled = false;
-        let id_sn = 0;
+        
         if (this.selectedNode) {
             if (this.selectedNode.data.id) {
                 id_sn = this.selectedNode.data.id;
             }
         }
+
         if (id_sn == this.move_id) {
             this.menuItems[2].visible = this.userdata.role_set.edit_customer;
             this.menuItems[3].visible = false;

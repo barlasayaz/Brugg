@@ -1,4 +1,4 @@
-<main-nav aktivPage="CustomerTable" (ping)="update($event)"></main-nav>
+<main-nav aktivPage="CustomerTable" [searchText]="columnFilterValues['search_all']" (ping)="update($event)"></main-nav>
 
 <div class="ek-content" (window:resize)="onResize($event)">
     <p-menubar id="menuMin" class="wideMenu">
@@ -112,10 +112,7 @@
         <ion-icon name="menu"></ion-icon>
     </ion-fab-button>
     <ion-fab-list side="top">
-        <!-- BUTTON -->
-        <ion-fab-button color="primary"   title="{{'Ansicht' | translate}}" > 
-            <i class="pi pi-eye"></i>
-        </ion-fab-button>
+
         <!-- BUTTON -->
         <ion-fab-button color="primary" title="{{'Bearbeiten' | translate}}" >
             <i class="pi pi-pencil"></i>
@@ -125,13 +122,8 @@
             <i class="pi pi-chevron-up"></i>
         </ion-fab-button>
         <!-- BUTTON -->
-        <ion-fab-button color="primary" title="{{'Neu' | translate}}" >
-            <i class="pi pi-plus"></i>
-        </ion-fab-button>
-        <!-- BUTTON -->
-        <ion-fab-button color="primary" title="{{'Spalten' | translate}}" >
-            <i class="pi pi-eject"></i>
-        </ion-fab-button>
+
+      
         <!-- BUTTON -->
         <ion-fab-button color="primary" title="{{'Filter zurücksetzen' | translate}}" >
             <i class="pi pi-filter"></i>
