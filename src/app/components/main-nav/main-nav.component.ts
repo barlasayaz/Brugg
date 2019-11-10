@@ -20,11 +20,13 @@ import { SystemService } from '../../services/system';
 export class MainNavComponent implements OnInit {
   @Input() aktivPage: string;
   @Input() idCustomer: number;
+  @Input() functionSearch: Function;
 
   public progressBar: any = 0;
   public rowRecords: any = 0;
   public totalRecords: any = 0;
   public customerName = '';
+  public searchText="";
 
   constructor(
     public userdata: UserdataService,
@@ -57,6 +59,12 @@ export class MainNavComponent implements OnInit {
         this.customerName = result.obj.company;
         }
       });
+    }
+  }
+
+  search(){
+    if(this.functionSearch) {
+      this.functionSearch(this.searchText);
     }
   }
 

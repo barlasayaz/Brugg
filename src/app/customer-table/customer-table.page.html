@@ -1,4 +1,4 @@
-<main-nav aktivPage="CustomerTable" [idCustomer]="0"></main-nav>
+<main-nav aktivPage="CustomerTable" [functionSearch]="searchAll"></main-nav>
 
 <div class="ek-content" (window:resize)="onResize($event)">
     <p-menubar id="menuMin" class="wideMenu">
@@ -131,35 +131,35 @@
     </ion-fab-button>
     <ion-fab-list side="top">
         <!-- BUTTON -->
-        <ion-fab-button color="primary" data-desc="Ansicht">
+        <ion-fab-button color="primary"   title="{{'Ansicht' | translate}}" > 
             <i class="pi pi-eye"></i>
         </ion-fab-button>
         <!-- BUTTON -->
-        <ion-fab-button color="primary" data-desc="Bearbeiten">
+        <ion-fab-button color="primary" title="{{'Bearbeiten' | translate}}" >
             <i class="pi pi-pencil"></i>
         </ion-fab-button>
         <!-- BUTTON -->
-        <ion-fab-button color="primary" data-desc="Bewegen">
+        <ion-fab-button color="primary" title="{{'Bewegen' | translate}}" >
             <i class="pi pi-chevron-up"></i>
         </ion-fab-button>
         <!-- BUTTON -->
-        <ion-fab-button color="primary" data-desc="Neu">
+        <ion-fab-button color="primary" title="{{'Neu' | translate}}" >
             <i class="pi pi-plus"></i>
         </ion-fab-button>
         <!-- BUTTON -->
-        <ion-fab-button color="primary" data-desc="Spalten">
+        <ion-fab-button color="primary" title="{{'Spalten' | translate}}" >
             <i class="pi pi-eject"></i>
         </ion-fab-button>
         <!-- BUTTON -->
-        <ion-fab-button color="primary" data-desc="Filter zurücksetzen">
+        <ion-fab-button color="primary" title="{{'Filter zurücksetzen' | translate}}" >
             <i class="pi pi-filter"></i>
         </ion-fab-button>
         <!-- BUTTON -->
-        <ion-fab-button color="primary" data-desc="PDF Export">
+        <ion-fab-button color="primary" title="{{'PDF Export' | translate}}" >
             <i class="pi pi-save"></i>
         </ion-fab-button>
         <!-- BUTTON -->
-        <ion-fab-button color="primary" data-desc="XLS Export">
+        <ion-fab-button color="primary" title="{{'XLS Export' | translate}}" >
             <i class="pi pi-save"></i>
         </ion-fab-button>
     </ion-fab-list>

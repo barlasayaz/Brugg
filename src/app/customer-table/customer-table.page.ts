@@ -190,6 +190,17 @@ export class CustomerTablePage implements OnInit {
     @ViewChild('tt') dataTable: TreeTable;
     @ViewChild('divHeightCalc') divHeightCalc: any;
 
+    searchAll():void{
+        console.log('searchAll():', this );
+        if (this.isFilterOn()) {
+            this.menuItems[7].items[0]['disabled'] = false;
+        } else {
+            this.menuItems[7].items[0]['disabled'] = true;
+        }
+        this.generate_customerList(0, this.rowCount, this.sortedColumn.sort_field, this.sortedColumn.sort_order);
+        localStorage.setItem('filter_values_customer', JSON.stringify(this.columnFilterValues));
+    }
+
     ngOnInit(): void {
         this.cols = [
             { field: 'company', header: this.translate.instant('Firma'), width: '200px' },
@@ -413,6 +424,7 @@ export class CustomerTablePage implements OnInit {
     }
 
     generate_customerList(start_index: number, end_index: number, sort_field, sort_order) {
+        console.log('generate_customerList()');
         if (!this.isFilterOn()) {
             this.customerListView = JSON.parse(JSON.stringify(this.customerListAll));
         } else {
