@@ -25,8 +25,6 @@ export class AppComponent {
     private router: Router,
     public menuCtrl: MenuController
   ) {
-    
-    
        
     this.initializeApp();
 
@@ -55,8 +53,6 @@ export class AppComponent {
 
     });
   }
-
-  
 
   getClass(path) {
     //console.log('this.router.isActive : ',path, this.router.isActive(path, false) );

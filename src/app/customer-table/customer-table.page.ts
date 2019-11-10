@@ -97,8 +97,7 @@ export class CustomerTablePage implements OnInit {
         icon: 'pi pi-fw pi-pencil',
         disabled: true,
         visible: this.userdata.role_set.edit_customer,
-        command: (event) => {
-            if (this.userdata.role_set.edit_customer != true) { return; }
+        command: (event) => {            
             console.log('command menuitem:', event);
             this.menu_edit();
         }
@@ -108,8 +107,7 @@ export class CustomerTablePage implements OnInit {
         icon: 'pi pi-fw pi-chevron-up',
         visible: this.userdata.role_set.edit_customer,
         disabled: true,
-        command: (event) => {
-            if (this.userdata.role_set.edit_customer != true) { return; }
+        command: (event) => {            
             console.log('command menuitem:', event);
             this.menu_move(1);
         }
@@ -585,7 +583,8 @@ export class CustomerTablePage implements OnInit {
     }
 
     async menu_edit() {
-        console.log('menu_edit', this.selectedNode);
+        console.log('menu_edit', this.selectedNode)
+        if (this.userdata.role_set.edit_customer != true) { return; }        ;
         if (this.selectedNode) {
             if (this.selectedNode.data.id) {
                 const id = parseInt(this.selectedNode.data.id);
@@ -611,6 +610,7 @@ export class CustomerTablePage implements OnInit {
 
     menu_move(n) {
         console.log('menu_move_up', this.selectedNode);
+        if (this.userdata.role_set.edit_customer != true) { return; }
         if (n == 1) {
             if (this.selectedNode) {
                 if (this.selectedNode.data.id) {

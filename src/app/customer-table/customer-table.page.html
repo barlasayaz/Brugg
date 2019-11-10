@@ -114,24 +114,24 @@
     <ion-fab-list side="top">
 
         <!-- BUTTON -->
-        <ion-fab-button color="primary" title="{{'Bearbeiten' | translate}}" >
+        <ion-fab-button color="primary" title="{{'Bearbeiten' | translate}}" (click)="menu_edit()" >
             <i class="pi pi-pencil"></i>
         </ion-fab-button>
         <!-- BUTTON -->
-        <ion-fab-button color="primary" title="{{'Bewegen' | translate}}" >
+        <ion-fab-button color="primary" title="{{'Bewegen' | translate}}"  (click)="menu_move(1)" >
             <i class="pi pi-chevron-up"></i>
         </ion-fab-button>
         <!-- BUTTON -->
 
-        <ion-fab-button color="primary" title="{{'Filter zurücksetzen' | translate}}" >
+        <ion-fab-button color="primary" title="{{'Filter zurücksetzen' | translate}}" (click)="cancel_filters(2)"  >
             <i class="pi pi-filter"></i>
         </ion-fab-button>
         <!-- BUTTON -->
-        <ion-fab-button color="primary" title="{{'PDF Export' | translate}}" >
+        <ion-fab-button color="primary" title="{{'PDF Export' | translate}}" (click)="pdf_export()"  >
             <i class="pi pi-save"></i>
         </ion-fab-button>
         <!-- BUTTON -->
-        <ion-fab-button color="primary" title="{{'XLS Export' | translate}}" >
+        <ion-fab-button color="primary" title="{{'XLS Export' | translate}}" (click)="excel_export()"  >
             <i class="pi pi-save"></i>
         </ion-fab-button>
     </ion-fab-list>
