@@ -21,7 +21,7 @@
                   aktivPage == 'ProductList' ||
                   aktivPage == 'ProtocolList' ||
                   aktivPage == 'NoteList' ">            
-                  <input type="text" (input)="search($event)" id="topsearch" [value]="searchText"  placeholder="{{'Suche' |translate }}">
+                  <ion-input type="text" (input)="search($event)" id="topsearch" [(ngModel)]="searchText"  placeholder="{{'Suche' |translate }}" ></ion-input>
                   <div class="search-filter" >
                     <i class="pi pi-search"></i>
                   </div>
