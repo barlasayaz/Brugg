@@ -1,4 +1,4 @@
-<main-nav aktivPage="CustomerTable" [functionSearch]="searchAll"></main-nav>
+<main-nav aktivPage="CustomerTable" (ping)="update($event)"></main-nav>
 
 <div class="ek-content" (window:resize)="onResize($event)">
     <p-menubar id="menuMin" class="wideMenu">
@@ -12,12 +12,6 @@
                 <span class="ui-submenu-icon pi pi-fw pi-caret-down slide-caret"></span>
             </button>
         </div>
-        <div class="ui-inputgroup search-search">
-            <input type="text"
-                   pInputText placeholder="{{'Suche' |translate }}"
-                   [(ngModel)]="columnFilterValues['search_all']"
-                   (input)="search_all()">
-        </div>
     </p-menubar>
     <p-slideMenu [model]="menuItems"
                  popup="false"
@@ -28,18 +22,6 @@
     <p-menubar [model]="menuItems"
                [autoDisplay]="false"
                id="menuMax">
-        <div class="ui-inputgroup search-search">
-            <input type="text" 
-                   pInputText
-                   placeholder="{{'Suche' |translate }}"
-                   [(ngModel)]="columnFilterValues['search_all']"
-                   (input)="search_all()">
-            <button (click)="search_all()" 
-                    pButton type="button" 
-                    icon="fa fa-search" 
-                    class="ui-button-warn">
-            </button>
-        </div>
     </p-menubar>
 
    <div id="heightCalc" 

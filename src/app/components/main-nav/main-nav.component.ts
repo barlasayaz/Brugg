@@ -1,9 +1,10 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input , Output, EventEmitter, NgModule  } from '@angular/core';
 import { UserdataService } from '../../services/userdata';
 import { ApiService } from '../../services/api';
 import { NavController, Events, MenuController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { SystemService } from '../../services/system';
+import { FormsModule } from '@angular/forms';
 
 /**
  * Generated class for the MainNavComponent component.
@@ -20,14 +21,14 @@ import { SystemService } from '../../services/system';
 export class MainNavComponent implements OnInit {
   @Input() aktivPage: string;
   @Input() idCustomer: number;
-  @Input() functionSearch: Function;
+  @Output() ping: EventEmitter<any> = new EventEmitter<any>();
 
   public progressBar: any = 0;
   public rowRecords: any = 0;
   public totalRecords: any = 0;
   public customerName = '';
   public searchText="";
-
+ 
   constructor(
     public userdata: UserdataService,
     public navCtrl: NavController,
@@ -56,16 +57,20 @@ export class MainNavComponent implements OnInit {
     if (this.idCustomer > 0) {
       this.apiService.pvs4_get_customer(this.idCustomer).then((result: any) => {
         if (result && result.obj) {
-        this.customerName = result.obj.company;
+          this.customerName = result.obj.company;
         }
       });
     }
   }
 
-  search(){
-    if(this.functionSearch) {
-      this.functionSearch(this.searchText);
+  search(event:any){
+    console.log('search',event.target.value);
+    this.searchText = event.target.value;
+    const eventObj = {
+      lable:"searchText",
+      text:this.searchText
     }
+    this.ping.emit(eventObj);
   }
 
   openMenu() {

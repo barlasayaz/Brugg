@@ -190,15 +190,18 @@ export class CustomerTablePage implements OnInit {
     @ViewChild('tt') dataTable: TreeTable;
     @ViewChild('divHeightCalc') divHeightCalc: any;
 
-    searchAll():void{
-        console.log('searchAll():', this );
-        if (this.isFilterOn()) {
-            this.menuItems[7].items[0]['disabled'] = false;
-        } else {
-            this.menuItems[7].items[0]['disabled'] = true;
-        }
-        this.generate_customerList(0, this.rowCount, this.sortedColumn.sort_field, this.sortedColumn.sort_order);
-        localStorage.setItem('filter_values_customer', JSON.stringify(this.columnFilterValues));
+    update(data:any):void{
+        console.log('searchAll():',data );
+        if(data.lable==="searchText"){
+            this.columnFilterValues['search_all'] = data.text;
+            if (this.isFilterOn()) {
+                this.menuItems[7].items[0]['disabled'] = false;
+            } else {
+                this.menuItems[7].items[0]['disabled'] = true;
+            }
+            this.generate_customerList(0, this.rowCount, this.sortedColumn.sort_field, this.sortedColumn.sort_order);
+            localStorage.setItem('filter_values_customer', JSON.stringify(this.columnFilterValues));
+        }  
     }
 
     ngOnInit(): void {
