@@ -202,7 +202,7 @@
     display: flex;
     margin-left: -40px;
     color: #009de0;
-    margin-right: 10px;
+    margin-right: 0px;
     align-items: center;
     width: 40px;
     z-index: 4;
@@ -293,10 +293,25 @@
   }
 }
 
+.filterOn {
+  background: #005e86;
+  padding: 4px 8px;
+  color: #fff;
+  border-radius: 3px;
+
+  .fas {
+    margin-left: 5px;
+    font-size: 12px;
+  }
+}
+
 #customerName {
   width: auto;
+  display: flex;
+  align-items: center;
   justify-content: left;
-  height: 45px;
+  text-transform: capitalize;
+  height: 60px;
   font-size: 14px;
 
   @media (max-width: 576px) {

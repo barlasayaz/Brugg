@@ -50,6 +50,9 @@
                           aktivPage == 'NoteDetails'">
                   {{customerName}}
                 </div>
+                <span class="filterOn" *ngIf="filterOn">
+                  {{'Filter' | translate}}: {{filterText}} <i class="fas fa-times"></i>
+                </span>
               </div>
             </div>
           </ion-col>
@@ -62,10 +65,6 @@
                           aktivPage == 'ProtocolList' ||
                           aktivPage == 'NoteList'">
                 {{rowRecords}} {{'Datensätze von' | translate}} {{totalRecords}}
-                <span *ngIf="filterOn">
-                  <br>{{'Filter' | translate}}: {{filterText}}
-                </span>
-                
               </div>
 
               <div class="topBar-inner posek" *ngIf="aktivPage == 'CustomerTable' ||

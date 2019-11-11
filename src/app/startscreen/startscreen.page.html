@@ -35,7 +35,7 @@
 							</div>
 						</ion-button>
 						<div class="startbtn-extra">
-							<ion-searchbar color="light" class="quicksearch" placeholder="Schnellsuche" (keyup.enter)="go('CustomerTable');"
+							<ion-searchbar color="light" class="quicksearch" placeholder="{{'Filter' | translate}}" (keyup.enter)="go('CustomerTable');"
 								[(ngModel)]="customerSearch"
 								animated></ion-searchbar>
 						</div>
