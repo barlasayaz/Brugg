@@ -654,7 +654,7 @@ export class CustomerTablePage implements OnInit {
                 buttons: [{
                     text: this.translate.instant('nein'),
                     handler: data => {
-                        //  alert.dismiss();
+                        this.workBreak();
                     }
                 },
                 {
