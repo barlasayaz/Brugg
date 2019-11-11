@@ -95,7 +95,16 @@
                 <td [hidden]="!workMode" > 
                     <ion-button [hidden]="!editMode"  size="small"  (click)="editCustomer(rowData)">
                         <ion-icon name="create"></ion-icon>
-                    </ion-button>                            
+                    </ion-button>   
+                    <ion-button [hidden]="((!moveMode)||(move_id>0))"  size="small"  (click)="moveCustomer(1,rowData)">
+                            <ion-icon name="md-move"></ion-icon>
+                    </ion-button> 
+                    <ion-button [hidden]="((!moveMode)||(move_id==0)||(move_id==rowData.id))"  size="small"  (click)="moveCustomer(2,rowData)">
+                            <ion-icon name="md-arrow-round-forward"></ion-icon>
+                    </ion-button>     
+                    <ion-button [hidden]="((!moveMode)||(move_id==0)||(move_id!=rowData.id))"  size="small"  (click)="moveCustomer(2,rowData)">
+                            <ion-icon name="md-arrow-round-back"></ion-icon>
+                    </ion-button>                          
                 </td>
                 <td *ngFor="let col of selectedColumns; let i = index">
                     <p-treeTableToggler [rowNode]="rowNode" *ngIf="i == 0"></p-treeTableToggler>
@@ -122,7 +131,7 @@
 
 <ion-fab [hidden]="!workMode" vertical="bottom" horizontal="end" slot="fixed" class="liftiball liftiball-cancel">
     <!-- BUTTON -->
-    <ion-fab-button color="danger" title="{{'abbrechen' | translate}}" (click)="workMode=false">
+    <ion-fab-button color="danger" title="{{'abbrechen' | translate}}" (click)="workBreak();">
         <i class="fas fa-times"></i>
     </ion-fab-button>
 </ion-fab>
@@ -142,7 +151,7 @@
             <i class="fas fa-pen"></i>
         </ion-fab-button>
         <!-- BUTTON -->
-        <ion-fab-button color="primary" title="{{'Bewegen' | translate}}"  (click)="menu_move(1)" >
+        <ion-fab-button color="primary" title="{{'Bewegen' | translate}}"  (click)="menu_move()" >
             <i class="fas fa-arrows-alt"></i>
         </ion-fab-button>
         <!-- BUTTON -->
