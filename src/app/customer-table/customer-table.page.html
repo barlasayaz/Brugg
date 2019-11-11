@@ -120,7 +120,14 @@
 
 </div>
 
-<ion-fab vertical="bottom" horizontal="end" slot="fixed" class="liftiball">
+<ion-fab [hidden]="!workMode" vertical="bottom" horizontal="end" slot="fixed" class="liftiball">
+    <!-- BUTTON -->
+    <ion-fab-button color="success" title="{{'abbrechen' | translate}}" (click)="workMode=false">
+            <ion-icon name="close-circle"></ion-icon>
+    </ion-fab-button>
+</ion-fab>
+
+<ion-fab [hidden]="workMode" vertical="bottom" horizontal="end" slot="fixed" class="liftiball">
     <ion-fab-button color="tertiary">
         <ion-icon name="menu"></ion-icon>
     </ion-fab-button>
@@ -142,7 +149,7 @@
     </ion-fab-list>
 </ion-fab>
 
-<ion-fab vertical="bottom" horizontal="end" slot="fixed" class="liftiball liftiball-extra">
+<ion-fab [hidden]="workMode" vertical="bottom" horizontal="end" slot="fixed" class="liftiball liftiball-extra">
     <ion-fab-button color="medium">
         <ion-icon name="settings"></ion-icon>
     </ion-fab-button>
