@@ -128,10 +128,10 @@ export class StartscreenPage {
       case 'CustomerTable': {
         this.systemService.customerId = 0;
         if (this.customerSearch == '') {
-          this.systemService.customerName = '';
+          this.systemService.filterText = '';
           this.navCtrl.navigateForward(['/customer-table', '']);
         } else {
-          this.systemService.customerName = this.customerSearch;
+          this.systemService.filterText = this.customerSearch;
           this.navCtrl.navigateForward(['/customer-table', this.customerSearch]);
         }
         break;
@@ -139,7 +139,7 @@ export class StartscreenPage {
       case 'CustomerTableAll': {
         this.systemService.customerId = 0;
         this.customerSearch = '';
-        this.systemService.customerName = '';
+        this.systemService.filterText = '';
         this.navCtrl.navigateForward(['/customer-table', '']);        
         break;
       }
