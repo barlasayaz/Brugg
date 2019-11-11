@@ -20,7 +20,7 @@
             <span style="font-size: 14px;">{{'Dashboard'| translate}}</span>
           </li>
 
-          <li [routerLink]="['/customer-table/',systemService.customerName]" [ngClass]="getClass('/customer-table')">
+          <li [routerLink]="['/customer-table/',systemService.filterText]" [ngClass]="getClass('/customer-table')">
             <ion-icon name="people"></ion-icon>
             <span style="font-size: 14px;">{{'Kundenübersicht'| translate}}</span>
           </li>

@@ -136,6 +136,13 @@ export class StartscreenPage {
         }
         break;
       }
+      case 'CustomerTableAll': {
+        this.systemService.customerId = 0;
+        this.customerSearch = '';
+        this.systemService.customerName = '';
+        this.navCtrl.navigateForward(['/customer-table', '']);        
+        break;
+      }
       case 'StartscreenPage':
         this.navCtrl.navigateForward('/startscreen');
         break;

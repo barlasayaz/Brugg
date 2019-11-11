@@ -28,14 +28,14 @@
 				<ion-row>
 					<!-- Kundenübersicht -->
 					<ion-col size="12">
-						<ion-button icon-only class="startbtn" (click)="go('CustomerTable');">
+						<ion-button icon-only class="startbtn" (click)="go('CustomerTableAll');">
 							<div>
 								<ion-icon class="starticn" name="people"></ion-icon><br><br>
 								<label class="startlbl">{{'Kundenuebersicht' | translate}}</label>
 							</div>
 						</ion-button>
 						<div class="startbtn-extra">
-							<ion-searchbar placeholder="Schnellsuche" [(ngModel)]="customerSearch" animated></ion-searchbar>
+							<ion-searchbar placeholder="Schnellsuche" (keyup.enter)="go('CustomerTable');"  [(ngModel)]="customerSearch" animated></ion-searchbar>
 						</div>
 					</ion-col>
 				</ion-row>

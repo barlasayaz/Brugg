@@ -1,4 +1,9 @@
-<main-nav aktivPage="CustomerTable" [searchText]="columnFilterValues['search_all']" (ping)="update($event)"></main-nav>
+<main-nav aktivPage="CustomerTable" 
+          [searchText]="columnFilterValues['search_all']" 
+          [filterText]="filterText" 
+          [filterOn]="filterOn" 
+          (ping)="update($event)">
+</main-nav>
 
 <div class="ek-content" (window:resize)="onResize($event)">
     <p-menubar id="menuMin" class="wideMenu">
