@@ -119,25 +119,41 @@
     <ion-fab-list side="top">
 
         <!-- BUTTON -->
-        <ion-fab-button color="primary" title="{{'Bearbeiten' | translate}}" (click)="menu_edit()" >
-            <i class="pi pi-pencil"></i>
+        <ion-fab-button color="success" title="{{'Neu' | translate}}" (click)="menu_new()">
+            <i class="fas fa-plus"></i>
+        </ion-fab-button>
+        <!-- BUTTON -->
+        <ion-fab-button color="success" title="{{'Bearbeiten' | translate}}" (click)="menu_edit()">
+            <i class="fas fa-pen"></i>
         </ion-fab-button>
         <!-- BUTTON -->
         <ion-fab-button color="primary" title="{{'Bewegen' | translate}}"  (click)="menu_move(1)" >
-            <i class="pi pi-chevron-up"></i>
+            <i class="fas fa-arrows-alt"></i>
         </ion-fab-button>
         <!-- BUTTON -->
+    </ion-fab-list>
+</ion-fab>
 
-        <ion-fab-button color="primary" title="{{'Filter zurücksetzen' | translate}}" (click)="cancel_filters(2)"  >
-            <i class="pi pi-filter"></i>
+<ion-fab vertical="bottom" horizontal="end" slot="fixed" class="liftiball liftiball-extra">
+    <ion-fab-button color="medium">
+        <ion-icon name="settings"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list side="top">
+        <!-- BUTTON -->
+        <ion-fab-button color="medium" title="{{'Spalten' | translate}}" (click)="show_columns()">
+            <i class="fas fa-columns"></i>
         </ion-fab-button>
         <!-- BUTTON -->
-        <ion-fab-button color="primary" title="{{'PDF Export' | translate}}" (click)="pdf_export()"  >
-            <i class="pi pi-save"></i>
+        <ion-fab-button color="medium" title="{{'Filter zurücksetzen' | translate}}" (click)="cancel_filters(2)">
+            <i class="fas fa-filter"></i>
         </ion-fab-button>
         <!-- BUTTON -->
-        <ion-fab-button color="primary" title="{{'XLS Export' | translate}}" (click)="excel_export()"  >
-            <i class="pi pi-save"></i>
+        <ion-fab-button color="medium" title="{{'PDF Export' | translate}}" (click)="pdf_export()">
+            <i class="fas fa-file-download"></i>
+        </ion-fab-button>
+        <!-- BUTTON -->
+        <ion-fab-button color="medium" title="{{'XLS Export' | translate}}" (click)="excel_export()">
+            <i class="fas fa-file-download"></i>
         </ion-fab-button>
     </ion-fab-list>
 </ion-fab>
