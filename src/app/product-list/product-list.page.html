@@ -120,7 +120,7 @@
                     let-rowData="rowData" 
                     let-columns="columns">
             <tr [ttSelectableRow]="rowNode">
-                <td *ngFor="let col of selectedColumns; let i = index">
+                <td *ngFor="let col of selectedColumns; let i = index" [ngStyle]="showActivePassiveProduct && {'color': '#ccc'}">
                     <p-treeTableToggler [rowNode]="rowNode" *ngIf="i == 0"></p-treeTableToggler>
 
                     <span *ngIf="col.field == 'nfc_tag_id'">
@@ -206,7 +206,7 @@
                     let-rowData="rowData" 
                     let-columns="columns"> 
             <tr [ttSelectableRow]="rowNode" >
-                <td *ngFor="let col of selectedColumns; let i = index" >
+                <td *ngFor="let col of selectedColumns; let i = index" [ngStyle]="showActivePassiveProduct && {'color': '#ccc'}">
                    <p-treeTableToggler [rowNode]="rowNode" *ngIf="i == 0"></p-treeTableToggler>
 
                     <span *ngIf="col.field == 'nfc_tag_id'">
@@ -217,7 +217,7 @@
                         </span>
                     </span>
                     <span *ngIf="(col.field != 'nfc_tag_id') && (col.field === 'last_protocol_next')"
-                        [ngStyle]="{'color': rowData.last_protocol_next_color  }">{{rowData[col.field]}}</span>
+                          [ngStyle]="!showActivePassiveProduct && {'color': rowData.last_protocol_next_color}">{{rowData[col.field]}}</span>
                     <span *ngIf="(col.field != 'nfc_tag_id') && (col.field != 'last_protocol_next')">
                         <span *ngIf="(rowData[col.field]!=='x') && (rowData[col.field]!=='√')">
                             {{rowData[col.field]}}
@@ -310,7 +310,10 @@
        let-rowData="rowData" 
        let-columns="columns"> 
 <tr>
-   <td *ngFor="let col of selectedColumns; let i = index" [ttEditableColumn]="rowData" [ttEditableColumnField]="col.field" >
+   <td *ngFor="let col of selectedColumns; let i = index" 
+       [ttEditableColumn]="rowData"
+       [ttEditableColumnField]="col.field"
+       [ngStyle]="showActivePassiveProduct && {'color': '#ccc'}">
       <p-treeTableToggler [rowNode]="rowNode" *ngIf="i == 0"></p-treeTableToggler>
       <p-treeTableCellEditor>
             <ng-template pTemplate="input" *ngIf="col.editable">
@@ -329,7 +332,7 @@
            </span>
        </span>
        <span *ngIf="(col.field != 'nfc_tag_id') && (col.field === 'last_protocol_next')"
-           [ngStyle]="{'color': rowData.last_protocol_next_color  }">{{rowData[col.field]}}</span>
+           [ngStyle]="!showActivePassiveProduct && {'color': rowData.last_protocol_next_color  }">{{rowData[col.field]}}</span>
        <span *ngIf="(col.field != 'nfc_tag_id') && (col.field != 'last_protocol_next')">
            <span *ngIf="(rowData[col.field]==='x') || (rowData[col.field]==='√')">
                <img *ngIf="rowData[col.field]==='√'" src="/assets/imgs/available.png" alt=""
