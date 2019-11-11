@@ -70,6 +70,8 @@ th.p-table-filter.ng-star-inserted {
 .workWidthfix {
   width:50px;
   max-width:50px;
+  display:flex;
+  flex-direction:column;
 }
 
 .workColumn {

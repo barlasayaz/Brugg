@@ -81,7 +81,7 @@
             </tr>
             <tr [hidden]="!splitFilter">
                 <th [hidden]="!workMode" class="workColumn"  >
-                    <div class="workWidthfix"></div>
+                    <div class="workWidthfix">&nbsp;</div>
                 </th>
                 <th *ngFor="let col of selectedColumns" [ngSwitch]="col.field" class="p-table-filter">
                     <input pInputText type="text"
