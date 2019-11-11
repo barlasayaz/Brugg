@@ -23,6 +23,8 @@ export class MainNavComponent implements OnInit {
   @Input() idCustomer: number;
   @Output() ping: EventEmitter<any> = new EventEmitter<any>();
   @Input() searchText: string = "";
+  @Input() filterText: string = "";
+  @Input() filterOn:boolean = false;
 
   public progressBar: any = 0;
   public rowRecords: any = 0;

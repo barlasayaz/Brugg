@@ -81,7 +81,8 @@ export class CustomerTablePage implements OnInit {
     public rowHeight = 26;
     public rowCount = 100;
     public sortedColumn = { sort_field : null, sort_order : 0 };
-    public customerName: any;
+    public filterText: string = "";
+    public filterOn: boolean = false;
 
     public menuItems: MenuItem[] = [{
         label: this.translate.instant('Ansicht'),
@@ -246,8 +247,10 @@ export class CustomerTablePage implements OnInit {
         if (localStorage.getItem('sort_column_customer') != undefined) {
             this.sortedColumn = JSON.parse(localStorage.getItem('sort_column_customer'));
         }
-        this.customerName = this.route.snapshot.paramMap.get('customerName');
-        console.log('customerName :', this.customerName);
+        this.filterText = this.route.snapshot.paramMap.get('filterText');
+        if(this.filterText.length>0) this.filterOn = true;
+        console.log('filterText :', this.filterText);
+
         this.page_load();
     }
 
@@ -324,7 +327,7 @@ export class CustomerTablePage implements OnInit {
         this.rowRecords = 0;
         this.totalRecords = 0;
         this.events.publish('prozCustomer', 0);
-        this.apiService.pvs4_get_customer_list(0, this.customerName).then((result: any) => {
+        this.apiService.pvs4_get_customer_list(0, this.filterText).then((result: any) => {
             console.log('page_load result :', result);
 
             this.customerListAll = result.list;

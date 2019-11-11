@@ -20,7 +20,7 @@ export class SystemService {
   public customerId: number;
   public customerText: string;
   public shrinkMenu: boolean;
-  public customerName: string;
+  public filterText: string;
 
   // public opcuaServerUri:string  = "opc.tcp://192.168.178.124:49320/Kepware.KEPServerEX.V6";
   // public opcuaServerPfad:string = "Hebemittel.SPS";
@@ -33,7 +33,7 @@ export class SystemService {
     this.opcuaServerPfad = 'Application.VARVISU';
     this.customerId = 0;
     this.shrinkMenu = false;
-    this.customerName = '';
+    this.filterText = '';
 
     if (this.plt.is('ios')) {
       console.log('I\'m an iOS device!');
@@ -54,12 +54,12 @@ export class SystemService {
     return this.customerId ;
   }
 
-  setCustomerName(customerName: string) {
-    this.customerName = customerName;
+  setFilterText(filterText: string) {
+    this.filterText = filterText;
   }
 
-  getCustomerName(): string {
-    return this.customerName ;
+  getFilterText(): string {
+    return this.filterText ;
   }
 
 }
