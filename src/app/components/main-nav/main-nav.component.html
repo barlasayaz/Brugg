@@ -22,7 +22,7 @@
                   aktivPage == 'ProtocolList' ||
                   aktivPage == 'NoteList' ">            
                   <ion-input type="text" (input)="search($event)" id="topsearch" [(ngModel)]="searchText"  placeholder="{{'Suche' |translate }}" ></ion-input>
-                  <div class="search-filter" (click)="sendPing('toggleFilter')" *ngIf="aktivPage == 'CustomerTable'">
+                  <div class="search-filter" (click)="sendPing('toggleFilter')">
                     <i class="pi pi-filter"></i>
                   </div>
                 </div>
