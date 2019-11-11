@@ -216,7 +216,7 @@
     background: #FAFAFC;
     width: 200px;
     border-radius: 3px;
-    padding: 5px 10px !important;
+    padding: 5px !important;
     font-size: 13px;
     height: 40px;
   }
@@ -295,9 +295,19 @@
 
 .filterOn {
   background: #005e86;
-  padding: 4px 8px;
+  padding: 8px 10px;
   color: #fff;
   border-radius: 3px;
+  display: flex;
+  align-items: center;
+
+  span {
+    max-width: 100px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-right: 5px;
+  }
 
   .fas {
     margin-left: 5px;

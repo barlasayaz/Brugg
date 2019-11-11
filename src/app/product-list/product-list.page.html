@@ -360,72 +360,80 @@
     </ion-fab-button>
     <ion-fab-list side="top">
         <!-- BUTTON -->
-        <ion-fab-button color="primary" data-desc="Ansicht">
-            <i class="pi pi-eye"></i>
+        <ion-fab-button color="primary" title="{{'Ansicht' | translate}}">
+            <i class="fas fa-eye"></i>
         </ion-fab-button>
         <!-- BUTTON -->
-        <ion-fab-button color="primary" data-desc="Bearbeiten">
-            <i class="pi pi-pencil"></i>
+        <ion-fab-button color="primary" title="{{'Bearbeiten' | translate}}">
+            <i class="fas fa-pen"></i>
         </ion-fab-button>
         <!-- BUTTON -->
-        <ion-fab-button color="primary" data-desc="Löschen">
-            <i class="pi pi-trash"></i>
+        <ion-fab-button color="primary" title="{{'Löschen' | translate}}">
+            <i class="fas fa-trash"></i>
         </ion-fab-button>
         <!-- BUTTON -->
-        <ion-fab-button color="primary" data-desc="Bewegen">
-            <i class="pi pi-chevron-up"></i>
+        <ion-fab-button color="primary" title="{{'Bewegen' | translate}}">
+            <i class="fas fa-arrows-alt"></i>
         </ion-fab-button>
         <!-- BUTTON -->
-        <ion-fab-button color="primary" data-desc="Neue Produktvorlage">
-            <i class="pi pi-plus"></i>
+        <ion-fab-button color="primary" title="{{'Neue Produktvorlage' | translate}}">
+            <i class="fas fa-plus"></i>
         </ion-fab-button>
         <!-- BUTTON -->
-        <ion-fab-button color="primary" data-desc="Neues Produkt">
-            <i class="pi pi-plus"></i>
+        <ion-fab-button color="primary" title="{{'Neues Produkt' | translate}}">
+            <i class="fas fa-plus"></i>
         </ion-fab-button>
         <!-- BUTTON -->
-        <ion-fab-button color="primary" data-desc="Neues Protokoll">
-            <i class="pi pi-plus"></i>
+        <ion-fab-button color="primary" title="{{'Neues Protokoll' | translate}}">
+            <i class="fas fa-plus"></i>
+        </ion-fab-button>
+    </ion-fab-list>
+</ion-fab>
+
+<ion-fab vertical="bottom" horizontal="end" slot="fixed" class="liftiball liftiball-extra">
+    <ion-fab-button color="medium">
+        <ion-icon name="settings"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list side="top">
+        <!-- BUTTON -->
+        <ion-fab-button color="medium" title="{{'Spalten' | translate}}" (click)="show_columns()">
+            <i class="fas fa-columns"></i>
         </ion-fab-button>
         <!-- BUTTON -->
-        <ion-fab-button color="primary" data-desc="Spalten">
-            <i class="pi pi-eject"></i>
+        <ion-fab-button color="medium" title="{{'Filter zurücksetzen' | translate}}" (click)="cancel_filters(2)">
+            <i class="fas fa-filter"></i>
         </ion-fab-button>
         <!-- BUTTON -->
-        <ion-fab-button color="primary" data-desc="Filter zurücksetzen">
-            <i class="pi pi-filter"></i>
+        <ion-fab-button color="medium" title="{{'PDF Export' | translate}}" (click)="pdf_export()">
+            <i class="fas fa-file-download"></i>
         </ion-fab-button>
         <!-- BUTTON -->
-        <ion-fab-button color="primary" data-desc="PDF Export">
-            <i class="pi pi-save"></i>
+        <ion-fab-button color="medium" title="{{'XLS Export' | translate}}" (click)="excel_export()">
+            <i class="fas fa-file-download"></i>
         </ion-fab-button>
         <!-- BUTTON -->
-        <ion-fab-button color="primary" data-desc="XLS Export">
-            <i class="pi pi-save"></i>
+        <ion-fab-button color="medium" title="{{'Produktmigration' | translate}}">
+            <i class="fas fa-angle-double-right"></i>
         </ion-fab-button>
         <!-- BUTTON -->
-        <ion-fab-button color="primary" data-desc="Produktmigration">
-            <i class="pi pi-arrow-right"></i>
+        <ion-fab-button color="medium" title="{{'Produkt kopieren' | translate}}">
+            <i class="fas fa-clone"></i>
         </ion-fab-button>
         <!-- BUTTON -->
-        <ion-fab-button color="primary" data-desc="Produkt kopieren">
-            <i class="pi pi-copy"></i>
+        <ion-fab-button color="medium" title="{{'Protokollverlauf' | translate}}">
+            <i class="fas fa-info"></i>
         </ion-fab-button>
         <!-- BUTTON -->
-        <ion-fab-button color="primary" data-desc="Protokollverlauf">
-            <i class="pi pi-info-circle"></i>
+        <ion-fab-button color="medium" title="zeige Basisinformationen">
+            <i class="fas fa-info"></i>
         </ion-fab-button>
         <!-- BUTTON -->
-        <ion-fab-button color="primary" data-desc="zeige Basisinformationen">
-            <i class="pi pi-info-circle"></i>
+        <ion-fab-button color="medium" title="Basisinformationen ausblenden">
+            <i class="fas fa-info"></i>
         </ion-fab-button>
         <!-- BUTTON -->
-        <ion-fab-button color="primary" data-desc="Basisinformationen ausblenden">
-            <i class="pi pi-info-circle"></i>
-        </ion-fab-button>
-        <!-- BUTTON -->
-        <ion-fab-button color="primary" data-desc="zeige nur passive Produkte">
-            <i class="pi pi-search"></i>
+        <ion-fab-button color="medium" title="zeige nur passive Produkte">
+            <i class="fab fa-searchengin"></i>
         </ion-fab-button>
     </ion-fab-list>
 </ion-fab>
