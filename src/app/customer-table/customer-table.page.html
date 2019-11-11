@@ -120,10 +120,10 @@
 
 </div>
 
-<ion-fab [hidden]="!workMode" vertical="bottom" horizontal="end" slot="fixed" class="liftiball">
+<ion-fab [hidden]="!workMode" vertical="bottom" horizontal="end" slot="fixed" class="liftiball liftiball-cancel">
     <!-- BUTTON -->
-    <ion-fab-button color="success" title="{{'abbrechen' | translate}}" (click)="workMode=false">
-            <ion-icon name="close-circle"></ion-icon>
+    <ion-fab-button color="danger" title="{{'abbrechen' | translate}}" (click)="workMode=false">
+        <i class="fas fa-times"></i>
     </ion-fab-button>
 </ion-fab>
 

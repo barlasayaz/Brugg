@@ -83,6 +83,10 @@ th.p-table-filter.ng-star-inserted {
   &-extra {
     margin-right: 60px;
   }
+
+  &-cancel {
+
+  }
 }
 
 .sideMenu {
@@ -2033,6 +2037,14 @@ ion-fab-button[title]::after {
 .liftiball-extra {
   ion-fab-button[title]::after {
     background-color: #222;
+  }
+
+}
+.liftiball-cancel {
+  ion-fab-button[title]::after {
+    background-color: #d33939;
+    bottom : 10px;
+    right:65px;
   }
 }
 
