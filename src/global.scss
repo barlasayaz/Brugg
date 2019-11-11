@@ -67,6 +67,21 @@ th.p-table-filter.ng-star-inserted {
   display:none;
 }
 
+.workWidthfix {
+  width:50px;
+  max-width:50px;
+}
+
+.workColumn {
+  word-wrap:break-word;
+  max-width:50px;
+  width:50px;
+}
+
+ion-fab-button {
+  --box-shadow: none;
+}
+
 .liftiball {
   ion-fab-button {
     --box-shadow: none;
@@ -82,10 +97,6 @@ th.p-table-filter.ng-star-inserted {
 
   &-extra {
     margin-right: 60px;
-  }
-
-  &-cancel {
-
   }
 }
 

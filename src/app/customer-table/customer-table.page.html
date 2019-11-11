@@ -68,7 +68,9 @@
         </ng-template>
         <ng-template pTemplate="header" let-columns>
             <tr>
-                <th [hidden]="!workMode" style="width:'80px'" class="workColumn"> </th>
+                <th [hidden]="!workMode" class="workColumn">
+                    <div class="workWidthfix"></div>
+                </th>
                 <th *ngFor="let col of selectedColumns" 
                     ttResizableColumn 
                     [ttSortableColumn]="col.field"  
@@ -78,7 +80,9 @@
                 </th>
             </tr>
             <tr [hidden]="!splitFilter">
-                <th [hidden]="!workMode" class="workColumn"  > </th>
+                <th [hidden]="!workMode" class="workColumn"  >
+                    <div class="workWidthfix"></div>
+                </th>
                 <th *ngFor="let col of selectedColumns" [ngSwitch]="col.field" class="p-table-filter">
                     <input pInputText type="text"
                            class="filter-search"
@@ -92,20 +96,22 @@
                      let-rowNode
                      let-rowData="rowData"
                      let-columns="columns">
-            <tr [ttSelectableRow]="rowNode">
-                <td [hidden]="!workMode" class="workColumn" > 
-                    <ion-button [hidden]="!editMode"  size="small"  (click)="editCustomer(rowData)">
-                        <ion-icon name="create"></ion-icon>
-                    </ion-button>   
-                    <ion-button [hidden]="((!moveMode)||(move_id>0))"  size="small"  (click)="moveCustomer(1,rowData)">
-                            <ion-icon name="md-move"></ion-icon>
-                    </ion-button> 
-                    <ion-button [hidden]="((!moveMode)||(move_id==0)||(move_id==rowData.id))"  size="small"  (click)="moveCustomer(2,rowData)">
-                            <ion-icon name="md-arrow-round-forward"></ion-icon>
-                    </ion-button>     
-                    <ion-button [hidden]="((!moveMode)||(move_id==0)||(move_id!=rowData.id))"  size="small"  (click)="moveCustomer(2,rowData)">
-                            <ion-icon name="md-arrow-round-back"></ion-icon>
-                    </ion-button>                          
+            <tr [ttSelectableRow]="rowNode" class="workworkC">
+                <td [hidden]="!workMode" class="workColumn" >
+                    <div class="workWidthfix">
+                        <ion-button [hidden]="!editMode"  size="small"  (click)="editCustomer(rowData)">
+                            <ion-icon name="create"></ion-icon>
+                        </ion-button>   
+                        <ion-button [hidden]="((!moveMode)||(move_id>0))"  size="small"  (click)="moveCustomer(1,rowData)">
+                                <ion-icon name="md-move"></ion-icon>
+                        </ion-button> 
+                        <ion-button [hidden]="((!moveMode)||(move_id==0)||(move_id==rowData.id))"  size="small"  (click)="moveCustomer(2,rowData)">
+                                <ion-icon name="md-arrow-round-forward"></ion-icon>
+                        </ion-button>     
+                        <ion-button [hidden]="((!moveMode)||(move_id==0)||(move_id!=rowData.id))"  size="small"  (click)="moveCustomer(2,rowData)">
+                                <ion-icon name="md-arrow-round-back"></ion-icon>
+                        </ion-button>           
+                    </div>               
                 </td>
                 <td *ngFor="let col of selectedColumns; let i = index">
                     <p-treeTableToggler [rowNode]="rowNode" *ngIf="i == 0"></p-treeTableToggler>
@@ -120,7 +126,9 @@
         </ng-template>
         <ng-template pTemplate="loadingbody" let-columns="columns">
             <tr style="height:34px">
-                <td [hidden]="!workMode" class="workColumn" > </td>
+                <td [hidden]="!workMode" class="workColumn" >
+                    <div class="workWidthfix"></div>
+                </td>
                 <td *ngFor="let col of selectedColumns;">
                     <div class="loading-text"></div>
                 </td>
