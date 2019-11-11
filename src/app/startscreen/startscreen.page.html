@@ -35,7 +35,8 @@
 							</div>
 						</ion-button>
 						<div class="startbtn-extra">
-							<ion-searchbar placeholder="Schnellsuche" [(ngModel)]="customerSearch" animated></ion-searchbar>
+							<ion-searchbar color="light" class="quicksearch" placeholder="Schnellsuche" [(ngModel)]="customerSearch"
+								animated></ion-searchbar>
 						</div>
 					</ion-col>
 				</ion-row>
@@ -83,7 +84,7 @@
 				<ion-row>
 					<!-- Logout -->
 					<ion-col size="12">
-						<ion-button style="height:auto;" class="pvs4-btn pvs4-btn-full pvs4-btn-red"
+						<ion-button style="height:auto;" class="pvs4-btn pvs4-btn-full pvs4-btn-red start-logout"
 							(click)="logout();">
 							<div class="logoutlbl">
 								<ion-icon class="starticn" style="font-size:36px" name="power"></ion-icon>
