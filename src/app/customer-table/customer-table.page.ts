@@ -114,7 +114,7 @@ export class CustomerTablePage implements OnInit {
         disabled: true,
         command: (event) => {            
             console.log('command menuitem:', event);
-            this.menu_move(1);
+            this.menu_move();
         }
     },
     {
@@ -125,7 +125,7 @@ export class CustomerTablePage implements OnInit {
         command: (event) => {
             if (this.userdata.role_set.edit_customer != true) { return; }
             console.log('command menuitem:', event);
-            this.menu_move(2);
+            this.menu_move();
         }
     },
     {
@@ -676,37 +676,13 @@ export class CustomerTablePage implements OnInit {
         }
     }
 
-    menu_move() {
+    menu_move() { 
         console.log('menu_move_up');
         this.workMode = true;
         this.moveMode = true; 
         this.move_id = 0;
         this.move_to = 0;
         this.move_obj = {};
-        return;
-
-        if (this.userdata.role_set.edit_customer != true) { return; }
-        if (n == 1) {
-            if (this.selectedNode) {
-                if (this.selectedNode.data.id) {
-                    this.move_id = parseInt(this.selectedNode.data.id);
-                    this.move_obj = JSON.parse(JSON.stringify(this.selectedNode.data));
-                }
-            }
-            this.menuItems[2].visible = false;
-            this.menuItems[3].visible = true;
-        } else if (n == 2) {
-            // in Stammordner
-            console.log('move item :', this.move_id, this.move_obj);
-            this.move_obj.parent = 0;
-            this.apiService.pvs4_set_customer(this.move_obj).then(async (result: any) => {
-                console.log('result: ', result);
-                this.page_load();
-            });
-            this.menuItems[2].visible = true;
-            this.menuItems[3].visible = false;
-            this.move_id = 0;
-        }
     }
 
     customer_list(num) {
