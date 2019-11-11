@@ -4,7 +4,6 @@ import { ApiService } from '../../services/api';
 import { NavController, Events, MenuController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { SystemService } from '../../services/system';
-import { FormsModule } from '@angular/forms';
 
 /**
  * Generated class for the MainNavComponent component.
@@ -77,6 +76,11 @@ export class MainNavComponent implements OnInit {
   sendPing(ping){
     const eventObj = { lable:ping };
     this.ping.emit(eventObj);
+  }
+
+  filterOff(){
+    this.systemService.filterText = '';
+    this.navCtrl.navigateForward(['/customer-table', '']);
   }
 
   openMenu() {

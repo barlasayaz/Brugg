@@ -50,9 +50,9 @@
                           aktivPage == 'NoteDetails'">
                   {{customerName}}
                 </div>
-                <span class="filterOn" *ngIf="filterOn">
+                <button class="filterOn" *ngIf="filterOn" (click)="filterOff()">
                   {{'Filter' | translate}}: {{filterText}} <i class="fas fa-times"></i>
-                </span>
+                </button>
               </div>
             </div>
           </ion-col>
