@@ -32,6 +32,13 @@ ion-button {
   max-width: 90%;
 }
 
+th.p-table-filter.ng-star-inserted {
+  background:#ddd !important;
+  .filter-search {
+    font-weight:400;
+  }
+}
+
 .split-pane-visible .sideMenu-inner {
   min-width: auto !important;
   max-width: 200px !important;
@@ -61,19 +68,20 @@ ion-button {
 }
 
 .liftiball {
+  ion-fab-button {
+    --box-shadow: none;
+  }
   ion-fab-list.fab-list-active {
-    max-height: 277px;
-    overflow: scroll;
-    display: block;
-    padding-left: 300px;
-    padding-right: 9px;
-    right: -10px;
-    bottom: -20px;
     ion-fab-button {
       height:45px;
       width:45px;
       font-size: 18px;
+      --box-shadow: none;
     }
+  }
+
+  &-extra {
+    margin-right: 60px;
   }
 }
 
@@ -83,7 +91,7 @@ ion-button {
     justify-content:center;
     align-items:center;
     flex-direction:column;
-    margin: 20px 0px;
+    margin: 18px 0px;
   }
 
   &-logo {
@@ -138,7 +146,7 @@ ion-button {
   }
 
   &-subnav {
-    margin: -2px 0 10px 0;
+    margin: -2px 0 2px 0;
     padding: 0;
     li {
       margin:0;
@@ -390,12 +398,11 @@ ion-button {
   display: block;
   position: absolute;
   top: calc(65px + 55px + 41px);
-  //top: calc(65px + 55px + 41px);
+  //top: calc(65px + 55px);
   left: 0;
   height: calc(100% - 65px - 55px - 41px);
   //height: calc(100% - 65px - 55px );
   width: 100%;
-  //background: #333;
   z-index: -55;
 }
 
@@ -2004,9 +2011,7 @@ ion-fab-button[data-desc]::after {
   border-radius: 3px;
   color: white;
   font-size:15px;
-  box-shadow: 0 3px 5px -1px rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12);
 }
-
 
 ion-fab-button[title] {
   position: relative;
@@ -2023,7 +2028,12 @@ ion-fab-button[title]::after {
   border-radius: 3px;
   color: white;
   font-size:15px;
-  box-shadow: 0 3px 5px -1px rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12);
+}
+
+.liftiball-extra {
+  ion-fab-button[title]::after {
+    background-color: #222;
+  }
 }
 
 .btn-modal-dark-main {
@@ -22395,14 +22405,14 @@ ion-fab-button[label-fab].mouse-over::after {
 
 .ui-treetable .ui-column-resizer {
   width: 1px !important;
-  border: 1px solid rgb(0, 157, 224) !important;
+  border: 1px solid #005376 !important;
 }
 
-.ui-treetable-resizable .ui-treetable-thead>tr>th,
-.ui-treetable-resizable .ui-treetable-tfoot>tr>td,
-.ui-treetable-resizable .ui-treetable-tbody>tr>td {
-  border-bottom: 0.5px solid white !important;
-}
+// .ui-treetable-resizable .ui-treetable-thead>tr>th,
+// .ui-treetable-resizable .ui-treetable-tfoot>tr>td,
+// .ui-treetable-resizable .ui-treetable-tbody>tr>td {
+//   border-bottom: 0.5px solid white !important;
+// }
 
 _:-ms-lang(x),
 _:-webkit-full-screen,

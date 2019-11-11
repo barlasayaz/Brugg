@@ -25,18 +25,7 @@ export class AppComponent {
     private router: Router,
     public menuCtrl: MenuController
   ) {
-    
-    this.router.events.subscribe((event: RouterEvent) => {
-      //console.log('RouterEvent:',event);      
-      if(this.router.isActive("/startscreen", false) ){
-        this.menuCtrl.enable(false);
-      }if(this.router.isActive("/startscreen", false) ){
-        this.menuCtrl.enable(false);
-      }else{
-        this.menuCtrl.enable(true);
-      }
-    }); 
-    
+       
     this.initializeApp();
 
   }
@@ -44,12 +33,26 @@ export class AppComponent {
   initializeApp() {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
-      this.splashScreen.hide();      
+      this.splashScreen.hide();     
       this.navCtrl.navigateRoot('/login');
+
+      this.router.events.subscribe((event: RouterEvent) => {
+        if(event instanceof RouterEvent){
+          if(event.url){
+            console.log('RouterEvent:',event, event.url  ); 
+            if( event.url == "/login" ){
+              this.menuCtrl.enable(false);
+            }else if(  event.url == "/startscreen"   ){
+              this.menuCtrl.enable(false);
+            }else{
+              this.menuCtrl.enable(true);
+            }
+          }         
+        }
+      }); 
+
     });
   }
-
-  
 
   getClass(path) {
     //console.log('this.router.isActive : ',path, this.router.isActive(path, false) );

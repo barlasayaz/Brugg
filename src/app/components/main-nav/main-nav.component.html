@@ -20,15 +20,12 @@
                 <div class="topsearch" *ngIf="aktivPage == 'CustomerTable' ||
                   aktivPage == 'ProductList' ||
                   aktivPage == 'ProtocolList' ||
-                  aktivPage == 'NoteList' ">
-                  <input type="search" name="topsearch" id="topsearch" placeholder="suche...">
-                  <div class="search-filter" (click)="search()">
+                  aktivPage == 'NoteList' ">            
+                  <ion-input type="text" (input)="search($event)" id="topsearch" [(ngModel)]="searchText"  placeholder="{{'Suche' |translate }}" ></ion-input>
+                  <div class="search-filter" (click)="sendPing('toggleFilter')">
                     <i class="pi pi-filter"></i>
                   </div>
                 </div>
-
-                
-
               </div>
 
               <div id="customerName" class="main-nav-fix">
@@ -43,6 +40,9 @@
                           aktivPage == 'NoteDetails'">
                   {{customerName}}
                 </div>
+                <button class="filterOn" *ngIf="filterOn" (click)="filterOff()">
+                  <span>{{'Filter' | translate}}: {{filterText}}</span> <i class="fas fa-times"></i>
+                </button>
               </div>
             </div>
           </ion-col>

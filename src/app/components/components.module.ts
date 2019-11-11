@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { FormsModule, } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MainNavComponent } from './main-nav/main-nav.component';
 import { IonicModule } from '@ionic/angular';
@@ -26,7 +27,7 @@ import { ChartHorizontalComponent } from './chart-horizontal/chart-horizontal.co
         IonicSelectableModule, NgxQRCodeModule,
         ColorPickerModule,AccordionModule,
         FileUploadModule,DragulaModule,
-        SlideMenuModule,ChartModule
+        SlideMenuModule,ChartModule,FormsModule
         ],
     exports: [
         //IonicModule,

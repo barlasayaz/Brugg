@@ -1,4 +1,6 @@
 .menuIcon {
+  display: flex;
+  align-items: center;
   &-xs {
     @media (min-width: 400px) {
       display: none;
@@ -65,7 +67,7 @@
 .topBar-outer {
   display: flex;
   align-items: center;
-  height: 68px - 3px; // 3PX Bottomborder
+  height: 60px;
 
   &-right {
     -webkit-justify-content: flex-end;
@@ -75,6 +77,8 @@
 
 .topBar-inner {
   display: flex;
+  align-items: center;
+  height: 100%;
 }
 
 .topBar-btn {
@@ -170,7 +174,23 @@
 }
 
 .topMenu {
-  margin-right: 20px;
+  margin-right: 10px;
+}
+
+.topbuttons {
+  ion-button {
+    --border-radius: 3000px;
+    height:40px;
+    width: 40px;
+    font-size: 0px;
+    margin-right:5px;
+    &:last-child {
+      margin-right: 0;
+    }
+    ion-icon {
+      font-size: 18px;
+    }
+  }
 }
 
 .topsearch {
@@ -178,19 +198,27 @@
   display: flex;
   align-items: center;
   .search-filter {
-    position: absolute;
-    right: 0px;
-    top: 1px;
-    padding: 5px 10px;
+    height: 40px;
+    display: flex;
+    margin-left: -40px;
     color: #009de0;
+    margin-right: 0px;
+    align-items: center;
+    width: 40px;
+    z-index: 4;
+    justify-content: center;
+    &:hover, &:focus {
+      cursor: pointer;
+    }
   }
-  input {
+  ion-input {
     border: 1px solid #E8E8E8;
     background: #FAFAFC;
     width: 200px;
     border-radius: 3px;
-    padding: 5px 10px;
-    font-size: 12px;
+    padding: 5px !important;
+    font-size: 13px;
+    height: 40px;
   }
 }
 
@@ -265,10 +293,35 @@
   }
 }
 
+.filterOn {
+  background: #005e86;
+  padding: 8px 10px;
+  color: #fff;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+
+  span {
+    max-width: 100px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-right: 5px;
+  }
+
+  .fas {
+    margin-left: 5px;
+    font-size: 12px;
+  }
+}
+
 #customerName {
   width: auto;
+  display: flex;
+  align-items: center;
   justify-content: left;
-  height: 45px;
+  text-transform: capitalize;
+  height: 60px;
   font-size: 14px;
 
   @media (max-width: 576px) {

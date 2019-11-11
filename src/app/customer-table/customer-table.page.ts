@@ -81,7 +81,10 @@ export class CustomerTablePage implements OnInit {
     public rowHeight = 26;
     public rowCount = 100;
     public sortedColumn = { sort_field : null, sort_order : 0 };
-    public customerName: any;
+    public filterText: string = "";
+    public filterOn: boolean = false;
+    public workMode: boolean = false;
+    public editMode: boolean = false;
 
     public menuItems: MenuItem[] = [{
         label: this.translate.instant('Ansicht'),
@@ -97,8 +100,7 @@ export class CustomerTablePage implements OnInit {
         icon: 'pi pi-fw pi-pencil',
         disabled: true,
         visible: this.userdata.role_set.edit_customer,
-        command: (event) => {
-            if (this.userdata.role_set.edit_customer != true) { return; }
+        command: (event) => {            
             console.log('command menuitem:', event);
             this.menu_edit();
         }
@@ -108,8 +110,7 @@ export class CustomerTablePage implements OnInit {
         icon: 'pi pi-fw pi-chevron-up',
         visible: this.userdata.role_set.edit_customer,
         disabled: true,
-        command: (event) => {
-            if (this.userdata.role_set.edit_customer != true) { return; }
+        command: (event) => {            
             console.log('command menuitem:', event);
             this.menu_move(1);
         }
@@ -190,15 +191,30 @@ export class CustomerTablePage implements OnInit {
     @ViewChild('tt') dataTable: TreeTable;
     @ViewChild('divHeightCalc') divHeightCalc: any;
 
-    searchAll():void{
-        console.log('searchAll():', this );
-        if (this.isFilterOn()) {
-            this.menuItems[7].items[0]['disabled'] = false;
-        } else {
-            this.menuItems[7].items[0]['disabled'] = true;
+    update(data:any):void{
+        console.log('update():',data );
+        if(data.lable==="searchText"){
+            this.columnFilterValues['search_all'] = data.text;
+            if (this.isFilterOn()) {
+                this.menuItems[7].items[0]['disabled'] = false;
+            } else {
+                this.menuItems[7].items[0]['disabled'] = true;
+            }
+            this.generate_customerList(0, this.rowCount, this.sortedColumn.sort_field, this.sortedColumn.sort_order);
+            localStorage.setItem('filter_values_customer', JSON.stringify(this.columnFilterValues));
+        }  
+        if(data.lable==="newCustomer"){
+            if (this.userdata.role_set.edit_customer != true) { return; }
+            this.menu_new();
         }
-        this.generate_customerList(0, this.rowCount, this.sortedColumn.sort_field, this.sortedColumn.sort_order);
-        localStorage.setItem('filter_values_customer', JSON.stringify(this.columnFilterValues));
+        if(data.lable==="toggleFilter"){
+            this.menu_filter();
+        }
+        if(data.lable==="showColumns"){
+            this.show_columns();
+        }
+
+        
     }
 
     ngOnInit(): void {
@@ -233,8 +249,10 @@ export class CustomerTablePage implements OnInit {
         if (localStorage.getItem('sort_column_customer') != undefined) {
             this.sortedColumn = JSON.parse(localStorage.getItem('sort_column_customer'));
         }
-        this.customerName = this.route.snapshot.paramMap.get('customerName');
-        console.log('customerName :', this.customerName);
+        this.filterText = this.route.snapshot.paramMap.get('filterText');
+        if(this.filterText.length>0) this.filterOn = true;
+        console.log('filterText :', this.filterText);
+
         this.page_load();
     }
 
@@ -311,7 +329,7 @@ export class CustomerTablePage implements OnInit {
         this.rowRecords = 0;
         this.totalRecords = 0;
         this.events.publish('prozCustomer', 0);
-        this.apiService.pvs4_get_customer_list(0, this.customerName).then((result: any) => {
+        this.apiService.pvs4_get_customer_list(0, this.filterText).then((result: any) => {
             console.log('page_load result :', result);
 
             this.customerListAll = result.list;
@@ -498,17 +516,54 @@ export class CustomerTablePage implements OnInit {
         }
     }
 
+    async editCustomer(rowNode){
+        console.log('editCustomer:', rowNode);
+        if (rowNode.id) {
+            const id = parseInt(rowNode.id);
+            console.log('menu_edit id', id);
+            const modal =
+            await this.modalCtrl.create({
+                component: CustomerEditComponent,
+                cssClass: 'customeredit-modal-css',
+                componentProps: {
+                id: id
+                }
+            });
+
+            modal.onDidDismiss().then(async data => {
+                if (data['data']) {
+                this.page_load();
+                }
+            });
+            modal.present();
+        }    
+    }
+
     nodeSelect() {
-        console.log('nodeSelect:', this.menuItems);
+        console.log('nodeSelect:', this.menuItems, this.workMode);
+        let id_sn = 0;
+
+        if(this.workMode){
+            this.selectedNode = null;
+            return;
+        }else{
+            //id_sn = this.selectedNode.data.id;
+            this.menu_view();
+        }
+       
+        return;
+        /* todo */
+        
         this.menuItems[0].disabled = false;
         this.menuItems[1].disabled = false;
         this.menuItems[2].disabled = false;
-        let id_sn = 0;
+        
         if (this.selectedNode) {
             if (this.selectedNode.data.id) {
                 id_sn = this.selectedNode.data.id;
             }
         }
+
         if (id_sn == this.move_id) {
             this.menuItems[2].visible = this.userdata.role_set.edit_customer;
             this.menuItems[3].visible = false;
@@ -562,33 +617,16 @@ export class CustomerTablePage implements OnInit {
         modal.present();
     }
 
-    async menu_edit() {
-        console.log('menu_edit', this.selectedNode);
-        if (this.selectedNode) {
-            if (this.selectedNode.data.id) {
-                const id = parseInt(this.selectedNode.data.id);
-                console.log('menu_edit id', id);
-                const modal =
-                await this.modalCtrl.create({
-                  component: CustomerEditComponent,
-                  cssClass: 'customeredit-modal-css',
-                  componentProps: {
-                    id: id
-                  }
-                });
-
-                modal.onDidDismiss().then(async data => {
-                  if (data['data']) {
-                    this.page_load();
-                  }
-                });
-                modal.present();
-            }
-        }
+    menu_edit() {
+        console.log('menu_edit')
+        if (this.userdata.role_set.edit_customer != true) { return; };
+        this.workMode = true;
+        this.editMode = true;       
     }
 
     menu_move(n) {
         console.log('menu_move_up', this.selectedNode);
+        if (this.userdata.role_set.edit_customer != true) { return; }
         if (n == 1) {
             if (this.selectedNode) {
                 if (this.selectedNode.data.id) {

@@ -1,4 +1,9 @@
-<main-nav aktivPage="CustomerTable" [functionSearch]="searchAll"></main-nav>
+<main-nav aktivPage="CustomerTable" 
+          [searchText]="columnFilterValues['search_all']" 
+          [filterText]="filterText" 
+          [filterOn]="filterOn" 
+          (ping)="update($event)">
+</main-nav>
 
 <div class="ek-content" (window:resize)="onResize($event)">
     <p-menubar id="menuMin" class="wideMenu">
@@ -12,12 +17,6 @@
                 <span class="ui-submenu-icon pi pi-fw pi-caret-down slide-caret"></span>
             </button>
         </div>
-        <div class="ui-inputgroup search-search">
-            <input type="text"
-                   pInputText placeholder="{{'Suche' |translate }}"
-                   [(ngModel)]="columnFilterValues['search_all']"
-                   (input)="search_all()">
-        </div>
     </p-menubar>
     <p-slideMenu [model]="menuItems"
                  popup="false"
@@ -28,18 +27,6 @@
     <p-menubar [model]="menuItems"
                [autoDisplay]="false"
                id="menuMax">
-        <div class="ui-inputgroup search-search">
-            <input type="text" 
-                   pInputText
-                   placeholder="{{'Suche' |translate }}"
-                   [(ngModel)]="columnFilterValues['search_all']"
-                   (input)="search_all()">
-            <button (click)="search_all()" 
-                    pButton type="button" 
-                    icon="fa fa-search" 
-                    class="ui-button-warn">
-            </button>
-        </div>
     </p-menubar>
 
    <div id="heightCalc" 
@@ -80,6 +67,7 @@
         </ng-template>
         <ng-template pTemplate="header" let-columns>
             <tr>
+                <th [hidden]="!workMode" style="width:'80px'"> </th>
                 <th *ngFor="let col of selectedColumns" 
                     ttResizableColumn 
                     [ttSortableColumn]="col.field"  
@@ -89,6 +77,7 @@
                 </th>
             </tr>
             <tr [hidden]="!splitFilter">
+                <th [hidden]="!workMode"  > </th>
                 <th *ngFor="let col of selectedColumns" [ngSwitch]="col.field" class="p-table-filter">
                     <input pInputText type="text"
                            class="filter-search"
@@ -96,13 +85,18 @@
                           [(ngModel)]="columnFilterValues[col.field]">
                 </th>
             </tr>
-        </ng-template>
+        </ng-template> 
 
         <ng-template pTemplate="body"
                      let-rowNode
                      let-rowData="rowData"
                      let-columns="columns">
             <tr [ttSelectableRow]="rowNode">
+                <td [hidden]="!workMode" > 
+                    <ion-button [hidden]="!editMode"  size="small"  (click)="editCustomer(rowData)">
+                        <ion-icon name="create"></ion-icon>
+                    </ion-button>                            
+                </td>
                 <td *ngFor="let col of selectedColumns; let i = index">
                     <p-treeTableToggler [rowNode]="rowNode" *ngIf="i == 0"></p-treeTableToggler>
                     <label *ngIf="(col.field == 'last_date')">{{rowData[col.field] | date : 'dd.MM.yyyy'}}</label>
@@ -116,6 +110,7 @@
         </ng-template>
         <ng-template pTemplate="loadingbody" let-columns="columns">
             <tr style="height:34px">
+                <td [hidden]="!workMode" > </td>
                 <td *ngFor="let col of selectedColumns;">
                     <div class="loading-text"></div>
                 </td>
@@ -125,42 +120,55 @@
 
 </div>
 
-<ion-fab vertical="bottom" horizontal="end" slot="fixed" class="liftiball">
+<ion-fab [hidden]="!workMode" vertical="bottom" horizontal="end" slot="fixed" class="liftiball">
+    <!-- BUTTON -->
+    <ion-fab-button color="success" title="{{'abbrechen' | translate}}" (click)="workMode=false">
+            <ion-icon name="close-circle"></ion-icon>
+    </ion-fab-button>
+</ion-fab>
+
+<ion-fab [hidden]="workMode" vertical="bottom" horizontal="end" slot="fixed" class="liftiball">
     <ion-fab-button color="tertiary">
         <ion-icon name="menu"></ion-icon>
     </ion-fab-button>
     <ion-fab-list side="top">
+
         <!-- BUTTON -->
-        <ion-fab-button color="primary"   title="{{'Ansicht' | translate}}" > 
-            <i class="pi pi-eye"></i>
+        <ion-fab-button color="success" title="{{'Neu' | translate}}" (click)="menu_new()">
+            <i class="fas fa-plus"></i>
         </ion-fab-button>
         <!-- BUTTON -->
-        <ion-fab-button color="primary" title="{{'Bearbeiten' | translate}}" >
-            <i class="pi pi-pencil"></i>
+        <ion-fab-button color="success" title="{{'Bearbeiten' | translate}}" (click)="menu_edit()">
+            <i class="fas fa-pen"></i>
         </ion-fab-button>
         <!-- BUTTON -->
-        <ion-fab-button color="primary" title="{{'Bewegen' | translate}}" >
-            <i class="pi pi-chevron-up"></i>
+        <ion-fab-button color="primary" title="{{'Bewegen' | translate}}"  (click)="menu_move(1)" >
+            <i class="fas fa-arrows-alt"></i>
         </ion-fab-button>
         <!-- BUTTON -->
-        <ion-fab-button color="primary" title="{{'Neu' | translate}}" >
-            <i class="pi pi-plus"></i>
+    </ion-fab-list>
+</ion-fab>
+
+<ion-fab [hidden]="workMode" vertical="bottom" horizontal="end" slot="fixed" class="liftiball liftiball-extra">
+    <ion-fab-button color="medium">
+        <ion-icon name="settings"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list side="top">
+        <!-- BUTTON -->
+        <ion-fab-button color="medium" title="{{'Spalten' | translate}}" (click)="show_columns()">
+            <i class="fas fa-columns"></i>
         </ion-fab-button>
         <!-- BUTTON -->
-        <ion-fab-button color="primary" title="{{'Spalten' | translate}}" >
-            <i class="pi pi-eject"></i>
+        <ion-fab-button color="medium" title="{{'Filter zurücksetzen' | translate}}" (click)="cancel_filters(2)">
+            <i class="fas fa-filter"></i>
         </ion-fab-button>
         <!-- BUTTON -->
-        <ion-fab-button color="primary" title="{{'Filter zurücksetzen' | translate}}" >
-            <i class="pi pi-filter"></i>
+        <ion-fab-button color="medium" title="{{'PDF Export' | translate}}" (click)="pdf_export()">
+            <i class="fas fa-file-download"></i>
         </ion-fab-button>
         <!-- BUTTON -->
-        <ion-fab-button color="primary" title="{{'PDF Export' | translate}}" >
-            <i class="pi pi-save"></i>
-        </ion-fab-button>
-        <!-- BUTTON -->
-        <ion-fab-button color="primary" title="{{'XLS Export' | translate}}" >
-            <i class="pi pi-save"></i>
+        <ion-fab-button color="medium" title="{{'XLS Export' | translate}}" (click)="excel_export()">
+            <i class="fas fa-file-download"></i>
         </ion-fab-button>
     </ion-fab-list>
 </ion-fab>
