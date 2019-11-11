@@ -83,6 +83,8 @@ export class CustomerTablePage implements OnInit {
     public sortedColumn = { sort_field : null, sort_order : 0 };
     public filterText: string = "";
     public filterOn: boolean = false;
+    public workMode: boolean = false;
+    public editMode: boolean = false;
 
     public menuItems: MenuItem[] = [{
         label: this.translate.instant('Ansicht'),
@@ -514,12 +516,42 @@ export class CustomerTablePage implements OnInit {
         }
     }
 
-    nodeSelect() {
-        console.log('nodeSelect:', this.menuItems);
-        let id_sn = 0;
-        id_sn = this.selectedNode.data.id;
-        this.menu_view();
+    async editCustomer(rowNode){
+        console.log('editCustomer:', rowNode);
+        if (rowNode.id) {
+            const id = parseInt(rowNode.id);
+            console.log('menu_edit id', id);
+            const modal =
+            await this.modalCtrl.create({
+                component: CustomerEditComponent,
+                cssClass: 'customeredit-modal-css',
+                componentProps: {
+                id: id
+                }
+            });
 
+            modal.onDidDismiss().then(async data => {
+                if (data['data']) {
+                this.page_load();
+                }
+            });
+            modal.present();
+        }    
+    }
+
+    nodeSelect() {
+        console.log('nodeSelect:', this.menuItems, this.workMode);
+        let id_sn = 0;
+
+        if(this.workMode){
+            this.selectedNode = null;
+            return;
+        }else{
+            //id_sn = this.selectedNode.data.id;
+            this.menu_view();
+        }
+       
+        return;
         /* todo */
         
         this.menuItems[0].disabled = false;
@@ -585,30 +617,11 @@ export class CustomerTablePage implements OnInit {
         modal.present();
     }
 
-    async menu_edit() {
-        console.log('menu_edit', this.selectedNode)
-        if (this.userdata.role_set.edit_customer != true) { return; }        ;
-        if (this.selectedNode) {
-            if (this.selectedNode.data.id) {
-                const id = parseInt(this.selectedNode.data.id);
-                console.log('menu_edit id', id);
-                const modal =
-                await this.modalCtrl.create({
-                  component: CustomerEditComponent,
-                  cssClass: 'customeredit-modal-css',
-                  componentProps: {
-                    id: id
-                  }
-                });
-
-                modal.onDidDismiss().then(async data => {
-                  if (data['data']) {
-                    this.page_load();
-                  }
-                });
-                modal.present();
-            }
-        }
+    menu_edit() {
+        console.log('menu_edit')
+        if (this.userdata.role_set.edit_customer != true) { return; };
+        this.workMode = true;
+        this.editMode = true;       
     }
 
     menu_move(n) {

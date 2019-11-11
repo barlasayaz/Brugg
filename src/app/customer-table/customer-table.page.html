@@ -67,6 +67,7 @@
         </ng-template>
         <ng-template pTemplate="header" let-columns>
             <tr>
+                <th [hidden]="!workMode" style="width:'80px'"> </th>
                 <th *ngFor="let col of selectedColumns" 
                     ttResizableColumn 
                     [ttSortableColumn]="col.field"  
@@ -76,6 +77,7 @@
                 </th>
             </tr>
             <tr [hidden]="!splitFilter">
+                <th [hidden]="!workMode"  > </th>
                 <th *ngFor="let col of selectedColumns" [ngSwitch]="col.field" class="p-table-filter">
                     <input pInputText type="text"
                            class="filter-search"
@@ -83,13 +85,18 @@
                           [(ngModel)]="columnFilterValues[col.field]">
                 </th>
             </tr>
-        </ng-template>
+        </ng-template> 
 
         <ng-template pTemplate="body"
                      let-rowNode
                      let-rowData="rowData"
                      let-columns="columns">
             <tr [ttSelectableRow]="rowNode">
+                <td [hidden]="!workMode" > 
+                    <ion-button [hidden]="!editMode"  size="small"  (click)="editCustomer(rowData)">
+                        <ion-icon name="create"></ion-icon>
+                    </ion-button>                            
+                </td>
                 <td *ngFor="let col of selectedColumns; let i = index">
                     <p-treeTableToggler [rowNode]="rowNode" *ngIf="i == 0"></p-treeTableToggler>
                     <label *ngIf="(col.field == 'last_date')">{{rowData[col.field] | date : 'dd.MM.yyyy'}}</label>
@@ -103,6 +110,7 @@
         </ng-template>
         <ng-template pTemplate="loadingbody" let-columns="columns">
             <tr style="height:34px">
+                <td [hidden]="!workMode" > </td>
                 <td *ngFor="let col of selectedColumns;">
                     <div class="loading-text"></div>
                 </td>
