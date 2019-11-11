@@ -22260,9 +22260,13 @@ ion-select {
   }
 }
 
-/*body .ui-state-active, body .ui-state-highlight {
-  background: rgba(#009de0, 0.2) !important;
-}*/
+.ui-treetable-tbody label {
+  margin: 0;
+}
+
+body .ui-state-active, body .ui-state-highlight {
+  background: rgba(#009de0, 0.6) !important;
+}
 
 //DRAGULA
 .gu-mirror {
