@@ -60,6 +60,7 @@ export class CustomerTablePage implements OnInit {
     public idCustomer = 0;
     public heightCalc: any;
     public move_id = 0;
+    public move_to = 0;
     public move_obj: any = {};
     public columnFilterValues = { company: '',
                                   id: '',
@@ -85,6 +86,7 @@ export class CustomerTablePage implements OnInit {
     public filterOn: boolean = false;
     public workMode: boolean = false;
     public editMode: boolean = false;
+    public moveMode: boolean = false;
 
     public menuItems: MenuItem[] = [{
         label: this.translate.instant('Ansicht'),
@@ -617,6 +619,15 @@ export class CustomerTablePage implements OnInit {
         modal.present();
     }
 
+    workBreak(){
+        this.workMode = false;
+        this.editMode = false;  
+        this.moveMode = false; 
+        this.move_id = 0;
+        this.move_to = 0;
+        this.move_obj = {};
+    }
+
     menu_edit() {
         console.log('menu_edit')
         if (this.userdata.role_set.edit_customer != true) { return; };
@@ -624,8 +635,56 @@ export class CustomerTablePage implements OnInit {
         this.editMode = true;       
     }
 
-    menu_move(n) {
-        console.log('menu_move_up', this.selectedNode);
+    async moveCustomer(step,rowNode){
+        console.log('moveCustomer',step,rowNode);
+        if(step==1){
+            this.move_id = parseInt(rowNode.id);
+            this.move_obj = JSON.parse(JSON.stringify(rowNode));
+        }
+        if(step==2){
+            this.move_to = parseInt(rowNode.id);
+            if(this.move_to===this.move_id ) 
+            {
+                this.move_to=0; //Stammordner
+            }
+
+            const alert = await this.alertCtrl.create({
+                header: this.translate.instant('Achtung'),
+                message: this.translate.instant('Möchten Sie diesen Kunden wirklich verschieben?'),
+                buttons: [{
+                    text: this.translate.instant('nein'),
+                    handler: data => {
+                        //  alert.dismiss();
+                    }
+                },
+                {
+                    text: this.translate.instant('ja'),
+                    handler: data => {
+                        this.move_obj.parent = this.move_to;
+                        this.apiService.pvs4_set_customer(this.move_obj).then(async (result: any) => {
+                            console.log('result: ', result);
+                            this.workBreak();
+                            this.page_load();
+                        });
+                    }
+                }
+                ]
+            });
+            await alert.present();
+
+            //this.move_obj = JSON.parse(JSON.stringify(rowNode));
+        }
+    }
+
+    menu_move() {
+        console.log('menu_move_up');
+        this.workMode = true;
+        this.moveMode = true; 
+        this.move_id = 0;
+        this.move_to = 0;
+        this.move_obj = {};
+        return;
+
         if (this.userdata.role_set.edit_customer != true) { return; }
         if (n == 1) {
             if (this.selectedNode) {
