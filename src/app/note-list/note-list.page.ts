@@ -219,18 +219,14 @@ export class NoteListPage implements OnInit {
         if (data.lable === 'searchText') {
             this.columnFilterValues['search_all'] = data.text;
             this.generate_noteList(0, this.rowCount, this.sortedColumn.sort_field, this.sortedColumn.sort_order);
-            localStorage.setItem('filter_values_customer', JSON.stringify(this.columnFilterValues));
+            localStorage.setItem('filter_values_product', JSON.stringify(this.columnFilterValues));
         }
-/*         if (data.lable === 'newCustomer') {
-            if (this.userdata.role_set.edit_customer != true) { return; }
-            this.menu_new();
-        } */
-        if (data.lable === 'toggleFilter') {
+        if(data.lable === 'toggleFilter') {
             this.menu_filter();
         }
-/*         if (data.lable === 'showColumns') {
+        if (data.lable === 'showColumns') {
             this.show_columns();
-        } */
+        }
     }
 
     onResize(event) {

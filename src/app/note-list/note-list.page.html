@@ -1,9 +1,9 @@
 <main-nav aktivPage="NoteList" 
           [idCustomer]="idCustomer"
           [searchText]="columnFilterValues['search_all']" 
-          [filterText]="filterText" 
-          [filterOn]="filterOn" 
-          (ping)="update($event)"></main-nav>
+          (ping)="update($event)"
+          autoDisplay="true">
+</main-nav>
 
 <div class="ek-content" (window:resize)="onResize($event)">
 <!--     <p-menubar id="menuMin" class="wideMenu">
@@ -145,12 +145,6 @@
                         data-desc="Spalten"
                         (click)="show_columns()">
             <i class="pi pi-eject"></i>
-        </ion-fab-button>
-        <!-- BUTTON -->
-        <ion-fab-button color="primary"
-                        data-desc="Filter zurücksetzen"
-                        (click)="menu_filter()">
-            <i class="pi pi-filter"></i>
         </ion-fab-button>
         <!-- BUTTON -->
         <ion-fab-button color="primary"
