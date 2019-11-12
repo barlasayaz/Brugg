@@ -421,27 +421,30 @@
             <i class="fas fa-file-download"></i>
         </ion-fab-button>
         <!-- BUTTON -->
-        <ion-fab-button color="success" title="{{'Produktmigration' | translate}}">
+        <ion-fab-button color="success" title="{{'Produktmigration' | translate}}" *ngIf="selectedRow==1">
             <i class="fas fa-angle-double-right"></i>
         </ion-fab-button>
         <!-- BUTTON -->
-        <ion-fab-button color="success" title="{{'Produkt kopieren' | translate}}">
+        <ion-fab-button color="success" title="{{'Produkt kopieren' | translate}}" (click)="product_copy()" *ngIf="selectedRow==1">
             <i class="fas fa-clone"></i>
         </ion-fab-button>
         <!-- BUTTON -->
-        <ion-fab-button color="dark" title="{{'Protokollverlauf' | translate}}">
+        <ion-fab-button color="dark" title="{{'Protokollverlauf' | translate}}" (click)="menu_history()" *ngIf="selectedRow==1">
             <i class="fas fa-info"></i>
         </ion-fab-button>
         <!-- BUTTON -->
-        <ion-fab-button color="dark" title="zeige Basisinformationen">
+        <ion-fab-button color="dark" title="{{'zeige Basisinformationen' | translate}}" *ngIf="!showBasicInfo" (click)="lengthOfBasis()" >
             <i class="fas fa-info"></i>
         </ion-fab-button>
         <!-- BUTTON -->
-        <ion-fab-button color="dark" title="Basisinformationen ausblenden">
+        <ion-fab-button color="dark" title="{{'Basisinformationen ausblenden' | translate}}" *ngIf="showBasicInfo" (click)="this.showBasicInfo = false;">
             <i class="fas fa-info"></i>
         </ion-fab-button>
         <!-- BUTTON -->
-        <ion-fab-button color="dark" title="zeige nur passive Produkte">
+        <ion-fab-button color="dark" title="{{'zeige nur passive Produkte' | translate}}" *ngIf="!showActivePassiveProduct" (click)="activePassiveProduct()">
+            <i class="fab fa-searchengin"></i>
+        </ion-fab-button>
+        <ion-fab-button color="dark" title="{{'zeige nur aktive Produkte' | translate}}" *ngIf="showActivePassiveProduct" (click)="activePassiveProduct()">
             <i class="fab fa-searchengin"></i>
         </ion-fab-button>
     </ion-fab-list>
