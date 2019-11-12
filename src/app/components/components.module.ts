@@ -1,3 +1,4 @@
+import { BottomNavComponent } from './bottom-nav/bottom-nav.component';
 import { NgModule } from '@angular/core';
 import { FormsModule, } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -20,7 +21,7 @@ import { ChartPieComponent } from './chart-pie/chart-pie.component';
 import { ChartHorizontalComponent } from './chart-horizontal/chart-horizontal.component';
 
 @NgModule({
-    declarations: [MainNavComponent,ChartPieComponent, ChartHorizontalComponent,FabDirective],
+    declarations: [MainNavComponent,BottomNavComponent,ChartPieComponent, ChartHorizontalComponent,FabDirective],
     imports: [IonicModule, TranslateModule,
         CommonModule, RoundProgressModule,
         MenubarModule, TreeTableModule,
@@ -32,6 +33,7 @@ import { ChartHorizontalComponent } from './chart-horizontal/chart-horizontal.co
     exports: [
         //IonicModule,
         MainNavComponent,
+        BottomNavComponent,
         TranslateModule,
         RoundProgressModule,
         MenubarModule,

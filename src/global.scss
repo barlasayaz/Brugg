@@ -39,6 +39,14 @@ th.p-table-filter.ng-star-inserted {
   }
 }
 
+bottom-nav {
+  position: absolute;
+  bottom: 0;
+  height: 50px;
+  width: 100%;
+  z-index: 3;
+}
+
 .split-pane-visible .sideMenu-inner {
   min-width: auto !important;
   max-width: 200px !important;
@@ -19924,6 +19932,7 @@ body {
 .ek-content {
   // height: 100%;
   min-height: 100%;
+  padding-bottom: 50px;
   background-color: #eeeeee;
 }
 

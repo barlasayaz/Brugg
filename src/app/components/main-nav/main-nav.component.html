@@ -9,11 +9,14 @@
               <div class="topBar-inner">
 
                 <div class="topMenu">
-                  <div class="menuIcon menuIcon-xs" (click)="openMenu()">
+                  <!-- <div class="menuIcon menuIcon-xs" (click)="openMenu()">
                     <ion-icon name="menu"></ion-icon>
                   </div>
                   <div class="menuIcon menuIcon-md" (click)="shrinkMenu()">
                     <ion-icon name="menu"></ion-icon>
+                  </div> -->
+                  <div class="menuIcon" routerLink="/startscreen" [ngClass]="getClass('/startscreen')">
+                    <ion-icon name="home"></ion-icon>
                   </div>
                 </div>
                 

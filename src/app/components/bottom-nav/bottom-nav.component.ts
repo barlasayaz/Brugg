@@ -7,18 +7,18 @@ import { SystemService } from '../../services/system';
 import { Router, RouterEvent } from '@angular/router';
 
 /**
- * Generated class for the MainNavComponent component.
+ * Generated class for the BottomNavComponent component.
  *
  * See https://angular.io/api/core/Component for more info on Angular
  * Components.
  */
 
 @Component({
-  selector: 'main-nav',
-  templateUrl: './main-nav.component.html',
-  styleUrls: ['./main-nav.component.scss']
+  selector: 'bottom-nav',
+  templateUrl: './bottom-nav.component.html',
+  styleUrls: ['./bottom-nav.component.scss']
 })
-export class MainNavComponent implements OnInit {
+export class BottomNavComponent implements OnInit {
   @Input() aktivPage: string;
   @Input() idCustomer: number;
   @Output() ping: EventEmitter<any> = new EventEmitter<any>();
@@ -41,7 +41,7 @@ export class MainNavComponent implements OnInit {
     private router: Router,
     public apiService: ApiService) {
 
-    console.log('Hello MainNavComponent Component');
+    console.log('Hello BottomNavComponent Component');
     this.events.subscribe('progressBar', (progressBar) => {
       if (progressBar >= 0) {
         this.progressBar = progressBar;
