@@ -205,8 +205,7 @@ export class ProductListPage implements OnInit {
                 icon: 'pi pi-fw pi-arrow-right',
                 visible: this.userdata.role_set.edit_products,
                 disabled: true,
-                command: (event) => {
-                    if (this.userdata.role_set.edit_products == false) { return; }
+                command: (event) => {                    
                     console.log('command menuitem:', event.item);
                     this.product_migration();
                 }
@@ -217,7 +216,7 @@ export class ProductListPage implements OnInit {
                 visible: this.userdata.role_set.edit_products,
                 disabled: true,
                 command: (event) => {
-                    if (this.userdata.role_set.edit_products == false) { return; }
+                    
                     console.log('command menuitem:', event.item);
                     this.product_copy();
                 }
@@ -1137,6 +1136,7 @@ export class ProductListPage implements OnInit {
 
     async product_migration() {
         console.log('product_migration', this.selectedNode);
+        if (this.userdata.role_set.edit_products == false) { return; }
         if (this.selectedNode) {
             const nodeList: string[]  = [];
             for (let index = 0; index < this.selectedNode.length; index++) {
@@ -1597,16 +1597,17 @@ export class ProductListPage implements OnInit {
     }
 
     async product_copy() {
-    const modal =
-        await this.modalCtrl.create({
-        component: ProductCopyPage,
-        cssClass: 'productcopy-modal-css',
-        componentProps: {
-            readOnly: false, idProduct: this.selectedNode.data.id, idCustomer: this.idCustomer
-        }
+        if (this.userdata.role_set.edit_products == false) { return; }
+        const modal =
+            await this.modalCtrl.create({
+            component: ProductCopyPage,
+            cssClass: 'productcopy-modal-css',
+            componentProps: {
+                readOnly: false, idProduct: this.selectedNode.data.id, idCustomer: this.idCustomer
+            }
         });
 
-    modal.present();
+        modal.present();
     }
 
     editProduct() {
