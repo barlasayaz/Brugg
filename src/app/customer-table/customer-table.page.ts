@@ -62,7 +62,8 @@ export class CustomerTablePage implements OnInit {
     public move_id = 0;
     public move_to = 0;
     public move_obj: any = {};
-    public columnFilterValues = { company: '',
+    public columnFilterValues = { edit: '',
+                                  company: '',
                                   id: '',
                                   customer_number: '',
                                   rating: '',
@@ -226,20 +227,37 @@ export class CustomerTablePage implements OnInit {
     }
 
     ngOnInit(): void {
-        this.cols = [
-            //{ field: 'work', header: '', width: '80px' },
-            { field: 'company', header: this.translate.instant('Firma'), width: '200px' },
-            { field: 'id', header: 'DB-ID', width: '60px' },
-            { field: 'customer_number', header: 'ID', width: '85px'},
-            { field: 'rating', header: this.translate.instant('Typ'), width: '100px' },
-            { field: 'zip_code', header: this.translate.instant('PLZ'), width: '85px'},
-            { field: 'place', header: this.translate.instant('Ort'), width: '200px' },
-            { field: 'employees', header: this.translate.instant('Mitarbeiter'), width: '170px' },
-            { field: 'last_date', header: this.translate.instant('Letzter besuch'), width: '120px' },
-            { field: 'next_date', header: this.translate.instant('Nächster besuch'), width: '120px' },
-            { field: 'inspector', header: this.translate.instant('Prüfer'), width: '170px' },
-            { field: 'sector', header: this.translate.instant('Branche'), width: '200px' }
-        ];
+        if (this.editMode) {
+            this.cols = [
+                { field: 'company', header: this.translate.instant('Firma'), width: '200px' },
+                { field: 'id', header: 'DB-ID', width: '60px' },
+                { field: 'customer_number', header: 'ID', width: '85px'},
+                { field: 'rating', header: this.translate.instant('Typ'), width: '100px' },
+                { field: 'zip_code', header: this.translate.instant('PLZ'), width: '85px'},
+                { field: 'place', header: this.translate.instant('Ort'), width: '200px' },
+                { field: 'employees', header: this.translate.instant('Mitarbeiter'), width: '170px' },
+                { field: 'last_date', header: this.translate.instant('Letzter besuch'), width: '120px' },
+                { field: 'next_date', header: this.translate.instant('Nächster besuch'), width: '120px' },
+                { field: 'inspector', header: this.translate.instant('Prüfer'), width: '170px' },
+                { field: 'sector', header: this.translate.instant('Branche'), width: '200px' }
+            ];
+        } else {
+            this.cols = [
+                { field: 'company', header: this.translate.instant('Firma'), width: '200px' },
+                { field: 'edit', header: this.translate.instant('Bearbeiten'), width: '60px' },
+                { field: 'id', header: 'DB-ID', width: '60px' },
+                { field: 'customer_number', header: 'ID', width: '85px'},
+                { field: 'rating', header: this.translate.instant('Typ'), width: '100px' },
+                { field: 'zip_code', header: this.translate.instant('PLZ'), width: '85px'},
+                { field: 'place', header: this.translate.instant('Ort'), width: '200px' },
+                { field: 'employees', header: this.translate.instant('Mitarbeiter'), width: '170px' },
+                { field: 'last_date', header: this.translate.instant('Letzter besuch'), width: '120px' },
+                { field: 'next_date', header: this.translate.instant('Nächster besuch'), width: '120px' },
+                { field: 'inspector', header: this.translate.instant('Prüfer'), width: '170px' },
+                { field: 'sector', header: this.translate.instant('Branche'), width: '200px' }
+            ];
+    
+        }
 
         this.filterCols = ['company',
                            'id',
@@ -433,7 +451,8 @@ export class CustomerTablePage implements OnInit {
                 this.columnFilterValues[this.cols[i].field] = '';
             }
         } else {
-            this.columnFilterValues = { company: '',
+            this.columnFilterValues = { edit: '',
+                                        company: '',
                                         id: '',
                                         customer_number: '',
                                         rating: '',
@@ -701,6 +720,7 @@ export class CustomerTablePage implements OnInit {
             const obj = this.allnodes[i];
 
             data.push({
+                'edit': obj.edit,
                 'company': obj.company,
                 'id': obj.id,
                 'customer_number': obj.customer_number,
