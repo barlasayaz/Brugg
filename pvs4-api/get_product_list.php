@@ -89,8 +89,10 @@ function processing($user, $customer) {
     // escape the uemailid to prevent sql injection
     $user      = trim( mysqli_escape_string($con,$user) );
     $customer  = intval ( trim( mysqli_escape_string($con,$customer) ) );
+    $active    = 1;
+    if(isset($_POST['active'])) $active = intval ( trim( mysqli_escape_string($con,$_POST['active']) ));
     
-    $sql    = "SELECT * FROM `products` where `customer` = $customer ORDER BY `parent`, `id` desc;";
+    $sql    = "SELECT * FROM `products` where `customer` = $customer AND `active` = $active ORDER BY `parent`, `id` desc;";
     $ret_sql= mysqli_query( $con, $sql );
 
     $liste = [];
