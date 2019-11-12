@@ -1,5 +1,5 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
-import { NavController, ModalController, Events, LoadingController } from '@ionic/angular';
+import { NavController, ModalController, Events, LoadingController  } from '@ionic/angular';
 import { ApiService } from '../services/api';
 import { TranslateService } from '@ngx-translate/core';
 import { UserdataService } from '../services/userdata';
@@ -193,6 +193,14 @@ export class CustomerTablePage implements OnInit {
 
     @ViewChild('tt') dataTable: TreeTable;
     @ViewChild('divHeightCalc') divHeightCalc: any;
+    @ViewChild('fab1') fab1: any;
+    @ViewChild('fab2') fab2: any;
+
+    fabClick(nr:number){
+        console.log('fabClick():',nr   );
+        if(nr===1) this.fab2.close();
+        if(nr===2) this.fab1.close();
+    }
 
     update(data:any):void{
         console.log('update():',data );
@@ -215,9 +223,7 @@ export class CustomerTablePage implements OnInit {
         }
         if(data.lable==="showColumns"){
             this.show_columns();
-        }
-
-        
+        }        
     }
 
     ngOnInit(): void {

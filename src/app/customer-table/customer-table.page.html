@@ -151,12 +151,11 @@
     </ion-fab-button>
 </ion-fab>
 
-<ion-fab [hidden]="workMode" vertical="bottom" horizontal="end" slot="fixed" class="liftiball">
-    <ion-fab-button color="tertiary">
+<ion-fab [hidden]="workMode" vertical="bottom" horizontal="end" slot="fixed" class="liftiball" #fab1>
+    <ion-fab-button color="tertiary" (click)="fabClick(1)" >
         <ion-icon name="menu"></ion-icon>
     </ion-fab-button>
     <ion-fab-list side="top">
-
         <!-- BUTTON -->
         <ion-fab-button color="success" title="{{'Neu' | translate}}" (click)="menu_new()">
             <i class="fas fa-plus"></i>
@@ -173,8 +172,8 @@
     </ion-fab-list>
 </ion-fab>
 
-<ion-fab [hidden]="workMode" vertical="bottom" horizontal="end" slot="fixed" class="liftiball liftiball-extra">
-    <ion-fab-button color="medium">
+<ion-fab [hidden]="workMode" vertical="bottom" horizontal="end" slot="fixed" class="liftiball liftiball-extra" #fab2 >
+    <ion-fab-button color="medium"  (click)="fabClick(2)">
         <ion-icon name="settings"></ion-icon>
     </ion-fab-button>
     <ion-fab-list side="top">

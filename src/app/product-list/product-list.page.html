@@ -1,4 +1,9 @@
-<main-nav aktivPage="ProductList" [idCustomer]="idCustomer" autoDisplay="true"></main-nav>
+<main-nav aktivPage="ProductList" 
+          [idCustomer]="idCustomer"  
+          [searchText]="columnFilterValues['search_all']"
+          (ping)="update($event)" 
+          autoDisplay="true">
+</main-nav>
 
 <div class="ek-content" (window:resize)="onResize($event)">
     <p-menubar id="menuMin" class="wideMenu">
@@ -357,8 +362,8 @@
 </p-treeTable>
 </div>
 
-<ion-fab vertical="bottom" horizontal="end" slot="fixed" class="liftiball">
-    <ion-fab-button color="tertiary">
+<ion-fab vertical="bottom" horizontal="end" slot="fixed" class="liftiball" #fab1>
+    <ion-fab-button color="tertiary" (click)="fabClick(1)" >
         <ion-icon name="menu"></ion-icon>
     </ion-fab-button>
     <ion-fab-list side="top">
@@ -394,8 +399,8 @@
     </ion-fab-list>
 </ion-fab>
 
-<ion-fab vertical="bottom" horizontal="end" slot="fixed" class="liftiball liftiball-extra">
-    <ion-fab-button color="medium">
+<ion-fab vertical="bottom" horizontal="end" slot="fixed" class="liftiball liftiball-extra" #fab2>
+    <ion-fab-button color="medium" (click)="fabClick(2)" >
         <ion-icon name="settings"></ion-icon>
     </ion-fab-button>
     <ion-fab-list side="top">
