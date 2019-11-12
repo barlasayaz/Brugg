@@ -421,7 +421,7 @@
             <i class="fas fa-file-download"></i>
         </ion-fab-button>
         <!-- BUTTON -->
-        <ion-fab-button color="success" title="{{'Produktmigration' | translate}}" *ngIf="selectedRow==1">
+        <ion-fab-button color="success" title="{{'Produktmigration' | translate}}" (click)="product_migration()" *ngIf="selectedRow==1">
             <i class="fas fa-angle-double-right"></i>
         </ion-fab-button>
         <!-- BUTTON -->
