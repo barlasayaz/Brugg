@@ -362,8 +362,31 @@ export class ProductListPage implements OnInit {
                     }
                     this.generate_productList(0, this.rowCount, this.sortedColumn.sort_field, this.sortedColumn.sort_order);
                     localStorage.setItem('filter_values_product', JSON.stringify(this.columnFilterValues));
-            });
+        });
+    }
+    @ViewChild('fab1') fab1: any;
+    @ViewChild('fab2') fab2: any;
+
+    fabClick(nr:number){
+        console.log('fabClick():',nr   );
+        if(nr===1) this.fab2.close();
+        if(nr===2) this.fab1.close();
+    }
+
+    update(data:any):void{
+        console.log('update():',data );
+        if(data.lable==="searchText"){
+            this.columnFilterValues['search_all'] = data.text;
+            this.generate_productList(0, this.rowCount, this.sortedColumn.sort_field, this.sortedColumn.sort_order);
+            localStorage.setItem('filter_values_product', JSON.stringify(this.columnFilterValues));
+        }  
+        if(data.lable==="toggleFilter"){
+            this.menu_filter();
         }
+        if(data.lable==="showColumns"){
+            this.show_columns();
+        }        
+    }
 
     ngOnInit() {
         this.route.queryParams.subscribe(params => {
