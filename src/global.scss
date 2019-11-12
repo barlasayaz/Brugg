@@ -93,6 +93,11 @@ ion-fab-button {
 }
 
 .liftiball {
+
+  @media screen and (max-width: 480px) {
+    margin-bottom:50px;
+  }
+
   ion-fab-button {
     --box-shadow: none;
   }
@@ -17960,7 +17965,7 @@ textarea {
 
 @media only screen and (max-width: 767px) {
   .content-sm {
-    padding-top: 47px;
+    //padding-top: 47px;
   }
 }
 

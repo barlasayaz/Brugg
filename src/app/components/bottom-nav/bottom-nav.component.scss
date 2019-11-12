@@ -4,6 +4,16 @@
   align-items: center;
   width: 100%;
   height: 50px;
+
+  @media screen and (max-width: 480px) {
+    justify-content: flex-start;
+  }
+}
+
+.hidden-md {
+  @media screen and (min-width: 481px) {
+    display: none;
+  }
 }
 
 ul.bottomMenu-nav {
