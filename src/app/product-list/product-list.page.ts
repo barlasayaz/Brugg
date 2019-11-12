@@ -53,7 +53,7 @@ export class ProductListPage implements OnInit {
     public lang: string = localStorage.getItem('lang');
     public navigationSubscription: any;
     public childCount: number;
-    modelChanged: Subject<any> = new Subject<any>();
+    public modelChanged: Subject<any> = new Subject<any>();
     public selectedRow: number;
     public selectMode: boolean = false;
     public editMode: boolean = false;
@@ -205,8 +205,7 @@ export class ProductListPage implements OnInit {
                 icon: 'pi pi-fw pi-arrow-right',
                 visible: this.userdata.role_set.edit_products,
                 disabled: true,
-                command: (event) => {
-                    if (this.userdata.role_set.edit_products == false) { return; }
+                command: (event) => {                    
                     console.log('command menuitem:', event.item);
                     this.product_migration();
                 }
@@ -217,7 +216,7 @@ export class ProductListPage implements OnInit {
                 visible: this.userdata.role_set.edit_products,
                 disabled: true,
                 command: (event) => {
-                    if (this.userdata.role_set.edit_products == false) { return; }
+                    
                     console.log('command menuitem:', event.item);
                     this.product_copy();
                 }
@@ -387,6 +386,38 @@ export class ProductListPage implements OnInit {
             this.show_columns();
         }        
     }
+
+    lengthOfBasis(){
+        const alert = this.alertCtrl.create({
+            header: this.translate.instant('Basisinformation'),
+            message: this.translate.instant('Anzahl der maximal angezeigten Zeichen (min:10, max:300)'),
+            inputs: [
+                {
+                  name: 'countC',
+                  placeholder: String(this.lengthBasicInfo)
+                }
+              ],
+            buttons: [
+                {
+                    text: this.translate.instant('okay'),
+                    handler: (e) => {
+                        console.log('alert menuitem:', e.countC);
+                        let x = parseInt(e.countC);
+                        if ((x >= 10) && (x <= 300)) { this.lengthBasicInfo = x; }
+                        for (let i = 0; i < this.productListView.length; i++ ) {
+                            let info = this.productListView[i].data['_basic_info_'];
+                            if (info.length > this.lengthBasicInfo + 3) {
+                                info = info.substring(0, this.lengthBasicInfo) + '...';
+                            }
+                            this.productListView[i].data['_basic_info_show_'] = info;
+                        }
+                    }
+                }
+            ]
+        }).then(x => x.present());
+        this.showBasicInfo = true;
+    }
+    
 
     ngOnInit() {
         this.route.queryParams.subscribe(params => {
@@ -1105,6 +1136,7 @@ export class ProductListPage implements OnInit {
 
     async product_migration() {
         console.log('product_migration', this.selectedNode);
+        if (this.userdata.role_set.edit_products == false) { return; }
         if (this.selectedNode) {
             const nodeList: string[]  = [];
             for (let index = 0; index < this.selectedNode.length; index++) {
@@ -1565,16 +1597,17 @@ export class ProductListPage implements OnInit {
     }
 
     async product_copy() {
-    const modal =
-        await this.modalCtrl.create({
-        component: ProductCopyPage,
-        cssClass: 'productcopy-modal-css',
-        componentProps: {
-            readOnly: false, idProduct: this.selectedNode.data.id, idCustomer: this.idCustomer
-        }
+        if (this.userdata.role_set.edit_products == false) { return; }
+        const modal =
+            await this.modalCtrl.create({
+            component: ProductCopyPage,
+            cssClass: 'productcopy-modal-css',
+            componentProps: {
+                readOnly: false, idProduct: this.selectedNode.data.id, idCustomer: this.idCustomer
+            }
         });
 
-    modal.present();
+        modal.present();
     }
 
     editProduct() {
@@ -1613,20 +1646,10 @@ export class ProductListPage implements OnInit {
     }
 
     activePassiveProduct() {
+        console.log('activePassiveProduct()');
         this.selectedNode = [];
         this.selectedRow = 0;
-        this.menuItems[0].disabled = true;
-        this.menuItems[1].disabled = true;
-        this.menuItems[2].disabled = true;
-        this.menuItems[3].disabled = true;
-        this.menuItems[3].visible = this.userdata.role_set.edit_products;
-        this.menuItems[4].visible = false;
-        this.menuItems[5].items[0]['disabled'] = !this.userdata.role_set.edit_product_templates;
-        this.menuItems[5].items[1]['disabled'] = false;
-        this.menuItems[5].items[2]['disabled'] = true;
-        this.menuItems[8].items[3]['disabled'] = true;
-        this.menuItems[8].items[4]['disabled'] = true;
-        this.menuItems[8].items[5]['disabled'] = true;
+        this.showActivePassiveProduct = !this.showActivePassiveProduct;
         this.generate_productList(0, this.rowCount, this.sortedColumn.sort_field, this.sortedColumn.sort_order);
     }
 }
