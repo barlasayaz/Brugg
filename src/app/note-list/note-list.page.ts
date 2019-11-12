@@ -36,8 +36,8 @@ export class NoteListPage implements OnInit {
     public allnodes: any[] = [];
     public selectedColumns: any[];
     public xlsHeader: any[];
-    public splitFilter: boolean = false;
-    public idCustomer: number = 0;
+    public splitFilter = false;
+    public idCustomer = 0;
     public columnFilterValues = { title: '',
                                   notes: '',
                                   notes_date: '',
@@ -67,6 +67,8 @@ export class NoteListPage implements OnInit {
     public rowHeight = 26;
     public rowCount = 100;
     public sortedColumn = { sort_field : null, sort_order : 0 };
+    public filterText = '';
+    public filterOn = false;
 
     public menuItems: MenuItem[] = [{
         label: this.translate.instant('Ansicht'),
@@ -139,11 +141,12 @@ export class NoteListPage implements OnInit {
             }
         ]
     }];
+
     public popupMenu: MenuItem[] = [{
         label: this.translate.instant('Menü'),
         icon: 'fa fa-fw fa-list',
         items: this.menuItems
-    }]
+    }];
 
     @ViewChild('tt') dataTable: TreeTable;
     @ViewChild('divHeightCalc') divHeightCalc: ElementRef;
@@ -175,6 +178,7 @@ export class NoteListPage implements OnInit {
             });
 
     }
+
     ngOnInit() {
         this.cols = [
             { field: 'title', header: this.translate.instant('Titel'), width: '170px' },
@@ -198,13 +202,37 @@ export class NoteListPage implements OnInit {
 
         this.idCustomer = parseInt(this.route.snapshot.paramMap.get('id'));
 
-       if (localStorage.getItem('sort_column_note') != undefined) {
+        if (localStorage.getItem('sort_column_note') != undefined) {
             this.sortedColumn = JSON.parse(localStorage.getItem('sort_column_note'));
         }
-       console.log('NoteListPage idCustomer:', this.idCustomer);
-       this.page_load();
+        this.filterText = this.route.snapshot.paramMap.get('filterText');
+      //  if (this.filterText.length > 0) { this.filterOn = true; }
+        console.log('filterText :', this.filterText);
+
+        console.log('NoteListPage idCustomer:', this.idCustomer);
+        this.page_load();
 
     }
+
+    update(data: any): void {
+        console.log('update():', data );
+        if (data.lable === 'searchText') {
+            this.columnFilterValues['search_all'] = data.text;
+            this.generate_noteList(0, this.rowCount, this.sortedColumn.sort_field, this.sortedColumn.sort_order);
+            localStorage.setItem('filter_values_customer', JSON.stringify(this.columnFilterValues));
+        }
+/*         if (data.lable === 'newCustomer') {
+            if (this.userdata.role_set.edit_customer != true) { return; }
+            this.menu_new();
+        } */
+        if (data.lable === 'toggleFilter') {
+            this.menu_filter();
+        }
+/*         if (data.lable === 'showColumns') {
+            this.show_columns();
+        } */
+    }
+
     onResize(event) {
         // console.log('onResize');
         this.funcHeightCalc();
@@ -212,8 +240,7 @@ export class NoteListPage implements OnInit {
 
      async loadNodes(event: LazyLoadEvent) {
         if (this.totalRecords > 0) {
-            if(event.sortField && event.sortField.length>0)
-            {
+            if (event.sortField && event.sortField.length > 0) {
                 this.sortedColumn.sort_field = event.sortField;
                 this.sortedColumn.sort_order = event.sortOrder;
                 localStorage.setItem('sort_column_note', JSON.stringify(this.sortedColumn));
@@ -441,9 +468,9 @@ export class NoteListPage implements OnInit {
 
     onColResize(event) {
         let index  = this.apiService.columnIndex(event.element);
-        this.selectedColumns[index].width = event.element.offsetWidth+"px";
-        let width2 = this.selectedColumns[index+1].width;
-        this.selectedColumns[index+1].width = parseInt(width2.replace('px',''))-event.delta + "px";
+        this.selectedColumns[index].width = event.element.offsetWidth + 'px';
+        let width2 = this.selectedColumns[index + 1].width;
+        this.selectedColumns[index + 1].width = parseInt(width2.replace('px', '')) - event.delta + 'px';
         localStorage.setItem('show_columns_note', JSON.stringify(this.selectedColumns));
     }
 
@@ -567,7 +594,7 @@ export class NoteListPage implements OnInit {
         let headerRowVisible: any = 1;
         for (var k = 0; k < this.selectedColumns.length; k++) {
             columns.push({ text: this.selectedColumns[k].header, style: 'header' });
-            widthsArray.push('*'); 
+            widthsArray.push('*');
         }
         let bodyArray: any[] = [];
         bodyArray.push(columns);
@@ -673,7 +700,7 @@ export class NoteListPage implements OnInit {
                     text: this.translate.instant('okay'),
                     handler: data => {
                         console.log('Checkbox data:', data);
-                        this.selectedColumns = this.cols.filter(function (element, index, array) { return data.includes(element.field) });
+                        this.selectedColumns = this.cols.filter(function (element, index, array) { return data.includes(element.field); });
                         localStorage.setItem('show_columns_note', JSON.stringify(this.selectedColumns));
                     }
                 }
