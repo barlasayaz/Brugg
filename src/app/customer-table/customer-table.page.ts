@@ -227,37 +227,21 @@ export class CustomerTablePage implements OnInit {
     }
 
     ngOnInit(): void {
-        if (this.editMode) {
-            this.cols = [
-                { field: 'company', header: this.translate.instant('Firma'), width: '200px' },
-                { field: 'id', header: 'DB-ID', width: '60px' },
-                { field: 'customer_number', header: 'ID', width: '85px'},
-                { field: 'rating', header: this.translate.instant('Typ'), width: '100px' },
-                { field: 'zip_code', header: this.translate.instant('PLZ'), width: '85px'},
-                { field: 'place', header: this.translate.instant('Ort'), width: '200px' },
-                { field: 'employees', header: this.translate.instant('Mitarbeiter'), width: '170px' },
-                { field: 'last_date', header: this.translate.instant('Letzter besuch'), width: '120px' },
-                { field: 'next_date', header: this.translate.instant('Nächster besuch'), width: '120px' },
-                { field: 'inspector', header: this.translate.instant('Prüfer'), width: '170px' },
-                { field: 'sector', header: this.translate.instant('Branche'), width: '200px' }
-            ];
-        } else {
-            this.cols = [
-                { field: 'company', header: this.translate.instant('Firma'), width: '200px' },
-                { field: 'edit', header: this.translate.instant('Bearbeiten'), width: '60px' },
-                { field: 'id', header: 'DB-ID', width: '60px' },
-                { field: 'customer_number', header: 'ID', width: '85px'},
-                { field: 'rating', header: this.translate.instant('Typ'), width: '100px' },
-                { field: 'zip_code', header: this.translate.instant('PLZ'), width: '85px'},
-                { field: 'place', header: this.translate.instant('Ort'), width: '200px' },
-                { field: 'employees', header: this.translate.instant('Mitarbeiter'), width: '170px' },
-                { field: 'last_date', header: this.translate.instant('Letzter besuch'), width: '120px' },
-                { field: 'next_date', header: this.translate.instant('Nächster besuch'), width: '120px' },
-                { field: 'inspector', header: this.translate.instant('Prüfer'), width: '170px' },
-                { field: 'sector', header: this.translate.instant('Branche'), width: '200px' }
-            ];
-    
-        }
+
+        this.cols = [
+            { field: 'work_column', header:'', width: '60px' },
+            { field: 'company', header: this.translate.instant('Firma'), width: '200px' },
+            { field: 'id', header: 'DB-ID', width: '60px' },
+            { field: 'customer_number', header: 'ID', width: '85px'},
+            { field: 'rating', header: this.translate.instant('Typ'), width: '100px' },
+            { field: 'zip_code', header: this.translate.instant('PLZ'), width: '85px'},
+            { field: 'place', header: this.translate.instant('Ort'), width: '200px' },
+            { field: 'employees', header: this.translate.instant('Mitarbeiter'), width: '170px' },
+            { field: 'last_date', header: this.translate.instant('Letzter besuch'), width: '120px' },
+            { field: 'next_date', header: this.translate.instant('Nächster besuch'), width: '120px' },
+            { field: 'inspector', header: this.translate.instant('Prüfer'), width: '170px' },
+            { field: 'sector', header: this.translate.instant('Branche'), width: '200px' }
+        ];
 
         this.filterCols = ['company',
                            'id',
@@ -568,6 +552,7 @@ export class CustomerTablePage implements OnInit {
     }
 
     nodeSelect() {
+        /*
         console.log('nodeSelect:', this.menuItems, this.workMode);
         let id_sn = 0;
 
@@ -578,35 +563,8 @@ export class CustomerTablePage implements OnInit {
             //id_sn = this.selectedNode.data.id;
             this.menu_view();
         }
+        */
        
-        return;
-        /* todo */
-        
-        this.menuItems[0].disabled = false;
-        this.menuItems[1].disabled = false;
-        this.menuItems[2].disabled = false;
-        
-        if (this.selectedNode) {
-            if (this.selectedNode.data.id) {
-                id_sn = this.selectedNode.data.id;
-            }
-        }
-
-        if (id_sn == this.move_id) {
-            this.menuItems[2].visible = this.userdata.role_set.edit_customer;
-            this.menuItems[3].visible = false;
-            this.move_id = 0;
-        } else if (this.move_id > 0) {
-            console.log('move item :', this.move_id, this.move_obj);
-            this.move_obj.parent = id_sn;
-            this.apiService.pvs4_set_customer(this.move_obj).then(async (result: any) => {
-                console.log('result: ', result);
-                this.page_load();
-            });
-            this.menuItems[2].visible = this.userdata.role_set.edit_customer;
-            this.menuItems[3].visible = false;
-            this.move_id = 0;
-        }
     }
 
     nodeUnselect() {
@@ -737,15 +695,11 @@ export class CustomerTablePage implements OnInit {
         this.customerList = data;
     }
 
-    menu_view() {
-        console.log('menu_view', this.selectedNode);
-        if (this.selectedNode) {
-            if (this.selectedNode.data.id) {
-                const id = parseInt(this.selectedNode.data.id);
-                console.log('menu_view id', id);
-                this.navCtrl.navigateForward('/customer-details/' + id);
-            }
-        }
+    viewCustomer(data) {
+        console.log('viewCustomer', data);
+        const id = parseInt(data.id);
+        console.log('menu_view id', id);
+        this.navCtrl.navigateForward('/customer-details/' + id);    
     }
 
     async excel_export() {

@@ -76,7 +76,7 @@ export class NoteListPage implements OnInit {
         disabled: true,
         command: (event) => {
             console.log('command menuitem:', event.item);
-            this.menu_view();
+            //this.menu_view();
         }
     },
     {
@@ -85,7 +85,7 @@ export class NoteListPage implements OnInit {
         disabled: true,
         command: (event) => {
             console.log('command menuitem:', event.item);
-            this.menu_edit();
+            //this.menu_edit();
         }
     },
     {
@@ -181,6 +181,7 @@ export class NoteListPage implements OnInit {
 
     ngOnInit() {
         this.cols = [
+            { field: 'work_column', header:'', width: '60px' },
             { field: 'title', header: this.translate.instant('Titel'), width: '170px' },
             { field: 'notes', header: this.translate.instant('Notiz'), width: '350px' },
             { field: 'notes_date', header: this.translate.instant('Datum'), width: '85px' },
@@ -190,6 +191,7 @@ export class NoteListPage implements OnInit {
         ];
 
         this.filterCols = [
+            'work_column',
             'title',
             'notes',
             'notes_date',
@@ -472,20 +474,21 @@ export class NoteListPage implements OnInit {
 
     onColReorder(event) {
         this.selectedColumns = event.columns;
+        this.fixReorder();
         localStorage.setItem('show_columns_note', JSON.stringify(this.selectedColumns));
     }
-
-
-    nodeSelect(event) {
-        // console.log('nodeSelect:', event, this.menuItems);
-        this.menuItems[0].disabled = false;
-        this.menuItems[1].disabled = false;
-    }
-
-    nodeUnselect() {
-        console.log('nodeUnselect');
-        this.menuItems[0].disabled = true;
-        this.menuItems[1].disabled = true;
+    fixReorder() {
+        console.log('fixReorder()', this.selectedColumns );
+        let cols = [
+            { field: 'work_column', header:'', width: '60px' },
+            { field: 'title', header: this.translate.instant('Titel'), width: '170px' }
+        ];
+        for (let i = 0; i < this.selectedColumns.length; i++) {
+            if (this.selectedColumns[i].field === 'work_column') { continue; }
+            if (this.selectedColumns[i].field === 'title') { continue; }
+            cols.push(this.selectedColumns[i]);
+        }
+        this.selectedColumns = cols;
     }
 
     async menu_new() {
@@ -508,43 +511,36 @@ export class NoteListPage implements OnInit {
             });
             modal.present();
     }
-    async menu_edit() {
-        console.log('menu_edit', this.selectedNode);
-        if (this.selectedNode) {
-            if (this.selectedNode.data.id) {
-                let id = parseInt(this.selectedNode.data.id);
-                console.log('menu_edit id', id);
-                const modal =
-                    await this.modalCtrl.create({
-                        component: NoteEditComponent,
-                        cssClass: 'noteedit-modal-css',
-                        componentProps: {
-                            id: id, idCustomer: this.idCustomer, redirect: 1
-                        }
-                    });
-                modal.onDidDismiss().then(async data => {
-                    console.log('menu_edit ret:', data['data']);
-                    if (data['data']) {
-                        this.page_load();
-                    }
-                });
-                modal.present();
+
+    async editNote(note) {
+        console.log('editNote', note);
+        let id = parseInt(note.id);
+        console.log('editNote id', id);
+        const modal =
+            await this.modalCtrl.create({
+                component: NoteEditComponent,
+                cssClass: 'noteedit-modal-css',
+                componentProps: {
+                    id: id, idCustomer: this.idCustomer, redirect: 1
+                }
+            });
+        modal.onDidDismiss().then(async data => {
+            console.log('menu_edit ret:', data['data']);
+            if (data['data']) {
+                this.page_load();
             }
-        }
+        });
+        modal.present();
     }
 
-    menu_view() {
-        console.log('menu_view', this.selectedNode);
-        if (this.selectedNode) {
-            if (this.selectedNode.data.id) {
-                const data = {
-                    id: parseInt(this.selectedNode.data.id),
-                    idCustomer: this.idCustomer
-                };
-                this.dataService.setData(data);
-                this.navCtrl.navigateForward(['/note-details']);
-            }
-        }
+    viewNote(note) {
+        console.log('viewNote', note);
+        const data = {
+            id: parseInt(note.id),
+            idCustomer: this.idCustomer
+        };
+        this.dataService.setData(note);
+        this.navCtrl.navigateForward(['/note-details']);            
     }
 
     async excel_export() {
@@ -642,6 +638,8 @@ export class NoteListPage implements OnInit {
     async show_columns() {
         let inputs: any[] = [];
         for (var i = 0; i < this.cols.length; i++) {
+            if (this.cols[i].field === 'work_column') { continue; }
+            if (this.cols[i].field === 'title') { continue; }
             inputs.push({
                 type: 'checkbox',
                 label: this.cols[i].header,
@@ -661,6 +659,8 @@ export class NoteListPage implements OnInit {
                     handler: data => {
                         inputs = [];
                         for (let i = 0; i < this.cols.length; i++) {
+                            if (this.cols[i].field === 'work_column') { continue; }
+                            if (this.cols[i].field === 'title') { continue; }
                             inputs.push({
                                 type: 'checkbox',
                                 label: this.cols[i].header,
@@ -676,6 +676,8 @@ export class NoteListPage implements OnInit {
                     handler: data => {
                         inputs = [];
                         for (let i = 0; i < this.cols.length; i++) {
+                            if (this.cols[i].field === 'work_column') { continue; }
+                            if (this.cols[i].field === 'title') { continue; }
                             inputs.push({
                                 type: 'checkbox',
                                 label: this.cols[i].header,
@@ -697,6 +699,9 @@ export class NoteListPage implements OnInit {
                     handler: data => {
                         console.log('Checkbox data:', data);
                         this.selectedColumns = this.cols.filter(function (element, index, array) { return data.includes(element.field); });
+                        this.selectedColumns.unshift(this.cols[1]);
+                        this.selectedColumns.unshift(this.cols[0]);
+                        console.log('Checkbox data:', this.selectedColumns );
                         localStorage.setItem('show_columns_note', JSON.stringify(this.selectedColumns));
                     }
                 }

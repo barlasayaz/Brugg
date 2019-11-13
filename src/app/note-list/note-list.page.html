@@ -6,42 +6,6 @@
 </main-nav>
 
 <div class="ek-content" (window:resize)="onResize($event)">
-<!--     <p-menubar id="menuMin" class="wideMenu">
-        <div style="width: 100%">
-            <button type="button"
-                    pButton 
-                    icon="fa fa-fw fa-list"
-                    label="Menu"
-                    id="btnMenu"
-                    (click)="menu.toggle($event)">
-                <span class="ui-submenu-icon pi pi-fw pi-caret-down slide-caret"></span>
-            </button>
-        </div>
-        <div class="ui-inputgroup search-search">
-            <input type="text"
-                   pInputText
-                   placeholder="{{'Suche' |translate }}"
-                   [(ngModel)]="columnFilterValues['search_all']"
-                   (input)="search_all()">
-        </div>
-    </p-menubar> -->
-<!--     <p-slideMenu [model]="menuItems"
-                 popup="false"
-                 [viewportHeight]="220"
-                 [style]="{'width':'200px'}"
-                 #menu>
-    </p-slideMenu>
-    <p-menubar [model]="menuItems"
-               [autoDisplay]="false"
-               id="menuMax">
-        <div class="ui-inputgroup search-search">
-            <input type="text"
-                   pInputText
-                   placeholder="{{'Suche' |translate }}"
-                   [(ngModel)]="columnFilterValues['search_all']"
-                   (input)="search_all()">
-        </div>
-    </p-menubar> -->
 
     <div id="heightCalc" 
          class="heightCalc"
@@ -49,10 +13,6 @@
     </div>
     <p-treeTable [value]="noteListView"
                  [columns]="selectedColumns"
-                 selectionMode="single"
-                 [(selection)]="selectedNode"
-                 (onNodeSelect)="nodeSelect($event)"
-                 (onNodeUnselect)="nodeUnselect()"
                  dataKey="id"
                  styleClass="ui-treetable-scrollable-body"
                  [resizableColumns]="true"
@@ -79,7 +39,8 @@
         </ng-template>
         <ng-template pTemplate="header" let-columns>
             <tr>
-                <th *ngFor="let col of selectedColumns" 
+                <th > </th>                
+                <th *ngFor="let col of selectedColumns.slice(1);" 
                     ttResizableColumn 
                     [ttSortableColumn]="col.field" 
                     ttReorderableColumn>
@@ -88,19 +49,29 @@
                 </th>
             </tr>
             <tr [hidden]="!splitFilter">
-                <th *ngFor="let col of selectedColumns" [ngSwitch]="col.field" class="p-table-filter" [ngStyle]="{width: col.width}">
+                <th *ngFor="let col of selectedColumns; let i = index" [ngSwitch]="col.field" class="p-table-filter" [ngStyle]="{width: col.width}">
                     <input pInputText
                            type="text"
                            class="filter-search"
                            (input)="search_all()"
+                           *ngIf="i != 0"
                            [(ngModel)]="columnFilterValues[col.field]">
                 </th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-rowNode let-rowData="rowData" let-columns="columns">
             <tr [ttSelectableRow]="rowNode">
-                <td *ngFor="let col of selectedColumns; let i = index" style="text-align: justify;">
-                    <p-treeTableToggler [rowNode]="rowNode" *ngIf="i == 0"></p-treeTableToggler>
+                <td>     
+                    <div class="workWidthfix">
+                        <ion-button [hidden]="!editMode" class="btn btn-success" size="small"  (click)="editNote(rowData)">
+                            <ion-icon name="create"></ion-icon>
+                        </ion-button>
+                        <ion-button [hidden]="editMode"  class="btn btn-primary" size="small"  (click)="viewNote(rowData)">
+                            <ion-icon name="eye"></ion-icon> 
+                        </ion-button>          
+                    </div>               
+                </td>
+                <td *ngFor="let col of selectedColumns.slice(1); let i = index" style="text-align: justify;">
                     <label
                         *ngIf="col.field == 'notes_date'">{{rowData[col.field] | date : 'dd.MM.yyyy - HH:mm'}}</label>
                     <label *ngIf="col.field != 'notes_date'">{{rowData[col.field]}}</label>
@@ -117,21 +88,22 @@
     </p-treeTable>
 </div>
 
-<ion-fab vertical="bottom" horizontal="end" slot="fixed" class="liftiball">
+<ion-fab [hidden]="!editMode" vertical="bottom" horizontal="end" slot="fixed" class="liftiball liftiball-cancel">
+    <!-- BUTTON -->
+    <ion-fab-button color="danger" title="{{'abbrechen' | translate}}" (click)="editMode=false;">
+        <i class="fas fa-times"></i>
+    </ion-fab-button>
+</ion-fab>
+
+<ion-fab [hidden]="editMode" vertical="bottom" horizontal="end" slot="fixed" class="liftiball">
     <ion-fab-button color="tertiary">
         <ion-icon name="menu"></ion-icon>
     </ion-fab-button>
     <ion-fab-list side="top">
         <!-- BUTTON -->
         <ion-fab-button color="primary"
-                        data-desc="Ansicht"
-                        (click)="menu_view()">
-            <ion-icon name="eye"></ion-icon> 
-        </ion-fab-button>
-        <!-- BUTTON -->
-        <ion-fab-button color="primary"
                         data-desc="Bearbeiten"
-                        (click)="menu_edit()">
+                        (click)="editMode=true;">
             <ion-icon name="create"></ion-icon>
         </ion-fab-button>
         <!-- BUTTON -->
