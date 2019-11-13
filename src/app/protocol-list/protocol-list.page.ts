@@ -177,6 +177,21 @@ export class ProtocolListPage implements OnInit {
         this.page_load();
     }
 
+    update(data: any): void {
+        console.log('update():', data );
+        if (data.lable === 'searchText') {
+            this.columnFilterValues['search_all'] = data.text;
+            this.generate_protocolList(0, this.rowCount, this.sortedColumn.sort_field, this.sortedColumn.sort_order);
+            localStorage.setItem('filter_values_product', JSON.stringify(this.columnFilterValues));
+        }
+        if(data.lable === 'toggleFilter') {
+            this.menu_filter();
+        }
+        if (data.lable === 'showColumns') {
+            this.show_columns();
+        }
+    }
+
     onResize(event) {
         // console.log('onResize');
         this.funcHeightCalc();

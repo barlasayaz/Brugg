@@ -58,3 +58,16 @@
     .topBar-outer {
       margin-bottom: 3px;
     }
+
+    .ui-treetable-scrollable-view {
+        colgroup col:first-child {
+            max-width: 90px !important;
+            width: 90px !important;
+        }
+        @supports not ( -moz-appearance:none ) {
+            tbody tr td:first-child{
+                padding-left: 15px !important;
+            }
+        }
+    
+    }

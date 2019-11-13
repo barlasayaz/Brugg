@@ -1,7 +1,12 @@
-<main-nav aktivPage="ProtocolList" [idCustomer]="idCustomer"></main-nav>
+<main-nav aktivPage="ProtocolList" 
+          [idCustomer]="idCustomer"
+          [searchText]="columnFilterValues['search_all']" 
+          (ping)="update($event)"
+          autoDisplay="true">
+</main-nav>
 
 <div class="ek-content" (window:resize)="onResize($event)">
-    <p-menubar id="menuMin" class="wideMenu">
+    <!-- <p-menubar id="menuMin" class="wideMenu">
         <div>
             <button type="button"
                     pButton icon="fa fa-fw fa-list"
@@ -44,13 +49,8 @@
                    placeholder="{{'Suche' |translate }}"
                    [(ngModel)]="columnFilterValues['search_all']"
                    (input)="search_all()">
-            <!-- <button (click)="search_all()" 
-                    pButton type="button" 
-                    icon="fa fa-search" 
-                    class="ui-button-warn">
-            </button>       -->
         </div>
-    </p-menubar>
+    </p-menubar> -->
 
     <div id="heightCalc"
          class="heightCalc"
@@ -146,32 +146,40 @@
     </ion-fab-button>
     <ion-fab-list side="top">
         <!-- BUTTON -->
-        <ion-fab-button color="primary" data-desc="Ansicht">
-            <i class="pi pi-eye"></i>
+        <ion-fab-button color="primary"
+                        data-desc="Ansicht"
+                        (click)="menu_view()">
+            <ion-icon name="eye"></ion-icon> 
         </ion-fab-button>
         <!-- BUTTON -->
-        <ion-fab-button color="primary" data-desc="Löschen">
-            <i class="pi pi-trash"></i>
+        <ion-fab-button color="primary"
+                        data-desc="Löschen"
+                        (click)="protocolDeactivate()">
+            <ion-icon name="trash"></ion-icon> 
         </ion-fab-button>
         <!-- BUTTON -->
-        <ion-fab-button color="primary" data-desc="Neue Protokollvorlage">
-            <i class="pi pi-plus"></i>
+        <ion-fab-button color="primary"
+                        data-desc="Neue Protokollvorlage"
+                        (click)="create_template()">
+            <ion-icon name="add"></ion-icon> 
         </ion-fab-button>
         <!-- BUTTON -->
-        <ion-fab-button color="primary" data-desc="Spalten">
-            <i class="pi pi-eject"></i>
+        <ion-fab-button color="primary"
+                        data-desc="Spalten"
+                        (click)="show_columns()">
+            <ion-icon name="grid"></ion-icon> 
         </ion-fab-button>
         <!-- BUTTON -->
-        <ion-fab-button color="primary" data-desc="Filter zurücksetzen">
-            <i class="pi pi-filter"></i>
+        <ion-fab-button color="primary"
+                        data-desc="PDF Export"
+                        (click)="pdf_export()">
+            <ion-icon name="download"></ion-icon>
         </ion-fab-button>
         <!-- BUTTON -->
-        <ion-fab-button color="primary" data-desc="PDF Export">
-            <i class="pi pi-save"></i>
-        </ion-fab-button>
-        <!-- BUTTON -->
-        <ion-fab-button color="primary" data-desc="XLS Export">
-            <i class="pi pi-save"></i>
+        <ion-fab-button color="primary"
+                        data-desc="XLS Export"
+                        (click)="excel_export()">
+            <ion-icon name="stats"></ion-icon>
         </ion-fab-button>
     </ion-fab-list>
 </ion-fab>
