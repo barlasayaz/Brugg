@@ -95,7 +95,7 @@ export class CustomerTablePage implements OnInit {
         disabled: true,
         command: (event) => {
             console.log('command menuitem:', event);
-            this.menu_view();
+            //this.menu_view();
         }
     },
     {
@@ -243,7 +243,9 @@ export class CustomerTablePage implements OnInit {
             { field: 'sector', header: this.translate.instant('Branche'), width: '200px' }
         ];
 
-        this.filterCols = ['company',
+        this.filterCols = [
+                           'work_column',
+                           'company',
                            'id',
                            'customer_number',
                            'rating',
@@ -804,8 +806,10 @@ export class CustomerTablePage implements OnInit {
     }
 
     async  show_columns() {
-        const inputs: any[] = [];
+      const inputs: any[] = [];
       for (let i = 0; i < this.cols.length; i++) {
+        if (this.cols[i].field === 'work_column') { continue; }
+        if (this.cols[i].field === 'company') { continue; }
           inputs.push({
               type: 'checkbox',
               label: this.cols[i].header,
@@ -824,6 +828,8 @@ export class CustomerTablePage implements OnInit {
                     handler: data => {
                         inputs = [];
                         for (let i = 0; i < this.cols.length; i++) {
+                            if (this.cols[i].field === 'work_column') { continue; }
+                            if (this.cols[i].field === 'company') { continue; }
                             inputs.push({
                                 type: 'checkbox',
                                 label: this.cols[i].header,
@@ -839,6 +845,8 @@ export class CustomerTablePage implements OnInit {
                     handler: data => {
                         inputs = [];
                         for (let i = 0; i < this.cols.length; i++) {
+                            if (this.cols[i].field === 'work_column') { continue; }
+                            if (this.cols[i].field === 'company') { continue; }
                             inputs.push({
                                 type: 'checkbox',
                                 label: this.cols[i].header,
@@ -860,6 +868,8 @@ export class CustomerTablePage implements OnInit {
                 handler: data => {
                     console.log('Checkbox data:', data );
                     this.selectedColumns = this.cols.filter(function (element, index, array) { return data.includes(element.field); });
+                    this.selectedColumns.unshift(this.cols[1]);
+                    this.selectedColumns.unshift(this.cols[0]);
                     localStorage.setItem('show_columns', JSON.stringify(this.selectedColumns));
                 }
             }
@@ -899,7 +909,21 @@ export class CustomerTablePage implements OnInit {
 
     onColReorder(event) {
         this.selectedColumns = event.columns;
+        this.fixReorder();
         localStorage.setItem('show_columns', JSON.stringify(this.selectedColumns));
+    }
+    fixReorder() {
+        console.log('fixReorder()', this.selectedColumns );
+        let cols = [
+            { field: 'work_column', header:'', width: '60px' },
+            { field: 'company', header: this.translate.instant('Firma'), width: '200px' }
+        ];
+        for (let i = 0; i < this.selectedColumns.length; i++) {
+            if (this.selectedColumns[i].field === 'work_column') { continue; }
+            if (this.selectedColumns[i].field === 'company') { continue; }
+            cols.push(this.selectedColumns[i]);
+        }
+        this.selectedColumns = cols;
     }
 
     onNodeExpand(event) {
