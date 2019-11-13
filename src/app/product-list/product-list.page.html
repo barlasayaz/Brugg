@@ -62,10 +62,6 @@
     </div>
     <p-treeTable [value]="productListView" 
                  [columns]="selectedColumns" 
-                 selectionMode="single"
-                 [(selection)]="selectedNode" 
-                 (onNodeSelect)="nodeSelect($event, selectedNode)"
-                 (onNodeUnselect)="onNodeUnselect($event, selectedNode)" 
                  dataKey="id" 
                  (onNodeExpand)="onNodeExpand($event)"
                  (onNodeCollapse)="onNodeCollapse($event)" 
@@ -131,7 +127,16 @@
                         </ion-button>
                         <ion-button [hidden]="workMode"  class="btn btn-primary" size="small"  (click)="viewProduct(rowData)">
                             <ion-icon name="eye"></ion-icon> 
-                        </ion-button>          
+                        </ion-button>   
+                        <ion-button [hidden]="((!moveMode)||(move_id>0))" class="btn btn-teal" size="small"  (click)="moveProduct(1,rowData)">
+                                <ion-icon name="md-move"></ion-icon>
+                        </ion-button> 
+                        <ion-button [hidden]="((!moveMode)||(move_id==0)||(move_id==rowData.id))" class="btn btn-danger" size="small"  (click)="moveProduct(2,rowData)">
+                                <ion-icon name="md-arrow-round-forward"></ion-icon>
+                        </ion-button>     
+                        <ion-button [hidden]="((!moveMode)||(move_id==0)||(move_id!=rowData.id))" class="btn btn-teal" size="small"  (click)="moveProduct(2,rowData)">
+                                <ion-icon name="md-arrow-round-back"></ion-icon>
+                        </ion-button>        
                     </div>               
                 </td>
                 <td *ngFor="let col of selectedColumns.slice(1); let i = index" [ngStyle]="showActivePassiveProduct && {'color': '#ccc'}">
@@ -182,7 +187,7 @@
             <i class="fas fa-plus"></i>
         </ion-fab-button>
         <!-- BUTTON -->
-        <ion-fab-button color="success" title="{{'Neue Produktvorlage' | translate}}" *ngIf="userdata.role_set.edit_product_templates">
+        <ion-fab-button color="success" title="{{'Neue Produktvorlage' | translate}}" (click)="create_template()"  *ngIf="userdata.role_set.edit_product_templates">
             <i class="fas fa-plus"></i>
         </ion-fab-button>
         <!-- BUTTON -->
@@ -194,7 +199,7 @@
             <i class="fas fa-trash"></i>
         </ion-fab-button>
         <!-- BUTTON -->
-        <ion-fab-button color="primary" title="{{'Bewegen' | translate}}" *ngIf="userdata.role_set.edit_products">
+        <ion-fab-button color="primary" title="{{'Bewegen' | translate}}" (click)="work_mode(3)" *ngIf="userdata.role_set.edit_products">
             <i class="fas fa-arrows-alt"></i>
         </ion-fab-button>
 
