@@ -123,8 +123,11 @@
             <tr [ttSelectableRow]="rowNode">
                 <td>     
                     <div class="workWidthfix">
+                        <ion-button [hidden]="!deleteMode" class="btn btn-danger" size="small"  (click)="productDeactivateAlert(rowNode)">
+                            <ion-icon name="trash"></ion-icon>
+                        </ion-button>
                         <ion-button [hidden]="!editMode" class="btn btn-success" size="small"  (click)="editProduct(rowData)">
-                            <ion-icon name="create"></ion-icon>
+                                <ion-icon name="create"></ion-icon>
                         </ion-button>
                         <ion-button [hidden]="workMode"  class="btn btn-primary" size="small"  (click)="viewProduct(rowData)">
                             <ion-icon name="eye"></ion-icon> 
@@ -158,17 +161,24 @@
     
 </div>
 
-<ion-fab vertical="bottom" horizontal="end" slot="fixed" class="liftiball" #fab1>
+<ion-fab [hidden]="!workMode" vertical="bottom" horizontal="end" slot="fixed" class="liftiball liftiball-cancel">
+    <!-- BUTTON -->
+    <ion-fab-button color="danger" title="{{'abbrechen' | translate}}" (click)="work_mode(0);">
+        <i class="fas fa-times"></i>
+    </ion-fab-button>
+</ion-fab>
+
+<ion-fab [hidden]="workMode" vertical="bottom" horizontal="end" slot="fixed" class="liftiball" #fab1>
     <ion-fab-button color="tertiary" (click)="fabClick(1)" >
         <ion-icon name="menu"></ion-icon>
     </ion-fab-button>
     <ion-fab-list side="top">
         <!-- BUTTON -->
-        <ion-fab-button color="success" title="{{'Neues Produkt' | translate}}" *ngIf="userdata.role_set.edit_products">
+        <ion-fab-button color="success" title="{{'Neues Produkt' | translate}}" (click)="menu_new()" *ngIf="userdata.role_set.edit_products">
             <i class="fas fa-plus"></i>
         </ion-fab-button>
         <!-- BUTTON -->
-        <ion-fab-button color="success" title="{{'Neues Protokoll' | translate}}" *ngIf="userdata.role_set.check_products">
+        <ion-fab-button color="success" title="{{'Neues Protokoll' | translate}}"  *ngIf="userdata.role_set.check_products">
             <i class="fas fa-plus"></i>
         </ion-fab-button>
         <!-- BUTTON -->
@@ -176,26 +186,23 @@
             <i class="fas fa-plus"></i>
         </ion-fab-button>
         <!-- BUTTON -->
-        <ion-fab-button color="success" title="{{'Bearbeiten' | translate}}" *ngIf="userdata.role_set.edit_products">
+        <ion-fab-button color="success" title="{{'Bearbeiten' | translate}}" (click)="work_mode(1)" *ngIf="userdata.role_set.edit_products">
             <i class="fas fa-pen"></i>
         </ion-fab-button>
         <!-- BUTTON -->
-        <ion-fab-button color="danger" title="{{'Löschen' | translate}}" *ngIf="userdata.role_set.edit_products">
+        <ion-fab-button color="danger" title="{{'Löschen' | translate}}" (click)="work_mode(2)"  *ngIf="userdata.role_set.edit_products">
             <i class="fas fa-trash"></i>
         </ion-fab-button>
         <!-- BUTTON -->
         <ion-fab-button color="primary" title="{{'Bewegen' | translate}}" *ngIf="userdata.role_set.edit_products">
             <i class="fas fa-arrows-alt"></i>
         </ion-fab-button>
-        <!-- BUTTON -->
-        <ion-fab-button color="primary" title="{{'Ansicht' | translate}}">
-            <i class="fas fa-eye"></i>
-        </ion-fab-button>
+
         
     </ion-fab-list>
 </ion-fab>
 
-<ion-fab vertical="bottom" horizontal="end" slot="fixed" class="liftiball liftiball-extra" #fab2>
+<ion-fab [hidden]="workMode" vertical="bottom" horizontal="end" slot="fixed" class="liftiball liftiball-extra" #fab2>
     <ion-fab-button color="medium" (click)="fabClick(2)" >
         <ion-icon name="settings"></ion-icon>
     </ion-fab-button>

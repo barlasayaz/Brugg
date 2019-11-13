@@ -37,6 +37,7 @@ export class ProductListPage implements OnInit {
     public idCustomer = 0;
     public heightCalc: any;
     public move_id = 0;
+    public move_to = 0;
     public move_obj: any = {};
     public columnFilterValues = { title: '',
                                   nfc_tag_id: '',
@@ -56,13 +57,16 @@ export class ProductListPage implements OnInit {
     public modelChanged: Subject<any> = new Subject<any>();
     public selectedRow: number;
     public selectMode: boolean = false;
-    public editMode: boolean = false;
     public rowHeight = 26;
     public rowCount = 100;    
     public showBasicInfo = true;
     public lengthBasicInfo = 90;
     public sortedColumn = { sort_field : null, sort_order : 0 };
     public showActivePassiveProduct: boolean = false;
+    public workMode: boolean = false;
+    public editMode: boolean = false;
+    public moveMode: boolean = false;
+    public deleteMode: boolean = false;
 
     public menuItems: MenuItem[] = [{
         label: this.translate.instant('Ansicht'),
@@ -70,7 +74,7 @@ export class ProductListPage implements OnInit {
         disabled: true,
         command: (event) => {
             console.log('command menuitem:', event.item);
-            this.menu_view();
+            //this.menu_view();
         }
     },
     {
@@ -81,7 +85,7 @@ export class ProductListPage implements OnInit {
         command: (event) => {
             if (this.userdata.role_set.edit_products == false) { return; }
             console.log('command menuitem:', event.item);
-            this.menu_edit();
+            //this.menu_edit();
         }
     },
     {
@@ -91,7 +95,7 @@ export class ProductListPage implements OnInit {
         visible:  this.userdata.role_set.check_products,
         command: (event) => {
             console.log('command menuitem:', event.item);
-            this.productDeactivateAlert();
+            //this.productDeactivateAlert();
         }
     },
     {
@@ -141,7 +145,7 @@ export class ProductListPage implements OnInit {
                 command: (event) => {
                     if (this.userdata.role_set.edit_products == false) { return; }
                     console.log('command menuitem:', event.item);
-                    //this.menu_new();
+                    this.menu_new();
                 }
             },
             {
@@ -1083,7 +1087,7 @@ export class ProductListPage implements OnInit {
             }
 
             if (event.node.data.parent != 0) {
-                this.childCount--;
+                this.childCount--; 
             }
             if (this.childCount > 0) {
                 this.menuItems[8].items[4]['disabled'] = true;
@@ -1092,27 +1096,41 @@ export class ProductListPage implements OnInit {
         }
     }
 
-    viewProduct(data) {
-        console.log('viewProduct', data,  this.idCustomer);
+    menu_new() {
         const obj = { id: 0, parent: 0, idCustomer: this.idCustomer };
-        obj.parent = data.id;
         this.dataService.setData(obj);
         this.navCtrl.navigateForward(['/product-edit']);
     }
-
-    menu_edit() {
-        console.log('menu_edit', this.selectedNode);
-        if (this.selectedNode) {
-            if (this.selectedNode.data.id) {
-                const data = {
-                    id: this.selectedNode.data.id,
-                    idCustomer: this.idCustomer,
-                    parent: this.selectedNode.data.parent
-                };
-                this.dataService.setData(data);
-                this.navCtrl.navigateForward(['/product-edit']);
-            }
+    work_mode(mode:number) {
+        console.log('work_mode()',mode);
+        if(mode===0){
+            this.workMode = false;
+            this.editMode = false;
+            this.moveMode = false;
+            this.deleteMode = false;
+            this.move_id = 0;
+            this.move_to = 0;
+            this.move_obj = {};
+        }else if(mode===1){
+            if (this.userdata.role_set.edit_products != true) { return; };
+            this.workMode = true;
+            this.editMode = true;
+        }else if(mode===2){
+            if (this.userdata.role_set.edit_products != true) { return; };
+            this.workMode = true;
+            this.deleteMode = true;
         }
+
+    }
+
+    editProduct(data) {
+        const obj = {
+            id: data.id,
+            idCustomer: this.idCustomer,
+            parent: data.parent
+        };
+        this.dataService.setData(obj);
+        this.navCtrl.navigateForward(['/product-edit']);
     }
 
     menu_history() {
@@ -1206,24 +1224,21 @@ export class ProductListPage implements OnInit {
         }
     }
 
-    menu_view() {
-        console.log('menu_view', this.selectedNode[0]);
-        if (this.selectedNode) {
-            if (this.selectedNode.data.id) {
-                const data = {
-                    id: this.selectedNode.data.id,
-                    idCustomer: this.idCustomer,
-                    parent: this.selectedNode.data.parent
-                };
-                this.dataService.setData(data);
-                this.navCtrl.navigateForward(['/product-details']);
-            }
-        }
+    viewProduct(data) {
+        console.log('viewProduct', data);
+
+        const obj = {
+            id: data.id,
+            idCustomer: this.idCustomer,
+            parent: data.parent
+        };
+        this.dataService.setData(obj);
+        this.navCtrl.navigateForward(['/product-details']);
+
     }
 
     create_template() {
         console.log('create_template', this.selectedNode);
-
         const data = {
             idCustomer: this.idCustomer
         };
@@ -1539,7 +1554,7 @@ export class ProductListPage implements OnInit {
         localStorage.setItem('expanded_nodes_product', JSON.stringify(this.expendedNodes));
     }
 
-    productDeactivateAlert() {
+    productDeactivateAlert(rowNode) {
         const alert = this.alertCtrl.create({
             header: this.translate.instant('Achtung'),
             message: this.translate.instant('Möchten Sie dieses Produkt wirklich deaktivieren'),
@@ -1553,36 +1568,35 @@ export class ProductListPage implements OnInit {
                 {
                     text: this.translate.instant('ja'),
                     handler: () => {
-                        this.productDeactivate();
+                        this.productDeactivate(rowNode);
                     }
                 }
             ]
         }).then(x => x.present());
     }
 
-    productDeactivate() {
-        console.log('productDeactivate');
-        let isChild = 0;
-        this.selectedNode.forEach(element => {
-            if (element['children'] != undefined) {
-                if (element.children.length > 0) {
-                    isChild++;
-                }
+    productDeactivate(rowNode) {
+        console.log('productDeactivate', rowNode);
+        let isChild = 0; 
+        if (rowNode.node['children'] != undefined) {
+            if (rowNode.node.children.length > 0) {
+                isChild++;
             }
-        });
+        }    
+    
         if (isChild > 0) {
             this.showChildMsg();
-        } else {
-            this.selectedNode.forEach(element => {
-                this.apiService.pvs4_get_product(element.data.id).then((result: any) => {
-                    const activProduct = result.obj;
-                    activProduct.active = 0;
-                    this.apiService.pvs4_set_product(activProduct).then((setResult: any) => {
-                        console.log('result: ', setResult);
-                        this.page_load();
-                    });
+        } else {     
+                  
+            this.apiService.pvs4_get_product(rowNode.node.data.id).then((result: any) => {
+                const activProduct = result.obj;
+                activProduct.active = 0;
+                this.apiService.pvs4_set_product(activProduct).then((setResult: any) => {
+                    console.log('result: ', setResult);
+                    this.page_load();
                 });
-            });
+            }); 
+            
         }
     }
 
@@ -1613,19 +1627,6 @@ export class ProductListPage implements OnInit {
         });
 
         modal.present();
-    }
-
-    editProduct() {
-        console.log('editProduct', this.selectedNode.data);
-        if (this.selectedNode.data.id) {
-            const data = {
-                id: this.selectedNode.data.id,
-                idCustomer: this.idCustomer,
-                parent: this.selectedNode.data.parent
-            };
-            this.dataService.setData(data);
-            this.navCtrl.navigateForward(['/product-edit']);
-        }
     }
 
     open_edit_mode() {
