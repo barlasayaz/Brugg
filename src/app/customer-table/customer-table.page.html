@@ -94,19 +94,19 @@
             <tr [ttSelectableRow]="rowNode" class="workworkC">
                 <td  class="workColumn" >
                     <div class="workWidthfix">
-                        <ion-button [hidden]="editMode"  class="btn btn-primary" size="small"  (click)="viewCustomer(rowData)">
+                        <ion-button [hidden]="workMode"  class="btn btn-primary" size="small"  (click)="viewCustomer(rowData)">
                             <ion-icon name="eye"></ion-icon> 
                         </ion-button>
                         <ion-button [hidden]="!editMode" class="btn btn-success" size="small"  (click)="editCustomer(rowData)">
                             <ion-icon name="create"></ion-icon>
                         </ion-button>
-                        <ion-button [hidden]="((!moveMode)||(move_id>0))"  size="small"  (click)="moveCustomer(1,rowData)">
+                        <ion-button [hidden]="((!moveMode)||(move_id>0))" class="btn btn-teal" size="small"  (click)="moveCustomer(1,rowData)">
                                 <ion-icon name="md-move"></ion-icon>
                         </ion-button> 
-                        <ion-button [hidden]="((!moveMode)||(move_id==0)||(move_id==rowData.id))"  size="small"  (click)="moveCustomer(2,rowData)">
+                        <ion-button [hidden]="((!moveMode)||(move_id==0)||(move_id==rowData.id))" class="btn btn-danger" size="small"  (click)="moveCustomer(2,rowData)">
                                 <ion-icon name="md-arrow-round-forward"></ion-icon>
                         </ion-button>     
-                        <ion-button [hidden]="((!moveMode)||(move_id==0)||(move_id!=rowData.id))"  size="small"  (click)="moveCustomer(2,rowData)">
+                        <ion-button [hidden]="((!moveMode)||(move_id==0)||(move_id!=rowData.id))" class="btn btn-teal" size="small"  (click)="moveCustomer(2,rowData)">
                                 <ion-icon name="md-arrow-round-back"></ion-icon>
                         </ion-button>           
                     </div>               
