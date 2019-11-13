@@ -69,6 +69,7 @@ export class NoteListPage implements OnInit {
     public sortedColumn = { sort_field : null, sort_order : 0 };
     public filterText = '';
     public filterOn = false;
+    public editMode = false;
 
     public menuItems: MenuItem[] = [{
         label: this.translate.instant('Ansicht'),

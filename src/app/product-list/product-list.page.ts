@@ -141,7 +141,7 @@ export class ProductListPage implements OnInit {
                 command: (event) => {
                     if (this.userdata.role_set.edit_products == false) { return; }
                     console.log('command menuitem:', event.item);
-                    this.menu_new();
+                    //this.menu_new();
                 }
             },
             {
@@ -420,18 +420,21 @@ export class ProductListPage implements OnInit {
     
 
     ngOnInit() {
-        this.route.queryParams.subscribe(params => {
-            this.cols = [
-                { field: 'nfc_tag_id', header: 'NFC', width: '80px' },
-                { field: 'title', header: this.translate.instant('Bezeichnung'), width: '220px' }, 
-                { field: 'id_number', header: 'ID', width: '85px' },
-                { field: 'id', header: 'DB-ID', width: '85px' },
-                { field: 'articel_no', header: this.translate.instant('Artikel-Nr.'), width: '100px' },
-                { field: 'customer_description', header: this.translate.instant('Kundenbezeichnung'), width: '200px', editable: true },
-                { field: 'last_protocol_date', header: this.translate.instant('Letzter besuch'), width: '100px' },
-                { field: 'last_protocol_next', header: this.translate.instant('Nächster besuch'), width: '100px' },
-                { field: 'check_interval', header: this.translate.instant('Intervall Prüfen'), width: '130px' }
-            ];
+        this.cols = [
+            { field: 'work_column', header:'', width: '60px' },
+            { field: 'nfc_tag_id', header: 'NFC', width: '80px' },
+            { field: 'title', header: this.translate.instant('Bezeichnung'), width: '220px' }, 
+            { field: 'id_number', header: 'ID', width: '85px' },
+            { field: 'id', header: 'DB-ID', width: '85px' },
+            { field: 'articel_no', header: this.translate.instant('Artikel-Nr.'), width: '100px' },
+            { field: 'customer_description', header: this.translate.instant('Kundenbezeichnung'), width: '200px', editable: true },
+            { field: 'last_protocol_date', header: this.translate.instant('Letzter besuch'), width: '100px' },
+            { field: 'last_protocol_next', header: this.translate.instant('Nächster besuch'), width: '100px' },
+            { field: 'check_interval', header: this.translate.instant('Intervall Prüfen'), width: '130px' }
+        ];
+        this.selectedColumns = JSON.parse(JSON.stringify(this.cols))
+
+        this.route.queryParams.subscribe(params => {            
             this.idCustomer = parseInt(this.route.snapshot.paramMap.get('id'));
             if (localStorage.getItem('sort_column_product') != undefined) {
                 this.sortedColumn = JSON.parse(localStorage.getItem('sort_column_product'));
@@ -1089,14 +1092,10 @@ export class ProductListPage implements OnInit {
         }
     }
 
-    menu_new() {
-        console.log('menu_new', this.selectedNode, this.idCustomer);
+    viewProduct(data) {
+        console.log('viewProduct', data,  this.idCustomer);
         const obj = { id: 0, parent: 0, idCustomer: this.idCustomer };
-        if (this.selectedNode.length > 0) {
-            if (this.selectedNode.data.id) {
-                obj.parent = this.selectedNode.data.id;
-            }
-        }
+        obj.parent = data.id;
         this.dataService.setData(obj);
         this.navCtrl.navigateForward(['/product-edit']);
     }
@@ -1392,6 +1391,7 @@ export class ProductListPage implements OnInit {
     async show_columns() {
         let inputs: any[] = [];
         for (let i = 0; i < this.cols.length; i++) {
+            if (this.cols[i].field === 'work_column') { continue; }
             if (this.cols[i].field === 'nfc_tag_id') { continue; }
             if (this.cols[i].field === 'title') { continue; }
             if (this.cols[i].field === 'id_number') { continue; }
@@ -1414,6 +1414,7 @@ export class ProductListPage implements OnInit {
                     handler: data => {
                         inputs = [];
                         for (let i = 0; i < this.cols.length; i++) {
+                            if (this.cols[i].field === 'work_column') { continue; }
                             if (this.cols[i].field === 'nfc_tag_id') { continue; }
                             if (this.cols[i].field === 'title') { continue; }
                             if (this.cols[i].field === 'id_number') { continue; }
@@ -1432,6 +1433,7 @@ export class ProductListPage implements OnInit {
                     handler: data => {
                         inputs = [];
                         for (let i = 0; i < this.cols.length; i++) {
+                            if (this.cols[i].field === 'work_column') { continue; }
                             if (this.cols[i].field === 'nfc_tag_id') { continue; }
                             if (this.cols[i].field === 'title') { continue; }
                             if (this.cols[i].field === 'id_number') { continue; }
@@ -1456,6 +1458,7 @@ export class ProductListPage implements OnInit {
                     handler: data => {
                         console.log('Checkbox data:', data );
                         this.selectedColumns = this.cols.filter(function (element, index, array) { return data.includes(element.field); });
+                        this.selectedColumns.unshift(this.cols[3]);
                         this.selectedColumns.unshift(this.cols[2]);
                         this.selectedColumns.unshift(this.cols[1]);
                         this.selectedColumns.unshift(this.cols[0]);
@@ -1511,11 +1514,13 @@ export class ProductListPage implements OnInit {
     fixReorder() {
         console.log('fixReorder()', this.selectedColumns );
         let cols = [
+            { field: 'work_column', header: '', width: '60px' },
             { field: 'nfc_tag_id', header: 'NFC', width: '80px' },
             { field: 'title', header: this.translate.instant('Bezeichnung'), width: '220px' },
             { field: 'id_number', header: 'ID', width: '85px' }
         ];
         for (let i = 0; i < this.selectedColumns.length; i++) {
+            if (this.selectedColumns[i].field === 'work_column') { continue; }
             if (this.selectedColumns[i].field === 'nfc_tag_id') { continue; }
             if (this.selectedColumns[i].field === 'title') { continue; }
             if (this.selectedColumns[i].field === 'id_number') { continue; }

@@ -49,7 +49,9 @@
                 </th>
             </tr>
             <tr [hidden]="!splitFilter">
-                <th *ngFor="let col of selectedColumns; let i = index" [ngSwitch]="col.field" class="p-table-filter" [ngStyle]="{width: col.width}">
+                <th *ngFor="let col of selectedColumns; let i = index" 
+                    [ngSwitch]="col.field" 
+                    class="p-table-filter" [ngStyle]="{width: col.width}">
                     <input pInputText
                            type="text"
                            class="filter-search"
