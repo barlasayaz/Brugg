@@ -32,7 +32,7 @@ export class NoteListPage implements OnInit {
     public noteListView: TreeNode[] = [];
     public noteListSearch: TreeNode[] = [];
     public cols: any[] = [];
-    public selectedNode: TreeNode;
+    public selectedNode: TreeNode[] = [];
     public allnodes: any[] = [];
     public selectedColumns: any[];
     public xlsHeader: any[];
@@ -63,7 +63,7 @@ export class NoteListPage implements OnInit {
     public heightCalc: any;
     public authorList: any = [];
     public pointofContactList: any = [];
-    modelChanged: Subject<any> = new Subject<any>();
+    public modelChanged: Subject<any> = new Subject<any>();
     public rowHeight = 26;
     public rowCount = 100;
     public sortedColumn = { sort_field : null, sort_order : 0 };

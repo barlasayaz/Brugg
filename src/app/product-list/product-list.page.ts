@@ -704,7 +704,7 @@ export class ProductListPage implements OnInit {
     }
 
     async deSelectAll() {
-        if (this.selectedRow > 0) {
+        if (this.selectedNode.length > 0) {
             const alert = await this.alertCtrl.create({
                 header: this.translate.instant('Achtung'),
                 message: this.translate.instant('Möchten Sie wirklich alle abwählen'),
@@ -718,19 +718,6 @@ export class ProductListPage implements OnInit {
                     text: this.translate.instant('ja'),
                     handler: data => {
                         this.selectedNode = [];
-                        this.selectedRow = 0;
-                        this.menuItems[0].disabled = true;
-                        this.menuItems[1].disabled = true;
-                        this.menuItems[2].disabled = true;
-                        this.menuItems[3].disabled = true;
-                        this.menuItems[3].visible = this.userdata.role_set.edit_products;
-                        this.menuItems[4].visible = false;
-                        this.menuItems[5].items[0]['disabled'] = !this.userdata.role_set.edit_product_templates;
-                        this.menuItems[5].items[1]['disabled'] = false;
-                        this.menuItems[5].items[2]['disabled'] = true;
-                        this.menuItems[8].items[3]['disabled'] = true;
-                        this.menuItems[8].items[4]['disabled'] = true;
-                        this.menuItems[8].items[5]['disabled'] = true;
                     }
                 }
                 ]
@@ -965,6 +952,7 @@ export class ProductListPage implements OnInit {
             this.editMode = false;
             this.moveMode = false;
             this.deleteMode = false;
+            this.selectMode = false;
             this.move_id = 0;
             this.move_to = 0;
             this.move_obj = {};
@@ -983,6 +971,10 @@ export class ProductListPage implements OnInit {
             this.move_id = 0;
             this.move_to = 0;
             this.move_obj = {};
+        }else if(mode===4){
+            if (this.userdata.role_set.check_products != true) { return; };
+            this.workMode = true;
+            this.selectMode = true;
         }
 
     }
