@@ -4,53 +4,8 @@
           (ping)="update($event)"
           autoDisplay="true">
 </main-nav>
-
+ 
 <div class="ek-content" (window:resize)="onResize($event)">
-    <!-- <p-menubar id="menuMin" class="wideMenu">
-        <div>
-            <button type="button"
-                    pButton icon="fa fa-fw fa-list"
-                    label="Menu"
-                    id="btnMenu"
-                    (click)="menu.toggle($event)">
-                <span class="ui-submenu-icon pi pi-fw pi-caret-down slide-caret"></span>
-            </button>
-        </div>
-        <div style="padding-top: 5px; padding-right: 10px; margin-left: auto; color: white;">
-            <button type="button" pButton (click)="deSelectAll()" >
-                {{'selektiert' |translate }}: {{selectedRow}}
-            </button>
-        </div>
-        <div class="ui-inputgroup search-search">
-            <input type="text"
-                   pInputText
-                   placeholder="{{'Suche' |translate }}"
-                   [(ngModel)]="columnFilterValues['search_all']"
-                   (input)="search_all()">
-        </div>
-    </p-menubar>
-    <p-slideMenu [model]="menuItems"
-                 popup="false"
-                 [viewportHeight]="220"
-                 [style]="{'width':'200px'}"
-                 #menu>
-    </p-slideMenu>
-    <p-menubar [model]="menuItems"
-               [autoDisplay]="false"
-               id="menuMax">
-        <div style="padding-top: 5px; padding-right: 10px; color: white;">
-            <button type="button" pButton (click)="deSelectAll()" >
-                {{'selektiert' |translate }}: {{selectedRow}}
-            </button>
-        </div>
-        <div class="ui-inputgroup search-search">
-            <input type="text"
-                   pInputText
-                   placeholder="{{'Suche' |translate }}"
-                   [(ngModel)]="columnFilterValues['search_all']"
-                   (input)="search_all()">
-        </div>
-    </p-menubar> -->
 
     <div id="heightCalc"
          class="heightCalc"
@@ -58,13 +13,7 @@
     </div>
     <p-treeTable [value]="protocolListView"
                  [columns]="selectedColumns"
-                 selectionMode="multiple"
-                 [(selection)]="selectedNode"
-                 (onNodeSelect)="nodeSelect($event, selectedNode)"
-                 (onNodeUnselect)="nodeSelect($event, selectedNode)"
                  dataKey="id"
-                 (onNodeExpand)="onNodeExpand($event)"
-                 (onNodeCollapse)="onNodeCollapse($event)"
                  styleClass="ui-treetable-scrollable-body"
                  [resizableColumns]="true"                 
                  [scrollable]="true"
@@ -90,7 +39,8 @@
         </ng-template>
         <ng-template pTemplate="header" let-columns>
             <tr>
-                <th *ngFor="let col of selectedColumns" 
+                <th > </th>    
+                <th *ngFor="let col of selectedColumns.slice(1);" 
                     ttResizableColumn 
                     [ttSortableColumn]="col.field" 
                     ttReorderableColumn>
@@ -99,11 +49,15 @@
                 </th>
             </tr>
             <tr [hidden]="!splitFilter">
-                <th *ngFor="let col of selectedColumns" [ngSwitch]="col.field" class="p-table-filter">
+                <th *ngFor="let col of selectedColumns"
+                    [ngSwitch]="col.field"
+                    class="p-table-filter"
+                    [ngStyle]="{width: col.width}">
                     <input pInputText
                            type="text"
                            class="filter-search"
                            (input)="search_all()"
+                           *ngIf="i != 0"
                            [(ngModel)]="columnFilterValues[col.field]">
                 </th>
             </tr>
@@ -113,6 +67,16 @@
                      let-rowData="rowData"
                      let-columns="columns">
             <tr [ttSelectableRow]="rowNode">
+                <td>     
+                    <div class="workWidthfix">
+                        <ion-button [hidden]="!editMode" class="btn btn-success" size="small"  (click)="editProtocol(rowData)">
+                            <ion-icon name="create"></ion-icon>
+                        </ion-button>
+                        <ion-button [hidden]="editMode"  class="btn btn-primary" size="small"  (click)="viewProtocol(rowData)">
+                            <ion-icon name="eye"></ion-icon> 
+                        </ion-button>          
+                    </div>               
+                </td>
                 <td *ngFor="let col of selectedColumns; let i = index">
                     <p-treeTableToggler [rowNode]="rowNode" *ngIf="i == 0"></p-treeTableToggler>
                     <label *ngIf="(col.field == 'protocol_date') || (col.field == 'protocol_date_next')">{{rowData[col.field] | date : 'dd.MM.yyyy'}}</label>
@@ -144,13 +108,7 @@
     <ion-fab-button color="tertiary">
         <ion-icon name="menu"></ion-icon>
     </ion-fab-button>
-    <ion-fab-list side="top">
-        <!-- BUTTON -->
-        <ion-fab-button color="primary"
-                        data-desc="Ansicht"
-                        (click)="menu_view()">
-            <ion-icon name="eye"></ion-icon> 
-        </ion-fab-button>
+    <ion-fab-list side="top">     
         <!-- BUTTON -->
         <ion-fab-button color="primary"
                         data-desc="Löschen"

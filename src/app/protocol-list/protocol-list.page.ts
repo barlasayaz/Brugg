@@ -45,6 +45,7 @@ export class ProtocolListPage implements OnInit {
     public rowHeight = 26;
     public rowCount = 100;
     public sortedColumn = { sort_field : null, sort_order : 0 };
+    public editMode = false;
 
     public menuItems: MenuItem[] = [
         {
@@ -53,7 +54,7 @@ export class ProtocolListPage implements OnInit {
             disabled: true,
             command: (event) => {
                 console.log('command menuitem:', event.item);
-                this.menu_view();
+               // this.viewProtocol();
             }
         },
         {
@@ -160,6 +161,7 @@ export class ProtocolListPage implements OnInit {
 
     ngOnInit() {
         this.cols = [
+            { field: 'work_column', header: '', width: '60px' },
             { field: 'protocol_number', header: this.translate.instant('Protokoll'), width: '100px' },
             { field: 'title', header: this.translate.instant('Bezeichnung'), width: '200px' },
             { field: 'product', header: this.translate.instant('Produkt'), width: '200px' },
@@ -168,6 +170,19 @@ export class ProtocolListPage implements OnInit {
             { field: 'result', header: this.translate.instant('Prüfergebnis'), width: '160px' },
             { field: 'protocol_date_next', header: this.translate.instant('Nächste prüfung'), width: '95px' }
         ];
+
+        this.filterCols = [
+            'work_column',
+            'protocol_number',
+            'title',
+            'product',
+            'id',
+            'protocol_date',
+            'result',
+            'protocol_date_next',
+            'search_all'
+        ];
+        this.selectedColumns = JSON.parse(JSON.stringify(this.cols));
 
         console.log('ProductListPage idCustomer:', this.idCustomer, this.system.platform);
         this.idCustomer = parseInt(this.route.snapshot.paramMap.get('id'));
@@ -546,7 +561,7 @@ export class ProtocolListPage implements OnInit {
     }
 
     nodeSelect(event, selectedNode) {
-        console.log('selectedNode :', selectedNode);
+/*         console.log('selectedNode :', selectedNode);
         this.selectedNode.data = event.node.data;
         this.selectedRow = selectedNode.length;
         if (selectedNode.length == 0) {
@@ -559,7 +574,7 @@ export class ProtocolListPage implements OnInit {
         } else if (selectedNode.length > 1) {
             this.menuItems[0].disabled = true;
             this.menuItems[1].disabled = false;
-        }
+        } */
     }
 
     menu_new() {
@@ -572,25 +587,11 @@ export class ProtocolListPage implements OnInit {
         this.navCtrl.navigateForward(['/protocol-edit']);
     }
 
-    menu_edit() {
-        // console.log('menu_edit', this.selectedNode);
-        if (this.selectedNode) {
-            if (this.selectedNode.data.id) {
-                let data = {
-                    id: this.selectedNode.data.id,
-                    idCustomer: this.idCustomer
-                };
-                this.dataService.setData(data);
-                this.navCtrl.navigateForward(['/protocol-edit']);
-            }
-        }
-    }
-
-    menu_view() {
-        console.log('menu_view', this.selectedNode);
-        if (this.selectedNode) {
-            if (this.selectedNode.data.id) {
-                const id = parseInt(this.selectedNode.data.id);
+    viewProtocol(protocol) {
+        console.log('viewProtocol', protocol);
+        if (protocol) {
+            if (protocol.id) {
+                const id = parseInt(protocol.id);
                 console.log('menu_view id', id);
 
                 let data = {
@@ -743,6 +744,8 @@ export class ProtocolListPage implements OnInit {
     async show_columns() {
         const inputs: any[] = [];
         for (let i = 0; i < this.cols.length; i++) {
+            if (this.cols[i].field === 'work_column') { continue; }
+            if (this.cols[i].field === 'title') { continue; }
             inputs.push({
                 type: 'checkbox',
                 label: this.cols[i].header,
