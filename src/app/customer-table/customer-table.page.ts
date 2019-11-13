@@ -62,8 +62,7 @@ export class CustomerTablePage implements OnInit {
     public move_id = 0;
     public move_to = 0;
     public move_obj: any = {};
-    public columnFilterValues = { edit: '',
-                                  company: '',
+    public columnFilterValues = { company: '',
                                   id: '',
                                   customer_number: '',
                                   rating: '',
@@ -83,7 +82,7 @@ export class CustomerTablePage implements OnInit {
     public rowHeight = 26;
     public rowCount = 100;
     public sortedColumn = { sort_field : null, sort_order : 0 };
-    public filterText: string = "";
+    public filterText: string = '';
     public filterOn: boolean = false;
     public workMode: boolean = false;
     public editMode: boolean = false;
@@ -95,7 +94,7 @@ export class CustomerTablePage implements OnInit {
         disabled: true,
         command: (event) => {
             console.log('command menuitem:', event);
-            //this.menu_view();
+            // this.menu_view();
         }
     },
     {
@@ -103,7 +102,7 @@ export class CustomerTablePage implements OnInit {
         icon: 'pi pi-fw pi-pencil',
         disabled: true,
         visible: this.userdata.role_set.edit_customer,
-        command: (event) => {            
+        command: (event) => {
             console.log('command menuitem:', event);
             this.menu_edit();
         }
@@ -113,7 +112,7 @@ export class CustomerTablePage implements OnInit {
         icon: 'pi pi-fw pi-chevron-up',
         visible: this.userdata.role_set.edit_customer,
         disabled: true,
-        command: (event) => {            
+        command: (event) => {
             console.log('command menuitem:', event);
             this.menu_move();
         }
@@ -196,15 +195,15 @@ export class CustomerTablePage implements OnInit {
     @ViewChild('fab1') fab1: any;
     @ViewChild('fab2') fab2: any;
 
-    fabClick(nr:number){
-        console.log('fabClick():',nr   );
-        if(nr===1) this.fab2.close();
-        if(nr===2) this.fab1.close();
+    fabClick(nr: number) {
+        console.log('fabClick():', nr);
+        if (nr === 1) { this.fab2.close(); }
+        if (nr === 2) { this.fab1.close(); }
     }
 
-    update(data:any):void{
-        console.log('update():',data );
-        if(data.lable==="searchText"){
+    update(data: any): void {
+        console.log('update():', data);
+        if (data.lable === 'searchText') {
             this.columnFilterValues['search_all'] = data.text;
             if (this.isFilterOn()) {
                 this.menuItems[7].items[0]['disabled'] = false;
@@ -213,23 +212,22 @@ export class CustomerTablePage implements OnInit {
             }
             this.generate_customerList(0, this.rowCount, this.sortedColumn.sort_field, this.sortedColumn.sort_order);
             localStorage.setItem('filter_values_customer', JSON.stringify(this.columnFilterValues));
-        }  
-        if(data.lable==="newCustomer"){
+        }
+        if (data.lable === 'newCustomer') {
             if (this.userdata.role_set.edit_customer != true) { return; }
             this.menu_new();
         }
-        if(data.lable==="toggleFilter"){
+        if (data.lable === 'toggleFilter') {
             this.menu_filter();
         }
-        if(data.lable==="showColumns"){
+        if (data.lable === 'showColumns') {
             this.show_columns();
-        }        
+        }
     }
 
     ngOnInit(): void {
-
         this.cols = [
-            { field: 'work_column', header:'', width: '60px' },
+            { field: 'work_column', header: '', width: '60px' },
             { field: 'company', header: this.translate.instant('Firma'), width: '200px' },
             { field: 'id', header: 'DB-ID', width: '60px' },
             { field: 'customer_number', header: 'ID', width: '85px'},
@@ -257,13 +255,14 @@ export class CustomerTablePage implements OnInit {
                            'inspector',
                            'sector',
                            'search_all'];
+
         this.selectedColumns = this.cols;
         console.log('CustomerTablePage idCustomer:', this.idCustomer, this.system.platform);
         if (localStorage.getItem('sort_column_customer') != undefined) {
             this.sortedColumn = JSON.parse(localStorage.getItem('sort_column_customer'));
         }
         this.filterText = this.route.snapshot.paramMap.get('filterText');
-        if(this.filterText.length>0) this.filterOn = true;
+        if (this.filterText.length > 0) { this.filterOn = true; }
         console.log('filterText :', this.filterText);
 
         this.page_load();
@@ -275,8 +274,7 @@ export class CustomerTablePage implements OnInit {
 
     async loadNodes(event: LazyLoadEvent) {
         if (this.totalRecords > 0) {
-            if(event.sortField && event.sortField.length>0)
-            {
+            if (event.sortField && event.sortField.length > 0) {
                 this.sortedColumn.sort_field = event.sortField;
                 this.sortedColumn.sort_order = event.sortOrder;
                 localStorage.setItem('sort_column_customer', JSON.stringify(this.sortedColumn));
@@ -437,8 +435,7 @@ export class CustomerTablePage implements OnInit {
                 this.columnFilterValues[this.cols[i].field] = '';
             }
         } else {
-            this.columnFilterValues = { edit: '',
-                                        company: '',
+            this.columnFilterValues = { company: '',
                                         id: '',
                                         customer_number: '',
                                         rating: '',
@@ -530,7 +527,7 @@ export class CustomerTablePage implements OnInit {
         }
     }
 
-    async editCustomer(rowNode){
+    async editCustomer(rowNode) {
         console.log('editCustomer:', rowNode);
         if (rowNode.id) {
             const id = parseInt(rowNode.id);
@@ -550,7 +547,7 @@ export class CustomerTablePage implements OnInit {
                 }
             });
             modal.present();
-        }    
+        }
     }
 
     nodeSelect() {
@@ -566,7 +563,7 @@ export class CustomerTablePage implements OnInit {
             this.menu_view();
         }
         */
-       
+
     }
 
     nodeUnselect() {
@@ -605,10 +602,10 @@ export class CustomerTablePage implements OnInit {
         modal.present();
     }
 
-    workBreak(){
+    workBreak() {
         this.workMode = false;
-        this.editMode = false;  
-        this.moveMode = false; 
+        this.editMode = false;
+        this.moveMode = false;
         this.move_id = 0;
         this.move_to = 0;
         this.move_obj = {};
@@ -618,20 +615,19 @@ export class CustomerTablePage implements OnInit {
         console.log('menu_edit')
         if (this.userdata.role_set.edit_customer != true) { return; };
         this.workMode = true;
-        this.editMode = true;       
+        this.editMode = true;
     }
 
-    async moveCustomer(step,rowNode){
-        console.log('moveCustomer',step,rowNode);
-        if(step==1){
+    async moveCustomer(step, rowNode) {
+        console.log('moveCustomer', step, rowNode);
+        if (step == 1) {
             this.move_id = parseInt(rowNode.id);
             this.move_obj = JSON.parse(JSON.stringify(rowNode));
         }
-        if(step==2){
+        if (step == 2) {
             this.move_to = parseInt(rowNode.id);
-            if(this.move_to===this.move_id ) 
-            {
-                this.move_to=0; //Stammordner
+            if (this.move_to === this.move_id ) {
+                this.move_to = 0; // Stammordner
             }
 
             const alert = await this.alertCtrl.create({
@@ -658,14 +654,14 @@ export class CustomerTablePage implements OnInit {
             });
             await alert.present();
 
-            //this.move_obj = JSON.parse(JSON.stringify(rowNode));
+            // this.move_obj = JSON.parse(JSON.stringify(rowNode));
         }
     }
 
-    menu_move() { 
+    menu_move() {
         console.log('menu_move_up');
         this.workMode = true;
-        this.moveMode = true; 
+        this.moveMode = true;
         this.move_id = 0;
         this.move_to = 0;
         this.move_obj = {};
@@ -680,7 +676,6 @@ export class CustomerTablePage implements OnInit {
             const obj = this.allnodes[i];
 
             data.push({
-                'edit': obj.edit,
                 'company': obj.company,
                 'id': obj.id,
                 'customer_number': obj.customer_number,
@@ -701,7 +696,7 @@ export class CustomerTablePage implements OnInit {
         console.log('viewCustomer', data);
         const id = parseInt(data.id);
         console.log('menu_view id', id);
-        this.navCtrl.navigateForward('/customer-details/' + id);    
+        this.navCtrl.navigateForward('/customer-details/' + id);
     }
 
     async excel_export() {
@@ -901,9 +896,9 @@ export class CustomerTablePage implements OnInit {
 
     onColResize(event) {
         let index  = this.apiService.columnIndex(event.element);
-        this.selectedColumns[index].width = event.element.offsetWidth+"px";
-        let width2 = this.selectedColumns[index+1].width;
-        this.selectedColumns[index+1].width = parseInt(width2.replace('px',''))-event.delta + "px";
+        this.selectedColumns[index].width = event.element.offsetWidth + 'px';
+        let width2 = this.selectedColumns[index + 1].width;
+        this.selectedColumns[index + 1].width = parseInt(width2.replace('px', '')) - event.delta + 'px';
         localStorage.setItem('show_columns', JSON.stringify(this.selectedColumns));
     }
 
@@ -915,7 +910,7 @@ export class CustomerTablePage implements OnInit {
     fixReorder() {
         console.log('fixReorder()', this.selectedColumns );
         let cols = [
-            { field: 'work_column', header:'', width: '60px' },
+            { field: 'work_column', header: '', width: '60px' },
             { field: 'company', header: this.translate.instant('Firma'), width: '200px' }
         ];
         for (let i = 0; i < this.selectedColumns.length; i++) {

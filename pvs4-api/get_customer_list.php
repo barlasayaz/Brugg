@@ -113,8 +113,7 @@ function processing($user) {
                       
             $sql = "SELECT cr.*, 
                       concat(ps_emp.first_name,' ', ps_emp.last_name) as employees,
-                      concat(ps_tst.first_name,' ', ps_tst.last_name) as inspector,
-                      '' as edit
+                      concat(ps_tst.first_name,' ', ps_tst.last_name) as inspector
                  FROM `customer` as cr
                       LEFT JOIN profiles as ps_emp ON ps_emp.id = cr.sales
                       LEFT JOIN profiles as ps_tst ON ps_tst.id = cr.tester
@@ -133,8 +132,7 @@ function processing($user) {
             // $sql = "SELECT * FROM `customer` WHERE (`active` = 1) AND (`id` IN (".implode(',',$arr)."))";
             $sql = "SELECT cr.*, 
                            concat(ps_emp.first_name,' ', ps_emp.last_name) as employees,
-                           concat(ps_tst.first_name,' ', ps_tst.last_name) as inspector,
-                           '' as edit 
+                           concat(ps_tst.first_name,' ', ps_tst.last_name) as inspector
                       FROM `customer` as cr
                            LEFT JOIN profiles as ps_emp ON ps_emp.id = cr.sales
                            LEFT JOIN profiles as ps_tst ON ps_tst.id = cr.tester
