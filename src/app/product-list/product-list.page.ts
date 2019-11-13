@@ -405,7 +405,7 @@ export class ProductListPage implements OnInit {
                 {
                     text: this.translate.instant('okay'),
                     handler: (e) => {
-                        console.log('alert menuitem:', e.countC);
+                        console.log('Basisinformation:', e);
                         let x = parseInt(e.countC);
                         if ((x >= 10) && (x <= 300)) { this.lengthBasicInfo = x; }
                         for (let i = 0; i < this.productListView.length; i++ ) {
@@ -421,7 +421,6 @@ export class ProductListPage implements OnInit {
         }).then(x => x.present());
         this.showBasicInfo = true;
     }
-    
 
     ngOnInit() {
         this.cols = [

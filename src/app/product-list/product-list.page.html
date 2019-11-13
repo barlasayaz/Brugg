@@ -139,7 +139,9 @@
                         </ion-button>        
                     </div>               
                 </td>
-                <td *ngFor="let col of selectedColumns.slice(1); let i = index" [ngStyle]="showActivePassiveProduct && {'color': '#ccc'}">
+                <!--
+                <td *ngFor="let col of selectedColumns.slice(1); let i = index" 
+                    [ngStyle]="showActivePassiveProduct && {'color': '#ccc'}">
                     <p-treeTableToggler [rowNode]="rowNode" *ngIf="i == 0"></p-treeTableToggler>
 
                     <span *ngIf="col.field == 'nfc_tag_id'">
@@ -151,6 +153,35 @@
                     </span>
                     <span *ngIf="col.field != 'nfc_tag_id'">{{rowData[col.field]}}</span>
 
+                </td>
+                -->
+                <td *ngFor="let col of selectedColumns.slice(1); let i = index" 
+                    [ngStyle]="showActivePassiveProduct && {'color': '#ccc'}">
+                    <p-treeTableToggler [rowNode]="rowNode" *ngIf="i == 0"></p-treeTableToggler>
+
+                    <span *ngIf="col.field == 'nfc_tag_id'">
+                        <span>
+                            <ion-icon name="wifi" *ngIf="!rowData[col.field]" [ngStyle]="{'color':'#ccc'}"></ion-icon>
+                            <ion-icon name="wifi" *ngIf="rowData[col.field]" [ngStyle]="{'color':'rgb(0, 157, 224)'}">
+                            </ion-icon>
+                        </span>
+                    </span>
+                    <span *ngIf="(col.field != 'nfc_tag_id') && (col.field === 'last_protocol_next')"
+                        [ngStyle]="!showActivePassiveProduct && {'color': rowData.last_protocol_next_color}">{{rowData[col.field]}}</span>
+                    <span *ngIf="(col.field != 'nfc_tag_id') && (col.field != 'last_protocol_next')">
+                        <span *ngIf="(rowData[col.field]!=='x') && (rowData[col.field]!=='√')">
+                            {{rowData[col.field]}}
+                        </span>
+                        <span *ngIf="(rowData[col.field]==='x') || (rowData[col.field]==='√')">
+                            <img *ngIf="rowData[col.field]==='√'" src="/assets/imgs/available.png" alt=""
+                                height="17px" />
+                            <img *ngIf="rowData[col.field]==='x'" src="/assets/imgs/not_available.png" alt=""
+                                height="17px" />
+                        </span>
+                    </span>
+                    <div *ngIf="(i===1) && showBasicInfo" style="font-size: 85%;  ">
+                            {{rowData['_basic_info_show_']}}
+                    </div>
                 </td>
             </tr>
         </ng-template>
