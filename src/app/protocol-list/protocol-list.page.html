@@ -69,8 +69,8 @@
             <tr [ttSelectableRow]="rowNode">
                 <td>     
                     <div class="workWidthfix">
-                        <ion-button [hidden]="!editMode" class="btn btn-success" size="small"  (click)="editProtocol(rowData)">
-                            <ion-icon name="create"></ion-icon>
+                        <ion-button [hidden]="!editMode" class="btn btn-danger" size="small"  (click)="protocolDeactivate(rowData)">
+                            <ion-icon name="trash"></ion-icon>
                         </ion-button>
                         <ion-button [hidden]="editMode"  class="btn btn-primary" size="small"  (click)="viewProtocol(rowData)">
                             <ion-icon name="eye"></ion-icon> 
@@ -104,7 +104,14 @@
     </p-treeTable>
 </div>
 
-<ion-fab vertical="bottom" horizontal="end" slot="fixed" class="liftiball">
+<ion-fab [hidden]="!editMode" vertical="bottom" horizontal="end" slot="fixed" class="liftiball liftiball-cancel">
+    <!-- BUTTON -->
+    <ion-fab-button color="danger" title="{{'abbrechen' | translate}}" (click)="editMode=false;">
+        <i class="fas fa-times"></i>
+    </ion-fab-button>
+</ion-fab>
+    
+<ion-fab [hidden]="editMode" vertical="bottom" horizontal="end" slot="fixed" class="liftiball">
     <ion-fab-button color="tertiary">
         <ion-icon name="menu"></ion-icon>
     </ion-fab-button>
@@ -112,7 +119,7 @@
         <!-- BUTTON -->
         <ion-fab-button color="primary"
                         data-desc="Löschen"
-                        (click)="protocolDeactivate()">
+                        (click)="editMode=true;">
             <ion-icon name="trash"></ion-icon> 
         </ion-fab-button>
         <!-- BUTTON -->

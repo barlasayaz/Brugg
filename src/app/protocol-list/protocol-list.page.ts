@@ -31,7 +31,12 @@ export class ProtocolListPage implements OnInit {
     public xlsHeader: any[];
     public splitFilter = false;
     public idCustomer = 0;
-    public columnFilterValues = { protocol_number: '', title: '', product: '', id: '', protocol_date: '', search_all: '' };
+    public columnFilterValues = { protocol_number: '',
+                                  title: '',
+                                  product: '',
+                                  id: '',
+                                  protocol_date: '',
+                                  search_all: '' };
     public filterCols: string[];
     public expendedNodes: string[] = [];
     public rowRecords = 0;
@@ -64,7 +69,7 @@ export class ProtocolListPage implements OnInit {
             visible:  this.userdata.role_set.check_products,
             command: (event) => {
                 console.log('command menuitem:', event.item);
-                this.protocolDeactivate();
+              //  this.protocolDeactivate();
             }
         },
         {
@@ -745,7 +750,6 @@ export class ProtocolListPage implements OnInit {
         const inputs: any[] = [];
         for (let i = 0; i < this.cols.length; i++) {
             if (this.cols[i].field === 'work_column') { continue; }
-            if (this.cols[i].field === 'title') { continue; }
             inputs.push({
                 type: 'checkbox',
                 label: this.cols[i].header,
@@ -765,6 +769,7 @@ export class ProtocolListPage implements OnInit {
                     handler: data => {
                         inputs = [];
                         for (let i = 0; i < this.cols.length; i++) {
+                            if (this.cols[i].field === 'work_column') { continue; }
                             inputs.push({
                                 type: 'checkbox',
                                 label: this.cols[i].header,
@@ -780,6 +785,7 @@ export class ProtocolListPage implements OnInit {
                     handler: data => {
                         inputs = [];
                         for (let i = 0; i < this.cols.length; i++) {
+                            if (this.cols[i].field === 'work_column') { continue; }
                             inputs.push({
                                 type: 'checkbox',
                                 label: this.cols[i].header,
@@ -801,6 +807,7 @@ export class ProtocolListPage implements OnInit {
                     handler: data => {
                         console.log('Checkbox data:', data);
                         this.selectedColumns = this.cols.filter(function (element, index, array) { return data.includes(element.field); });
+                        this.selectedColumns.unshift(this.cols[0]);
                         localStorage.setItem('show_columns_protocol', JSON.stringify(this.selectedColumns));
                     }
                 }
@@ -859,9 +866,9 @@ export class ProtocolListPage implements OnInit {
         localStorage.setItem('expanded_nodes_protocol', JSON.stringify(this.expendedNodes));
     }
 
-    protocolDeactivate() {
+    protocolDeactivate(protocol) {
         console.log('delete');
-        this.showConfirmAlert(this.selectedNode.data.id);
+        this.showConfirmAlert(protocol.id);
     }
 
     async deSelectAll() {
@@ -904,17 +911,17 @@ export class ProtocolListPage implements OnInit {
                 {
                     text: this.translate.instant('ja'),
                     handler: () => {
-                        this.selectedNode.forEach(element => {
-                            this.apiService.pvs4_get_protocol(element.data.id).then((result: any) => {
+                     //   this.selectedNode.forEach(element => {
+                            this.apiService.pvs4_get_protocol(idProtocol).then((result: any) => {
                                 const activProtocol = result.obj;
-
                                 activProtocol.active = 0;
                                 this.apiService.pvs4_set_protocol(activProtocol).then((setResult: any) => {
                                     console.log('result: ', setResult);
+                                    this.editMode = false;
                                     this.page_load();
                                 });
                             });
-                        });
+                      //  });
                     }
                 }
             ]
