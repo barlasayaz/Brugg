@@ -1,19 +1,11 @@
 <div class="bottom-nav-inner">
   <ul class="bottomMenu-nav">
-
-    <li class="hidden-md">
-      <ion-icon name="arrow-round-back"></ion-icon>
-    </li>
-
-    <li class="hidden-md" style="margin-right:2px;">
-      <ion-icon name="arrow-round-forward"></ion-icon>
-    </li>
     
-    <li routerLink="/dashboard" [ngClass]="getClass('/dashboard')">
+    <li routerLink="/dashboard" [ngClass]="getClass('/dashboard')" class="hidden-sd">
       <ion-icon name="apps"></ion-icon>
     </li>
 
-    <li [routerLink]="['/customer-table/',systemService.filterText]" [ngClass]="getClass('/customer-table')">
+    <li [routerLink]="['/customer-table/',systemService.filterText]" [ngClass]="getClass('/customer-table')" >
       <ion-icon name="people"></ion-icon>
     </li>
 
@@ -43,11 +35,11 @@
 
     </ul>
 
-    <li routerLink="/appointment-plan" [ngClass]="getClass('/appointment-plan')">
+    <li routerLink="/appointment-plan" [ngClass]="getClass('/appointment-plan')" class="hidden-sd">
       <ion-icon name="time"></ion-icon>
     </li>
 
-    <li routerLink="/my-data" [ngClass]="getClass('//my-data')">
+    <li routerLink="/my-data" [ngClass]="getClass('//my-data')" class="hidden-sd">
       <ion-icon name="settings"></ion-icon>
     </li>
 

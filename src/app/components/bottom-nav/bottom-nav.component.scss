@@ -15,6 +15,11 @@
     display: none !important;
   }
 }
+.hidden-sd {
+  @media screen and (max-width: 480px) {
+    display: none !important;
+  }
+}
 
 ul.bottomMenu-nav {
   display: flex;
