@@ -640,6 +640,7 @@ export class NoteListPage implements OnInit {
         const inputs: any[] = [];
         for (var i = 0; i < this.cols.length; i++) {
             if (this.cols[i].field === 'work_column') { continue; }
+            if (this.cols[i].field === 'title') { continue; }
             inputs.push({
                 type: 'checkbox',
                 label: this.cols[i].header,
@@ -660,6 +661,7 @@ export class NoteListPage implements OnInit {
                         inputs = [];
                         for (let i = 0; i < this.cols.length; i++) {
                             if (this.cols[i].field === 'work_column') { continue; }
+                            if (this.cols[i].field === 'title') { continue; }
                             inputs.push({
                                 type: 'checkbox',
                                 label: this.cols[i].header,
@@ -676,6 +678,7 @@ export class NoteListPage implements OnInit {
                         inputs = [];
                         for (let i = 0; i < this.cols.length; i++) {
                             if (this.cols[i].field === 'work_column') { continue; }
+                            if (this.cols[i].field === 'title') { continue; }
                             inputs.push({
                                 type: 'checkbox',
                                 label: this.cols[i].header,
@@ -697,6 +700,7 @@ export class NoteListPage implements OnInit {
                     handler: data => {
                         console.log('Checkbox data:', data);
                         this.selectedColumns = this.cols.filter(function (element, index, array) { return data.includes(element.field); });
+                        this.selectedColumns.unshift(this.cols[1]);
                         this.selectedColumns.unshift(this.cols[0]);
                         console.log('Checkbox data:', this.selectedColumns );
                         localStorage.setItem('show_columns_note', JSON.stringify(this.selectedColumns));

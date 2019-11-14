@@ -228,8 +228,8 @@ export class CustomerTablePage implements OnInit {
     ngOnInit(): void {
         this.cols = [
             { field: 'work_column', header: '', width: '60px' },
+            { field: 'id', header: 'DB-ID', width: '100px' },
             { field: 'company', header: this.translate.instant('Firma'), width: '200px' },
-            { field: 'id', header: 'DB-ID', width: '60px' },
             { field: 'customer_number', header: 'ID', width: '85px'},
             { field: 'rating', header: this.translate.instant('Typ'), width: '100px' },
             { field: 'zip_code', header: this.translate.instant('PLZ'), width: '85px'},
@@ -804,6 +804,7 @@ export class CustomerTablePage implements OnInit {
       const inputs: any[] = [];
       for (let i = 0; i < this.cols.length; i++) {
         if (this.cols[i].field === 'work_column') { continue; }
+        if (this.cols[i].field === 'id') { continue; }
         if (this.cols[i].field === 'company') { continue; }
           inputs.push({
               type: 'checkbox',
@@ -824,6 +825,7 @@ export class CustomerTablePage implements OnInit {
                         inputs = [];
                         for (let i = 0; i < this.cols.length; i++) {
                             if (this.cols[i].field === 'work_column') { continue; }
+                            if (this.cols[i].field === 'id') { continue; }
                             if (this.cols[i].field === 'company') { continue; }
                             inputs.push({
                                 type: 'checkbox',
@@ -841,6 +843,7 @@ export class CustomerTablePage implements OnInit {
                         inputs = [];
                         for (let i = 0; i < this.cols.length; i++) {
                             if (this.cols[i].field === 'work_column') { continue; }
+                            if (this.cols[i].field === 'id') { continue; }
                             if (this.cols[i].field === 'company') { continue; }
                             inputs.push({
                                 type: 'checkbox',
@@ -863,6 +866,7 @@ export class CustomerTablePage implements OnInit {
                 handler: data => {
                     console.log('Checkbox data:', data );
                     this.selectedColumns = this.cols.filter(function (element, index, array) { return data.includes(element.field); });
+                    this.selectedColumns.unshift(this.cols[2]);
                     this.selectedColumns.unshift(this.cols[1]);
                     this.selectedColumns.unshift(this.cols[0]);
                     localStorage.setItem('show_columns', JSON.stringify(this.selectedColumns));
@@ -911,10 +915,12 @@ export class CustomerTablePage implements OnInit {
         console.log('fixReorder()', this.selectedColumns );
         let cols = [
             { field: 'work_column', header: '', width: '60px' },
+            { field: 'id', header: 'DB-ID', width: '100px' },
             { field: 'company', header: this.translate.instant('Firma'), width: '200px' }
         ];
         for (let i = 0; i < this.selectedColumns.length; i++) {
             if (this.selectedColumns[i].field === 'work_column') { continue; }
+            if (this.selectedColumns[i].field === 'id') { continue; }
             if (this.selectedColumns[i].field === 'company') { continue; }
             cols.push(this.selectedColumns[i]);
         }

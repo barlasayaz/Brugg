@@ -60,12 +60,13 @@
                  [sortOrder] = "sortedColumn['sort_order']" >      
         <ng-template pTemplate="colgroup" let-columns="columns">
             <colgroup>
-                <col *ngFor="let col of selectedColumns" [ngStyle]="{width: col.width}">
+                <col [hidden]="!workMode" [ngStyle]="{width: selectedColumns[0].width}" >
+                <col *ngFor="let col of selectedColumns.slice(1);" [ngStyle]="{width: col.width}">
             </colgroup>
         </ng-template>
         <ng-template pTemplate="header" let-columns>
             <tr>
-                <th class="workColumn">
+                <th class="workColumn" [hidden]="!workMode">
                     <div class="workWidthfix"></div>
                 </th> 
                 <th *ngFor="let col of selectedColumns.slice(1);" 
@@ -77,11 +78,13 @@
                 </th>
             </tr>
             <tr [hidden]="!splitFilter">
-                <th *ngFor="let col of selectedColumns; let i = index" [ngSwitch]="col.field" class="p-table-filter">
+                <th class="workColumn" [hidden]="!workMode">
+                    <div class="workWidthfix"></div>
+                </th> 
+                <th *ngFor="let col of selectedColumns.slice(1); let i = index" [ngSwitch]="col.field" class="p-table-filter">
                     <input pInputText type="text"
                            class="filter-search"
                            (input)="search_all()"
-                           *ngIf="i != 0" 
                           [(ngModel)]="columnFilterValues[col.field]">
                 </th>
             </tr>
@@ -92,11 +95,13 @@
                      let-rowData="rowData"
                      let-columns="columns">
             <tr [ttSelectableRow]="rowNode" class="workworkC">
-                <td  class="workColumn" >
+                <td  class="workColumn" [hidden]="!workMode">
                     <div class="workWidthfix">
+                        <!--
                         <ion-button [hidden]="workMode"  class="btn btn-primary" size="small"  (click)="viewCustomer(rowData)">
                             <ion-icon name="eye"></ion-icon> 
                         </ion-button>
+                        -->
                         <ion-button [hidden]="!editMode" class="btn btn-success" size="small"  (click)="editCustomer(rowData)">
                             <ion-icon name="create"></ion-icon>
                         </ion-button>
@@ -118,13 +123,16 @@
                     <label *ngIf="(col.field == 'sector')">{{rowData[col.field] | translate}}</label>
                     <label *ngIf="(col.field != 'last_date') &&
                                   (col.field != 'next_date') &&
-                                  (col.field != 'sector') ">{{rowData[col.field]}}</label>                    
+                                  (col.field != 'company') &&
+                                  (col.field != 'sector') ">{{rowData[col.field]}}</label>   
+                    <div class="link" *ngIf="(col.field == 'company')" (click)="viewCustomer(rowData)">{{rowData[col.field]}}</div>                 
                 </td>
             </tr>
         </ng-template>
         <ng-template pTemplate="loadingbody" let-columns="columns">
             <tr style="height:34px">
-                <td *ngFor="let col of selectedColumns;">
+                <td  class="workColumn" [hidden]="!workMode"></td>
+                <td *ngFor="let col of selectedColumns.slice(1)">
                     <div class="loading-text"></div>
                 </td>
             </tr>
