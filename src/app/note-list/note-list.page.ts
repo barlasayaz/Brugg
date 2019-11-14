@@ -58,8 +58,8 @@ export class NoteListPage implements OnInit {
                                       'Neukundenakquise'];
     public filterCols: string[];
     public expendedNodes: string[] = [];
-    public rowRecords: number = 0;
-    public totalRecords: number = 0;
+    public rowRecords = 0;
+    public totalRecords = 0;
     public heightCalc: any;
     public authorList: any = [];
     public pointofContactList: any = [];
@@ -77,7 +77,7 @@ export class NoteListPage implements OnInit {
         disabled: true,
         command: (event) => {
             console.log('command menuitem:', event.item);
-            //this.menu_view();
+            // this.menu_view();
         }
     },
     {
@@ -86,7 +86,7 @@ export class NoteListPage implements OnInit {
         disabled: true,
         command: (event) => {
             console.log('command menuitem:', event.item);
-            //this.menu_edit();
+            // this.menu_edit();
         }
     },
     {
@@ -182,7 +182,7 @@ export class NoteListPage implements OnInit {
 
     ngOnInit() {
         this.cols = [
-            { field: 'work_column', header:'', width: '60px' },
+            { field: 'work_column', header: '', width: '60px' },
             { field: 'title', header: this.translate.instant('Titel'), width: '170px' },
             { field: 'notes', header: this.translate.instant('Notiz'), width: '350px' },
             { field: 'notes_date', header: this.translate.instant('Datum'), width: '85px' },
@@ -224,7 +224,7 @@ export class NoteListPage implements OnInit {
             this.generate_noteList(0, this.rowCount, this.sortedColumn.sort_field, this.sortedColumn.sort_order);
             localStorage.setItem('filter_values_product', JSON.stringify(this.columnFilterValues));
         }
-        if(data.lable === 'toggleFilter') {
+        if (data.lable === 'toggleFilter') {
             this.menu_filter();
         }
         if (data.lable === 'showColumns') {
@@ -272,7 +272,7 @@ export class NoteListPage implements OnInit {
         */
 
         let x = this.divHeightCalc.nativeElement.scrollHeight;
-        let y = x;
+        const y = x;
         if (x == 0) { x = 550; }
         if (this.system.platform == 2) {
             if (this.screenOrientation.type == 'portrait-primary') {
@@ -320,7 +320,7 @@ export class NoteListPage implements OnInit {
             for (let i = 0; i < this.noteListAll.length; i++) {
                 let ci = parseInt(this.noteListAll[i].data.category) - 1 ;
                 if (ci < 0) { ci = 8; }
-                let cn = this.categoryNames[ci];
+                const cn = this.categoryNames[ci];
                 // console.log('categoryName:', cn, ci, this.noteListAll[i]);
                 this.noteListAll[i].data.category = this.translate.instant(cn);
             }
@@ -401,15 +401,15 @@ export class NoteListPage implements OnInit {
         if (!this.isFilterOn()) {
             this.noteListView = JSON.parse(JSON.stringify(this.noteListAll));
         } else {
-            let try_list = JSON.parse(JSON.stringify(this.noteListAll));
+            const try_list = JSON.parse(JSON.stringify(this.noteListAll));
             this.dir_try_filter(try_list);
             this.noteListView = try_list;
             this.noteListSearch = try_list;
         }
         if (sort_field != null) {
             this.noteListView = this.noteListView.sort((a, b) => {
-                let value1 = a.data[sort_field];
-                let value2 = b.data[sort_field];
+                const value1 = a.data[sort_field];
+                const value2 = b.data[sort_field];
 
                 if (this.apiService.isEmpty(value1) && !this.apiService.isEmpty(value2)) {
                     return-1 * sort_order;
@@ -466,9 +466,9 @@ export class NoteListPage implements OnInit {
     }
 
     onColResize(event) {
-        let index  = this.apiService.columnIndex(event.element);
+        const index  = this.apiService.columnIndex(event.element);
         this.selectedColumns[index].width = event.element.offsetWidth + 'px';
-        let width2 = this.selectedColumns[index + 1].width;
+        const width2 = this.selectedColumns[index + 1].width;
         this.selectedColumns[index + 1].width = parseInt(width2.replace('px', '')) - event.delta + 'px';
         localStorage.setItem('show_columns_note', JSON.stringify(this.selectedColumns));
     }
@@ -480,8 +480,8 @@ export class NoteListPage implements OnInit {
     }
     fixReorder() {
         console.log('fixReorder()', this.selectedColumns );
-        let cols = [
-            { field: 'work_column', header:'', width: '60px' },
+        const cols = [
+            { field: 'work_column', header: '', width: '60px' },
             { field: 'title', header: this.translate.instant('Titel'), width: '170px' }
         ];
         for (let i = 0; i < this.selectedColumns.length; i++) {
@@ -494,7 +494,7 @@ export class NoteListPage implements OnInit {
 
     async menu_new() {
         console.log('menu_new', this.idCustomer);
-        let obj = {};
+        const obj = {};
         const modal =
             await this.modalCtrl.create({
                 component: NoteEditComponent,
@@ -515,7 +515,7 @@ export class NoteListPage implements OnInit {
 
     async editNote(note) {
         console.log('editNote', note);
-        let id = parseInt(note.id);
+        const id = parseInt(note.id);
         console.log('editNote id', id);
         const modal =
             await this.modalCtrl.create({
@@ -541,7 +541,7 @@ export class NoteListPage implements OnInit {
             idCustomer: this.idCustomer
         };
         this.dataService.setData(note);
-        this.navCtrl.navigateForward(['/note-details']);            
+        this.navCtrl.navigateForward(['/note-details']);
     }
 
     async excel_export() {
@@ -551,18 +551,19 @@ export class NoteListPage implements OnInit {
         });
         loader.present();
 
-        let data: any = [];
+        const data: any = [];
         this.allnodes = [];
         if (this.isFilterOn()) {
             this.data_tree(this.noteListSearch);
         } else {
             this.data_tree(this.noteListAll);
         }
-        for (var i = 0, len = this.allnodes.length; i < len; i++) {
-            let obj = this.allnodes[i];
+        for (let i = 0, len = this.allnodes.length; i < len; i++) {
+            const obj = this.allnodes[i];
             obj.notes = obj.notes.replace(/(\\r\\n|\\n|\\r)/gm, ' ');
-            let json: any = {};
-            for (var j = 0; j < this.selectedColumns.length; j++) {
+            const json: any = {};
+            for (let j = 0; j < this.selectedColumns.length; j++) {
+                if (this.selectedColumns[j].field === 'work_column') { continue; }
                 if (obj[this.selectedColumns[j].field]) {
                     json[this.selectedColumns[j].header] = obj[this.selectedColumns[j].field];
                 } else {
@@ -582,14 +583,15 @@ export class NoteListPage implements OnInit {
         });
         loader.present();
 
-        let columns: any[] = [];
-        let widthsArray: string[] = [];
-        let headerRowVisible: any = 1;
-        for (var k = 0; k < this.selectedColumns.length; k++) {
+        const columns: any[] = [];
+        const widthsArray: string[] = [];
+        const headerRowVisible: any = 1;
+        for (let k = 0; k < this.selectedColumns.length; k++) {
+            if (this.selectedColumns[k].field === 'work_column') { continue; }
             columns.push({ text: this.selectedColumns[k].header, style: 'header' });
             widthsArray.push('*');
         }
-        let bodyArray: any[] = [];
+        const bodyArray: any[] = [];
         bodyArray.push(columns);
         this.allnodes = [];
         if (this.isFilterOn()) {
@@ -599,11 +601,12 @@ export class NoteListPage implements OnInit {
         }
         let obj: any;
         let rowArray: any[] = [];
-        for (var i = 0, len = this.allnodes.length; i < len; i++) {
+        for (let i = 0, len = this.allnodes.length; i < len; i++) {
             obj = this.allnodes[i];
             obj.notes = obj.notes.replace(/(\\r\\n|\\n|\\r)/gm, ' ');
             rowArray = [];
-            for (var j = 0; j < this.selectedColumns.length; j++) {
+            for (let j = 0; j < this.selectedColumns.length; j++) {
+                if (this.selectedColumns[j].field === 'work_column') { continue; }
                 if (obj[this.selectedColumns[j].field]) {
                     rowArray.push(obj[this.selectedColumns[j].field]);
                 } else {
@@ -638,7 +641,7 @@ export class NoteListPage implements OnInit {
 
     async show_columns() {
         const inputs: any[] = [];
-        for (var i = 0; i < this.cols.length; i++) {
+        for (let i = 0; i < this.cols.length; i++) {
             if (this.cols[i].field === 'work_column') { continue; }
             if (this.cols[i].field === 'title') { continue; }
             inputs.push({

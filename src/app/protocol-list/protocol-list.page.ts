@@ -204,7 +204,7 @@ export class ProtocolListPage implements OnInit {
             this.generate_protocolList(0, this.rowCount, this.sortedColumn.sort_field, this.sortedColumn.sort_order);
             localStorage.setItem('filter_values_product', JSON.stringify(this.columnFilterValues));
         }
-        if(data.lable === 'toggleFilter') {
+        if (data.lable === 'toggleFilter') {
             this.menu_filter();
         }
         if (data.lable === 'showColumns') {
@@ -219,8 +219,7 @@ export class ProtocolListPage implements OnInit {
 
     async loadNodes(event: LazyLoadEvent) {
         if (this.totalRecords > 0) {
-            if(event.sortField && event.sortField.length>0)
-            {
+            if (event.sortField && event.sortField.length > 0) {
                 this.sortedColumn.sort_field = event.sortField;
                 this.sortedColumn.sort_order = event.sortOrder;
                 localStorage.setItem('sort_column_protocol', JSON.stringify(this.sortedColumn));
@@ -295,10 +294,10 @@ export class ProtocolListPage implements OnInit {
             this.activCustomer = result.obj;
             this.customer_number = this.activCustomer.customer_number;
         });
-        //console.log('ProtocolListPage idCustomer:', this.idCustomer);
+        // console.log('ProtocolListPage idCustomer:', this.idCustomer);
 
         this.apiService.pvs4_get_protocol_list(this.idCustomer).then((result: any) => {
-            //console.log('result protocol :', result);
+            // console.log('result protocol :', result);
             this.protocolListAll = JSON.parse(JSON.stringify(result.list));
             // console.log('protocolListAll :', this.protocolListAll);
 
@@ -492,18 +491,16 @@ export class ProtocolListPage implements OnInit {
             this.protocolListView = this.protocolListView.sort((a, b) => {
                 let value1 = a.data[sort_field];
                 let value2 = b.data[sort_field];
-                if (typeof value1 === "boolean"){
-                    if(value1 === true) value1="1";
-                    else value1="0";
+                if (typeof value1 === 'boolean') {
+                    if (value1 === true) { value1 = '1'; } else { value1 = '0'; }
                 }
-                if (typeof value2 === "boolean"){
-                    if(value2 === true) value2="1";
-                    else value2="0";                
-                } 
-                if (typeof value1 === "undefined"){
+                if (typeof value2 === 'boolean') {
+                    if (value2 === true) { value2 = '1'; } else { value2 = '0'; }
+                }
+                if (typeof value1 === 'undefined') {
                     return -1 * sort_order;
                 }
-                if (typeof value2 === "undefined"){                 
+                if (typeof value2 === 'undefined') {
                     return 1 * sort_order;
                 }
                 if (this.apiService.isEmpty(value1) && !this.apiService.isEmpty(value2)) {
@@ -520,7 +517,7 @@ export class ProtocolListPage implements OnInit {
                     return 1 * sort_order;
                 } else if ( value1.toLowerCase( ) < value2.toLowerCase( )) {
                     return -1 * sort_order;
-                } else {                    
+                } else {
                     return 0;
                 }
             });
@@ -528,7 +525,7 @@ export class ProtocolListPage implements OnInit {
         this.rowRecords = this.protocolListView.length;
         this.totalRecords = this.protocolListAll.length;
 
-        //console.log('start_index - end_index :', start_index, end_index, this.protocolListView );
+        // console.log('start_index - end_index :', start_index, end_index, this.protocolListView );
 
         if ((start_index + end_index + this.rowCount) >= this.rowRecords) {
             this.protocolListView = this.protocolListView.slice(start_index, this.rowRecords);
@@ -639,6 +636,7 @@ export class ProtocolListPage implements OnInit {
             const json: any = {};
             let objStr: any;
             for (let j = 0; j < this.selectedColumns.length; j++) {
+                if (this.selectedColumns[j].field === 'work_column') { continue; }
                 if (obj[this.selectedColumns[j].field]) {
                     json[this.selectedColumns[j].header] = obj[this.selectedColumns[j].field];
                 } else {
@@ -679,13 +677,15 @@ export class ProtocolListPage implements OnInit {
             obj.items = obj.items.replace(/(\\r\\n|\\n|\\r)/gm, ' ');
 
             columns = [];
-            for (let k = 0; k < 7; k++) {
+            for (let k = 0; k < 8; k++) {
+                if (this.selectedColumns[k].field === 'work_column') { continue; }
                 columns.push({ text: this.selectedColumns[k].header, style: 'header' });
             }
             bodyArray.push(columns);
 
             rowArray = [];
-            for (let j = 0; j < 7; j++) {
+            for (let j = 0; j < 8; j++) {
+                if (this.selectedColumns[j].field === 'work_column') { continue; }
                 if (obj[this.selectedColumns[j].field]) {
                     rowArray.push(obj[this.selectedColumns[j].field]);
                 } else {
@@ -694,7 +694,7 @@ export class ProtocolListPage implements OnInit {
             }
             bodyArray.push(rowArray);
 
-            for (let l = 7; l < this.selectedColumns.length; l++) {
+            for (let l = 8; l < this.selectedColumns.length; l++) {
                 rowArray = [];
                 rowArray.push({ text: this.selectedColumns[l].header, style: 'header' });
                 if (obj[this.selectedColumns[l].field]) {
@@ -852,9 +852,9 @@ export class ProtocolListPage implements OnInit {
 
     onColResize(event) {
         let index  = this.apiService.columnIndex(event.element);
-        this.selectedColumns[index].width = event.element.offsetWidth+"px";
-        let width2 = this.selectedColumns[index+1].width;
-        this.selectedColumns[index+1].width = parseInt(width2.replace('px',''))-event.delta + "px";
+        this.selectedColumns[index].width = event.element.offsetWidth + 'px';
+        let width2 = this.selectedColumns[index + 1].width;
+        this.selectedColumns[index + 1].width = parseInt(width2.replace('px', '')) - event.delta + 'px';
         localStorage.setItem('show_columns_protocol', JSON.stringify(this.selectedColumns));
     }
 
@@ -867,7 +867,7 @@ export class ProtocolListPage implements OnInit {
     fixReorder() {
         console.log('fixReorder()', this.selectedColumns );
         let cols = [
-            { field: 'work_column', header:'', width: '60px' },
+            { field: 'work_column', header: '', width: '60px' },
             { field: 'protocol_number', header: this.translate.instant('Protokoll'), width: '100px' },
             { field: 'title', header: this.translate.instant('Bezeichnung'), width: '200px' }
         ];

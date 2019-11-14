@@ -724,6 +724,7 @@ export class CustomerTablePage implements OnInit {
             obj.street  = obj.street.replace(/(\\r\\n|\\n|\\r)/gm, ' ');
             const json: any = {};
             for (let j = 0; j < this.selectedColumns.length; j++) {
+                if (this.selectedColumns[j].field === 'work_column') { continue; }
                 if (obj[this.selectedColumns[j].field]) {
                     json[this.selectedColumns[j].header] = obj[this.selectedColumns[j].field];
                 } else {
@@ -747,6 +748,7 @@ export class CustomerTablePage implements OnInit {
         const widthsArray: string[] = [];
         const headerRowVisible: any = 1;
         for (let k = 0; k < this.selectedColumns.length; k++) {
+            if (this.selectedColumns[k].field === 'work_column') { continue; }
             columns.push({ text: this.selectedColumns[k].header, style: 'header' });
             widthsArray.push('auto');
         }
@@ -764,6 +766,7 @@ export class CustomerTablePage implements OnInit {
             obj = this.allnodes[i];
             rowArray = [];
             for (let j = 0; j < this.selectedColumns.length; j++) {
+                if (this.selectedColumns[j].field === 'work_column') { continue; }
                 if (obj[this.selectedColumns[j].field]) {
                    rowArray.push(obj[this.selectedColumns[j].field]);
                 } else {

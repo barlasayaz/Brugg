@@ -58,7 +58,7 @@ export class ProductListPage implements OnInit {
     public selectedRow: number;
     public selectMode: boolean = false;
     public rowHeight = 26;
-    public rowCount = 100;    
+    public rowCount = 100;
     public showBasicInfo = true;
     public lengthBasicInfo = 90;
     public sortedColumn = { sort_field : null, sort_order : 0 };
@@ -74,7 +74,7 @@ export class ProductListPage implements OnInit {
         disabled: true,
         command: (event) => {
             console.log('command menuitem:', event.item);
-            //this.menu_view();
+            // this.menu_view();
         }
     },
     {
@@ -85,7 +85,7 @@ export class ProductListPage implements OnInit {
         command: (event) => {
             if (this.userdata.role_set.edit_products == false) { return; }
             console.log('command menuitem:', event.item);
-            //this.menu_edit();
+            // this.menu_edit();
         }
     },
     {
@@ -95,7 +95,7 @@ export class ProductListPage implements OnInit {
         visible:  this.userdata.role_set.check_products,
         command: (event) => {
             console.log('command menuitem:', event.item);
-            //this.productDeactivateAlert();
+            // this.productDeactivateAlert();
         }
     },
     {
@@ -209,7 +209,7 @@ export class ProductListPage implements OnInit {
                 icon: 'pi pi-fw pi-arrow-right',
                 visible: this.userdata.role_set.edit_products,
                 disabled: true,
-                command: (event) => {                    
+                command: (event) => {
                     console.log('command menuitem:', event.item);
                     this.product_migration();
                 }
@@ -220,7 +220,7 @@ export class ProductListPage implements OnInit {
                 visible: this.userdata.role_set.edit_products,
                 disabled: true,
                 command: (event) => {
-                    
+
                     console.log('command menuitem:', event.item);
                     this.product_copy();
                 }
@@ -370,28 +370,28 @@ export class ProductListPage implements OnInit {
     @ViewChild('fab1') fab1: any;
     @ViewChild('fab2') fab2: any;
 
-    fabClick(nr:number){
-        console.log('fabClick():',nr   );
-        if(nr===1) this.fab2.close();
-        if(nr===2) this.fab1.close();
+    fabClick(nr: number) {
+        console.log('fabClick():', nr   );
+        if (nr === 1) { this.fab2.close(); }
+        if (nr === 2) { this.fab1.close(); }
     }
 
-    update(data:any):void{
-        console.log('update():',data );
-        if(data.lable==="searchText"){
+    update(data: any): void {
+        console.log('update():', data );
+        if (data.lable === 'searchText') {
             this.columnFilterValues['search_all'] = data.text;
             this.generate_productList(0, this.rowCount, this.sortedColumn.sort_field, this.sortedColumn.sort_order);
             localStorage.setItem('filter_values_product', JSON.stringify(this.columnFilterValues));
-        }  
-        if(data.lable==="toggleFilter"){
+        }
+        if (data.lable === 'toggleFilter') {
             this.menu_filter();
         }
-        if(data.lable==="showColumns"){
+        if (data.lable === 'showColumns') {
             this.show_columns();
-        }        
+        }
     }
 
-    lengthOfBasis(){
+    lengthOfBasis() {
         const alert = this.alertCtrl.create({
             header: this.translate.instant('Basisinformation'),
             message: this.translate.instant('Anzahl der maximal angezeigten Zeichen (min:10, max:300)'),
@@ -424,9 +424,9 @@ export class ProductListPage implements OnInit {
 
     ngOnInit() {
         this.cols = [
-            { field: 'work_column', header:'', width: '60px' },
+            { field: 'work_column', header: '', width: '60px' },
             { field: 'nfc_tag_id', header: 'NFC', width: '80px' },
-            { field: 'title', header: this.translate.instant('Bezeichnung'), width: '220px' }, 
+            { field: 'title', header: this.translate.instant('Bezeichnung'), width: '220px' },
             { field: 'id_number', header: 'ID', width: '85px' },
             { field: 'id', header: 'DB-ID', width: '85px' },
             { field: 'articel_no', header: this.translate.instant('Artikel-Nr.'), width: '100px' },
@@ -435,9 +435,9 @@ export class ProductListPage implements OnInit {
             { field: 'last_protocol_next', header: this.translate.instant('Nächster besuch'), width: '100px' },
             { field: 'check_interval', header: this.translate.instant('Intervall Prüfen'), width: '130px' }
         ];
-        this.selectedColumns = JSON.parse(JSON.stringify(this.cols))
+        this.selectedColumns = JSON.parse(JSON.stringify(this.cols));
 
-        this.route.queryParams.subscribe(params => {            
+        this.route.queryParams.subscribe(params => {
             this.idCustomer = parseInt(this.route.snapshot.paramMap.get('id'));
             if (localStorage.getItem('sort_column_product') != undefined) {
                 this.sortedColumn = JSON.parse(localStorage.getItem('sort_column_product'));
@@ -678,13 +678,13 @@ export class ProductListPage implements OnInit {
                     if ((options[i].type != 0) && (options[i].type != 6)) {
                         let t = this.productListAll[index].data[options[i].title[this.lang]] ;
                         let h = '';
-                        //console.log(options[i].base);
+                        // console.log(options[i].base);
                         if (options[i].base === undefined) { options[i].base = true; }
                         if (options[i].base) {
                             if (t) { h = t.trim(); }
                             if ( h !== '') {
                                 if ( info !== '') { info += ', '; }
-                                info += h;  
+                                info += h;
                             }
                         }
                     }
@@ -870,7 +870,7 @@ export class ProductListPage implements OnInit {
                 }
                 if (typeof value2 === 'boolean') {
                     if (value2 === true) { value2 = '1'; } else { value2 = '0'; }
-                } 
+                }
                 if (typeof value1 === 'undefined') {
                     return -1 * sort_order;
                 }
@@ -938,16 +938,15 @@ export class ProductListPage implements OnInit {
 
     }
 
-      
-
     menu_new() {
         const obj = { id: 0, parent: 0, idCustomer: this.idCustomer };
         this.dataService.setData(obj);
         this.navCtrl.navigateForward(['/product-edit']);
     }
-    work_mode(mode:number) {
-        console.log('work_mode()',mode);
-        if(mode===0){
+
+    work_mode(mode: number) {
+        console.log('work_mode()', mode);
+        if (mode === 0) {
             this.workMode = false;
             this.editMode = false;
             this.moveMode = false;
@@ -956,27 +955,26 @@ export class ProductListPage implements OnInit {
             this.move_id = 0;
             this.move_to = 0;
             this.move_obj = {};
-        }else if(mode===1){
-            if (this.userdata.role_set.edit_products != true) { return; };
+        } else if (mode === 1) {
+            if (this.userdata.role_set.edit_products != true) { return; }
             this.workMode = true;
             this.editMode = true;
-        }else if(mode===2){
-            if (this.userdata.role_set.edit_products != true) { return; };
+        } else if (mode === 2) {
+            if (this.userdata.role_set.edit_products != true) { return; }
             this.workMode = true;
             this.deleteMode = true;
-        }else if(mode===3){
-            if (this.userdata.role_set.edit_products != true) { return; };
+        } else if (mode === 3) {
+            if (this.userdata.role_set.edit_products != true) { return; }
             this.workMode = true;
             this.moveMode = true;
             this.move_id = 0;
             this.move_to = 0;
             this.move_obj = {};
-        }else if(mode===4){
-            if (this.userdata.role_set.check_products != true) { return; };
+        } else if (mode === 4) {
+            if (this.userdata.role_set.check_products != true) { return; }
             this.workMode = true;
             this.selectMode = true;
         }
-
     }
 
     async moveProduct(step, rowNode) {
@@ -1189,6 +1187,7 @@ export class ProductListPage implements OnInit {
             const json: any = {};
 
             for (let j = 0; j < this.selectedColumns.length; j++) {
+                if (this.selectedColumns[j].field === 'work_column') { continue; }
                 if (obj[this.selectedColumns[j].field]) {
                     json[this.selectedColumns[j].header] = obj[this.selectedColumns[j].field];
                 } else {
@@ -1228,13 +1227,15 @@ export class ProductListPage implements OnInit {
             obj.items = obj.items.replace(/(\\r\\n|\\n|\\r)/gm, ' ');
 
             columns = [];
-            for (let k = 0; k < 9; k++) {
+            for (let k = 0; k < 10; k++) {
+                if (this.selectedColumns[k].field === 'work_column') { continue; }
                 columns.push({ text: this.selectedColumns[k].header, style: 'header' });
             }
             bodyArray.push(columns);
 
             rowArray = [];
-            for (let j = 0; j < 9; j++) {
+            for (let j = 0; j < 10; j++) {
+                if (this.selectedColumns[j].field === 'work_column') { continue; }
                 if (obj[this.selectedColumns[j].field]) {
                     rowArray.push(obj[this.selectedColumns[j].field]);
                 } else {
@@ -1243,7 +1244,7 @@ export class ProductListPage implements OnInit {
             }
             bodyArray.push(rowArray);
 
-            for (let l = 9; l < this.selectedColumns.length; l++) {
+            for (let l = 10; l < this.selectedColumns.length; l++) {
                 rowArray = [];
                 rowArray.push({ text: this.selectedColumns[l].header, style: 'header' });
                 if (obj[this.selectedColumns[l].field]) {
@@ -1423,6 +1424,7 @@ export class ProductListPage implements OnInit {
         this.fixReorder();
         localStorage.setItem('show_columns_product', JSON.stringify(this.selectedColumns));
     }
+
     fixReorder() {
         console.log('fixReorder()', this.selectedColumns );
         let cols = [
@@ -1474,15 +1476,15 @@ export class ProductListPage implements OnInit {
 
     productDeactivate(rowNode) {
         console.log('productDeactivate', rowNode);
-        let isChild = 0; 
+        let isChild = 0;
         if (rowNode.node['children'] != undefined) {
             if (rowNode.node.children.length > 0) {
                 isChild++;
             }
-        }        
+        }
         if (isChild > 0) {
             this.showChildMsg();
-        } else {           
+        } else {
             this.apiService.pvs4_get_product(rowNode.node.data.id).then((result: any) => {
                 const activProduct = result.obj;
                 activProduct.active = 0;
@@ -1490,8 +1492,8 @@ export class ProductListPage implements OnInit {
                     console.log('result: ', setResult);
                     this.page_load();
                 });
-            }); 
-            
+            });
+
         }
     }
 
@@ -1541,7 +1543,7 @@ export class ProductListPage implements OnInit {
       let field = event.field;
       let id = event.data.id;
 
-      let obj = { value : value, field: field, id: id}
+      let obj = { value : value, field: field, id: id};
 
       this.apiService.pvs4_set_product_dynamic(obj);
     }
