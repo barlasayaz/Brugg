@@ -35,7 +35,8 @@
                  [sortOrder]="sortedColumn['sort_order']">
         <ng-template pTemplate="colgroup" let-columns>
             <colgroup>
-                <col *ngFor="let col of selectedColumns" [ngStyle]="{width: col.width}">
+                <col [hidden]="!workMode" [ngStyle]="{width: selectedColumns[0].width}" >
+                <col *ngFor="let col of selectedColumns.slice(1);" [ngStyle]="{width: col.width}">            
             </colgroup>
         </ng-template>
         <ng-template pTemplate="header" let-columns>
@@ -45,7 +46,9 @@
                             <ion-icon name="ios-close-circle-outline"></ion-icon>
                     </ion-button>
                 </th>  
-                <th *ngIf="!selectMode" >  </th>  
+                <th *ngIf="!selectMode"  class="workColumn" [hidden]="!workMode">
+                        <div class="workWidthfix"></div>
+                </th> 
                 <th *ngFor="let col of selectedColumns.slice(1);" 
                     ttResizableColumn 
                     [ttSortableColumn]="col.field"
@@ -55,7 +58,10 @@
                 </th>
             </tr>
             <tr [hidden]="!splitFilter">
-                    <th *ngFor="let col of selectedColumns; let i = index" 
+                    <th class="workColumn" [hidden]="!workMode">
+                            <div class="workWidthfix"></div>
+                        </th> 
+                    <th *ngFor="let col of selectedColumns.slice(1)" 
                     nowrap 
                     [ngSwitch]="col.field" 
                     class="p-table-filter">
@@ -63,7 +69,6 @@
                            type="text" 
                            class="filter-search" 
                            (input)="search_all()"
-                           *ngIf="i != 0"
                         [(ngModel)]="columnFilterValues[col.field]">
                 </th>
             </tr>
@@ -72,8 +77,8 @@
                     let-rowNode 
                     let-rowData="rowData" 
                     let-columns="columns">
-            <tr >
-                <td>     
+            <tr class="workworkC">
+                <td class="workColumn" [hidden]="!workMode" >     
                     <div class="workWidthfix">
                         <ion-button [hidden]="!deleteMode" class="btn btn-danger" size="small"  (click)="productDeactivateAlert(rowNode)">
                             <ion-icon name="trash"></ion-icon>
@@ -81,9 +86,11 @@
                         <ion-button [hidden]="!editMode" class="btn btn-success" size="small"  (click)="editProduct(rowData)">
                                 <ion-icon name="create"></ion-icon>
                         </ion-button>
+                        <!--
                         <ion-button [hidden]="workMode"  class="btn btn-primary" size="small"  (click)="viewProduct(rowData)">
                             <ion-icon name="eye"></ion-icon> 
                         </ion-button>   
+                        -->
                         <ion-button [hidden]="((!moveMode)||(move_id>0))" class="btn btn-teal" size="small"  (click)="moveProduct(1,rowData)">
                                 <ion-icon name="md-move"></ion-icon>
                         </ion-button> 
@@ -107,9 +114,9 @@
                             </ion-icon>
                         </span>
                     </span>
-                    <span *ngIf="(col.field != 'nfc_tag_id') && (col.field === 'last_protocol_next')"
+                    <span *ngIf="(col.field != 'title') && (col.field != 'nfc_tag_id') && (col.field === 'last_protocol_next')"
                         [ngStyle]="!showActivePassiveProduct && {'color': rowData.last_protocol_next_color}">{{rowData[col.field]}}</span>
-                    <span *ngIf="(col.field != 'nfc_tag_id') && (col.field != 'last_protocol_next')">
+                    <span *ngIf="(col.field != 'title') && (col.field != 'nfc_tag_id') && (col.field != 'last_protocol_next')">
                         <span *ngIf="(rowData[col.field]!=='x') && (rowData[col.field]!=='√')">
                             {{rowData[col.field]}}
                         </span>
@@ -120,6 +127,8 @@
                                 height="17px" />
                         </span>
                     </span>
+                    <div class="link" *ngIf="(col.field == 'title')" (click)="viewProduct(rowData)">{{rowData[col.field]}}</div>                 
+               
                     <div *ngIf="(i===1) && showBasicInfo" style="font-size: 85%;  ">
                             {{rowData['_basic_info_show_']}}
                     </div>
