@@ -81,7 +81,7 @@
                 <th class="workColumn" [hidden]="!workMode">
                     <div class="workWidthfix"></div>
                 </th> 
-                <th *ngFor="let col of selectedColumns.slice(1); let i = index" [ngSwitch]="col.field" class="p-table-filter">
+                <th *ngFor="let col of selectedColumns.slice(1)" [ngSwitch]="col.field" class="p-table-filter">
                     <input pInputText type="text"
                            class="filter-search"
                            (input)="search_all()"
