@@ -34,7 +34,8 @@
                  [sortOrder] = "sortedColumn['sort_order']" >    
         <ng-template pTemplate="colgroup" let-columns>
             <colgroup>
-                <col *ngFor="let col of selectedColumns" [ngStyle]="{width: col.width}">
+                <col [hidden]="!editMode" [ngStyle]="{width: selectedColumns[0].width}" >
+                <col *ngFor="let col of selectedColumns.slice(1);" [ngStyle]="{width: col.width}">
             </colgroup>
         </ng-template>
         <ng-template pTemplate="header" let-columns>
@@ -85,8 +86,8 @@
                 </td>
                 <td *ngFor="let col of selectedColumns.slice(1); let i = index">
                     <p-treeTableToggler [rowNode]="rowNode" *ngIf="i == 0"></p-treeTableToggler>
-                    <label *ngIf="(col.field == 'protocol_date') || (col.field == 'protocol_date_next')">{{rowData[col.field] | date : 'dd.MM.yyyy'}}</label>
-                    <label *ngIf="(col.field != 'protocol_date') && (col.field != 'protocol_date_next')">
+                    <label *ngIf="(col.field != 'title') && (col.field == 'protocol_date') || (col.field == 'protocol_date_next')">{{rowData[col.field] | date : 'dd.MM.yyyy'}}</label>
+                    <label *ngIf="(col.field != 'title') &&(col.field != 'protocol_date') && (col.field != 'protocol_date_next')">
                         <span *ngIf="(rowData[col.field]!=='x') && (rowData[col.field]!=='√')">
                             {{rowData[col.field]}}
                         </span>
@@ -97,6 +98,7 @@
                                     src="/assets/imgs/not_available.png" alt="" height="17px"/>
                         </span>
                     </label>
+                    <div class="link" *ngIf="(col.field == 'title')" (click)="viewProtocol(rowData)">{{rowData[col.field]}}</div>
                 </td>
             </tr>
         </ng-template>
