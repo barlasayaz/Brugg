@@ -39,7 +39,9 @@
         </ng-template>
         <ng-template pTemplate="header" let-columns>
             <tr>
-                <th > </th>    
+                <th class="workColumn" [hidden]="!editMode">
+                    <div class="workWidthfix"></div>
+                </th>   
                 <th *ngFor="let col of selectedColumns.slice(1);" 
                     ttResizableColumn 
                     [ttSortableColumn]="col.field" 
@@ -49,7 +51,10 @@
                 </th>
             </tr>
             <tr [hidden]="!splitFilter">
-                <th *ngFor="let col of selectedColumns; let i = index"
+                <th class="workColumn" [hidden]="!editMode">
+                    <div class="workWidthfix"></div>
+                </th> 
+                <th *ngFor="let col of selectedColumns.slice(1)" 
                     [ngSwitch]="col.field"
                     class="p-table-filter"
                     [ngStyle]="{width: col.width}">
@@ -57,7 +62,6 @@
                            type="text"
                            class="filter-search"
                            (input)="search_all()"
-                           *ngIf="i != 0"
                            [(ngModel)]="columnFilterValues[col.field]">
                 </th>
             </tr>
@@ -67,14 +71,16 @@
                      let-rowData="rowData"
                      let-columns="columns">
             <tr [ttSelectableRow]="rowNode">
-                <td>     
+                    <td  class="workColumn" [hidden]="!editMode"> 
                     <div class="workWidthfix">
                         <ion-button [hidden]="!editMode" class="btn btn-danger" size="small"  (click)="protocolDeactivate(rowData)">
                             <ion-icon name="trash"></ion-icon>
                         </ion-button>
+                        <!--
                         <ion-button [hidden]="editMode"  class="btn btn-primary" size="small"  (click)="viewProtocol(rowData)">
                             <ion-icon name="eye"></ion-icon> 
                         </ion-button>          
+                        -->
                     </div>               
                 </td>
                 <td *ngFor="let col of selectedColumns.slice(1); let i = index">
@@ -95,11 +101,12 @@
             </tr>
         </ng-template>
         <ng-template pTemplate="loadingbody" let-columns="columns">
-            <tr style="height:34px">
-                <td *ngFor="let col of selectedColumns;">
-                    <div class="loading-text"></div>
-                </td>
-            </tr>
+                <tr style="height:34px">
+                    <td  class="workColumn" [hidden]="!editMode"></td>
+                    <td *ngFor="let col of selectedColumns.slice(1)">
+                        <div class="loading-text"></div>
+                    </td>
+                </tr>
         </ng-template>
     </p-treeTable>
 </div>
