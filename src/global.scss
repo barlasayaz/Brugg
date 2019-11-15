@@ -2040,7 +2040,7 @@ ion-fab-button[data-desc]::after {
   padding: 6px 12px;
   border-radius: 3px;
   color: white;
-  font-size: 14px;  
+  font-size: 13px;  
 }
 
 ion-fab-button[title] {
@@ -2057,7 +2057,7 @@ ion-fab-button[title]::after {
   padding: 6px 12px;
   border-radius: 3px;
   color: white;
-  font-size:15px;
+  font-size:13px;
 }
 
 .liftiball-extra {
@@ -22475,3 +22475,11 @@ _:-webkit-full-screen,
   display: block;
   border-radius: 8px;
 }
+
+ .link {
+      cursor: pointer;
+      color: #005e86;
+  }  
+  .link:hover{
+      font-weight: bold;
+  }
