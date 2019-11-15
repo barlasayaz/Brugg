@@ -154,16 +154,22 @@
     </ion-fab-button>
     <ion-fab-list side="top">
         <!-- BUTTON -->
-        <ion-fab-button color="success" title="{{'Neu' | translate}}" (click)="menu_new()">
-            <i class="fas fa-plus"></i>
+        <ion-fab-button color="success"
+                        title="{{'Neu' | translate}}"
+                        (click)="menu_new()">
+            <ion-icon name="add"></ion-icon>
         </ion-fab-button>
         <!-- BUTTON -->
-        <ion-fab-button color="success" title="{{'Bearbeiten' | translate}}" (click)="menu_edit()">
-            <i class="fas fa-pen"></i>
+        <ion-fab-button color="success"
+                        title="{{'Bearbeiten' | translate}}"
+                        (click)="menu_edit()">
+            <ion-icon name="create"></ion-icon>
         </ion-fab-button>
         <!-- BUTTON -->
-        <ion-fab-button color="primary" title="{{'Bewegen' | translate}}"  (click)="menu_move()" >
-            <i class="fas fa-arrows-alt"></i>
+        <ion-fab-button color="primary"
+                        title="{{'Bewegen' | translate}}"
+                        (click)="menu_move()">
+            <ion-icon name="move"></ion-icon>
         </ion-fab-button>
         <!-- BUTTON -->
     </ion-fab-list>
@@ -175,20 +181,28 @@
     </ion-fab-button>
     <ion-fab-list side="top">
         <!-- BUTTON -->
-        <ion-fab-button color="medium" title="{{'Spalten' | translate}}" (click)="show_columns()">
-            <i class="fas fa-columns"></i>
+        <ion-fab-button color="medium"
+                        title="{{'Spalten' | translate}}"
+                        (click)="show_columns()">
+            <ion-icon name="grid"></ion-icon>
         </ion-fab-button>
         <!-- BUTTON -->
-        <ion-fab-button color="medium" title="{{'Filter zurücksetzen' | translate}}" (click)="cancel_filters(2)">
-            <i class="fas fa-filter"></i>
+        <ion-fab-button color="medium"
+                        title="{{'Cancel filters' | translate}}"
+                        (click)="cancel_filters(2)">
+            <ion-icon name="eye-off"></ion-icon>
         </ion-fab-button>
         <!-- BUTTON -->
-        <ion-fab-button color="warning" title="{{'PDF Export' | translate}}" (click)="pdf_export()">
-            <i class="fas fa-file-download"></i>
+        <ion-fab-button color="warning"
+                        title="{{'PDF Export' | translate}}"
+                        (click)="pdf_export()">
+            <ion-icon name="download"></ion-icon>
         </ion-fab-button>
         <!-- BUTTON -->
-        <ion-fab-button color="warning" title="{{'XLS Export' | translate}}" (click)="excel_export()">
-            <i class="fas fa-file-download"></i>
+        <ion-fab-button color="warning"
+                        title="{{'XLS Export' | translate}}"
+                        (click)="excel_export()">
+            <ion-icon name="stats"></ion-icon>
         </ion-fab-button>
     </ion-fab-list>
 </ion-fab>

@@ -126,32 +126,33 @@
     </ion-fab-button>
     <ion-fab-list side="top">     
         <!-- BUTTON -->
-        <ion-fab-button color="primary"
-                        data-desc="Löschen"
+        <ion-fab-button color="danger"
+                        title="{{'Löschen' | translate}}"
                         (click)="editMode=true;">
             <ion-icon name="trash"></ion-icon> 
         </ion-fab-button>
         <!-- BUTTON -->
-        <ion-fab-button color="primary"
-                        data-desc="Neue Protokollvorlage"
+        <ion-fab-button color="success"
+                        title="{{'Neue Protokollvorlage' | translate}}"
                         (click)="create_template()">
-            <ion-icon name="add"></ion-icon> 
+            <ion-icon name="add"></ion-icon>
+            <ion-icon name="list"></ion-icon>
         </ion-fab-button>
         <!-- BUTTON -->
         <ion-fab-button color="primary"
-                        data-desc="Spalten"
+                        title="{{'Spalten' | translate}}"
                         (click)="show_columns()">
-            <ion-icon name="grid"></ion-icon> 
+            <ion-icon name="grid"></ion-icon>
         </ion-fab-button>
         <!-- BUTTON -->
-        <ion-fab-button color="primary"
-                        data-desc="PDF Export"
+        <ion-fab-button color="warning"
+                        title="{{'PDF Export' | translate}}"
                         (click)="pdf_export()">
             <ion-icon name="download"></ion-icon>
         </ion-fab-button>
         <!-- BUTTON -->
-        <ion-fab-button color="primary"
-                        data-desc="XLS Export"
+        <ion-fab-button color="warning"
+                        title="{{'XLS Export' | translate}}"
                         (click)="excel_export()">
             <ion-icon name="stats"></ion-icon>
         </ion-fab-button>

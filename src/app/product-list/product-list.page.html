@@ -163,31 +163,50 @@
     </ion-fab-button>
     <ion-fab-list side="top">
         <!-- BUTTON -->
-        <ion-fab-button color="success" title="{{'Neues Produkt' | translate}}" (click)="menu_new()" *ngIf="userdata.role_set.edit_products">
-            <i class="fas fa-plus"></i>
+        <ion-fab-button color="success"
+                        title="{{'Neues Produkt' | translate}}"
+                        (click)="menu_new()"
+                        *ngIf="userdata.role_set.edit_products">
+            <ion-icon name="add"></ion-icon>
+            <ion-icon name="pricetags"></ion-icon>
         </ion-fab-button>
         <!-- BUTTON -->
-        <ion-fab-button color="success" title="{{'Neues Protokoll' | translate}}" (click)="work_mode(4)" *ngIf="userdata.role_set.check_products">
-            <i class="fas fa-plus"></i>
+        <ion-fab-button color="success"
+                        title="{{'Neues Protokoll' | translate}}"
+                        (click)="work_mode(4)"
+                        *ngIf="userdata.role_set.check_products">
+            <ion-icon name="add"></ion-icon>
+            <ion-icon name="document"></ion-icon>
         </ion-fab-button>
         <!-- BUTTON -->
-        <ion-fab-button color="success" title="{{'Neue Produktvorlage' | translate}}" (click)="create_template()"  *ngIf="userdata.role_set.edit_product_templates">
-            <i class="fas fa-plus"></i>
+        <ion-fab-button color="success"
+                        title="{{'Neue Produktvorlage' | translate}}"
+                        (click)="create_template()"
+                        *ngIf="userdata.role_set.edit_product_templates">
+            <ion-icon name="add"></ion-icon>
+            <ion-icon name="list"></ion-icon>
         </ion-fab-button>
         <!-- BUTTON -->
-        <ion-fab-button color="success" title="{{'Bearbeiten' | translate}}" (click)="work_mode(1)" *ngIf="userdata.role_set.edit_products">
-            <i class="fas fa-pen"></i>
+        <ion-fab-button color="success"
+                        title="{{'Bearbeiten' | translate}}"
+                        (click)="work_mode(1)"
+                        *ngIf="userdata.role_set.edit_products">
+            <ion-icon name="create"></ion-icon>
         </ion-fab-button>
         <!-- BUTTON -->
-        <ion-fab-button color="danger" title="{{'Löschen' | translate}}" (click)="work_mode(2)"  *ngIf="userdata.role_set.edit_products">
-            <i class="fas fa-trash"></i>
+        <ion-fab-button color="danger"
+                        title="{{'Löschen' | translate}}"
+                        (click)="work_mode(2)"
+                        *ngIf="userdata.role_set.edit_products">
+            <ion-icon name="trash"></ion-icon>
         </ion-fab-button>
         <!-- BUTTON -->
-        <ion-fab-button color="primary" title="{{'Bewegen' | translate}}" (click)="work_mode(3)" *ngIf="userdata.role_set.edit_products">
-            <i class="fas fa-arrows-alt"></i>
-        </ion-fab-button>
-
-        
+        <ion-fab-button color="primary"
+                        title="{{'Bewegen' | translate}}"
+                        (click)="work_mode(3)"
+                        *ngIf="userdata.role_set.edit_products">
+            <ion-icon name="move"></ion-icon>
+        </ion-fab-button>        
     </ion-fab-list>
 </ion-fab>
 
@@ -197,47 +216,76 @@
     </ion-fab-button>
     <ion-fab-list side="top">
         <!-- BUTTON -->
-        <ion-fab-button color="medium" title="{{'Spalten' | translate}}" (click)="show_columns()">
-            <i class="fas fa-columns"></i>
+        <ion-fab-button color="medium"
+                        title="{{'Spalten' | translate}}"
+                        (click)="show_columns()">
+            <ion-icon name="grid"></ion-icon>
         </ion-fab-button>
         <!-- BUTTON -->
-        <ion-fab-button color="medium" title="{{'Filter zurücksetzen' | translate}}" (click)="cancel_filters(2)">
-            <i class="fas fa-filter"></i>
+        <ion-fab-button color="medium"
+                        title="{{'Cancel filters' | translate}}"
+                        (click)="cancel_filters(2)">
+            <ion-icon name="eye-off"></ion-icon>
         </ion-fab-button>
         <!-- BUTTON -->
-        <ion-fab-button color="warning" title="{{'PDF Export' | translate}}" (click)="pdf_export()">
-            <i class="fas fa-file-download"></i>
+        <ion-fab-button color="warning"
+                        title="{{'PDF Export' | translate}}"
+                        (click)="pdf_export()">
+            <ion-icon name="download"></ion-icon>
         </ion-fab-button>
         <!-- BUTTON -->
-        <ion-fab-button color="warning" title="{{'XLS Export' | translate}}" (click)="excel_export()">
-            <i class="fas fa-file-download"></i>
+        <ion-fab-button color="warning"
+                        title="{{'XLS Export' | translate}}"
+                        (click)="excel_export()">
+            <ion-icon name="stats"></ion-icon>
         </ion-fab-button>
         <!-- BUTTON -->
-        <ion-fab-button color="success" title="{{'Produktmigration' | translate}}" (click)="product_migration()" *ngIf="(selectedRow==1)&& userdata.role_set.edit_products">
-            <i class="fas fa-angle-double-right"></i>
+        <ion-fab-button color="success"
+                        title="{{'Produktmigration' | translate}}"
+                        (click)="product_migration()"
+                        *ngIf="(selectedRow==1)&& userdata.role_set.edit_products">
+            <ion-icon name="fastforward"></ion-icon>
         </ion-fab-button>
         <!-- BUTTON -->
-        <ion-fab-button color="success" title="{{'Produkt kopieren' | translate}}" (click)="product_copy()" *ngIf="(selectedRow==1)&& userdata.role_set.edit_products">
-            <i class="fas fa-clone"></i>
+        <ion-fab-button color="success"
+                        title="{{'Produkt kopieren' | translate}}"
+                        (click)="product_copy()"
+                        *ngIf="(selectedRow==1)&& userdata.role_set.edit_products">
+            <ion-icon name="albums"></ion-icon>
         </ion-fab-button>
         <!-- BUTTON -->
-        <ion-fab-button color="dark" title="{{'Protokollverlauf' | translate}}" (click)="menu_history()" *ngIf="selectedRow==1">
-            <i class="fas fa-info"></i>
+        <ion-fab-button color="dark"
+                        title="{{'Protokollverlauf' | translate}}"
+                        (click)="menu_history()"
+                        *ngIf="selectedRow==1">
+            <ion-icon name="information"></ion-icon>
         </ion-fab-button>
         <!-- BUTTON -->
-        <ion-fab-button color="dark" title="{{'zeige Basisinformationen' | translate}}" *ngIf="!showBasicInfo" (click)="lengthOfBasis()" >
-            <i class="fas fa-info"></i>
+        <ion-fab-button color="dark"
+                        title="{{'Zeige basisinformation' | translate}}"
+                        *ngIf="!showBasicInfo"
+                        (click)="lengthOfBasis()">
+            <ion-icon name="information"></ion-icon>
         </ion-fab-button>
         <!-- BUTTON -->
-        <ion-fab-button color="dark" title="{{'Basisinformationen ausblenden' | translate}}" *ngIf="showBasicInfo" (click)="showBasicInfo = false;">
-            <i class="fas fa-info"></i>
+        <ion-fab-button color="dark"
+                        title="{{'Basisinformation ausblenden' | translate}}"
+                        *ngIf="showBasicInfo"
+                        (click)="showBasicInfo = false;">
+            <ion-icon name="information"></ion-icon>
         </ion-fab-button>
         <!-- BUTTON -->
-        <ion-fab-button color="dark" title="{{'zeige nur passive Produkte' | translate}}" *ngIf="!showActivePassiveProduct" (click)="activePassiveProduct()">
-            <i class="fab fa-searchengin"></i>
+        <ion-fab-button color="dark"
+                        title="{{'Zeige nur passive produkte' | translate}}"
+                        *ngIf="!showActivePassiveProduct"
+                        (click)="activePassiveProduct()">
+            <ion-icon name="search"></ion-icon>
         </ion-fab-button>
-        <ion-fab-button color="dark" title="{{'zeige nur aktive Produkte' | translate}}" *ngIf="showActivePassiveProduct" (click)="activePassiveProduct()">
-            <i class="fab fa-searchengin"></i>
+        <ion-fab-button color="dark"
+                        title="{{'Zeige nur aktives produkte' | translate}}"
+                        *ngIf="showActivePassiveProduct"
+                        (click)="activePassiveProduct()">
+            <ion-icon name="search"></ion-icon>
         </ion-fab-button>
     </ion-fab-list>
 </ion-fab>
