@@ -22,15 +22,15 @@ export class MainNavComponent implements OnInit {
   @Input() aktivPage: string;
   @Input() idCustomer: number;
   @Output() ping: EventEmitter<any> = new EventEmitter<any>();
-  @Input() searchText: string = "";
-  @Input() filterText: string = "";
-  @Input() filterOn:boolean = false;
+  @Input() searchText: string = '';
+  @Input() filterText: string = '';
+  @Input() filterOn: boolean = false;
 
   public progressBar: any = 0;
   public rowRecords: any = 0;
   public totalRecords: any = 0;
   public customerName = '';
- 
+
   constructor(
     public userdata: UserdataService,
     public navCtrl: NavController,
@@ -66,23 +66,24 @@ export class MainNavComponent implements OnInit {
     }
   }
 
-  search(event:any){
-    console.log('search',event.target.value);
+  search(event: any) {
+    console.log('search', event.target.value);
     this.searchText = event.target.value;
     const eventObj = {
-      lable:"searchText",
-      text:this.searchText
-    }
-    this.ping.emit(eventObj);
-  }
-  sendPing(ping){
-    const eventObj = { lable:ping };
+      lable: 'searchText',
+      text: this.searchText
+    };
     this.ping.emit(eventObj);
   }
 
-  filterOff(){
+  sendPing(ping) {
+    const eventObj = { lable: ping };
+    this.ping.emit(eventObj);
+  }
+
+  filterOff() {
     this.systemService.filterText = '';
-    this.navCtrl.navigateForward(['/customer-table', '']);
+    // this.navCtrl.navigateForward(['/customer-table', '']);
   }
 
   openMenu() {
@@ -91,7 +92,6 @@ export class MainNavComponent implements OnInit {
     console.log('menu opend');
   }
 
-  
   shrinkMenu() {
     console.log('menu shrinked');
     this.systemService.shrinkMenu = !this.systemService.shrinkMenu ;
@@ -110,7 +110,7 @@ export class MainNavComponent implements OnInit {
   }
 
   getClass(path) {
-    //console.log('this.router.isActive : ',path, this.router.isActive(path, false) );
+    // console.log('this.router.isActive : ',path, this.router.isActive(path, false) );
     if (this.router.isActive(path, false)) {
       return 'active';
     } else {

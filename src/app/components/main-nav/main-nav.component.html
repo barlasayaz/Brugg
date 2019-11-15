@@ -20,27 +20,35 @@
                   </div>
                 </div>
                 
-                <div class="topsearch" *ngIf="aktivPage == 'CustomerTable' ||
-                  aktivPage == 'ProductList' ||
-                  aktivPage == 'ProtocolList' ||
-                  aktivPage == 'NoteList' ">            
-                  <ion-input type="text" (input)="search($event)" id="topsearch" [(ngModel)]="searchText"  placeholder="{{'Suche' |translate }}" ></ion-input>
-                  <div class="search-filter" (click)="sendPing('toggleFilter')">
+                <div class="topsearch"
+                     *ngIf="aktivPage == 'CustomerTable' ||
+                            aktivPage == 'ProductList' ||
+                            aktivPage == 'ProtocolList' ||
+                            aktivPage == 'NoteList' ">            
+                  <ion-input type="text"
+                             (input)="search($event)"
+                             id="topsearch"
+                             [(ngModel)]="searchText"
+                             placeholder="{{'Suche' |translate }}" >
+                  </ion-input>
+                  <div class="search-filter"
+                       (click)="sendPing('toggleFilter')">
                     <i class="pi pi-filter"></i>
                   </div>
                 </div>
               </div>
 
               <div id="customerName" class="main-nav-fix">
-                <div class="comp-name" *ngIf="aktivPage == 'CustomerTable' ||
-                          aktivPage == 'ProductList' ||
-                          aktivPage == 'ProductDetails' ||
-                          aktivPage == 'ProductEdit' ||
-                          aktivPage == 'ProtocolList' ||
-                          aktivPage == 'ProtocolDetails' ||
-                          aktivPage == 'OrderForm' ||
-                          aktivPage == 'NoteList' ||
-                          aktivPage == 'NoteDetails'">
+                <div class="comp-name" 
+                     *ngIf="aktivPage == 'CustomerTable' ||
+                            aktivPage == 'ProductList' ||
+                            aktivPage == 'ProductDetails' ||
+                            aktivPage == 'ProductEdit' ||
+                            aktivPage == 'ProtocolList' ||
+                            aktivPage == 'ProtocolDetails' ||
+                            aktivPage == 'OrderForm' ||
+                            aktivPage == 'NoteList' ||
+                            aktivPage == 'NoteDetails'">
                   {{customerName}}
                 </div>
                 <button class="filterOn" *ngIf="filterOn" (click)="filterOff()">
