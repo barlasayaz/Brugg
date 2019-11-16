@@ -2,32 +2,30 @@
 
 <div class="ek-content" style="overflow: scroll;">
 	<div class="container container-fix">
-		<div class="mt20 content-sm">
+		<div class="mt201 content-sm">
 			<div class="settings-delete">
-				<div class="settings-delete-inner">
-					<ion-grid>
-						<ion-row>
-							<ion-col>
-								<div class="pvs4-full-select" style="font-size: 14px; width: 100px;">
-									<ion-select [(ngModel)]="lang"
-												(ionChange)="changeLanguage()"
-												okText="{{'okay' | translate}}"
-												cancelText="{{'dismiss' | translate}}">
-										<ion-select-option value="de">{{'Deutsch' }}</ion-select-option>
-										<ion-select-option value="en">{{'English' }}</ion-select-option>
-										<ion-select-option value="fr">{{'Français' }}</ion-select-option>
-										<ion-select-option value="it">{{'Italiano' }}</ion-select-option>										
-									</ion-select>								
-								</div>
-							</ion-col>
-							<ion-col style="text-align: -webkit-right;">
-								<ion-button class="btn btn-danger" (click)="delLocalAll();">
-									<span style="font-size: 11px;">{{'Lokale Daten löschen' | translate}}</span>
-								</ion-button>
-							</ion-col>
-						</ion-row>
-					</ion-grid>
-				</div>
+			<ion-grid>
+				<ion-row>
+					<ion-col size-xl="7" size-lg="7" size-md="7" size-sm="6" size="6">
+						<div class="pvs4-full-select">
+							<ion-select [(ngModel)]="lang"
+										(ionChange)="changeLanguage()"
+										okText="{{'okay' | translate}}"
+										cancelText="{{'dismiss' | translate}}">
+								<ion-select-option value="de">{{'Deutsch' }}</ion-select-option>
+								<ion-select-option value="en">{{'English' }}</ion-select-option>
+								<ion-select-option value="fr">{{'Français' }}</ion-select-option>
+								<ion-select-option value="it">{{'Italiano' }}</ion-select-option>										
+							</ion-select>								
+						</div>
+					</ion-col>
+					<ion-col size-xl="5" size-lg="5" size-md="5" size-sm="6" size="6" style="text-align: -webkit-right;">
+						<ion-button class="btn btn-danger" (click)="delLocalAll();">
+							<span style="font-size: 11px;">{{'Lokale Daten löschen' | translate}}</span>
+						</ion-button>
+					</ion-col>
+				</ion-row>
+			</ion-grid>
 			</div>
 			<ion-grid>
 				<ion-row>

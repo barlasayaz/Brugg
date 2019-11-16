@@ -20696,23 +20696,23 @@ div.table-info .settings-icon {
 
 .settings-delete {
   position: fixed;
-  top: 15px;
+  top: 5px;
   z-index: 555;
   width: calc(1108px - 755px);
-  margin-left: 747px;
+  margin-left: 660px;
 }
 
 @media only screen and (max-width: 1200px) {
   .settings-delete {
-    width: calc(928px - 300px);
-    margin-left: 300px;
+    margin-left: 555px;
+    width: 225px !important;
   }
 }
 
-@media only screen and (max-width: 992px) {
+@media only screen and (max-width: 991px) {
   .settings-delete {
-    width: calc(690px - 300px);
-    margin-left: 300px;
+    width: calc(690px - 420px);
+    margin-left: 325px; 
   }
 }
 
@@ -20720,10 +20720,8 @@ div.table-info .settings-icon {
   .settings-delete {
     position: relative;
     margin-left: 0;
-    width: 100%;
+    width: 100% !important;
     z-index: 2;
-    margin-bottom: 20px;
-    margin-top: -50px;
   }
 }
 
