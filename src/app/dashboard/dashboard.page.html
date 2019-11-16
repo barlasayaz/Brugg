@@ -7,12 +7,13 @@
 		<div class="container container-fix">
 			<div class="mt20 content-sm">
 				<ion-grid>
-					<ion-row *ngIf="appointmentPlanEnable">
-						<app-appointment-dashboard></app-appointment-dashboard>
+					<ion-row *ngIf="appointmentPlanEnable"
+							 style="margin-top: 10px; margin-bottom: 10px;">
+						<app-appointment-dashboard class="appointment-top"></app-appointment-dashboard>
 					</ion-row>
-					<ion-row>
+					<ion-row style="margin-top: 5px;">
 						<ion-col *ngIf="nextAppointmentEnable" size="12" size-lg="6" id="na_dashboard_termine"
-							[ngClass]="className=='showdashfirst' ? 'showdashfirst' : 'showdashsecond'">
+								 [ngClass]="className=='showdashfirst' ? 'showdashfirst' : 'showdashsecond'">
 							<div class="table-responsive" id="ps_dashboard_termine">
 								<div class="table table-striped" id="dashboard_termine">
 									<div class="thead">
@@ -197,12 +198,9 @@
 							</div>
 						</ion-col>
 					</ion-row>
-
 				</ion-grid>
 			</div>
-
 		</div>
-
 	</div>
 </ion-content>
 
