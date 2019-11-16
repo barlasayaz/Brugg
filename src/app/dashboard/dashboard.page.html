@@ -1,12 +1,17 @@
-<main-nav aktivPage="Dashboard"></main-nav>
+<main-nav aktivPage="Dashboard"
+		(ping)="update($event)">
+</main-nav>
 
 <ion-content>
 	<div class="ek-content">
 		<div class="container container-fix">
 			<div class="mt20 content-sm">
 				<ion-grid>
+					<ion-row *ngIf="appointmentPlanEnable">
+						<app-appointment-dashboard></app-appointment-dashboard>
+					</ion-row>
 					<ion-row>
-						<ion-col size="12" size-lg="6" id="na_dashboard_termine"
+						<ion-col *ngIf="nextAppointmentEnable" size="12" size-lg="6" id="na_dashboard_termine"
 							[ngClass]="className=='showdashfirst' ? 'showdashfirst' : 'showdashsecond'">
 							<div class="table-responsive" id="ps_dashboard_termine">
 								<div class="table table-striped" id="dashboard_termine">
@@ -93,7 +98,7 @@
 								</div>
 							</div>
 						</ion-col>
-						<ion-col size="12" size-lg="6" id="ps_dashboard_pruefungen"
+						<ion-col *ngIf="customerEnable" size="12" size-lg="6" id="ps_dashboard_pruefungen"
 							[ngClass]="className=='showdashsecond' ? 'showdashfirst' : 'showdashsecond'">
 							<div class="table-responsive">
 								<div class="table table-striped">

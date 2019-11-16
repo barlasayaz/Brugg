@@ -1,0 +1,34 @@
+<div>
+	<ion-select #select [hidden]='showList' [(ngModel)]="peopleFilter" 
+							okText="{{translate.instant('okay')}}" 
+							(ionChange)="changeFilter()"
+							cancelText="{{translate.instant('abbrechen')}}">
+		<ion-select-option value="none">{{translate.instant('Alle Mitarbeiter')}}</ion-select-option>
+		<ion-select-option *ngFor="let p of people" [value]="p.email">{{p.first_name + " " + p.last_name}}</ion-select-option>
+	</ion-select> 
+	<full-calendar #calendar 
+					defaultView="dayGridMonth"  
+					[events]="events"  
+					[editable]="true" 
+					class="calendar" 
+					deepChangeDetection="true" 
+					[plugins]="calendarPlugins" 
+					[customButtons]= "customButtons" 
+					[header] = "headers" 
+					[locale] = "lang" 
+					[locales] = "locales" 
+					minTime = "07:00:00" 
+					maxTime = "18:00:00" 
+					weekHeader = "dd" 
+					dateFormat = "dd.mm.yy" 
+					[allDaySlot] = "false" 
+					[weekends]= "true" 
+					firstDay = "1" 
+					eventLimit = "false" 
+					timeFormat = "HH:mm" 
+					[businessHours] = "businessHours" 
+					(datesRender)="loadEvents($event)" 
+					(eventClick)="handleEventClick($event)" 
+					(eventDrop)="updateEvent($event)">
+	</full-calendar>
+</div>

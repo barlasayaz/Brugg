@@ -31,6 +31,10 @@ export class MainNavComponent implements OnInit {
   public totalRecords: any = 0;
   public customerName = '';
 
+  public nextAppointmentEnable = true;
+  public customerEnable = true;
+  public appointmentPlanEnable = false;
+
   constructor(
     public userdata: UserdataService,
     public navCtrl: NavController,
@@ -118,5 +122,13 @@ export class MainNavComponent implements OnInit {
     }
   }
 
+  updateDashboard() {
+    const eventObj = {
+      nextAppointmentEnable: this.nextAppointmentEnable,
+      customerEnable: this.customerEnable,
+      appointmentPlanEnable: this.appointmentPlanEnable
+    };
+    this.ping.emit(eventObj);
+  }
 
 }

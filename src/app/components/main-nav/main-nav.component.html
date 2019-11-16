@@ -36,6 +36,30 @@
                     <i class="pi pi-filter"></i>
                   </div>
                 </div>
+                <div 
+                      *ngIf="aktivPage == 'Dashboard' ">    
+
+                  <ion-row>
+                    <ion-col>
+                        <ion-item lines="none">
+                          <ion-label class="app-label">{{'Nächste Termine' | translate}}</ion-label>
+                          <ion-checkbox color="primary" [(ngModel)]="nextAppointmentEnable" (ionChange)="updateDashboard()" slot="start"></ion-checkbox>
+                        </ion-item>
+                    </ion-col>
+                    <ion-col>
+                        <ion-item lines="none">
+                          <ion-label class="app-label">{{'Kunden' | translate }}</ion-label>
+                          <ion-checkbox color="primary" [(ngModel)]="customerEnable" (ionChange)="updateDashboard()" slot="start"></ion-checkbox>
+                        </ion-item>
+                    </ion-col>
+                    <ion-col>
+                        <ion-item lines="none">
+                            <ion-label class="app-label">{{'Termin' | translate }}</ion-label>
+                          <ion-checkbox color="primary" [(ngModel)]="appointmentPlanEnable" (ionChange)="updateDashboard()" slot="start"></ion-checkbox>
+                        </ion-item>
+                    </ion-col>
+                  </ion-row>
+                </div>
               </div>
 
               <div id="customerName" class="main-nav-fix">

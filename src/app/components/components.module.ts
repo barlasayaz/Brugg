@@ -17,18 +17,29 @@ import { FileUploadModule } from 'primeng/fileupload';
 import { DragulaModule } from 'ng2-dragula';
 import { FabDirective } from '../directives/fab.directive';
 import { ChartModule } from 'primeng/chart';
+import { FullCalendarModule } from '@fullcalendar/angular';
 import { ChartPieComponent } from './chart-pie/chart-pie.component';
 import { ChartHorizontalComponent } from './chart-horizontal/chart-horizontal.component';
+import { AppointmentDashboardComponent } from './appointment-dashboard/appointment-dashboard.component';
 
 @NgModule({
-    declarations: [MainNavComponent,BottomNavComponent,ChartPieComponent, ChartHorizontalComponent,FabDirective],
+    declarations: [
+        MainNavComponent,
+        BottomNavComponent,
+        ChartPieComponent, 
+        ChartHorizontalComponent,
+        AppointmentDashboardComponent,
+        FabDirective],
     imports: [IonicModule, TranslateModule,
         CommonModule, RoundProgressModule,
         MenubarModule, TreeTableModule,
         IonicSelectableModule, NgxQRCodeModule,
         ColorPickerModule,AccordionModule,
         FileUploadModule,DragulaModule,
-        SlideMenuModule,ChartModule,FormsModule
+        SlideMenuModule,
+        ChartModule,
+        FormsModule, 
+        FullCalendarModule
         ],
     exports: [
         //IonicModule,
@@ -43,7 +54,9 @@ import { ChartHorizontalComponent } from './chart-horizontal/chart-horizontal.co
         FileUploadModule,DragulaModule,
         FabDirective,SlideMenuModule,
         ChartModule,
-        ChartPieComponent, ChartHorizontalComponent
+        ChartPieComponent, 
+        ChartHorizontalComponent,
+        AppointmentDashboardComponent
     ]
 })
 export class ComponentsModule { }

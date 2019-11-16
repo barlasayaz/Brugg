@@ -382,3 +382,18 @@
 .sc-ion-icon-h {
   height: 1.75em !important;
 }
+
+.app-label {
+  font-size: 12px !important;
+}
+
+ion-checkbox {
+  margin-right: 5px !important;
+  --size: 25px;
+  --background: #ffffff;
+  --border-radius: 50%;
+  --checkmark-color: #ffffff;
+  --background-checked: #009de0;
+  --border-color: #C7C7C7;
+  --border-color-checked: #009de0;
+}
