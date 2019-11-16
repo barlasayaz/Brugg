@@ -147,13 +147,13 @@
     
 </div>
 
-<ion-fab [hidden]="!workMode" vertical="bottom" horizontal="end" slot="fixed" class="liftiball">
+<ion-fab [hidden]="!workMode" vertical="bottom" horizontal="end" slot="fixed" class="liftiball liftiball-cancel">
     <!-- BUTTON -->
     <ion-fab-button color="danger" title="{{'abbrechen' | translate}}" (click)="work_mode(0);">
         <i class="fas fa-times"></i>
     </ion-fab-button>
     <ion-fab-button *ngIf="selectMode && (selectedNode.length>0)" color="success" title="{{'Neues Protokoll' | translate}}" (click)="create_protocol();">
-            <i class="fas fa-plus"></i>
+        <i class="fas fa-plus"></i>
     </ion-fab-button>
 </ion-fab>
 
@@ -168,7 +168,20 @@
                         (click)="menu_new()"
                         *ngIf="userdata.role_set.edit_products">
             <ion-icon name="add"></ion-icon>
-            <ion-icon name="pricetags"></ion-icon>
+        </ion-fab-button>
+        <!-- BUTTON -->
+        <ion-fab-button color="success"
+                        title="{{'Bearbeiten' | translate}}"
+                        (click)="work_mode(1)"
+                        *ngIf="userdata.role_set.edit_products">
+            <ion-icon name="create"></ion-icon>
+        </ion-fab-button>
+        <!-- BUTTON -->
+        <ion-fab-button color="danger"
+                        title="{{'Löschen' | translate}}"
+                        (click)="work_mode(2)"
+                        *ngIf="userdata.role_set.edit_products">
+            <ion-icon name="trash"></ion-icon>
         </ion-fab-button>
         <!-- BUTTON -->
         <ion-fab-button color="success"
@@ -185,20 +198,6 @@
                         *ngIf="userdata.role_set.edit_product_templates">
             <ion-icon name="add"></ion-icon>
             <ion-icon name="list"></ion-icon>
-        </ion-fab-button>
-        <!-- BUTTON -->
-        <ion-fab-button color="success"
-                        title="{{'Bearbeiten' | translate}}"
-                        (click)="work_mode(1)"
-                        *ngIf="userdata.role_set.edit_products">
-            <ion-icon name="create"></ion-icon>
-        </ion-fab-button>
-        <!-- BUTTON -->
-        <ion-fab-button color="danger"
-                        title="{{'Löschen' | translate}}"
-                        (click)="work_mode(2)"
-                        *ngIf="userdata.role_set.edit_products">
-            <ion-icon name="trash"></ion-icon>
         </ion-fab-button>
         <!-- BUTTON -->
         <ion-fab-button color="primary"
