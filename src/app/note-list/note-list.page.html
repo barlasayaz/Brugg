@@ -129,6 +129,12 @@
             <ion-icon name="grid"></ion-icon>
         </ion-fab-button>
         <!-- BUTTON -->
+        <ion-fab-button color="primary"
+                        title="{{'Cancel filters' | translate}}"
+                        (click)="cancel_filters(2)">
+            <ion-icon name="eye-off"></ion-icon>
+        </ion-fab-button>
+        <!-- BUTTON -->
         <ion-fab-button color="warning"
                         title="{{'PDF Export' | translate}}"
                         (click)="pdf_export()">
