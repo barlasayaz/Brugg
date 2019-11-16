@@ -16,6 +16,7 @@
 	ion-button.btn-danger {
 		position: relative;
 		margin-top: -3px;
+		height: 40px;
 	}
 }
 
@@ -32,8 +33,12 @@
 }
 
 ion-select {
-	border: none !important;
+	max-width: 80% !important;
+	height: 40px !important;
+	padding: 10px 10px 5px 10px !important;
 }
+
+
 
 .right_align {
 	text-align: right;
