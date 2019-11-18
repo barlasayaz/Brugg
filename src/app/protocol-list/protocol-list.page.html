@@ -1,56 +1,11 @@
-<main-nav aktivPage="ProtocolList" [idCustomer]="idCustomer"></main-nav>
-
+<main-nav aktivPage="ProtocolList" 
+          [idCustomer]="idCustomer"
+          [searchText]="columnFilterValues['search_all']" 
+          (ping)="update($event)"
+          autoDisplay="true">
+</main-nav>
+ 
 <div class="ek-content" (window:resize)="onResize($event)">
-    <p-menubar id="menuMin" class="wideMenu">
-        <div>
-            <button type="button"
-                    pButton icon="fa fa-fw fa-list"
-                    label="Menu"
-                    id="btnMenu"
-                    (click)="menu.toggle($event)">
-                <span class="ui-submenu-icon pi pi-fw pi-caret-down slide-caret"></span>
-            </button>
-        </div>
-        <div style="padding-top: 5px; padding-right: 10px; margin-left: auto; color: white;">
-            <button type="button" pButton (click)="deSelectAll()" >
-                {{'selektiert' |translate }}: {{selectedRow}}
-            </button>
-        </div>
-        <div class="ui-inputgroup search-search">
-            <input type="text"
-                   pInputText
-                   placeholder="{{'Suche' |translate }}"
-                   [(ngModel)]="columnFilterValues['search_all']"
-                   (input)="search_all()">
-        </div>
-    </p-menubar>
-    <p-slideMenu [model]="menuItems"
-                 popup="false"
-                 [viewportHeight]="220"
-                 [style]="{'width':'200px'}"
-                 #menu>
-    </p-slideMenu>
-    <p-menubar [model]="menuItems"
-               [autoDisplay]="false"
-               id="menuMax">
-        <div style="padding-top: 5px; padding-right: 10px; color: white;">
-            <button type="button" pButton (click)="deSelectAll()" >
-                {{'selektiert' |translate }}: {{selectedRow}}
-            </button>
-        </div>
-        <div class="ui-inputgroup search-search">
-            <input type="text"
-                   pInputText
-                   placeholder="{{'Suche' |translate }}"
-                   [(ngModel)]="columnFilterValues['search_all']"
-                   (input)="search_all()">
-            <!-- <button (click)="search_all()" 
-                    pButton type="button" 
-                    icon="fa fa-search" 
-                    class="ui-button-warn">
-            </button>       -->
-        </div>
-    </p-menubar>
 
     <div id="heightCalc"
          class="heightCalc"
@@ -58,13 +13,7 @@
     </div>
     <p-treeTable [value]="protocolListView"
                  [columns]="selectedColumns"
-                 selectionMode="multiple"
-                 [(selection)]="selectedNode"
-                 (onNodeSelect)="nodeSelect($event, selectedNode)"
-                 (onNodeUnselect)="nodeSelect($event, selectedNode)"
                  dataKey="id"
-                 (onNodeExpand)="onNodeExpand($event)"
-                 (onNodeCollapse)="onNodeCollapse($event)"
                  styleClass="ui-treetable-scrollable-body"
                  [resizableColumns]="true"                 
                  [scrollable]="true"
@@ -85,12 +34,16 @@
                  [sortOrder] = "sortedColumn['sort_order']" >    
         <ng-template pTemplate="colgroup" let-columns>
             <colgroup>
-                <col *ngFor="let col of selectedColumns" [ngStyle]="{width: col.width}">
+                <col [hidden]="!editMode" [ngStyle]="{width: selectedColumns[0].width}" >
+                <col *ngFor="let col of selectedColumns.slice(1);" [ngStyle]="{width: col.width}">
             </colgroup>
         </ng-template>
         <ng-template pTemplate="header" let-columns>
             <tr>
-                <th *ngFor="let col of selectedColumns" 
+                <th class="workColumn" [hidden]="!editMode">
+                    <div class="workWidthfix"></div>
+                </th>   
+                <th *ngFor="let col of selectedColumns.slice(1);" 
                     ttResizableColumn 
                     [ttSortableColumn]="col.field" 
                     ttReorderableColumn>
@@ -99,7 +52,13 @@
                 </th>
             </tr>
             <tr [hidden]="!splitFilter">
-                <th *ngFor="let col of selectedColumns" [ngSwitch]="col.field" class="p-table-filter">
+                <th class="workColumn" [hidden]="!editMode">
+                    <div class="workWidthfix"></div>
+                </th> 
+                <th *ngFor="let col of selectedColumns.slice(1)" 
+                    [ngSwitch]="col.field"
+                    class="p-table-filter"
+                    [ngStyle]="{width: col.width}">
                     <input pInputText
                            type="text"
                            class="filter-search"
@@ -113,10 +72,22 @@
                      let-rowData="rowData"
                      let-columns="columns">
             <tr [ttSelectableRow]="rowNode">
-                <td *ngFor="let col of selectedColumns; let i = index">
+                    <td  class="workColumn" [hidden]="!editMode"> 
+                    <div class="workWidthfix">
+                        <ion-button [hidden]="!editMode" class="btn btn-danger" size="small"  (click)="protocolDeactivate(rowData)">
+                            <ion-icon name="trash"></ion-icon>
+                        </ion-button>
+                        <!--
+                        <ion-button [hidden]="editMode"  class="btn btn-primary" size="small"  (click)="viewProtocol(rowData)">
+                            <ion-icon name="eye"></ion-icon> 
+                        </ion-button>          
+                        -->
+                    </div>               
+                </td>
+                <td *ngFor="let col of selectedColumns.slice(1); let i = index">
                     <p-treeTableToggler [rowNode]="rowNode" *ngIf="i == 0"></p-treeTableToggler>
-                    <label *ngIf="(col.field == 'protocol_date') || (col.field == 'protocol_date_next')">{{rowData[col.field] | date : 'dd.MM.yyyy'}}</label>
-                    <label *ngIf="(col.field != 'protocol_date') && (col.field != 'protocol_date_next')">
+                    <label *ngIf="(col.field != 'title') && (col.field == 'protocol_date') || (col.field == 'protocol_date_next')">{{rowData[col.field] | date : 'dd.MM.yyyy'}}</label>
+                    <label *ngIf="(col.field != 'title') &&(col.field != 'protocol_date') && (col.field != 'protocol_date_next')">
                         <span *ngIf="(rowData[col.field]!=='x') && (rowData[col.field]!=='√')">
                             {{rowData[col.field]}}
                         </span>
@@ -127,15 +98,71 @@
                                     src="/assets/imgs/not_available.png" alt="" height="17px"/>
                         </span>
                     </label>
+                    <div class="link" *ngIf="(col.field == 'title')" (click)="viewProtocol(rowData)">{{rowData[col.field]}}</div>
                 </td>
             </tr>
         </ng-template>
         <ng-template pTemplate="loadingbody" let-columns="columns">
-            <tr style="height:34px">
-                <td *ngFor="let col of selectedColumns;">
-                    <div class="loading-text"></div>
-                </td>
-            </tr>
+                <tr style="height:34px">
+                    <td  class="workColumn" [hidden]="!editMode"></td>
+                    <td *ngFor="let col of selectedColumns.slice(1)">
+                        <div class="loading-text"></div>
+                    </td>
+                </tr>
         </ng-template>
     </p-treeTable>
 </div>
+
+<ion-fab [hidden]="!editMode" vertical="bottom" horizontal="end" slot="fixed" class="liftiball liftiball-cancel">
+    <!-- BUTTON -->
+    <ion-fab-button color="danger" title="{{'abbrechen' | translate}}" (click)="editMode=false;">
+        <i class="fas fa-times"></i>
+    </ion-fab-button>
+</ion-fab>
+    
+<ion-fab [hidden]="editMode" vertical="bottom" horizontal="end" slot="fixed" class="liftiball">
+    <ion-fab-button color="tertiary">
+        <ion-icon name="menu"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list side="top">     
+        <!-- BUTTON -->
+        <ion-fab-button color="danger"
+                        title="{{'Löschen' | translate}}"
+                        (click)="editMode=true;">
+            <ion-icon name="trash"></ion-icon> 
+        </ion-fab-button>
+        <!-- BUTTON -->
+        <ion-fab-button color="success"
+                        title="{{'Neue Protokollvorlage' | translate}}"
+                        (click)="create_template()">
+            <ion-icon name="add"></ion-icon>
+            <ion-icon name="list"></ion-icon>
+        </ion-fab-button>
+        <!-- BUTTON -->
+        <ion-fab-button color="primary"
+                        title="{{'Spalten' | translate}}"
+                        (click)="show_columns()">
+            <ion-icon name="grid"></ion-icon>
+        </ion-fab-button>
+        <!-- BUTTON -->
+        <ion-fab-button color="primary"
+                        title="{{'Cancel filters' | translate}}"
+                        (click)="cancel_filters(2)">
+            <ion-icon name="eye-off"></ion-icon>
+        </ion-fab-button>
+        <!-- BUTTON -->
+        <ion-fab-button color="warning"
+                        title="{{'PDF Export' | translate}}"
+                        (click)="pdf_export()">
+            <ion-icon name="download"></ion-icon>
+        </ion-fab-button>
+        <!-- BUTTON -->
+        <ion-fab-button color="warning"
+                        title="{{'XLS Export' | translate}}"
+                        (click)="excel_export()">
+            <ion-icon name="stats"></ion-icon>
+        </ion-fab-button>
+    </ion-fab-list>
+</ion-fab>
+
+<bottom-nav></bottom-nav>

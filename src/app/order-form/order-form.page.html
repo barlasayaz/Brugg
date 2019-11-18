@@ -1,6 +1,6 @@
 <main-nav aktivPage="OrderForm" [idCustomer]="idCustomer"></main-nav>
 
-<ion-content>
+<ion-content class="orderform">
     <div class="ek-content">
       <div class="container">
         <div class="mt20 content-sm">  
@@ -17,7 +17,7 @@
                         </div>
                       </div>
                       <div class="tbody">
-                        <div class="tr table-body orederType" style="border:2px solid #ccc;">
+                        <div class="tr table-body orederType">
                             <div class="td" style="max-width: 25px;"><ion-checkbox [(ngModel)]="activOrderForm.orderCheckBox"></ion-checkbox></div>
                             <div class="orederTypeOrder">{{'Bestellen' | translate}}</div>
                             <div class="td" style="max-width: 25px;"><ion-checkbox [(ngModel)]="activOrderForm.offerCheckBox"></ion-checkbox></div>
@@ -38,7 +38,7 @@
             <ion-row>
               <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="12" size="12">  
                 <!-- Invoice Address -->
-                <div class="kunden-col" style="border:2px solid #ccc;">
+                <div class="kunden-col">
                   <div class="table-info">      
                     <div class="thead">
                       <div class="tr table-subheader table-subheader-fix">
@@ -106,7 +106,7 @@
               </ion-col>            
               <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="12" size="12">  
                 <!-- Shipping Address -->
-                <div class="kunden-col" style="border:2px solid #ccc;">
+                <div class="kunden-col">
                   <div class="table-info">      
                     <div class="thead">
                       <div class="tr table-subheader table-subheader-fix">
@@ -177,7 +177,7 @@
             </ion-row>
             <ion-row>
               <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="12" size="12">  
-                <div class="kunden-col" style="border:2px solid #ccc;">
+                <div class="kunden-col">
                   <div class="table-info">      
                     <div class="tbody">
                       <div class="tr table-body">
@@ -212,7 +212,7 @@
                 </div>    
               </ion-col>
               <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="12" size="12">  
-                <div class="kunden-col" style="border:2px solid #ccc;">
+                <div class="kunden-col">
                   <div class="table-info">      
                     <div class="tbody">
                       <div class="tr table-body">
@@ -254,7 +254,7 @@
                     <div class="kunden-col">
                       <div class="table-info">
                         <div class="tbody">
-                          <div class="tr table-body" style="border:2px solid #ccc;">
+                          <div class="tr table-body">
                               <div class="td" style="max-width: 30px; width: 30px;"><ion-checkbox [(ngModel)]="activOrderForm.sampleDeliveryCheckBox"></ion-checkbox></div>
                               <div class="td" style="font-size: 15px; margin-top: -6px;">{{'Musterlieferung' | translate}}</div>
                               <div class="td" style="max-width: 30px; width: 30px;"><ion-checkbox [(ngModel)]="activOrderForm.creditCheckBox"></ion-checkbox></div>
@@ -277,7 +277,7 @@
                     <div class="kunden-col">
                       <div class="table-info">
                         <div class="tbody">
-                          <div class="tr table-body" style="border:2px solid #ccc;">
+                          <div class="tr table-body">
                               <div class="td" style="max-width: 30px; width: 30px;"><ion-checkbox [(ngModel)]="activOrderForm.postCheckBox"></ion-checkbox></div>
                               <div class="td" style="font-size: 15px; margin-top: -6px;">{{'Post' | translate}}</div>
                               <div class="td" style="max-width: 30px; width: 30px;"><ion-checkbox [(ngModel)]="activOrderForm.expressCheckBox"></ion-checkbox></div>
@@ -297,7 +297,7 @@
               </ion-row>
               <ion-row>     
                 <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="12" size="12">
-                  <div class="kunden-col" style="border:2px solid #ccc;">
+                  <div class="kunden-col">
                     <div class="table-info"> 
                       <div class="tbody">
                         <div class="tr table-body">
@@ -314,41 +314,43 @@
                 </ion-col>             
               </ion-row>
               <!-- Product Info -->
-              <ion-row style="padding-left: 5px; padding-right: 5px; font-size: 13px;">
+              <ion-row style="padding-left: 5px; padding-right: 5px; font-size: 13px;margin-top:20px">
                 <ion-col size-xl="2" size-lg="2" size-md="2" size-sm="2" size="2"
-                         style="border:1px solid #ccc; 
+                         style="
                                 background: #005e86; 
                                 color: white;
-                                padding: 10px;">
+                                padding: 10px;
+                                border-radius:3px 0px 0px 0px;">
                   <div>{{'Menge' | translate}}</div>
                 </ion-col>
                 <ion-col size-xl="2" size-lg="2" size-md="2" size-sm="2" size="2" 
-                         style="border:1px solid #ccc; 
+                         style=" 
                                 background: #005e86; 
                                 color: white;
                                 padding: 10px;">
                   <div>{{'PVS ID' | translate}}</div>
                 </ion-col>
                 <ion-col size-xl="2" size-lg="2" size-md="2" size-sm="2" size="2" 
-                         style="border:1px solid #ccc; 
+                         style="
                                background: #005e86; 
                                color: white;
                                padding: 10px;">
                   <div>{{'Artikel-Nr.' | translate}}</div>
                 </ion-col>
                 <ion-col size-xl="5" size-lg="5" size-md="5" size-sm="5" size="5" 
-                         style="border:1px solid #ccc;
+                         style="
                                background: #005e86; 
                                color: white; 
                                padding: 10px;">
                   <div>{{'Bezeichnung' | translate}}</div>
                 </ion-col>   
                 <ion-col size-xl="1" size-lg="1" size-md="1" size-sm="1" size="1" 
-                         style="border:1px solid #ccc; 
+                         style=" 
                                background: #005e86; 
                                color: white;
                                text-align: center;
-                               padding: 5px 0px 5px 0px;">
+                               padding: 5px 0px 5px 0px;
+                               border-radius: 0px 3px 0px 0px;">
                   <ion-button size="small"
                               style="font-size: 0.7em;"
                               (click)="addProduct()">
@@ -359,39 +361,35 @@
               <ion-row style="padding-left: 5px; padding-right: 5px; font-size: 13px;"
                        *ngFor="let product of products; let prdctInd = index">
                 <ion-col size-xl="2" size-lg="2" size-md="2" size-sm="2" size="2" 
-                        style="border:1px solid #ccc;
-                               padding-top: 20px;">
+                        style="padding: 10px 5px;background: #fff;border-radius: 0px 0px 0px 3px;">
                   <ion-input type="text" 
                             style="color: black"
                             [(ngModel)]="product.quantity">
                   </ion-input>
                 </ion-col>
                 <ion-col size-xl="2" size-lg="2" size-md="2" size-sm="2" size="2" 
-                        style="border:1px solid #ccc; 
-                               padding-top: 20px;">
+                        style="padding: 10px 5px;background: #fff;">
                   <ion-input type="text" 
                             style="color: black"
                             [(ngModel)]="product.pvsid">
                   </ion-input>
                 </ion-col>
                 <ion-col size-xl="2" size-lg="2" size-md="2" size-sm="2" size="2" 
-                        style="border:1px solid #ccc;
-                               padding-top: 20px;">
+                        style="padding: 10px 5px;background: #fff;">
                   <ion-input type="text" 
                             style="color: black"
                             [(ngModel)]="product.articleno">
                   </ion-input>
                 </ion-col>
                 <ion-col size-xl="5" size-lg="5" size-md="5" size-sm="5" size="5" 
-                        style="border:1px solid #ccc;
-                               padding: 0px 5px 10px 5px;">
+                        style="background: #fff;">
                   <ion-textarea type="text" 
-                                style="color: black; border:1px solid #ccc;"
+                                style="color: black; border:1px solid #ccc;height:44px;margin-top:4px;padding-top: 0;"
                                 [(ngModel)]="product.designation">
                   </ion-textarea>
                 </ion-col>   
                 <ion-col size-xl="1" size-lg="1" size-md="1" size-sm="1" size="1"
-                         style="border:1px solid #ccc; text-align: center; padding: 18px 0px 5px 0px;">
+                         style=" text-align: center; padding: 18px 0px 5px 0px;background: #fff;border-radius: 0px 0px 3px 0px;">
                   <ion-button size="small"
                               style="font-size: 0.7em; --background: red;"
                               (click)="remProduct(prdctInd)">
@@ -400,9 +398,9 @@
                 </ion-col>   
               </ion-row>
               <!-- Notes -->
-              <ion-row>
+              <ion-row style="margin-top:10px;">
                 <ion-col size-xl="12" size-lg="12" size-md="12" size-sm="12" size="12">  
-                  <div class="kunden-col" style="border:2px solid #ccc;">
+                  <div class="kunden-col">
                     <div class="table-info" style="background: white;">      
                       <div class="thead">
                         <div class="tr table-subheader table-subheader-fix">
@@ -420,7 +418,7 @@
               <!-- Commissioned -->
               <ion-row>
                 <ion-col size-xl="12" size-lg="12" size-md="12" size-sm="12" size="12">  
-                  <div class="kunden-col" style="border:2px solid #ccc;">
+                  <div class="kunden-col" >
                     <div class="table-info" style="background: white;">      
                       <div class="thead">
                         <div class="tr table-subheader table-subheader-fix">
@@ -459,8 +457,10 @@
                       (mouseover)="mouseover(2)" 
                       (mouseout)="mouseout(2)"
                       [class.mouse-over]="mouseoverButton2"
-                      [labelFab]="'PDF Ansicht'">
+                      [labelFab]="'PDF Export'">
         <ion-icon name="document"></ion-icon>        
       </ion-fab-button>
     </ion-fab-list>
   </ion-fab>
+
+<bottom-nav></bottom-nav>

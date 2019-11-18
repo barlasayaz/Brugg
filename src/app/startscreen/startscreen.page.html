@@ -1,5 +1,3 @@
-<main-nav aktivPage="StartscreenPage"></main-nav>
-
 <ion-content>
 	<div class="ek-content">
 		<div class="container" style="max-width: 450px">
@@ -28,12 +26,17 @@
 				<ion-row>
 					<!-- Kundenübersicht -->
 					<ion-col size="12">
-						<ion-button icon-only class="startbtn" (click)="go('CustomerTable');">
+						<ion-button icon-only class="startbtn" (click)="go('CustomerTableAll');">
 							<div>
 								<ion-icon class="starticn" name="people"></ion-icon><br><br>
 								<label class="startlbl">{{'Kundenuebersicht' | translate}}</label>
 							</div>
 						</ion-button>
+						<div class="startbtn-extra">
+							<ion-searchbar color="light" class="quicksearch" placeholder="{{'Filter' | translate}}" (keyup.enter)="go('CustomerTable');"
+								[(ngModel)]="customerSearch"
+								animated></ion-searchbar>
+						</div>
 					</ion-col>
 				</ion-row>
 
@@ -80,7 +83,7 @@
 				<ion-row>
 					<!-- Logout -->
 					<ion-col size="12">
-						<ion-button style="height:auto;" class="pvs4-btn pvs4-btn-full pvs4-btn-red"
+						<ion-button style="height:auto;" class="pvs4-btn pvs4-btn-full pvs4-btn-red start-logout"
 							(click)="logout();">
 							<div class="logoutlbl">
 								<ion-icon class="starticn" style="font-size:36px" name="power"></ion-icon>

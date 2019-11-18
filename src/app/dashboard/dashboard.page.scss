@@ -187,3 +187,9 @@ div.table div.tbody div.tr.table-subheader div.th {
       font-size: 12px;
     }
   }
+
+  @media only screen and (max-width: 992px) {
+    .appointment-top {
+      margin-top: 52px;
+    }
+  }

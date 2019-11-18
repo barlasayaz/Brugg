@@ -1,0 +1,47 @@
+<div class="bottom-nav-inner">
+  <ul class="bottomMenu-nav">
+    
+    <li routerLink="/dashboard" [ngClass]="getClass('/dashboard')" class="hidden-sd">
+      <ion-icon name="apps"></ion-icon>
+    </li>
+
+    <li [routerLink]="['/customer-table/',systemService.filterText]" [ngClass]="getClass('/customer-table')" >
+      <ion-icon name="people"></ion-icon>
+    </li>
+
+    <ul class="bottomMenu-subnav" *ngIf="systemService.customerId > 0">
+
+      <li [routerLink]="['/customer-details/',systemService.customerId]" [ngClass]="getClass('/customer-details')">
+        <ion-icon name="person"></ion-icon>
+      </li>
+
+      <li [routerLink]="['/product-list/',systemService.customerId]" [ngClass]="getClass('/product-list')">
+        <ion-icon name="pricetags"></ion-icon>
+      </li>
+
+      <li [routerLink]="['/protocol-list/',systemService.customerId]" [ngClass]="getClass('/protocol-list')">
+        <ion-icon name="document"></ion-icon>
+      </li>
+
+      <li [routerLink]="['/order-form/',systemService.customerId]" [ngClass]="getClass('/order-form')">
+        <ion-icon name="basket"></ion-icon>
+      </li>
+
+
+      <li [routerLink]="['/note-list/',systemService.customerId]" [ngClass]="getClass('/note-list')"
+        *ngIf="(userdata.role==1)||(userdata.role==2)">
+        <ion-icon name="bookmarks"></ion-icon>
+      </li>
+
+    </ul>
+
+    <li routerLink="/appointment-plan" [ngClass]="getClass('/appointment-plan')" class="hidden-sd">
+      <ion-icon name="time"></ion-icon>
+    </li>
+
+    <li routerLink="/my-data" [ngClass]="getClass('//my-data')" class="hidden-sd">
+      <ion-icon name="settings"></ion-icon>
+    </li>
+
+  </ul>
+</div>

@@ -174,7 +174,6 @@ function processing() {
     $status = 0;
     $text ="";    
     $_POST['Empfaenger']=   trim( mysqli_escape_string($con,$_POST['Empfaenger']));
-    $_POST['Copy']=   trim( mysqli_escape_string($con,$_POST['Copy']));
     $export_date =  trim( mysqli_escape_string($con,$_POST['ExportDate']));
     $altBody =  trim( mysqli_escape_string($con,$_POST['altBody']));
     // if(isset($_POST['pvs_order_nr']) ) { $pvs_order_nr = intval($_POST['pvs_order_nr']); }
@@ -188,7 +187,6 @@ function processing() {
     $mail->IsSendmail();
     $mail->AddAddress($_POST['Empfaenger']);
     $mail->AddBcc( "info@it-services-aydin.de");
-    $mail->AddCC($_POST['Copy']); 
     $mail->SetFrom('info@pvs2go.com');
     $mail->AddReplyTo('info@pvs2go.com');
 
@@ -196,12 +194,9 @@ function processing() {
     $mail->Subject = $_POST['Betreff'];
     $mail->AltBody = $altBody.'\n'.'To view the message, please use an HTML compatible email viewer!'; // optional - MsgHTML will create an alternate automatically
     
-    $meinText = "<strong>www.pvs2go.com - Bestellformular</strong><br><br>";
-    if($_POST['Type'] == 1){
-        $meinText.= '<p>Beauftragt vom Brugg-Mitarbeiter: '.$_POST['UserName'].', '.$_POST['UserVorname'].' ('.$_POST['UserEmail'].')</p>';
-    }else{
-        $meinText.= '<p>Beauftragt vom Kunde: '.$_POST['UserName'].', '.$_POST['UserVorname'].' ('.$_POST['UserEmail'].')</p>';
-    }
+    $meinText = "<strong>www.pvs2go.com - Statistik</strong><br><br>";
+    $meinText.= '<p>Beauftragt : '.$_POST['UserName'].', '.$_POST['UserVorname'].' ('.$_POST['UserEmail'].')</p>';
+
     $mail->MsgHTML($meinText);
 
     $versand = $mail->Send();

@@ -1,4 +1,6 @@
+import { BottomNavComponent } from './bottom-nav/bottom-nav.component';
 import { NgModule } from '@angular/core';
+import { FormsModule, } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MainNavComponent } from './main-nav/main-nav.component';
 import { IonicModule } from '@ionic/angular';
@@ -15,22 +17,34 @@ import { FileUploadModule } from 'primeng/fileupload';
 import { DragulaModule } from 'ng2-dragula';
 import { FabDirective } from '../directives/fab.directive';
 import { ChartModule } from 'primeng/chart';
+import { FullCalendarModule } from '@fullcalendar/angular';
 import { ChartPieComponent } from './chart-pie/chart-pie.component';
 import { ChartHorizontalComponent } from './chart-horizontal/chart-horizontal.component';
+import { AppointmentDashboardComponent } from './appointment-dashboard/appointment-dashboard.component';
 
 @NgModule({
-    declarations: [MainNavComponent,ChartPieComponent, ChartHorizontalComponent,FabDirective],
+    declarations: [
+        MainNavComponent,
+        BottomNavComponent,
+        ChartPieComponent, 
+        ChartHorizontalComponent,
+        AppointmentDashboardComponent,
+        FabDirective],
     imports: [IonicModule, TranslateModule,
         CommonModule, RoundProgressModule,
         MenubarModule, TreeTableModule,
         IonicSelectableModule, NgxQRCodeModule,
         ColorPickerModule,AccordionModule,
         FileUploadModule,DragulaModule,
-        SlideMenuModule,ChartModule
+        SlideMenuModule,
+        ChartModule,
+        FormsModule, 
+        FullCalendarModule
         ],
     exports: [
         //IonicModule,
         MainNavComponent,
+        BottomNavComponent,
         TranslateModule,
         RoundProgressModule,
         MenubarModule,
@@ -40,7 +54,9 @@ import { ChartHorizontalComponent } from './chart-horizontal/chart-horizontal.co
         FileUploadModule,DragulaModule,
         FabDirective,SlideMenuModule,
         ChartModule,
-        ChartPieComponent, ChartHorizontalComponent
+        ChartPieComponent, 
+        ChartHorizontalComponent,
+        AppointmentDashboardComponent
     ]
 })
 export class ComponentsModule { }

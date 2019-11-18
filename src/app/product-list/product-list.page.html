@@ -1,72 +1,17 @@
-<main-nav aktivPage="ProductList" [idCustomer]="idCustomer" autoDisplay="true"></main-nav>
+<main-nav aktivPage="ProductList" 
+          [idCustomer]="idCustomer"  
+          [searchText]="columnFilterValues['search_all']"
+          (ping)="update($event)" 
+          autoDisplay="true">
+</main-nav>
 
 <div class="ek-content" (window:resize)="onResize($event)">
-    <p-menubar id="menuMin" class="wideMenu">
-        <div>
-            <button type="button" 
-                    pButton 
-                    icon="fa fa-fw fa-list" 
-                    label="Menu" 
-                    id="btnMenu"
-                    (click)="menu.toggle($event)">
-                <span class="ui-submenu-icon pi pi-fw pi-caret-down slide-caret"></span>
-            </button>
-        </div>
-        <div style="padding-top: 5px; padding-right: 10px; margin-left: auto; color: white;">
-            <button type="button" 
-                    pButton 
-                    (click)="deSelectAll()">
-                {{'selektiert' |translate }}: {{selectedRow}}
-            </button>
-
-        </div>
-        <div class="ui-inputgroup search-search">
-            <input type="text" 
-                    pInputText 
-                    placeholder="{{'Suche' |translate }}"
-                    [(ngModel)]="columnFilterValues['search_all']" 
-                    (input)="search_all()">
-        </div>
-    </p-menubar>
-    <p-slideMenu [model]="menuItems" 
-                 popup="false" 
-                 [viewportHeight]="280" 
-                 [style]="{'width':'200px'}"
-                  #menu>
-    </p-slideMenu>
-    <p-menubar [model]="menuItems" 
-               [autoDisplay]="false" 
-               id="menuMax">
-        <div style="padding-top: 5px; padding-right: 10px; color: white;">
-            <button type="button" pButton (click)="deSelectAll()">
-                {{'selektiert' |translate }}: {{selectedRow}}
-            </button>
-        </div>
-        <div class="ui-inputgroup search-search">
-            <input type="text" 
-                   pInputText 
-                   placeholder="{{'Suche' |translate }}"
-                   [(ngModel)]="columnFilterValues['search_all']" 
-                   (input)="search_all()">
-            <!-- <button (click)="search_all()" 
-                    pButton type="button" 
-                    icon="fa fa-search" 
-                    class="ui-button-warn">
-            </button>       -->
-        </div>
-    </p-menubar>
-
     <div id="heightCalc" 
          class="heightCalc" 
          #divHeightCalc>
     </div>
-    <p-treeTable *ngIf="selectMode&&!editMode" 
-                 [value]="productListView" 
+    <p-treeTable [value]="productListView" 
                  [columns]="selectedColumns" 
-                 selectionMode="single"
-                 [(selection)]="selectedNode" 
-                 (onNodeSelect)="nodeSelect($event, selectedNode)"
-                 (onNodeUnselect)="onNodeUnselect($event, selectedNode)" 
                  dataKey="id" 
                  (onNodeExpand)="onNodeExpand($event)"
                  (onNodeCollapse)="onNodeCollapse($event)" 
@@ -78,6 +23,7 @@
                  [scrollHeight]="heightCalc"
                  [virtualRowHeight]="rowHeight" 
                  [virtualScroll]="true" 
+                 selectionMode="checkbox" [(selection)]="selectedNode"
                  [lazy]="true" 
                  (onLazyLoad)="loadNodes($event)"
                  [loading]="false" 
@@ -89,12 +35,21 @@
                  [sortOrder]="sortedColumn['sort_order']">
         <ng-template pTemplate="colgroup" let-columns>
             <colgroup>
-                <col *ngFor="let col of selectedColumns" [ngStyle]="{width: col.width}">
+                <col [hidden]="!workMode" [ngStyle]="{width: selectedColumns[0].width}" >
+                <col *ngFor="let col of selectedColumns.slice(1);" [ngStyle]="{width: col.width}">            
             </colgroup>
         </ng-template>
         <ng-template pTemplate="header" let-columns>
             <tr>
-                <th *ngFor="let col of selectedColumns" 
+                <th *ngIf="selectMode" >                       
+                    <ion-button *ngIf="selectedNode.length>0" class="btn btn-danger btn-sm"   (click)="deSelectAll()">
+                            <ion-icon name="ios-close-circle-outline"></ion-icon>
+                    </ion-button>
+                </th>  
+                <th *ngIf="!selectMode"  class="workColumn" [hidden]="!workMode">
+                        <div class="workWidthfix"></div>
+                </th> 
+                <th *ngFor="let col of selectedColumns.slice(1);" 
                     ttResizableColumn 
                     [ttSortableColumn]="col.field"
                     ttReorderableColumn > {{col.header}}
@@ -103,7 +58,10 @@
                 </th>
             </tr>
             <tr [hidden]="!splitFilter">
-                    <th *ngFor="let col of selectedColumns" 
+                    <th class="workColumn" [hidden]="!workMode">
+                            <div class="workWidthfix"></div>
+                        </th> 
+                    <th *ngFor="let col of selectedColumns.slice(1)" 
                     nowrap 
                     [ngSwitch]="col.field" 
                     class="p-table-filter">
@@ -119,8 +77,34 @@
                     let-rowNode 
                     let-rowData="rowData" 
                     let-columns="columns">
-            <tr [ttSelectableRow]="rowNode">
-                <td *ngFor="let col of selectedColumns; let i = index">
+            <tr class="workworkC">
+                <td class="workColumn" [hidden]="!workMode" >     
+                    <div class="workWidthfix">
+                        <ion-button [hidden]="!deleteMode" class="btn btn-danger" size="small"  (click)="productDeactivateAlert(rowNode)">
+                            <ion-icon name="trash"></ion-icon>
+                        </ion-button>
+                        <ion-button [hidden]="!editMode" class="btn btn-success" size="small"  (click)="editProduct(rowData)">
+                                <ion-icon name="create"></ion-icon>
+                        </ion-button>
+                        <!--
+                        <ion-button [hidden]="workMode"  class="btn btn-primary" size="small"  (click)="viewProduct(rowData)">
+                            <ion-icon name="eye"></ion-icon> 
+                        </ion-button>   
+                        -->
+                        <ion-button [hidden]="((!moveMode)||(move_id>0))" class="btn btn-teal" size="small"  (click)="moveProduct(1,rowData)">
+                                <ion-icon name="md-move"></ion-icon>
+                        </ion-button> 
+                        <ion-button [hidden]="((!moveMode)||(move_id==0)||(move_id==rowData.id))" class="btn btn-danger" size="small"  (click)="moveProduct(2,rowData)">
+                                <ion-icon name="md-arrow-round-forward"></ion-icon>
+                        </ion-button>     
+                        <ion-button [hidden]="((!moveMode)||(move_id==0)||(move_id!=rowData.id))" class="btn btn-teal" size="small"  (click)="moveProduct(2,rowData)">
+                                <ion-icon name="md-arrow-round-back"></ion-icon>
+                        </ion-button>   
+                        <p-treeTableCheckbox [value]="rowNode" *ngIf="selectMode"></p-treeTableCheckbox>        
+                    </div>                                
+                </td>
+                <td *ngFor="let col of selectedColumns.slice(1); let i = index" 
+                    [ngStyle]="showActivePassiveProduct && {'color': '#ccc'}">
                     <p-treeTableToggler [rowNode]="rowNode" *ngIf="i == 0"></p-treeTableToggler>
 
                     <span *ngIf="col.field == 'nfc_tag_id'">
@@ -130,95 +114,9 @@
                             </ion-icon>
                         </span>
                     </span>
-                    <span *ngIf="col.field != 'nfc_tag_id'">{{rowData[col.field]}}</span>
-
-                </td>
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="loadingbody" let-columns="columns">
-            <tr style="height:34px">
-                <td *ngFor="let col of selectedColumns;">
-                    <div class="loading-text"></div>
-                </td>
-            </tr>
-        </ng-template>
-    </p-treeTable>
-    <p-treeTable *ngIf="!selectMode&&!editMode"
-                 [value]="productListView"
-                 [columns]="selectedColumns"
-                 selectionMode="multiple"
-                 [(selection)]="selectedNode"
-                 (onNodeSelect)="nodeSelect($event, selectedNode)"
-                 (onNodeUnselect)="onNodeUnselect($event, selectedNode)"
-                 dataKey="id"
-                 (onNodeExpand)="onNodeExpand($event)"
-                 (onNodeCollapse)="onNodeCollapse($event)"
-                 styleClass="ui-treetable-scrollable-body"
-                 [resizableColumns]="true"
-                 [scrollable]="true"
-                 [paginator]="false" 
-                 [rows]="rowCount" 
-                 [scrollHeight]="heightCalc"
-                 [virtualRowHeight]="rowHeight"
-                 [virtualScroll]="true" 
-                 [lazy]="true" 
-                 (onLazyLoad)="loadNodes($event)"  
-                 [loading]="false" 
-                 [totalRecords]="rowRecords"
-                 [reorderableColumns]="true"
-                 (onColReorder)="onColReorder($event)"
-                 (onColResize)="onColResize($event)"
-                 [sortField] = "sortedColumn['sort_field']"
-                 [sortOrder] = "sortedColumn['sort_order']" >   
-        <ng-template pTemplate="colgroup" let-columns>
-            <colgroup>
-                <col *ngFor="let col of selectedColumns" [ngStyle]="{width: col.width}">
-            </colgroup>
-        </ng-template>
-        <ng-template pTemplate="header" let-columns>
-            <tr>
-                <th *ngFor="let col of selectedColumns" 
-                    ttResizableColumn
-                    [ttSortableColumn]="col.field" 
-                    ttReorderableColumn 
-                    > {{col.header}}
-                    <p-treeTableSortIcon [field]="col.field">
-                    </p-treeTableSortIcon>
-                </th>
-                
-            </tr>
-            <tr [hidden]="!splitFilter">
-                <th *ngFor="let col of selectedColumns" 
-                    nowrap 
-                    [ngSwitch]="col.field" 
-                    class="p-table-filter">
-                    <input pInputText 
-                           type="text" 
-                           class="filter-search" 
-                           (input)="search_all()"
-                        [(ngModel)]="columnFilterValues[col.field]">
-                </th>
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="body" 
-                    let-rowIndex
-                    let-rowNode
-                    let-rowData="rowData" 
-                    let-columns="columns"> 
-            <tr [ttSelectableRow]="rowNode" >
-                <td *ngFor="let col of selectedColumns; let i = index" >
-                   <p-treeTableToggler [rowNode]="rowNode" *ngIf="i == 0"></p-treeTableToggler>
-
-                    <span *ngIf="col.field == 'nfc_tag_id'">
-                        <span>
-                            <ion-icon name="wifi" *ngIf="!rowData[col.field]" [ngStyle]="{'color':'#ccc'}"></ion-icon>
-                            <ion-icon name="wifi" *ngIf="rowData[col.field]" [ngStyle]="{'color':'rgb(0, 157, 224)'}">
-                            </ion-icon>
-                        </span>
-                    </span>
-                    <span *ngIf="(col.field != 'nfc_tag_id') && (col.field === 'last_protocol_next')"
-                        [ngStyle]="{'color': rowData.last_protocol_next_color  }">{{rowData[col.field]}}</span>
-                    <span *ngIf="(col.field != 'nfc_tag_id') && (col.field != 'last_protocol_next')">
+                    <span *ngIf="(col.field != 'title') && (col.field != 'nfc_tag_id') && (col.field === 'last_protocol_next')"
+                        [ngStyle]="!showActivePassiveProduct && {'color': rowData.last_protocol_next_color}">{{rowData[col.field]}}</span>
+                    <span *ngIf="(col.field != 'title') && (col.field != 'nfc_tag_id') && (col.field != 'last_protocol_next')">
                         <span *ngIf="(rowData[col.field]!=='x') && (rowData[col.field]!=='√')">
                             {{rowData[col.field]}}
                         </span>
@@ -229,18 +127,13 @@
                                 height="17px" />
                         </span>
                     </span>
+                    <div class="link" *ngIf="(col.field == 'title')" (click)="viewProduct(rowData)">{{rowData[col.field]}}</div>                 
+               
                     <div *ngIf="(i===1) && showBasicInfo" style="font-size: 85%;  ">
                             {{rowData['_basic_info_show_']}}
                     </div>
                 </td>
             </tr>
-            <!--
-            <tr >
-                    <td (click)="test(rowIndex)" >{{'ffffffffffff'}} </td>
-                    <td colspan="2" > {{rowData['_basic_info_']}}</td>  
-                    <td [attr.colspan]="selectedColumns.length-3"></td>                 
-            </tr>
-            -->
         </ng-template>
         <ng-template pTemplate="loadingbody" let-columns="columns">
             <tr style="height:34px">
@@ -250,106 +143,150 @@
             </tr>
         </ng-template>
     </p-treeTable>
-    <p-treeTable *ngIf="!selectMode&&editMode"
-                [value]="productListView"
-                [columns]="selectedColumns"
-                dataKey="id"
-                (onNodeExpand)="onNodeExpand($event)"
-                (onNodeCollapse)="onNodeCollapse($event)"
-                styleClass="ui-treetable-scrollable-body"
-                [resizableColumns]="true"
-                [scrollable]="true"
-                [paginator]="false" 
-                [rows]="rowCount" 
-                [scrollHeight]="heightCalc"
-                [virtualRowHeight]="rowHeight"
-                [virtualScroll]="true" 
-                [lazy]="true" 
-                (onLazyLoad)="loadNodes($event)"  
-                [loading]="false" 
-                [totalRecords]="rowRecords"
-                [reorderableColumns]="true"
-                (onColReorder)="onColReorder($event)"
-                (onColResize)="onColResize($event)"
-                [sortField] = "sortedColumn['sort_field']"
-                [sortOrder] = "sortedColumn['sort_order']" 
-                (onEditComplete)="onEditComplete($event)" >   
-<ng-template pTemplate="colgroup" let-columns>
-<colgroup>
-   <col *ngFor="let col of selectedColumns" [ngStyle]="{width: col.width}">
-</colgroup>
-</ng-template>
-<ng-template pTemplate="header" let-columns>
-<tr>
-   <th *ngFor="let col of selectedColumns" 
-       ttResizableColumn
-       [ttSortableColumn]="col.field" 
-       ttReorderableColumn 
-       > {{col.header}}
-       <p-treeTableSortIcon [field]="col.field">
-       </p-treeTableSortIcon>
-   </th>
-   
-</tr>
-<tr [hidden]="!splitFilter">
-   <th *ngFor="let col of selectedColumns" 
-       nowrap 
-       [ngSwitch]="col.field" 
-       class="p-table-filter">
-       <input pInputText 
-              type="text" 
-              class="filter-search" 
-              (input)="search_all()"
-              [(ngModel)]="columnFilterValues[col.field]">
-   </th>
-</tr>
-</ng-template>
-<ng-template pTemplate="body" 
-       let-rowIndex
-       let-rowNode
-       let-rowData="rowData" 
-       let-columns="columns"> 
-<tr>
-   <td *ngFor="let col of selectedColumns; let i = index" [ttEditableColumn]="rowData" [ttEditableColumnField]="col.field" >
-      <p-treeTableToggler [rowNode]="rowNode" *ngIf="i == 0"></p-treeTableToggler>
-      <p-treeTableCellEditor>
-            <ng-template pTemplate="input" *ngIf="col.editable">
-                <input pInputText type="text" [(ngModel)]="rowData[col.field]"
-                    [ngStyle]="{'width': i == 0 ? '90%': '100%'}">
-            </ng-template>
-            <ng-template pTemplate="output"
-                *ngIf="(col.field != 'nfc_tag_id') && (col.field != 'last_protocol_next') && (rowData[col.field]!=='x') && (rowData[col.field]!=='√')">
-                {{rowData[col.field]}}</ng-template>
-        </p-treeTableCellEditor>
-       <span *ngIf="col.field == 'nfc_tag_id'">
-           <span>
-               <ion-icon name="wifi" *ngIf="!rowData[col.field]" [ngStyle]="{'color':'#ccc'}"></ion-icon>
-               <ion-icon name="wifi" *ngIf="rowData[col.field]" [ngStyle]="{'color':'rgb(0, 157, 224)'}">
-               </ion-icon>
-           </span>
-       </span>
-       <span *ngIf="(col.field != 'nfc_tag_id') && (col.field === 'last_protocol_next')"
-           [ngStyle]="{'color': rowData.last_protocol_next_color  }">{{rowData[col.field]}}</span>
-       <span *ngIf="(col.field != 'nfc_tag_id') && (col.field != 'last_protocol_next')">
-           <span *ngIf="(rowData[col.field]==='x') || (rowData[col.field]==='√')">
-               <img *ngIf="rowData[col.field]==='√'" src="/assets/imgs/available.png" alt=""
-                   height="17px" />
-               <img *ngIf="rowData[col.field]==='x'" src="/assets/imgs/not_available.png" alt=""
-                   height="17px" />
-           </span>
-       </span>
-       <div *ngIf="i == 1" style="font-size: 85%;  ">
-               {{rowData['_basic_info_']}}
-       </div>
-   </td>
-</tr>
-</ng-template>
-<ng-template pTemplate="loadingbody" let-columns="columns">
-<tr style="height:34px">
-   <td *ngFor="let col of selectedColumns;">
-       <div class="loading-text"></div>
-   </td>
-</tr>
-</ng-template>
-</p-treeTable>
+    
+    
 </div>
+
+<ion-fab [hidden]="!workMode" vertical="bottom" horizontal="end" slot="fixed" class="liftiball liftiball-cancel">
+    <!-- BUTTON -->
+    <ion-fab-button color="danger" title="{{'abbrechen' | translate}}" (click)="work_mode(0);">
+        <i class="fas fa-times"></i>
+    </ion-fab-button>
+    <ion-fab-button *ngIf="selectMode && (selectedNode.length>0)" color="success" title="{{'Neues Protokoll' | translate}}" (click)="create_protocol();">
+        <i class="fas fa-plus"></i>
+    </ion-fab-button>
+</ion-fab>
+
+<ion-fab [hidden]="workMode" vertical="bottom" horizontal="end" slot="fixed" class="liftiball" #fab1>
+    <ion-fab-button color="tertiary" (click)="fabClick(1)" >
+        <ion-icon name="menu"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list side="top">
+        <!-- BUTTON -->
+        <ion-fab-button color="success"
+                        title="{{'Neu' | translate}}"
+                        (click)="menu_new()"
+                        *ngIf="userdata.role_set.edit_products">
+            <ion-icon name="add"></ion-icon>
+        </ion-fab-button>
+        <!-- BUTTON -->
+        <ion-fab-button color="success"
+                        title="{{'Bearbeiten' | translate}}"
+                        (click)="work_mode(1)"
+                        *ngIf="userdata.role_set.edit_products">
+            <ion-icon name="create"></ion-icon>
+        </ion-fab-button>
+        <!-- BUTTON -->
+        <ion-fab-button color="danger"
+                        title="{{'Löschen' | translate}}"
+                        (click)="work_mode(2)"
+                        *ngIf="userdata.role_set.edit_products">
+            <ion-icon name="trash"></ion-icon>
+        </ion-fab-button>
+        <!-- BUTTON -->
+        <ion-fab-button color="success"
+                        title="{{'Neues Protokoll' | translate}}"
+                        (click)="work_mode(4)"
+                        *ngIf="userdata.role_set.check_products">
+            <ion-icon name="add"></ion-icon>
+            <ion-icon name="document"></ion-icon>
+        </ion-fab-button>
+        <!-- BUTTON -->
+        <ion-fab-button color="success"
+                        title="{{'Neue Produktvorlage' | translate}}"
+                        (click)="create_template()"
+                        *ngIf="userdata.role_set.edit_product_templates">
+            <ion-icon name="add"></ion-icon>
+            <ion-icon name="list"></ion-icon>
+        </ion-fab-button>
+        <!-- BUTTON -->
+        <ion-fab-button color="primary"
+                        title="{{'Bewegen' | translate}}"
+                        (click)="work_mode(3)"
+                        *ngIf="userdata.role_set.edit_products">
+            <ion-icon name="move"></ion-icon>
+        </ion-fab-button>        
+    </ion-fab-list>
+</ion-fab>
+
+<ion-fab [hidden]="workMode" vertical="bottom" horizontal="end" slot="fixed" class="liftiball liftiball-extra" #fab2>
+    <ion-fab-button color="medium" (click)="fabClick(2)" >
+        <ion-icon name="settings"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list side="top">
+        <!-- BUTTON -->
+        <ion-fab-button color="medium"
+                        title="{{'Spalten' | translate}}"
+                        (click)="show_columns()">
+            <ion-icon name="grid"></ion-icon>
+        </ion-fab-button>
+        <!-- BUTTON -->
+        <ion-fab-button color="medium"
+                        title="{{'Cancel filters' | translate}}"
+                        (click)="cancel_filters(2)">
+            <ion-icon name="eye-off"></ion-icon>
+        </ion-fab-button>
+        <!-- BUTTON -->
+        <ion-fab-button color="warning"
+                        title="{{'PDF Export' | translate}}"
+                        (click)="pdf_export()">
+            <ion-icon name="download"></ion-icon>
+        </ion-fab-button>
+        <!-- BUTTON -->
+        <ion-fab-button color="warning"
+                        title="{{'XLS Export' | translate}}"
+                        (click)="excel_export()">
+            <ion-icon name="stats"></ion-icon>
+        </ion-fab-button>
+        <!-- BUTTON -->
+        <ion-fab-button color="success"
+                        title="{{'Produktmigration' | translate}}"
+                        (click)="product_migration()"
+                        *ngIf="(selectedRow==1)&& userdata.role_set.edit_products">
+            <ion-icon name="fastforward"></ion-icon>
+        </ion-fab-button>
+        <!-- BUTTON -->
+        <ion-fab-button color="success"
+                        title="{{'Produkt kopieren' | translate}}"
+                        (click)="product_copy()"
+                        *ngIf="(selectedRow==1)&& userdata.role_set.edit_products">
+            <ion-icon name="albums"></ion-icon>
+        </ion-fab-button>
+        <!-- BUTTON -->
+        <ion-fab-button color="dark"
+                        title="{{'Protokollverlauf' | translate}}"
+                        (click)="menu_history()"
+                        *ngIf="selectedRow==1">
+            <ion-icon name="information"></ion-icon>
+        </ion-fab-button>
+        <!-- BUTTON -->
+        <ion-fab-button color="dark"
+                        title="{{'Zeige basisinformation' | translate}}"
+                        *ngIf="!showBasicInfo"
+                        (click)="lengthOfBasis()">
+            <ion-icon name="information"></ion-icon>
+        </ion-fab-button>
+        <!-- BUTTON -->
+        <ion-fab-button color="dark"
+                        title="{{'Basisinformation ausblenden' | translate}}"
+                        *ngIf="showBasicInfo"
+                        (click)="showBasicInfo = false;">
+            <ion-icon name="information"></ion-icon>
+        </ion-fab-button>
+        <!-- BUTTON -->
+        <ion-fab-button color="dark"
+                        title="{{'Zeige nur passive produkte' | translate}}"
+                        *ngIf="!showActivePassiveProduct"
+                        (click)="activePassiveProduct()">
+            <ion-icon name="search"></ion-icon>
+        </ion-fab-button>
+        <ion-fab-button color="dark"
+                        title="{{'Zeige nur aktives produkte' | translate}}"
+                        *ngIf="showActivePassiveProduct"
+                        (click)="activePassiveProduct()">
+            <ion-icon name="search"></ion-icon>
+        </ion-fab-button>
+    </ion-fab-list>
+</ion-fab>
+
+<bottom-nav></bottom-nav>

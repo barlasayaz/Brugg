@@ -6,16 +6,22 @@
 	ion-select {
 		margin-top: -3px;
 		position: relative;
+		font-size: 14px !important;
 		button {
 			position: absolute;
 		}
 	}
 }
 
+.btn-danger {
+	width: 250px !important;
+}
+
 .settings-delete {
 	ion-button.btn-danger {
 		position: relative;
 		margin-top: -3px;
+		height: 40px;
 	}
 }
 
@@ -32,8 +38,11 @@
 }
 
 ion-select {
-	border: none !important;
+	height: 40px !important;
+	padding: 10px 10px 5px 10px !important;
 }
+
+
 
 .right_align {
 	text-align: right;

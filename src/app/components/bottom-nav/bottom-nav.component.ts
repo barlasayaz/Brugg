@@ -7,34 +7,30 @@ import { SystemService } from '../../services/system';
 import { Router, RouterEvent } from '@angular/router';
 
 /**
- * Generated class for the MainNavComponent component.
+ * Generated class for the BottomNavComponent component.
  *
  * See https://angular.io/api/core/Component for more info on Angular
  * Components.
  */
 
 @Component({
-  selector: 'main-nav',
-  templateUrl: './main-nav.component.html',
-  styleUrls: ['./main-nav.component.scss']
+  selector: 'bottom-nav',
+  templateUrl: './bottom-nav.component.html',
+  styleUrls: ['./bottom-nav.component.scss']
 })
-export class MainNavComponent implements OnInit {
+export class BottomNavComponent implements OnInit {
   @Input() aktivPage: string;
   @Input() idCustomer: number;
   @Output() ping: EventEmitter<any> = new EventEmitter<any>();
-  @Input() searchText: string = '';
-  @Input() filterText: string = '';
-  @Input() filterOn: boolean = false;
+  @Input() searchText: string = "";
+  @Input() filterText: string = "";
+  @Input() filterOn:boolean = false;
 
   public progressBar: any = 0;
   public rowRecords: any = 0;
   public totalRecords: any = 0;
   public customerName = '';
-
-  public nextAppointmentEnable = true;
-  public customerEnable = true;
-  public appointmentPlanEnable = false;
-
+ 
   constructor(
     public userdata: UserdataService,
     public navCtrl: NavController,
@@ -45,7 +41,7 @@ export class MainNavComponent implements OnInit {
     private router: Router,
     public apiService: ApiService) {
 
-    console.log('Hello MainNavComponent Component');
+    console.log('Hello BottomNavComponent Component');
     this.events.subscribe('progressBar', (progressBar) => {
       if (progressBar >= 0) {
         this.progressBar = progressBar;
@@ -70,24 +66,23 @@ export class MainNavComponent implements OnInit {
     }
   }
 
-  search(event: any) {
-    console.log('search', event.target.value);
+  search(event:any){
+    console.log('search',event.target.value);
     this.searchText = event.target.value;
     const eventObj = {
-      lable: 'searchText',
-      text: this.searchText
-    };
+      lable:"searchText",
+      text:this.searchText
+    }
+    this.ping.emit(eventObj);
+  }
+  sendPing(ping){
+    const eventObj = { lable:ping };
     this.ping.emit(eventObj);
   }
 
-  sendPing(ping) {
-    const eventObj = { lable: ping };
-    this.ping.emit(eventObj);
-  }
-
-  filterOff() {
+  filterOff(){
     this.systemService.filterText = '';
-    // this.navCtrl.navigateForward(['/customer-table', '']);
+    this.navCtrl.navigateForward(['/customer-table', '']);
   }
 
   openMenu() {
@@ -96,6 +91,7 @@ export class MainNavComponent implements OnInit {
     console.log('menu opend');
   }
 
+  
   shrinkMenu() {
     console.log('menu shrinked');
     this.systemService.shrinkMenu = !this.systemService.shrinkMenu ;
@@ -114,7 +110,7 @@ export class MainNavComponent implements OnInit {
   }
 
   getClass(path) {
-    // console.log('this.router.isActive : ',path, this.router.isActive(path, false) );
+    //console.log('this.router.isActive : ',path, this.router.isActive(path, false) );
     if (this.router.isActive(path, false)) {
       return 'active';
     } else {
@@ -122,13 +118,5 @@ export class MainNavComponent implements OnInit {
     }
   }
 
-  updateDashboard() {
-    const eventObj = {
-      nextAppointmentEnable: this.nextAppointmentEnable,
-      customerEnable: this.customerEnable,
-      appointmentPlanEnable: this.appointmentPlanEnable
-    };
-    this.ping.emit(eventObj);
-  }
 
 }

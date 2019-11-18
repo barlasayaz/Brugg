@@ -1,49 +1,46 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, OnInit } from '@angular/core';
 import { NavController, ModalController , Platform } from '@ionic/angular';
-import { ApiService } from '../services/api';
-import { UserdataService } from '../services/userdata';
+import { ApiService } from './../../services/api';
+import { UserdataService } from './../../services/userdata';
 import { TranslateService } from '@ngx-translate/core';
-import { AppointmentEditComponent } from '../components/appointment-edit/appointment-edit.component';
 import { FullCalendarComponent } from '@fullcalendar/angular';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGrigPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction'; // for dateClick
+import { AppointmentEditComponent } from './../appointment-edit/appointment-edit.component';
 import frLocale from '@fullcalendar/core/locales/fr'
 import itLocale from '@fullcalendar/core/locales/it'
 import deLocale from '@fullcalendar/core/locales/de'
 import { DatePipe } from '@angular/common';
 import bootstrapPlugin from '@fullcalendar/bootstrap';
 import * as moment from 'moment';
-
-/**
- * Generated class for the TerminplanPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { IonSelect } from '@ionic/angular';
 
 @Component({
-    selector: 'app-appointment-plan',
-    templateUrl: './appointment-plan.page.html',
-    styleUrls: ['./appointment-plan.page.scss'],
+  selector: 'app-appointment-dashboard',
+  templateUrl: './appointment-dashboard.component.html',
+  styleUrls: ['./appointment-dashboard.component.scss'],
 })
-export class AppointmentPlanPage {
+export class AppointmentDashboardComponent implements OnInit {
     public events: any[] = [];
     public allEvents: any[] = [];
     public people: any[] = [];
     public calendarOptions: any;
-    public mouseoverButton1: boolean;
-    public mouseoverButton2: boolean;
-    public mouseoverButton3: boolean;
-    public mouseoverButton4: boolean;
-    public mouseoverButton5: boolean;
     public mobilePlatform = false;
     public viewMode = 0;
     public peopleFilter = 'none';
     public typeFilter = 99;
-    calendarPlugins = [dayGridPlugin, timeGrigPlugin, interactionPlugin, bootstrapPlugin]; 
+    calendarPlugins = [dayGridPlugin, timeGrigPlugin, interactionPlugin, bootstrapPlugin];
+    customButtons = {
+        myCustomButton: {
+            text: this.translate.instant('Filter'),
+            click: () => {
+            this.select.open();
+            }
+        }
+    };
     headers =  {
-        left: 'prev,next today',
+        left: 'prev,next today myCustomButton',
         center: 'title',
         right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
     };
@@ -55,6 +52,8 @@ export class AppointmentPlanPage {
     locales = [itLocale, frLocale, deLocale];
     lang = localStorage.getItem('lang');
     @ViewChild('calendar') calendarComponent: FullCalendarComponent;
+    @ViewChild('select') select: IonSelect;
+    showList = true;
 
     constructor(public navCtrl: NavController,
         public apiService: ApiService,
@@ -62,71 +61,24 @@ export class AppointmentPlanPage {
         public modalCtrl: ModalController,
         private translate: TranslateService,
         public platform: Platform
-        // private datePipe: DatePipe
     ) {
         console.log(this.lang);
         this.peopleFilter = this.userdata.email.toLocaleLowerCase();
-      /*  const today = new Date();
-        const newdate = new Date();
-        newdate.setDate(today.getDate() + 30);
-        const newdate2 = new Date();
-        newdate2.setDate(today.getDate() - 30);
-        console.log(newdate + ' - ' + newdate2);
-        
-        this.eventsFunc(newdate2, newdate); */
-
-
 
         platform.ready().then(() => {
             if ( this.platform.is('ios') ||
               this.platform.is('android') ) {
               this.mobilePlatform = true;
-              this.mouseoverButton1 = true;
-              this.mouseoverButton2 = true;
-              this.mouseoverButton3 = true;
-              this.mouseoverButton4 = true;
-              this.mouseoverButton5 = true;
               console.log('platform mobile:', this.platform.platforms());
             } else {
               console.log('platform not mobile:', this.platform.platforms());
               this.mobilePlatform = false;
-              this.mouseoverButton1 = false;
-              this.mouseoverButton2 = false;
-              this.mouseoverButton3 = false;
-              this.mouseoverButton4 = false;
-              this.mouseoverButton5 = false;
             }
           });
     }
 
-    mouseover(buttonNumber) {
-        if (buttonNumber == 1) {
-            this.mouseoverButton1 = true;
-        } else if (buttonNumber == 2) {
-            this.mouseoverButton2 = true;
-        } else if (buttonNumber == 3) {
-            this.mouseoverButton3 = true;
-        } else if (buttonNumber == 4) {
-            this.mouseoverButton4 = true;
-        } else if (buttonNumber == 5) {
-            this.mouseoverButton5 = true;
-        }
-    }
-
-    mouseout(buttonNumber) {
-        if (this.mobilePlatform == false) {
-            if (buttonNumber == 1) {
-                this.mouseoverButton1 = false;
-            } else if (buttonNumber == 2) {
-                this.mouseoverButton2 = false;
-            } else if (buttonNumber == 3) {
-                this.mouseoverButton3 = false;
-            } else if (buttonNumber == 4) {
-                this.mouseoverButton4 = false;
-            } else if (buttonNumber == 5) {
-                this.mouseoverButton5 = false;
-            }
-        }
+    ngOnInit() {
+        this.setView(1);
     }
 
     changeFilter() {
@@ -168,9 +120,9 @@ export class AppointmentPlanPage {
             this.people = [];
             for (let k = 0; k < liste.length; k++) {
                 const p = {'first_name': liste[k].first_name,
-                           'last_name': liste[k].last_name,
-                           'short_code': liste[k].short_code,
-                           'email': liste[k].email };
+                            'last_name': liste[k].last_name,
+                            'short_code': liste[k].short_code,
+                            'email': liste[k].email };
                 let n = true;
                 for (let z = 0; z < this.people.length; z++) { 
                     if (this.people[z].email == liste[k].email ) { n = false; }
@@ -255,7 +207,7 @@ export class AppointmentPlanPage {
 
                             let z1 = moment(obj.appointment_date + ' ' + obj.start_time, 'YYYY-MM-DD HH:mm:ss').add(1,'years').toDate();
                             let z2 = moment(obj.appointment_date + ' ' + obj.end_time, 'YYYY-MM-DD HH:mm:ss').add(1,'years').toDate();
-            
+
                             if (z1.getHours() < 7) {
                                 z1.setHours(7);
                                 z1.setMinutes(0);
@@ -305,7 +257,7 @@ export class AppointmentPlanPage {
         console.log('event_end: ', event_end);
         this.eventsFunc(event_start, event_end);
     }
-     handleEventClick(model: any) {
+    handleEventClick(model: any) {
         console.log(model.event);
         let id = model.event.id;
         if(id == "0" && model.event.extendedProps.old_id)
@@ -363,30 +315,6 @@ export class AppointmentPlanPage {
         });
     }
 
-    async newAppointment() {
-        console.log('newAppointment');
-        const modal: HTMLIonModalElement =
-        await this.modalCtrl.create({
-          component: AppointmentEditComponent,
-          cssClass: 'appointmentedit-modal-css',
-          componentProps: {
-            redirect: 2
-          }
-        });
-        modal.onDidDismiss().then((data) => {
-            if (data['data']) {
-                const today = new Date();
-                const newdate = new Date();
-                newdate.setDate(today.getDate() + 30);
-                const newdate2 = new Date();
-                newdate2.setDate(today.getDate() - 30);
-                console.log(newdate + ' - ' + newdate2);
-                this.eventsFunc(newdate2, newdate);
-            }
-        });
-      modal.present();
-    }
-
     setView(nr: number) {
         console.log('setView():', nr);
         this.viewMode = nr;
@@ -404,4 +332,3 @@ export class AppointmentPlanPage {
         this.changeFilter();
     }
 }
-

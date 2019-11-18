@@ -1,0 +1,56 @@
+.bottom-nav-inner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 50px;
+
+  @media screen and (max-width: 480px) {
+    justify-content: flex-start;
+  }
+}
+
+.hidden-md {
+  @media screen and (min-width: 481px) {
+    display: none !important;
+  }
+}
+.hidden-sd {
+  @media screen and (max-width: 480px) {
+    display: none !important;
+  }
+}
+
+ul.bottomMenu-nav {
+  display: flex;
+  padding: 0;
+  margin: 0;
+  li {
+    list-style: none;
+    height: 50px;
+    width:60px;
+    font-size: 24px;
+    background:#009de0;
+    color:#fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:hover,
+    &.active {
+      cursor: pointer;
+      background: #005E86;
+      color: #FFF;
+
+      ion-icon {
+        background: #005E86;
+      }
+    }
+  }
+
+  .bottomMenu-subnav {
+    display: flex;
+    margin: 0px 2px;
+    padding: 0;
+  }
+}

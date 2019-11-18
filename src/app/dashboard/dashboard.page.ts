@@ -49,6 +49,10 @@ export class DashboardPage implements OnInit {
     modelAppChanged: Subject<any> = new Subject<any>();
     modelChanged: Subject<any> = new Subject<any>();
 
+    public nextAppointmentEnable = true;
+    public customerEnable = true;
+    public appointmentPlanEnable = false;
+
     constructor(public navCtrl: NavController,
         public apiService: ApiService,
         public excelService: ExcelService,
@@ -530,6 +534,13 @@ export class DashboardPage implements OnInit {
 
     getStatistik() {
         this.navCtrl.navigateRoot('/statistics');
+    }
+
+    update(data: any): void {
+        console.log('update():', data);
+        this.nextAppointmentEnable = data.nextAppointmentEnable;
+        this.customerEnable = data.customerEnable;
+        this.appointmentPlanEnable = data.appointmentPlanEnable;
     }
 
 }

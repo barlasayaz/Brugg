@@ -13,7 +13,7 @@ const routes: Routes = [
   { path: 'customer-details/:id', loadChildren: './customer-details/customer-details.module#CustomerDetailsPageModule' },
   { path: 'contact-person', loadChildren: './customer-details/contact-person/contact-person.module#ContactPersonPageModule' },
   { path: 'contact-person-address', loadChildren: './customer-details/contact-person-address/contact-person-address.module#ContactPersonAddressPageModule' },
-  { path: 'customer-table', loadChildren: './customer-table/customer-table.module#CustomerTablePageModule' },
+  { path: 'customer-table/:filterText', loadChildren: './customer-table/customer-table.module#CustomerTablePageModule' },
   { path: 'dashboard', loadChildren: './dashboard/dashboard.module#DashboardPageModule' },
   { path: 'imprint', loadChildren: './login/imprint/imprint.module#ImprintPageModule' },
   { path: 'old-browser', loadChildren: './login/old-browser/old-browser.module#OldBrowserPageModule' },

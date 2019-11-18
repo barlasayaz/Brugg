@@ -1,5 +1,5 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
-import { NavController, ModalController, Events, LoadingController } from '@ionic/angular';
+import { NavController, ModalController, Events, LoadingController  } from '@ionic/angular';
 import { ApiService } from '../services/api';
 import { TranslateService } from '@ngx-translate/core';
 import { UserdataService } from '../services/userdata';
@@ -13,6 +13,7 @@ import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { SystemService } from '../services/system';
 import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
     selector: 'app-customer-table',
@@ -32,7 +33,8 @@ export class CustomerTablePage implements OnInit {
         public system: SystemService,
         public events: Events,
         public loadingCtrl: LoadingController,
-        private screenOrientation: ScreenOrientation) {
+        private screenOrientation: ScreenOrientation,
+        private route: ActivatedRoute) {
             this.modelChanged.pipe(
                 debounceTime(700))
                 .subscribe(model => {
@@ -58,6 +60,7 @@ export class CustomerTablePage implements OnInit {
     public idCustomer = 0;
     public heightCalc: any;
     public move_id = 0;
+    public move_to = 0;
     public move_obj: any = {};
     public columnFilterValues = { company: '',
                                   id: '',
@@ -79,6 +82,11 @@ export class CustomerTablePage implements OnInit {
     public rowHeight = 26;
     public rowCount = 100;
     public sortedColumn = { sort_field : null, sort_order : 0 };
+    public filterText: string = '';
+    public filterOn: boolean = false;
+    public workMode: boolean = false;
+    public editMode: boolean = false;
+    public moveMode: boolean = false;
 
     public menuItems: MenuItem[] = [{
         label: this.translate.instant('Ansicht'),
@@ -86,7 +94,7 @@ export class CustomerTablePage implements OnInit {
         disabled: true,
         command: (event) => {
             console.log('command menuitem:', event);
-            this.menu_view();
+            // this.menu_view();
         }
     },
     {
@@ -95,7 +103,6 @@ export class CustomerTablePage implements OnInit {
         disabled: true,
         visible: this.userdata.role_set.edit_customer,
         command: (event) => {
-            if (this.userdata.role_set.edit_customer != true) { return; }
             console.log('command menuitem:', event);
             this.menu_edit();
         }
@@ -106,9 +113,8 @@ export class CustomerTablePage implements OnInit {
         visible: this.userdata.role_set.edit_customer,
         disabled: true,
         command: (event) => {
-            if (this.userdata.role_set.edit_customer != true) { return; }
             console.log('command menuitem:', event);
-            this.menu_move(1);
+            this.menu_move();
         }
     },
     {
@@ -119,7 +125,7 @@ export class CustomerTablePage implements OnInit {
         command: (event) => {
             if (this.userdata.role_set.edit_customer != true) { return; }
             console.log('command menuitem:', event);
-            this.menu_move(2);
+            this.menu_move();
         }
     },
     {
@@ -186,11 +192,44 @@ export class CustomerTablePage implements OnInit {
 
     @ViewChild('tt') dataTable: TreeTable;
     @ViewChild('divHeightCalc') divHeightCalc: any;
+    @ViewChild('fab1') fab1: any;
+    @ViewChild('fab2') fab2: any;
+
+    fabClick(nr: number) {
+        console.log('fabClick():', nr);
+        if (nr === 1) { this.fab2.close(); }
+        if (nr === 2) { this.fab1.close(); }
+    }
+
+    update(data: any): void {
+        console.log('update():', data);
+        if (data.lable === 'searchText') {
+            this.columnFilterValues['search_all'] = data.text;
+            if (this.isFilterOn()) {
+                this.menuItems[7].items[0]['disabled'] = false;
+            } else {
+                this.menuItems[7].items[0]['disabled'] = true;
+            }
+            this.generate_customerList(0, this.rowCount, this.sortedColumn.sort_field, this.sortedColumn.sort_order);
+            localStorage.setItem('filter_values_customer', JSON.stringify(this.columnFilterValues));
+        }
+        if (data.lable === 'newCustomer') {
+            if (this.userdata.role_set.edit_customer != true) { return; }
+            this.menu_new();
+        }
+        if (data.lable === 'toggleFilter') {
+            this.menu_filter();
+        }
+        if (data.lable === 'showColumns') {
+            this.show_columns();
+        }
+    }
 
     ngOnInit(): void {
         this.cols = [
+            { field: 'work_column', header: '', width: '60px' },
+            { field: 'id', header: 'DB-ID', width: '100px' },
             { field: 'company', header: this.translate.instant('Firma'), width: '200px' },
-            { field: 'id', header: 'DB-ID', width: '60px' },
             { field: 'customer_number', header: 'ID', width: '85px'},
             { field: 'rating', header: this.translate.instant('Typ'), width: '100px' },
             { field: 'zip_code', header: this.translate.instant('PLZ'), width: '85px'},
@@ -202,7 +241,9 @@ export class CustomerTablePage implements OnInit {
             { field: 'sector', header: this.translate.instant('Branche'), width: '200px' }
         ];
 
-        this.filterCols = ['company',
+        this.filterCols = [
+                           'work_column',
+                           'company',
                            'id',
                            'customer_number',
                            'rating',
@@ -214,11 +255,16 @@ export class CustomerTablePage implements OnInit {
                            'inspector',
                            'sector',
                            'search_all'];
+
         this.selectedColumns = this.cols;
         console.log('CustomerTablePage idCustomer:', this.idCustomer, this.system.platform);
         if (localStorage.getItem('sort_column_customer') != undefined) {
             this.sortedColumn = JSON.parse(localStorage.getItem('sort_column_customer'));
         }
+        this.filterText = this.route.snapshot.paramMap.get('filterText');
+        if (this.filterText.length > 0) { this.filterOn = true; }
+        console.log('filterText :', this.filterText);
+
         this.page_load();
     }
 
@@ -228,8 +274,7 @@ export class CustomerTablePage implements OnInit {
 
     async loadNodes(event: LazyLoadEvent) {
         if (this.totalRecords > 0) {
-            if(event.sortField && event.sortField.length>0)
-            {
+            if (event.sortField && event.sortField.length > 0) {
                 this.sortedColumn.sort_field = event.sortField;
                 this.sortedColumn.sort_order = event.sortOrder;
                 localStorage.setItem('sort_column_customer', JSON.stringify(this.sortedColumn));
@@ -295,7 +340,7 @@ export class CustomerTablePage implements OnInit {
         this.rowRecords = 0;
         this.totalRecords = 0;
         this.events.publish('prozCustomer', 0);
-        this.apiService.pvs4_get_customer_list(0).then((result: any) => {
+        this.apiService.pvs4_get_customer_list(0, this.filterText).then((result: any) => {
             console.log('page_load result :', result);
 
             this.customerListAll = result.list;
@@ -408,6 +453,7 @@ export class CustomerTablePage implements OnInit {
     }
 
     generate_customerList(start_index: number, end_index: number, sort_field, sort_order) {
+        console.log('generate_customerList()');
         if (!this.isFilterOn()) {
             this.customerListView = JSON.parse(JSON.stringify(this.customerListAll));
         } else {
@@ -481,32 +527,43 @@ export class CustomerTablePage implements OnInit {
         }
     }
 
-    nodeSelect() {
-        console.log('nodeSelect:', this.menuItems);
-        this.menuItems[0].disabled = false;
-        this.menuItems[1].disabled = false;
-        this.menuItems[2].disabled = false;
-        let id_sn = 0;
-        if (this.selectedNode) {
-            if (this.selectedNode.data.id) {
-                id_sn = this.selectedNode.data.id;
-            }
-        }
-        if (id_sn == this.move_id) {
-            this.menuItems[2].visible = this.userdata.role_set.edit_customer;
-            this.menuItems[3].visible = false;
-            this.move_id = 0;
-        } else if (this.move_id > 0) {
-            console.log('move item :', this.move_id, this.move_obj);
-            this.move_obj.parent = id_sn;
-            this.apiService.pvs4_set_customer(this.move_obj).then(async (result: any) => {
-                console.log('result: ', result);
-                this.page_load();
+    async editCustomer(rowNode) {
+        console.log('editCustomer:', rowNode);
+        if (rowNode.id) {
+            const id = parseInt(rowNode.id);
+            console.log('menu_edit id', id);
+            const modal =
+            await this.modalCtrl.create({
+                component: CustomerEditComponent,
+                cssClass: 'customeredit-modal-css',
+                componentProps: {
+                id: id
+                }
             });
-            this.menuItems[2].visible = this.userdata.role_set.edit_customer;
-            this.menuItems[3].visible = false;
-            this.move_id = 0;
+
+            modal.onDidDismiss().then(async data => {
+                if (data['data']) {
+                this.page_load();
+                }
+            });
+            modal.present();
         }
+    }
+
+    nodeSelect() {
+        /*
+        console.log('nodeSelect:', this.menuItems, this.workMode);
+        let id_sn = 0;
+
+        if(this.workMode){
+            this.selectedNode = null;
+            return;
+        }else{
+            //id_sn = this.selectedNode.data.id;
+            this.menu_view();
+        }
+        */
+
     }
 
     nodeUnselect() {
@@ -545,54 +602,69 @@ export class CustomerTablePage implements OnInit {
         modal.present();
     }
 
-    async menu_edit() {
-        console.log('menu_edit', this.selectedNode);
-        if (this.selectedNode) {
-            if (this.selectedNode.data.id) {
-                const id = parseInt(this.selectedNode.data.id);
-                console.log('menu_edit id', id);
-                const modal =
-                await this.modalCtrl.create({
-                  component: CustomerEditComponent,
-                  cssClass: 'customeredit-modal-css',
-                  componentProps: {
-                    id: id
-                  }
-                });
+    workBreak() {
+        this.workMode = false;
+        this.editMode = false;
+        this.moveMode = false;
+        this.move_id = 0;
+        this.move_to = 0;
+        this.move_obj = {};
+    }
 
-                modal.onDidDismiss().then(async data => {
-                  if (data['data']) {
-                    this.page_load();
-                  }
-                });
-                modal.present();
+    menu_edit() {
+        console.log('menu_edit')
+        if (this.userdata.role_set.edit_customer != true) { return; };
+        this.workMode = true;
+        this.editMode = true;
+    }
+
+    async moveCustomer(step, rowNode) {
+        console.log('moveCustomer', step, rowNode);
+        if (step == 1) {
+            this.move_id = parseInt(rowNode.id);
+            this.move_obj = JSON.parse(JSON.stringify(rowNode));
+        }
+        if (step == 2) {
+            this.move_to = parseInt(rowNode.id);
+            if (this.move_to === this.move_id ) {
+                this.move_to = 0; // Stammordner
             }
+
+            const alert = await this.alertCtrl.create({
+                header: this.translate.instant('Achtung'),
+                message: this.translate.instant('Möchten Sie diesen Kunden wirklich verschieben?'),
+                buttons: [{
+                    text: this.translate.instant('nein'),
+                    handler: data => {
+                        this.workBreak();
+                    }
+                },
+                {
+                    text: this.translate.instant('ja'),
+                    handler: data => {
+                        this.move_obj.parent = this.move_to;
+                        this.apiService.pvs4_set_customer(this.move_obj).then(async (result: any) => {
+                            console.log('result: ', result);
+                            this.workBreak();
+                            this.page_load();
+                        });
+                    }
+                }
+                ]
+            });
+            await alert.present();
+
+            // this.move_obj = JSON.parse(JSON.stringify(rowNode));
         }
     }
 
-    menu_move(n) {
-        console.log('menu_move_up', this.selectedNode);
-        if (n == 1) {
-            if (this.selectedNode) {
-                if (this.selectedNode.data.id) {
-                    this.move_id = parseInt(this.selectedNode.data.id);
-                    this.move_obj = JSON.parse(JSON.stringify(this.selectedNode.data));
-                }
-            }
-            this.menuItems[2].visible = false;
-            this.menuItems[3].visible = true;
-        } else if (n == 2) {
-            // in Stammordner
-            console.log('move item :', this.move_id, this.move_obj);
-            this.move_obj.parent = 0;
-            this.apiService.pvs4_set_customer(this.move_obj).then(async (result: any) => {
-                console.log('result: ', result);
-                this.page_load();
-            });
-            this.menuItems[2].visible = true;
-            this.menuItems[3].visible = false;
-            this.move_id = 0;
-        }
+    menu_move() {
+        console.log('menu_move_up');
+        this.workMode = true;
+        this.moveMode = true;
+        this.move_id = 0;
+        this.move_to = 0;
+        this.move_obj = {};
     }
 
     customer_list(num) {
@@ -620,15 +692,11 @@ export class CustomerTablePage implements OnInit {
         this.customerList = data;
     }
 
-    menu_view() {
-        console.log('menu_view', this.selectedNode);
-        if (this.selectedNode) {
-            if (this.selectedNode.data.id) {
-                const id = parseInt(this.selectedNode.data.id);
-                console.log('menu_view id', id);
-                this.navCtrl.navigateForward('/customer-details/' + id);
-            }
-        }
+    viewCustomer(data) {
+        console.log('viewCustomer', data);
+        const id = parseInt(data.id);
+        console.log('menu_view id', id);
+        this.navCtrl.navigateForward('/customer-details/' + id);
     }
 
     async excel_export() {
@@ -656,6 +724,7 @@ export class CustomerTablePage implements OnInit {
             obj.street  = obj.street.replace(/(\\r\\n|\\n|\\r)/gm, ' ');
             const json: any = {};
             for (let j = 0; j < this.selectedColumns.length; j++) {
+                if (this.selectedColumns[j].field === 'work_column') { continue; }
                 if (obj[this.selectedColumns[j].field]) {
                     json[this.selectedColumns[j].header] = obj[this.selectedColumns[j].field];
                 } else {
@@ -679,6 +748,7 @@ export class CustomerTablePage implements OnInit {
         const widthsArray: string[] = [];
         const headerRowVisible: any = 1;
         for (let k = 0; k < this.selectedColumns.length; k++) {
+            if (this.selectedColumns[k].field === 'work_column') { continue; }
             columns.push({ text: this.selectedColumns[k].header, style: 'header' });
             widthsArray.push('auto');
         }
@@ -696,6 +766,7 @@ export class CustomerTablePage implements OnInit {
             obj = this.allnodes[i];
             rowArray = [];
             for (let j = 0; j < this.selectedColumns.length; j++) {
+                if (this.selectedColumns[j].field === 'work_column') { continue; }
                 if (obj[this.selectedColumns[j].field]) {
                    rowArray.push(obj[this.selectedColumns[j].field]);
                 } else {
@@ -733,8 +804,11 @@ export class CustomerTablePage implements OnInit {
     }
 
     async  show_columns() {
-        const inputs: any[] = [];
+      const inputs: any[] = [];
       for (let i = 0; i < this.cols.length; i++) {
+        if (this.cols[i].field === 'work_column') { continue; }
+        if (this.cols[i].field === 'id') { continue; }
+        if (this.cols[i].field === 'company') { continue; }
           inputs.push({
               type: 'checkbox',
               label: this.cols[i].header,
@@ -753,6 +827,9 @@ export class CustomerTablePage implements OnInit {
                     handler: data => {
                         inputs = [];
                         for (let i = 0; i < this.cols.length; i++) {
+                            if (this.cols[i].field === 'work_column') { continue; }
+                            if (this.cols[i].field === 'id') { continue; }
+                            if (this.cols[i].field === 'company') { continue; }
                             inputs.push({
                                 type: 'checkbox',
                                 label: this.cols[i].header,
@@ -768,6 +845,9 @@ export class CustomerTablePage implements OnInit {
                     handler: data => {
                         inputs = [];
                         for (let i = 0; i < this.cols.length; i++) {
+                            if (this.cols[i].field === 'work_column') { continue; }
+                            if (this.cols[i].field === 'id') { continue; }
+                            if (this.cols[i].field === 'company') { continue; }
                             inputs.push({
                                 type: 'checkbox',
                                 label: this.cols[i].header,
@@ -789,6 +869,9 @@ export class CustomerTablePage implements OnInit {
                 handler: data => {
                     console.log('Checkbox data:', data );
                     this.selectedColumns = this.cols.filter(function (element, index, array) { return data.includes(element.field); });
+                    this.selectedColumns.unshift(this.cols[2]);
+                    this.selectedColumns.unshift(this.cols[1]);
+                    this.selectedColumns.unshift(this.cols[0]);
                     localStorage.setItem('show_columns', JSON.stringify(this.selectedColumns));
                 }
             }
@@ -820,15 +903,31 @@ export class CustomerTablePage implements OnInit {
 
     onColResize(event) {
         let index  = this.apiService.columnIndex(event.element);
-        this.selectedColumns[index].width = event.element.offsetWidth+"px";
-        let width2 = this.selectedColumns[index+1].width;
-        this.selectedColumns[index+1].width = parseInt(width2.replace('px',''))-event.delta + "px";
+        this.selectedColumns[index].width = event.element.offsetWidth + 'px';
+        let width2 = this.selectedColumns[index + 1].width;
+        this.selectedColumns[index + 1].width = parseInt(width2.replace('px', '')) - event.delta + 'px';
         localStorage.setItem('show_columns', JSON.stringify(this.selectedColumns));
     }
 
     onColReorder(event) {
         this.selectedColumns = event.columns;
+        this.fixReorder();
         localStorage.setItem('show_columns', JSON.stringify(this.selectedColumns));
+    }
+    fixReorder() {
+        console.log('fixReorder()', this.selectedColumns );
+        let cols = [
+            { field: 'work_column', header: '', width: '60px' },
+            { field: 'id', header: 'DB-ID', width: '100px' },
+            { field: 'company', header: this.translate.instant('Firma'), width: '200px' }
+        ];
+        for (let i = 0; i < this.selectedColumns.length; i++) {
+            if (this.selectedColumns[i].field === 'work_column') { continue; }
+            if (this.selectedColumns[i].field === 'id') { continue; }
+            if (this.selectedColumns[i].field === 'company') { continue; }
+            cols.push(this.selectedColumns[i]);
+        }
+        this.selectedColumns = cols;
     }
 
     onNodeExpand(event) {

@@ -4,13 +4,13 @@ import { FormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
-import { ChartModule } from 'primeng/chart';
-import { ChartHorizontalComponent } from './chart-horizontal.component';
+import { FullCalendarModule } from '@fullcalendar/angular';
+import { AppointmentDashboardComponent } from './appointment-dashboard.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: ChartHorizontalComponent
+    component: AppointmentDashboardComponent
   }
 ];
 
@@ -19,9 +19,10 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
-    ChartModule,
+    FullCalendarModule,
     RouterModule.forChild(routes)
   ],
   declarations: []
 })
-export class ChartHorizontalComponentModule {}
+export class AppointmentDashboardComponentModule {}
+

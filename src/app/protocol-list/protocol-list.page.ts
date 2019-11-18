@@ -31,7 +31,12 @@ export class ProtocolListPage implements OnInit {
     public xlsHeader: any[];
     public splitFilter = false;
     public idCustomer = 0;
-    public columnFilterValues = { protocol_number: '', title: '', product: '', id: '', protocol_date: '', search_all: '' };
+    public columnFilterValues = { protocol_number: '',
+                                  title: '',
+                                  product: '',
+                                  id: '',
+                                  protocol_date: '',
+                                  search_all: '' };
     public filterCols: string[];
     public expendedNodes: string[] = [];
     public rowRecords = 0;
@@ -45,6 +50,7 @@ export class ProtocolListPage implements OnInit {
     public rowHeight = 26;
     public rowCount = 100;
     public sortedColumn = { sort_field : null, sort_order : 0 };
+    public editMode = false;
 
     public menuItems: MenuItem[] = [
         {
@@ -53,7 +59,7 @@ export class ProtocolListPage implements OnInit {
             disabled: true,
             command: (event) => {
                 console.log('command menuitem:', event.item);
-                this.menu_view();
+               // this.viewProtocol();
             }
         },
         {
@@ -63,7 +69,7 @@ export class ProtocolListPage implements OnInit {
             visible:  this.userdata.role_set.check_products,
             command: (event) => {
                 console.log('command menuitem:', event.item);
-                this.protocolDeactivate();
+              //  this.protocolDeactivate();
             }
         },
         {
@@ -160,6 +166,7 @@ export class ProtocolListPage implements OnInit {
 
     ngOnInit() {
         this.cols = [
+            { field: 'work_column', header: '', width: '60px' },
             { field: 'protocol_number', header: this.translate.instant('Protokoll'), width: '100px' },
             { field: 'title', header: this.translate.instant('Bezeichnung'), width: '200px' },
             { field: 'product', header: this.translate.instant('Produkt'), width: '200px' },
@@ -169,12 +176,40 @@ export class ProtocolListPage implements OnInit {
             { field: 'protocol_date_next', header: this.translate.instant('Nächste prüfung'), width: '95px' }
         ];
 
+        this.filterCols = [
+            'work_column',
+            'protocol_number',
+            'title',
+            'product',
+            'id',
+            'protocol_date',
+            'result',
+            'protocol_date_next',
+            'search_all'
+        ];
+        this.selectedColumns = JSON.parse(JSON.stringify(this.cols));
+
         console.log('ProductListPage idCustomer:', this.idCustomer, this.system.platform);
         this.idCustomer = parseInt(this.route.snapshot.paramMap.get('id'));
         if (localStorage.getItem('sort_column_protocol') != undefined) {
             this.sortedColumn = JSON.parse(localStorage.getItem('sort_column_protocol'));
         }
         this.page_load();
+    }
+
+    update(data: any): void {
+        console.log('update():', data );
+        if (data.lable === 'searchText') {
+            this.columnFilterValues['search_all'] = data.text;
+            this.generate_protocolList(0, this.rowCount, this.sortedColumn.sort_field, this.sortedColumn.sort_order);
+            localStorage.setItem('filter_values_product', JSON.stringify(this.columnFilterValues));
+        }
+        if (data.lable === 'toggleFilter') {
+            this.menu_filter();
+        }
+        if (data.lable === 'showColumns') {
+            this.show_columns();
+        }
     }
 
     onResize(event) {
@@ -184,8 +219,7 @@ export class ProtocolListPage implements OnInit {
 
     async loadNodes(event: LazyLoadEvent) {
         if (this.totalRecords > 0) {
-            if(event.sortField && event.sortField.length>0)
-            {
+            if (event.sortField && event.sortField.length > 0) {
                 this.sortedColumn.sort_field = event.sortField;
                 this.sortedColumn.sort_order = event.sortOrder;
                 localStorage.setItem('sort_column_protocol', JSON.stringify(this.sortedColumn));
@@ -260,10 +294,10 @@ export class ProtocolListPage implements OnInit {
             this.activCustomer = result.obj;
             this.customer_number = this.activCustomer.customer_number;
         });
-        //console.log('ProtocolListPage idCustomer:', this.idCustomer);
+        // console.log('ProtocolListPage idCustomer:', this.idCustomer);
 
         this.apiService.pvs4_get_protocol_list(this.idCustomer).then((result: any) => {
-            //console.log('result protocol :', result);
+            // console.log('result protocol :', result);
             this.protocolListAll = JSON.parse(JSON.stringify(result.list));
             // console.log('protocolListAll :', this.protocolListAll);
 
@@ -457,18 +491,16 @@ export class ProtocolListPage implements OnInit {
             this.protocolListView = this.protocolListView.sort((a, b) => {
                 let value1 = a.data[sort_field];
                 let value2 = b.data[sort_field];
-                if (typeof value1 === "boolean"){
-                    if(value1 === true) value1="1";
-                    else value1="0";
+                if (typeof value1 === 'boolean') {
+                    if (value1 === true) { value1 = '1'; } else { value1 = '0'; }
                 }
-                if (typeof value2 === "boolean"){
-                    if(value2 === true) value2="1";
-                    else value2="0";                
-                } 
-                if (typeof value1 === "undefined"){
+                if (typeof value2 === 'boolean') {
+                    if (value2 === true) { value2 = '1'; } else { value2 = '0'; }
+                }
+                if (typeof value1 === 'undefined') {
                     return -1 * sort_order;
                 }
-                if (typeof value2 === "undefined"){                 
+                if (typeof value2 === 'undefined') {
                     return 1 * sort_order;
                 }
                 if (this.apiService.isEmpty(value1) && !this.apiService.isEmpty(value2)) {
@@ -485,7 +517,7 @@ export class ProtocolListPage implements OnInit {
                     return 1 * sort_order;
                 } else if ( value1.toLowerCase( ) < value2.toLowerCase( )) {
                     return -1 * sort_order;
-                } else {                    
+                } else {
                     return 0;
                 }
             });
@@ -493,7 +525,7 @@ export class ProtocolListPage implements OnInit {
         this.rowRecords = this.protocolListView.length;
         this.totalRecords = this.protocolListAll.length;
 
-        //console.log('start_index - end_index :', start_index, end_index, this.protocolListView );
+        // console.log('start_index - end_index :', start_index, end_index, this.protocolListView );
 
         if ((start_index + end_index + this.rowCount) >= this.rowRecords) {
             this.protocolListView = this.protocolListView.slice(start_index, this.rowRecords);
@@ -531,7 +563,7 @@ export class ProtocolListPage implements OnInit {
     }
 
     nodeSelect(event, selectedNode) {
-        console.log('selectedNode :', selectedNode);
+/*         console.log('selectedNode :', selectedNode);
         this.selectedNode.data = event.node.data;
         this.selectedRow = selectedNode.length;
         if (selectedNode.length == 0) {
@@ -544,7 +576,7 @@ export class ProtocolListPage implements OnInit {
         } else if (selectedNode.length > 1) {
             this.menuItems[0].disabled = true;
             this.menuItems[1].disabled = false;
-        }
+        } */
     }
 
     menu_new() {
@@ -557,25 +589,11 @@ export class ProtocolListPage implements OnInit {
         this.navCtrl.navigateForward(['/protocol-edit']);
     }
 
-    menu_edit() {
-        // console.log('menu_edit', this.selectedNode);
-        if (this.selectedNode) {
-            if (this.selectedNode.data.id) {
-                let data = {
-                    id: this.selectedNode.data.id,
-                    idCustomer: this.idCustomer
-                };
-                this.dataService.setData(data);
-                this.navCtrl.navigateForward(['/protocol-edit']);
-            }
-        }
-    }
-
-    menu_view() {
-        console.log('menu_view', this.selectedNode);
-        if (this.selectedNode) {
-            if (this.selectedNode.data.id) {
-                const id = parseInt(this.selectedNode.data.id);
+    viewProtocol(protocol) {
+        console.log('viewProtocol', protocol);
+        if (protocol) {
+            if (protocol.id) {
+                const id = parseInt(protocol.id);
                 console.log('menu_view id', id);
 
                 let data = {
@@ -618,6 +636,7 @@ export class ProtocolListPage implements OnInit {
             const json: any = {};
             let objStr: any;
             for (let j = 0; j < this.selectedColumns.length; j++) {
+                if (this.selectedColumns[j].field === 'work_column') { continue; }
                 if (obj[this.selectedColumns[j].field]) {
                     json[this.selectedColumns[j].header] = obj[this.selectedColumns[j].field];
                 } else {
@@ -658,13 +677,15 @@ export class ProtocolListPage implements OnInit {
             obj.items = obj.items.replace(/(\\r\\n|\\n|\\r)/gm, ' ');
 
             columns = [];
-            for (let k = 0; k < 7; k++) {
+            for (let k = 0; k < 8; k++) {
+                if (this.selectedColumns[k].field === 'work_column') { continue; }
                 columns.push({ text: this.selectedColumns[k].header, style: 'header' });
             }
             bodyArray.push(columns);
 
             rowArray = [];
-            for (let j = 0; j < 7; j++) {
+            for (let j = 0; j < 8; j++) {
+                if (this.selectedColumns[j].field === 'work_column') { continue; }
                 if (obj[this.selectedColumns[j].field]) {
                     rowArray.push(obj[this.selectedColumns[j].field]);
                 } else {
@@ -673,7 +694,7 @@ export class ProtocolListPage implements OnInit {
             }
             bodyArray.push(rowArray);
 
-            for (let l = 7; l < this.selectedColumns.length; l++) {
+            for (let l = 8; l < this.selectedColumns.length; l++) {
                 rowArray = [];
                 rowArray.push({ text: this.selectedColumns[l].header, style: 'header' });
                 if (obj[this.selectedColumns[l].field]) {
@@ -728,6 +749,9 @@ export class ProtocolListPage implements OnInit {
     async show_columns() {
         const inputs: any[] = [];
         for (let i = 0; i < this.cols.length; i++) {
+            if (this.cols[i].field === 'work_column') { continue; }
+            if (this.cols[i].field === 'protocol_number') { continue; }
+            if (this.cols[i].field === 'title') { continue; }
             inputs.push({
                 type: 'checkbox',
                 label: this.cols[i].header,
@@ -747,6 +771,9 @@ export class ProtocolListPage implements OnInit {
                     handler: data => {
                         inputs = [];
                         for (let i = 0; i < this.cols.length; i++) {
+                            if (this.cols[i].field === 'work_column') { continue; }
+                            if (this.cols[i].field === 'protocol_number') { continue; }
+                            if (this.cols[i].field === 'title') { continue; }
                             inputs.push({
                                 type: 'checkbox',
                                 label: this.cols[i].header,
@@ -762,6 +789,9 @@ export class ProtocolListPage implements OnInit {
                     handler: data => {
                         inputs = [];
                         for (let i = 0; i < this.cols.length; i++) {
+                            if (this.cols[i].field === 'work_column') { continue; }
+                            if (this.cols[i].field === 'protocol_number') { continue; }
+                            if (this.cols[i].field === 'title') { continue; }
                             inputs.push({
                                 type: 'checkbox',
                                 label: this.cols[i].header,
@@ -783,6 +813,9 @@ export class ProtocolListPage implements OnInit {
                     handler: data => {
                         console.log('Checkbox data:', data);
                         this.selectedColumns = this.cols.filter(function (element, index, array) { return data.includes(element.field); });
+                        this.selectedColumns.unshift(this.cols[2]);
+                        this.selectedColumns.unshift(this.cols[1]);
+                        this.selectedColumns.unshift(this.cols[0]);
                         localStorage.setItem('show_columns_protocol', JSON.stringify(this.selectedColumns));
                     }
                 }
@@ -817,18 +850,34 @@ export class ProtocolListPage implements OnInit {
         }
     }
 
-    
     onColResize(event) {
         let index  = this.apiService.columnIndex(event.element);
-        this.selectedColumns[index].width = event.element.offsetWidth+"px";
-        let width2 = this.selectedColumns[index+1].width;
-        this.selectedColumns[index+1].width = parseInt(width2.replace('px',''))-event.delta + "px";
+        this.selectedColumns[index].width = event.element.offsetWidth + 'px';
+        let width2 = this.selectedColumns[index + 1].width;
+        this.selectedColumns[index + 1].width = parseInt(width2.replace('px', '')) - event.delta + 'px';
         localStorage.setItem('show_columns_protocol', JSON.stringify(this.selectedColumns));
     }
 
     onColReorder(event) {
         this.selectedColumns = event.columns;
-        localStorage.setItem('show_columns_protocol', JSON.stringify(this.selectedColumns));
+        this.fixReorder();
+        localStorage.setItem('show_columns_note', JSON.stringify(this.selectedColumns));
+    }
+
+    fixReorder() {
+        console.log('fixReorder()', this.selectedColumns );
+        let cols = [
+            { field: 'work_column', header: '', width: '60px' },
+            { field: 'protocol_number', header: this.translate.instant('Protokoll'), width: '100px' },
+            { field: 'title', header: this.translate.instant('Bezeichnung'), width: '200px' }
+        ];
+        for (let i = 0; i < this.selectedColumns.length; i++) {
+            if (this.selectedColumns[i].field === 'work_column') { continue; }
+            if (this.selectedColumns[i].field === 'protocol_number') { continue; }
+            if (this.selectedColumns[i].field === 'title') { continue; }
+            cols.push(this.selectedColumns[i]);
+        }
+        this.selectedColumns = cols;
     }
 
     onNodeExpand(event) {
@@ -841,9 +890,9 @@ export class ProtocolListPage implements OnInit {
         localStorage.setItem('expanded_nodes_protocol', JSON.stringify(this.expendedNodes));
     }
 
-    protocolDeactivate() {
+    protocolDeactivate(protocol) {
         console.log('delete');
-        this.showConfirmAlert(this.selectedNode.data.id);
+        this.showConfirmAlert(protocol.id);
     }
 
     async deSelectAll() {
@@ -886,17 +935,17 @@ export class ProtocolListPage implements OnInit {
                 {
                     text: this.translate.instant('ja'),
                     handler: () => {
-                        this.selectedNode.forEach(element => {
-                            this.apiService.pvs4_get_protocol(element.data.id).then((result: any) => {
+                     //   this.selectedNode.forEach(element => {
+                            this.apiService.pvs4_get_protocol(idProtocol).then((result: any) => {
                                 const activProtocol = result.obj;
-
                                 activProtocol.active = 0;
                                 this.apiService.pvs4_set_protocol(activProtocol).then((setResult: any) => {
                                     console.log('result: ', setResult);
+                                    this.editMode = false;
                                     this.page_load();
                                 });
                             });
-                        });
+                      //  });
                     }
                 }
             ]

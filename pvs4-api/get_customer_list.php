@@ -101,55 +101,25 @@ function processing($user) {
     $licensee = 0;
     $offset = 0;
     $role = 0;
+    $customerName = '';
     if(isset($_POST['licensee'])) $licensee = intval ( trim( mysqli_escape_string($con,$_POST['licensee']) ));
     if(isset($_POST['offset'])) $offset = intval ( trim( mysqli_escape_string($con,$_POST['offset']) ));
     if(isset($_POST['role'])) $role = intval ( trim( mysqli_escape_string($con,$_POST['role']) ));
+    if(isset($_POST['customerName'])) $customerName = trim(mysqli_escape_string($con,$_POST['customerName']));
     $limit  = 9999;
     $offset = $offset * $limit ;
     if(($role==1)||($role==2)){
-        /*
-        $sql = "SELECT cr.*, 
-                       concat(ps_emp.first_name,' ', ps_emp.last_name) as employees,
-                       concat(ps_tst.first_name,' ', ps_tst.last_name) as inspector,
-                       (SELECT appointment_date
-                          FROM `appointment`
-                         WHERE `appointment_date` < NOW() 
-                           AND `idCustomer` = cr.id 
-                           AND `appointment_type` = 0 
-                           AND `active` = 1 
-                      ORDER by appointment_date DESC LIMIT 1) as last_date,
-                       (SELECT appointment_date
-                          FROM `appointment`
-                         WHERE `appointment_date` >= NOW() 
-                           AND `idCustomer` = cr.id 
-                           AND `appointment_type` = 0 
-                           AND `active` = 1 
-                      ORDER by appointment_date ASC LIMIT 1) as next_date
-                  FROM `customer` as cr
-                       LEFT JOIN profiles as ps_emp ON ps_emp.id = cr.sales
-                       LEFT JOIN profiles as ps_tst ON ps_tst.id = cr.tester
-                 WHERE cr.active = 1 
-                   AND cr.licensee = $licensee
-              ORDER BY cr.parent LIMIT $limit OFFSET $offset;";
-              */
-
-              /*
-              $sql = "SELECT cr.*
-                            FROM `customer` as cr
-                            WHERE cr.active = 1 
-                            AND cr.licensee = $licensee
-                      ORDER BY cr.parent LIMIT $limit OFFSET $offset;";
-            
-                      */     
+  
                       
             $sql = "SELECT cr.*, 
                       concat(ps_emp.first_name,' ', ps_emp.last_name) as employees,
-                      concat(ps_tst.first_name,' ', ps_tst.last_name) as inspector                  
+                      concat(ps_tst.first_name,' ', ps_tst.last_name) as inspector
                  FROM `customer` as cr
                       LEFT JOIN profiles as ps_emp ON ps_emp.id = cr.sales
                       LEFT JOIN profiles as ps_tst ON ps_tst.id = cr.tester
                 WHERE cr.active = 1 
                   AND cr.licensee = $licensee
+                  AND cr.company LIKE '%$customerName%'
              ORDER BY cr.parent LIMIT $limit OFFSET $offset;";                               
     }else{
         $cp= mysqli_query($con,"SELECT * FROM contact_persons WHERE active = 1 AND email = '$email'");
@@ -162,11 +132,12 @@ function processing($user) {
             // $sql = "SELECT * FROM `customer` WHERE (`active` = 1) AND (`id` IN (".implode(',',$arr)."))";
             $sql = "SELECT cr.*, 
                            concat(ps_emp.first_name,' ', ps_emp.last_name) as employees,
-                           concat(ps_tst.first_name,' ', ps_tst.last_name) as inspector 
+                           concat(ps_tst.first_name,' ', ps_tst.last_name) as inspector
                       FROM `customer` as cr
                            LEFT JOIN profiles as ps_emp ON ps_emp.id = cr.sales
                            LEFT JOIN profiles as ps_tst ON ps_tst.id = cr.tester
                      WHERE cr.active = 1
+                       AND cr.company LIKE '$customerName%'
                        AND cr.id IN (".implode(',',$arr).")";
         }
     }
@@ -225,7 +196,7 @@ function processing($user) {
         $ok = new \stdClass();
         $ok->amount = $anz_liste;
         $ok->list = $liste;
-        $ok->sql = $sql;
+        //$ok->sql = $sql;
         echo json_encode($ok);
         mysqli_close($con);
         die;

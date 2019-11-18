@@ -70,7 +70,7 @@ export class ReboxPage implements OnInit {
   }
 
   loadCustomer() {
-    this.apiService.pvs4_get_customer_list(0).then((result: any) => {
+    this.apiService.pvs4_get_customer_list(0, '').then((result: any) => {
         this.listCustomer = [];
         this.data_tree(result.list);
         console.log("Load Customer");

@@ -115,6 +115,7 @@ export class CustomerDetailsPage implements OnInit {
     }
 
    loadCustomer(id) {
+      this.system.setCustomerId(id);
       this.apiService.pvs4_get_customer(id).then((result: any) => {
         this.activCustomer = result.obj;
         this.aktive_products = parseInt(result.aktive_products);
