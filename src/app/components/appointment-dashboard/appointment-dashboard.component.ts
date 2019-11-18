@@ -1,4 +1,4 @@
-import { Component, ViewChild, OnInit } from '@angular/core';
+import { Component, ViewChild, OnInit, AfterViewInit } from '@angular/core';
 import { NavController, ModalController , Platform } from '@ionic/angular';
 import { ApiService } from './../../services/api';
 import { UserdataService } from './../../services/userdata';
@@ -21,7 +21,7 @@ import { IonSelect } from '@ionic/angular';
   templateUrl: './appointment-dashboard.component.html',
   styleUrls: ['./appointment-dashboard.component.scss'],
 })
-export class AppointmentDashboardComponent implements OnInit {
+export class AppointmentDashboardComponent implements OnInit, AfterViewInit {
     public events: any[] = [];
     public allEvents: any[] = [];
     public people: any[] = [];
@@ -30,6 +30,8 @@ export class AppointmentDashboardComponent implements OnInit {
     public viewMode = 0;
     public peopleFilter = 'none';
     public typeFilter = 99;
+    public customButtonText = '';
+    public enableAfterViewInit = false;
     calendarPlugins = [dayGridPlugin, timeGrigPlugin, interactionPlugin, bootstrapPlugin];
     customButtons = {
         myCustomButton: {
@@ -81,6 +83,14 @@ export class AppointmentDashboardComponent implements OnInit {
         this.setView(1);
     }
 
+    ngAfterViewInit() {
+        const calendarApi = this.calendarComponent.getApi();
+        console.log('calendarApi', calendarApi);
+
+        calendarApi.el.childNodes[0].childNodes[0].childNodes[2].firstChild.textContent = this.customButtonText;
+        this.enableAfterViewInit = true;
+    }
+
     changeFilter() {
         console.log( 'changeFilter()', this.peopleFilter, this.typeFilter, this.allEvents.length );
         for (let k = 0; k < this.events.length; k++) { this.events.pop(); } // clear
@@ -106,6 +116,22 @@ export class AppointmentDashboardComponent implements OnInit {
                 }
             }
         }
+
+        if (this.peopleFilter == 'none') {
+            this.customButtonText = this.translate.instant('Alle Mitarbeiter');
+        } else {
+            for (let k = 0; k < this.people.length; k++) {
+                if (this.peopleFilter == this.people[k].email) {
+                    this.customButtonText = this.people[k].first_name + ' ' + this.people[k].last_name;
+                }
+            }
+        }
+
+        if (this.enableAfterViewInit == true) {
+            const calendarApi = this.calendarComponent.getApi();
+            calendarApi.el.childNodes[0].childNodes[0].childNodes[2].firstChild.textContent = this.customButtonText;
+        }
+
     }
 
     eventsFunc(start: any, end: any) {
