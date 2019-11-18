@@ -49,9 +49,9 @@ export class DashboardPage implements OnInit {
     modelAppChanged: Subject<any> = new Subject<any>();
     modelChanged: Subject<any> = new Subject<any>();
 
-    public nextAppointmentEnable = true;
-    public customerEnable = true;
-    public appointmentPlanEnable = false;
+    public nextAppointmentEnable: boolean;
+    public customerEnable: boolean;
+    public appointmentPlanEnable: boolean;
 
     constructor(public navCtrl: NavController,
         public apiService: ApiService,
@@ -65,6 +65,10 @@ export class DashboardPage implements OnInit {
         private keyboard: Keyboard,
         public events: Events,
         public platform: Platform) {
+
+        this.nextAppointmentEnable = true;
+        this.customerEnable = true;
+        this.appointmentPlanEnable = false;
 
         platform.ready().then(() => {
             if (this.platform.is('ios') ||

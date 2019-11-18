@@ -193,3 +193,9 @@ div.table div.tbody div.tr.table-subheader div.th {
       margin-top: 52px;
     }
   }
+
+  @media only screen and (min-width: 767px) {
+    div.table .name {
+      max-width: 345px;
+    }
+  }

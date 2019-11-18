@@ -12,7 +12,7 @@
 						<app-appointment-dashboard class="appointment-top"></app-appointment-dashboard>
 					</ion-row>
 					<ion-row style="margin-top: 5px;">
-						<ion-col *ngIf="nextAppointmentEnable" size="12" size-lg="6" id="na_dashboard_termine"
+						<ion-col *ngIf="nextAppointmentEnable&&customerEnable" size="12" size-lg="6" id="na_dashboard_termine"
 								 [ngClass]="className=='showdashfirst' ? 'showdashfirst' : 'showdashsecond'">
 							<div class="table-responsive" id="ps_dashboard_termine">
 								<div class="table table-striped" id="dashboard_termine">
@@ -99,13 +99,200 @@
 								</div>
 							</div>
 						</ion-col>
-						<ion-col *ngIf="customerEnable" size="12" size-lg="6" id="ps_dashboard_pruefungen"
-							[ngClass]="className=='showdashsecond' ? 'showdashfirst' : 'showdashsecond'">
+						<ion-col *ngIf="nextAppointmentEnable&&!customerEnable" size="12" size-lg="12" id="na_dashboard_termine"
+								 [ngClass]="className=='showdashfirst' ? 'showdashfirst' : 'showdashsecond'">
+							<div class="table-responsive" id="ps_dashboard_termine">
+								<div class="table table-striped" id="dashboard_termine">
+									<div class="thead">
+										<div class="tr table-header">
+											<div class="table-header-title">
+												<ion-icon name="calendar"></ion-icon>
+												{{'Nächste Termine' | translate}}
+											</div>
+											<div class="hidden-sm-down">{{rowRecordsAppointment}}
+												{{'Datensätze von' | translate}} {{totalRecordsAppointment}}</div>
+										</div>
+									</div>
+									<div class="tbody">
+										<div class="tr table-subheader table-subheader-fix">
+											<div class="table-subheader-buttons">
+												<ion-button size="small" (click)="newPrAppointment()">
+													<ion-icon name="add"></ion-icon>
+												</ion-button>
+												<ion-button size="small" (click)="all_dates()"
+													[ngClass]="{secondary: all_dates_view}">
+													<ion-icon name="people"></ion-icon>
+												</ion-button>
+												<!-- 
+														<button ion-button small (click)="goStatistik()">
+															<ion-icon name="person"></ion-icon>
+														</button>
+														-->
+											</div>
+											<div class="search-search">
+												<ion-input type="text" placeholder="{{'Suche' |translate }}"
+													[(ngModel)]="filterValueApp" (input)="search_all_app()"
+													class="search-text-input-left">
+												</ion-input>
+												<!-- <button ion-button small (click)="search_all_app()" style="margin-top:7px;">
+															<ion-icon name="search"></ion-icon>
+														</button> -->
+											</div>
+										</div>
+									</div>
+									<div class="tbody scrollcontent">
+										<div class="tr table-subheader hidden-sm-down">
+											<div class="th date"
+												[ngClass]="{secondary: sortAppointmentType=='appointment_date'}"
+												(click)="sortAppointment('appointment_date')">{{'Datum' | translate}}
+											</div>
+											<div class="th time" [ngClass]="{secondary: sortAppointmentType=='start_time'}"
+												(click)="sortAppointment('start_time')">{{'Zeit' | translate}}</div>
+											<div class="th" [ngClass]="{secondary: sortAppointmentType=='company'}"
+												(click)="sortAppointment('company')">{{'Firma' | translate}}</div>
+											<div class="th name" [ngClass]="{secondary: sortAppointmentType=='last_name'}"
+												(click)="sortAppointment('last_name')" *ngIf="all_dates_view">
+												{{'Mitarbeiter' | translate}}</div>
+											<div class="th name"
+												[ngClass]="{secondary: sortAppointmentType=='appointment_type_text'}"
+												(click)="sortAppointment('appointment_type_text')">
+												{{'Terminart' | translate}}</div>
+										</div>
+											<ion-virtual-scroll [items]="nextAppointment" >
+											<div class="tr table-body {{item.classes}}" *virtualItem="let item">
+												<div class="td date clickable" (click)="editAppointment(item)">
+													<div class="before">{{'Datum' | translate}}</div>
+													<div class="after">{{maskDate(item.appointment_date)}}</div>
+												</div>
+												<div class="td time">
+													<div class="before">{{'Zeit' | translate}}</div>
+													<div class="after">{{item.start_time}}</div>
+												</div>
+												<div class="td clickable" (click)="go(item.idCustomer);">
+													<div class="before">{{'Firma' | translate}}</div>
+													<div class="after">{{item.company}}</div>
+												</div>
+												<div class="td name" *ngIf="all_dates_view">
+													<div class="before">{{'Mitarbeiter' | translate}}</div>
+													<div class="after">{{item.last_name}}</div>
+												</div>
+												<div class="td name">
+													<div class="before">{{'Terminart' | translate}}</div>
+													<div class="after">{{item.appointment_type_text}}</div>
+												</div>
+											</div>
+										</ion-virtual-scroll>
+									</div>
+								</div>
+							</div>
+			   			</ion-col>
+						<ion-col *ngIf="customerEnable&&nextAppointmentEnable" size="12" size-lg="6" id="ps_dashboard_pruefungen"
+							     [ngClass]="className=='showdashsecond' ? 'showdashfirst' : 'showdashsecond'">
 							<div class="table-responsive">
 								<div class="table table-striped">
 									<div class="thead">
 										<div class="tr table-header">
 											<div class="table-header-title">
+												<ion-icon name="contacts"></ion-icon>
+												{{'Kunden' | translate }}
+											</div>
+											<div class="hidden-sm-down">{{rowRecordsInspection}}
+												{{'Datensätze von' | translate}} {{totalRecordsInspection}}</div>
+										</div>
+									</div>
+									<div class="tbody">
+										<div class="tr table-subheader table-subheader-fix">
+											<div class="table-subheader-buttons">
+												<ion-button size="small" (click)="downloadXLS()">
+													<ion-icon name="download"></ion-icon> &nbsp; XLS
+												</ion-button>
+												<ion-button size="small" (click)="all_customer()"
+													[ngClass]="{secondary: all_customer_view}">
+													<ion-icon name="people"></ion-icon>
+												</ion-button>
+												<ion-button size="small" (click)="show_disponent()"
+													[ngClass]="{secondary: disponent_view}">
+													<ion-icon name="eye"></ion-icon>
+												</ion-button>
+											</div>
+											<div class="search-search">
+												<ion-input type="text" placeholder="{{'Suche' |translate }}"
+													[(ngModel)]="filterValue" (input)="search_all()"
+													class="search-text-input-right">
+												</ion-input>
+											</div>
+										</div>
+									</div>
+									<div class="tbody scrollcontent">
+										<div class="tr table-subheader hidden-sm-down">
+											<div class="th time" [ngClass]="{secondary: sortCustomerType=='customer_number'}"
+												(click)="sortCustomerStr('customer_number')">ID</div>
+											<div class="th name" [ngClass]="{secondary: sortCustomerType=='company'}"
+												(click)="sortCustomerStr('company')" translate='Firma'>
+												{{'Firma' | translate}}</div>
+											<div class="th name" [ngClass]="{secondary: sortCustomerType=='zip_code'}"
+												(click)="sortCustomerStr('zip_code')" *ngIf="!disponent_view">
+												{{'PLZ' | translate}}</div>
+											<div class="th name" [ngClass]="{secondary: sortCustomerType=='place'}"
+												(click)="sortCustomerStr('place')">{{'Ort' | translate}}</div>
+											<div class="th name" [ngClass]="{secondary: sortCustomerType=='days10'}"
+												(click)="sortCustomerNum('days10')" *ngIf="disponent_view">
+												{{'10T' | translate}}</div>
+											<div class="th name" [ngClass]="{secondary: sortCustomerType=='days30'}"
+												(click)="sortCustomerNum('days30')" *ngIf="disponent_view">
+												{{'30T' | translate}}</div>
+											<div class="th name" [ngClass]="{secondary: sortCustomerType=='days90'}"
+												(click)="sortCustomerNum('days90')" *ngIf="disponent_view">
+												{{'90T' | translate}}</div>
+										</div>
+										  <ion-virtual-scroll [items]="listInspection">
+											<div class="tr table-body" *virtualItem="let row">
+												<div class="td time">
+													<div class="before">ID</div>
+													<div class="after">{{row.customer_number}}</div>
+												</div>
+												<div class="td clickable name" (click)="editPrAppointment(row)">
+													<div class="before">{{'Firma' | translate}}</div>
+													<div class="after">{{row.company}}</div>
+												</div>
+												<div class="td clickable name" (click)="go(row.idCustomer)"
+													*ngIf="!disponent_view">
+													<div class="before">{{'PLZ' | translate}}</div>
+													<div class="after">{{row.zip_code}}</div>
+												</div>
+												<div class="td clickable name" (click)="go(row.idCustomer)">
+													<div class="before">{{'Ort' | translate}}</div>
+													<div class="after">{{row.place}}</div>
+												</div>
+												<div class="td clickable name" (click)="go(row.idCustomer)"
+													*ngIf="disponent_view">
+													<div class="before">{{'10T' | translate}}</div>
+													<div class="after">{{row.days10}}</div>
+												</div>
+												<div class="td clickable name" (click)="go(row.idCustomer)"
+													*ngIf="disponent_view">
+													<div class="before">{{'30T' | translate}}</div>
+													<div class="after">{{row.days30}}</div>
+												</div>
+												<div class="td clickable name" (click)="go(row.idCustomer)"
+													*ngIf="disponent_view">
+													<div class="before">{{'90T' | translate}}</div>
+													<div class="after">{{row.days90}}</div>
+												</div>
+											</div>
+										  </ion-virtual-scroll>
+									</div>
+								</div>
+							</div>
+						</ion-col>
+						<ion-col *ngIf="customerEnable&&!nextAppointmentEnable" size="12" size-lg="12" id="ps_dashboard_pruefungen"
+							     [ngClass]="className=='showdashsecond' ? 'showdashfirst' : 'showdashsecond'">
+							<div class="table-responsive">
+								<div class="table table-striped">
+									<div class="thead">
+										<div class="tr table-header">
+											<div class="table-header-title">
+												<ion-icon name="contacts"></ion-icon>
 												{{'Kunden' | translate }}
 											</div>
 											<div class="hidden-sm-down">{{rowRecordsInspection}}
