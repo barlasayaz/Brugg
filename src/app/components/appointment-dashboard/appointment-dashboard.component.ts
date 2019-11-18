@@ -59,7 +59,7 @@ export class AppointmentDashboardComponent implements OnInit {
         public apiService: ApiService,
         public userdata: UserdataService,
         public modalCtrl: ModalController,
-        private translate: TranslateService,
+        public translate: TranslateService,
         public platform: Platform
     ) {
         console.log(this.lang);
