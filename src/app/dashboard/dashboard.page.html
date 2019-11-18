@@ -71,8 +71,10 @@
 												(click)="sortAppointment('appointment_type_text')">
 												{{'Terminart' | translate}}</div>
 										</div>
-										  <ion-virtual-scroll [items]="nextAppointment" >
-											<div class="tr table-body {{item.classes}}" *virtualItem="let item">
+										<div style="max-height: 455px; overflow-y: auto;">
+										  <!-- <ion-virtual-scroll [items]="nextAppointment" > -->
+											<!-- <div class="tr table-body {{item.classes}}" *virtualItem="let item"> -->
+											<div class="tr table-body {{item.classes}}" *ngFor="let item of nextAppointment">	
 												<div class="td date clickable" (click)="editAppointment(item)">
 													<div class="before">{{'Datum' | translate}}</div>
 													<div class="after">{{maskDate(item.appointment_date)}}</div>
@@ -94,7 +96,8 @@
 													<div class="after">{{item.appointment_type_text}}</div>
 												</div>
 											</div>
-										</ion-virtual-scroll>
+										</div>
+										<!-- </ion-virtual-scroll> -->
 									</div>
 								</div>
 							</div>
@@ -158,8 +161,9 @@
 												(click)="sortAppointment('appointment_type_text')">
 												{{'Terminart' | translate}}</div>
 										</div>
-											<ion-virtual-scroll [items]="nextAppointment" >
-											<div class="tr table-body {{item.classes}}" *virtualItem="let item">
+										<div style="max-height: 455px; overflow-y: auto;">
+											<!-- <ion-virtual-scroll [items]="nextAppointment" > -->
+											<div class="tr table-body {{item.classes}}" *ngFor="let item of nextAppointment">
 												<div class="td date clickable" (click)="editAppointment(item)">
 													<div class="before">{{'Datum' | translate}}</div>
 													<div class="after">{{maskDate(item.appointment_date)}}</div>
@@ -181,7 +185,8 @@
 													<div class="after">{{item.appointment_type_text}}</div>
 												</div>
 											</div>
-										</ion-virtual-scroll>
+										<!-- </ion-virtual-scroll> -->
+										</div>
 									</div>
 								</div>
 							</div>
@@ -245,8 +250,9 @@
 												(click)="sortCustomerNum('days90')" *ngIf="disponent_view">
 												{{'90T' | translate}}</div>
 										</div>
-										  <ion-virtual-scroll [items]="listInspection">
-											<div class="tr table-body" *virtualItem="let row">
+										<div style="max-height: 455px; overflow-y: auto;">
+										  <!-- <ion-virtual-scroll [items]="listInspection"> -->
+											<div class="tr table-body" *ngFor="let row of listInspection">
 												<div class="td time">
 													<div class="before">ID</div>
 													<div class="after">{{row.customer_number}}</div>
@@ -280,7 +286,8 @@
 													<div class="after">{{row.days90}}</div>
 												</div>
 											</div>
-										  </ion-virtual-scroll>
+										  <!-- </ion-virtual-scroll> -->
+										</div>
 									</div>
 								</div>
 							</div>
@@ -344,8 +351,9 @@
 												(click)="sortCustomerNum('days90')" *ngIf="disponent_view">
 												{{'90T' | translate}}</div>
 										</div>
-										  <ion-virtual-scroll [items]="listInspection">
-											<div class="tr table-body" *virtualItem="let row">
+										<div style="max-height: 455px; overflow-y: auto;">
+										  <!-- <ion-virtual-scroll [items]="listInspection"> -->
+											<div class="tr table-body" *ngFor="let row of listInspection">
 												<div class="td time">
 													<div class="before">ID</div>
 													<div class="after">{{row.customer_number}}</div>
@@ -379,7 +387,8 @@
 													<div class="after">{{row.days90}}</div>
 												</div>
 											</div>
-										  </ion-virtual-scroll>
+										  <!-- </ion-virtual-scroll> -->
+										</div>
 									</div>
 								</div>
 							</div>

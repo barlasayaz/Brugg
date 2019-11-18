@@ -8,9 +8,9 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGrigPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction'; // for dateClick
 import { AppointmentEditComponent } from './../appointment-edit/appointment-edit.component';
-import frLocale from '@fullcalendar/core/locales/fr'
-import itLocale from '@fullcalendar/core/locales/it'
-import deLocale from '@fullcalendar/core/locales/de'
+import frLocale from '@fullcalendar/core/locales/fr';
+import itLocale from '@fullcalendar/core/locales/it';
+import deLocale from '@fullcalendar/core/locales/de';
 import { DatePipe } from '@angular/common';
 import bootstrapPlugin from '@fullcalendar/bootstrap';
 import * as moment from 'moment';
@@ -30,6 +30,7 @@ export class AppointmentDashboardComponent implements OnInit {
     public viewMode = 0;
     public peopleFilter = 'none';
     public typeFilter = 99;
+    public showList = true;
     calendarPlugins = [dayGridPlugin, timeGrigPlugin, interactionPlugin, bootstrapPlugin];
     customButtons = {
         myCustomButton: {
@@ -39,13 +40,14 @@ export class AppointmentDashboardComponent implements OnInit {
             }
         }
     };
+
     headers =  {
         left: 'prev,next today myCustomButton',
-        center: 'title',
+        center: this.translate.instant('title'),
         right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
     };
     businessHours = {
-        dow: [1, 2, 3, 4, 5], 
+        dow: [1, 2, 3, 4, 5],
         start: '05:00', // a start time
         end: '18:00', // an end time
     };
@@ -53,7 +55,6 @@ export class AppointmentDashboardComponent implements OnInit {
     lang = localStorage.getItem('lang');
     @ViewChild('calendar') calendarComponent: FullCalendarComponent;
     @ViewChild('select') select: IonSelect;
-    showList = true;
 
     constructor(public navCtrl: NavController,
         public apiService: ApiService,
@@ -153,8 +154,8 @@ export class AppointmentDashboardComponent implements OnInit {
                 if (liste[k].appointment_type == 2) {
                     title += ' (' + this.translate.instant('Urlaub') + ')';
                 } else {
-                    if ( liste[k].zip_code) title += ' ' + liste[k].zip_code;
-                    if ( liste[k].company) title += ' ' + liste[k].company;
+                    if ( liste[k].zip_code) { title += ' ' + liste[k].zip_code; }
+                    if ( liste[k].company) { title += ' ' + liste[k].company; }
                 }
                 let note = liste[k].notes;
                 if (note.length > 33) {
@@ -177,27 +178,25 @@ export class AppointmentDashboardComponent implements OnInit {
                 this.allEvents.push( JSON.parse(JSON.stringify(t)));
             }
 
-            let startLastYear = moment(start,'YYYY-MM-DD').subtract(1,'years').format('YYYY-MM-DD');
-            let endLastYear = moment(end,'YYYY-MM-DD').subtract(1,'years').format('YYYY-MM-DD');
+            let startLastYear = moment(start, 'YYYY-MM-DD').subtract(1, 'years').format('YYYY-MM-DD');
+            let endLastYear = moment(end, 'YYYY-MM-DD').subtract(1, 'years').format('YYYY-MM-DD');
             this.apiService.pvs4_get_appointment_list_ps(startLastYear, endLastYear).then((result: any) => {
                 for (let i = 0; i < result.list.length; i++) {
                     const obj = result.list[i].data;
 
-                    let nextYear = moment(obj.appointment_date,'YYYY-MM-DD').add(1,'years').format('YYYY-MM-DD');
-                    let nextYearDate = moment(obj.appointment_date,'YYYY-MM-DD').add(1,'years').toDate();
-                    let nextMonth = moment(new Date()).add(1,'months').toDate();
-                    if(nextYearDate > new Date() && nextYearDate <= nextMonth && obj.reminder == 1 && obj.idUser == this.userdata.id)
-                    {
+                    let nextYear = moment(obj.appointment_date, 'YYYY-MM-DD').add(1, 'years').format('YYYY-MM-DD');
+                    let nextYearDate = moment(obj.appointment_date, 'YYYY-MM-DD').add(1, 'years').toDate();
+                    let nextMonth = moment(new Date()).add(1, 'months').toDate();
+                    if (nextYearDate > new Date() && nextYearDate <= nextMonth && obj.reminder == 1 && obj.idUser == this.userdata.id) {
                         console.log('reminder: ',  obj);
-                        let appointment = liste.find(function (element, index, array){ return element.idCustomer == obj.idCustomer && element.appointment_date == nextYear; });
-                        if(!appointment )
-                        {
+                        let appointment = liste.find(function (element, index, array) { return element.idCustomer == obj.idCustomer && element.appointment_date == nextYear; });
+                        if (!appointment ) {
                             let title = obj.short_code;
                             if (obj.appointment_type == 2) {
                                 title += ' (' + this.translate.instant('Urlaub') + ')';
                             } else {
-                                if ( obj.zip_code) title += ' ' + obj.zip_code;
-                                if ( obj.company) title += ' ' + obj.company;
+                                if ( obj.zip_code) { title += ' ' + obj.zip_code; }
+                                if ( obj.company) { title += ' ' + obj.company; }
                             }
                             let note = obj.notes;
                             if (note.length > 33) {
@@ -205,8 +204,8 @@ export class AppointmentDashboardComponent implements OnInit {
                             }
                             title += ' ' + note;
 
-                            let z1 = moment(obj.appointment_date + ' ' + obj.start_time, 'YYYY-MM-DD HH:mm:ss').add(1,'years').toDate();
-                            let z2 = moment(obj.appointment_date + ' ' + obj.end_time, 'YYYY-MM-DD HH:mm:ss').add(1,'years').toDate();
+                            let z1 = moment(obj.appointment_date + ' ' + obj.start_time, 'YYYY-MM-DD HH:mm:ss').add(1, 'years').toDate();
+                            let z2 = moment(obj.appointment_date + ' ' + obj.end_time, 'YYYY-MM-DD HH:mm:ss').add(1, 'years').toDate();
 
                             if (z1.getHours() < 7) {
                                 z1.setHours(7);
@@ -234,8 +233,8 @@ export class AppointmentDashboardComponent implements OnInit {
                                 reminder: true,
                                 allDay: false,
                                 textColor: '#999',
-                                backgroundColor: "white",
-                                borderColor: "#bbb" };
+                                backgroundColor: 'white',
+                                borderColor: '#bbb'};
 
                             this.events.push(t);
                             this.allEvents.push( JSON.parse(JSON.stringify(t)));
@@ -247,6 +246,7 @@ export class AppointmentDashboardComponent implements OnInit {
             this.changeFilter();
         });
     }
+
     loadEvents(model: any) {
         console.log('loadEvents(): ', model);
         let pipe = new DatePipe('en-US');
@@ -257,19 +257,18 @@ export class AppointmentDashboardComponent implements OnInit {
         console.log('event_end: ', event_end);
         this.eventsFunc(event_start, event_end);
     }
+
     handleEventClick(model: any) {
         console.log(model.event);
         let id = model.event.id;
-        if(id == "0" && model.event.extendedProps.old_id)
-        {
+        if (id == '0' && model.event.extendedProps.old_id) {
             id = model.event.extendedProps.old_id;
         }
 
         this.apiService.pvs4_get_appointment(id).then(async (result: any) => {
-                if(model.event.extendedProps.old_id)
-                {
+                if (model.event.extendedProps.old_id) {
                     result.obj.id = 0;
-                    result.obj.appointment_date = moment(result.obj.appointment_date,'YYYY-MM-DD').add(1,'years').format('YYYY-MM-DD');
+                    result.obj.appointment_date = moment(result.obj.appointment_date, 'YYYY-MM-DD').add(1, 'years').format('YYYY-MM-DD');
                 }
 
                 const modal: HTMLIonModalElement =
