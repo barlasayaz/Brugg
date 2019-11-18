@@ -1,6 +1,6 @@
 <div>
 	<ion-item style="display: none;">
-		<ion-label position="floating" *ngIf="showList==true">{{translate.instant('Filter')}}</ion-label>
+		<ion-label position="floating" *ngIf="showList">{{translate.instant('Filter')}}</ion-label>
 		<ion-select #select
 					[hidden]="showList"
 					[(ngModel)]="peopleFilter"
