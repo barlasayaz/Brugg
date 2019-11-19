@@ -57,7 +57,7 @@ export class AppointmentDashboardComponent implements OnInit, AfterViewInit {
     lang = localStorage.getItem('lang');
     @ViewChild('calendar') calendarComponent: FullCalendarComponent;
     @ViewChild('select') select: IonSelect;
-
+ 
     constructor(public navCtrl: NavController,
         public apiService: ApiService,
         public userdata: UserdataService,
@@ -81,7 +81,7 @@ export class AppointmentDashboardComponent implements OnInit, AfterViewInit {
     }
 
     ngOnInit() {
-        this.setView(1);
+        this.setView(0);
     }
 
     ngAfterViewInit() {
@@ -340,6 +340,30 @@ export class AppointmentDashboardComponent implements OnInit, AfterViewInit {
         });
     }
 
+    async newAppointment() {
+        console.log('newAppointment');
+        const modal: HTMLIonModalElement =
+        await this.modalCtrl.create({
+          component: AppointmentEditComponent,
+          cssClass: 'appointmentedit-modal-css',
+          componentProps: {
+            redirect: 2
+          }
+        });
+        modal.onDidDismiss().then((data) => {
+            if (data['data']) {
+                const today = new Date();
+                const newdate = new Date();
+                newdate.setDate(today.getDate() + 30);
+                const newdate2 = new Date();
+                newdate2.setDate(today.getDate() - 30);
+                console.log(newdate + ' - ' + newdate2);
+                this.eventsFunc(newdate2, newdate);
+            }
+        });
+      modal.present();
+    }
+
     setView(nr: number) {
         console.log('setView():', nr);
         this.viewMode = nr;
@@ -356,4 +380,9 @@ export class AppointmentDashboardComponent implements OnInit, AfterViewInit {
 
         this.changeFilter();
     }
+
+    getStatistik() {
+        this.navCtrl.navigateRoot('/statistics');
+    }
+    
 }

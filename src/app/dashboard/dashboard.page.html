@@ -9,7 +9,7 @@
 				<ion-grid>
 					<ion-row *ngIf="appointmentPlanEnable"
 							 style="margin-top: 10px; margin-bottom: 10px;">
-						<app-appointment-dashboard class="appointment-top"></app-appointment-dashboard>
+						<app-appointment-dashboard class="appointment-top"></app-appointment-dashboard>		
 					</ion-row>
 					<ion-row style="margin-top: 5px;">
 						<ion-col *ngIf="nextAppointmentEnable&&customerEnable" size="12" size-lg="6" id="na_dashboard_termine"
@@ -400,29 +400,23 @@
 	</div>
 </ion-content>
 
-<ion-fab slot="fixed" horizontal="end" vertical="bottom" class="liftiball">
+<ion-fab slot="fixed" horizontal="end" vertical="bottom" class="liftiball" *ngIf="!appointmentPlanEnable">
 	<ion-fab-button color="tertiary">
 		<ion-icon name="menu"></ion-icon>
 	</ion-fab-button>
 	<ion-fab-list side="top">
-		<ion-fab-button 
-				(click)="newPrAppointment()" 
-				color="primary"
-				(mouseover)="mouseover(1)"
-				(mouseout)="mouseout(1)"
-				[class.mouse-over]="mouseoverButton1"
-				[labelFab]="'Termin hinzufügen'">				
+		<!-- BUTTON -->
+		<ion-fab-button color="primary"
+						title="{{'Termin hinzufügen' | translate}}"
+						(click)="newPrAppointment()">
 			<ion-icon name="time"></ion-icon>
 		</ion-fab-button>
-		<ion-fab-button 
-				(click)="getStatistik()" 
-				color="primary"
-				(mouseover)="mouseover(2)"
-				(mouseout)="mouseout(2)"
-				[class.mouse-over]="mouseoverButton2"
-				[labelFab]="'Statistik'">  				
+		<!-- BUTTON -->
+		<ion-fab-button color="primary"
+						title="{{'Statistik' | translate}}"
+						(click)="getStatistik()">
 			<ion-icon name="stats"></ion-icon>
-		</ion-fab-button>		
+		</ion-fab-button>
 	</ion-fab-list>
 </ion-fab>
 

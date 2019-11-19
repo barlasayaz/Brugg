@@ -37,3 +37,45 @@
 					(eventDrop)="updateEvent($event)">
 	</full-calendar>
 </div>
+
+<ion-fab vertical="bottom" horizontal="end" slot="fixed" class="liftiball liftiball-extra">
+	<ion-fab-button color="tertiary">
+		<ion-icon name="calendar"></ion-icon>
+	</ion-fab-button>
+	<ion-fab-list side="top">
+		<!-- BUTTON -->
+		<ion-fab-button color="success"
+						title="{{'Statistik' | translate}}"
+						(click)="getStatistik()">
+			<ion-icon name="stats"></ion-icon>
+		</ion-fab-button>
+		<ion-fab-button color="primary"
+						title="{{'Termin hinzufügen' | translate}}"
+						(click)="newAppointment()">
+			<ion-icon name="add"></ion-icon>
+		</ion-fab-button>
+		<ion-fab-button color="primary"
+						title="{{'Meine Termine' | translate}}"
+						(click)="setView(0)">
+			<ion-icon name="calendar"></ion-icon>
+		</ion-fab-button>
+		<ion-fab-button color="primary"
+						title="{{'Kundenbesuch' | translate}}"
+						(click)="setView(1)"
+						*ngIf="userdata.role!=3">
+			<ion-icon name="people"></ion-icon>
+		</ion-fab-button>
+		<ion-fab-button color="primary"
+						title="{{'Prüfung' | translate}}"
+						(click)="setView(2)"
+						*ngIf="userdata.role!=3">
+			<ion-icon name="eye"></ion-icon>
+		</ion-fab-button>
+		<ion-fab-button color="primary"
+						title="{{'Urlaub' | translate}}"
+						(click)="setView(3)"
+						*ngIf="userdata.role!=3">
+			<ion-icon name="cafe"></ion-icon>
+		</ion-fab-button>
+	</ion-fab-list>
+</ion-fab>
