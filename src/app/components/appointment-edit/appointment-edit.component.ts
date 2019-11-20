@@ -67,19 +67,19 @@ export class AppointmentEditComponent implements OnInit {
 
   ngOnInit() {
     this.maxDate = this.apiService.maxDate;
-  
-    this.employeesList();
-    this.loadCustomer();
-  
+
+    // this.employeesList();
+    // this.loadCustomer();
+
     if (this.navParams.get('appointment')) {
       this.activAppointment = this.navParams.get('appointment');
       this.idAppointment = this.activAppointment.id;
       this.idCustomer = this.activAppointment.idCustomer;
-      if (this.activAppointment.idUser == null) {
-        this.activAppointment.idUser = this.userdata.id;
-      } else {
-        this.activAppointment.idUser = parseInt(this.activAppointment.idUser);
-      }
+      // if (this.activAppointment.idUser == null) {
+      //   this.activAppointment.idUser = this.userdata.id;
+      // } else {
+      //   this.activAppointment.idUser = parseInt(this.activAppointment.idUser);
+      // }
       if (this.activAppointment.appointment_date == null) { this.activAppointment.appointment_date = new Date().toISOString(); }
       if (this.activAppointment.start_time == null) { this.activAppointment.start_time = this.apiService.appointmentStartTime; }
       if (this.activAppointment.end_time == null) { this.activAppointment.end_time = this.apiService.appointmentEndTime; }
@@ -110,6 +110,28 @@ export class AppointmentEditComponent implements OnInit {
 
     if (this.idCustomer != 0) { this.contactPersonDisabled = false; }
 
+    const getEmployeesList = this.employeesList();
+    const getPersonList = this.loadCustomer();
+    Promise.all([
+      getEmployeesList,
+      getPersonList
+    ]).then((resultX) => {
+      this.employeeList = resultX[0];
+      this.contactPersonList = resultX[1];
+
+      if (this.navParams.get('appointment')) {
+        if (this.activAppointment.idUser == null) {
+          this.activAppointment.idUser = this.userdata.id;
+        } else {
+          this.activAppointment.idUser = parseInt(this.activAppointment.idUser);
+        }
+      }
+
+      // For ion-select id must be integer. Data id and ngModel value id...
+      this.activAppointment.idContactPerson = parseInt(this.activAppointment.idContactPerson);
+
+    });
+
     console.log('AppointmentEditComponent: ', this.activAppointment, this.userdata.licensee);
   }
 
@@ -129,24 +151,84 @@ export class AppointmentEditComponent implements OnInit {
     this.dismiss();
   }
 
-  loadCustomer() {
-    this.apiService.pvs4_get_customer_list(0, '').then((result: any) => {
-      this.listCustomer = [];
-      this.data_tree(result.list);
-      /*
-      if(this.listCustomer.filter(x=> x.id == this.idCustomer).length>=1){
-        this.customer = this.listCustomer.filter(x=> x.id == this.idCustomer)[0];
-      }
-      */
-      this.customer = null;
-      if (this.idCustomer > 0) { 
-        for (let i = 0; i < this.listCustomer.length; i++) {
-          if (this.listCustomer[i].id == this.idCustomer) {
-            this.customer = this.listCustomer[i];
-            console.log('customer: ', this.customer);
+  employeesList() {
+    return new Promise((resolve) => {
+      this.apiService.pvs4_get_colleagues_list(this.userdata.role, this.userdata.role_set, this.userdata.licensee)
+      .then((result: any) => {
+        console.log('pvs4_get_colleagues_list result:', result);
+        const employees = [];
+        let k = result['obj'];
+        result['amount'] = parseInt(result['amount']);
+        if (result['amount'] > 0) {
+          for (var i = 0, len = k.length; i < len; i++) {
+            let item = k[i];
+            item.id = parseInt(item.id);
+            employees.push(item);
           }
         }
-        this.contactPersonsList(this.idCustomer);
+        resolve(employees);
+      });
+    });
+  }
+
+  loadCustomer() {
+    return new Promise((resolve) => {
+      this.apiService.pvs4_get_customer_list(0, '').then((result: any) => {
+        this.listCustomer = [];
+        this.data_tree(result.list);
+        /*
+        if(this.listCustomer.filter(x=> x.id == this.idCustomer).length>=1){
+          this.customer = this.listCustomer.filter(x=> x.id == this.idCustomer)[0];
+        }
+        */
+        this.customer = null;
+        if (this.idCustomer > 0) { 
+          for (let i = 0; i < this.listCustomer.length; i++) {
+            if (this.listCustomer[i].id == this.idCustomer) {
+              this.customer = this.listCustomer[i];
+              console.log('customer: ', this.customer);
+            }
+          }
+
+          this.contactPersonList = [];
+          this.apiService.pvs4_get_contact_person(this.idCustomer).then((resultX: any) => {
+            console.log('contactPersonsList resultX', resultX.list);
+            const personList = [];
+            for (var i = 0, len = resultX.list.length; i < len; i++) {
+              var item = resultX.list[i].data;
+              try {
+                item.addresses = JSON.parse(item.addresses);
+              } catch {
+                 console.error('JSON.parse err', item.addresses) ;
+              }
+              item.id = parseInt(item.id);
+              personList.push(item);
+            }
+            console.log('CONTACT', personList);
+            resolve(personList);
+          });
+        } else {
+          console.log('NO CONTACT');
+          const personList = [];
+          resolve(personList);
+        }
+      });
+    });
+  }
+
+  contactPersonsList(idCustomer) {
+    console.log('contactPersonsList :', idCustomer);
+    this.contactPersonList = [];
+    this.apiService.pvs4_get_contact_person(idCustomer).then((result: any) => {
+      console.log('contactPersonsList result', result.list);
+      for (var i = 0, len = result.list.length; i < len; i++) {
+        var item = result.list[i].data;
+        try {
+          item.addresses = JSON.parse(item.addresses);
+        } catch {
+           console.error('JSON.parse err', item.addresses) ;
+        }
+        this.contactPersonList.push(item);
       }
     });
   }
@@ -375,40 +457,6 @@ export class AppointmentEditComponent implements OnInit {
 
   appointmentTypeChange() {
     this.activAppointment.idContactPerson = 0;
-  }
-
-  employeesList() {
-    this.apiService.pvs4_get_colleagues_list(this.userdata.role, this.userdata.role_set, this.userdata.licensee)
-      .then((result: any) => {
-        console.log('pvs4_get_colleagues_list result:', result);
-        let k = result['obj'];
-        result['amount'] = parseInt(result['amount']);
-        if (result['amount'] > 0) {
-          for (var i = 0, len = k.length; i < len; i++) {
-            let item = k[i];
-            item.id = parseInt(item.id);
-            this.employeeList.push(item);
-          }
-        }
-      });
-    console.log('salesListe :', this.employeeList);
-  }
-
-  contactPersonsList(idCustomer) {
-    console.log('contactPersonsList :', idCustomer);
-    this.contactPersonList = [];
-    this.apiService.pvs4_get_contact_person(idCustomer).then((result: any) => {
-      console.log('contactPersonsList result', result.list);
-      for (var i = 0, len = result.list.length; i < len; i++) {
-        var item = result.list[i].data;
-        try {
-          item.addresses = JSON.parse(item.addresses);
-        } catch {
-           console.error('JSON.parse err', item.addresses) ;
-        }
-        this.contactPersonList.push(item);
-      }
-    });
   }
 
   plusDate() {
