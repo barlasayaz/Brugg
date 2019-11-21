@@ -67,8 +67,9 @@ export class ProductListPage implements OnInit {
     public editMode: boolean = false;
     public moveMode: boolean = false;
     public deleteMode: boolean = false;
-
- 
+    public copyMode: boolean = false;
+    public migrationMode: boolean = false;
+    public historyMode: boolean = false;
 
     @ViewChild('tt') dataTable: TreeTable;
     @ViewChild('divHeightCalc') divHeightCalc: any;
@@ -99,7 +100,7 @@ export class ProductListPage implements OnInit {
     @ViewChild('fab2') fab2: any;
 
     fabClick(nr: number) {
-        console.log('fabClick():', nr   );
+        console.log('fabClick():', nr);
         if (nr === 1) { this.fab2.close(); }
         if (nr === 2) { this.fab1.close(); }
     }
@@ -655,6 +656,9 @@ export class ProductListPage implements OnInit {
             this.moveMode = false;
             this.deleteMode = false;
             this.selectMode = false;
+            this.copyMode = false;
+            this.migrationMode = false;
+            this.historyMode = false;
             this.move_id = 0;
             this.move_to = 0;
             this.move_obj = {};
@@ -677,6 +681,18 @@ export class ProductListPage implements OnInit {
             if (this.userdata.role_set.check_products != true) { return; }
             this.workMode = true;
             this.selectMode = true;
+        } else if (mode === 5) {
+            if (this.userdata.role_set.edit_products != true) { return; }
+            this.workMode = true;
+            this.copyMode = true;
+        } else if (mode === 6) {
+            if (this.userdata.role_set.edit_products != true) { return; }
+            this.workMode = true;
+            this.migrationMode = true;
+        } else if (mode === 7) {
+            if (this.userdata.role_set.edit_products != true) { return; }
+            this.workMode = true;
+            this.historyMode = true;
         }
     }
 
@@ -730,33 +746,30 @@ export class ProductListPage implements OnInit {
         this.navCtrl.navigateForward(['/product-edit']);
     }
 
-    menu_history() {
-        console.log('menu_history', this.selectedNode);
-        if (this.selectedNode) {
-            if (this.selectedNode.data.id) {
-                const id = parseInt(this.selectedNode.data.id);
+    menu_history(data) {
+        console.log('menu_history', data);
+        if (data) {
+            if (data.id) {
+                const id = parseInt(data.id);
                 console.log('menu_history id', id);
 
-                const data = {
+                const obj = {
                     idCustomer: this.idCustomer,
                     idProduct: id,
-                    titleProduct: this.selectedNode.data.title
+                    titleProduct: data.title
                 };
-                this.dataService.setData(data);
+                this.dataService.setData(obj);
                 this.navCtrl.navigateForward(['/protocol-history']);
             }
         }
     }
 
-    async product_migration() {
-        console.log('product_migration', this.selectedNode);
+    async product_migration(data) {
+        console.log('product_migration', data);
         if (this.userdata.role_set.edit_products == false) { return; }
-        if (this.selectedNode) {
+        if (data) {
             const nodeList: string[]  = [];
-            for (let index = 0; index < this.selectedNode.length; index++) {
-                const element = this.selectedNode[index];
-                nodeList.push(element.data);
-            }
+            nodeList.push(data);
             const modal =
                 await this.modalCtrl.create({
                     component: ProductMigrationPage,
@@ -766,8 +779,8 @@ export class ProductListPage implements OnInit {
                     }
                 });
 
-            modal.onDidDismiss().then(async data => {
-                if (data['data']) {
+            modal.onDidDismiss().then(async retData => {
+                if (retData['data']) {
                     this.page_load();
                 }
             });
@@ -1193,21 +1206,19 @@ export class ProductListPage implements OnInit {
         }).then(x => x.present());
     }
 
-    async product_copy() {
+    async product_copy(data) {
         if (this.userdata.role_set.edit_products == false) { return; }
         const modal =
             await this.modalCtrl.create({
             component: ProductCopyPage,
             cssClass: 'productcopy-modal-css',
             componentProps: {
-                readOnly: false, idProduct: this.selectedNode.data.id, idCustomer: this.idCustomer
+                readOnly: false, idProduct: data.id, idCustomer: this.idCustomer
             }
         });
 
         modal.present();
     }
-
-
 
     activePassiveProduct() {
         console.log('activePassiveProduct()');

@@ -84,7 +84,7 @@
                             <ion-icon name="trash"></ion-icon>
                         </ion-button>
                         <ion-button [hidden]="!editMode" class="btn btn-success" size="small"  (click)="editProduct(rowData)">
-                                <ion-icon name="create"></ion-icon>
+                            <ion-icon name="create"></ion-icon>
                         </ion-button>
                         <!--
                         <ion-button [hidden]="workMode"  class="btn btn-primary" size="small"  (click)="viewProduct(rowData)">
@@ -92,14 +92,23 @@
                         </ion-button>   
                         -->
                         <ion-button [hidden]="((!moveMode)||(move_id>0))" class="btn btn-teal" size="small"  (click)="moveProduct(1,rowData)">
-                                <ion-icon name="md-move"></ion-icon>
+                            <ion-icon name="md-move"></ion-icon>
                         </ion-button> 
                         <ion-button [hidden]="((!moveMode)||(move_id==0)||(move_id==rowData.id))" class="btn btn-danger" size="small"  (click)="moveProduct(2,rowData)">
-                                <ion-icon name="md-arrow-round-forward"></ion-icon>
+                            <ion-icon name="md-arrow-round-forward"></ion-icon>
                         </ion-button>     
                         <ion-button [hidden]="((!moveMode)||(move_id==0)||(move_id!=rowData.id))" class="btn btn-teal" size="small"  (click)="moveProduct(2,rowData)">
-                                <ion-icon name="md-arrow-round-back"></ion-icon>
-                        </ion-button>   
+                            <ion-icon name="md-arrow-round-back"></ion-icon>
+                        </ion-button>
+                        <ion-button [hidden]="!copyMode" class="btn btn-success" size="small"  (click)="product_copy(rowData)">
+                            <ion-icon name="copy"></ion-icon>
+                        </ion-button>
+                        <ion-button [hidden]="!migrationMode" class="btn btn-success" size="small"  (click)="product_migration(rowData)">
+                            <ion-icon name="arrow-forward"></ion-icon>
+                        </ion-button>
+                        <ion-button [hidden]="!historyMode" class="btn btn-success" size="small"  (click)="menu_history(rowData)">
+                            <ion-icon name="filing"></ion-icon>
+                        </ion-button>
                         <p-treeTableCheckbox [value]="rowNode" *ngIf="selectMode"></p-treeTableCheckbox>        
                     </div>                                
                 </td>
@@ -238,25 +247,25 @@
                         (click)="excel_export()">
             <ion-icon name="stats"></ion-icon>
         </ion-fab-button>
-        <!-- BUTTON aaaaaaa -->
+        <!-- BUTTON -->
         <ion-fab-button color="success"
-                        title="{{'Produktmigration' | translate}}"
-                        (click)="product_migration()"
-                        *ngIf="userdata.role_set.edit_products">
-            <ion-icon name="fastforward"></ion-icon>
-        </ion-fab-button>
-        <!-- BUTTON aaaaaaa-->
-        <ion-fab-button color="success"
-                        title="{{'Produkt kopieren' | translate}}"
-                        (click)="product_copy()"
+                        title="{{'Produkt duplizieren alt' | translate}}"
+                        (click)="work_mode(5)"
                         *ngIf=" userdata.role_set.edit_products">
-            <ion-icon name="albums"></ion-icon>
+            <ion-icon name="copy"></ion-icon>
         </ion-fab-button>
-        <!-- BUTTON aaaaaaaa-->
-        <ion-fab-button color="dark"
+        <!-- BUTTON -->
+        <ion-fab-button color="success"
+                        title="{{'Produkt migration' | translate}}"
+                        (click)="work_mode(6)"
+                        *ngIf="userdata.role_set.edit_products">
+            <ion-icon name="arrow-forward"></ion-icon>
+        </ion-fab-button>
+        <!-- BUTTON -->
+        <ion-fab-button color="success"
                         title="{{'Protokollverlauf' | translate}}"
-                        (click)="menu_history()">
-            <ion-icon name="information"></ion-icon>
+                        (click)="work_mode(7)">
+            <ion-icon name="filing"></ion-icon>
         </ion-fab-button>
         <!-- BUTTON -->
         <ion-fab-button color="dark"
