@@ -72,12 +72,14 @@ export class MainNavComponent implements OnInit {
 
   search(event: any) {
     console.log('search', event.target.value);
-    this.searchText = event.target.value;
-    const eventObj = {
-      lable: 'searchText',
-      text: this.searchText
-    };
-    this.ping.emit(eventObj);
+    let searchTimeout = setTimeout(() => {
+      this.searchText = event.target.value;
+      const eventObj = {
+        lable: 'searchText',
+        text: this.searchText
+      };
+      this.ping.emit(eventObj);
+    }, 900);
   }
 
   sendPing(ping) {
