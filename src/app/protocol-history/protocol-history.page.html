@@ -38,8 +38,12 @@
                         <div class="td">{{col.header}}</div>
                       </ion-col>
                       <ion-col size-xl="2" size-lg="2" size-md="2" size-sm="12" size="12" *ngFor="let index of listCount"> 
-                        <div class="td" *ngIf="col.field != 'protocol_date'"> {{protocolList[index].data[col.field]}} </div>
+                        <div class="td" *ngIf="col.field != 'protocol_date' && protocolList[index].data[col.field] != true && protocolList[index].data[col.field] != false"> {{protocolList[index].data[col.field]}} </div>
                         <div class="td" *ngIf="col.field == 'protocol_date'"> {{protocolList[index].data[col.field] | date: 'dd.MM.yyyy'}} </div>
+                        <div class="td" *ngIf="col.field != 'protocol_date'">
+                          <img class="td" *ngIf="protocolList[index].data[col.field] == true" src="/assets/imgs/available.png" alt="" height="17px" />
+                          <img class="td" *ngIf="protocolList[index].data[col.field] == false" src="/assets/imgs/not_available.png" alt="" height="17px" />
+                        </div>
                       </ion-col>
                     </div>             	
                 </div>
@@ -56,17 +60,17 @@
       <ion-icon name="menu"></ion-icon>
     </ion-fab-button>
     <ion-fab-list side="top">
-      <ion-fab-button color="primary"
-                      title="{{'ExportAllExcel' | translate}}"
-                      (click)="printExcel()"
-                      [disabled]="pdfxlsButton">
-        <ion-icon name="podium"></ion-icon>
-      </ion-fab-button>
-      <ion-fab-button color="primary"
-                      title="{{'PDF Ansicht' | translate}}"
+      <ion-fab-button color="warning"
+                      title="{{'PDF Export' | translate}}"
                       (click)="printPdf()"
                       [disabled]="pdfxlsButton">
-        <ion-icon name="document"></ion-icon>
+        <ion-icon name="download"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button color="warning"
+                      title="{{'XLS Export' | translate}}"
+                      (click)="printExcel()"
+                      [disabled]="pdfxlsButton">
+        <ion-icon name="stats"></ion-icon>
       </ion-fab-button>
     </ion-fab-list>
   </ion-fab>
