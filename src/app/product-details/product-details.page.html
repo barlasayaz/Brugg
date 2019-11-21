@@ -146,60 +146,54 @@
 	</div>
 </ion-content>
 
-<ion-fab slot="fixed" vertical="bottom" horizontal="end" class="liftiball">
+<ion-fab vertical="bottom" horizontal="end" slot="fixed" class="liftiball">
 	<ion-fab-button color="tertiary">
 		<ion-icon name="menu"></ion-icon>
 	</ion-fab-button>
 	<ion-fab-list side="top">
 		<ion-fab-button color="primary"
-						(click)="editProduct()"
-						(mouseover)="mouseover(1)"
-						(mouseout)="mouseout(1)"
-						[class.mouse-over]="mouseoverButton1"
-						[labelFab]="'Produkt bearbeiten'">
+						title="{{'Produkt bearbeiten' | translate}}"
+						(click)="editProduct()">
 			<ion-icon name="create"></ion-icon>
-		</ion-fab-button>		
+		</ion-fab-button>
 		<ion-fab-button color="primary"
-						(click)="copyProduct()"
-						(mouseover)="mouseover(2)"
-						(mouseout)="mouseout(2)"
-						[class.mouse-over]="mouseoverButton2"
-						[labelFab]="'Produkt duplizieren alt'">
+						title="{{'Produkt duplizieren alt' | translate}}"
+						(click)="copyProduct()">
 			<ion-icon name="copy"></ion-icon>
-		</ion-fab-button>		
+		</ion-fab-button>
 		<ion-fab-button color="primary"
+						title="{{'Produkt migration' | translate}}"
+						(click)="product_migration()"
+						*ngIf="userdata.role_set.edit_products">
+			<ion-icon name="arrow-forward"></ion-icon>
+		</ion-fab-button>
+		<ion-fab-button color="primary"
+						title="{{'Protokollverlauf' | translate}}"
+						(click)="menu_history()"
+						*ngIf="userdata.role_set.edit_products">
+			<ion-icon name="filing"></ion-icon>
+		</ion-fab-button>
+		<ion-fab-button color="primary"
+						title="{{'Neues Protokoll' | translate}}"
 						(click)="createProtocol()"
-						[disabled]="userdata.role_set.check_products==false"
-						(mouseover)="mouseover(3)"
-						(mouseout)="mouseout(3)"
-						[class.mouse-over]="mouseoverButton3"
-						[labelFab]="'Neues Protokoll'">
+						[disabled]="userdata.role_set.check_products==false">
 			<ion-icon name="clipboard"></ion-icon>
 		</ion-fab-button>
 		<ion-fab-button color="primary"
-						(click)="printPdf()"
-						(mouseover)="mouseover(4)"
-						(mouseout)="mouseout(4)"
-						[class.mouse-over]="mouseoverButton4"
-						[labelFab]="'PDF Ansicht'">
+						title="{{'PDF Ansicht' | translate}}"
+						(click)="printPdf()">
 			<ion-icon name="document"></ion-icon>
 		</ion-fab-button>
-		<ion-fab-button color="primary"						
+		<ion-fab-button color="primary"
+						title="{{'NFC Scan' | translate}}"
 						(click)="nfc_scan()"
-						[disabled]="!isNFC"
-						(mouseover)="mouseover(5)"
-						(mouseout)="mouseout(5)"
-						[class.mouse-over]="mouseoverButton5"
-						[labelFab]="'NFC Scan'">
+						[disabled]="!isNFC">
 			<ion-icon name="wifi"></ion-icon>
 		</ion-fab-button>
 		<ion-fab-button color="primary"
+						title="{{'QR-Code scannen' | translate}}"
 						(click)="qr_code()"
-						[disabled]="!mobilePlatform"
-						(mouseover)="mouseover(6)"
-						(mouseout)="mouseout(6)"
-						[class.mouse-over]="mouseoverButton6"
-						[labelFab]="'QR-Code scannen'">
+						[disabled]="!mobilePlatform">
 			<ion-icon name="qr-scanner"></ion-icon>
 		</ion-fab-button>
 	</ion-fab-list>

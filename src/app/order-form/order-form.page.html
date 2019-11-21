@@ -439,27 +439,21 @@
     </div>
   </ion-content>
 
-  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" class="liftiball">
     <ion-fab-button color="tertiary">
       <ion-icon name="menu"></ion-icon>
     </ion-fab-button>
     <ion-fab-list side="top">
-      <ion-fab-button color="primary" 
-                      (click)="ordersSend()" 
-                      (mouseover)="mouseover(1)" 
-                      (mouseout)="mouseout(1)"
-                      [class.mouse-over]="mouseoverButton1"
-                      [labelFab]="'Bestellung Abschicken'">
-        <ion-icon name="send"></ion-icon>        
-      </ion-fab-button>
-      <ion-fab-button color="primary"
-                      (click)="printPdf('download')"
-                      (mouseover)="mouseover(2)" 
-                      (mouseout)="mouseout(2)"
-                      [class.mouse-over]="mouseoverButton2"
-                      [labelFab]="'PDF Export'">
-        <ion-icon name="document"></ion-icon>        
-      </ion-fab-button>
+        <ion-fab-button color="primary"
+                        title="{{'Bestellung Abschicken' | translate}}"
+                        (click)="ordersSend()">
+            <ion-icon name="send"></ion-icon>
+        </ion-fab-button>
+        <ion-fab-button color="primary"
+                        title="{{'PDF Export' | translate}}"
+                        (click)="printPdf('download')">
+            <ion-icon name="document"></ion-icon>
+        </ion-fab-button>
     </ion-fab-list>
   </ion-fab>
 

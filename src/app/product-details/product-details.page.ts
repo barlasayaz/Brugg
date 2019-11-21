@@ -9,11 +9,12 @@ import { CameraOptions, Camera } from '@ionic-native/camera/ngx';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
 import { DatePipe } from '@angular/common';
 import { PdfExportService } from '../services/pdf-export';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, NavigationExtras } from '@angular/router';
 import { DataService } from '../services/data.service';
 import { ProductCopyPage } from '../product-copy/product-copy.page';
 import { NFC, Ndef } from '@ionic-native/nfc/ngx';
 import { MapLocateComponent } from '../components/map-locate/map-locate.component';
+import { ProductMigrationPage } from '../product-migration/product-migration.page';
 
 /**
  * Generated class for the ProductDetailsPage page.
@@ -653,7 +654,54 @@ export class ProductDetailsPage implements OnInit {
       }
     });
     model.present();
-    
+  }
+
+  async product_migration() {
+    console.log('product_migration', this.activProduct);
+    if (this.userdata.role_set.edit_products == false) { return; }
+    if (this.activProduct) {
+        const nodeList: string[]  = [];
+        nodeList.push(this.activProduct);
+        const modal =
+            await this.modalCtrl.create({
+                component: ProductMigrationPage,
+                cssClass: 'productmigration-modal-css',
+                componentProps: {
+                    'idCustomer': this.idCustomer,
+                    productList: JSON.stringify(nodeList)
+                }
+            });
+
+        modal.onDidDismiss().then(async data => {
+            if (data['data']) {
+              let navigationExtras: NavigationExtras = {
+                queryParams: {
+                  refresh: new Date().getTime()
+                }
+              };
+              this.navCtrl.navigateBack(['/product-list/' + this.idCustomer], navigationExtras);
+            }
+        });
+        modal.present();
+    }
+  }
+
+  menu_history() {
+    console.log('menu_history', this.activProduct);
+    if (this.activProduct) {
+        if (this.activProduct.id) {
+            const id = parseInt(this.activProduct.id);
+            console.log('menu_history id', id);
+
+            const data = {
+                idCustomer: this.idCustomer,
+                idProduct: id,
+                titleProduct: this.activProduct.title
+            };
+            this.dataService.setData(data);
+            this.navCtrl.navigateForward(['/protocol-history']);
+        }
+    }
   }
 
 }

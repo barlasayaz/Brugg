@@ -29,7 +29,7 @@
 	</div>		
 </div>
 
-<ion-fab slot="fixed" horizontal="end" vertical="bottom" class="liftiball">
+<ion-fab vertical="bottom" horizontal="end" slot="fixed" class="liftiball">
 	<ion-item *ngIf="viewMode>0" class="peopleFilter">  
 		<ion-label position="floating">{{translate.instant('Filter')}}</ion-label>
 		<ion-select [(ngModel)]="peopleFilter" 
@@ -44,52 +44,32 @@
 		<ion-icon name="menu"></ion-icon>
 	</ion-fab-button>
 	<ion-fab-list side="top">
-		<ion-fab-button 
-				(click)="newAppointment()" 
-				color="primary"
-				(mouseover)="mouseover(1)"
-				(mouseout)="mouseout(1)"
-				[class.mouse-over]="mouseoverButton1"
-				[labelFab]="'Termin hinzufügen'">				
+		<ion-fab-button color="primary"
+						title="{{'Termin hinzufügen' | translate}}"
+						(click)="newAppointment()">
 			<ion-icon name="add"></ion-icon>
 		</ion-fab-button>
-		<ion-fab-button 
-				(click)="setView(0);" 
-				color="primary"
-				(mouseover)="mouseover(2)"
-				(mouseout)="mouseout(2)"
-				[class.mouse-over]="mouseoverButton2"
-				[labelFab]="'Meine Termine'">  				
+		<ion-fab-button color="primary"
+						title="{{'Meine Termine' | translate}}"
+						(click)="setView(0)">
 			<ion-icon name="calendar"></ion-icon>
 		</ion-fab-button>
-		<ion-fab-button 
-				(click)="setView(1);" 
-				color="primary"
-				(mouseover)="mouseover(3)"
-				(mouseout)="mouseout(3)"
-				[class.mouse-over]="mouseoverButton3"
-				*ngIf="userdata.role!=3" 
-				[labelFab]="'Kundenbesuch'">				
+		<ion-fab-button color="primary"
+						title="{{'Kundenbesuch' | translate}}"
+						(click)="setView(1)"
+						*ngIf="userdata.role!=3">
 			<ion-icon name="people"></ion-icon>
 		</ion-fab-button>
-		<ion-fab-button 					
-				(click)="setView(2);" 
-				color="primary"
-				(mouseover)="mouseover(4)"
-				(mouseout)="mouseout(4)"
-				[class.mouse-over]="mouseoverButton4"
-				*ngIf="userdata.role!=3" 
-				[labelFab]="'Prüfung'">				
+		<ion-fab-button color="primary"
+						title="{{'Prüfung' | translate}}"
+						(click)="setView(2)"
+						*ngIf="userdata.role!=3">
 			<ion-icon name="eye"></ion-icon>
 		</ion-fab-button>
-		<ion-fab-button 					
-				(click)="setView(3);" 
-				color="primary"
-				(mouseover)="mouseover(5)" 
-				(mouseout)="mouseout(5)"
-				[class.mouse-over]="mouseoverButton5"
-				*ngIf="userdata.role!=3" 
-				[labelFab]="'Urlaub'">				
+		<ion-fab-button color="primary"
+						title="{{'Urlaub' | translate}}"
+						(click)="setView(3)"
+						*ngIf="userdata.role!=3">
 			<ion-icon name="cafe"></ion-icon>
 		</ion-fab-button>
 	</ion-fab-list>
