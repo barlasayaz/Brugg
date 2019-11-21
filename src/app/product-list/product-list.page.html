@@ -238,25 +238,24 @@
                         (click)="excel_export()">
             <ion-icon name="stats"></ion-icon>
         </ion-fab-button>
-        <!-- BUTTON -->
+        <!-- BUTTON aaaaaaa -->
         <ion-fab-button color="success"
                         title="{{'Produktmigration' | translate}}"
                         (click)="product_migration()"
-                        *ngIf="(selectedRow==1)&& userdata.role_set.edit_products">
+                        *ngIf="userdata.role_set.edit_products">
             <ion-icon name="fastforward"></ion-icon>
         </ion-fab-button>
-        <!-- BUTTON -->
+        <!-- BUTTON aaaaaaa-->
         <ion-fab-button color="success"
                         title="{{'Produkt kopieren' | translate}}"
                         (click)="product_copy()"
-                        *ngIf="(selectedRow==1)&& userdata.role_set.edit_products">
+                        *ngIf=" userdata.role_set.edit_products">
             <ion-icon name="albums"></ion-icon>
         </ion-fab-button>
-        <!-- BUTTON -->
+        <!-- BUTTON aaaaaaaa-->
         <ion-fab-button color="dark"
                         title="{{'Protokollverlauf' | translate}}"
-                        (click)="menu_history()"
-                        *ngIf="selectedRow==1">
+                        (click)="menu_history()">
             <ion-icon name="information"></ion-icon>
         </ion-fab-button>
         <!-- BUTTON -->

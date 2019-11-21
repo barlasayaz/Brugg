@@ -68,274 +68,7 @@ export class ProductListPage implements OnInit {
     public moveMode: boolean = false;
     public deleteMode: boolean = false;
 
-    public menuItems: MenuItem[] = [{
-        label: this.translate.instant('Ansicht'),
-        icon: 'pi pi-fw pi-eye',
-        disabled: true,
-        command: (event) => {
-            console.log('command menuitem:', event.item);
-            // this.menu_view();
-        }
-    },
-    {
-        label: this.translate.instant('Bearbeiten'),
-        icon: 'pi pi-fw pi-pencil',
-        disabled: true,
-        visible: this.userdata.role_set.edit_products,
-        command: (event) => {
-            if (this.userdata.role_set.edit_products == false) { return; }
-            console.log('command menuitem:', event.item);
-            // this.menu_edit();
-        }
-    },
-    {
-        label: this.translate.instant('löschen'),
-        icon: 'pi pi-fw pi-trash',
-        disabled: true,
-        visible:  this.userdata.role_set.check_products,
-        command: (event) => {
-            console.log('command menuitem:', event.item);
-            // this.productDeactivateAlert();
-        }
-    },
-    {
-        label: this.translate.instant('Bewegen'),
-        icon: 'pi pi-fw pi-chevron-up',
-        visible: this.userdata.role_set.edit_products,
-        disabled: true,
-        command: (event) => {
-            if (this.userdata.role_set.edit_products == false) { return; }
-            console.log('command menuitem:', event.item);
-            this.menu_move(1);
-        }
-    },
-    {
-        label: this.translate.instant('Stammordner'),
-        icon: 'pi pi-fw pi-chevron-down',
-        visible: false,
-        styleClass: 'move_now',
-        disabled: false,
-        command: (event) => {
-            if (this.userdata.role_set.edit_products == false) { return; }
-            console.log('command menuitem:', event.item);
-            this.menu_move(2);
-        }
-    },
-    {
-        label: this.translate.instant('Neu'),
-        icon: 'pi pi-fw pi-plus',
-        visible: (this.userdata.role_set.edit_products || this.userdata.role_set.check_products),
-        items: [
-            {
-                label: this.translate.instant('Neue Produktvorlage'),
-                icon: 'pi pi-fw pi-plus',
-                visible: this.userdata.role_set.edit_product_templates,
-                disabled: false,
-                command: (event) => {
-                    if (this.userdata.role_set.edit_product_templates == false) { return; }
-                    console.log('command menuitem:', event.item);
-                    this.create_template();
-                }
-            },
-            {
-                label: this.translate.instant('Neues Produkt'),
-                icon: 'pi pi-fw pi-plus',
-                visible: this.userdata.role_set.edit_products,
-                disabled: false,
-                command: (event) => {
-                    if (this.userdata.role_set.edit_products == false) { return; }
-                    console.log('command menuitem:', event.item);
-                    this.menu_new();
-                }
-            },
-            {
-                label: this.translate.instant('Neues Protokoll'),
-                icon: 'pi pi-fw pi-plus',
-                visible: this.userdata.role_set.check_products,
-                disabled: true,
-                command: (event) => {
-                    if (this.userdata.role_set.check_products == false) { return; }
-                    console.log('command menuitem:', event.item);
-                    this.create_protocol();
-                }
-            }
-        ]
-    },
-    {
-        label: this.translate.instant('Filter'),
-        icon: 'pi pi-fw pi-filter',
-        command: (event) => {
-            console.log('command menuitem:', event.item);
-            this.menu_filter();
-        }
-    },
-    {
-        label: this.translate.instant('Spalten'),
-        icon: 'pi pi-fw pi-eject',
-        command: (event) => {
-            console.log('command menuitem:', event.item);
-            this.show_columns();
-        }
-    },
-    {
-        label: this.translate.instant('Aktion'),
-        icon: 'pi pi-fw pi-cog',
-        items: [
-            {
-                label: this.translate.instant('Cancel filters'),
-                icon: 'pi pi-fw pi-filter',
-                disabled: true,
-                command: (event) => {
-                    console.log('command menuitem:', event.item);
-                    this.cancel_filters(2);
-                }
-            },
-            {
-                label: this.translate.instant('XLSx export'),
-                icon: 'pi pi-fw pi-save',
-                command: (event) => {
-                    this.excel_export();
-                }
-            },
-            {
-                label: this.translate.instant('PDF export'),
-                icon: 'pi pi-fw pi-save',
-                command: (event) => {
-                    this.pdf_export();
-                }
-            },
-            {
-                label: this.translate.instant('Produkt migration'),
-                icon: 'pi pi-fw pi-arrow-right',
-                visible: this.userdata.role_set.edit_products,
-                disabled: true,
-                command: (event) => {
-                    console.log('command menuitem:', event.item);
-                    this.product_migration();
-                }
-            },
-            {
-                label: this.translate.instant('Produkt duplizieren alt'),
-                icon: 'pi pi-fw pi-copy',
-                visible: this.userdata.role_set.edit_products,
-                disabled: true,
-                command: (event) => {
-
-                    console.log('command menuitem:', event.item);
-                    this.product_copy();
-                }
-            },
-            {
-                label: this.translate.instant('Protokollverlauf'),
-                icon: 'pi pi-fw pi-info-circle',
-                disabled: true,
-                command: (event) => {
-                    console.log('command menuitem:', event.item);
-                    this.menu_history();
-                }
-            },
-            {
-                label: this.translate.instant('zeige Basisinformation'),
-                icon: 'pi pi-fw pi-info-circle',
-                disabled: this.showBasicInfo,
-                command: (event) => {
-                    console.log('command menuitem:', event.item);
-                    const alert = this.alertCtrl.create({
-                        header: this.translate.instant('Basisinformation'),
-                        message: this.translate.instant('Anzahl der maximal angezeigten Zeichen (min:10, max:300)'),
-                        inputs: [
-                            {
-                              name: 'countC',
-                              placeholder: String(this.lengthBasicInfo)
-                            }
-                          ],
-                        buttons: [
-                            {
-                                text: this.translate.instant('okay'),
-                                handler: (e) => {
-                                    console.log('alert menuitem:', e.countC);
-                                    let x = parseInt(e.countC);
-                                    if ((x >= 10) && (x <= 300)) { this.lengthBasicInfo = x; }
-                                    for (let i = 0; i < this.productListView.length; i++ ) {
-                                        let info = this.productListView[i].data['_basic_info_'];
-                                        if (info.length > this.lengthBasicInfo + 3) {
-                                            info = info.substring(0, this.lengthBasicInfo) + '...';
-                                        }
-                                        this.productListView[i].data['_basic_info_show_'] = info;
-                                    }
-                                }
-                            }
-                        ]
-                    }).then(x => x.present());
-                    this.showBasicInfo = true;
-                    this.menuItems[8].items[6]['disabled'] = true;
-                    this.menuItems[8].items[7]['disabled'] = false;
-                }
-            },
-            {
-                label: this.translate.instant('Basisinformation ausblenden'),
-                icon: 'pi pi-fw pi-info-circle',
-                disabled: !this.showBasicInfo,
-                command: (event) => {
-                    console.log('command menuitem:', event.item);
-                    this.showBasicInfo = false;
-                    this.menuItems[8].items[6]['disabled'] = false;
-                    this.menuItems[8].items[7]['disabled'] = true;
-                }
-            },
-            {
-                label: this.translate.instant('Zeige nur aktives produkte'),
-                icon: 'pi pi-fw pi-search',
-                visible: this.showActivePassiveProduct,
-                command: (event) => {
-                    console.log('command menuitem:', event.item);
-                    this.showActivePassiveProduct = false;
-                    this.menuItems[8].items[8]['visible'] = false;
-                    this.menuItems[8].items[9]['visible'] = true;
-                    this.activePassiveProduct();
-                }
-            },
-            {
-                label: this.translate.instant('Zeige nur passive produkte'),
-                icon: 'pi pi-fw pi-search',
-                visible: !this.showActivePassiveProduct,
-                command: (event) => {
-                    console.log('command menuitem:', event.item);
-                    this.showActivePassiveProduct = true;
-                    this.menuItems[8].items[8]['visible'] = true;
-                    this.menuItems[8].items[9]['visible'] = false;
-                    this.activePassiveProduct();
-                }
-            }
-            /*,
-            {
-                label: this.translate.instant('Bearbeitungsmodus'),
-                icon: 'pi pi-fw pi-pencil',
-                visible: this.userdata.role_set.edit_products,
-                command: (event) => {
-                    console.log('command menuitem:', event.item);
-                    this.open_edit_mode();
-                }
-            },
-            {
-                label: this.translate.instant('Bearbeitungsmodus abbrechen'),
-                icon: 'pi pi-fw pi-pencil',
-                visible: false,
-                command: (event) => {
-                    console.log('command menuitem:', event.item);
-                    this.quit_edit_mode();
-                }
-            }
-            */
-        ]
-    }
-];
-
-    public popupMenu: MenuItem[] = [{
-        label: this.translate.instant('Menü'),
-        icon: 'fa fa-fw fa-list',
-        items: this.menuItems
-    }];
+ 
 
     @ViewChild('tt') dataTable: TreeTable;
     @ViewChild('divHeightCalc') divHeightCalc: any;
@@ -358,11 +91,6 @@ export class ProductListPage implements OnInit {
             this.modelChanged.pipe(
                 debounceTime(700))
                 .subscribe(model => {
-                    if (this.isFilterOn()) {
-                        this.menuItems[8].items[0]['disabled'] = false;
-                    } else {
-                        this.menuItems[8].items[0]['disabled'] = true;
-                    }
                     this.generate_productList(0, this.rowCount, this.sortedColumn.sort_field, this.sortedColumn.sort_order);
                     localStorage.setItem('filter_values_product', JSON.stringify(this.columnFilterValues));
         });
@@ -523,16 +251,6 @@ export class ProductListPage implements OnInit {
         this.childCount = 0;
         this.selectedNode = [];
         this.selectedRow = 0;
-        this.menuItems[0].disabled = true;
-        this.menuItems[1].disabled = true;
-        this.menuItems[2].disabled = true;
-        this.menuItems[3].disabled = true;
-        this.menuItems[5].items[0]['disabled'] = !this.userdata.role_set.edit_product_templates;
-        this.menuItems[5].items[1]['disabled'] = false;
-        this.menuItems[5].items[2]['disabled'] = true;
-        this.menuItems[8].items[3]['disabled'] = true;
-        this.menuItems[8].items[4]['disabled'] = true;
-        this.menuItems[8].items[5]['disabled'] = true;
 
         this.events.publish('prozCustomer', 0);
         this.apiService.pvs4_get_product_list(this.idCustomer).then((result: any) => {
@@ -819,7 +537,6 @@ export class ProductListPage implements OnInit {
 
     cancel_filters(cancel_type) {
         console.log('cancel_filters');
-        this.menuItems[8].items[0]['disabled'] = true;
         if (cancel_type == 1) {
             for (let i = 0; i < this.cols.length; i++) {
                 this.columnFilterValues[this.cols[i].field] = '';
@@ -906,20 +623,6 @@ export class ProductListPage implements OnInit {
             this.productListView = this.productListView.slice(start_index, this.rowRecords);
         } else {
             this.productListView = this.productListView.slice(start_index, (start_index + end_index));
-        }
-
-        if (this.productListView.length > 0) {
-            if (this.isFilterOn()) {
-                this.menuItems[8].items[0]['disabled'] = false;
-            } else {
-                this.menuItems[8].items[0]['disabled'] = true;
-            }
-            this.menuItems[8].items[1]['disabled'] = false;
-            this.menuItems[8].items[2]['disabled'] = false;
-        } else {
-            this.menuItems[8].items[0]['disabled'] = true;
-            this.menuItems[8].items[1]['disabled'] = true;
-            this.menuItems[8].items[2]['disabled'] = true;
         }
 
         let progressBar;
@@ -1081,23 +784,6 @@ export class ProductListPage implements OnInit {
                     this.move_obj = JSON.parse(JSON.stringify(this.selectedNode.data));
                 }
             }
-            // this.menuItems[3].visible = false;
-            // this.menuItems[4].visible = true;
-            // this.selectMulti = 0;
-            this.menuItems[0].disabled = true;
-            this.menuItems[1].disabled = true;
-            this.menuItems[2].disabled = true;
-            this.menuItems[3].visible = false;
-            this.menuItems[4].visible = true;
-            this.menuItems[5].items[0]['disabled'] = true;
-            this.menuItems[5].items[1]['disabled'] = true;
-            this.menuItems[5].items[2]['disabled'] = true;
-            this.menuItems[8].items[0]['disabled'] = true;
-            this.menuItems[8].items[1]['disabled'] = true;
-            this.menuItems[8].items[2]['disabled'] = true;
-            this.menuItems[8].items[3]['disabled'] = true;
-            this.menuItems[8].items[4]['disabled'] = true;
-            this.menuItems[8].items[5]['disabled'] = true;
             this.selectMode = true;
         } else if (n == 2) {
             // in Root
@@ -1107,11 +793,6 @@ export class ProductListPage implements OnInit {
                 console.log('result: ', result);
                 this.page_load();
             });
-            this.menuItems[3].visible = true;
-            this.menuItems[4].visible = false;
-            this.menuItems[3].visible = true;
-            this.menuItems[4].visible = false;
-            this.menuItems[5].items[2]['disabled'] = true;
             this.move_id = 0;
             // this.selectMulti = 1;
             this.selectMode = false;
@@ -1526,27 +1207,7 @@ export class ProductListPage implements OnInit {
         modal.present();
     }
 
-    open_edit_mode() {
-        this.editMode = true;
-        this.menuItems[8].items[6]['visible'] = false;
-        this.menuItems[8].items[7]['visible'] = true;
-    }
 
-    quit_edit_mode() {
-        this.editMode = false;
-        this.menuItems[8].items[6]['visible'] = true;
-        this.menuItems[8].items[7]['visible'] = false;
-    }
-    onEditComplete (event) {
-        console.log('event:', event);
-      let value = event.data[event.field];
-      let field = event.field;
-      let id = event.data.id;
-
-      let obj = { value : value, field: field, id: id};
-
-      this.apiService.pvs4_set_product_dynamic(obj);
-    }
 
     activePassiveProduct() {
         console.log('activePassiveProduct()');
