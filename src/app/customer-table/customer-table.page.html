@@ -97,11 +97,7 @@
             <tr [ttSelectableRow]="rowNode" class="workworkC">
                 <td  class="workColumn" [hidden]="!workMode">
                     <div class="workWidthfix">
-                        <!--
-                        <ion-button [hidden]="workMode"  class="btn btn-primary" size="small"  (click)="viewCustomer(rowData)">
-                            <ion-icon name="eye"></ion-icon> 
-                        </ion-button>
-                        -->
+                        
                         <ion-button [hidden]="!editMode" class="btn btn-success" size="small"  (click)="editCustomer(rowData)">
                             <ion-icon name="create"></ion-icon>
                         </ion-button>
@@ -116,7 +112,7 @@
                         </ion-button>           
                     </div>               
                 </td> 
-                <td *ngFor="let col of selectedColumns.slice(1); let i = index">
+                <td *ngFor="let col of selectedColumns.slice(1); let i = index" [ngClass]="{'link_eye': (col.field == 'company')}" >
                     <p-treeTableToggler [rowNode]="rowNode" *ngIf="i == 0"></p-treeTableToggler>
                     <label *ngIf="(col.field == 'last_date')">{{rowData[col.field] | date : 'dd.MM.yyyy'}}</label>
                     <label *ngIf="(col.field == 'next_date')">{{rowData[col.field] | date : 'dd.MM.yyyy'}}</label>

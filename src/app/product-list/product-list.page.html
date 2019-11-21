@@ -103,7 +103,7 @@
                         <p-treeTableCheckbox [value]="rowNode" *ngIf="selectMode"></p-treeTableCheckbox>        
                     </div>                                
                 </td>
-                <td *ngFor="let col of selectedColumns.slice(1); let i = index" 
+                <td *ngFor="let col of selectedColumns.slice(1); let i = index" [ngClass]="{'link_eye': (col.field == 'title')}"
                     [ngStyle]="showActivePassiveProduct && {'color': '#ccc'}">
                     <p-treeTableToggler [rowNode]="rowNode" *ngIf="i == 0"></p-treeTableToggler>
 
@@ -127,11 +127,13 @@
                                 height="17px" />
                         </span>
                     </span>
-                    <div class="link" *ngIf="(col.field == 'title')" (click)="viewProduct(rowData)">{{rowData[col.field]}}</div>                 
+                    <div class="link" *ngIf="(col.field == 'title')" (click)="viewProduct(rowData)">{{rowData[col.field]}}
+                        <div *ngIf="(i===1) && showBasicInfo" style="font-size: 85%;  ">
+                                {{rowData['_basic_info_show_']}}
+                        </div>
+                    </div>                 
                
-                    <div *ngIf="(i===1) && showBasicInfo" style="font-size: 85%;  ">
-                            {{rowData['_basic_info_show_']}}
-                    </div>
+                    
                 </td>
             </tr>
         </ng-template>

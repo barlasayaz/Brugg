@@ -22474,10 +22474,33 @@ _:-webkit-full-screen,
   border-radius: 8px;
 }
 
- .link {
-      cursor: pointer;
-      color: #005e86;
-  }  
-  .link:hover{
-      font-weight: bold;
-  }
+.link {
+    cursor: pointer;
+    color: #005e86;
+    height: 100%;
+}  
+.link:hover{
+    font-weight: bold;
+}
+.link_eye{
+  position: relative;
+}
+
+.link_eye:after {
+  content: '\1F441';
+  display: block;
+ font-size: 16px; 
+  position: absolute;
+  color: #005e86;
+  opacity: 75%;
+  top: 0px;
+  right: 3px;
+}
+
+.link_eye:hover{
+  background-color: #9fdbf5 !important;
+}
+.link_eye:hover:after{
+  opacity: 100%;
+  font-size: 20px; 
+}
