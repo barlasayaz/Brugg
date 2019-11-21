@@ -34,6 +34,7 @@ export class MainNavComponent implements OnInit {
   public nextAppointmentEnable = true;
   public customerEnable = true;
   public appointmentPlanEnable = false;
+  public searchTimeout;
 
   constructor(
     public userdata: UserdataService,
@@ -72,14 +73,15 @@ export class MainNavComponent implements OnInit {
 
   search(event: any) {
     console.log('search', event.target.value);
-    let searchTimeout = setTimeout(() => {
+    if(this.searchTimeout) clearTimeout(this.searchTimeout);
+    this.searchTimeout = setTimeout(() => {
       this.searchText = event.target.value;
       const eventObj = {
         lable: 'searchText',
         text: this.searchText
       };
       this.ping.emit(eventObj);
-    }, 900);
+    }, 700);
   }
 
   sendPing(ping) {
