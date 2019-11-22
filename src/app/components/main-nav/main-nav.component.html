@@ -52,8 +52,14 @@
                        [ngClass]="getClass('/note-list')">
                     <ion-icon name="arrow-round-back"></ion-icon>
                   </div>
+                  <div *ngIf="aktivPage == 'Statistics'" 
+                       class="menuIcon"
+                       [routerLink]="['/dashboard']"
+                       [ngClass]="getClass('/dashboard')">
+                    <ion-icon name="arrow-round-back"></ion-icon>
+                  </div>
                 </div>
-                
+  
                 <div class="topsearch"
                      *ngIf="aktivPage == 'CustomerTable' ||
                             aktivPage == 'ProductList' ||
