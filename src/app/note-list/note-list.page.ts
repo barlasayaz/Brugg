@@ -536,12 +536,17 @@ export class NoteListPage implements OnInit {
 
     viewNote(note) {
         console.log('viewNote', note);
-        const data = {
-            id: parseInt(note.id),
-            idCustomer: this.idCustomer
-        };
-        this.dataService.setData(note);
-        this.navCtrl.navigateForward(['/note-details']);
+        if (note) {
+            if (note.id) {
+                const id = parseInt(note.id);
+                let data = {
+                    idCustomer: this.idCustomer,
+                    idNote: id
+                  };
+                this.dataService.setData(data);
+                this.navCtrl.navigateForward(['/note-details']);
+            }
+        }
     }
 
     async excel_export() {

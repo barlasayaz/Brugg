@@ -33,7 +33,7 @@ export class NoteDetailsPage {
 
       if (this.route.snapshot.data['special']) {
         let params = this.route.snapshot.data['special'];
-        this.idNote = params['id'];
+        this.idNote = params['idNote'];
         this.idCustomer = params['idCustomer'];
       }
       this.loadNote(this.idNote);
