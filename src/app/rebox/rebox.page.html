@@ -63,7 +63,7 @@
 					</ion-input>
 				</ion-item>
 			</ion-col>
-			<ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12">
+			<ion-col size-xl="3" size-lg="3" size-md="3" size-sm="10" size="10">
 				<ion-item lines="none">
 					<ion-label position="floating">{{translate.instant('PLZ')}} {{translate.instant('Ort')}}</ion-label>
 					<ion-input (ionChange)="inputErrorMsg()"
@@ -71,14 +71,18 @@
 								id="Ort"
 								[(ngModel)]="rebox.Ort">
 					</ion-input>
-					<ion-button [hidden]="platform_version==0" (click)="setGPS(1);">
+				</ion-item>
+			</ion-col>
+			<ion-col size-xl="1" size-lg="1" size-md="1" size-sm="2" size="2">
+				<ion-item lines="none" style="margin-top: 15px; margin-left: -5px;">
+					<ion-button [disabled]="platform_version==0" (click)="setGPS(1);">
 						<ion-icon class="headerIcon" name="pin"></ion-icon>
 					</ion-button>
 				</ion-item>
-			</ion-col>
+			</ion-col>					
 		</ion-row>
 		<ion-row *ngIf="GPS==1">
-			<ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12">
+			<ion-col size-xl="4" size-lg="4" size-md="4" size-sm="10" size="10">
 				<ion-item lines="none">
 					<ion-label position="floating">{{translate.instant('Position')}}</ion-label>
 					<ion-input (ionChange)="inputErrorMsg()"
@@ -86,12 +90,17 @@
 								readonly
 								id="Ort"
 								[(ngModel)]="rebox.latitude"
-						(click)="goPos();"></ion-input>
+								(click)="goPos();">
+					</ion-input>
+				</ion-item>
+			</ion-col>
+			<ion-col size-xl="2" size-lg="2" size-md="2" size-sm="2" size="2">
+				<ion-item lines="none" style="margin-top: 15px; margin-left: -5px;">
 					<ion-button (click)="setGPS(0);">
 						<ion-icon class="headerIcon" name="pin"></ion-icon>
 					</ion-button>
 				</ion-item>
-			</ion-col>
+			</ion-col>		
 		</ion-row>
 
 		<!-- Row 3 -->
@@ -110,17 +119,19 @@
 		</ion-row>
 
 		<!-- Row 4 -->
-		<ion-row style="margin-top:20px;">
-			<ion-col size="7">
-				<ion-item lines="none">
+		<ion-row>
+			<ion-col size="12">
+				<ion-item lines="none" class="radio-button">
 					<ion-radio-group [(ngModel)]="pickUpValue">
-						<ion-item lines="none"  *ngFor="let option of pickUpOptions">
+						<ion-item lines="none" *ngFor="let option of pickUpOptions" style="height: 35px;">
 							<ion-label>{{option}}</ion-label>
-							<ion-radio slot="start" [value]="option"></ion-radio>
+							<ion-radio slot="start" [value]="option" style="margin-right: 10px;"></ion-radio>
 						</ion-item>
 					</ion-radio-group>
 				</ion-item>
 			</ion-col>
+		</ion-row>
+		<ion-row>
 			<ion-col size="auto" style="margin-top: 5px;">
 				<ion-label style="color:#999;font-size:14px;">{{translate.instant('Anzahl')}}</ion-label>
 			</ion-col>
