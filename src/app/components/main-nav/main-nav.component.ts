@@ -135,4 +135,8 @@ export class MainNavComponent implements OnInit {
     this.ping.emit(eventObj);
   }
 
+  homePage() {
+    this.systemService.customerId = 0;
+  }
+
 }

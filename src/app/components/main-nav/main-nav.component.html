@@ -19,6 +19,40 @@
                     <ion-icon name="home"></ion-icon>
                   </div>
                 </div>
+
+                <div class="topMenu">
+                  <div *ngIf="aktivPage == 'CustomerDetails'" 
+                       class="menuIcon"
+                       [routerLink]="['/customer-table/',systemService.filterText]"
+                       [ngClass]="getClass('/customer-table')"
+                       (click)="homePage()">
+                    <ion-icon name="arrow-round-back"></ion-icon>
+                  </div>
+                  <div *ngIf="aktivPage == 'ProductDetails' || aktivPage == 'ProductEdit' || aktivPage == 'ProtocolHistory' || aktivPage == 'ProductTemplate'" 
+                       class="menuIcon"
+                       [routerLink]="['/product-list/',systemService.customerId]"
+                       [ngClass]="getClass('/product-list')">
+                    <ion-icon name="arrow-round-back"></ion-icon>
+                  </div>
+                  <div *ngIf="aktivPage == 'ProtocolDetails' || aktivPage == 'ProtocolEdit' || aktivPage == 'ProtocolTemplate'" 
+                       class="menuIcon"
+                       [routerLink]="['/protocol-list/',systemService.customerId]"
+                       [ngClass]="getClass('/protocol-list')">
+                    <ion-icon name="arrow-round-back"></ion-icon>
+                  </div>
+                  <div *ngIf="aktivPage == 'OrderForm'" 
+                       class="menuIcon"
+                       [routerLink]="['/customer-details/',systemService.customerId]"
+                       [ngClass]="getClass('/customer-details')">
+                    <ion-icon name="arrow-round-back"></ion-icon>
+                  </div>
+                  <div *ngIf="aktivPage == 'NoteDetails'" 
+                       class="menuIcon"
+                       [routerLink]="['/note-list/',systemService.customerId]"
+                       [ngClass]="getClass('/note-list')">
+                    <ion-icon name="arrow-round-back"></ion-icon>
+                  </div>
+                </div>
                 
                 <div class="topsearch"
                      *ngIf="aktivPage == 'CustomerTable' ||
@@ -63,12 +97,15 @@
 
               <div id="customerName" class="main-nav-fix">
                 <div class="comp-name" 
-                     *ngIf="aktivPage == 'CustomerTable' ||
-                            aktivPage == 'ProductList' ||
+                     *ngIf="aktivPage == 'ProductList' ||
                             aktivPage == 'ProductDetails' ||
                             aktivPage == 'ProductEdit' ||
+                            aktivPage == 'ProductTemplate' ||
                             aktivPage == 'ProtocolList' ||
                             aktivPage == 'ProtocolDetails' ||
+                            aktivPage == 'ProtocolEdit' ||
+                            aktivPage == 'ProtocolTemplate' ||
+                            aktivPage == 'ProtocolHistory' ||
                             aktivPage == 'OrderForm' ||
                             aktivPage == 'NoteList' ||
                             aktivPage == 'NoteDetails'">
