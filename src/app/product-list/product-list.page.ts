@@ -343,19 +343,14 @@ export class ProductListPage implements OnInit {
                         console.log('options :', this.productListAll[index].data);
                     }
                 }
-
                 // console.log('options :', options);
 
                 if (options == null) { options = []; }
                 let info = '';
                 for (let i = 0; i < options.length; i++) {
-                    // console.log('options :', options[i]);
-                    // console.log('options :', options[i].id);
-                    // console.log('options :', options[i].title);
-
                     // console.log('this.lang :', this.lang);
-                    if (!this.cols.find(x => x.field == options[i].title[this.lang])) {
-                        this.cols.push({ field: options[i].title[this.lang], header: options[i].title[this.lang] , width: '200px'});
+                    if (!this.cols.find(x => x.field === '_opt_'+options[i].title['en'])) {
+                        this.cols.push({ field: '_opt_'+options[i].title['en'], header: options[i].title[this.lang] , width: '200px'});
                         // console.log('this.lang :', options[i].title[this.lang]);
                     }
 

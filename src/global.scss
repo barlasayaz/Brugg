@@ -22492,8 +22492,8 @@ _:-webkit-full-screen,
  font-size: 16px; 
   position: absolute;
   color: #005e86;
-  opacity: 75%;
-  top: 0px;
+  opacity: 50%;
+  top: -3px;
   right: 3px;
 }
 
@@ -22502,5 +22502,6 @@ _:-webkit-full-screen,
 }
 .link_eye:hover:after{
   opacity: 100%;
-  font-size: 20px; 
+  font-size: 22px; 
+  top: -6px;
 }
