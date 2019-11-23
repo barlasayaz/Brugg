@@ -22479,13 +22479,9 @@ _:-webkit-full-screen,
     color: #005e86;
     height: 100%;
 }  
-.link:hover{
-    font-weight: bold;
-}
 .link_eye{
   position: relative;
 }
-
 .link_eye:after {
   content: '\1F441';
   display: block;
@@ -22496,7 +22492,6 @@ _:-webkit-full-screen,
   top: -3px;
   right: 3px;
 }
-
 .link_eye:hover{
   background-color: #9fdbf5 !important;
 }
@@ -22504,4 +22499,31 @@ _:-webkit-full-screen,
   opacity: 100%;
   font-size: 22px; 
   top: -6px;
+}
+
+.link_edit{
+  cursor: pointer;
+  color: #005e86;
+  height: 100%;
+}  
+.link_edit{
+position: relative;
+}
+.link_edit:after {
+content: '\1F589';
+display: block;
+font-size: 16px; 
+position: absolute;
+color: #005e86;
+opacity: 50%;
+top: 0px;
+right: 3px;
+}
+.link_edit:hover{
+background-color: #9fdbf5 !important;
+}
+.link_edit:hover:after{
+opacity: 100%;
+font-size: 22px; 
+top: -3px;
 }

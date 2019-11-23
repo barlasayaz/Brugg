@@ -152,14 +152,14 @@ export class ProductListPage implements OnInit {
     }
 
     ngOnInit() {
-        this.cols = [
+        this.cols = [ 
             { field: 'work_column', header: '', width: '60px' },
             { field: 'nfc_tag_id', header: 'NFC', width: '80px' },
             { field: 'title', header: this.translate.instant('Bezeichnung'), width: '220px' },
             { field: 'id_number', header: 'ID', width: '85px' },
             { field: 'id', header: 'DB-ID', width: '85px' },
             { field: 'articel_no', header: this.translate.instant('Artikel-Nr.'), width: '100px' },
-            { field: 'customer_description', header: this.translate.instant('Kundenbezeichnung'), width: '200px', editable: true },
+            { editField: true, editFieldEN:'customer_description', field: 'customer_description', header: this.translate.instant('Kundenbezeichnung'), width: '200px' },
             { field: 'last_protocol_date', header: this.translate.instant('Letzter besuch'), width: '100px' },
             { field: 'last_protocol_next', header: this.translate.instant('Nächster besuch'), width: '100px' },
             { field: 'check_interval', header: this.translate.instant('Intervall Prüfen'), width: '130px' }
@@ -330,9 +330,7 @@ export class ProductListPage implements OnInit {
                     }
                 }
                 // options
-
                 let options = [];
-
                 if (this.productListAll[index].data.items) {
                     // console.log("items :", this.productListAll[index].data.items);
                     try {
@@ -344,17 +342,26 @@ export class ProductListPage implements OnInit {
                     }
                 }
                 // console.log('options :', options);
-
+ 
                 if (options == null) { options = []; }
                 let info = '';
                 for (let i = 0; i < options.length; i++) {
                     // console.log('this.lang :', this.lang);
-                    if (!this.cols.find(x => x.field === '_opt_'+options[i].title['en'])) {
-                        this.cols.push({ field: '_opt_'+options[i].title['en'], header: options[i].title[this.lang] , width: '200px'});
+                    if (!this.cols.find(x => x.field === options[i].title[this.lang])) {
+                        let obj = { editField: false, editFieldEN: '', field: options[i].title[this.lang],  header: options[i].title[this.lang] , width: '200px'};
+                        if(options[i].title['en'] === 'Location' ) {
+                            obj.editField = true;
+                            obj.editFieldEN = 'Location' ;
+                        }
+                        if(options[i].title['en'] === 'Note' ) {
+                            obj.editField = true;
+                            obj.editFieldEN = 'Note' ;
+                        }
+                        this.cols.push(obj);
                         // console.log('this.lang :', options[i].title[this.lang]);
                     }
 
-                    if (options[i].type == 0) {
+                    if (options[i].type == 0) { 
                         if (options[i].value == true) {
                             options[i].value = '√';
                         }
@@ -732,6 +739,7 @@ export class ProductListPage implements OnInit {
     }
 
     editProduct(data) {
+        console.log('editProduct()', data);
         const obj = {
             id: data.id,
             idCustomer: this.idCustomer,
@@ -739,6 +747,166 @@ export class ProductListPage implements OnInit {
         };
         this.dataService.setData(obj);
         this.navCtrl.navigateForward(['/product-edit']);
+    }
+
+    dbClickCol(field, data){
+        console.log('dbClickCol()',field, data);
+        if(field.field==='title') this.viewProduct(data);
+
+        if(field.editField!=true) return;        
+
+        if(field.editFieldEN==='customer_description') {
+            let otext = String(data.customer_description);
+            const alert = this.alertCtrl.create({
+                header: this.translate.instant('Kundenbezeichnung'),
+                message: otext,
+                inputs: [
+                    {
+                      name: 'input',
+                      value: otext
+                    }
+                  ],
+                buttons: [
+                    {
+                        text: this.translate.instant('abbrechen'),
+                        handler: data => {
+                            //  alert.dismiss();
+                        }
+                    },{
+                        text: this.translate.instant('okay'),
+                        handler: (e) => {
+                            console.log('customer_description:', e);
+                            let s = String(e.input);
+                            this.apiService.pvs4_get_product(data.id).then((result: any) => {
+                                const activProduct = result.obj;
+                                activProduct.customer_description = s;
+                                this.apiService.pvs4_set_product(activProduct).then((setResult: any) => {
+                                    console.log('result: ', setResult);
+                                    this.page_load();
+                                });
+                            });                            
+                        }
+                    }
+                ]
+            }).then(x => x.present());
+        } 
+        
+        if(field.editFieldEN==='Note') {
+            let otext = String(data[field.field]);
+            const alert = this.alertCtrl.create({
+                header: field.field,
+                message: otext,
+                inputs: [ 
+                    {
+                      name: 'input',
+                      value: otext
+                    }
+                  ],
+                buttons: [
+                    {
+                        text: this.translate.instant('abbrechen'),
+                        handler: data => {
+                            //  alert.dismiss();
+                        }
+                    },{
+                        text: this.translate.instant('okay'),
+                        handler: (e) => {
+                            console.log('Note:', e);
+                            let s = String(e.input);
+                            this.apiService.pvs4_get_product(data.id).then((result: any) => {
+                                const activProduct = result.obj;
+                                console.log('activProduct: ', activProduct);
+                                try {
+                                    let items = JSON.parse(activProduct.items);
+                                    for (let i = 0; i < items.length; i++) {
+                                        if(items[i].type!=2) continue;
+                                        if(items[i].title['en']==="Note") {
+                                            items[i].value = s;
+                                            break;
+                                        }
+                                    }                                    
+                                    items = JSON.stringify(items);
+                                    console.log("items new:", items);
+                                    activProduct.items = items;
+                                    this.apiService.pvs4_set_product(activProduct).then((setResult: any) => {
+                                        console.log('result: ', setResult);
+                                        this.page_load();
+                                    });
+                                } catch (e) {
+                                    console.error('JSON.parse items err :', e);
+                                    console.log('items :', activProduct);
+                                }
+                                
+                            });     
+                        }
+                    }
+                ]
+            }).then(x => x.present());
+        }
+        
+        if(field.editFieldEN==='Location') {
+            let otext = String(data[field.field]);
+            const alert = this.alertCtrl.create({
+                header: field.field,
+                message: otext,
+                inputs: [ 
+                    {
+                      name: 'input',
+                      value: otext
+                    }
+                  ],
+                buttons: [
+                    {
+                        text: this.translate.instant('abbrechen'),
+                        handler: data => {
+                            //  alert.dismiss();
+                        }
+                    },{
+                        text: this.translate.instant('okay'),
+                        handler: (e) => {
+                            console.log('Location:', e);
+                            let s = String(e.input);
+                            this.apiService.pvs4_get_product(data.id).then((result: any) => {
+                                const activProduct = result.obj;
+                                console.log('activProduct: ', activProduct);
+                                try {
+                                    let items = JSON.parse(activProduct.items);
+                                    for (let i = 0; i < items.length; i++) {
+                                        if(items[i].type!=2) continue;
+                                        if(items[i].title['en']==="Location") {
+                                            items[i].value = s;
+                                            break;
+                                        }
+                                    }                                    
+                                    items = JSON.stringify(items);
+                                    console.log("items new:", items);
+                                    activProduct.items = items;
+                                    this.apiService.pvs4_set_product(activProduct).then((setResult: any) => {
+                                        console.log('result: ', setResult);
+                                        this.page_load();
+                                    });
+                                } catch (e) {
+                                    console.error('JSON.parse items err :', e);
+                                    console.log('items :', activProduct);
+                                }
+                                
+                            });     
+                        }
+                    }
+                ]
+            }).then(x => x.present());
+        } 
+    }
+
+    viewProduct(data) {
+        console.log('viewProduct', data);
+        const obj = {
+            id: data.id,
+            idCustomer: this.idCustomer,
+            parent: data.parent
+        };
+        this.dataService.setData(obj);
+        this.navCtrl.navigateForward(['/product-details']);
     }
 
     menu_history(data) {
@@ -805,20 +973,7 @@ export class ProductListPage implements OnInit {
             // this.selectMulti = 1;
             this.selectMode = false;
         }
-    }
-
-    viewProduct(data) {
-        console.log('viewProduct', data);
-
-        const obj = {
-            id: data.id,
-            idCustomer: this.idCustomer,
-            parent: data.parent
-        };
-        this.dataService.setData(obj);
-        this.navCtrl.navigateForward(['/product-details']);
-
-    }
+    }    
 
     create_template() {
         if (this.userdata.role_set.edit_product_templates == false) { return; }
