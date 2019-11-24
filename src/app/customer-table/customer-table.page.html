@@ -6,37 +6,12 @@
 </main-nav>
 
 <div class="ek-content" (window:resize)="onResize($event)">
-<!--  
-    <p-menubar id="menuMin" class="wideMenu">
-        <div style="width: 100%" >
-            <button type="button"
-                    pButton 
-                    icon="fa fa-fw fa-list"
-                    label="Menu"
-                    id="btnMenu"
-                    (click)="menu.toggle($event)">
-                <span class="ui-submenu-icon pi pi-fw pi-caret-down slide-caret"></span>
-            </button>
-        </div>
-    </p-menubar>
-    <p-slideMenu [model]="menuItems"
-                 popup="false"
-                 [viewportHeight]="245"
-                 [style]="{'width':'200px'}"
-                 #menu>
-    </p-slideMenu>
-    <p-menubar [model]="menuItems"
-               [autoDisplay]="false"
-               id="menuMax">
-    </p-menubar>
--->
    <div id="heightCalc" 
          class="heightCalc"
          #divHeightCalc>
     </div>
     <p-treeTable [value]="customerListView"
-                 [columns]="selectedColumns"
-                 
+                 [columns]="selectedColumns"                 
                  dataKey="id"
                  (onNodeExpand)="onNodeExpand($event)"
                  (onNodeCollapse)="onNodeCollapse($event)"
@@ -112,7 +87,9 @@
                         </ion-button>           
                     </div>               
                 </td> 
-                <td *ngFor="let col of selectedColumns.slice(1); let i = index" [ngClass]="{'link_eye': (col.field == 'company')}" >
+                <td *ngFor="let col of selectedColumns.slice(1); let i = index" 
+                    (click)="viewCustomer(col,rowData)"
+                    [ngClass]="{'link_eye': (col.field == 'company')}" >
                     <p-treeTableToggler [rowNode]="rowNode" *ngIf="i == 0"></p-treeTableToggler>
                     <label *ngIf="(col.field == 'last_date')">{{rowData[col.field] | date : 'dd.MM.yyyy'}}</label>
                     <label *ngIf="(col.field == 'next_date')">{{rowData[col.field] | date : 'dd.MM.yyyy'}}</label>
@@ -121,7 +98,7 @@
                                   (col.field != 'next_date') &&
                                   (col.field != 'company') &&
                                   (col.field != 'sector') ">{{rowData[col.field]}}</label>   
-                    <div class="link" *ngIf="(col.field == 'company')" (click)="viewCustomer(rowData)">{{rowData[col.field]}}</div>                 
+                    <div class="link" *ngIf="(col.field == 'company')" >{{rowData[col.field]}}</div>                 
                 </td>
             </tr>
         </ng-template>

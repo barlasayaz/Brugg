@@ -77,14 +77,11 @@
                         <ion-button [hidden]="!editMode" class="btn btn-danger" size="small"  (click)="protocolDeactivate(rowData)">
                             <ion-icon name="trash"></ion-icon>
                         </ion-button>
-                        <!--
-                        <ion-button [hidden]="editMode"  class="btn btn-primary" size="small"  (click)="viewProtocol(rowData)">
-                            <ion-icon name="eye"></ion-icon> 
-                        </ion-button>          
-                        -->
                     </div>               
                 </td>
-                <td *ngFor="let col of selectedColumns.slice(1); let i = index" [ngClass]="{'link_eye': (col.field == 'title')}" >
+                <td *ngFor="let col of selectedColumns.slice(1); let i = index" 
+                    (click)="viewProtocol(col, rowData)"
+                    [ngClass]="{'link_eye': (col.field == 'title')}" >
                     <p-treeTableToggler [rowNode]="rowNode" *ngIf="i == 0"></p-treeTableToggler>
                     <label *ngIf="(col.field != 'title') && (col.field == 'protocol_date') || (col.field == 'protocol_date_next')">{{rowData[col.field] | date : 'dd.MM.yyyy'}}</label>
                     <label *ngIf="(col.field != 'title') &&(col.field != 'protocol_date') && (col.field != 'protocol_date_next')">
@@ -98,7 +95,7 @@
                                     src="/assets/imgs/not_available.png" alt="" height="17px"/>
                         </span>
                     </label>
-                    <div class="link" *ngIf="(col.field == 'title')" (click)="viewProtocol(rowData)">{{rowData[col.field]}}</div>
+                    <div class="link" *ngIf="(col.field == 'title')" >{{rowData[col.field]}}</div>
                 </td>
             </tr>
         </ng-template>

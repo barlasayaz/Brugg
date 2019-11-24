@@ -71,84 +71,6 @@ export class NoteListPage implements OnInit {
     public filterOn = false;
     public editMode = false;
 
-    public menuItems: MenuItem[] = [{
-        label: this.translate.instant('Ansicht'),
-        icon: 'pi pi-fw pi-eye',
-        disabled: true,
-        command: (event) => {
-            console.log('command menuitem:', event.item);
-            // this.menu_view();
-        }
-    },
-    {
-        label: this.translate.instant('Bearbeiten'),
-        icon: 'pi pi-fw pi-pencil',
-        disabled: true,
-        command: (event) => {
-            console.log('command menuitem:', event.item);
-            // this.menu_edit();
-        }
-    },
-    {
-        label: this.translate.instant('Neu'),
-        icon: 'pi pi-fw pi-plus',
-        command: (event) => {
-            console.log('command menuitem:', event.item);
-            this.menu_new();
-        }
-    },
-    {
-        label: this.translate.instant('Filter'),
-        icon: 'pi pi-fw pi-filter',
-        command: (event) => {
-            console.log('command menuitem:', event.item);
-            this.menu_filter();
-        }
-    },
-    {
-        label: this.translate.instant('Spalten'),
-        icon: 'pi pi-fw pi-eject',
-        command: (event) => {
-            console.log('command menuitem:', event.item);
-            this.show_columns();
-        }
-    },
-    {
-        label: this.translate.instant('Aktion'),
-        icon: 'pi pi-fw pi-cog',
-        items: [
-            {
-                label: this.translate.instant('Cancel filters'),
-                icon: 'pi pi-fw pi-filter',
-                disabled: true,
-                command: (event) => {
-                    console.log('command menuitem:', event.item);
-                    this.cancel_filters(2);
-                }
-            },
-            {
-                label: this.translate.instant('XLSx export'),
-                icon: 'pi pi-fw pi-save',
-                command: (event) => {
-                    this.excel_export();
-                }
-            },
-            {
-                label: this.translate.instant('PDF export'),
-                icon: 'pi pi-fw pi-save',
-                command: (event) => {
-                    this.pdf_export();
-                }
-            }
-        ]
-    }];
-
-    public popupMenu: MenuItem[] = [{
-        label: this.translate.instant('Menü'),
-        icon: 'fa fa-fw fa-list',
-        items: this.menuItems
-    }];
-
     @ViewChild('tt') dataTable: TreeTable;
     @ViewChild('divHeightCalc') divHeightCalc: ElementRef;
 
@@ -169,11 +91,6 @@ export class NoteListPage implements OnInit {
             this.modelChanged.pipe(
                 debounceTime(700))
                 .subscribe(model => {
-                    if (this.isFilterOn()) {
-                        this.menuItems[5].items[0]['disabled'] = false;
-                    } else {
-                        this.menuItems[5].items[0]['disabled'] = true;
-                    }
                     this.generate_noteList(0, this.rowCount, this.sortedColumn.sort_field, this.sortedColumn.sort_order);
                     localStorage.setItem('filter_values_note', JSON.stringify(this.columnFilterValues));
             });
@@ -377,7 +294,6 @@ export class NoteListPage implements OnInit {
 
     cancel_filters(cancel_type) {
         console.log('cancel_filters');
-        this.menuItems[5].items[0]['disabled'] = true;
         if (cancel_type == 1) {
             for (let i = 0; i < this.cols.length; i++) {
                 this.columnFilterValues[this.cols[i].field] = '';
@@ -439,19 +355,6 @@ export class NoteListPage implements OnInit {
             this.noteListView = this.noteListView.slice(start_index, this.rowRecords);
         } else {
             this.noteListView = this.noteListView.slice(start_index, (start_index + end_index));
-        }
-        if (this.noteListView.length > 0) {
-            if (this.isFilterOn()) {
-                this.menuItems[5].items[0]['disabled'] = false;
-            } else {
-                this.menuItems[5].items[0]['disabled'] = true;
-            }
-            this.menuItems[5].items[1]['disabled'] = false;
-            this.menuItems[5].items[2]['disabled'] = false;
-        } else {
-            this.menuItems[5].items[0]['disabled'] = true;
-            this.menuItems[5].items[1]['disabled'] = true;
-            this.menuItems[5].items[2]['disabled'] = true;
         }
 
         let progressBar;
@@ -534,8 +437,9 @@ export class NoteListPage implements OnInit {
         modal.present();
     }
 
-    viewNote(note) {
-        console.log('viewNote', note);
+    viewNote(field, note) {
+        console.log('viewNote()',field, note);
+        if(field.field!='title') return;
         if (note) {
             if (note.id) {
                 const id = parseInt(note.id);

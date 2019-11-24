@@ -692,8 +692,9 @@ export class CustomerTablePage implements OnInit {
         this.customerList = data;
     }
 
-    viewCustomer(data) {
-        console.log('viewCustomer', data);
+    viewCustomer(field, data) {
+        console.log('viewCustomer()',field, data);
+        if(field.field!='company') return;
         const id = parseInt(data.id);
         console.log('menu_view id', id);
         this.navCtrl.navigateForward('/customer-details/' + id);

@@ -73,17 +73,15 @@
                         <ion-button [hidden]="!editMode" class="btn btn-success" size="small"  (click)="editNote(rowData)">
                             <ion-icon name="create"></ion-icon>
                         </ion-button>
-                        <!--
-                        <ion-button [hidden]="editMode"  class="btn btn-primary" size="small"  (click)="viewNote(rowData)">
-                            <ion-icon name="eye"></ion-icon> 
-                        </ion-button>          
-                        -->
                     </div>               
                 </td>
-                <td *ngFor="let col of selectedColumns.slice(1); let i = index" style="text-align: justify;" [ngClass]="{'link_eye': (col.field == 'title')}" >
+                <td *ngFor="let col of selectedColumns.slice(1); let i = index" 
+                    style="text-align: justify;" 
+                    (click)="viewNote(col,rowData)"
+                    [ngClass]="{'link_eye': (col.field == 'title')}" >
                     <label *ngIf="col.field == 'notes_date'">{{rowData[col.field] | date : 'dd.MM.yyyy - HH:mm'}}</label>
                     <label *ngIf="(col.field != 'notes_date') && (col.field != 'title')">{{rowData[col.field]}}</label>
-                    <div class="link" *ngIf="(col.field == 'title')" (click)="viewNote(rowData)">{{rowData[col.field]}}</div>  
+                    <div class="link" *ngIf="(col.field == 'title')" >{{rowData[col.field]}}</div>  
                 </td>
             </tr>
         </ng-template>

@@ -50,89 +50,7 @@ export class ProtocolListPage implements OnInit {
     public rowHeight = 26;
     public rowCount = 100;
     public sortedColumn = { sort_field : null, sort_order : 0 };
-    public editMode = false;
-
-    public menuItems: MenuItem[] = [
-        {
-            label: this.translate.instant('Ansicht'),
-            icon: 'pi pi-fw pi-eye',
-            disabled: true,
-            command: (event) => {
-                console.log('command menuitem:', event.item);
-               // this.viewProtocol();
-            }
-        },
-        {
-            label: this.translate.instant('l\u00f6schen'),
-            icon: 'pi pi-fw pi-trash',
-            disabled: true,
-            visible:  this.userdata.role_set.check_products,
-            command: (event) => {
-                console.log('command menuitem:', event.item);
-              //  this.protocolDeactivate();
-            }
-        },
-        {
-            label: this.translate.instant('Neue Protokollvorlage'),
-            icon: 'pi pi-fw pi-plus',
-            visible:  this.userdata.role_set.edit_protocol_templates,
-            disabled: !this.userdata.role_set.edit_protocol_templates,
-            command: (event) => {
-                console.log('command menuitem:', event.item);
-                this.create_template();
-            }
-        },
-        {
-            label: this.translate.instant('Filter'),
-            icon: 'pi pi-fw pi-filter',
-            command: (event) => {
-                console.log('command menuitem:', event.item);
-                this.menu_filter();
-            }
-        },
-        {
-            label: this.translate.instant('Spalten'),
-            icon: 'pi pi-fw pi-eject',
-            command: (event) => {
-                console.log('command menuitem:', event.item);
-                this.show_columns();
-            }
-        },
-        {
-            label: this.translate.instant('Aktion'),
-            icon: 'pi pi-fw pi-cog',
-            items: [
-                {
-                    label: this.translate.instant('Cancel filters'),
-                    icon: 'pi pi-fw pi-filter',
-                    disabled: true,
-                    command: (event) => {
-                        console.log('command menuitem:', event.item);
-                        this.cancel_filters(2);
-                    }
-                },
-                {
-                    label: this.translate.instant('XLSx export'),
-                    icon: 'pi pi-fw pi-save',
-                    command: (event) => {
-                        this.excel_export();
-                    }
-                },
-                {
-                    label: this.translate.instant('PDF export'),
-                    icon: 'pi pi-fw pi-save',
-                    command: (event) => {
-                        this.pdf_export();
-                    }
-                }
-            ]
-        }
-    ];
-    public popupMenu: MenuItem[] = [{
-        label: this.translate.instant('Menü'),
-        icon: 'fa fa-fw fa-list',
-        items: this.menuItems
-    }];
+    public editMode = false;    
 
     @ViewChild('tt') dataTable: TreeTable;
     @ViewChild('divHeightCalc') divHeightCalc: any;
@@ -154,11 +72,6 @@ export class ProtocolListPage implements OnInit {
             this.modelChanged.pipe(
                 debounceTime(700))
                 .subscribe(model => {
-                    if (this.isFilterOn()) {
-                        this.menuItems[5].items[0]['disabled'] = false;
-                    } else {
-                        this.menuItems[5].items[0]['disabled'] = true;
-                    }
                     this.generate_protocolList(0, this.rowCount, this.sortedColumn.sort_field, this.sortedColumn.sort_order);
                     localStorage.setItem('filter_values_protocol', JSON.stringify(this.columnFilterValues));
             });
@@ -284,8 +197,6 @@ export class ProtocolListPage implements OnInit {
 
         this.rowRecords = 0;
         this.totalRecords = 0;
-        this.menuItems[0].disabled = true;
-        this.menuItems[1].disabled = true;
         this.selectedNode = [];
         this.selectedRow = 0;
         this.events.publish('prozCustomer', 0);
@@ -457,7 +368,6 @@ export class ProtocolListPage implements OnInit {
 
     cancel_filters(cancel_type) {
         console.log('cancel_filters');
-        this.menuItems[5].items[0]['disabled'] = true;
         if (cancel_type == 1) {
             for (let i = 0; i < this.cols.length; i++) {
                 this.columnFilterValues[this.cols[i].field] = '';
@@ -533,20 +443,6 @@ export class ProtocolListPage implements OnInit {
             this.protocolListView = this.protocolListView.slice(start_index, (start_index + end_index));
         }
 
-        if (this.protocolListView.length > 0) {
-            if (this.isFilterOn()) {
-                this.menuItems[5].items[0]['disabled'] = false;
-            } else {
-                this.menuItems[5].items[0]['disabled'] = true;
-            }
-            this.menuItems[5].items[1]['disabled'] = false;
-            this.menuItems[5].items[2]['disabled'] = false;
-        } else {
-            this.menuItems[5].items[0]['disabled'] = true;
-            this.menuItems[5].items[1]['disabled'] = true;
-            this.menuItems[5].items[2]['disabled'] = true;
-        }
-
         let progressBar;
         if (this.totalRecords > 0 ) {
             progressBar = Math.round(this.rowRecords * 100 / this.totalRecords);
@@ -562,22 +458,6 @@ export class ProtocolListPage implements OnInit {
         }
     }
 
-    nodeSelect(event, selectedNode) {
-/*         console.log('selectedNode :', selectedNode);
-        this.selectedNode.data = event.node.data;
-        this.selectedRow = selectedNode.length;
-        if (selectedNode.length == 0) {
-            this.menuItems[0].disabled = true;
-            this.menuItems[1].disabled = true;
-        } else if (selectedNode.length == 1) {
-            this.selectedNode.data = this.selectedNode[0].data;
-            this.menuItems[0].disabled = false;
-            this.menuItems[1].disabled = false;
-        } else if (selectedNode.length > 1) {
-            this.menuItems[0].disabled = true;
-            this.menuItems[1].disabled = false;
-        } */
-    }
 
     menu_new() {
         console.log('menu_new', this.idCustomer);
@@ -589,13 +469,14 @@ export class ProtocolListPage implements OnInit {
         this.navCtrl.navigateForward(['/protocol-edit']);
     }
 
-    viewProtocol(protocol) {
-        console.log('viewProtocol', protocol);
+    viewProtocol(field, protocol) {
+        console.log('viewProtocol()',field, protocol);
+        if(field.field!='title') return;
+        console.log('viewProtocol.id', protocol.id);
         if (protocol) {
             if (protocol.id) {
                 const id = parseInt(protocol.id);
                 console.log('menu_view id', id);
-
                 let data = {
                     idCustomer: this.idCustomer,
                     customer_number: this.customer_number,
@@ -911,8 +792,6 @@ export class ProtocolListPage implements OnInit {
                     handler: data => {
                         this.selectedNode = [];
                         this.selectedRow = 0;
-                        this.menuItems[0].disabled = true;
-                        this.menuItems[1].disabled = true;
                     }
                 }
                 ]

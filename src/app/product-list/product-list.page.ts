@@ -749,14 +749,15 @@ export class ProductListPage implements OnInit {
         this.navCtrl.navigateForward(['/product-edit']);
     }
 
-    dbClickCol(field, data){
-        console.log('dbClickCol()',field, data);
+    clickCol(field, data){
+        console.log('clickCol()',field, data);
         if(field.field==='title') this.viewProduct(data);
 
         if(field.editField!=true) return;        
 
         if(field.editFieldEN==='customer_description') {
-            let otext = String(data.customer_description);
+            let otext = '';
+            if (data.customer_description) otext = String(data.customer_description);
             const alert = this.alertCtrl.create({
                 header: this.translate.instant('Kundenbezeichnung'),
                 message: otext,
@@ -792,7 +793,8 @@ export class ProductListPage implements OnInit {
         } 
         
         if(field.editFieldEN==='Note') {
-            let otext = String(data[field.field]);
+            let otext = '';
+            if (data[field.field]) otext = String(data[field.field]);
             const alert = this.alertCtrl.create({
                 header: field.field,
                 message: otext,
@@ -845,7 +847,8 @@ export class ProductListPage implements OnInit {
         }
         
         if(field.editFieldEN==='Location') {
-            let otext = String(data[field.field]);
+            let otext = '';
+            if (data[field.field]) otext = String(data[field.field]);
             const alert = this.alertCtrl.create({
                 header: field.field,
                 message: otext,

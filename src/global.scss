@@ -22481,6 +22481,7 @@ _:-webkit-full-screen,
 }  
 .link_eye{
   position: relative;
+  cursor: pointer;
 }
 .link_eye:after {
   content: '\1F441';
@@ -22508,6 +22509,7 @@ _:-webkit-full-screen,
 }  
 .link_edit{
 position: relative;
+cursor: pointer;
 }
 .link_edit:after {
 content: '\1F589';

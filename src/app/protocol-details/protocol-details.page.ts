@@ -41,6 +41,7 @@ export class ProtocolDetailsPage implements OnInit {
   public file_link: any;
   public nocache: any;
   public customer_number: any;
+  public viewTitle = '';
 
   constructor(public navCtrl: NavController,
     public route: ActivatedRoute,
@@ -126,6 +127,14 @@ export class ProtocolDetailsPage implements OnInit {
         this.activProtocol.resultText = this.translate.instant('ausmustern');
       }
 
+      try {
+        let obj  = JSON.parse(this.activProtocol.title);
+        this.viewTitle = obj[this.lang];
+      } catch {
+        console.error('activProtocol title JSON.parse:', this.activProtocol.title);
+        this.viewTitle =  '';
+      }
+
       this.dateiListe();
     });
   }
@@ -146,7 +155,7 @@ export class ProtocolDetailsPage implements OnInit {
         try {
           this.activProduct.items = JSON.parse(this.activProduct.items);
         } catch {
-          console.log('loadProduct items JSON.parse:', this.activProduct.items);
+          console.error('loadProduct items JSON.parse:', this.activProduct.items);
           this.activProduct.items = [];
         }
       } else {
