@@ -749,11 +749,13 @@ export class ProductListPage implements OnInit {
         this.navCtrl.navigateForward(['/product-edit']);
     }
 
-    clickCol(field, data){
-        console.log('clickCol()',field, data);
+    clickCol(field, data, text){
+        console.log('clickCol()',field, data,text);
         if(field.field==='title') this.viewProduct(data);
 
-        if(field.editField!=true) return;        
+        if(field.editField!=true) return;    
+        if(text === undefined) return;    
+        if(text === null) return; 
 
         if(field.editFieldEN==='customer_description') {
             let otext = '';
@@ -828,7 +830,7 @@ export class ProductListPage implements OnInit {
                                         }
                                     }                                    
                                     items = JSON.stringify(items);
-                                    console.log("items new:", items);
+                                    //console.log("items new:", items);
                                     activProduct.items = items;
                                     this.apiService.pvs4_set_product(activProduct).then((setResult: any) => {
                                         console.log('result: ', setResult);
@@ -882,7 +884,7 @@ export class ProductListPage implements OnInit {
                                         }
                                     }                                    
                                     items = JSON.stringify(items);
-                                    console.log("items new:", items);
+                                    //console.log("items new:", items);
                                     activProduct.items = items;
                                     this.apiService.pvs4_set_product(activProduct).then((setResult: any) => {
                                         console.log('result: ', setResult);

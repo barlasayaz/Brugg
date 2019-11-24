@@ -113,8 +113,8 @@
                     </div>                                
                 </td>
                 <td *ngFor="let col of selectedColumns.slice(1); let i = index"   
-                    (click)="clickCol(col,rowData)"
-                    [ngClass]="{'link_eye': (col.field == 'title'), 'link_edit': (col.editField === true), 'ui-toggler-column': i === 0}"
+                    (click)="clickCol(col,rowData,rowData[col.field])"
+                    [ngClass]="{'link_eye': (col.field == 'title'), 'link_edit': ((col.editField === true) && (rowData[col.field] != undefined)), 'ui-toggler-column': i === 0}"
                     [ngStyle]="showActivePassiveProduct && {'color': '#ccc'}">
                     <p-treeTableToggler [rowNode]="rowNode" *ngIf="i === 0"></p-treeTableToggler>
                     <span *ngIf="col.field == 'nfc_tag_id'">
@@ -139,7 +139,7 @@
                                 {{rowData['_basic_info_show_']}}
                         </div>
                     </div>   
-                    <div class="link"  *ngIf="(col.editField === true)" >{{rowData[col.field]}}</div>    
+                    <div class="link"  *ngIf="((col.editField === true) && (rowData[col.field] != undefined))" >{{rowData[col.field]}}</div>    
                 </td>
             </tr>
         </ng-template>
