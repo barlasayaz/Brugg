@@ -44,7 +44,7 @@
 	</ion-fab-button>
 	<ion-fab-list side="top">
 		<!-- BUTTON -->
-		<ion-fab-button color="success"
+		<ion-fab-button *ngIf="statistic" color="success"
 						title="{{'Statistik' | translate}}"
 						(click)="getStatistik()">
 			<ion-icon name="stats"></ion-icon>

@@ -1,4 +1,4 @@
-import { Component, ViewChild, OnInit, AfterViewInit } from '@angular/core';
+import { Component, ViewChild, OnInit, AfterViewInit, Input } from '@angular/core';
 import { NavController, ModalController , Platform } from '@ionic/angular';
 import { ApiService } from './../../services/api';
 import { UserdataService } from './../../services/userdata';
@@ -22,6 +22,7 @@ import { IonSelect } from '@ionic/angular';
   styleUrls: ['./appointment-dashboard.component.scss'],
 })
 export class AppointmentDashboardComponent implements OnInit, AfterViewInit {
+    @Input() statistic: boolean;
     public events: any[] = [];
     public allEvents: any[] = [];
     public people: any[] = [];

@@ -2,7 +2,8 @@
 
 <div class="ek-content" style="margin-top: 10px; overflow-x: auto;">
     <div class="container container-fix container-bg">
-			<full-calendar #calendar 
+		<app-appointment-dashboard class="appointment-top" [statistic]="false"></app-appointment-dashboard>		
+			<!-- <full-calendar #calendar 
 						   defaultView="dayGridMonth"  
 						   [events]="events"  
 						   [editable]="true" 
@@ -25,11 +26,11 @@
 						   (datesRender)="loadEvents($event)" 
 						   (eventClick)="handleEventClick($event)" 
 						   (eventDrop)="updateEvent($event)">
-			</full-calendar>
+			</full-calendar> -->
 	</div>		
 </div>
 
-<ion-fab vertical="bottom" horizontal="end" slot="fixed" class="liftiball">
+<!-- <ion-fab vertical="bottom" horizontal="end" slot="fixed" class="liftiball">
 	<ion-item *ngIf="viewMode>0" class="peopleFilter">  
 		<ion-label position="floating">{{translate.instant('Filter')}}</ion-label>
 		<ion-select [(ngModel)]="peopleFilter" 
@@ -73,6 +74,6 @@
 			<ion-icon name="cafe"></ion-icon>
 		</ion-fab-button>
 	</ion-fab-list>
-</ion-fab>
+</ion-fab> -->
 
 <bottom-nav></bottom-nav>
