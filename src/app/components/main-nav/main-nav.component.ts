@@ -20,7 +20,7 @@ import { Router, RouterEvent } from '@angular/router';
 })
 export class MainNavComponent implements OnInit {
   @Input() aktivPage: string;
-  @Input() idCustomer: number;
+  @Input() idCustomer: number = 0;
   @Output() ping: EventEmitter<any> = new EventEmitter<any>();
   @Input() searchText: string = '';
   @Input() filterText: string = '';
@@ -62,6 +62,7 @@ export class MainNavComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log('main-nav ngOnInit this.idCustomer:', this.idCustomer );
     if (this.idCustomer > 0) {
       this.apiService.pvs4_get_customer(this.idCustomer).then((result: any) => {
         if (result && result.obj) {

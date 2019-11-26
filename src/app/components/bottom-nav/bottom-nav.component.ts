@@ -20,7 +20,7 @@ import { Router, RouterEvent } from '@angular/router';
 })
 export class BottomNavComponent implements OnInit {
   @Input() aktivPage: string;
-  @Input() idCustomer: number;
+  @Input() idCustomer: number = 0;
   @Output() ping: EventEmitter<any> = new EventEmitter<any>();
   @Input() searchText: string = '';
   @Input() filterText: string = '';
@@ -118,8 +118,6 @@ export class BottomNavComponent implements OnInit {
     }
   }
 
-  homePage() {
-    this.systemService.customerId = 0;
-  }
+
 
 }
