@@ -43,12 +43,6 @@ export class ProductDetailsPage implements OnInit {
   public imageURI: any;
   public file_link: any;
   public nocache: any;
-  public mouseoverButton1: boolean;
-  public mouseoverButton2: boolean;
-  public mouseoverButton3: boolean;
-  public mouseoverButton4: boolean;
-  public mouseoverButton5: boolean;
-  public mouseoverButton6: boolean;
   public isNFC: boolean;
 
   constructor(public navCtrl: NavController,
@@ -76,12 +70,6 @@ export class ProductDetailsPage implements OnInit {
       if ( this.platform.is('ios') ||
         this.platform.is('android') ) {
         this.mobilePlatform = true;
-        this.mouseoverButton1 = true;
-        this.mouseoverButton2 = true;
-        this.mouseoverButton3 = true;
-        this.mouseoverButton4 = true;
-        this.mouseoverButton5 = true;
-        this.mouseoverButton6 = true;
         console.log('platform mobile:', this.platform.platforms());
         this.nfc.addNdefListener(() => {
           this.isNFC = true;
@@ -95,12 +83,6 @@ export class ProductDetailsPage implements OnInit {
       } else {
         console.log('platform not mobile:', this.platform.platforms());
         this.mobilePlatform = false;
-        this.mouseoverButton1 = false;
-        this.mouseoverButton2 = false;
-        this.mouseoverButton3 = false;
-        this.mouseoverButton4 = false;
-        this.mouseoverButton5 = false;
-        this.mouseoverButton6 = false;
       }
     });
 
@@ -552,40 +534,6 @@ export class ProductDetailsPage implements OnInit {
       };
       this.dataService.setData(data);
       this.navCtrl.navigateForward(['/protocol-edit']);
-    }
-  }
-
-  mouseover(buttonNumber) {
-    if (buttonNumber == 1) {
-      this.mouseoverButton1 = true;
-    } else if (buttonNumber == 2) {
-      this.mouseoverButton2 = true;
-    } else if (buttonNumber == 3) {
-      this.mouseoverButton3 = true;
-    } else if (buttonNumber == 4) {
-       this.mouseoverButton4 = true;
-    } else if (buttonNumber == 5) {
-      this.mouseoverButton5 = true;
-    } else if (buttonNumber == 6) {
-      this.mouseoverButton6 = true;
-    }
-  }
-
-  mouseout(buttonNumber) {
-    if (this.mobilePlatform == false) {
-      if (buttonNumber == 1) {
-        this.mouseoverButton1 = false;
-      } else if (buttonNumber == 2) {
-        this.mouseoverButton2 = false;
-      } else if (buttonNumber == 3) {
-        this.mouseoverButton3 = false;
-      } else if (buttonNumber == 4) {
-        this.mouseoverButton4 = false;
-      } else if (buttonNumber == 5) {
-        this.mouseoverButton5 = false;
-      } else if (buttonNumber == 6) {
-        this.mouseoverButton6 = false;
-      }
     }
   }
 

@@ -40,8 +40,6 @@ export class ProtocolHistoryPage implements OnInit {
     public pageTotalCount: any;
     public pdfxlsButton: boolean;
     public mobilePlatform: boolean;
-    public mouseoverButton1: boolean;
-    public mouseoverButton2: boolean;
 
     constructor(public navCtrl: NavController,
                 public route: ActivatedRoute,
@@ -65,14 +63,10 @@ export class ProtocolHistoryPage implements OnInit {
                 this.platform.is('phablet') ||
                 this.platform.is('tablet')) {
                 this.mobilePlatform = true;
-                this.mouseoverButton1 = true;
-                this.mouseoverButton2 = true;
                 console.log('platform mobile:', this.platform.platforms());
             } else {
                 console.log('platform not mobile:', this.platform.platforms());
                 this.mobilePlatform = false;
-                this.mouseoverButton1 = false;
-                this.mouseoverButton2 = false;
             }
         });
 
@@ -348,23 +342,5 @@ export class ProtocolHistoryPage implements OnInit {
         }
         this.protocolPage(pList);
     }
-
-    mouseover(buttonNumber) {
-        if (buttonNumber == 1) {
-          this.mouseoverButton1 = true;
-        } else if (buttonNumber == 2) {
-          this.mouseoverButton2 = true;
-             }
-      }
-
-      mouseout(buttonNumber) {
-        if (this.mobilePlatform == false) {
-          if (buttonNumber == 1) {
-            this.mouseoverButton1 = false;
-          } else if (buttonNumber == 2) {
-            this.mouseoverButton2 = false;
-               }
-        }
-      }
 
 }

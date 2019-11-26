@@ -34,10 +34,6 @@ export class CustomerDetailsPage implements OnInit {
   public baan1_href = '';
   public baan2_href = '';
   public mobilePlatform: boolean;
-  public mouseoverButton1: boolean;
-  public mouseoverButton2: boolean;
-  public mouseoverButton3: boolean;
-  public mouseoverButton4: boolean;
   public aktive_products: number = 0;
   public inspection_service: number = 0;
   public contactPersonList: any = [];
@@ -77,18 +73,10 @@ export class CustomerDetailsPage implements OnInit {
         if (this.platform.is('ios') ||
           this.platform.is('android')) {
           this.mobilePlatform = true;
-          this.mouseoverButton1 = true;
-          this.mouseoverButton2 = true;
-          this.mouseoverButton3 = true;
-          this.mouseoverButton4 = true;
           console.log('platform mobile:', this.platform.platforms());
         } else {
           console.log('platform not mobile:', this.platform.platforms());
           this.mobilePlatform = false;
-          this.mouseoverButton1 = false;
-          this.mouseoverButton2 = false;
-          this.mouseoverButton3 = false;
-          this.mouseoverButton4 = false;
         }
       });
       console.log('ngOnInit CustomerDetailsPage',  this.userdata);
@@ -349,32 +337,6 @@ export class CustomerDetailsPage implements OnInit {
         if (x == 2) {
           this.inAppBrowser.create(this.baan2_href, '_system', 'location=yes');
         }
-      }
-    }
-
-    mouseover(buttonNumber) {
-      if (buttonNumber == 1) {
-        this.mouseoverButton1 = true;
-      } else if (buttonNumber == 2) {
-        this.mouseoverButton2 = true;
-           } else if (buttonNumber == 3) {
-        this.mouseoverButton3 = true;
-           } else if (buttonNumber == 4) {
-        this.mouseoverButton4 = true;
-           }
-    }
-
-    mouseout(buttonNumber) {
-      if (this.mobilePlatform == false) {
-        if (buttonNumber == 1) {
-          this.mouseoverButton1 = false;
-        } else if (buttonNumber == 2) {
-          this.mouseoverButton2 = false;
-             } else if (buttonNumber == 3) {
-          this.mouseoverButton3 = false;
-             } else if (buttonNumber == 4) {
-          this.mouseoverButton4 = false;
-             }
       }
     }
 

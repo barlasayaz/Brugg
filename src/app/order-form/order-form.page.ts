@@ -24,8 +24,6 @@ export class OrderFormPage {
   public idCustomer: number;
   public maxDate: string;
   public deliveryDate: any;
-  public mouseoverButton1: boolean;
-  public mouseoverButton2: boolean;
   public mobilePlatform: boolean;
   public activCustomer: any = [];
   public contactPersonList: any = [];
@@ -107,14 +105,10 @@ export class OrderFormPage {
                   if ( this.platform.is('ios') ||
                     this.platform.is('android') ) {
                     this.mobilePlatform = true;
-                    this.mouseoverButton1 = true;
-                    this.mouseoverButton2 = true;
                     console.log('platform mobile:', this.platform.platforms());
                   } else {
                     console.log('platform not mobile:', this.platform.platforms());
                     this.mobilePlatform = false;
-                    this.mouseoverButton1 = false;
-                    this.mouseoverButton2 = false;
                   }
                 });
 
@@ -126,24 +120,6 @@ export class OrderFormPage {
                 this.activOrderForm.commissioned = this.userdata.first_name + ' ' +
                                                    this.userdata.last_name + ' (' +
                                                    this.userdata.email + ')';
-  }
-
-  mouseover(buttonNumber) {
-    if (buttonNumber == 1) {
-      this.mouseoverButton1 = true;
-    } else if (buttonNumber == 2) {
-      this.mouseoverButton2 = true;
-      }
-  }
-
-  mouseout(buttonNumber) {
-    if (this.mobilePlatform == false) {
-      if (buttonNumber == 1) {
-        this.mouseoverButton1 = false;
-      } else if (buttonNumber == 2) {
-        this.mouseoverButton2 = false;
-        }
-    }
   }
 
   loadCustomer(id: number) {

@@ -32,9 +32,6 @@ export class StatisticsPage implements OnInit {
   public visitReportSum: any;
   public listStatisticMaster: any[] = [];
   public listStatisticMasterDetail: any[] = [];
-  public mouseoverButton1: boolean;
-  public mouseoverButton2: boolean;
-  public mouseoverButton3: boolean;
   public mobilePlatform: boolean;
   public specialCustomer: any = [];
   public winWidth: any;
@@ -59,16 +56,10 @@ export class StatisticsPage implements OnInit {
         if ( this.platform.is('ios') ||
           this.platform.is('android') ) {
           this.mobilePlatform = true;
-          this.mouseoverButton1 = true;
-          this.mouseoverButton2 = true;
-          this.mouseoverButton3 = true;
           console.log('platform mobile:', this.platform.platforms());
         } else {
           console.log('platform not mobile:', this.platform.platforms());
           this.mobilePlatform = false;
-          this.mouseoverButton1 = false;
-          this.mouseoverButton2 = false;
-          this.mouseoverButton3 = false;
         }
       });
 
@@ -88,30 +79,7 @@ export class StatisticsPage implements OnInit {
 
    }
 
-  mouseover(buttonNumber) {
-    if (buttonNumber == 1) {
-      this.mouseoverButton1 = true;
-    } else if (buttonNumber == 2) {
-      this.mouseoverButton2 = true;
-    } else if (buttonNumber == 3) {
-      this.mouseoverButton3 = true;
-    }
-  }
-
-  mouseout(buttonNumber) {
-    if (this.mobilePlatform == false) {
-      if (buttonNumber == 1) {
-        this.mouseoverButton1 = false;
-      } else if (buttonNumber == 2) {
-        this.mouseoverButton2 = false;
-      } else if (buttonNumber == 3) {
-        this.mouseoverButton3 = false;
-      }
-    }
-  }
-
   ngOnInit() {
-
     this.cols = [
       { field: 'name_user', header: this.translate.instant('Benutzername') },
       { field: 'company', header: this.translate.instant('Firma') },
