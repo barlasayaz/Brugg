@@ -29,6 +29,7 @@ export class ContactPersonPage {
     public email_felder: any = 0;
     public pw_felder: any = 0;
     public setRights: boolean = false;
+    public selectedSWitch: string;
 
     constructor(public navCtrl: NavController,
         public navParams: NavParams,
@@ -38,6 +39,7 @@ export class ContactPersonPage {
         private alertCtrl: AlertController,
         public viewCtrl: ModalController) {
 
+        this.selectedSWitch = 'person';
         this.idCustomer = this.navParams.get('idCustomer');
         this.getPointContact();
         if (this.userdata.role_set) {
@@ -272,6 +274,16 @@ export class ContactPersonPage {
             ]
         }).then(x => x.present());
 
+    }
+
+    select_switch(event) {
+        console.log('select_switch :', event);
+        if (event == 'person') {
+            this.selectedSWitch = 'person';
+        }
+        if (event == 'create') {
+            this.selectedSWitch = 'create';
+        }
     }
 
     SP_Ansp(type, nr) {

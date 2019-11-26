@@ -22529,3 +22529,15 @@ opacity: 100%;
 font-size: 22px; 
 top: -3px;
 }
+
+.modalPageFooter {  
+  text-align: center !important;
+  ion-button {
+    height: 40px !important;
+    width: 64.72px !important;
+  }
+}
+
+ion-footer {
+  z-index: 9999 !important;
+}

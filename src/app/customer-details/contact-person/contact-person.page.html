@@ -1,25 +1,17 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-buttons slot="primary">
-        <ion-button 
-                icon-only 
-                (click)="dismiss()">
-          <ion-icon name="close"></ion-icon>
-        </ion-button>
-    </ion-buttons>
-  <ion-title>{{translate.instant('Ansprechpartner')}}</ion-title>
-</ion-toolbar>
-
-<ion-toolbar no-border-top style="min-height: 0px;padding:0px">
-  <ion-segment [(ngModel)]="kundendaten">
-    <ion-segment-button value="person">
-      <ion-icon name="person"></ion-icon>
-    </ion-segment-button>
-    <ion-segment-button value="create">
-      <ion-icon name="create"></ion-icon>
-    </ion-segment-button>
-  </ion-segment>
-</ion-toolbar>
+    <ion-title>{{translate.instant('Ansprechpartner')}}</ion-title>
+  </ion-toolbar>
+  <ion-toolbar no-border-top style="min-height: 0px;padding:0px">
+    <ion-segment [(ngModel)]="kundendaten">
+      <ion-segment-button value="person" (click)="select_switch('person')">
+        <ion-icon name="person"></ion-icon>
+      </ion-segment-button>
+      <ion-segment-button value="create" (click)="select_switch('create')">
+        <ion-icon name="create"></ion-icon>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>  
 </ion-header>
 
 <ion-content>
@@ -48,11 +40,6 @@
             </div>
           </div>
         </div>        
-        <div class="modal-footer">
-          <ion-button type="button" class="btn btn-modal-danger" (click)="dismiss()">
-            <ion-icon name="close"></ion-icon>
-          </ion-button>
-        </div>
       </div>
     </ion-list>  
     <ion-list *ngSwitchCase="'create'">
@@ -195,31 +182,45 @@
       <div [hidden]="!inputError" *ngIf="!email_felder" class="pfehler">
           {{translate.instant('Bitte füllen Sie alle Pflichtfelder aus.')}}
       </div>
-      
-      <div class="modal-footer">    
-          <ion-button type="button" 
-                    class="btn btn-modal-danger" 
-                    (click)="dismiss()">
-          <ion-icon class="footerIcon" name="close"></ion-icon>
-        </ion-button>
-        <!-- Edit -->
-        <ion-button type="button" 
-                class="btn btn-modal-success" 
-                [hidden]="contactPersonEditOderNeu==1" 
-                (click)="updateData(1);">
-          <ion-icon class="footerIcon" name="checkmark"></ion-icon>
-        </ion-button>
-        <!-- New -->
-        <ion-button 
-            type="button" 
-            class="btn btn-modal-success" 
-            [hidden]="contactPersonEditOderNeu==0" 
-            (click)="updateData(0);">
-          <ion-icon class="footerIcon" name="checkmark"></ion-icon>
-        </ion-button>
-      </div>
+
     </ion-list>  
   </div>
 </ion-content>
-  
+
+<!-- Person -->
+<ion-footer *ngIf="selectedSWitch=='person'">
+  <ion-toolbar class="modalPageFooter">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12" no-padding>
+          <ion-button (click)="dismiss()" class="btn-modal-danger">
+              <ion-icon name="close"></ion-icon>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-footer> 
+
+<!-- Create -->
+<ion-footer *ngIf="selectedSWitch=='create'">
+  <ion-toolbar class="modalPageFooter">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12" no-padding>
+          <ion-button (click)="dismiss()" class="btn-modal-danger">
+            <ion-icon name="close"></ion-icon>
+          </ion-button>
+          &nbsp;&nbsp;&nbsp;
+          <ion-button (click)="updateData(1)" class="btn-modal-success" [hidden]="contactPersonEditOderNeu==1">
+            <ion-icon name="checkmark"></ion-icon>
+          </ion-button>
+          <ion-button (click)="updateData(0)" class="btn-modal-success" [hidden]="contactPersonEditOderNeu==0">
+            <ion-icon name="checkmark"></ion-icon>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-footer>
   

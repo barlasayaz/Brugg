@@ -1,152 +1,150 @@
 <ion-header>
-    <ion-toolbar color="primary">
-      <ion-buttons slot="primary">
-          <ion-button 
-                  icon-only 
-                  (click)="dismiss()">
-            <ion-icon name="close"></ion-icon>
-          </ion-button>
-      </ion-buttons>
-      <ion-title>{{translate.instant('Ansprechpartner')}} ({{translate.instant('Adressen')}})</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>{{translate.instant('Ansprechpartner')}} ({{translate.instant('Adressen')}})</ion-title>
+  </ion-toolbar>
+</ion-header>
     
-  <ion-content>
+<ion-content>
+  <ion-grid>
+    <ion-row>          
+      <ion-col size-xl="12" size-lg="12" size-md="12" size-sm="12" size="12">            
+        <p-accordion>
+          <div *ngFor="let contactPersonAddress of contactPersonAddresses; let indAdr = index;">
+            <p-accordionTab styleClass="ui-accordion-header" header="{{translate.instant('Ort')}} : {{contactPersonAddress.zip_code}}">
+              <!-- Row 1 -->
+              <div class="tbody">
+              <ion-row>
+                <ion-col size="10">
+                  <ion-item lines="none" style="padding-left: 0px;">
+                    <ion-label position="floating">{{translate.instant('Adresstyp')}}</ion-label>
+                    <ion-select required
+                                (ionChange)="inputErrorMsg()"
+                                id="ansp_address_type" 
+                                [(ngModel)]="contactPersonAddress.address_type"
+                                okText="{{translate.instant('okay')}}"
+                                cancelText="{{translate.instant('abbrechen')}}">
+                      <ion-select-option value="Rechnungsadresse" selected>{{translate.instant('Rechnungsadresse')}}</ion-select-option>
+                      <ion-select-option value="Lieferadresse">{{translate.instant('Lieferadresse')}}</ion-select-option>
+                    </ion-select>            
+                  </ion-item>
+                </ion-col>
+                <ion-col size="2" style="text-align: center; margin-top: 10px;">
+                  <ion-item lines="none">
+                    <ion-button size="small" 
+                                (click)="remAddress(indAdr)" 
+                                style="margin-top: 22px; --background: red;"> 
+                        <ion-icon class="footerIcon" name="remove"></ion-icon>
+                    </ion-button>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+              <!-- Row 2 -->
+              <ion-row>
+                <ion-col size="12">
+                  <ion-item lines="none" style="padding-left: 0px;">
+                    <ion-label position="floating">{{translate.instant('Strasse')}}</ion-label>
+                    <ion-input required
+                                (ionChange)="inputErrorMsg()"
+                                type="text"
+                                id="ansp_street"
+                                [(ngModel)]="contactPersonAddress.street">
+                    </ion-input>                
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+              <!-- Row 3 -->
+              <ion-row>
+                <ion-col size="6">
+                  <ion-item lines="none" style="padding-left: 0px;">
+                    <ion-label position="floating">{{translate.instant('PLZ')}} - {{translate.instant('Ort')}}</ion-label>
+                    <ion-input required
+                                (ionChange)="inputErrorMsg()"
+                                type="text"
+                                id="ansp_zip_code"
+                                [(ngModel)]="contactPersonAddress.zip_code">
+                    </ion-input>
+                  </ion-item>
+                </ion-col>
+                <ion-col size="6">
+                  <ion-item lines="none" style="padding-left: 0px;">
+                    <ion-label position="floating">{{translate.instant('Abteilung')}}</ion-label>
+                    <ion-input type="text" 
+                                id="ansp_department"
+                                [(ngModel)]="contactPersonAddress.department">
+                    </ion-input>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+              <!-- Row 4 -->
+              <ion-row>
+                <ion-col size="12">
+                  <ion-item lines="none" style="padding-left: 0px;">
+                    <ion-label position="floating">{{translate.instant('E-Mail')}}</ion-label>
+                    <ion-input type="text" 
+                                id="ansp_email"
+                                [(ngModel)]="contactPersonAddress.email">
+                    </ion-input>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+              <!-- Row 5 -->
+              <ion-row>
+                <ion-col size="6">
+                  <ion-item lines="none" style="padding-left: 0px;">
+                    <ion-label position="floating">{{translate.instant('Telefon')}}</ion-label>
+                    <ion-input type="text" 
+                                id="ansp_phone"
+                                [(ngModel)]="contactPersonAddress.phone">
+                    </ion-input>
+                  </ion-item>
+                </ion-col>
+                <ion-col size="6">
+                  <ion-item lines="none" style="padding-left: 0px;">
+                    <ion-label position="floating">{{translate.instant('Mobiltelefon')}}</ion-label>
+                    <ion-input type="text" 
+                                id="ansp_mobile"
+                                [(ngModel)]="contactPersonAddress.mobile">
+                    </ion-input>
+                  </ion-item>
+                </ion-col>
+              </ion-row> 
+              </div>               
+            </p-accordionTab>
+          </div>
+        </p-accordion>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <!-- Error -->
+  <div *ngIf="email_felder" class="pfehler">
+    {{translate.instant('E-Mail nicht standardkonform.')}}
+  </div>
+  <div [hidden]="!inputError" *ngIf="!email_felder" class="pfehler">
+      {{translate.instant('Bitte füllen Sie alle Pflichtfelder aus.')}}
+  </div>
+
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar class="modalPageFooter">
     <ion-grid>
-      <ion-row>          
-        <ion-col size-xl="12" size-lg="12" size-md="12" size-sm="12" size="12">            
-          <p-accordion>
-            <div *ngFor="let contactPersonAddress of contactPersonAddresses; let indAdr = index;">
-              <p-accordionTab styleClass="ui-accordion-header" header="{{translate.instant('Ort')}} : {{contactPersonAddress.zip_code}}">
-                <!-- Row 1 -->
-                <div class="tbody">
-                <ion-row>
-                  <ion-col size="10">
-                    <ion-item lines="none" style="padding-left: 0px;">
-                      <ion-label position="floating">{{translate.instant('Adresstyp')}}</ion-label>
-                      <ion-select required
-                                  (ionChange)="inputErrorMsg()"
-                                  id="ansp_address_type" 
-                                  [(ngModel)]="contactPersonAddress.address_type"
-                                  okText="{{translate.instant('okay')}}"
-                                  cancelText="{{translate.instant('abbrechen')}}">
-                        <ion-select-option value="Rechnungsadresse" selected>{{translate.instant('Rechnungsadresse')}}</ion-select-option>
-                        <ion-select-option value="Lieferadresse">{{translate.instant('Lieferadresse')}}</ion-select-option>
-                      </ion-select>            
-                    </ion-item>
-                  </ion-col>
-                  <ion-col size="2" style="text-align: center; margin-top: 10px;">
-                    <ion-item lines="none">
-                      <ion-button size="small" 
-                                  (click)="remAddress(indAdr)" 
-                                  style="margin-top: 22px; --background: red;"> 
-                          <ion-icon class="footerIcon" name="remove"></ion-icon>
-                      </ion-button>
-                    </ion-item>
-                  </ion-col>
-                </ion-row>
-                <!-- Row 2 -->
-                <ion-row>
-                  <ion-col size="12">
-                    <ion-item lines="none" style="padding-left: 0px;">
-                      <ion-label position="floating">{{translate.instant('Strasse')}}</ion-label>
-                      <ion-input required
-                                 (ionChange)="inputErrorMsg()"
-                                 type="text"
-                                 id="ansp_street"
-                                 [(ngModel)]="contactPersonAddress.street">
-                      </ion-input>                
-                    </ion-item>
-                  </ion-col>
-                </ion-row>
-                <!-- Row 3 -->
-                <ion-row>
-                  <ion-col size="6">
-                    <ion-item lines="none" style="padding-left: 0px;">
-                      <ion-label position="floating">{{translate.instant('PLZ')}} - {{translate.instant('Ort')}}</ion-label>
-                      <ion-input required
-                                 (ionChange)="inputErrorMsg()"
-                                 type="text"
-                                 id="ansp_zip_code"
-                                 [(ngModel)]="contactPersonAddress.zip_code">
-                      </ion-input>
-                    </ion-item>
-                  </ion-col>
-                  <ion-col size="6">
-                    <ion-item lines="none" style="padding-left: 0px;">
-                      <ion-label position="floating">{{translate.instant('Abteilung')}}</ion-label>
-                      <ion-input type="text" 
-                                  id="ansp_department"
-                                  [(ngModel)]="contactPersonAddress.department">
-                      </ion-input>
-                    </ion-item>
-                  </ion-col>
-                </ion-row>
-                <!-- Row 4 -->
-                <ion-row>
-                  <ion-col size="12">
-                    <ion-item lines="none" style="padding-left: 0px;">
-                      <ion-label position="floating">{{translate.instant('E-Mail')}}</ion-label>
-                      <ion-input type="text" 
-                                  id="ansp_email"
-                                  [(ngModel)]="contactPersonAddress.email">
-                      </ion-input>
-                    </ion-item>
-                  </ion-col>
-                </ion-row>
-                <!-- Row 5 -->
-                <ion-row>
-                  <ion-col size="6">
-                    <ion-item lines="none" style="padding-left: 0px;">
-                      <ion-label position="floating">{{translate.instant('Telefon')}}</ion-label>
-                      <ion-input type="text" 
-                                  id="ansp_phone"
-                                  [(ngModel)]="contactPersonAddress.phone">
-                      </ion-input>
-                    </ion-item>
-                  </ion-col>
-                  <ion-col size="6">
-                    <ion-item lines="none" style="padding-left: 0px;">
-                      <ion-label position="floating">{{translate.instant('Mobiltelefon')}}</ion-label>
-                      <ion-input type="text" 
-                                  id="ansp_mobile"
-                                  [(ngModel)]="contactPersonAddress.mobile">
-                      </ion-input>
-                    </ion-item>
-                  </ion-col>
-                </ion-row> 
-                </div>               
-              </p-accordionTab>
-            </div>
-          </p-accordion>
+      <ion-row>
+        <ion-col size="3" no-padding>
+          <ion-button (click)="addAddress()" class="btn-modal-danger" *ngIf="!itsNew">
+              <ion-icon name="add"></ion-icon>
+          </ion-button>
+        </ion-col>
+        <ion-col size="6" no-padding>
+          <ion-button (click)="dismiss()" class="btn-modal-danger">
+              <ion-icon name="close"></ion-icon>
+          </ion-button>
+          &nbsp;&nbsp;&nbsp;
+          <ion-button (click)="updateData()" class="btn-modal-success">
+              <ion-icon name="checkmark"></ion-icon>
+          </ion-button>
         </ion-col>
       </ion-row>
     </ion-grid>
-
-    <!-- Error -->
-    <div *ngIf="email_felder" class="pfehler">
-      {{translate.instant('E-Mail nicht standardkonform.')}}
-    </div>
-    <div [hidden]="!inputError" *ngIf="!email_felder" class="pfehler">
-        {{translate.instant('Bitte füllen Sie alle Pflichtfelder aus.')}}
-    </div>
-
-    <div class="modal-footer">
-      <ion-button type="button" 
-                  class="btn btn-modal-success"
-                  (click)="addAddress()"
-                  style="left: -150px; width: 50px;">
-        <ion-icon class="footerIcon" name="add"></ion-icon>
-      </ion-button>
-      <ion-button type="button" 
-                  class="btn btn-modal-danger" 
-                  (click)="dismiss()">
-          <ion-icon class="footerIcon" name="close"></ion-icon>
-      </ion-button>
-      <ion-button type="button" 
-                  class="btn btn-modal-success" 
-                  (click)="updateData();">
-        <ion-icon class="footerIcon" name="checkmark"></ion-icon>
-      </ion-button>
-    </div>  
-  </ion-content>  
+  </ion-toolbar>
+</ion-footer>
