@@ -9,7 +9,7 @@
 				<ion-grid>
 					<ion-row *ngIf="appointmentPlanEnable"
 							 style="margin-top: 10px; margin-bottom: 10px;">
-						<app-appointment-dashboard class="appointment-top"></app-appointment-dashboard>		
+						<app-appointment-dashboard class="appointment-top" [statistic]="true"></app-appointment-dashboard>		
 					</ion-row>
 					<ion-row style="margin-top: 5px;">
 						<ion-col *ngIf="nextAppointmentEnable&&customerEnable" size="12" size-lg="6" id="na_dashboard_termine"
