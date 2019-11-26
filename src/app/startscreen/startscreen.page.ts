@@ -119,28 +119,26 @@ export class StartscreenPage {
     this.navCtrl.navigateForward('/login');
   }
 
+  customer_search(event) {
+    if (event.keyCode == 13) {
+      console.log('event :', event, event.keyCode, this.customerSearch);
+      this.systemService.customerId = 0;
+      this.systemService.filterText = this.customerSearch;
+      this.navCtrl.navigateForward(['/customer-table', this.customerSearch]);
+    }
+  }
+
   go(action) {
     console.log(action);
     switch (action) {
       case 'DashboardPage':
         this.navCtrl.navigateForward('/dashboard');
         break;
-      case 'CustomerTable': {
-        this.systemService.customerId = 0;
-        if (this.customerSearch == '') {
-          this.systemService.filterText = '';
-          this.navCtrl.navigateForward(['/customer-table', '']);
-        } else {
-          this.systemService.filterText = this.customerSearch;
-          this.navCtrl.navigateForward(['/customer-table', this.customerSearch]);
-        }
-        break;
-      }
       case 'CustomerTableAll': {
         this.systemService.customerId = 0;
         this.customerSearch = '';
         this.systemService.filterText = '';
-        this.navCtrl.navigateForward(['/customer-table', '']);        
+        this.navCtrl.navigateForward(['/customer-table', '']);
         break;
       }
       case 'StartscreenPage':
