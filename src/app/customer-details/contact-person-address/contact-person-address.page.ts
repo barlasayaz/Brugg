@@ -27,6 +27,7 @@ export class ContactPersonAddressPage {
   public inputError: boolean = false;
   public email_felder: any = 0;
   public pw_felder: any = 0;
+  public itsNew:boolean = false;
   public contactPersonAddresses: any = [];
   public contactPersonAddress: any;
 
