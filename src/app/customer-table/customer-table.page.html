@@ -32,7 +32,7 @@
                  (onColReorder)="onColReorder($event)"
                  (onColResize)="onColResize($event)"
                  [sortField] = "sortedColumn['sort_field']"
-                 [sortOrder] = "sortedColumn['sort_order']" >      
+                 [sortOrder] = "sortedColumn['sort_order']">      
         <ng-template pTemplate="colgroup" let-columns="columns">
             <colgroup>
                 <col [hidden]="!workMode" [ngStyle]="{width: selectedColumns[0].width}" >
@@ -56,11 +56,14 @@
                 <th class="workColumn" [hidden]="!workMode">
                     <div class="workWidthfix"></div>
                 </th> 
-                <th *ngFor="let col of selectedColumns.slice(1)" [ngSwitch]="col.field" class="p-table-filter">
-                    <input pInputText type="text"
+                <th *ngFor="let col of selectedColumns.slice(1)"
+                    [ngSwitch]="col.field"
+                    class="p-table-filter">
+                    <input pInputText
+                           type="text"
                            class="filter-search"
                            (input)="search_all()"
-                          [(ngModel)]="columnFilterValues[col.field]">
+                           [(ngModel)]="columnFilterValues[col.field]">
                 </th>
             </tr>
         </ng-template> 
@@ -69,27 +72,26 @@
                      let-rowNode
                      let-rowData="rowData"
                      let-columns="columns">
-            <tr [ttSelectableRow]="rowNode" class="workworkC">
-                <td  class="workColumn" [hidden]="!workMode">
-                    <div class="workWidthfix">
-                        
-                        <ion-button [hidden]="!editMode" class="btn btn-success" size="small"  (click)="editCustomer(rowData)">
+            <tr [ttSelectableRow]="rowNode">
+                <td class="workColumn" [hidden]="!workMode">
+                    <div class="workWidthfix">                        
+                        <ion-button [hidden]="!editMode" class="btn btn-success" size="small" (click)="editCustomer(rowData)">
                             <ion-icon name="create"></ion-icon>
                         </ion-button>
-                        <ion-button [hidden]="((!moveMode)||(move_id>0))" class="btn btn-teal" size="small"  (click)="moveCustomer(1,rowData)">
-                                <ion-icon name="md-move"></ion-icon>
+                        <ion-button [hidden]="((!moveMode)||(move_id>0))" class="btn btn-teal" size="small" (click)="moveCustomer(1,rowData)">
+                            <ion-icon name="md-move"></ion-icon>
                         </ion-button> 
-                        <ion-button [hidden]="((!moveMode)||(move_id==0)||(move_id==rowData.id))" class="btn btn-danger" size="small"  (click)="moveCustomer(2,rowData)">
-                                <ion-icon name="md-arrow-round-forward"></ion-icon>
+                        <ion-button [hidden]="((!moveMode)||(move_id==0)||(move_id==rowData.id))" class="btn btn-danger" size="small" (click)="moveCustomer(2,rowData)">
+                            <ion-icon name="md-arrow-round-forward"></ion-icon>
                         </ion-button>     
-                        <ion-button [hidden]="((!moveMode)||(move_id==0)||(move_id!=rowData.id))" class="btn btn-teal" size="small"  (click)="moveCustomer(2,rowData)">
-                                <ion-icon name="md-arrow-round-back"></ion-icon>
+                        <ion-button [hidden]="((!moveMode)||(move_id==0)||(move_id!=rowData.id))" class="btn btn-teal" size="small" (click)="moveCustomer(2,rowData)">
+                            <ion-icon name="md-arrow-round-back"></ion-icon>
                         </ion-button>           
                     </div>               
                 </td> 
                 <td *ngFor="let col of selectedColumns.slice(1); let i = index" 
                     (click)="viewCustomer(col,rowData)"
-                    [ngClass]="{'link_eye': (col.field == 'company')}" >
+                    [ngClass]="{'link_eye': (col.field == 'company')}">
                     <p-treeTableToggler [rowNode]="rowNode" *ngIf="i == 0"></p-treeTableToggler>
                     <label *ngIf="(col.field == 'last_date')">{{rowData[col.field] | date : 'dd.MM.yyyy'}}</label>
                     <label *ngIf="(col.field == 'next_date')">{{rowData[col.field] | date : 'dd.MM.yyyy'}}</label>
@@ -98,7 +100,7 @@
                                   (col.field != 'next_date') &&
                                   (col.field != 'company') &&
                                   (col.field != 'sector') ">{{rowData[col.field]}}</label>   
-                    <div class="link" *ngIf="(col.field == 'company')" >{{rowData[col.field]}}</div>                 
+                    <div class="link" *ngIf="(col.field == 'company')">{{rowData[col.field]}}</div>                 
                 </td>
             </tr>
         </ng-template>

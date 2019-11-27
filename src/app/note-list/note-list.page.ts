@@ -14,6 +14,7 @@ import { debounceTime } from 'rxjs/operators';
 import { SystemService } from '../services/system';
 import { DataService } from '../services/data.service';
 import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
+import { DatePipe } from '@angular/common';
 
 /**
  * Generated class for the NoteListPage page.
@@ -240,6 +241,10 @@ export class NoteListPage implements OnInit {
                 const cn = this.categoryNames[ci];
                 // console.log('categoryName:', cn, ci, this.noteListAll[i]);
                 this.noteListAll[i].data.category = this.translate.instant(cn);
+
+                let pipe = new DatePipe('en-US');
+                var notesDate = new Date(this.noteListAll[i].data.notes_date.replace(' ', 'T')).toISOString();
+                this.noteListAll[i].data.notes_date = pipe.transform(notesDate, 'dd.MM.yyyy HH:mm');
             }
 
             this.generate_noteList(0, this.rowCount, this.sortedColumn.sort_field, this.sortedColumn.sort_order);

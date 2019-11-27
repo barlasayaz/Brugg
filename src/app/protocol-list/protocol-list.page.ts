@@ -215,6 +215,10 @@ export class ProtocolListPage implements OnInit {
             this.title_translate(this.protocolListAll);
 
             for (let index = 0; index < this.protocolListAll.length; index++) {
+                let pipe = new DatePipe('en-US');
+                var protocolDate = new Date(this.protocolListAll[index].data.protocol_date.replace(' ', 'T')).toISOString();
+                this.protocolListAll[index].data.protocol_date = pipe.transform(protocolDate, 'dd.MM.yyyy');
+
                 let options = [];
                 try {
                     options = JSON.parse(this.protocolListAll[index].data.items);
