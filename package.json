@@ -62,7 +62,7 @@
     "cordova-android": "^7.1.4",
     "cordova-android-support-gradle-release": "^2.1.0",
     "cordova-browser": "^5.0.4",
-    "cordova-ios": "5.0.1",
+    "cordova-ios": "^5.1.0",
     "cordova-plugin-add-swift-support": "1.7.2",
     "cordova-plugin-camera": "^4.1.0",
     "cordova-plugin-device": "^2.0.3",
@@ -172,9 +172,9 @@
     },
     "platforms": [
       "browser",
-      "ios",
       "android",
-      "windows"
+      "windows",
+      "ios"
     ]
   }
 }
