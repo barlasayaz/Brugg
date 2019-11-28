@@ -4,6 +4,7 @@ import { ApiService } from '../services/api';
 import { TranslateService } from '@ngx-translate/core';
 import { UserdataService } from '../services/userdata';
 import { ActivatedRoute } from '@angular/router';
+import { DatePipe } from '@angular/common';
 
 /**
  * Generated class for the NoteDetailsPage page.
@@ -45,6 +46,10 @@ export class NoteDetailsPage {
         this.activNote = result.obj;
         this.activNote.category = this.translate.instant(this.categoryNames[this.activNote.category - 1]);
         this.idCustomer = this.activNote.customer;
+        let pipe = new DatePipe('en-US');
+        var notesDate = new Date(this.activNote.notes_date.replace(' ', 'T')).toISOString();
+        this.activNote.notes_date = pipe.transform(notesDate, 'dd.MM.yyyy');
+        this.activNote.notes_time = pipe.transform(notesDate, 'HH:mm');
         this.loadCustomer(this.idCustomer);
         console.log('loadCustomer', this.activNote);
     });

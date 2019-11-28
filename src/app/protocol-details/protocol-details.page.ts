@@ -99,8 +99,14 @@ export class ProtocolDetailsPage implements OnInit {
   loadProtocol(id: any) {
     this.apiService.pvs4_get_protocol(id).then((result: any) => {
       this.activProtocol = result.obj;
-      // console.log('loadProtocol :', this.activProtocol);
+       console.log('loadProtocol :', this.activProtocol);
       this.activProtocol.items = JSON.parse(this.activProtocol.items);
+
+      let pipe = new DatePipe('en-US');
+      var protocolDate = new Date(this.activProtocol.protocol_date.replace(' ', 'T')).toISOString();
+      this.activProtocol.protocol_date = pipe.transform(protocolDate, 'dd.MM.yyyy');
+      var protocolDateNext = new Date(this.activProtocol.protocol_date_next.replace(' ', 'T')).toISOString();
+      this.activProtocol.protocol_date_next = pipe.transform(protocolDateNext, 'dd.MM.yyyy');
 
       let productList = JSON.parse(this.activProtocol.product);
       productList.forEach(element => {
