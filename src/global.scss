@@ -22487,7 +22487,6 @@ _:-webkit-full-screen,
   content: url("/assets/imgs/pvs-eye-1.png");
   display: block;
   position: absolute;
-  opacity: 40%;
   top: 1px;
   right: 3px;
 }
@@ -22496,8 +22495,6 @@ _:-webkit-full-screen,
 }
 .link_eye:hover:after{
   content: url("/assets/imgs/pvs-eye-2.png");
-  opacity: 100%;
-  top: 4px;
 }
 
 .link_edit{
@@ -22510,22 +22507,17 @@ position: relative;
 cursor: pointer;
 }
 .link_edit:after {
-content: '\1F589';
-display: block;
-font-size: 16px; 
-position: absolute;
-color: #005e86;
-opacity: 50%;
-top: 0px;
-right: 3px;
+  content: url("/assets/imgs/pen-1.png");
+  display: block;
+  position: absolute;
+  top: 0px;
+  right: 3px;
 }
 .link_edit:hover{
 background-color: #9fdbf5 !important;
 }
 .link_edit:hover:after{
-opacity: 100%;
-font-size: 22px; 
-top: -3px;
+  content: url("/assets/imgs/pen-2.png");
 }
 
 .modalPageFooter {  

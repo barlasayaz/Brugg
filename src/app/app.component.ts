@@ -39,7 +39,7 @@ export class AppComponent {
       this.router.events.subscribe((event: RouterEvent) => {
         if(event instanceof RouterEvent){
           if(event.url){
-            console.log('RouterEvent:',event, event.url  ); 
+            //console.log('RouterEvent:',event, event.url  ); 
             if( event.url == "/login" ){
               this.menuCtrl.enable(false);
             }else if(  event.url == "/startscreen"   ){

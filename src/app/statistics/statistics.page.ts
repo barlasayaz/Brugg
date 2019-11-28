@@ -185,9 +185,10 @@ export class StatisticsPage implements OnInit {
 
       const x = this.listStatisticMaster.length;
       let y = 0;
-      this.listStatisticMaster.forEach(eventX => {
-        console.log('listStatisticMaster event ', eventX);
-
+      for(let nr=0; this.listStatisticMaster.length > nr; nr++ )
+      {
+        //console.log('listStatisticMaster event ', eventX);
+        let eventX = this.listStatisticMaster[nr];
         this.listStatistic = [];
         this.listStatisticMasterDetail = [];
 
@@ -209,7 +210,7 @@ export class StatisticsPage implements OnInit {
             eventX.data = this.listStatisticMasterDetail;
             eventX.count = this.listStatisticMasterDetail.length;
             if (x==y) {
-              console.log('OK NOTE', x, y);
+              //console.log('OK NOTE', x, y);
               loader.dismiss();
               this.listItemGroup();
             }
@@ -227,67 +228,19 @@ export class StatisticsPage implements OnInit {
             eventX.data = this.listStatisticMasterDetail;
             eventX.count = this.listStatisticMasterDetail.length;
             if (x==y) {
-              console.log('OK NOTE', x, y);
+              //console.log('OK NOTE', x, y);
               loader.dismiss();
               this.listItemGroup();
             }
           });
         }
-      });
+      }
+
     }).catch(err => {
       loader.dismiss();
       console.log('pvs4_get_colleagues_list err: ', err);
     });
   }
-
-  // statisticSummary(statisticList: any) {
-  //   var sortarray = [{field:'name_user', direction:'asc'}, {field:'company', direction:'asc'}];
-  //   statisticList.sort(function(a,b){
-  //     for(var i=0; i<sortarray.length; i++){
-  //         let retval = a[sortarray[i].field] < b[sortarray[i].field] ? -1 : a[sortarray[i].field] > b[sortarray[i].field] ? 1 : 0;
-  //         if (sortarray[i].direction == "desc") {
-  //             retval = retval * -1;
-  //         }
-  //         if (retval !== 0) {
-  //             return retval;
-  //         }
-  //     }
-  //   });
-  //   let i: any = 0;
-  //   let companyArr: any = [];
-  //   this.ratingA = 0;
-  //   this.ratingB = 0;
-  //   this.ratingC = 0;
-  //   this.ratingF = 0;
-  //   this.visitReportSum = 0;
-  //   statisticList.forEach(event => {
-  //     if (event.rating == 'A') {
-  //       this.ratingA++;
-  //     }
-  //     if (event.rating == 'B') {
-  //       this.ratingB++;
-  //     }
-  //     if (event.rating == 'C') {
-  //       this.ratingC++;
-  //     }
-  //     if (event.rating == 'F') {
-  //       this.ratingF++;
-  //     }
-  //     companyArr[i] = event.company;
-  //     i++;
-  //     this.visitReportSum = this.visitReportSum + parseInt(event.visitReport);
-  //   });
-  //   companyArr = companyArr.sort();
-
-  //   let companyName = '';
-  //   this.companyCount = 0;
-  //   companyArr.forEach(event => {
-  //     if (event != companyName) {
-  //       this.companyCount++;
-  //       companyName = event;
-  //     }
-  //   });
-  // }
 
   statisticSummaryItem(item, statisticList: any) {
     let i: any = 0;
