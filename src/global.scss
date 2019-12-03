@@ -14,6 +14,57 @@
 @import '~@fullcalendar/timegrid/main.css';
 @import '~@fullcalendar/bootstrap/main.css';
 
+//IOS NOTCH FIX // padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+ion-app.ios {
+
+  .mt20 {
+    margin-top: 0px;
+    margin-bottom: 40px;
+  } 
+
+  main-nav {
+    padding-top: env(safe-area-inset-top);
+    background : #fff;
+  }
+
+  app-startscreen {
+    padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+  }
+
+  .pvs4-login-wrapper {
+    padding: calc(env(safe-area-inset-top) + 20px) 20px 5px 15px !important;
+  }
+
+  bottom-nav {
+    padding-bottom: env(safe-area-inset-bottom);
+    background: #009de0;
+    min-height: 50px;
+    height: auto;
+  }
+
+.liftiball {
+  margin-bottom: calc(env(safe-area-inset-bottom) + 50px);
+}
+
+  .ek-content {
+    padding-bottom: calc(env(safe-area-inset-bottom) + 50px);
+  }
+
+  .heightCalc {
+    height: calc(100% - 65px - 55px - 41px - env(safe-area-inset-bottom));
+  }
+
+  .liftiball ion-fab-button {
+    --box-shadow: 0px 1px 9px rgba(0, 0, 0, 0.3);
+  }
+
+  .native-input.sc-ion-input-ios {
+    padding-left:10px !important;
+    padding-right:10px !important;
+  }
+
+}
+
 ///PVS4
 //CHROME AUTOFILL BACKGROUND COLOR
 input:-webkit-autofill,
@@ -37,6 +88,28 @@ th.p-table-filter.ng-star-inserted {
   .filter-search {
     font-weight:400;
   }
+}
+
+.orederType {
+  padding: 0 15px !important;
+  background:#fff !important;
+
+  ion-checkbox {
+    margin-right: 10px;
+  }
+
+  ion-item {
+    margin-bottom:-1px;
+    width: 100%;
+  }
+
+
+  @media screen and (max-width: 480px) {
+    flex-direction: column !important;
+  }
+
+  
+
 }
 
 bottom-nav {
@@ -20062,7 +20135,7 @@ body {
 }
 
 .container-fix {
-  height: 99%;
+  margin-bottom: 100px;
 }
 
 .ui-grid-render-container {
@@ -22478,6 +22551,7 @@ _:-webkit-full-screen,
     cursor: pointer;
     color: #005e86;
     height: 100%;
+    padding-right:15px;
 }  
 .link_eye{
   position: relative;
@@ -22485,10 +22559,12 @@ _:-webkit-full-screen,
 }
 .link_eye:after {
   content: url("/assets/imgs/pvs-eye-1.png");
-  display: block;
+  display: flex;
   position: absolute;
-  top: 1px;
-  right: 3px;
+  top: 0px;
+  right: 0px;
+  height:100%;
+  align-items: center;
 }
 .link_eye:hover{
   background-color: #9fdbf5 !important;
