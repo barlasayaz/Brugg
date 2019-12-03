@@ -60,7 +60,7 @@ export class StartscreenPage {
           this.isNFC = false;
           console.log('error attaching ndef listener', err);
         }).subscribe((event) => {
-          console.log('NFC event: ', event);
+          console.log('NFC event: ', JSON.stringify(event));
         });
       } else {
         console.log('platform : other');

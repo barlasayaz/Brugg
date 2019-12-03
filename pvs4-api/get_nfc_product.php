@@ -20,8 +20,8 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' && empty($_POST)) {
 // switch on the current http method, 
 switch ($_SERVER['REQUEST_METHOD']) {
     case "POST":
-        if(isset($_POST['tagID']) ) {
-            processing( $_POST['tagID']  );
+        if(isset($_POST['pid']) ) {
+            processing( $_POST['pid']  );
         }else{
             http_response_code(500);
             $error = new \stdClass();
@@ -45,7 +45,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
         die;
 }
 
-function processing($tagID) {
+function processing($pid) {
     global $brugg_id_api,$database_location,$database_username,$database_password,$database_name;
     $con=mysqli_connect($database_location,$database_username,$database_password,$database_name);
     mysqli_query($con,"SET NAMES 'utf8'");
@@ -86,9 +86,9 @@ function processing($tagID) {
     //-----------------------------------------------------
 
     // escape the uemailid to prevent sql injection
-    $tagID   = trim( mysqli_escape_string($con,$tagID) );
+    $pid   = trim( mysqli_escape_string($con,$pid) );
     
-    $sql    = "SELECT * FROM `products` WHERE  `nfc_tag_id`='$tagID';";
+    $sql    = "SELECT * FROM `products` WHERE `id`='$pid';";
     $ret_sql= mysqli_query( $con, $sql );
 
     $obj = mysqli_fetch_assoc($ret_sql);
