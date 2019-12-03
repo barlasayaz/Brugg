@@ -392,6 +392,10 @@ export class ProductListPage implements OnInit {
                         this.productListAll[index].data[options[i].title[this.lang]] = pipe.transform(options[i].value, 'dd.MM.yyyy');
                     } else if (options[i].type == 6) {
                         this.productListAll[index].data[options[i].title[this.lang]] = '(' + options[i].value.lat.toString().substring(0, 6) + ',' + options[i].value.long.toString().substring(0, 6) + ')';
+                    } else if (options[i].type == 2) {
+                        if(options[i].value === null) options[i].value="";
+                        if(options[i].value === undefined) options[i].value="";
+                        this.productListAll[index].data[options[i].title[this.lang]] = options[i].value;
                     } else {
                         this.productListAll[index].data[options[i].title[this.lang]] = options[i].value;
                     }
