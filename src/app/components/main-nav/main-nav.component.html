@@ -73,13 +73,13 @@
                 <div style="width: max-content;"
                      *ngIf="aktivPage == 'Dashboard'">
                   <ion-row>
-                    <ion-col>
+                    <ion-col class="hidden-xs-down">
                         <ion-item lines="none">
                           <ion-label class="app-label">{{'Nächste Termine' | translate}}</ion-label>
                           <ion-checkbox color="primary" [(ngModel)]="nextAppointmentEnable" (ionChange)="updateDashboard()" slot="start"></ion-checkbox>
                         </ion-item>
                     </ion-col>
-                    <ion-col>
+                    <ion-col class="hidden-xs-down">
                         <ion-item lines="none">
                           <ion-label class="app-label">{{'Kunden' | translate }}</ion-label>
                           <ion-checkbox color="primary" [(ngModel)]="customerEnable" (ionChange)="updateDashboard()" slot="start"></ion-checkbox>

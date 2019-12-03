@@ -18,16 +18,26 @@
                       </div>
                       <div class="tbody">
                         <div class="tr table-body orederType">
-                            <div class="td" style="max-width: 25px;"><ion-checkbox [(ngModel)]="activOrderForm.orderCheckBox"></ion-checkbox></div>
-                            <div class="orederTypeOrder">{{'Bestellen' | translate}}</div>
-                            <div class="td" style="max-width: 25px;"><ion-checkbox [(ngModel)]="activOrderForm.offerCheckBox"></ion-checkbox></div>
-                            <div class="orederTypeOffer">{{'Offerte' | translate}}</div>
-                            <div class="td" style="max-width: 25px;"><ion-checkbox [(ngModel)]="activOrderForm.repairCheckBox"></ion-checkbox></div>
-                            <div class="orederTypeReperatur">{{'Reparatur' | translate}}</div>
-                            <div class="td" style="max-width: 25px;"><ion-checkbox [(ngModel)]="activOrderForm.inspectionCheckBox"></ion-checkbox></div>
-                            <div class="orederTypeInspection">{{'Prüfung' | translate}}</div>
-                            <div class="td" style="max-width: 25px;"><ion-checkbox [(ngModel)]="activOrderForm.rentCheckBox"></ion-checkbox></div>
-                            <div class="orederTypeRent">{{'Miete' | translate}}</div> 
+                            <ion-item>
+                              <ion-label>{{'Bestellen' | translate}}</ion-label>
+                              <ion-checkbox slot="start" [(ngModel)]="activOrderForm.orderCheckBox"></ion-checkbox>
+                            </ion-item>
+                            <ion-item>
+                              <ion-label>{{'Offerte' | translate}}</ion-label>
+                              <ion-checkbox slot="start" [(ngModel)]="activOrderForm.offerCheckBox"></ion-checkbox>
+                            </ion-item>
+                            <ion-item>
+                              <ion-label>{{'Reparatur' | translate}}</ion-label>
+                              <ion-checkbox slot="start" [(ngModel)]="activOrderForm.repairCheckBox"></ion-checkbox>
+                            </ion-item>
+                            <ion-item>
+                              <ion-label>{{'Prüfung' | translate}}</ion-label>
+                              <ion-checkbox slot="start" [(ngModel)]="activOrderForm.inspectionCheckBox"></ion-checkbox>
+                            </ion-item>
+                            <ion-item>
+                              <ion-label>{{'Miete' | translate}}</ion-label>
+                              <ion-checkbox slot="start" [(ngModel)]="activOrderForm.rentCheckBox"></ion-checkbox>
+                            </ion-item>
                         </div>
                       </div>
                     </div>
@@ -254,16 +264,26 @@
                     <div class="kunden-col">
                       <div class="table-info">
                         <div class="tbody">
-                          <div class="tr table-body">
-                              <div class="td" style="max-width: 30px; width: 30px;"><ion-checkbox [(ngModel)]="activOrderForm.sampleDeliveryCheckBox"></ion-checkbox></div>
-                              <div class="td" style="font-size: 15px; margin-top: -6px;">{{'Musterlieferung' | translate}}</div>
-                              <div class="td" style="max-width: 30px; width: 30px;"><ion-checkbox [(ngModel)]="activOrderForm.creditCheckBox"></ion-checkbox></div>
-                              <div class="td" style="font-size: 15px; margin-top: -6px;">{{'Gutschrift' | translate}}</div>
-                              <div class="td" style="max-width: 30px; width: 30px;"><ion-checkbox [(ngModel)]="activOrderForm.confOrderCheckBox"></ion-checkbox></div>
-                              <div class="td" style="font-size: 15px; margin-top: -6px;">{{'Auftragsbestätigung' | translate}}</div>
-                              <div class="td" style="max-width: 30px; width: 30px;"><ion-checkbox [(ngModel)]="activOrderForm.afterLoadingCheckBox"></ion-checkbox></div>
-                              <div class="td" style="font-size: 15px; margin-top: -6px;">{{'Nach belastung' | translate}}</div>
+
+                          <div class="tr table-body orederType">
+                              <ion-item>
+                                <ion-label>{{'Musterlieferung' | translate}}</ion-label>
+                                <ion-checkbox slot="start" [(ngModel)]="activOrderForm.sampleDeliveryCheckBox"></ion-checkbox>
+                              </ion-item>
+                              <ion-item>
+                                <ion-label>{{'Gutschrift' | translate}}</ion-label>
+                                <ion-checkbox slot="start" [(ngModel)]="activOrderForm.creditCheckBox"></ion-checkbox>
+                              </ion-item>
+                              <ion-item>
+                                <ion-label>{{'Auftragsbestätigung' | translate}}</ion-label>
+                                <ion-checkbox slot="start" [(ngModel)]="activOrderForm.confOrderCheckBox"></ion-checkbox>
+                              </ion-item>
+                              <ion-item>
+                                <ion-label>{{'Nach belastung' | translate}}</ion-label>
+                                <ion-checkbox slot="start" [(ngModel)]="activOrderForm.afterLoadingCheckBox"></ion-checkbox>
+                              </ion-item>
                           </div>
+
                         </div>
                       </div>
                     </div>
@@ -277,18 +297,30 @@
                     <div class="kunden-col">
                       <div class="table-info">
                         <div class="tbody">
-                          <div class="tr table-body">
-                              <div class="td" style="max-width: 30px; width: 30px;"><ion-checkbox [(ngModel)]="activOrderForm.postCheckBox"></ion-checkbox></div>
-                              <div class="td" style="font-size: 15px; margin-top: -6px;">{{'Post' | translate}}</div>
-                              <div class="td" style="max-width: 30px; width: 30px;"><ion-checkbox [(ngModel)]="activOrderForm.expressCheckBox"></ion-checkbox></div>
-                              <div class="td" style="font-size: 15px; margin-top: -6px;">{{'Express' | translate}}</div>
-                              <div class="td" style="max-width: 30px; width: 30px;"><ion-checkbox [(ngModel)]="activOrderForm.aboutBrachtCheckBox"></ion-checkbox></div>
-                              <div class="td" style="font-size: 15px; margin-top: -6px;">{{'Überbracht' | translate}}</div>
-                              <div class="td" style="max-width: 30px; width: 30px;"><ion-checkbox [(ngModel)]="activOrderForm.lkwCheckBox"></ion-checkbox></div>
-                              <div class="td" style="font-size: 15px; margin-top: -6px;">{{'LKW' | translate}}</div>
-                              <div class="td" style="max-width: 30px; width: 30px;"><ion-checkbox [(ngModel)]="activOrderForm.evenPickupCheckBox"></ion-checkbox></div>
-                              <div class="td" style="font-size: 15px; margin-top: -6px;">{{'Selbst Abholer' | translate}}</div>
+
+                          <div class="tr table-body orederType">
+                              <ion-item>
+                                <ion-label>{{'Post' | translate}}</ion-label>
+                                <ion-checkbox slot="start" [(ngModel)]="activOrderForm.postCheckBox"></ion-checkbox>
+                              </ion-item>
+                              <ion-item>
+                                <ion-label>{{'Express' | translate}}</ion-label>
+                                <ion-checkbox slot="start" [(ngModel)]="activOrderForm.expressCheckBox"></ion-checkbox>
+                              </ion-item>
+                              <ion-item>
+                                <ion-label>{{'Überbracht' | translate}}</ion-label>
+                                <ion-checkbox slot="start" [(ngModel)]="activOrderForm.aboutBrachtCheckBox"></ion-checkbox>
+                              </ion-item>
+                              <ion-item>
+                                <ion-label>{{'LKW' | translate}}</ion-label>
+                                <ion-checkbox slot="start" [(ngModel)]="activOrderForm.lkwCheckBox"></ion-checkbox>
+                              </ion-item>
+                              <ion-item>
+                                <ion-label>{{'Selbst Abholer' | translate}}</ion-label>
+                                <ion-checkbox slot="start" [(ngModel)]="activOrderForm.evenPickupCheckBox"></ion-checkbox>
+                              </ion-item>
                           </div>
+
                         </div>
                       </div>
                     </div>
@@ -300,7 +332,7 @@
                   <div class="kunden-col">
                     <div class="table-info"> 
                       <div class="tbody">
-                        <div class="tr table-body">
+                        <div class="tr table-body" style="background: #fff">
                           <ion-label>
                               {{'ID-Nummer beibehalten' | translate}}
                           </ion-label>

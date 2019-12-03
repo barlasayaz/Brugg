@@ -1,13 +1,15 @@
 
     .schalter {
-        padding: 2px;
-        margin: 0 10px 0 20px;
+        padding: 5px;
     }
-    .headerText {
-        margin: 0;
-        color: #ddd;
-        text-align: left!important;
-    }
+.headerText {
+    margin: 0;
+    color: #fff !important;
+    height: 45px;
+    text-align: left!important;
+    display: flex;
+    align-items: center;
+}
     .scanList td, .scanList th  {
         text-align: left;
         padding: 7px 9px;

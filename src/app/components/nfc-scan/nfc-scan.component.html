@@ -1,22 +1,17 @@
 <ion-header>
-
   <ion-toolbar color="primary">
-    <div class="modal-header" *ngIf="readonly" >
-      <ion-toggle class="schalter" [(ngModel)]="listView" checked="false">
-      </ion-toggle>
-      <ion-label class="headerText">{{'Listenansicht'| translate}}</ion-label>
-    </div>
-    <ion-buttons slot="primary">
-      <ion-button icon-only (click)="dismiss()">
-        <ion-icon name="close"></ion-icon>
-      </ion-button>
-    </ion-buttons>
+      <ion-title>{{'Scanner an NFC halten.' | translate}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <div class="modal-content">
     <div class="modal-body">
+      <div class="modal-header" *ngIf="readonly">
+        <ion-label class="headerText">{{'Listenansicht'| translate}}</ion-label>
+        <ion-toggle class="schalter" [(ngModel)]="listView" checked="false"></ion-toggle>
+        <br>
+      </div>
       <p-table class="scanList" [columns]="cols" [value]="scanList" *ngIf="listView">
         <ng-template pTemplate="header" let-columns>
           <tr>
@@ -46,8 +41,6 @@
 
       <div *ngIf="!listView">
         <div *ngIf="procedure==0" class="modal-body" style="text-align: center;">
-          <div style="text-align:center;color:#ccc;font-size:24px">{{'Scanner an NFC halten.' | translate}}</div>
-          <br>
           <ion-icon name="wifi" style="color:#ccc;font-size:100px"></ion-icon>
         </div>
         <div *ngIf="procedure==1" class="card">
@@ -89,39 +82,50 @@
         </div>
       </div>
     </div>
-    <div class="modal-footer text-center" style='clear: both;'>
+    <div class="text-center" style='clear: both;'>
       <div *ngIf="listView && (scanList.length==0)" class="modal-body" style="text-align: center;">
-        <div style="text-align:center;color:#ccc;font-size:24px">{{'Scanner an NFC halten.' | translate}}</div><br>
         <ion-icon name="wifi" style="color:#ccc;font-size:100px"></ion-icon>
       </div>
       <div *ngIf="listView && (scanList.length>0)" class="modal-body" style="text-align: center;">
-        <ion-button  class="btn btn-modal-success button-larger" (click)="createProtocol();" >
+        <ion-button class="btn btn-modal-success button-larger" (click)="createProtocol();" >
           {{'Neues Protokoll' | translate}}
         </ion-button>				
-      </div>
-
-      <div *ngIf="!listView">
-        <ion-button *ngIf="procedure==1&&isWritable" class="btn-modal-success button-larger"
-          (click)="nfc_write();">
-          {{'NFC beschreiben' | translate}}
-        </ion-button>
-        <ion-button *ngIf="procedure==4&&isWritable&&!readonly" class="btn-modal-warning button-larger"
-          (click)="nfc_write();">
-          {{'Wiederholen' | translate}}
-        </ion-button>
-        <ion-button *ngIf="procedure==4&&readonly" class="btn-modal-warning"
-          (click)="procedure=0;">
-          <ion-icon name="repeat"></ion-icon>
-        </ion-button>
-        <ion-button *ngIf="procedure!=3" class="btn-modal-danger"
-          (click)="dismiss()">
-          <ion-icon name="close"></ion-icon>
-        </ion-button>
-        <ion-button *ngIf="procedure==3" class="btn-modal-success"
-          (click)="dismiss()">
-          <ion-icon name="checkmark"></ion-icon>
-        </ion-button>
       </div>
     </div>
   </div>
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar class="modalPageFooter">
+      <ion-grid>
+          <ion-row>
+              <ion-col size="12" no-padding>
+                <ion-button *ngIf="procedure==1&&isWritable" class="btn-modal-success button-larger"
+                  (click)="nfc_write();">
+                  {{'NFC beschreiben' | translate}}
+                </ion-button>
+<!--                   <ion-button *ngIf="procedure==4&&isWritable&&!readonly" class="btn-modal-warning button-larger"
+                  (click)="nfc_write();">
+                  {{'Wiederholen' | translate}}
+                </ion-button>
+                <ion-button *ngIf="procedure==4&&readonly" class="btn-modal-warning"
+                  (click)="procedure=0;">
+                  <ion-icon name="repeat"></ion-icon>
+                </ion-button> -->
+                <ion-button class="btn-modal-danger"
+                  (click)="dismiss()">
+                  <ion-icon name="close"></ion-icon>
+                </ion-button>
+<!--                   <ion-button *ngIf="procedure==3" class="btn-modal-success"
+                  (click)="dismiss()">
+                  <ion-icon name="checkmark"></ion-icon>
+                </ion-button> -->
+                <ion-button class="btn-modal-success"
+                  (click)="readNFC()">
+                  <ion-icon name="wifi"></ion-icon>
+                </ion-button>
+              </ion-col>
+          </ion-row>
+      </ion-grid>
+  </ion-toolbar>
+</ion-footer>
