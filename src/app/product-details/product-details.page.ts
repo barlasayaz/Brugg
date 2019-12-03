@@ -72,7 +72,9 @@ export class ProductDetailsPage implements OnInit {
         this.mobilePlatform = true;
         console.log('platform mobile:', this.platform.platforms());
         this.nfc.addNdefListener(() => {
-          this.isNFC = true;
+          if(this.platform.is('android')) {
+            this.isNFC = true;
+          }
           console.log('successfully attached ndef listener');
         }, (err) => {
           this.isNFC = false;

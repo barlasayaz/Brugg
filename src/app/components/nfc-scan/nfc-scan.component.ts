@@ -63,37 +63,75 @@ export class NfcScanComponent implements OnInit {
       { field: 'next_protocol', header: this.translate.instant('Nächster besuch') },
       { field: 'details', header: this.translate.instant('Produktdetails') },
 
-      
     ];
     this.procedure = 0;
     this.isWritable = true;
+  }
 
+  readNFC() {
     this.platform.ready().then(() => {
-      if (this.platform.is('ios') ||
-        this.platform.is('android') ||
-        this.platform.is('ipad') ||
-        this.platform.is('iphone') ||
-        this.platform.is('phablet') ||
-        this.platform.is('tablet')) {
+      if (this.platform.is('ios')) {
           this.nfc.enabled().then((flag) => {
-          this.subscribeNfc();
-        }).catch(this.onFailure); ;
+            this.subscribeNfc_ios();
+        }).catch(this.onFailure);
+      } else {
+        console.log('platform :', this.platform.platforms());
+      }
+    });
+    this.platform.ready().then(() => {
+      if (this.platform.is('android')) {
+          this.nfc.enabled().then((flag) => {
+            this.subscribeNfc_android();
+        }).catch(this.onFailure);
       } else {
         console.log('platform :', this.platform.platforms());
       }
     });
   }
 
-  subscribeNfc() {
-    console.log('subscribeNfc()');
+  subscribeNfc_ios() {
+    console.log('subscribeNfc_ios()');
+    this.nfc.beginSession().subscribe(res => {
+      this.nfc.addNdefListener(() => {
+        console.log('successfully attached ndef listener');
+      }, (err) => {
+        console.log('error attaching ndef listener', err);
+      }).subscribe((event) => {
+        this.nfcReadNdef_ios(event);
+      });
+    }, err => {
+      console.log(err);
+    });
+  }
+
+  subscribeNfc_android() {
+    console.log('subscribeNfc_android()');
     this.ndeflistener = this.nfc.addNdefListener();
     this.subscription = this.ndeflistener.subscribe(
-      (data: Event) => this.nfcReadNdef(data),
+      (data: Event) => this.nfcReadNdef_android(data),
       (err: any) => console.log(err)
     );
   }
 
-  nfcReadNdef(event: any) {
+  nfcReadNdef_ios(event: any) {
+    console.log('nfcReadNdef()', JSON.stringify(event));
+    console.log('received ndef message. the tag contains: ', JSON.stringify(event.tag));
+    console.log('received ndef message. the ndefMessage contains: ', JSON.stringify(event.tag.ndefMessage));
+    console.log('received ndef message. the id contains: ', JSON.stringify(event.tag.ndefMessage[0].id));
+    console.log('received ndef message. payload 1: ', this.ndef.textHelper.decodePayload(event.tag.ndefMessage[0].payload));
+    console.log('received ndef message. payload 2: ', this.ndef.textHelper.decodePayload(event.tag.ndefMessage[1].payload));
+    // if (event) {
+      this.isWritable = false;
+      this.tagId = '';
+      if (this.readonly) {
+        this.read_nfc_data(event);
+      } else {
+        this.procedure = 1;
+      }
+    // }
+  }
+
+  nfcReadNdef_android(event: any) {
     console.log('nfcReadNdef()', event);
     if (event && event.tag && event.tag.id) {
       this.tagId = this.nfc.bytesToHexString(event.tag.id);
@@ -131,7 +169,7 @@ export class NfcScanComponent implements OnInit {
             const pid = parseInt(res[2]);
             console.log('NFC pid', pid);
             if (pid > 0) {
-              this.apiService.pvs4_get_nfc_product(this.tagId).then((result: any) => {
+              this.apiService.pvs4_get_nfc_product(pid).then((result: any) => {
                 console.log('nfc result', result);
                 if (result.amount == 0) {
                   const toast = this.toastCtrl.create({
@@ -189,7 +227,6 @@ export class NfcScanComponent implements OnInit {
                                       if (diffDays < 30) { result.obj.next_protocol_color = '#e74c3c'; }
                                       // console.log('x :', pr.protocol_date_next ,  diffDays);
                                   }
-      
                                   if (pr.result) {
                                       if (pr.result == 1) {
                                           result.obj.next_protocol = this.translate.instant('reparieren');
@@ -241,7 +278,7 @@ export class NfcScanComponent implements OnInit {
                         idCustomer: customer.obj.id,
                         details: details,
                         next_protocol: result.obj.next_protocol,
-                        next_protocol_color: result.obj.next_protocol_color 
+                        next_protocol_color: result.obj.next_protocol_color
                       };
                       this.zone.run(() => {
                         this.scanList.push(new_obj);
