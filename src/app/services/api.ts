@@ -670,12 +670,12 @@ export class ApiService {
     });
   }
 
-  pvs4_get_nfc_product(pid: number) {
+  pvs4_get_nfc_product(tagID: string) {
     const userID = this.userdata.id;
     return new Promise((res, rej) => {
       const data = {
         user: userID,
-        pid: pid
+        tagID: tagID
       };
       this.pvs4_api_post('get_nfc_product.php', data).then((done: any) => {// return the result
         done.amount = parseInt(done.amount);

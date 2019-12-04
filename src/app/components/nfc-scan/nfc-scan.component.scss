@@ -1,11 +1,14 @@
 
-    .schalter {
-        padding: 5px;
-    }
+.schalter {
+    // padding: 5px;
+    margin: 0 10px 0 20px;
+    margin-top: -4px;
+}
+
 .headerText {
     margin: 0;
     color: #fff !important;
-    height: 45px;
+    // height: 45px;
     text-align: left!important;
     display: flex;
     align-items: center;
@@ -41,4 +44,9 @@
         padding: 5px !important;
         text-align: right !important;
         color: #444 !important;
+    }
+
+    .modalPageFooter ion-button {
+        height: 50px !important;
+        width: 80.90px !important;
     }

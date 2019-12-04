@@ -56,29 +56,25 @@ export class NfcScanComponent implements OnInit {
   ngOnInit() {
     this.readonly = this.navParams.get('readOnly');
     this.pid = this.navParams.get('pid');
-
     this.cols = [
       { field: 'id_number', header: 'ID', width: '60px' },
       { field: 'title', header: this.translate.instant('Produkt') },
       { field: 'next_protocol', header: this.translate.instant('Nächster besuch') },
-      { field: 'details', header: this.translate.instant('Produktdetails') },
-
+      { field: 'details', header: this.translate.instant('Produktdetails') }
     ];
-    this.procedure = 0;
-    this.isWritable = true;
   }
 
   readNFC() {
+    this.procedure = 0;
+    this.isWritable = true;
     this.platform.ready().then(() => {
       if (this.platform.is('ios')) {
-          this.nfc.enabled().then((flag) => {
-            this.subscribeNfc_ios();
-        }).catch(this.onFailure);
+        this.nfc.enabled().then((flag) => {
+          this.subscribeNfc_ios();
+      }).catch(this.onFailure);
       } else {
         console.log('platform :', this.platform.platforms());
       }
-    });
-    this.platform.ready().then(() => {
       if (this.platform.is('android')) {
           this.nfc.enabled().then((flag) => {
             this.subscribeNfc_android();
@@ -92,13 +88,11 @@ export class NfcScanComponent implements OnInit {
   subscribeNfc_ios() {
     console.log('subscribeNfc_ios()');
     this.nfc.beginSession().subscribe(res => {
-      this.nfc.addNdefListener(() => {
-        console.log('successfully attached ndef listener');
-      }, (err) => {
-        console.log('error attaching ndef listener', err);
-      }).subscribe((event) => {
-        this.nfcReadNdef_ios(event);
-      });
+      this.ndeflistener = this.nfc.addNdefListener();
+      this.subscription = this.ndeflistener.subscribe(
+        (data: Event) => this.nfcReadNdef_ios(data),
+        (err: any) => console.log(err)
+      );
     }, err => {
       console.log(err);
     });
@@ -115,39 +109,25 @@ export class NfcScanComponent implements OnInit {
 
   nfcReadNdef_ios(event: any) {
     console.log('nfcReadNdef()', JSON.stringify(event));
-    console.log('received ndef message. the tag contains: ', JSON.stringify(event.tag));
-    console.log('received ndef message. the ndefMessage contains: ', JSON.stringify(event.tag.ndefMessage));
-    console.log('received ndef message. the id contains: ', JSON.stringify(event.tag.ndefMessage[0].id));
+    console.log('received ndef message. the tag contains: ', JSON.stringify(event.tag));
+    console.log('received ndef message. the ndefMessage contains: ', JSON.stringify(event.tag.ndefMessage));
+    console.log('received ndef message. the id contains: ', JSON.stringify(event.tag.ndefMessage[0].id), this.ndef.encodeMessage(event));
     console.log('received ndef message. payload 1: ', this.ndef.textHelper.decodePayload(event.tag.ndefMessage[0].payload));
     console.log('received ndef message. payload 2: ', this.ndef.textHelper.decodePayload(event.tag.ndefMessage[1].payload));
-    // if (event) {
+    console.log('isTrusted: ', JSON.stringify(event.isTrusted));
+    // console.log('tagID :', this.nfc.bytesToHexString(event.tag.id));
+    if (event) {
       this.isWritable = false;
       this.tagId = '';
       if (this.readonly) {
-        this.read_nfc_data(event);
-      } else {
-        this.procedure = 1;
-      }
-    // }
-  }
-
-  nfcReadNdef_android(event: any) {
-    console.log('nfcReadNdef()', event);
-    if (event && event.tag && event.tag.id) {
-      this.tagId = this.nfc.bytesToHexString(event.tag.id);
-      this.isWritable = event.tag.isWritable;
-      console.log(typeof (this.tagId) + ' tagId: ', this.tagId);
-      console.log('isWritable: ', this.isWritable);
-      console.log('only read: ', this.readonly);
-      if (this.readonly) {
-        this.read_nfc_data(event);
+        this.read_nfc_data_ios(event);
       } else {
         this.procedure = 1;
       }
     }
   }
 
-  read_nfc_data(nfcEvent: any) {
+  read_nfc_data_ios(nfcEvent: any) {
     console.log('read_nfc_data()', nfcEvent);
     if (!nfcEvent.tag.ndefMessage) {
       const toast = this.toastCtrl.create({
@@ -169,7 +149,172 @@ export class NfcScanComponent implements OnInit {
             const pid = parseInt(res[2]);
             console.log('NFC pid', pid);
             if (pid > 0) {
-              this.apiService.pvs4_get_nfc_product(pid).then((result: any) => {
+              this.apiService.pvs4_get_product(pid).then((result: any) => {
+                console.log('nfc result', result);
+                if (result.amount == 0) {
+                  const toast = this.toastCtrl.create({
+                    message: this.translate.instant('Produkt unbekannt'),
+                    cssClass: 'toast-warning',
+                    duration: 3000
+                  }).then(x => x.present());
+                  return;
+                }
+                if (!this.listView) {
+                  // result.obj.title = JSON.parse(result.obj.title);
+                  this.viewCtrl.dismiss();
+                  const data = {
+                    id: result.obj.id,
+                  };
+                  this.dataService.setData(data);
+                  this.navCtrl.navigateForward(['/product-details'] );
+                } else {
+                  let rein = true;
+                  for (let i = 0; i < this.scanList.length; i++) {
+                    if (this.scanList[i].id == result.obj.id) { rein = false; }
+                  }
+                  for (let i = 0; i < this.scanList.length; i++) {
+                    this.scanList[i].idCustomer = parseInt(this.scanList[i].idCustomer);
+                    result.obj.customer = parseInt(result.obj.customer);
+                    if (this.scanList[i].idCustomer != result.obj.customer) {
+                      rein = false;
+                      const toast = this.toastCtrl.create({
+                        message: this.translate.instant('Produkt einem anderem Kunden zugeteilt'),
+                        cssClass: 'toast-warning',
+                        duration: 3000
+                      }).then(x => x.present());
+                      return;
+                    }
+                  }
+                  if (rein) {
+                    this.apiService.pvs4_get_customer(result.obj.customer).then((customer: any) => {
+                      try {
+                        result.obj.title = JSON.parse(result.obj.title);
+                        result.obj.title = result.obj.title[this.lang];
+                      } catch {
+                         console.error('JSON.parse err title', result.obj.title) ;
+                      }
+                      let pr = result.obj.last_protocol;
+                      if (pr &&  pr.length > 0) {
+                              try {
+                                  pr = JSON.parse(pr);
+                                  result.obj.next_protocol_color = 'rgb(74, 83, 86)';
+                                  if (pr.protocol_date_next) {
+                                      result.obj.next_protocol = this.apiService.mysqlDate2view(pr.protocol_date_next);
+                                      let x = moment(pr.protocol_date_next, 'YYYY-M-D');
+                                      let y = moment();
+                                      let diffDays = x.diff(y, 'days');
+                                      if (diffDays < 90) { result.obj.next_protocol_color = '#f1c40f'; }
+                                      if (diffDays < 30) { result.obj.next_protocol_color = '#e74c3c'; }
+                                      // console.log('x :', pr.protocol_date_next ,  diffDays);
+                                  }
+                                  if (pr.result) {
+                                      if (pr.result == 1) {
+                                          result.obj.next_protocol = this.translate.instant('reparieren');
+                                          result.obj.next_protocol_color = '#f1c40f';
+                                      }
+                                      if (pr.result == 3) {
+                                          result.obj.next_protocol = this.translate.instant('unauffindbar');
+                                          result.obj.next_protocol_color = '#e74c3c';
+                                      }
+                                      if ((pr.result == 2) || (pr.result == 4)) {
+                                          result.obj.next_protocol = this.translate.instant('ausmustern');
+                                          result.obj.next_protocol_color = '#C558D3';
+                                      }
+                                  }
+                              } catch (e) {
+                                  console.error('JSON.parse(pr) err :', e);
+                                  console.log('pr :', pr);
+                              }
+                      }
+
+                      let details = '';
+                      try {
+                        const items = JSON.parse(result.obj.items);
+
+                        console.log('items:', result.obj.items );
+                        for (let i = 0; i < items.length; i++) {
+                          if (items[i].type != 2 ) { continue; }
+                          if (items[i].value.trim() == '' ) { continue; }
+                          if (details != '') {
+                            details += ', ';
+                          }
+                          details += items[i].title[this.lang] + ':' + items[i].value.trim();
+                          if (details.length > 63) {
+                            details = details.substring(0, 60) + '...';
+                            break;
+                          }
+                        }
+                      } catch {
+                         console.error('JSON.parse err items', result.obj.items) ;
+                      }
+
+                      this.company = customer.obj.company;
+
+                      const new_obj = {
+                        id: result.obj.id,
+                        id_number: result.obj.id_number,
+                        title: result.obj.title,
+                        company: customer.obj.company,
+                        idCustomer: customer.obj.id,
+                        details: details,
+                        next_protocol: result.obj.next_protocol,
+                        next_protocol_color: result.obj.next_protocol_color
+                      };
+                      this.zone.run(() => {
+                        this.scanList.push(new_obj);
+                        console.log('scanList:', this.scanList);
+                      });
+
+                    }).catch(this.onFailure);
+                  }
+                }
+              }).catch(this.onFailure);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  nfcReadNdef_android(event: any) {
+    console.log('nfcReadNdef()', event);
+    if (event && event.tag && event.tag.id) {
+      this.tagId = this.nfc.bytesToHexString(event.tag.id);
+      this.isWritable = event.tag.isWritable;
+      console.log(typeof (this.tagId) + ' tagId: ', this.tagId);
+      console.log('isWritable: ', this.isWritable);
+      console.log('only read: ', this.readonly);
+      if (this.readonly) {
+        this.read_nfc_data_andorid(event);
+      } else {
+        this.procedure = 1;
+      }
+    }
+  }
+
+  read_nfc_data_andorid(nfcEvent: any) {
+    console.log('read_nfc_data()', nfcEvent);
+    if (!nfcEvent.tag.ndefMessage) {
+      const toast = this.toastCtrl.create({
+        message: this.translate.instant('Produkt unbekannt'),
+        cssClass: 'toast-warning',
+        duration: 3000
+      }).then(x => x.present());
+      return;
+    }
+    let art = this.nfc.bytesToString(nfcEvent.tag.ndefMessage[0].type);
+    console.log('NFC art:', art);
+    if (art == 'T') {
+      let text = this.ndef.textHelper.decodePayload(nfcEvent.tag.ndefMessage[0].payload);
+      console.log('NFC text', text);
+      let res = text.split(':');
+      if (res.length >= 3) {
+        if (res[0] == 'BruggPVS') {
+          if (res[1] == 'ProductID') {
+            const pid = parseInt(res[2]);
+            console.log('NFC pid', pid);
+            if (pid > 0) {
+              this.apiService.pvs4_get_nfc_product(this.tagId).then((result: any) => {
                 console.log('nfc result', result);
                 if (result.amount == 0) {
                   const toast = this.toastCtrl.create({
@@ -360,6 +505,7 @@ export class NfcScanComponent implements OnInit {
     for (let i = 0; i < this.scanList.length; i++) {
       if (this.scanList[i].id != del.id) { hilf.push(this.scanList[i]); }
     }
+    this.scanList = [];
     this.scanList = hilf;
     if (hilf.length == 0) {
       this.company = '';
