@@ -92,7 +92,8 @@ export class MainNavComponent implements OnInit {
 
   filterOff() {
     this.systemService.filterText = '';
-    // this.navCtrl.navigateForward(['/customer-table', '']);
+    this.filterOn = false;
+    this.navCtrl.navigateForward(['/customer-table', '']);
   }
 
   openMenu() {
