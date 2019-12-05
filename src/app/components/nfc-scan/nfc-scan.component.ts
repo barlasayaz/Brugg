@@ -62,6 +62,8 @@ export class NfcScanComponent implements OnInit {
       { field: 'next_protocol', header: this.translate.instant('Nächster besuch') },
       { field: 'details', header: this.translate.instant('Produktdetails') }
     ];
+    this.procedure = 0;
+    this.isWritable = true;
   }
 
   readNFC() {
@@ -87,6 +89,7 @@ export class NfcScanComponent implements OnInit {
 
   subscribeNfc_ios() {
     console.log('subscribeNfc_ios()');
+    this.subscription.unsubscribe();
     this.nfc.beginSession().subscribe(res => {
       this.ndeflistener = this.nfc.addNdefListener();
       this.subscription = this.ndeflistener.subscribe(
