@@ -22607,3 +22607,19 @@ background-color: #9fdbf5 !important;
 ion-footer {
   z-index: 9999 !important;
 }
+
+app-customer-details .ui-accordion .ui-accordion-header .ui-accordion-toggle-icon {
+  display: none;
+}
+
+app-customer-details .ui-accordion .ui-accordion-header a {
+  padding: 0 !important;
+  margin: 0 !important;
+  background-color: #009de0 !important;
+  color: white;
+}
+
+app-customer-details .ui-accordion .ui-accordion-header.ui-state-active a {
+  background-color: #4caf50 !important;
+  color: white;
+}

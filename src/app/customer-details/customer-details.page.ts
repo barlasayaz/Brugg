@@ -49,6 +49,9 @@ export class CustomerDetailsPage implements OnInit {
   public next_visit: any;
   public next_inspection: any;
   public isLoaded = false;
+  public index = -1;
+  public isExpanded = false;
+  public isSetDefault = false;
 
   constructor(public navCtrl: NavController,
     public userdata: UserdataService,
@@ -240,6 +243,7 @@ export class CustomerDetailsPage implements OnInit {
             for (var j = 0, ln = this.pageTotalCount; j < ln; j++) {
               this.contactPersonAddr.push(item.addresses[j]);
             }
+            this.setDefaultContact(item);
           }
         }
 
@@ -267,7 +271,8 @@ export class CustomerDetailsPage implements OnInit {
             this.pageTotalCount = 0;
             this.contactPerson = [];
             this.contactPerson.push(contact);
-            localStorage.setItem('ContactPerson' + this.idCustomer, contact.id);
+            // localStorage.setItem('ContactPerson' + this.idCustomer, contact.id);
+            this.setDefaultContact(contact);
             this.pageTotalCount = contact.addresses.length;
             for (var i = 0, len = this.pageTotalCount; i < len; i++) {
               if (i == 0) {
@@ -281,6 +286,67 @@ export class CustomerDetailsPage implements OnInit {
         });
       modal.present();
     }
+
+    getContactAdress( k, item) {
+      console.log('getContactAdress item',  this.index, this.isExpanded);
+      if ( this.index == -1 ) {
+        this.index = k;
+        this.isExpanded = true;
+      } else {
+        if (this.index == k) {
+          this.index = -1;
+        } else {
+          this.index = k;
+        }
+        this.isExpanded = true;
+      }
+
+      this.isSetDefault = true;
+
+      const contact = item;
+      this.contactPersonAddresses = [];
+      this.contactPersonAddr = [];
+      this.pageCount = 0;
+      this.pageTotalCount = 0;
+      this.contactPerson = [];
+      this.contactPerson.push(contact);
+      // localStorage.setItem('ContactPerson' + this.idCustomer, contact.id);
+      this.pageTotalCount = contact.addresses.length;
+      for (var i = 0, len = this.pageTotalCount; i < len; i++) {
+        if (i == 0) {
+          this.contactPersonAddresses.push(contact.addresses[i]);
+          for (var j = 0, ln = this.pageTotalCount; j < ln; j++) {
+            this.contactPersonAddr.push(contact.addresses[j]);
+          }
+        }
+      }
+    }
+
+    setDefaultContact(item) {
+      console.log('setDefaultContact item',  item);
+      const contact = item;
+      localStorage.setItem('ContactPerson' + this.idCustomer, contact.id);
+
+      let delContact = -1;
+      for (var i = 0, len = this.contactPersonList.length; i < len; i++) {
+        if ( this.contactPersonList[i].id == contact.id) {
+          delContact = i;
+        }
+      }
+
+      if (delContact >= 0) {
+        this.contactPersonList.splice(delContact, 1);
+
+        const arr = [];
+        arr.push(contact);
+        for (var i = 0, len = this.contactPersonList.length; i < len; i++) {
+          arr.push(this.contactPersonList[i]);
+        }
+        this.contactPersonList = arr;
+      }
+    }
+
+
 
     async addAddress() {
       let contactPersonAddrTmp = JSON.parse(JSON.stringify(this.contactPersonAddr));

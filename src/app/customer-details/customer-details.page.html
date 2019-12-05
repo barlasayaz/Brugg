@@ -97,99 +97,120 @@
                 
                 <!-- POINT of contact -->
                 <div class="kunden-col">
-                    <div class="table-info">
-                      <div class="thead">
-                        <div class="tr table-header">
-                          <div class="th" *ngFor="let contactPersonItem of contactPerson">
-                              {{contactPersonItem.gender_text}} {{contactPersonItem.last_name}} {{contactPersonItem.first_name}}
-                            <a href="mailto:{{contactPersonItem.email}}" class="headerIcon"
-                              style="margin-top:18px; font-size: 1.5em; padding-top: 0px;">
-                              <ion-icon name="mail"></ion-icon>
-                            </a>
+                  <p-accordion [multiple]="false">
+                    <div *ngFor="let cp of contactPersonList; let i=index;">
+                      <p-accordionTab >
+                        <p-header (click)="getContactAdress(i, cp)" >  
+                          <div style="padding: 10px 10px 10px 10px;">
+                              <span style="display: inline-block; width: 50%;">{{cp.first_name}} {{cp.last_name}}</span>
+                              <span style="display: inline-block; width: 30%;">{{cp.phone}}</span>
+                              <span *ngIf="isSetDefault && (i == this.index)" style="display: inline-block; width: 10%; text-align: right;">
+                                <i class="fa fa-check-circle" aria-hidden="true" (click)="setDefaultContact(cp)"></i>
+                              </span> 
+                              <span style="display: inline-block; width: 10%; text-align: right;">
+                                  <i *ngIf="(i != this.index)" class="fa fa-plus-circle" aria-hidden="true"></i>
+                                  <i *ngIf="isExpanded && (i == this.index)" class="fa fa-minus-circle" aria-hidden="true"></i>
+                              </span> 
                           </div>
-                        </div>
-                      </div>
-                      <div class="tbody" *ngFor="let contactPersonItem of contactPerson">
-                        <div class="tr table-body">
-                          <div class="td">{{'Letzter Login' | translate}}</div>
-                          <div class="td">
-                            <!-- {{aktiverAnsprechpartner.last_login}} -->
-                          </div>
-                        </div>
-                        <div class="tr table-body">
-                          <div class="td"><span class="strong">{{'Funktion' | translate}}</span></div>
-                          <div class="td"> {{contactPersonItem.position}} </div>
-                        </div>
-                        <div class="tr table-body">
-                          <div class="td"><span class="strong">{{'Abteilung' | translate}}</span></div>
-                          <div class="td"> {{contactPersonItem.department}} </div>
-                        </div>
-                        <div class="tr table-body">
-                          <div class="td"><span class="strong">{{'E-Mail' | translate}}</span></div>
-                          <div class="td"> {{contactPersonItem.email}} </div>
-                        </div>
-                        <div class="tr table-body">
-                          <div class="td"><span class="strong">{{'Telefon' | translate}}</span></div>
-                          <div class="td"><a href="tel:{{contactPersonItem.phone}}">{{contactPersonItem.phone}}</a></div>
-                        </div>
-                        <div class="tr table-body">
-                          <div class="td"><span class="strong">{{'Notiz' | translate}}</span></div>
-                          <div class="td" style="text-align: justify;"> {{contactPersonItem.note}} </div>
-                        </div>
-                      </div>
-                      <div class="thead">
-                        <div class="tr table-subheader table-subheader-fix">
-                          <div class="th" style="padding-right: 5px;">{{'Adressen' | translate}}</div>
-                          <ion-button [disabled]="contactPersonCount == 0" (click)="addAddress()">
-                            <ion-icon name="md-create"></ion-icon>
-                          </ion-button>
-                          <ion-button [disabled]="pageCount<=0" (click)="pageBack()">
-                            <ion-icon name="arrow-back"></ion-icon>
-                          </ion-button>
-                          <ion-button [disabled]="pageCount+1>=pageTotalCount" (click)="pageForward()">
-                            <ion-icon name="arrow-forward"></ion-icon>
-                          </ion-button>
-                          &nbsp;
-                          <div *ngIf="pageTotalCount == 0" style="color: #fff; font-size: 13px;"> [ {{pageCount}} / {{pageTotalCount}} ]
-                          </div>
-                          <div *ngIf="pageTotalCount > 0" style="color: #fff; font-size: 13px;"> [ {{pageCount+1}} / {{pageTotalCount}} ]
-                          </div>
-                        </div>
-                      </div>
-                      <div class="tbody" *ngFor="let contactPersonAddress of contactPersonAddresses">
-                        <div class="tbody">
+                                                      
+                        </p-header>
+
+                        <div class="table-info">
+                          <!-- <div class="thead">
+                            <div class="tr table-header">
+                              <div class="th" *ngFor="let contactPersonItem of contactPerson">
+                                  {{contactPersonItem.gender_text}} {{contactPersonItem.last_name}} {{contactPersonItem.first_name}}
+                                <a href="mailto:{{contactPersonItem.email}}" class="headerIcon"
+                                  style="margin-top:18px; font-size: 1.5em; padding-top: 0px;">
+                                  <ion-icon name="mail"></ion-icon>
+                                </a>
+                              </div>
+                            </div>
+                          </div> -->
+                          <div class="tbody" *ngFor="let contactPersonItem of contactPerson">
                             <div class="tr table-body">
-                              <div class="td"><span class="strong">{{'Adresstyp' | translate}}</span></div>
-                              <div class="td"> {{contactPersonAddress.address_type | translate}} </div>
+                              <div class="td">{{'Letzter Login' | translate}}</div>
+                              <div class="td">
+                                <!-- {{aktiverAnsprechpartner.last_login}} -->
+                              </div>
+                            </div>
+                            <div class="tr table-body">
+                              <div class="td"><span class="strong">{{'Funktion' | translate}}</span></div>
+                              <div class="td"> {{contactPersonItem.position}} </div>
+                            </div>
+                            <div class="tr table-body">
+                              <div class="td"><span class="strong">{{'Abteilung' | translate}}</span></div>
+                              <div class="td"> {{contactPersonItem.department}} </div>
+                            </div>
+                            <div class="tr table-body">
+                              <div class="td"><span class="strong">{{'E-Mail' | translate}}</span></div>
+                              <div class="td"> {{contactPersonItem.email}} </div>
+                            </div>
+                            <div class="tr table-body">
+                              <div class="td"><span class="strong">{{'Telefon' | translate}}</span></div>
+                              <div class="td"><a href="tel:{{contactPersonItem.phone}}">{{contactPersonItem.phone}}</a></div>
+                            </div>
+                            <div class="tr table-body">
+                              <div class="td"><span class="strong">{{'Notiz' | translate}}</span></div>
+                              <div class="td" style="text-align: justify;"> {{contactPersonItem.note}} </div>
+                            </div>
                           </div>
-                          <div class="tr table-body">
-                            <div class="td"><span class="strong">{{'Strasse' | translate}}</span></div>
-                            <div class="td"> {{contactPersonAddress.street}} </div>
+                          <div class="thead">
+                            <div class="tr table-subheader table-subheader-fix">
+                              <div class="th" style="padding-right: 5px;">{{'Adressen' | translate}}</div>
+                              <ion-button [disabled]="contactPersonCount == 0" (click)="addAddress()">
+                                <ion-icon name="md-create"></ion-icon>
+                              </ion-button>
+                              <ion-button [disabled]="pageCount<=0" (click)="pageBack()">
+                                <ion-icon name="arrow-back"></ion-icon>
+                              </ion-button>
+                              <ion-button [disabled]="pageCount+1>=pageTotalCount" (click)="pageForward()">
+                                <ion-icon name="arrow-forward"></ion-icon>
+                              </ion-button>
+                              &nbsp;
+                              <div *ngIf="pageTotalCount == 0" style="color: #fff; font-size: 13px;"> [ {{pageCount}} / {{pageTotalCount}} ]
+                              </div>
+                              <div *ngIf="pageTotalCount > 0" style="color: #fff; font-size: 13px;"> [ {{pageCount+1}} / {{pageTotalCount}} ]
+                              </div>
+                            </div>
                           </div>
-                          <div class="tr table-body">
-                            <div class="td"><span class="strong">{{'PLZ' | translate}}&nbsp;{{'Ort' | translate}}</span></div>
-                            <div class="td"> {{contactPersonAddress.zip_code}} </div>
+                          <div class="tbody" *ngFor="let contactPersonAddress of contactPersonAddresses">
+                            <div class="tbody">
+                                <div class="tr table-body">
+                                  <div class="td"><span class="strong">{{'Adresstyp' | translate}}</span></div>
+                                  <div class="td"> {{contactPersonAddress.address_type | translate}} </div>
+                              </div>
+                              <div class="tr table-body">
+                                <div class="td"><span class="strong">{{'Strasse' | translate}}</span></div>
+                                <div class="td"> {{contactPersonAddress.street}} </div>
+                              </div>
+                              <div class="tr table-body">
+                                <div class="td"><span class="strong">{{'PLZ' | translate}}&nbsp;{{'Ort' | translate}}</span></div>
+                                <div class="td"> {{contactPersonAddress.zip_code}} </div>
+                              </div>
+                              <div class="tr table-body">
+                                <div class="td"><span class="strong">{{'Abteilung' | translate}}</span></div>
+                                <div class="td"> {{contactPersonAddress.department}} </div>
+                              </div>
+                              <div class="tr table-body">
+                                <div class="td"><span class="strong">{{'E-Mail' | translate}}</span></div>
+                                <div class="td"> {{contactPersonAddress.email}} </div>
+                              </div>
+                              <div class="tr table-body">
+                                <div class="td"><span class="strong">{{'Telefon' | translate}}</span></div>
+                                <div class="td"> <a href="tel:{{contactPersonAddress.phone}}">{{contactPersonAddress.phone}}</a> </div>
+                              </div>
+                              <div class="tr table-body">
+                                <div class="td"><span class="strong">{{'Mobiltelefon' | translate}}</span></div>
+                                <div class="td"> <a href="tel:{{contactPersonAddress.mobile}}">{{contactPersonAddress.mobile}}</a> </div>
+                              </div>
+                            </div>
                           </div>
-                          <div class="tr table-body">
-                            <div class="td"><span class="strong">{{'Abteilung' | translate}}</span></div>
-                            <div class="td"> {{contactPersonAddress.department}} </div>
-                          </div>
-                          <div class="tr table-body">
-                            <div class="td"><span class="strong">{{'E-Mail' | translate}}</span></div>
-                            <div class="td"> {{contactPersonAddress.email}} </div>
-                          </div>
-                          <div class="tr table-body">
-                            <div class="td"><span class="strong">{{'Telefon' | translate}}</span></div>
-                            <div class="td"> <a href="tel:{{contactPersonAddress.phone}}">{{contactPersonAddress.phone}}</a> </div>
-                          </div>
-                          <div class="tr table-body">
-                            <div class="td"><span class="strong">{{'Mobiltelefon' | translate}}</span></div>
-                            <div class="td"> <a href="tel:{{contactPersonAddress.mobile}}">{{contactPersonAddress.mobile}}</a> </div>
-                          </div>
-                        </div>
-                      </div>
+                        </div>                      
+                      </p-accordionTab>
                     </div>
-                  </div>
+                  </p-accordion>                   
+                </div>
   
               </ion-col>            
               <ion-col size-xl="5" size-lg="5" size-md="5" size-sm="12" size="12">
