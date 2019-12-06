@@ -217,12 +217,12 @@ export class CustomerDetailsPage implements OnInit {
       this.apiService.pvs4_get_contact_person(this.idCustomer).then((result: any) => {
         console.log('getPointContact result', result.list);
         this.contactPersonCount = result.list.length;
-        for (var i = 0, len = result.list.length; i < len; i++) {
+        for (var i = 0 ; i < result.list.length; i++) {
           var item = result.list[i].data;
           try {
             item.addresses = JSON.parse(item.addresses);
           } catch {
-            console.error('JSON.parse', item.addresses) ;
+            console.error('JSON.parse pvs4_get_contact_person addresses', item.addresses) ;
             item.addresses = [];
           }
           this.contactPersonList.push(item);
