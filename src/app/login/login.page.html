@@ -120,8 +120,8 @@
         </ion-row>
     
         <ion-row class="pvs4-login-infobar">
-          <ion-col size="5" class="ion-text-left"  (click)="imprintModal()"><a>{{ "Impressum" | translate }}</a></ion-col>
-          <ion-col size="7" class="ion-text-right" ><a href="https://www.brugg.com/portal/pics/Documents/Datenschutzerklaerung-DSGVO-Gruppe-Brugg-10-04-2018-DE.pdf" target="_blank" rel="noopener">{{"Datenschutzerklärung" | translate}} <small>(PDF)</small></a></ion-col>
+          <ion-col size="5" class="ion-text-left"  (click)="imprintModal()"><a>{{ "Impressum" | translate }}<br>{{ "Rechtliche Hinweise" | translate }}</a></ion-col>
+          <ion-col size="7" class="ion-text-right" style="display:flex;justify-content: flex-end;align-items: center"><a href="{{'dataschutz-link' | translate}}" target="_blank" rel="noopener">{{"Datenschutzerklärung" | translate}} <small>(PDF)</small></a></ion-col>
         </ion-row>
 
       </ion-grid>
