@@ -827,7 +827,7 @@ export class ProductEditPage implements OnInit {
   showProductImageAlert() {
     let alert = this.alertCtrl.create({
       header: this.translate.instant('Achtung'),
-      message: this.translate.instant('Möchten Sie dem Produkt ein Bild hinzufügen?'),
+      message: this.translate.instant('Möchten sie dem produkt ein bild hinzufügen?'),
       buttons: [
         {
           text: this.translate.instant('nein'),
