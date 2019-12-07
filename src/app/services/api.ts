@@ -743,13 +743,18 @@ export class ApiService {
     });
   }
 
-  pvs4_get_product_list(customerID: Number) {
+  pvs4_get_product_list(customerID: Number, activePassiv:boolean= true ) {
     const userID = this.userdata.id;
+    console.log("aaa ",activePassiv);
+    let active = 1;
+    if(activePassiv===false) active = 0;
     return new Promise((res, rej) => {
       const data = {
         user: userID,
-        customer: customerID
+        customer: customerID,
+        active: active
       };
+      console.log("gg ",data);
       this.pvs4_api_post('get_product_list.php', data).then((done: any) => {// return the result
         res(done);
       },

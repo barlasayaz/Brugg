@@ -115,7 +115,7 @@
                 <td *ngFor="let col of selectedColumns.slice(1); let i = index"   
                     (click)="clickCol(col,rowData,rowData[col.field])"
                     [ngClass]="{'link_eye': (col.field == 'title'), 'link_edit': ((col.editField === true) && (rowData[col.field] != undefined)), 'ui-toggler-column': i === 0}"
-                    [ngStyle]="showActivePassiveProduct && {'color': '#ccc'}">
+                    [ngStyle]="!showActivePassiveProduct && {'color': '#ccc'}">
                     <p-treeTableToggler [rowNode]="rowNode" *ngIf="i === 0"></p-treeTableToggler>
                     <span *ngIf="col.field == 'nfc_tag_id'">
                         <span>
@@ -124,7 +124,7 @@
                         </span>
                     </span>
                     <span *ngIf="(col.editField != true) && (col.field != 'title') && (col.field != 'nfc_tag_id') && (col.field === 'last_protocol_next')"
-                        [ngStyle]="!showActivePassiveProduct && {'color': rowData.last_protocol_next_color}">{{rowData[col.field]}}</span>
+                        [ngStyle]="showActivePassiveProduct && {'color': rowData.last_protocol_next_color}">{{rowData[col.field]}}</span>
                     <span *ngIf="(col.editField != true) && (col.field != 'title') && (col.field != 'nfc_tag_id') && (col.field != 'last_protocol_next')">
                         <span *ngIf="(rowData[col.field]!=='x') && (rowData[col.field]!=='√')">
                             {{rowData[col.field]}}
@@ -281,13 +281,13 @@
         <!-- BUTTON -->
         <ion-fab-button color="dark"
                         title="{{'Zeige nur passive produkte' | translate}}"
-                        *ngIf="!showActivePassiveProduct"
+                        *ngIf="showActivePassiveProduct"
                         (click)="activePassiveProduct()">
             <ion-icon name="search"></ion-icon>
         </ion-fab-button>
         <ion-fab-button color="dark"
                         title="{{'Zeige nur aktives produkte' | translate}}"
-                        *ngIf="showActivePassiveProduct"
+                        *ngIf="!showActivePassiveProduct"
                         (click)="activePassiveProduct()">
             <ion-icon name="search"></ion-icon>
         </ion-fab-button>
