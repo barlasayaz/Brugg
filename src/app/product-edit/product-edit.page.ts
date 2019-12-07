@@ -71,6 +71,7 @@ export class ProductEditPage implements OnInit {
   public uploadedFiles: any[] = [];
   public edit_product_templates: boolean=false;
   public opdInd: any;
+  public productSave: boolean;
 
   constructor(public navCtrl: NavController,
     public route: ActivatedRoute,
@@ -95,6 +96,7 @@ export class ProductEditPage implements OnInit {
     this.maxDate = this.apiService.maxDate;
     this.activProduct.id_number = '';
     this.edit_product_templates = this.userdata.role_set.edit_product_templates;
+    this.productSave = true;
 
     if (this.route.snapshot.data['special']) {
       let params = this.route.snapshot.data['special'];
@@ -244,6 +246,10 @@ export class ProductEditPage implements OnInit {
 
   move_right() {
     this.showConfirmTemplateAlert(this.activProduct);
+    this.selectTemplate = 0;
+    for (let i = 0; i < this.selectedTemplate.length; i++) {
+      this.selectedTemplate[i] = 0;
+    }
   }
 
   productEdit() {
@@ -388,8 +394,13 @@ export class ProductEditPage implements OnInit {
 
     this.apiService.pvs4_set_product(obj).then((result: any) => {
       console.log('result: ', result);
-      // this.viewCtrl.dismiss(true);
-      this.dismiss();
+      this.idProduct = result.id;
+      this.loadProduct();
+      if (this.itsNew) {
+        this.showProductImageAlert();
+      } else {
+        this.dismiss();
+      }
     });
 
     var str: string = this.imagesSave;
@@ -807,6 +818,29 @@ export class ProductEditPage implements OnInit {
           text: this.translate.instant('okay'),
           handler: () => {
 
+          }
+        }
+      ]
+    }).then(x => x.present());
+  }
+
+  showProductImageAlert() {
+    let alert = this.alertCtrl.create({
+      header: this.translate.instant('Achtung'),
+      message: this.translate.instant('Möchten Sie dem Produkt ein Bild hinzufügen?'),
+      buttons: [
+        {
+          text: this.translate.instant('nein'),
+          handler: () => {
+            console.log('Cancel clicked');
+            this.dismiss();
+          }
+        },
+        {
+          text: this.translate.instant('okay'),
+          handler: () => {
+            console.log('Okay clicked');
+            this.productSave = false;
           }
         }
       ]
