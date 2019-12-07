@@ -83,9 +83,8 @@ function processing($user, $customer) {
         $error->oauth2 = $response->body;
         echo json_encode($error);
         die;
-    }
+    } 
     //-----------------------------------------------------
-
     // escape the uemailid to prevent sql injection
     $user      = trim( mysqli_escape_string($con,$user) );
     $customer  = intval ( trim( mysqli_escape_string($con,$customer) ) );

@@ -62,7 +62,7 @@ export class ProductListPage implements OnInit {
     public showBasicInfo = true;
     public lengthBasicInfo = 90;
     public sortedColumn = { sort_field : null, sort_order : 0 };
-    public showActivePassiveProduct: boolean = false;
+    public showActivePassiveProduct: boolean = true;
     public workMode: boolean = false;
     public editMode: boolean = false;
     public moveMode: boolean = false;
@@ -246,7 +246,7 @@ export class ProductListPage implements OnInit {
             message: this.translate.instant('Bitte warten')
         });
         loader.present();
-
+ 
         this.rowRecords = 0;
         this.totalRecords = 0;
         this.childCount = 0;
@@ -254,7 +254,7 @@ export class ProductListPage implements OnInit {
         this.selectedRow = 0;
 
         this.events.publish('prozCustomer', 0);
-        this.apiService.pvs4_get_product_list(this.idCustomer).then((result: any) => {
+        this.apiService.pvs4_get_product_list(this.idCustomer, this.showActivePassiveProduct).then((result: any) => {
             console.log('pvs4_get_product_list ok');
             const list = JSON.parse(JSON.stringify(result.list));
             this.productListAll = list;
@@ -564,18 +564,14 @@ export class ProductListPage implements OnInit {
     generate_productList(start_index: number, end_index: number, sort_field, sort_order) {
         console.log('generate_productList', this.isFilterOn());
 
-        const actvPssvProduct = JSON.parse(JSON.stringify(this.productListAll));
-        for (let index = 0; index < actvPssvProduct.length; index++) {
-            if (actvPssvProduct[index].data.active == 0 && !this.showActivePassiveProduct) {
-                actvPssvProduct.splice(index, 1);
-                index--;
-            }
-            if (actvPssvProduct[index].data.active == 1 && this.showActivePassiveProduct) {
-                actvPssvProduct.splice(index, 1);
-                index--;
-            }
+        let actvPssvProduct = [];
+        try {
+            actvPssvProduct = JSON.parse(JSON.stringify(this.productListAll));
+        } catch (e) {
+            console.error('JSON.parse productListAll err :', e);
+            console.log('productListAll :', this.productListAll);
         }
-
+        
         if (!this.isFilterOn()) {
             this.productListView = JSON.parse(JSON.stringify(actvPssvProduct));
         } else {
@@ -1384,6 +1380,8 @@ export class ProductListPage implements OnInit {
         this.selectedNode = [];
         this.selectedRow = 0;
         this.showActivePassiveProduct = !this.showActivePassiveProduct;
-        this.generate_productList(0, this.rowCount, this.sortedColumn.sort_field, this.sortedColumn.sort_order);
+        this.page_load();
+
+        //this.generate_productList(0, this.rowCount, this.sortedColumn.sort_field, this.sortedColumn.sort_order);
     }
 }
