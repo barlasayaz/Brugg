@@ -95,12 +95,11 @@
                           <ion-button size="small" 
                                       class="btn-red"
                                      (click)="productDeactivate()"
-                                     [disabled] = "!idProduct">
+                                     [disabled] = "!activProduct.id">
                             <ion-icon name="trash"></ion-icon>
                           </ion-button>   
                           <ion-button size="small" 
-                                      (click)="productEdit()"
-                                      [disabled]="!productSave">
+                                      (click)="productEdit()" >
                             <ion-icon name="checkmark"></ion-icon>
                           </ion-button>
                           <ion-button size="small"
@@ -331,13 +330,12 @@
                           <ion-icon name="trash"></ion-icon>
                         </ion-button> 
                           <ion-button size="small"
-                                      (click)="getImage()"
-                                      [disabled]="!idProduct">
+                                      (click)="getImage()">
                             <ion-icon name="folder-open"></ion-icon>
                           </ion-button>   
                           <ion-button size="small"
                                       (click)="getCamera()"
-                                      [disabled]="!mobilePlatform || !idProduct"
+                                      [disabled]="!mobilePlatform"
                                       style="padding-right: 10px;">
                             <ion-icon name="camera"></ion-icon>
                           </ion-button> 
@@ -353,9 +351,9 @@
                                         (onSelect)="validateFileSize($event, fubauto.maxFileSize)"
                                         (uploadHandler)="onFileUpload($event)"
                                         [auto]="true"
-                                        chooseLabel="{{'Wähle Bild' | translate}}"
-                                        [disabled]="!idProduct">
+                                        chooseLabel="{{'Wähle Bild' | translate}}">
                           </p-fileUpload>
+
                         </div>
                       </div>
                       <div class="whitebox-image">

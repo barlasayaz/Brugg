@@ -71,7 +71,6 @@ export class ProductEditPage implements OnInit {
   public uploadedFiles: any[] = [];
   public edit_product_templates: boolean=false;
   public opdInd: any;
-  public productSave: boolean;
 
   constructor(public navCtrl: NavController,
     public route: ActivatedRoute,
@@ -96,7 +95,6 @@ export class ProductEditPage implements OnInit {
     this.maxDate = this.apiService.maxDate;
     this.activProduct.id_number = '';
     this.edit_product_templates = this.userdata.role_set.edit_product_templates;
-    this.productSave = true;
 
     if (this.route.snapshot.data['special']) {
       let params = this.route.snapshot.data['special'];
@@ -246,10 +244,6 @@ export class ProductEditPage implements OnInit {
 
   move_right() {
     this.showConfirmTemplateAlert(this.activProduct);
-    this.selectTemplate = 0;
-    for (let i = 0; i < this.selectedTemplate.length; i++) {
-      this.selectedTemplate[i] = 0;
-    }
   }
 
   productEdit() {
@@ -394,13 +388,8 @@ export class ProductEditPage implements OnInit {
 
     this.apiService.pvs4_set_product(obj).then((result: any) => {
       console.log('result: ', result);
-      this.idProduct = result.id;
-      this.loadProduct();
-      if (this.itsNew) {
-        this.showProductImageAlert();
-      } else {
-        this.dismiss();
-      }
+      // this.viewCtrl.dismiss(true);
+      this.dismiss();
     });
 
     var str: string = this.imagesSave;
@@ -567,9 +556,25 @@ export class ProductEditPage implements OnInit {
     await this.loader.present();
     const fileTransfer: FileTransferObject = this.transfer.create();
 
+    let productId: any;
+    if (this.idProduct == 0) {
+      let dateTime: any = new Date().toISOString();
+      dateTime = dateTime.replace('-', '');
+      dateTime = dateTime.replace('-', '');
+      dateTime = dateTime.replace(':', '');
+      dateTime = dateTime.replace(':', '');
+      dateTime = dateTime.replace('.', '');
+      productId = dateTime;
+    } else {
+      let str: any = this.imagesSave;
+      str = str.replace('mobileimages/productimage_', '');
+      str = str.replace('.jpg', '');
+      productId = str;
+    }
+
     let options: FileUploadOptions = {
       fileKey: 'file',
-      fileName: 'productimage_' + this.idProduct + '.jpg',
+      fileName: 'productimage_' + productId + '.jpg',
       chunkedMode: false,
       mimeType: 'image/jpeg',
       httpMethod: 'POST',
@@ -586,7 +591,7 @@ export class ProductEditPage implements OnInit {
       .then((data) => {
         console.log('Uploaded Successfully :', data);
         this.activProduct.images = this.imageURI;
-        this.imagesSave = 'mobileimages/productimage_' + this.idProduct + '.jpg';
+        this.imagesSave = 'mobileimages/productimage_' + productId + '.jpg';
         console.log('upload images :', this.imagesSave);
         this.hideLoader();
 
@@ -603,6 +608,7 @@ export class ProductEditPage implements OnInit {
           this.imagesSave = '';
         }
 
+        this.nocache = new Date().getTime();
         let obj = JSON.parse(JSON.stringify(this.activProduct));
         if (obj['id'] > 0) {
           obj['items'] = JSON.stringify(this.activProduct['items']);
@@ -623,19 +629,35 @@ export class ProductEditPage implements OnInit {
   onFileUpload(data: { files: File }): void {
     const formData: FormData = new FormData();
     const file = data.files[0];
+    let productId: any;
 
     console.log('uploader :', formData, file);
 
+    if (this.idProduct == 0) {
+      let dateTime: any = new Date().toISOString();
+      dateTime = dateTime.replace('-', '');
+      dateTime = dateTime.replace('-', '');
+      dateTime = dateTime.replace(':', '');
+      dateTime = dateTime.replace(':', '');
+      dateTime = dateTime.replace('.', '');
+      productId = dateTime;
+    } else {
+      let str: any = this.imagesSave;
+      str = str.replace('mobileimages/productimage_', '');
+      str = str.replace('.jpg', '');
+      productId = str;
+    }
+
     formData.append('token', window.localStorage['access_token']);
     formData.append('dir', 'mobileimages');
-    formData.append('file', file, 'productimage_' + this.idProduct + '.jpg');
+    formData.append('file', file, 'productimage_' + productId + '.jpg');
     console.log('onBeforeUpload event :', formData, file.name);
 
    this.apiService.pvs4_uploadphp(formData).then((result: any) => {
         console.log('result: ', result);
         this.nocache = new Date().getTime();
-        this.activProduct.images = this.file_link + 'mobileimages/productimage_' + this.idProduct + '.jpg';
-        this.imagesSave = 'mobileimages/productimage_' + this.idProduct + '.jpg';
+        this.activProduct.images = this.file_link + 'mobileimages/productimage_' + productId + '.jpg';
+        this.imagesSave = 'mobileimages/productimage_' + productId + '.jpg';
         console.log('upload images :', this.file_link, this.activProduct.images);
 
         let imgstr: string = this.imagesSave;
@@ -818,29 +840,6 @@ export class ProductEditPage implements OnInit {
           text: this.translate.instant('okay'),
           handler: () => {
 
-          }
-        }
-      ]
-    }).then(x => x.present());
-  }
-
-  showProductImageAlert() {
-    let alert = this.alertCtrl.create({
-      header: this.translate.instant('Achtung'),
-      message: this.translate.instant('Möchten sie dem produkt ein bild hinzufügen?'),
-      buttons: [
-        {
-          text: this.translate.instant('nein'),
-          handler: () => {
-            console.log('Cancel clicked');
-            this.dismiss();
-          }
-        },
-        {
-          text: this.translate.instant('okay'),
-          handler: () => {
-            console.log('Okay clicked');
-            this.productSave = false;
           }
         }
       ]
