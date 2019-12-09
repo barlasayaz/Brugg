@@ -6,34 +6,33 @@
 
 <ion-content style="padding-top: 5px; padding-bottom: 0px;">
 	<ion-grid>
-
 		<!-- Row 1 -->
 		<ion-row>
 			<ion-col size-xl="8" size-lg="8" size-md="8" size-sm="12" size="12">
 				<ion-item lines="none">
 					<ion-label position="floating">{{translate.instant('Firma')}}</ion-label>
-					<ionic-selectable 
+					<ionic-selectable required
 										name="Customer"
-										[(ngModel)]="customer"
+										[(ngModel)]="rebox.Firma"
 										[items]="listCustomer"
 										itemValueField="id"
 										itemTextField="company"
 										[canSearch]="true"
-										(onChange)="inputErrorMsg()"
 										[hasVirtualScroll]="true"
+										(onChange)="customerChange($event)"
 										closeButtonSlot="end">
-							<ng-template ionicSelectableCloseButtonTemplate>
-								<ion-icon name="close" style="font-size: 24px;"></ion-icon>
-							</ng-template>
+						<ng-template ionicSelectableCloseButtonTemplate>
+							<ion-icon name="close" style="font-size: 24px;"></ion-icon>
+						</ng-template>
 					</ionic-selectable>
 				</ion-item>
 			</ion-col>
 			<ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12">
 				<ion-item lines="none">
 					<ion-label position="floating">{{translate.instant('Datum')}}</ion-label>
-					<ion-datetime  mode="ios" 
-								  required
+					<ion-datetime required="true"
 								  (ionChange)="inputErrorMsg()"
+								  mode="ios"
 								  name="rebox.ReBoxDate"
 								  [(ngModel)]="rebox.ReBoxDate"   
 								  id="ReBoxDate"  
@@ -51,48 +50,72 @@
 			<ion-col size-xl="8" size-lg="8" size-md="8" size-sm="12" size="12">
 				<ion-item lines="none">
 					<ion-label position="floating">{{translate.instant('Strasse')}}</ion-label>
-					<ion-input (ionChange)="inputErrorMsg()"
+					<ion-input required="true"
+								(ionChange)="inputErrorMsg()"
 								type="text"
 								id="Str"
 								[(ngModel)]="rebox.Str">
 					</ion-input>
 				</ion-item>
 			</ion-col>
-			<ion-col size-xl="3" size-lg="3" size-md="3" size-sm="10" size="10">
+			<ion-col size-xl="2.7" size-lg="2.7" size-md="2.7" size-sm="9" size="9">
 				<ion-item lines="none">
 					<ion-label position="floating">{{translate.instant('PLZ')}} {{translate.instant('Ort')}}</ion-label>
-					<ion-input (ionChange)="inputErrorMsg()"
+					<ion-input required="true"
+								(ionChange)="inputErrorMsg()"
 								type="text"
 								id="Ort"
 								[(ngModel)]="rebox.Ort">
 					</ion-input>
 				</ion-item>
 			</ion-col>
-			<ion-col size-xl="1" size-lg="1" size-md="1" size-sm="2" size="2">
-				<ion-item lines="none" style="margin-top: 15px; margin-left: -5px;">
-					<ion-button [disabled]="platform_version==0" (click)="setGPS(1);">
+			<ion-col size-xl="1.3" size-lg="1.3" size-md="1.3" size-sm="3" size="3">
+				<ion-item lines="none">
+					<ion-button [disabled]="platform_version==0"
+								(click)="setGPS(1);"
+								style="margin-top: 28px; width: 50px; height: 30.90px;">
 						<ion-icon class="headerIcon" name="pin"></ion-icon>
 					</ion-button>
 				</ion-item>
 			</ion-col>					
 		</ion-row>
 		<ion-row *ngIf="GPS==1">
-			<ion-col size-xl="4" size-lg="4" size-md="4" size-sm="10" size="10">
+			<ion-col size-xl="4" size-lg="4" size-md="4" size-sm="4" size="4">
 				<ion-item lines="none">
-					<ion-label position="floating">{{translate.instant('Position')}}</ion-label>
-					<ion-input (ionChange)="inputErrorMsg()"
-								type="text"
-								readonly
-								id="Ort"
-								[(ngModel)]="rebox.latitude"
-								(click)="goPos();">
+					<ion-label position="floating">Lat</ion-label>
+					<ion-input required="true"
+								(ionChange)="inputErrorMsg()"
+								type="text" 
+								(keydown)="keyDownNumber($event)" 
+								[(ngModel)]="latitude"
+								min="-90" 
+								max="90">
 					</ion-input>
 				</ion-item>
-			</ion-col>
-			<ion-col size-xl="2" size-lg="2" size-md="2" size-sm="2" size="2">
-				<ion-item lines="none" style="margin-top: 15px; margin-left: -5px;">
-					<ion-button (click)="setGPS(0);">
-						<ion-icon class="headerIcon" name="pin"></ion-icon>
+			</ion-col> 
+			<ion-col size-xl="4" size-lg="4" size-md="4" size-sm="4" size="4">
+				<ion-item lines="none">
+					<ion-label position="floating">Long</ion-label>
+					<ion-input required="true"
+								(ionChange)="inputErrorMsg()"
+								type="text" 
+								(keydown)="keyDownNumber($event)" 
+								[(ngModel)]="longitude"
+								min="-180" 
+								max="180">
+					</ion-input>
+				</ion-item>
+			</ion-col> 
+			<ion-col size-xl="4" size-lg="4" size-md="4" size-sm="4" size="4">
+				<ion-item lines="none">
+					<ion-button (click)="openMap()"
+								style="margin-top: 28px; width: 50px; height: 30.90px;">
+						<ion-icon class="headerIcon" name="navigate"></ion-icon>
+					</ion-button>
+					&nbsp;&nbsp;
+					<ion-button (click)="setGPS(0)"
+								style="margin-top: 28px; width: 50px; height: 30.90px;">
+						<ion-icon class="headerIcon" name="arrow-up"></ion-icon>
 					</ion-button>
 				</ion-item>
 			</ion-col>		
@@ -103,7 +126,8 @@
 			<ion-col size="12">
 				<ion-item lines="none">
 					<ion-label position="floating">{{translate.instant('Notiz')}}</ion-label>
-					<ion-textarea (ionChange)="inputErrorMsg()"
+					<ion-textarea required="true"
+								  (ionChange)="inputErrorMsg()"
 								  name="Notiz"
 								  id="Notiz"
 								  [(ngModel)]="rebox.Notiz"
@@ -118,9 +142,14 @@
 			<ion-col size="12">
 				<ion-item lines="none" class="radio-button">
 					<ion-radio-group [(ngModel)]="pickUpValue">
-						<ion-item lines="none" *ngFor="let option of pickUpOptions" style="height: 35px;">
-							<ion-label>{{option}}</ion-label>
-							<ion-radio slot="start" [value]="option" style="margin-right: 10px;"></ion-radio>
+	 					<ion-item lines="none" *ngFor="let option of pickUpOptions" style="height: 35px;">
+							<ion-label>{{option.text}}</ion-label>
+							<ion-radio slot="start"
+										name="{{option.name}}"
+										value="{{option.value}}"
+										checked="{{option.checked}}"
+										style="margin-right: 10px;">
+							</ion-radio>
 						</ion-item>
 					</ion-radio-group>
 				</ion-item>
@@ -135,12 +164,12 @@
 					<ion-icon name="remove"></ion-icon>
 				</ion-button>
 			</ion-col>
-			<ion-col size="1" style="margin-top: -3px;">
+			<ion-col size-xl="1.5" size-lg="1.5" size-md="2" size-sm="2" size="2" style="text-align: center;">
 				<ion-input (ionChange)="inputErrorMsg()" 
 							readonly 
 							type="numbers" 
 							[(ngModel)]="anzRebox"
-					style="color: #5a6468" class="ion-text-center" >
+							style="color: #5a6468; margin-top: -5px;">
 				</ion-input>
 			</ion-col>
 			<ion-col size="auto">

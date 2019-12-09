@@ -69,7 +69,7 @@ export class ProductEditPage implements OnInit {
   public allnodes: any[] = [];
   public idnumberControl: boolean = false;
   public uploadedFiles: any[] = [];
-  public edit_product_templates: boolean=false;
+  public edit_product_templates: boolean = false;
   public opdInd: any;
 
   constructor(public navCtrl: NavController,
@@ -181,8 +181,8 @@ export class ProductEditPage implements OnInit {
       this.activProduct = result.obj;
       this.activProduct.title = JSON.parse(result.obj.title);
       this.activProduct.items = JSON.parse(result.obj.items);
-      for(let i=0; i<this.activProduct.items.length; i++ ){
-        if(this.activProduct.items[i].base === undefined) this.activProduct.items[i].base=true;
+      for (let i = 0; i < this.activProduct.items.length; i++ ) {
+        if (this.activProduct.items[i].base === undefined) this.activProduct.items[i].base = true;
       }
       console.log('loadProduct: ', this.activProduct, this.activProduct.items);
       this.imagesSave = this.activProduct.images;
@@ -512,8 +512,7 @@ export class ProductEditPage implements OnInit {
     console.log('get images :', this.imagesSave);
   }
 
-  getGps(value:any)
-  {
+  getGps(value: any) {
     this.locationAccuracy.request(this.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY).then(
       () => {
         this.geolocation.getCurrentPosition().then((resp) => {
@@ -523,8 +522,8 @@ export class ProductEditPage implements OnInit {
           console.log('Error getting location', error);
         });
     },
-    error => alert('Error requesting location permissions ' + JSON.stringify(error))
-  );
+      error => alert('Error requesting location permissions' + JSON.stringify(error))
+    );
   }
 
   getCamera() {
@@ -556,9 +555,25 @@ export class ProductEditPage implements OnInit {
     await this.loader.present();
     const fileTransfer: FileTransferObject = this.transfer.create();
 
+    let productId: any;
+    if (this.idProduct == 0) {
+      let dateTime: any = new Date().toISOString();
+      dateTime = dateTime.replace('-', '');
+      dateTime = dateTime.replace('-', '');
+      dateTime = dateTime.replace(':', '');
+      dateTime = dateTime.replace(':', '');
+      dateTime = dateTime.replace('.', '');
+      productId = dateTime;
+    } else {
+      let str: any = this.imagesSave;
+      str = str.replace('mobileimages/productimage_', '');
+      str = str.replace('.jpg', '');
+      productId = str;
+    }
+
     let options: FileUploadOptions = {
       fileKey: 'file',
-      fileName: 'productimage_' + this.idProduct + '.jpg',
+      fileName: 'productimage_' + productId + '.jpg',
       chunkedMode: false,
       mimeType: 'image/jpeg',
       httpMethod: 'POST',
@@ -575,7 +590,7 @@ export class ProductEditPage implements OnInit {
       .then((data) => {
         console.log('Uploaded Successfully :', data);
         this.activProduct.images = this.imageURI;
-        this.imagesSave = 'mobileimages/productimage_' + this.idProduct + '.jpg';
+        this.imagesSave = 'mobileimages/productimage_' + productId + '.jpg';
         console.log('upload images :', this.imagesSave);
         this.hideLoader();
 
@@ -592,6 +607,7 @@ export class ProductEditPage implements OnInit {
           this.imagesSave = '';
         }
 
+        this.nocache = new Date().getTime();
         let obj = JSON.parse(JSON.stringify(this.activProduct));
         if (obj['id'] > 0) {
           obj['items'] = JSON.stringify(this.activProduct['items']);
@@ -612,19 +628,35 @@ export class ProductEditPage implements OnInit {
   onFileUpload(data: { files: File }): void {
     const formData: FormData = new FormData();
     const file = data.files[0];
+    let productId: any;
 
     console.log('uploader :', formData, file);
 
+    if (this.idProduct == 0) {
+      let dateTime: any = new Date().toISOString();
+      dateTime = dateTime.replace('-', '');
+      dateTime = dateTime.replace('-', '');
+      dateTime = dateTime.replace(':', '');
+      dateTime = dateTime.replace(':', '');
+      dateTime = dateTime.replace('.', '');
+      productId = dateTime;
+    } else {
+      let str: any = this.imagesSave;
+      str = str.replace('mobileimages/productimage_', '');
+      str = str.replace('.jpg', '');
+      productId = str;
+    }
+
     formData.append('token', window.localStorage['access_token']);
     formData.append('dir', 'mobileimages');
-    formData.append('file', file, 'productimage_' + this.idProduct + '.jpg');
+    formData.append('file', file, 'productimage_' + productId + '.jpg');
     console.log('onBeforeUpload event :', formData, file.name);
 
    this.apiService.pvs4_uploadphp(formData).then((result: any) => {
         console.log('result: ', result);
         this.nocache = new Date().getTime();
-        this.activProduct.images = this.file_link + 'mobileimages/productimage_' + this.idProduct + '.jpg';
-        this.imagesSave = 'mobileimages/productimage_' + this.idProduct + '.jpg';
+        this.activProduct.images = this.file_link + 'mobileimages/productimage_' + productId + '.jpg';
+        this.imagesSave = 'mobileimages/productimage_' + productId + '.jpg';
         console.log('upload images :', this.file_link, this.activProduct.images);
 
         let imgstr: string = this.imagesSave;
@@ -942,8 +974,7 @@ export class ProductEditPage implements OnInit {
     }
   }
 
-  async openMap(value:any)
-  {
+  async openMap(value: any) {
      let model = await this.modalCtrl.create({
       component: MapLocateComponent,
       cssClass: 'maplocate-modal-css',
@@ -952,7 +983,6 @@ export class ProductEditPage implements OnInit {
       }
     });
     model.present();
-    
   }
 
 }

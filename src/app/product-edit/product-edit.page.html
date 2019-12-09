@@ -268,7 +268,6 @@
                           </ion-col> 
                           <ion-col size="4" size-md="4" *ngIf="item.type == 6">
                             <ion-item lines="none">
-                               <!--<ion-label *ngIf="item.title[lang] != ''" position="floating">{{item.title[lang]}}</ion-label>--> 
                                 <ion-label position="floating">Lat</ion-label>
                                 <ion-input required="{{item.mandatory}}"
                                            type="text" 
@@ -293,16 +292,15 @@
                         </ion-col> 
                         <ion-col size="4" size-md="4" *ngIf="item.type == 6">
                             <ion-item lines="none">
-                                <ion-button size="small" 
-                                (click)="getGps(item.value)"
-                                style="margin-top: 30px">
-                                <ion-icon name="locate"></ion-icon> 
+                                <ion-button (click)="getGps(item.value)"
+                                            style="margin-top: 28px; width: 50px; height: 30.90px;"
+                                            [disabled]="!mobilePlatform">
+                                  <ion-icon name="locate"></ion-icon> 
                                 </ion-button>
-
-                                <ion-button size="small" 
-                                (click)="openMap(item.value)"
-                                style="margin-top: 30px">
-                                <ion-icon name="navigate"></ion-icon> 
+                                &nbsp;&nbsp;
+                                <ion-button (click)="openMap(item.value)"
+                                            style="margin-top: 28px; width: 50px; height: 30.90px;">
+                                  <ion-icon name="navigate"></ion-icon> 
                                 </ion-button>
                           </ion-item>
                         </ion-col> 
