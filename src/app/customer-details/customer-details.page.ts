@@ -496,9 +496,10 @@ export class CustomerDetailsPage implements OnInit {
         }
       });
       modal.onDidDismiss().then(data => {
-        if (data['data']) {
-           this.loadCustomer(this.activCustomer.id);
-        }
+        // if (data['data']) {
+        //    this.loadCustomer(this.activCustomer.id);
+        // }
+        this.loadCustomer(this.activCustomer.id);
       });
       modal.present();
 

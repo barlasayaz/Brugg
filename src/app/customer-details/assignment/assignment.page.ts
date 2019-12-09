@@ -41,43 +41,46 @@ export class AssignmentPage {
       {
         this.activCustomer = JSON.parse(this.activCustomer);
       }
-      catch{
-         console.error('JSON.parse err',this.activCustomer) ;
+      catch {
+         console.error('JSON.parse err', this.activCustomer) ;
       }
 
     }
     console.log('activCustomer :', this.activCustomer);
-    if (this.activCustomer.sales != 0) {
-      this.idSales = this.activCustomer.sales;
-    } else {
-      this.idSales = 0;
-    }
-    if (this.activCustomer.tester != 0) {
-      this.idTester = this.activCustomer.tester;
-    } else {
-      this.idTester = 0;
-    }
-    console.log('idSales - idTester :', this.idSales, this.idTester);
+    const salesID = this.activCustomer.sales;
+    const testerID = this.activCustomer.tester;
 
     this.apiService.pvs4_get_colleagues_list(this.userdata.role, this.userdata.role_set, this.userdata.licensee)
-      .then((result: any) => {
-        console.log('pvs4_get_colleagues_list result:', result);
-        const k = result['obj'];
-        result['amount'] = parseInt(result['amount']);
-        if (result['amount'] > 0) {
-          for (let i = 0, len = k.length; i < len; i++) {
-            const item = k[i];
-            item.id = parseInt(item.id);
-            // console.log("item:", item);
-            this.salesListe.push(item);
-            if (item.role_set.check_products) {
-              this.testerListe.push(item);
-            }
+    .then((result: any) => {
+      console.log('pvs4_get_colleagues_list result:', result);
+      const k = result['obj'];
+      result['amount'] = parseInt(result['amount']);
+      if (result['amount'] > 0) {
+        for (let i = 0, len = k.length; i < len; i++) {
+          const item = k[i];
+          item.id = parseInt(item.id);
+          // console.log("item:", item);
+          this.salesListe.push(item);
+          if (item.role_set.check_products) {
+            this.testerListe.push(item);
           }
         }
-      });
-    console.log('salesListe :', this.salesListe);
-    console.log('testerListe :', this.testerListe);
+      }
+      console.log('salesListe :', this.salesListe);
+      console.log('testerListe :', this.testerListe);
+
+      if (salesID != 0) {
+        this.idSales = salesID;
+      } else {
+        this.idSales = 0;
+      }
+      if (testerID != 0) {
+        this.idTester = testerID;
+      } else {
+        this.idTester = 0;
+      }
+      console.log('idSales - idTester :', this.idSales, this.idTester);
+    });
   }
 
   closeModal() {

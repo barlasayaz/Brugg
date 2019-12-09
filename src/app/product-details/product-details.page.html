@@ -45,6 +45,22 @@
 												<div class="td ">{{'Intervall Prüfen' | translate}}</div>
 												<div class="td">{{activProduct.check_interval}}</div>
 											</div>
+											<div class="tr table-body">
+												<div class="td">{{'Letzter prüftermin' | translate}}</div>
+												<div class="td">{{activProduct.last_inspection | date : 'dd.MM.yyyy'}}</div>
+											</div>
+											<div class="tr table-body">
+												<div class="td">{{'Nächster prüftermin' | translate}}</div>
+												<div class="td">{{activProduct.last_protocol_next}}</div>
+											</div>
+											<div class="tr table-body">
+												<div class="td">{{'Produktstatus' | translate}}</div>
+												<div class="td" [ngStyle]="{'color': activProduct.last_protocol_next_color}">{{activProduct.productstatus}}</div>
+											</div>
+											<div class="tr table-body">
+												<div class="td">{{'Prüfer' | translate}}</div>
+												<div class="td">{{activProduct.inspector}}</div>
+											</div>
 											<div class="tr table-body" *ngFor="let item of activProduct.items">
 												<div class="td">{{item.title[lang]}}</div>
 												<div class="td" *ngIf="item.type!==0">{{item.value}}</div> 

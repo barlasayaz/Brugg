@@ -15,6 +15,7 @@ import { ProductCopyPage } from '../product-copy/product-copy.page';
 import { NFC, Ndef } from '@ionic-native/nfc/ngx';
 import { MapLocateComponent } from '../components/map-locate/map-locate.component';
 import { ProductMigrationPage } from '../product-migration/product-migration.page';
+import * as moment from 'moment';
 
 /**
  * Generated class for the ProductDetailsPage page.
@@ -173,7 +174,85 @@ export class ProductDetailsPage implements OnInit {
         console.log('images 2:', this.activProduct.images);
       }
 
-      this.listProduct.push(this.activProduct);
+      let pr = this.activProduct.last_protocol;
+      this.activProduct.last_protocol_next = '';
+      this.activProduct.productstatus = 'Normal';
+      this.activProduct.last_protocol_next_color = '#000000';
+      if (pr) {
+        if (pr.length > 0) {
+          try {
+            pr = JSON.parse(pr);
+            // if (pr.protocol_date) {
+            //   this.activProduct.last_protocol_date = this.apiService.mysqlDate2view(pr.protocol_date);
+            // }
+            this.activProduct.last_protocol_next_color = 'rgb(74, 83, 86)';
+            if (pr.protocol_date_next) {
+              this.activProduct.last_protocol_next = this.apiService.mysqlDate2view(pr.protocol_date_next);
+              let x = moment(pr.protocol_date_next, 'YYYY-M-D');
+              let y = moment();
+              let diffDays = x.diff(y, 'days');
+              if (diffDays < 90) { this.activProduct.last_protocol_next_color = '#f1c40f'; }
+              if (diffDays < 30) { this.activProduct.last_protocol_next_color = '#e74c3c'; }
+            }
+
+            if (pr.result) {
+              if (pr.result == 1) {
+                this.activProduct.productstatus = this.translate.instant('reparieren');
+                this.activProduct.last_protocol_next_color = '#f1c40f';
+              }
+              if (pr.result == 3) {
+                this.activProduct.productstatus = this.translate.instant('unauffindbar');
+                this.activProduct.last_protocol_next_color = '#e74c3c';
+              }
+              if ((pr.result == 2) || (pr.result == 4)) {
+                this.activProduct.productstatus = this.translate.instant('ausmustern');
+                this.activProduct.last_protocol_next_color = '#C558D3';
+              }
+            }
+          } catch (e) {
+              console.error('JSON.parse(pr) err :', e);
+              console.log('pr :', pr);
+          }
+        }
+      }
+      console.log('pr :', pr);
+      const getInsDate = this.getInspectionDates(this.idCustomer);
+      const getIns = this.getInspector(this.idCustomer);
+      Promise.all([
+        getInsDate,
+        getIns
+      ]).then((resultX) => {
+        this.listProduct.push(this.activProduct);
+      });
+    });
+  }
+
+  getInspectionDates(id): Promise<any> {
+    return new Promise((resolve) => {
+      this.apiService.pvs4_get_appointment_date(id).then((done: any) => {
+        if (done.amount != 0) {
+          // if (done.last_visit.length) { this.last_visit = done.last_visit; }
+          // if (done.next_visit.length) { this.next_visit = done.next_visit; }
+          this.activProduct.last_inspection = done.last_inspection;
+          this.activProduct.next_inspection = done.next_inspection;
+        }
+        resolve();
+      });
+    });
+  }
+
+  getInspector(id): Promise<any> {
+    return new Promise((resolve) => {
+      this.apiService.pvs4_get_customer(id).then((result: any) => {
+        const activCustomer = result.obj;
+        // Zuweisungen
+        this.apiService.pvs4_get_profile(activCustomer.tester_email, 1).then((done: any) => {
+          if (done.amount != 0) {
+            this.activProduct.inspector = done.bid.first_name + ' ' + done.bid.last_name ;
+          }
+          resolve();
+        });
+      });
     });
   }
 
@@ -365,6 +444,27 @@ export class ProductDetailsPage implements OnInit {
         productList.push({ 'title': this.translate.instant('Intervall Prüfen'), 'value': element.check_interval });
       } else {
         productList.push({ 'title': this.translate.instant('Intervall Prüfen'), 'value': ' ' });
+      }
+      if (element.check_interval != undefined) {
+        const last_inspection = this.apiService.mysqlDate2view(element.last_inspection);
+        productList.push({ 'title': this.translate.instant('Letzter prüftermin'), 'value': last_inspection });
+      } else {
+        productList.push({ 'title': this.translate.instant('Letzter prüftermin'), 'value': ' ' });
+      }
+      if (element.check_interval != undefined) {
+        productList.push({ 'title': this.translate.instant('Nächster prüftermin'), 'value': element.last_protocol_next });
+      } else {
+        productList.push({ 'title': this.translate.instant('Nächster prüftermin'), 'value': ' ' });
+      }
+      if (element.check_interval != undefined) {
+        productList.push({ 'title': this.translate.instant('Produktstatus'), 'value': element.productstatus });
+      } else {
+        productList.push({ 'title': this.translate.instant('Produktstatus'), 'value': ' ' });
+      }
+      if (element.check_interval != undefined) {
+        productList.push({ 'title': this.translate.instant('Prüfer'), 'value': element.inspector });
+      } else {
+        productList.push({ 'title': this.translate.instant('Prüfer'), 'value': ' ' });
       }
       if (element.images != undefined) {
         productImagePath = element.images;
