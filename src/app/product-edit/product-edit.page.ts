@@ -69,7 +69,7 @@ export class ProductEditPage implements OnInit {
   public allnodes: any[] = [];
   public idnumberControl: boolean = false;
   public uploadedFiles: any[] = [];
-  public edit_product_templates: boolean=false;
+  public edit_product_templates: boolean = false;
   public opdInd: any;
 
   constructor(public navCtrl: NavController,
@@ -181,8 +181,8 @@ export class ProductEditPage implements OnInit {
       this.activProduct = result.obj;
       this.activProduct.title = JSON.parse(result.obj.title);
       this.activProduct.items = JSON.parse(result.obj.items);
-      for(let i=0; i<this.activProduct.items.length; i++ ){
-        if(this.activProduct.items[i].base === undefined) this.activProduct.items[i].base=true;
+      for (let i = 0; i < this.activProduct.items.length; i++ ) {
+        if (this.activProduct.items[i].base === undefined) this.activProduct.items[i].base = true;
       }
       console.log('loadProduct: ', this.activProduct, this.activProduct.items);
       this.imagesSave = this.activProduct.images;
@@ -512,8 +512,7 @@ export class ProductEditPage implements OnInit {
     console.log('get images :', this.imagesSave);
   }
 
-  getGps(value:any)
-  {
+  getGps(value: any) {
     this.locationAccuracy.request(this.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY).then(
       () => {
         this.geolocation.getCurrentPosition().then((resp) => {
@@ -523,8 +522,8 @@ export class ProductEditPage implements OnInit {
           console.log('Error getting location', error);
         });
     },
-    error => alert('Error requesting location permissions ' + JSON.stringify(error))
-  );
+      error => alert('Error requesting location permissions' + JSON.stringify(error))
+    );
   }
 
   getCamera() {
@@ -975,8 +974,7 @@ export class ProductEditPage implements OnInit {
     }
   }
 
-  async openMap(value:any)
-  {
+  async openMap(value: any) {
      let model = await this.modalCtrl.create({
       component: MapLocateComponent,
       cssClass: 'maplocate-modal-css',
@@ -985,7 +983,6 @@ export class ProductEditPage implements OnInit {
       }
     });
     model.present();
-    
   }
 
 }

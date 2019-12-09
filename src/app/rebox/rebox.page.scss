@@ -5,8 +5,9 @@ ion-textarea {
 
 .radio-button {
     border: 1px solid var(--ion-color-green);
-    padding-left: 10px;
-    padding-bottom: 10px;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    padding: 0px 10px 10px 10px;
+}
+
+.headerIcon {
+    font-size: 1.5em !important;
 }
