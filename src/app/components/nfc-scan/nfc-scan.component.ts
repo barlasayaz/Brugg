@@ -103,6 +103,7 @@ export class NfcScanComponent implements OnInit {
 
   subscribeNfc_android() {
     console.log('subscribeNfc_android()');
+    this.subscription.unsubscribe();
     this.ndeflistener = this.nfc.addNdefListener();
     this.subscription = this.ndeflistener.subscribe(
       (data: Event) => this.nfcReadNdef_android(data),
