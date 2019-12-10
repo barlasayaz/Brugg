@@ -556,19 +556,22 @@ export class ProductEditPage implements OnInit {
     const fileTransfer: FileTransferObject = this.transfer.create();
 
     let productId: any;
+    let dateTime: any = new Date().toISOString();
+    dateTime = dateTime.replace('-', '');
+    dateTime = dateTime.replace('-', '');
+    dateTime = dateTime.replace(':', '');
+    dateTime = dateTime.replace(':', '');
+    dateTime = dateTime.replace('.', '');
     if (this.idProduct == 0) {
-      let dateTime: any = new Date().toISOString();
-      dateTime = dateTime.replace('-', '');
-      dateTime = dateTime.replace('-', '');
-      dateTime = dateTime.replace(':', '');
-      dateTime = dateTime.replace(':', '');
-      dateTime = dateTime.replace('.', '');
       productId = dateTime;
     } else {
       let str: any = this.imagesSave;
       str = str.replace('mobileimages/productimage_', '');
       str = str.replace('.jpg', '');
       productId = str;
+      if (productId == '') {
+        productId = dateTime;
+      }
     }
 
     let options: FileUploadOptions = {
@@ -607,13 +610,13 @@ export class ProductEditPage implements OnInit {
           this.imagesSave = '';
         }
 
-        this.nocache = new Date().getTime();
         let obj = JSON.parse(JSON.stringify(this.activProduct));
         if (obj['id'] > 0) {
           obj['items'] = JSON.stringify(this.activProduct['items']);
           obj['title'] = JSON.stringify(this.activProduct['title']);
           obj['images'] = this.imagesSave;
           this.apiService.pvs4_set_product(obj).then((result: any) => {
+            this.nocache = new Date().getTime();
             console.log('result: ', result);
           });
         }
@@ -632,19 +635,22 @@ export class ProductEditPage implements OnInit {
 
     console.log('uploader :', formData, file);
 
+    let dateTime: any = new Date().toISOString();
+    dateTime = dateTime.replace('-', '');
+    dateTime = dateTime.replace('-', '');
+    dateTime = dateTime.replace(':', '');
+    dateTime = dateTime.replace(':', '');
+    dateTime = dateTime.replace('.', '');
     if (this.idProduct == 0) {
-      let dateTime: any = new Date().toISOString();
-      dateTime = dateTime.replace('-', '');
-      dateTime = dateTime.replace('-', '');
-      dateTime = dateTime.replace(':', '');
-      dateTime = dateTime.replace(':', '');
-      dateTime = dateTime.replace('.', '');
       productId = dateTime;
     } else {
       let str: any = this.imagesSave;
       str = str.replace('mobileimages/productimage_', '');
       str = str.replace('.jpg', '');
       productId = str;
+      if (productId == '') {
+        productId = dateTime;
+      }
     }
 
     formData.append('token', window.localStorage['access_token']);
