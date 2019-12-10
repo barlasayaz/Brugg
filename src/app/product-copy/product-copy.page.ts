@@ -32,7 +32,6 @@ export class ProductCopyPage implements OnInit {
   public file_link: any;
   public attachmentsFileCount: any = 0;
   public idProduct: any;
-  public inputError: boolean = false;
 
   constructor(public navCtrl: NavController,
               public viewCtrl: ModalController,

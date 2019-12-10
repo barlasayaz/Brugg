@@ -3,6 +3,7 @@ import { NavController, NavParams, ModalController, AlertController } from '@ion
 import { UserdataService } from '../../services/userdata';
 import { TranslateService } from '@ngx-translate/core';
 import { ApiService } from '../../services/api';
+import { ToastController } from '@ionic/angular';
 
 /**
  * Generated class for the CustomerEditComponent component.
@@ -22,7 +23,6 @@ export class CustomerEditComponent implements OnInit {
   public parentCustomer: number = 0;
   public itsNew: boolean = false;
   public activCustomer: any = {};
-  public inputError: boolean = false;
   public Branches: any = [];
   public redirect: any = 0;
   public customerDisabled: boolean = false;
@@ -35,7 +35,8 @@ export class CustomerEditComponent implements OnInit {
     public userdata: UserdataService,
     public viewCtrl: ModalController,
     public apiService: ApiService,
-    public alertCtrl: AlertController) {
+    public alertCtrl: AlertController,
+    private toastCtrl: ToastController) {
 
   }
 
@@ -108,29 +109,28 @@ export class CustomerEditComponent implements OnInit {
   customerEdit() {
     console.log('customerEdit()', this.activCustomer);
 
-    this.inputError = false;
     if (this.activCustomer.company == '') {
-      this.inputError = true;
+      this.mandatoryMsg();
       return;
     }
     if (this.activCustomer.rating == '') {
-      this.inputError = true;
+      this.mandatoryMsg();
       return;
     }
     if (this.activCustomer.customer_number == '') {
-      this.inputError = true;
+      this.mandatoryMsg();
       return;
     }
     if (this.activCustomer.sales == '') {
-      this.inputError = true;
+      this.mandatoryMsg();
       return;
     }
     if (this.activCustomer.tester == '') {
-      this.inputError = true;
+      this.mandatoryMsg();
       return;
     }
     if (this.activCustomer.sector == '') {
-      this.inputError = true;
+      this.mandatoryMsg();
       return;
     }
 
@@ -194,10 +194,6 @@ export class CustomerEditComponent implements OnInit {
     this.showConfirmAlert(this.activCustomer);
   }
 
-  inputErrorMsg() {
-    this.inputError = false;
-  }
-
   showConfirmAlert(activeCustomer) {
     let alert = this.alertCtrl.create({
       header: this.translate.instant('Achtung'),
@@ -245,4 +241,13 @@ export class CustomerEditComponent implements OnInit {
     console.log('testerListe :', this.testerListe);
   }
 
+  mandatoryMsg() {
+    const toast = this.toastCtrl.create({
+      message: this.translate.instant('Bitte füllen Sie alle Pflichtfelder aus.'),
+      cssClass: 'toast-mandatory',
+      duration: 3000,
+      position: 'top'
+    }).then(x => x.present());
+  }
+  
 }

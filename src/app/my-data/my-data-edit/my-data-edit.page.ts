@@ -3,6 +3,7 @@ import { NavController, NavParams, ModalController, AlertController } from '@ion
 import { TranslateService } from '@ngx-translate/core';
 import { ApiService } from '../../services/api';
 import { UserdataService } from '../../services/userdata';
+import { ToastController } from '@ionic/angular';
 
 /**
  * Generated class for the MyDataEditPage page.
@@ -18,7 +19,6 @@ import { UserdataService } from '../../services/userdata';
 })
 
 export class MyDataEditPage {
-  public inputError: boolean = false;
   public params: any;
   public pid: number;
   public edit: any = {bid: {}, role_set: []};
@@ -49,7 +49,8 @@ export class MyDataEditPage {
               public translate: TranslateService,
               private api : ApiService,
               public viewCtrl: ModalController,
-              public alertCtrl: AlertController) {
+              public alertCtrl: AlertController,
+              private toastCtrl: ToastController) {
     console.log('my-data-edit.ts');
     this.pid = 0;
     this.Farbe = '#000fff';
@@ -86,7 +87,6 @@ export class MyDataEditPage {
     if (pid != this.userdata.profile) {
       if (this.userdata.role_set.edit_rights) { this.setRights = true; }
       if (this.userdata.role_set.edit_membership) { this.editMembership = true; }
-       
     }
     if (pid != 0) {
       this.api.pvs4_get_mydata(this.pid).then((result: any) => {
@@ -94,10 +94,6 @@ export class MyDataEditPage {
         this.edit = result['obj'];
       });
     }
-  }
-
-  inputErrorMsg() {
-    this.inputError = false;
   }
 
   findEmail() {
@@ -152,12 +148,11 @@ export class MyDataEditPage {
     });
   }
 
-  updateData( ) {
+  updateData() {
     console.log('updateData this.edit:', this.edit);
 
-    this.inputError = false;
     if (this.edit.short_code == '') {
-      this.inputError = true;
+      this.mandatoryMsg();
       return;
     }
 
@@ -238,4 +233,14 @@ export class MyDataEditPage {
         ]
     }).then(x => x.present());
   }
+
+  mandatoryMsg() {
+    const toast = this.toastCtrl.create({
+      message: this.translate.instant('Bitte füllen Sie alle Pflichtfelder aus.'),
+      cssClass: 'toast-mandatory',
+      duration: 3000,
+      position: 'top'
+    }).then(x => x.present());
+  }
+
 }

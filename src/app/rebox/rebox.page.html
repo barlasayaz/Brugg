@@ -31,7 +31,6 @@
 				<ion-item lines="none">
 					<ion-label position="floating">{{translate.instant('Datum')}}</ion-label>
 					<ion-datetime required="true"
-								  (ionChange)="inputErrorMsg()"
 								  mode="ios"
 								  name="rebox.ReBoxDate"
 								  [(ngModel)]="rebox.ReBoxDate"   
@@ -51,7 +50,6 @@
 				<ion-item lines="none">
 					<ion-label position="floating">{{translate.instant('Strasse')}}</ion-label>
 					<ion-input required="true"
-								(ionChange)="inputErrorMsg()"
 								type="text"
 								id="Str"
 								[(ngModel)]="rebox.Str">
@@ -62,7 +60,6 @@
 				<ion-item lines="none">
 					<ion-label position="floating">{{translate.instant('PLZ')}} {{translate.instant('Ort')}}</ion-label>
 					<ion-input required="true"
-								(ionChange)="inputErrorMsg()"
 								type="text"
 								id="Ort"
 								[(ngModel)]="rebox.Ort">
@@ -84,7 +81,6 @@
 				<ion-item lines="none">
 					<ion-label position="floating">Lat</ion-label>
 					<ion-input required="true"
-								(ionChange)="inputErrorMsg()"
 								type="text" 
 								(keydown)="keyDownNumber($event)" 
 								[(ngModel)]="latitude"
@@ -97,7 +93,6 @@
 				<ion-item lines="none">
 					<ion-label position="floating">Long</ion-label>
 					<ion-input required="true"
-								(ionChange)="inputErrorMsg()"
 								type="text" 
 								(keydown)="keyDownNumber($event)" 
 								[(ngModel)]="longitude"
@@ -127,7 +122,6 @@
 				<ion-item lines="none">
 					<ion-label position="floating">{{translate.instant('Notiz')}}</ion-label>
 					<ion-textarea required="true"
-								  (ionChange)="inputErrorMsg()"
 								  name="Notiz"
 								  id="Notiz"
 								  [(ngModel)]="rebox.Notiz"
@@ -165,8 +159,7 @@
 				</ion-button>
 			</ion-col>
 			<ion-col size-xl="1.5" size-lg="1.5" size-md="2" size-sm="2" size="2" style="text-align: center;">
-				<ion-input (ionChange)="inputErrorMsg()" 
-							readonly 
+				<ion-input readonly 
 							type="numbers" 
 							[(ngModel)]="anzRebox"
 							style="color: #5a6468; margin-top: -5px;">
@@ -179,11 +172,6 @@
 			</ion-col>
 		</ion-row>
 	</ion-grid>
-
-	<!-- Error -->
-	<div [hidden]="!inputError" class="pfehler">
-		{{translate.instant('Bitte füllen Sie alle Pflichtfelder aus.')}}
-	</div>
 
 </ion-content>
 

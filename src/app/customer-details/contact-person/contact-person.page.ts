@@ -3,6 +3,7 @@ import { NavController, NavParams, ModalController, AlertController } from '@ion
 import { TranslateService } from '@ngx-translate/core';
 import { UserdataService } from '../../services/userdata';
 import { ApiService } from '../../services/api';
+import { ToastController } from '@ionic/angular';
 
 /**
  * Generated class for the ContactPersonPage page.
@@ -24,10 +25,6 @@ export class ContactPersonPage {
     public contactPersonEditOderNeu = 1; // 0>bearbeiten 1>neu
     public contactPersonList: any = [];
     public params: any;
-    public pfelder: any = 0;
-    public inputError: boolean = false;
-    public email_felder: any = 0;
-    public pw_felder: any = 0;
     public setRights: boolean = false;
     public selectedSWitch: string;
 
@@ -37,7 +34,8 @@ export class ContactPersonPage {
         public userdata: UserdataService,
         public apiService: ApiService,
         private alertCtrl: AlertController,
-        public viewCtrl: ModalController) {
+        public viewCtrl: ModalController,
+        private toastCtrl: ToastController) {
 
         this.selectedSWitch = 'person';
         this.idCustomer = this.navParams.get('idCustomer');
@@ -57,8 +55,8 @@ export class ContactPersonPage {
         this.contactPersonList = [];
         this.apiService.pvs4_get_contact_person(this.idCustomer).then((result: any) => {
             console.log('getPointContact result', result.list);
-            for (var i = 0, len = result.list.length; i < len; i++) {
-                var item = result.list[i].data;
+            for (let i = 0, len = result.list.length; i < len; i++) {
+                let item = result.list[i].data;
                 if (item.check_products) {
                     item.check_products = parseInt(item.check_products);
                     if (item.check_products >= 1) { item.check_products = true; } else { item.check_products = false; }
@@ -95,59 +93,33 @@ export class ContactPersonPage {
     }
 
     updateData(recType) {
-        this.pfelder = 0;
-        this.inputError = false;
-        this.email_felder = 0;
-        this.pw_felder = 1;
-        console.log('contactPersonEdit :', this.contactPersonEdit);
-        if (this.contactPersonEdit) {
-            if (this.contactPersonEdit.gender) {
-                this.pw_felder = 0;
-            } else {
-                this.inputError = true;
-                this.pw_felder = 1;
-                this.pfelder = 1;
-                return;
-            }
-            if (this.contactPersonEdit.last_name) {
-                this.pw_felder = 0;
-            } else {
-                this.inputError = true;
-                this.pw_felder = 1;
-                this.pfelder = 1;
-                return;
-            }
-            if (this.contactPersonEdit.first_name) {
-                this.pw_felder = 0;
-            } else {
-                this.inputError = true;
-                this.pw_felder = 1;
-                this.pfelder = 1;
-                return;
-            }
-            if (this.contactPersonEdit.email) {
-                this.pw_felder = 0;
-                if (this.validateEmail(this.contactPersonEdit.email) == false) {
-                    this.inputError = true;
-                    this.email_felder = 1;
-                    return;
-                }
-            } else {
-                this.inputError = true;
-                this.pw_felder = 1;
-                this.pfelder = 1;
-                return;
-            }
-            if (this.contactPersonEdit.phone) {
-                this.pw_felder = 0;
-            } else {
-                this.inputError = true;
-                this.pw_felder = 1;
-                this.pfelder = 1;
+        console.log('contactPersonEdit :', this.contactPersonEdit, this.contactPersonEdit.gender, this.contactPersonEdit.last_name);
+        if (this.contactPersonEdit.gender == undefined) {
+            this.mandatoryMsg('Bitte füllen Sie alle Pflichtfelder aus.');
+            return;
+        }
+        if (this.contactPersonEdit.last_name == undefined) {
+            this.mandatoryMsg('Bitte füllen Sie alle Pflichtfelder aus.');
+            return;
+        }
+        if (this.contactPersonEdit.first_name == undefined) {
+            this.mandatoryMsg('Bitte füllen Sie alle Pflichtfelder aus.');
+            return;
+        }
+        if (this.contactPersonEdit.email == undefined || this.contactPersonEdit.email == '') {
+            this.mandatoryMsg('Bitte füllen Sie alle Pflichtfelder aus.');
+            return;
+        } else {
+            if (this.validateEmail(this.contactPersonEdit.email) == false) {
+                this.mandatoryMsg('E-Mail nicht standardkonform.');
                 return;
             }
         }
-        if (this.pw_felder == 0) {
+        if (this.contactPersonEdit.phone == undefined) {
+            this.mandatoryMsg('Bitte füllen Sie alle Pflichtfelder aus.');
+            return;
+        }
+
         let obj = {id: 0,
                     check_products: 0,
                     edit_products: 0,
@@ -192,7 +164,7 @@ export class ContactPersonPage {
         this.contactPersonEdit = [];
         this.contactPersonEditOderNeu = 1; // 0->bearbeiten 1->neu
         this.kundendaten = 'person';
-        }
+
     }
 
     validateEmail(email) {
@@ -202,10 +174,6 @@ export class ContactPersonPage {
         } else {
             return (true);
         }
-    }
-
-    inputErrorMsg() {
-        this.inputError = false;
     }
 
     editContactPerson(contactPerson) {
@@ -394,6 +362,15 @@ export class ContactPersonPage {
           if (ret == '') { return ''; }
 
           return ret;
+      }
+
+      mandatoryMsg(msg) {
+        const toast = this.toastCtrl.create({
+          message: this.translate.instant(msg),
+          cssClass: 'toast-mandatory',
+          duration: 3000,
+          position: 'top'
+        }).then(x => x.present());
       }
 
     }

@@ -5,6 +5,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { ApiService } from '../../services/api';
 import { DatePipe } from '@angular/common';
 import { TreeNode } from 'primeng/api';
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-appointment-edit',
@@ -31,7 +32,6 @@ export class AppointmentEditComponent implements OnInit {
     reminder: 0
   };
 
-  public inputError: boolean = false;
   public lang: string = localStorage.getItem('lang');
   public redirect: number = 0;
   public customer: any = {};
@@ -61,7 +61,8 @@ export class AppointmentEditComponent implements OnInit {
     public userdata: UserdataService,
     public viewCtrl: ModalController,
     public apiService: ApiService,
-    public alertCtrl: AlertController) {
+    public alertCtrl: AlertController,
+    private toastCtrl: ToastController) {
 
   }
 
@@ -238,37 +239,36 @@ export class AppointmentEditComponent implements OnInit {
   }
 
   appointmentEdit() {
-    this.inputError = false;
     if (this.activAppointment.idUser == '') {
-      this.inputError = true;
+      this.mandatoryMsg();
       return;
     }
     if (this.activAppointment.appointment_type == '') {
-      this.inputError = true;
+      this.mandatoryMsg();
       return;
     }
     if (this.customer == null) {
-      this.inputError = true;
+      this.mandatoryMsg();
       return;
     }
     if (this.activAppointment.idContactPerson == '') {
-      this.inputError = true;
+      this.mandatoryMsg();
       return;
     }
     if (this.activAppointment.appointment_date == '') {
-      this.inputError = true;
+      this.mandatoryMsg();
       return;
     }
     if (this.activAppointment.start_time == '') {
-      this.inputError = true;
+      this.mandatoryMsg();
       return;
     }
     if (this.activAppointment.end_time == '') {
-      this.inputError = true;
+      this.mandatoryMsg();
       return;
     }
     if (this.activAppointment.notes == '') {
-      this.inputError = true;
+      this.mandatoryMsg();
       return;
     }
 
@@ -443,16 +443,11 @@ export class AppointmentEditComponent implements OnInit {
 
   customerChange(event) {
     console.log('customerChange:', event.value);
-    this.inputError = false;
     let idCstmr: any;
     idCstmr = parseInt(event.value.id);
     if (idCstmr != 0) { this.contactPersonDisabled = false; }
     this.contactPersonsList(idCstmr);
     this.activAppointment.idContactPerson = '';
-  }
-
-  inputErrorMsg() {
-    this.inputError = false;
   }
 
   appointmentTypeChange() {
@@ -540,5 +535,13 @@ export class AppointmentEditComponent implements OnInit {
     }
   }
 
+  mandatoryMsg() {
+    const toast = this.toastCtrl.create({
+      message: this.translate.instant('Bitte füllen Sie alle Pflichtfelder aus.'),
+      cssClass: 'toast-mandatory',
+      duration: 3000,
+      position: 'top'
+    }).then(x => x.present());
+  }
 
 }

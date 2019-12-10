@@ -6,6 +6,7 @@ import { ApiService } from '../services/api';
 import { DatePipe } from '@angular/common';
 import { ActivatedRoute, NavigationExtras } from '@angular/router';
 import { DataService } from '../services/data.service';
+import { ToastController } from '@ionic/angular';
 
 /**
  * Generated class for the ProtocolEditPage page.
@@ -58,7 +59,8 @@ export class ProtocolEditPage implements OnInit {
     public apiService: ApiService,
     public modalCtrl: ModalController,
     public dataService: DataService,
-    public alertCtrl: AlertController) {
+    public alertCtrl: AlertController,
+    private toastCtrl: ToastController) {
   }
 
   ngOnInit() {
@@ -274,7 +276,7 @@ export class ProtocolEditPage implements OnInit {
     });
 
     if (this.mandatoryControl) {
-      this.showMandatoryAlert();
+      this.mandatoryMsg();
       return;
     }
 
@@ -412,21 +414,6 @@ export class ProtocolEditPage implements OnInit {
     }).then(x => x.present());
   }
 
-  showMandatoryAlert() {
-    let alert = this.alertCtrl.create({
-      header: this.translate.instant('Achtung'),
-      message: this.translate.instant('Bitte füllen Sie alle Pflichtfelder aus.'),
-      buttons: [
-        {
-          text: this.translate.instant('okay'),
-          handler: () => {
-
-          }
-        }
-      ]
-    }).then(x => x.present());
-  }
-
   showOptionAlert() {
     let alert = this.alertCtrl.create({
       header: this.translate.instant('Achtung'),
@@ -486,6 +473,15 @@ export class ProtocolEditPage implements OnInit {
           }
         }
       ]
+    }).then(x => x.present());
+  }
+
+  mandatoryMsg() {
+    const toast = this.toastCtrl.create({
+      message: this.translate.instant('Bitte füllen Sie alle Pflichtfelder aus.'),
+      cssClass: 'toast-mandatory',
+      duration: 3000,
+      position: 'top'
     }).then(x => x.present());
   }
 

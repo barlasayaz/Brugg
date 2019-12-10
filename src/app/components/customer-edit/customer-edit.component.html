@@ -12,7 +12,6 @@
           <ion-item lines="none">
               <ion-label position="floating" >{{translate.instant('Firma')}}</ion-label>
               <ion-input required
-                         (ionChange)="inputErrorMsg()"
                          type="text" 
                          [(ngModel)]="activCustomer.company"
                          [readonly] = customerDisabled>
@@ -23,7 +22,6 @@
           <ion-item lines="none">
               <ion-label position="floating" >{{translate.instant('Wertung')}}</ion-label>
               <ion-select required
-                          (ionChange)="inputErrorMsg()"
                           [disabled]="!this.userdata.role_set.edit_customer" 
                           name="Wertung"
                           [(ngModel)]="activCustomer.rating"
@@ -94,7 +92,6 @@
         <ion-item lines="none">
           <ion-label position="floating" >{{translate.instant('Kundennummer')}}</ion-label>
           <ion-input required
-                     (ionChange)="inputErrorMsg()"
                      type="text"
                      [disabled]="!this.userdata.role_set.edit_customer"
                      [(ngModel)]="activCustomer.customer_number">
@@ -105,7 +102,6 @@
         <ion-item lines="none"s>
           <ion-label position="floating" >{{translate.instant('AD-Mitarbeiter')}}</ion-label>
           <ion-select required
-                      (ionChange)="inputErrorMsg()"
                       [disabled]="!this.userdata.role_set.edit_customer"
                       name="selectSales" 
                       id="selectSales"
@@ -120,7 +116,6 @@
         <ion-item lines="none">
           <ion-label position="floating" >{{translate.instant('Prüfer')}}</ion-label>
           <ion-select required
-                      (ionChange)="inputErrorMsg()"
                       [disabled]="!this.userdata.role_set.edit_customer"
                       name="selectTester" 
                       id="selectTester"
@@ -138,7 +133,6 @@
         <ion-item lines="none">
           <ion-label position="floating" >{{translate.instant('Branche')}}</ion-label>
           <ion-select required
-                      (ionChange)="inputErrorMsg()"
                       [disabled]="!this.userdata.role_set.edit_customer"
                       name="selectBranche" 
                       id="selectBranche"
@@ -197,11 +191,6 @@
         </ion-item>
       </ion-col>
     </ion-row>
-
-    <!-- Error -->
-    <div [hidden]="!inputError" class="pfehler">
-      {{translate.instant('Bitte füllen Sie alle Pflichtfelder aus.')}}
-    </div>
 
   </ion-grid>
 </ion-content>

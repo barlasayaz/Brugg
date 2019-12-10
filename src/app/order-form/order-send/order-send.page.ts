@@ -3,6 +3,7 @@ import { NavController, NavParams, ModalController, AlertController,LoadingContr
 import { TranslateService } from '@ngx-translate/core';
 import { UserdataService } from '../../services/userdata';
 import { ApiService } from '../../services/api';
+import { ToastController } from '@ionic/angular';
 
 /**
  * Generated class for the OrderSendPage page.
@@ -17,7 +18,6 @@ import { ApiService } from '../../services/api';
   styleUrls: ['./order-send.page.scss'],
 })
 export class OrderSendPage {
-  public inputError: boolean = false;
   public Ziel_DropDown: any = '0';
   public Empfaenger: string = '';
   public idCustomer: number;
@@ -32,7 +32,6 @@ export class OrderSendPage {
   public company = '';
   public activOrderForm: any = {};
   public pdfRetVal: any;
-  public email_felder: any = 0;
 
   constructor(public navCtrl: NavController, 
               public navParams: NavParams,
@@ -41,7 +40,8 @@ export class OrderSendPage {
               public apiProvider: ApiService,
               public alertCtrl: AlertController,
               public modalCtrl: ModalController,
-              public loadingCtrl: LoadingController,) {
+              public loadingCtrl: LoadingController,
+              private toastCtrl: ToastController) {
 
                 this.idCustomer = this.navParams.get('idCustomer');
                 this.company = this.navParams.get('company');
@@ -60,7 +60,6 @@ export class OrderSendPage {
 
   changeAnsp() {
     console.log('changeReAnsp :', this.RE_Ansp);
-    this.inputError = false;
     this.Empfaenger = this.RE_Ansp.email;
   }
 
@@ -102,32 +101,39 @@ export class OrderSendPage {
   async send() {
     console.log('send()');
 
-    this.inputError = false;
-    this.email_felder = 0;
+    console.log('aaaa :', this.Betreff);
+    if (this.Ziel_DropDown == 0) {   // Destination
+      this.mandatoryMsg('Bitte füllen Sie alle Pflichtfelder aus.');
+      return;
+    }
+
     if (this.Betreff == '') {   // Subject
-      this.inputError = true;
+      this.mandatoryMsg('Bitte füllen Sie alle Pflichtfelder aus.');
       return;
     }
+
     if (this.Empfaenger == '') {  // To
-      this.inputError = true;
+      this.mandatoryMsg('Bitte füllen Sie alle Pflichtfelder aus.');
       return;
+    } else {
+      if (this.validateEmail(this.Empfaenger) == false) {
+          this.mandatoryMsg('E-Mail nicht standardkonform.');
+          return;
+      }
     }
+
     if (this.Copy == '') {  // Cc
-      this.inputError = true;
+      this.mandatoryMsg('Bitte füllen Sie alle Pflichtfelder aus.');
       return;
+    } else {
+      if (this.validateEmail(this.Copy) == false) {
+          this.mandatoryMsg('E-Mail nicht standardkonform.');
+          return;
+      }
     }
+
     if (this.Ziel_DropDown == 2 && this.RE_Ansp == '') {  // person contact
-      this.inputError = true;
-      return;
-    }
-    if (this.validateEmail(this.Empfaenger) == false) {  // To
-      this.inputError = false;
-      this.email_felder = 1;
-      return;
-    }
-    if (this.validateEmail(this.Copy) == false) { // Cc
-      this.inputError = false;
-      this.email_felder = 1;
+      this.mandatoryMsg('Bitte füllen Sie alle Pflichtfelder aus.');
       return;
     }
 
@@ -214,11 +220,6 @@ export class OrderSendPage {
     });
   }
 
-  inputErrorMsg() {
-    this.inputError = false;
-    this.email_felder = 0;
-  }
-
   validateEmail(email) {
     let reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
     if (reg.test(email) == false) {
@@ -226,6 +227,15 @@ export class OrderSendPage {
     } else {
         return (true);
     }
+  }
+
+  mandatoryMsg(msg) {
+    const toast = this.toastCtrl.create({
+      message: this.translate.instant(msg),
+      cssClass: 'toast-mandatory',
+      duration: 3000,
+      position: 'top'
+    }).then(x => x.present());
   }
 
 }

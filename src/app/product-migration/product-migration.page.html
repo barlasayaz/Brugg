@@ -11,7 +11,6 @@
           <ion-item lines="none">
               <ion-label position="floating" >{{translate.instant('Quelle Firma')}}</ion-label>
               <ion-input required
-                         (ionChange)="inputErrorMsg()"
                          type="text"
                          [(ngModel)]="activCustomer.company"
                          [disabled]= "true">
@@ -40,11 +39,6 @@
         </ion-item>
       </ion-col>
     </ion-row>
-
-    <!-- Error -->
-    <div [hidden]="!inputError" class="pfehler">
-      {{translate.instant('Bitte füllen Sie alle Pflichtfelder aus.')}}
-    </div>
 
   </ion-grid>
 </ion-content>

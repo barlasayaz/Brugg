@@ -5,6 +5,7 @@ import { UserdataService } from '../services/userdata';
 import { ApiService } from '../services/api';
 import { TreeNode } from 'primeng/api';
 import { File } from '@ionic-native/file/ngx';
+import { ToastController } from '@ionic/angular';
 
 /**
  * Generated class for the ProductMigrationPage page.
@@ -19,7 +20,6 @@ import { File } from '@ionic-native/file/ngx';
   styleUrls: ['./product-migration.page.scss'],
 })
 export class ProductMigrationPage implements OnInit {
-  public inputError: boolean = false;
   public lang: string = localStorage.getItem('lang');
   public idCustomer: any;
   public activCustomer: any = {}; 
@@ -38,7 +38,8 @@ export class ProductMigrationPage implements OnInit {
               public apiService: ApiService,
               public alertCtrl: AlertController,
               private navParams: NavParams,
-              public file: File) {
+              public file: File,
+              private toastCtrl: ToastController) {
 
   }
 
@@ -87,19 +88,17 @@ export class ProductMigrationPage implements OnInit {
   }
 
   customerChange(event) {
-    this.inputError = false;
     console.log('port:', event.value);
     console.log('customer:', this.targetCustomer);
   }
 
-  inputErrorMsg() {
-    this.inputError = false;
-  }
-
   productMigrationAlert() {
-    this.inputError = false;
+    if (this.activCustomer.company == '') {
+      this.mandatoryMsg();
+      return;
+    }
     if (this.targetCustomer == '') {
-      this.inputError = true;
+      this.mandatoryMsg();
       return;
     }
     if (this.targetCustomer) {
@@ -146,6 +145,15 @@ export class ProductMigrationPage implements OnInit {
         });
       });
     });
+  }
+
+  mandatoryMsg() {
+    const toast = this.toastCtrl.create({
+      message: this.translate.instant('Bitte füllen Sie alle Pflichtfelder aus.'),
+      cssClass: 'toast-mandatory',
+      duration: 3000,
+      position: 'top'
+    }).then(x => x.present());
   }
 
 }

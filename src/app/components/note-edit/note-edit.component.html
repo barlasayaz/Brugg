@@ -12,7 +12,6 @@
             <ion-item lines="none">
                 <ion-label position="floating">{{translate.instant('Titel')}}</ion-label>
                 <ion-input required
-                           (ionChange)="inputErrorMsg()"
                            type="text"
                            [(ngModel)]="activNote.title" >
                 </ion-input>
@@ -34,7 +33,6 @@
           <ion-item lines="none">
             <ion-label position="floating">{{translate.instant('Ansprechpartner')}}</ion-label>
             <ionic-selectable required
-                              (onChange)="inputErrorMsg()"
                               item-content
                               [(ngModel)]="selectedContact"
                               [hasVirtualScroll]="true"
@@ -80,7 +78,6 @@
           <ion-item lines="none">
             <ion-label position="floating">{{translate.instant('Notizkategorie')}}</ion-label>
             <ion-select required
-                        (ionChange)="inputErrorMsg()"
                         [(ngModel)]="activNote.category" 
                         okText="{{translate.instant('okay')}}"
                         cancelText="{{translate.instant('abbrechen')}}">
@@ -97,7 +94,6 @@
           <ion-item lines="none">
               <ion-label position="floating">{{translate.instant('Notes')}}</ion-label>     
               <ion-textarea required
-                            (ionChange)="inputErrorMsg()"
                             type="text"
                             rows="5"
                             id="Notiztext"
@@ -106,11 +102,6 @@
           </ion-item>
         </ion-col>      
       </ion-row>      
-     
-    <!-- Error -->
-    <div [hidden]="!inputError" class="pfehler">
-      {{translate.instant('Bitte füllen Sie alle Pflichtfelder aus.')}}
-    </div>
   
     </ion-grid>
   </ion-content>

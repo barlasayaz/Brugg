@@ -12,7 +12,6 @@
               <ion-item lines="none">  
                 <ion-label position="floating">{{translate.instant('AD-Mitarbeiter')}}</ion-label>
                 <ion-select required
-                            (ionChange)="inputErrorMsg()"
                             [(ngModel)]="idSales"
                             okText="{{translate.instant('okay')}}" 
                             cancelText="{{translate.instant('abbrechen')}}">
@@ -27,7 +26,6 @@
             <ion-item lines="none">  
               <ion-label position="floating">{{translate.instant('Prüfer')}}</ion-label>
               <ion-select required
-                          (ionChange)="inputErrorMsg()"
                           [(ngModel)]="idTester"
                           okText="{{translate.instant('okay')}}" 
                           cancelText="{{translate.instant('abbrechen')}}">
@@ -37,11 +35,6 @@
           </ion-col>
       </ion-row>   
     </ion-grid>
-    
-    <!-- Error -->
-    <div [hidden]="!inputError" class="pfehler">
-      {{translate.instant('Bitte füllen Sie alle Pflichtfelder aus.')}}
-    </div>
 
 </ion-content>
 
@@ -54,7 +47,7 @@
               <ion-icon name="close"></ion-icon>
           </ion-button>
           &nbsp;&nbsp;&nbsp;
-          <ion-button (click)="editAssignment()" class="btn-modal-success" [disabled]="((idSales==0) || (idTester==0))">
+          <ion-button (click)="editAssignment()" class="btn-modal-success">
               <ion-icon name="checkmark"></ion-icon>
           </ion-button>
         </ion-col>

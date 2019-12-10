@@ -47,8 +47,7 @@
         <ion-col size="12" size-md="6">
             <ion-item lines="none">
               <ion-label position="floating">{{translate.instant('Betreff')}}</ion-label>
-              <ion-input required="true"  
-                         (ionChange)="inputErrorMsg()"
+              <ion-input required="true"
                          type="text"
                          name="Betreff"
                          id="Betreff"
@@ -59,8 +58,7 @@
         <ion-col size="12" size-md="6">
           <ion-item lines="none">
             <ion-label position="floating">{{translate.instant('Empfänger')}}</ion-label>
-            <ion-input required="true"  
-                       (ionChange)="inputErrorMsg()"
+            <ion-input required="true"
                        type="text"
                        name="Empfaenger"
                        id="Empfaenger"
@@ -73,8 +71,7 @@
         <ion-col size="12" size-md="6" offset-md="6">
             <ion-item lines="none">
               <ion-label position="floating">{{translate.instant('Cc')}}</ion-label>
-              <ion-input required="true"  
-                         (ionChange)="inputErrorMsg()"
+              <ion-input required="true"
                          type="text"
                          name="Copy"
                          id="Copy"
@@ -84,14 +81,6 @@
         </ion-col>
       </ion-row>
   </ion-grid>
-
-  <!-- Error -->
-  <div *ngIf="email_felder" class="pfehler">
-    {{translate.instant('E-Mail nicht standardkonform.')}}
-  </div>
-  <div [hidden]="!inputError" class="pfehler">
-    {{translate.instant('Bitte füllen Sie alle Pflichtfelder aus.')}}
-  </div>
 
 </ion-content>
 
