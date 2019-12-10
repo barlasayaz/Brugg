@@ -51,8 +51,13 @@ ion-app.ios {
   }
 
   .heightCalc {
-    height: calc(100% - 65px - 55px - 41px - env(safe-area-inset-bottom));
+    height: calc(100% - 70px - 44px - 50px - env(safe-area-inset-bottom) - env(safe-area-inset-top));
+    top: calc(70px + 44px);
   }
+
+  // .ui-treetable-scrollable-body {
+  //   max-height: calc(100% - 70px - 44px - 50px - env(safe-area-inset-bottom)) !important;
+  // }
 
   .liftiball ion-fab-button {
     --box-shadow: 0px 1px 9px rgba(0, 0, 0, 0.3);
@@ -500,11 +505,9 @@ ion-fab-button {
 .heightCalc {
   display: block;
   position: absolute;
-  top: calc(65px + 55px + 41px);
-  //top: calc(65px + 55px);
+  top: calc(70px + 42px);
   left: 0;
-  height: calc(100% - 65px - 55px - 41px);
-  //height: calc(100% - 65px - 55px );
+  height: calc(100% - 70px - 42px - 50px);
   width: 100%;
   z-index: -55;
 }
