@@ -13,7 +13,6 @@
             <ion-item lines="none">
               <ion-label position="floating">{{translate.instant('Vorname')}}</ion-label>
                 <ion-input required
-                            (ionChange)="inputErrorMsg()"
                             [disabled]="true" 
                             type="text"
                             id="Vorname"
@@ -25,7 +24,6 @@
             <ion-item lines="none">
               <ion-label position="floating">{{translate.instant('Name')}}</ion-label>
                 <ion-input required
-                            (ionChange)="inputErrorMsg()"
                             [disabled]="true"
                             type="text"
                             id="Name"
@@ -37,7 +35,6 @@
             <ion-item lines="none">
               <ion-label position="floating">{{translate.instant('KennungMitarbeiter')}}</ion-label>
                 <ion-input required
-                            (ionChange)="inputErrorMsg()"
                             type="text"
                             id="short_code"
                             [(ngModel)]="edit.short_code">
@@ -158,11 +155,6 @@
             </ion-item>
           </ion-col>
         </ion-row>
-
-        <!-- Error -->
-        <div [hidden]="!inputError" class="pfehler">
-          {{translate.instant('Bitte füllen Sie alle Pflichtfelder aus.')}}
-        </div>
 
     </ion-grid>
 </ion-content>
@@ -317,11 +309,6 @@
         </ion-item>
       </ion-col>
   </ion-row>
-
-  <!-- Error -->
-  <div [hidden]="!inputError" class="pfehler">
-    {{translate.instant('Bitte füllen Sie alle Pflichtfelder aus.')}}
-  </div>
 
   <ion-row style="margin-bottom: -10px;" *ngIf="viewNewMode==1">
     <ion-col>{{translate.instant('Benutzer nicht gefunden!')}}</ion-col>

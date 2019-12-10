@@ -9,6 +9,7 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { MapLocateComponent } from '../components/map-locate/map-locate.component';
 import { LocationAccuracy } from '@ionic-native/location-accuracy/ngx';
 import { DatePipe } from '@angular/common';
+import { ToastController } from '@ionic/angular';
 
 /**
  * Generated class for the ReboxPage page.
@@ -36,7 +37,6 @@ export class ReboxPage implements OnInit {
   public longitude: any;
   public maxDate: string;
   public platform_version: number;
-  public inputError: boolean = false;
   public listCustomer: any[] = [];
   public customer: any = {};
   public pickUpValue = '';
@@ -72,7 +72,8 @@ export class ReboxPage implements OnInit {
               public viewCtrl: ModalController,
               public alertCtrl: AlertController,
               private locationAccuracy: LocationAccuracy,
-              private geolocation: Geolocation) {
+              private geolocation: Geolocation,
+              private toastCtrl: ToastController) {
                 console.log('ReBox load');
                 this.platform_version = this.system.platform;
                 this.maxDate = this.apiService.maxDate;
@@ -117,7 +118,6 @@ export class ReboxPage implements OnInit {
 
   customerChange(event) {
     this.customer = event.value;
-    this.inputError = false;
     console.log('customer :', event.value);
   }
 
@@ -184,36 +184,35 @@ export class ReboxPage implements OnInit {
 
   showConfirmAlert() {
     console.log('Rebox Alert');
-    this.inputError = false;
     if (this.rebox.Firma == '') {
-      this.inputError = true;
+      this.mandatoryMsg();
       return;
     }
     if (this.rebox.ReBoxDate == '') {
-      this.inputError = true;
+      this.mandatoryMsg();
       return;
     }
     if (this.GPS == 0) {
       if (this.rebox.Str == '') {
-        this.inputError = true;
+        this.mandatoryMsg();
         return;
       }
       if (this.rebox.Ort == '') {
-        this.inputError = true;
+        this.mandatoryMsg();
         return;
       }
     } else {
       if (this.rebox.latitude == '') {
-        this.inputError = true;
+        this.mandatoryMsg();
         return;
       }
       if (this.rebox.longitude == '') {
-        this.inputError = true;
+        this.mandatoryMsg();
         return;
       }
     }
     if (this.rebox.Notiz == '') {
-      this.inputError = true;
+      this.mandatoryMsg();
       return;
     }
 
@@ -311,8 +310,13 @@ export class ReboxPage implements OnInit {
     });
   }
 
-  inputErrorMsg() {
-    this.inputError = false;
+  mandatoryMsg() {
+    const toast = this.toastCtrl.create({
+      message: this.translate.instant('Bitte füllen Sie alle Pflichtfelder aus.'),
+      cssClass: 'toast-mandatory',
+      duration: 3000,
+      position: 'top'
+    }).then(x => x.present());
   }
 
 }

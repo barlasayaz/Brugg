@@ -52,7 +52,6 @@
                 <ion-item lines="none" style="padding-left: 0px;">  
                   <ion-label position="floating">{{translate.instant('Geschlecht')}}</ion-label>
                   <ion-select required="true"
-                              (ionChange)="inputErrorMsg()"
                               [(ngModel)]="contactPersonEdit.gender"
                               okText="{{translate.instant('okay')}}" 
                               cancelText="{{translate.instant('abbrechen')}}">
@@ -68,7 +67,6 @@
                 <ion-item lines="none" style="padding-left: 0px;">
                   <ion-label position="floating">{{translate.instant('Name')}}</ion-label>
                   <ion-input required="true"
-                             (ionChange)="inputErrorMsg()"
                              type="text"
                              id="ansp_name" 
                              [(ngModel)]="contactPersonEdit.last_name">
@@ -79,7 +77,6 @@
                 <ion-item lines="none" style="padding-left: 0px;">
                   <ion-label  position="floating">{{translate.instant('Vorname')}}</ion-label>
                   <ion-input required="true"
-                             (ionChange)="inputErrorMsg()"
                              type="text"
                              id="ansp_vorname" 
                              [(ngModel)]="contactPersonEdit.first_name">
@@ -93,7 +90,6 @@
                 <ion-item lines="none" style="padding-left: 0px;">
                   <ion-label position="floating">{{translate.instant('E-Mail')}}</ion-label>
                   <ion-input required="true"
-                             (ionChange)="inputErrorMsg()"
                              type="text"
                              id="ansp_eMail"
                              [(ngModel)]="contactPersonEdit.email">
@@ -107,7 +103,6 @@
                   <ion-item lines="none" style="padding-left: 0px;">
                     <ion-label position="floating">{{translate.instant('Telefon')}}</ion-label>
                     <ion-input required="true"
-                               (ionChange)="inputErrorMsg()"
                                type="text" 
                                id="ansp_phone"
                                [(ngModel)]="contactPersonEdit.phone">
@@ -174,14 +169,6 @@
           </ion-col>  
         </ion-row>
       </ion-grid>  
-
-      <!-- Error -->
-      <div *ngIf="email_felder" class="pfehler">
-          {{translate.instant('E-Mail nicht standardkonform.')}}
-      </div>
-      <div [hidden]="!inputError" *ngIf="!email_felder" class="pfehler">
-          {{translate.instant('Bitte füllen Sie alle Pflichtfelder aus.')}}
-      </div>
 
     </ion-list>  
   </div>

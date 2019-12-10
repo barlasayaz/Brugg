@@ -3,6 +3,7 @@ import { NavController, NavParams, ModalController, AlertController } from '@ion
 import { UserdataService } from '../../services/userdata';
 import { TranslateService } from '@ngx-translate/core';
 import { ApiService } from '../../services/api';
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-product-opt-edit',
@@ -28,7 +29,6 @@ export class ProductOptEditComponent implements OnInit {
     type: 0,
     id: 0
   };
-  public inputError = false;
   public inputColor = '#EEEEEE';
   public options: any = [{
     de: '',
@@ -51,7 +51,8 @@ export class ProductOptEditComponent implements OnInit {
     public userdata: UserdataService,
     public viewCtrl: ModalController,
     public apiService: ApiService,
-    public alertCtrl: AlertController) {
+    public alertCtrl: AlertController,
+    private toastCtrl: ToastController) {
 
     }
 
@@ -112,122 +113,119 @@ export class ProductOptEditComponent implements OnInit {
 
     productOptionsEdit() {
       console.log('productOptionsEdit()');
-      this.inputError = false;
       if (this.activOption.title['de'] == '') {
-        this.inputError = true;
+        this.mandatoryMsg();
         return;
       }
 
       console.log('optionen :', this.activOption.type);
 
       if (this.activOption.type == 1) {
+        let itemNull = 0;
         this.options.forEach(element => {
-          console.log('element["de"] :', element['de']);
+          console.log('element["de"] :', element, element['de']);
           if (element['de'] == '') {
-            this.inputError = true;
-            return;
+            itemNull = 1;
           }
         });
+        if (itemNull == 1) {
+          this.mandatoryMsg();
+          return;
+        }
       }
 
       if (this.activOption.type == 2) {
         console.log('maxChar :', this.maxChar);
         if (this.maxChar == null) {
-          this.inputError = true;
+          this.mandatoryMsg();
           return;
         }
       }
       if (this.activOption.type == 3) {
         console.log('minNumber :', this.minNumber);
         if (this.minNumber == null) {
-          this.inputError = true;
+          this.mandatoryMsg();
           return;
         }
         console.log('maxNumber :', this.maxNumber);
         if (this.maxNumber == null) {
-          this.inputError = true;
+          this.mandatoryMsg();
           return;
         }
       }
       if (this.activOption.type == 4) {
         console.log('defaultTime :', this.defaultTime);
         if (this.defaultTime == '') {
-          this.inputError = true;
+          this.mandatoryMsg();
           return;
         }
       }
 
-      if (!this.inputError) {
-        const obj = {
-          user: 1,
-          title: '',
-          mandatory: 0,
-          options: '',
-          licensee: this.userdata.licensee,
-          type: 0,
-          id: 0,
-          active: '1'
+      const obj = {
+        user: 1,
+        title: '',
+        mandatory: 0,
+        options: '',
+        licensee: this.userdata.licensee,
+        type: 0,
+        id: 0,
+        active: '1'
+      };
+
+      if (this.activOption.type == '0') {
+        this.activOption.options = {
+          default: this.defaultToggle,
+          color: this.inputColor
         };
-
-        if (this.activOption.type == '0') {
-          this.activOption.options = {
-            default: this.defaultToggle,
-            color: this.inputColor
-          };
-        } else if (this.activOption.type == '1') {
-          this.activOption.options = this.options;
-        } else if (this.activOption.type == '2') {
-          this.activOption.options = { max: this.maxChar };
-        } else if (this.activOption.type == '3') {
-          this.activOption.options = {
-            min: this.minNumber,
-            max: this.maxNumber
-          };
-        } else if (this.activOption.type == '4') {
-          this.activOption.options = { default: this.defaultTime };
-        }
-
-        this.activOption.mandatory = this.mandatoryToogle;
-
-        if (this.activOption['user']) { obj.user = this.activOption['user']; }
-        if (this.activOption['licensee']) { obj.licensee = this.activOption['licensee']; }
-        if (this.activOption['type']) { obj.type = this.activOption['type']; }
-        if (this.activOption['mandatory'] == true) { obj.mandatory = 1; }
-        if (this.activOption['mandatory'] == false) { obj.mandatory = 0; }
-        if (this.activOption['title']) { obj.title = JSON.stringify(this.activOption['title']); }
-        if (this.activOption['options']) { obj.options = JSON.stringify(this.activOption['options']); }
-
-        if (!this.itsNew) {
-          obj.id = this.activOption['id'];
-          this.idOption = this.activOption['id'];
-        } else {
-          obj.active = '1';
-          this.activOption.active = 1;
-        }
-
-        this.apiService.pvs4_set_product_opt(obj).then((result: any) => {
-          console.log('result: ', result);
-          this.activOption.id = result.id;
-          if (obj.mandatory == 1) {
-            this.activOption.mandatory = 'true';
-          }
-          if (obj.mandatory == 0) {
-            this.activOption.mandatory = 'false';
-          }
-          if (this.activOption.options.default == true) {
-            this.activOption.options.default = 'true';
-          }
-          if (this.activOption.options.default == false) {
-            this.activOption.options.default = 'false';
-          }
-          this.viewCtrl.dismiss(this.activOption);
-        });
+      } else if (this.activOption.type == '1') {
+        this.activOption.options = this.options;
+      } else if (this.activOption.type == '2') {
+        this.activOption.options = { max: this.maxChar };
+      } else if (this.activOption.type == '3') {
+        this.activOption.options = {
+          min: this.minNumber,
+          max: this.maxNumber
+        };
+      } else if (this.activOption.type == '4') {
+        this.activOption.options = { default: this.defaultTime };
       }
 
-    }
+      this.activOption.mandatory = this.mandatoryToogle;
 
-    inputErrorMsg() {
-      this.inputError = false;
+      if (this.activOption['user']) { obj.user = this.activOption['user']; }
+      if (this.activOption['licensee']) { obj.licensee = this.activOption['licensee']; }
+      if (this.activOption['type']) { obj.type = this.activOption['type']; }
+      if (this.activOption['mandatory'] == true) { obj.mandatory = 1; }
+      if (this.activOption['mandatory'] == false) { obj.mandatory = 0; }
+      if (this.activOption['title']) { obj.title = JSON.stringify(this.activOption['title']); }
+      if (this.activOption['options']) { obj.options = JSON.stringify(this.activOption['options']); }
+
+      if (!this.itsNew) {
+        obj.id = this.activOption['id'];
+        this.idOption = this.activOption['id'];
+      } else {
+        obj.active = '1';
+        this.activOption.active = 1;
+      }
+
+      this.apiService.pvs4_set_product_opt(obj).then((result: any) => {
+        console.log('result: ', result);
+        this.activOption.id = result.id;
+        if (obj.mandatory == 1) {
+          this.activOption.mandatory = 'true';
+        }
+        if (obj.mandatory == 0) {
+          this.activOption.mandatory = 'false';
+        }
+        if (this.activOption.options.default == true) {
+          this.activOption.options.default = 'true';
+        }
+        if (this.activOption.options.default == false) {
+          this.activOption.options.default = 'false';
+        }
+        this.viewCtrl.dismiss(this.activOption);
+      });
+
     }
 
     add_option() {
@@ -302,7 +300,6 @@ export class ProductOptEditComponent implements OnInit {
                 return false;
               } else {
                 console.log('options:', this.options);
-                this.inputError = false;
                 if (type == 1) {
                   this.activOption.title = data;
                 } else {
@@ -387,6 +384,15 @@ export class ProductOptEditComponent implements OnInit {
             }
           }
         ]
+      }).then(x => x.present());
+    }
+
+    mandatoryMsg() {
+      const toast = this.toastCtrl.create({
+        message: this.translate.instant('Bitte füllen Sie alle Pflichtfelder aus.'),
+        cssClass: 'toast-mandatory',
+        duration: 3000,
+        position: 'top'
       }).then(x => x.present());
     }
 

@@ -12,7 +12,6 @@
                 <ion-item lines="none">
                     <ion-label position="floating">{{translate.instant('Titel')}} </ion-label>
                     <ion-input required
-                               (ionChange)="inputErrorMsg()"
                                type="text"
                                [(ngModel)]="activOption.title[lang]"
                                readonly="true"
@@ -27,7 +26,6 @@
                 <ion-item lines="none">
                     <ion-label position="floating">{{translate.instant('Art')}}</ion-label>
                     <ion-select required
-                                (ionChange)="inputErrorMsg()"
                                 style="margin-bottom: 10px;"
                                 [(ngModel)]="activOption.type"
                                 okText="{{translate.instant('okay')}}"
@@ -129,7 +127,6 @@
                 <ion-item lines="none">
                     <ion-label position="floating">{{translate.instant('Max')}} {{translate.instant('Charakter')}}</ion-label>
                     <ion-input required
-                               (ionChange)="inputErrorMsg()"
                                type="Number"
                                [(ngModel)]="maxChar">
                     </ion-input>
@@ -143,7 +140,6 @@
                 <ion-item lines="none">
                     <ion-label position="floating">{{translate.instant('Min')}}</ion-label>
                     <ion-input required
-                               (ionChange)="inputErrorMsg()"
                                type="Number"
                                [(ngModel)]="minNumber">
                     </ion-input>
@@ -153,7 +149,6 @@
                 <ion-item lines="none">
                     <ion-label position="floating">{{translate.instant('Max')}}</ion-label>
                     <ion-input required
-                               (ionChange)="inputErrorMsg()"
                                type="Number"
                                [(ngModel)]="maxNumber">
                     </ion-input>
@@ -167,7 +162,6 @@
             <ion-item lines="none">
                 <ion-label floating>{{translate.instant('Datum')}}</ion-label>
                 <ion-datetime  mode="ios"  required
-                              (ionChange)="inputErrorMsg()"
                               [(ngModel)]="default_date"
                               displayFormat="DD.MM.YYYY"
                               doneText="{{translate.instant('okay')}}"
@@ -182,8 +176,8 @@
             <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="10" size-xs="10">
                 <ion-item lines="none">
                     <ion-label position="floating">{{translate.instant('Standard')}}</ion-label>
-                    <ion-datetime  mode="ios"  required
-                                  (ionChange)="inputErrorMsg()"
+                    <ion-datetime required
+                                  mode="ios"  
                                   type="time"
                                   [(ngModel)]="defaultTime"
                                   name="start_time" 
@@ -194,11 +188,6 @@
                 </ion-item>
             </ion-col>
         </ion-row>
-
-        <!-- Error -->
-        <div [hidden]="!inputError" class="pfehler">
-            {{translate.instant('Bitte füllen Sie alle Pflichtfelder aus.')}}
-        </div>
 
     </ion-grid>
 </ion-content>

@@ -4,6 +4,7 @@ import { UserdataService } from '../../services/userdata';
 import { TranslateService } from '@ngx-translate/core';
 import { ApiService } from '../../services/api';
 import { DatePipe } from '@angular/common';
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-note-edit',
@@ -12,7 +13,6 @@ import { DatePipe } from '@angular/common';
 })
 export class NoteEditComponent {
 
-  public inputError: boolean = false;
   public modalTitle: string;
   public idCustomer: number = 0;
   public idNote: number = 0;
@@ -37,7 +37,8 @@ export class NoteEditComponent {
                 public userdata: UserdataService,
                 public viewCtrl: ModalController,
                 public apiService: ApiService,
-                public alertCtrl: AlertController) {
+                public alertCtrl: AlertController,
+                private toastCtrl: ToastController) {
     this.maxDate = this.apiService.maxDate;
     this.idNote = this.navParams.get('id'); 
     this.idCustomer = this.navParams.get('idCustomer');
@@ -84,21 +85,24 @@ export class NoteEditComponent {
 
   noteEdit() {
     console.log('noteEdit()');
-    this.inputError = false;
     if (this.activNote.title == '') {
-      this.inputError = true;
+      this.mandatoryMsg();
       return;
     }
     if (this.selectedContact == null) {
-      this.inputError = true;
+      this.mandatoryMsg();
       return;
     }
     if (this.activNote.category == null) {
-      this.inputError = true;
+      this.mandatoryMsg();
+      return;
+    }
+    if (this.activNote.category == '') {
+      this.mandatoryMsg();
       return;
     }
     if (this.activNote.notes == '') {
-      this.inputError = true;
+      this.mandatoryMsg();
       return;
     }
 
@@ -184,10 +188,6 @@ export class NoteEditComponent {
     this.showConfirmAlert(this.activNote);
   }
 
-  inputErrorMsg() {
-    this.inputError = false;
-  }
-  
   showConfirmAlert(activNote) {
     let alert = this.alertCtrl.create({
       header: this.translate.instant('Achtung'),
@@ -246,6 +246,15 @@ export class NoteEditComponent {
       }
       this.loadCustomer(this.idCustomer);
     });
+  }
+
+  mandatoryMsg() {
+    const toast = this.toastCtrl.create({
+      message: this.translate.instant('Bitte füllen Sie alle Pflichtfelder aus.'),
+      cssClass: 'toast-mandatory',
+      duration: 3000,
+      position: 'top'
+    }).then(x => x.present());
   }
 
 }

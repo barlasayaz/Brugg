@@ -3,6 +3,7 @@ import { NavController, ModalController, NavParams } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { UserdataService } from '../../services/userdata';
 import { ApiService } from '../../services/api';
+import { ToastController } from '@ionic/angular';
 
 /**
  * Generated class for the AssignmentPage page.
@@ -23,25 +24,23 @@ export class AssignmentPage {
   public salesListe: any = [];
   public testerListe: any = [];
   public params: any;
-  public inputError: boolean = false;
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     public translate: TranslateService,
     public userdata: UserdataService,
     public apiService: ApiService,
-    public viewCtrl: ModalController) {
+    public viewCtrl: ModalController,
+    private toastCtrl: ToastController) {
 
     if (this.userdata.role == 3) {
       this.userdata.licensee = 0;
     }
     this.activCustomer = this.navParams.get('activCustomer');
     if (this.activCustomer) {
-      try
-      {
+      try {
         this.activCustomer = JSON.parse(this.activCustomer);
-      }
-      catch {
+      } catch {
          console.error('JSON.parse err', this.activCustomer) ;
       }
 
@@ -91,17 +90,20 @@ export class AssignmentPage {
     this.viewCtrl.dismiss();
   }
 
-  inputErrorMsg() {
-    this.inputError = false;
-  }
-
   editAssignment() {
-    try
-    {
-      this.activCustomer = JSON.parse(this.activCustomer);
+    if (this.idSales == 0) {
+      this.mandatoryMsg();
+      return;
     }
-    catch{
-       console.error('JSON.parse',this.activCustomer) ;
+    if (this.idTester == 0) {
+      this.mandatoryMsg();
+      return;
+    }
+
+    try {
+      this.activCustomer = JSON.parse(this.activCustomer);
+    } catch {
+       console.error('JSON.parse', this.activCustomer) ;
     }
     console.log('activCustomer edit :', this.activCustomer);
     console.log('idSales :', this.idSales);
@@ -158,6 +160,15 @@ export class AssignmentPage {
       this.dismiss();
     });
 
+  }
+
+  mandatoryMsg() {
+    const toast = this.toastCtrl.create({
+      message: this.translate.instant('Bitte füllen Sie alle Pflichtfelder aus.'),
+      cssClass: 'toast-mandatory',
+      duration: 3000,
+      position: 'top'
+    }).then(x => x.present());
   }
 
 }

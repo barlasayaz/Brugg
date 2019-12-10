@@ -305,7 +305,7 @@ ion-fab-button {
 }
 
 .rebox-modal-css .modal-wrapper {
-  height: 705px;
+  height: 645px;
   position: absolute;
   display: block;
   border-radius: 8px;
@@ -571,6 +571,15 @@ ion-header ion-toolbar:first-child {
   --border-style: solid;
   --border-width: 1px;
   --border-color: black;
+}
+
+.toast-mandatory {
+  --background: yellow;
+  --color: red;
+  --border-style: solid;
+  --border-width: 1px;
+  --border-color: red;
+  --max-width: 350px;  
 }
 
 // FAB

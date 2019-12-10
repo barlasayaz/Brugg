@@ -314,7 +314,7 @@ export class ProductEditPage implements OnInit {
     });
 
     if (this.mandatoryControl) {
-      this.showMandatoryAlert();
+      this.mandatoryMsg();
       return;
     }
 
@@ -815,21 +815,6 @@ export class ProductEditPage implements OnInit {
     }).then(x => x.present());
   }
 
-  showMandatoryAlert() {
-    let alert = this.alertCtrl.create({
-      header: this.translate.instant('information'),
-      message: this.translate.instant('Bitte füllen Sie alle Pflichtfelder aus.'),
-      buttons: [
-        {
-          text: this.translate.instant('okay'),
-          handler: () => {
-
-          }
-        }
-      ]
-    }).then(x => x.present());
-  }
-
   showOptionAlert() {
     let alert = this.alertCtrl.create({
       header: this.translate.instant('information'),
@@ -983,6 +968,15 @@ export class ProductEditPage implements OnInit {
       }
     });
     model.present();
+  }
+
+  mandatoryMsg() {
+    const toast = this.toastCtrl.create({
+      message: this.translate.instant('Bitte füllen Sie alle Pflichtfelder aus.'),
+      cssClass: 'toast-mandatory',
+      duration: 3000,
+      position: 'top'
+    }).then(x => x.present());
   }
 
 }
