@@ -239,6 +239,149 @@ export class ProductListPage implements OnInit {
         console.log('funcHeightCalc:', x , this.heightCalc  );
     }
 
+    prepare_line( line:any ){        
+        let pr = line.data.last_protocol;
+        if (pr) {
+            if (pr.length > 0) {
+                try {
+                    pr = JSON.parse(pr);
+                    if (pr.protocol_date) {
+                        line.data.last_protocol_date = this.apiService.mysqlDate2view(pr.protocol_date);
+                    }
+                    line.data.last_protocol_next_color = 'rgb(74, 83, 86)';
+                    if (pr.protocol_date_next) {
+                        line.data.last_protocol_next = this.apiService.mysqlDate2view(pr.protocol_date_next);
+                        let x = moment(pr.protocol_date_next, 'YYYY-M-D');
+                        let y = moment();
+                        let diffDays = x.diff(y, 'days');
+                        if (diffDays < 90) { line.data.last_protocol_next_color = '#f1c40f'; }
+                        if (diffDays < 30) { line.data.last_protocol_next_color = '#e74c3c'; }
+                        // console.log('x :', pr.protocol_date_next ,  diffDays);
+                    }
+
+                    if (pr.result) {
+                        if (pr.result == 1) {
+                            line.data.last_protocol_next = this.translate.instant('reparieren');
+                            line.data.last_protocol_next_color = '#f1c40f';
+                        }
+                        if (pr.result == 3) {
+                            line.data.last_protocol_next = this.translate.instant('unauffindbar');
+                            line.data.last_protocol_next_color = '#e74c3c';
+                        }
+                        if ((pr.result == 2) || (pr.result == 4)) {
+                            line.data.last_protocol_next = this.translate.instant('ausmustern');
+                            line.data.last_protocol_next_color = '#C558D3';
+                        }
+                    }
+                } catch (e) {
+                    console.error('JSON.parse(pr) err :', e);
+                    console.log('pr :', pr);
+                }
+            }
+        }
+
+        // options
+        let options = [];
+        if (line.data.items) {
+            // console.log("items :", line.data.items);
+            try {
+                options = JSON.parse(line.data.items);
+                // console.log("options :", options);
+            } catch (e) {
+                console.error('JSON.parse options err :', e);
+                console.log('options :', line.data);
+            }
+        }
+        // console.log('options :', options);
+
+        if (options == null) { options = []; }
+        let info = '';
+        for (let i = 0; i < options.length; i++) {
+            // console.log('this.lang :', this.lang);
+            if (!this.cols.find(x => x.field === options[i].title[this.lang])) {
+                let obj = { editField: false, editFieldEN: '', field: options[i].title[this.lang],  header: options[i].title[this.lang] , width: '200px'};
+                if(options[i].title['en'] === 'Location' ) {
+                    obj.editField = true;
+                    obj.editFieldEN = 'Location' ; 
+                }
+                if(options[i].title['en'] === 'Note' ) {
+                    obj.editField = true;
+                    obj.editFieldEN = 'Note' ;
+                }
+                this.cols.push(obj);
+                // console.log('this.lang :', options[i].title[this.lang]);
+            }
+
+            if (options[i].type == 0) { 
+                if (options[i].value == true) {
+                    options[i].value = '√';
+                }
+                if (options[i].value == false) {
+                     options[i].value = 'x';
+                }
+                line.data[options[i].title[this.lang]] = options[i].value;
+            } else if (options[i].type == 1) {
+                for (let j = 0; j < options[i].options.length; j++) {
+                    if (options[i].value == options[i].options[j].de ||
+                        options[i].value == options[i].options[j].en ||
+                        options[i].value == options[i].options[j].fr ||
+                        options[i].value == options[i].options[j].it
+                        ) {
+                        options[i].value = options[i].options[j][this.lang];
+                    }
+                }
+                line.data[options[i].title[this.lang]] = options[i].value;
+            } else if (options[i].type == 4) {
+                const pipe = new DatePipe('en-US');
+                if (options[i].value && options[i].value.length == 5 ) {
+                    line.data[options[i].title[this.lang]] = options[i].value;
+                } else {
+                    line.data[options[i].title[this.lang]] = pipe.transform(options[i].value, 'HH:mm');
+                }
+            } else if (options[i].type == 5) {
+                const pipe = new DatePipe('en-US');
+                line.data[options[i].title[this.lang]] = pipe.transform(options[i].value, 'dd.MM.yyyy');
+            } else if (options[i].type == 6) {
+                line.data[options[i].title[this.lang]] = '(' + options[i].value.lat.toString().substring(0, 6) + ',' + options[i].value.long.toString().substring(0, 6) + ')';
+            } else if (options[i].type == 2) {
+                if(options[i].value === null) options[i].value="";
+                if(options[i].value === undefined) options[i].value="";
+                line.data[options[i].title[this.lang]] = options[i].value;
+            } else {
+                line.data[options[i].title[this.lang]] = options[i].value;
+            }
+
+            if ((options[i].type != 0) && (options[i].type != 6)) {
+                let t = line.data[options[i].title[this.lang]] ;
+                let h = '';
+                // console.log(options[i].base);
+                if (options[i].base === undefined) { options[i].base = true; }
+                if (options[i].base) {
+                    if (t) { h = t.trim(); }
+                    if ( h !== '') {
+                        if ( info !== '') { info += ', '; }
+                        info += h;
+                    }
+                }
+            }
+        }
+        // console.log("index :", index);
+        line.data['_basic_info_'] = info;
+        if (info.length > this.lengthBasicInfo + 3) {
+            info = info.substring(0, this.lengthBasicInfo) + '...';
+        }
+        line.data['_basic_info_show_'] = info;
+
+        // children
+        if(line.children){
+            //console.log('prepare_line', line.children);
+            for (let i = 0; i < line.children.length; i++) {
+                this.prepare_line(line.children[i]);
+            }
+        }
+        
+    }
+
     async page_load() {
         console.log('page_load ProductListPage');
 
@@ -290,136 +433,7 @@ export class ProductListPage implements OnInit {
 
             for (let index = 0; index < this.productListAll.length; index++) {
                 // last_protocol & last_protocol_next
-                let pr = this.productListAll[index].data.last_protocol;
-                if (pr) {
-                    if (pr.length > 0) {
-                        try {
-                            pr = JSON.parse(pr);
-                            if (pr.protocol_date) {
-                                this.productListAll[index].data.last_protocol_date = this.apiService.mysqlDate2view(pr.protocol_date);
-                            }
-                            this.productListAll[index].data.last_protocol_next_color = 'rgb(74, 83, 86)';
-                            if (pr.protocol_date_next) {
-                                this.productListAll[index].data.last_protocol_next = this.apiService.mysqlDate2view(pr.protocol_date_next);
-                                let x = moment(pr.protocol_date_next, 'YYYY-M-D');
-                                let y = moment();
-                                let diffDays = x.diff(y, 'days');
-                                if (diffDays < 90) { this.productListAll[index].data.last_protocol_next_color = '#f1c40f'; }
-                                if (diffDays < 30) { this.productListAll[index].data.last_protocol_next_color = '#e74c3c'; }
-                                // console.log('x :', pr.protocol_date_next ,  diffDays);
-                            }
-
-                            if (pr.result) {
-                                if (pr.result == 1) {
-                                    this.productListAll[index].data.last_protocol_next = this.translate.instant('reparieren');
-                                    this.productListAll[index].data.last_protocol_next_color = '#f1c40f';
-                                }
-                                if (pr.result == 3) {
-                                    this.productListAll[index].data.last_protocol_next = this.translate.instant('unauffindbar');
-                                    this.productListAll[index].data.last_protocol_next_color = '#e74c3c';
-                                }
-                                if ((pr.result == 2) || (pr.result == 4)) {
-                                    this.productListAll[index].data.last_protocol_next = this.translate.instant('ausmustern');
-                                    this.productListAll[index].data.last_protocol_next_color = '#C558D3';
-                                }
-                            }
-                        } catch (e) {
-                            console.error('JSON.parse(pr) err :', e);
-                            console.log('pr :', pr);
-                        }
-                    }
-                }
-                // options
-                let options = [];
-                if (this.productListAll[index].data.items) {
-                    // console.log("items :", this.productListAll[index].data.items);
-                    try {
-                        options = JSON.parse(this.productListAll[index].data.items);
-                        // console.log("options :", options);
-                    } catch (e) {
-                        console.error('JSON.parse options err :', e);
-                        console.log('options :', this.productListAll[index].data);
-                    }
-                }
-                // console.log('options :', options);
- 
-                if (options == null) { options = []; }
-                let info = '';
-                for (let i = 0; i < options.length; i++) {
-                    // console.log('this.lang :', this.lang);
-                    if (!this.cols.find(x => x.field === options[i].title[this.lang])) {
-                        let obj = { editField: false, editFieldEN: '', field: options[i].title[this.lang],  header: options[i].title[this.lang] , width: '200px'};
-                        if(options[i].title['en'] === 'Location' ) {
-                            obj.editField = true;
-                            obj.editFieldEN = 'Location' ;
-                        }
-                        if(options[i].title['en'] === 'Note' ) {
-                            obj.editField = true;
-                            obj.editFieldEN = 'Note' ;
-                        }
-                        this.cols.push(obj);
-                        // console.log('this.lang :', options[i].title[this.lang]);
-                    }
-
-                    if (options[i].type == 0) { 
-                        if (options[i].value == true) {
-                            options[i].value = '√';
-                        }
-                        if (options[i].value == false) {
-                             options[i].value = 'x';
-                        }
-                        this.productListAll[index].data[options[i].title[this.lang]] = options[i].value;
-                    } else if (options[i].type == 1) {
-                        for (let j = 0; j < options[i].options.length; j++) {
-                            if (options[i].value == options[i].options[j].de ||
-                                options[i].value == options[i].options[j].en ||
-                                options[i].value == options[i].options[j].fr ||
-                                options[i].value == options[i].options[j].it
-                                ) {
-                                options[i].value = options[i].options[j][this.lang];
-                            }
-                        }
-                        this.productListAll[index].data[options[i].title[this.lang]] = options[i].value;
-                    } else if (options[i].type == 4) {
-                        const pipe = new DatePipe('en-US');
-                        if (options[i].value && options[i].value.length == 5 ) {
-                            this.productListAll[index].data[options[i].title[this.lang]] = options[i].value;
-                        } else {
-                            this.productListAll[index].data[options[i].title[this.lang]] = pipe.transform(options[i].value, 'HH:mm');
-                        }
-                    } else if (options[i].type == 5) {
-                        const pipe = new DatePipe('en-US');
-                        this.productListAll[index].data[options[i].title[this.lang]] = pipe.transform(options[i].value, 'dd.MM.yyyy');
-                    } else if (options[i].type == 6) {
-                        this.productListAll[index].data[options[i].title[this.lang]] = '(' + options[i].value.lat.toString().substring(0, 6) + ',' + options[i].value.long.toString().substring(0, 6) + ')';
-                    } else if (options[i].type == 2) {
-                        if(options[i].value === null) options[i].value="";
-                        if(options[i].value === undefined) options[i].value="";
-                        this.productListAll[index].data[options[i].title[this.lang]] = options[i].value;
-                    } else {
-                        this.productListAll[index].data[options[i].title[this.lang]] = options[i].value;
-                    }
-
-                    if ((options[i].type != 0) && (options[i].type != 6)) {
-                        let t = this.productListAll[index].data[options[i].title[this.lang]] ;
-                        let h = '';
-                        // console.log(options[i].base);
-                        if (options[i].base === undefined) { options[i].base = true; }
-                        if (options[i].base) {
-                            if (t) { h = t.trim(); }
-                            if ( h !== '') {
-                                if ( info !== '') { info += ', '; }
-                                info += h;
-                            }
-                        }
-                    }
-                }
-                // console.log("index :", index);
-                this.productListAll[index].data['_basic_info_'] = info;
-                if (info.length > this.lengthBasicInfo + 3) {
-                    info = info.substring(0, this.lengthBasicInfo) + '...';
-                }
-                this.productListAll[index].data['_basic_info_show_'] = info;
+                this.prepare_line(this.productListAll[index]);                
             }
 
             this.generate_productList(0, this.rowCount, this.sortedColumn.sort_field, this.sortedColumn.sort_order);
