@@ -136,8 +136,21 @@ export class PdfExportService {
         var image = new Image();
         image.src = url;
         image.crossOrigin = "Anonymous";
+
+        image.oncancel = (e) => {
+            console.error(" image.oncancel  :", e );
+        }
+
+        image.onabort = (e) => {
+            console.error(" image.onabort  :", e );
+        }
+
+        image.onerror = (e) => {
+            console.error(" image.onabort  :", e );
+        }
     
-        image.onload = () => {
+        image.onload = (e) => {
+          console.log(" image.onload  :", e );
           var width = image.width;
           var height = image.height;
     
