@@ -11,3 +11,7 @@ ion-textarea {
 .headerIcon {
     font-size: 1.5em !important;
 }
+
+ion-header ion-toolbar:first-child {
+	padding-top: 0 !important;
+} 

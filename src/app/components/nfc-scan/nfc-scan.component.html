@@ -1,17 +1,14 @@
 <ion-header>
-  <ion-toolbar color="primary">
-      <ion-title>{{'Scanner an NFC halten.' | translate}}</ion-title>
-  </ion-toolbar>
+  <div class="modal-header" *ngIf="readonly">
+    <ion-label class="headerText">{{'Listenansicht'| translate}}</ion-label>
+    <ion-toggle class="schalter" [(ngModel)]="listView" checked="false"></ion-toggle>
+    <br>
+  </div>
 </ion-header>
 
 <ion-content>
   <div class="modal-content">
     <div class="modal-body">
-      <div class="modal-header" *ngIf="readonly">
-        <ion-label class="headerText">{{'Listenansicht'| translate}}</ion-label>
-        <ion-toggle class="schalter" [(ngModel)]="listView" checked="false"></ion-toggle>
-        <br>
-      </div>
       <p-table class="scanList" [columns]="cols" [value]="scanList" *ngIf="listView">
         <ng-template pTemplate="header" let-columns>
           <tr>
