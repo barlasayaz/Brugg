@@ -238,7 +238,7 @@ export class ReboxPage implements OnInit {
   }
 
   send() {
-    console.log('send()');
+    console.log('send()', this.userdata);
     localStorage.setItem('ReBox_Str', this.rebox.Str);
     localStorage.setItem('ReBox_Ort', this.rebox.Ort);
     if (this.customer.company) {
@@ -251,12 +251,12 @@ export class ReboxPage implements OnInit {
       this.longitude = '';
     }
     this.MsgHTML = '<h2>pvs2go.com - ReBox - Abholung</h2>';
-    if (this.userdata.Type < 20) {
-      this.MsgHTML += '<p>Beauftragt vom Brugg-Mitarbeiter: ' + this.userdata.Name + ', ' + this.userdata.Vorname + ' (' + this.userdata.eMail + ')</p>';
+    if (this.userdata.role < 3) {
+      this.MsgHTML += '<p>Beauftragt vom Brugg-Mitarbeiter: <br> ' + this.userdata.last_name + ', ' + this.userdata.first_name + ' <br>' + this.userdata.email + '</p>';
       this.MsgHTML += '<p>Firma: ' + this.rebox.Firma + '- DB-ID: ' + this.customer.id + '- #:' + this.customer.customer_number + '</p>';
       this.MsgHTML += '<p>Notiz: ' + this.rebox.Notiz + '</p>';
     } else {
-      this.MsgHTML += '<p>Beauftragt vom Kunde: ' + this.userdata.Name + ', ' + this.userdata.Vorname + ' (' + this.userdata.eMail + ')<br>';
+      this.MsgHTML += '<p>Beauftragt vom Kunde: <br> ' + this.userdata.last_name + ', ' + this.userdata.first_name + ' <br>' + this.userdata.email + '</p>';
       this.MsgHTML += '<p>Firma: ' + this.rebox.Firma + '- DB-ID: ' + this.customer.id + '- #:' + this.customer.customer_number + '</p>';
     }
     if (this.GPS == 0) {
@@ -271,7 +271,7 @@ export class ReboxPage implements OnInit {
     }
     this.MsgHTML += 'Wahl der Abholung: ' + this.pickUpValue + '<br></p>';
 
-    const userInfo = {'Begrenzt': this.userdata.Begrenzt, 'eMail': this.userdata.eMail, 'Extras': this.userdata.Extras, 'id': this.userdata.id, 'Name': this.userdata.Name, 'OpcUa': this.userdata.OpcUa, 'Prueferservice': this.userdata.Prueferservice , 'token': this.userdata.token, 'Type': this.userdata.Type, 'Vorname': this.userdata.Vorname};
+    const userInfo = { 'eMail': this.userdata.email,    'Name': this.userdata.last_name,     'Vorname': this.userdata.first_name};
     this.params = {'MsgHTML': this.MsgHTML, 'latitude': this.latitude, 'longitude': this.longitude, 'UserInfo': JSON.stringify(userInfo), 'Betreff': 'pvs2go.com - ReBox - Abholung', 'ReBoxDate': this.rebox.ReBoxDate, 'Copy': this.Copy, 'Empfaenger': this.Empfaenger};
 
     console.log('params :', this.params);
