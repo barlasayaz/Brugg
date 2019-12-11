@@ -7,6 +7,7 @@ import { ApiService } from '../services/api';
 import { ModalController } from '@ionic/angular';
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
+import { ImprintPage } from '../login/imprint/imprint.page';
 
 /**
  * Generated class for the MyDataPage page.
@@ -87,6 +88,17 @@ export class MyDataPage {
     console.log('delLocalAll()');
     this.userdata.delAllStorage();
     this.navCtrl.navigateForward('/login');
+  }
+
+    // IMPRINT
+  async imprintModal() {
+    const modal =
+      await this.modalCtrl.create({
+        component: ImprintPage,
+        cssClass: 'imprint-modal-css',
+        componentProps: {
+        }
+      }).then(x => x.present());
   }
 
   mw_test_a(nr: number) {
