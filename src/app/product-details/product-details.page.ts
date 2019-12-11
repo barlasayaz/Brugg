@@ -176,15 +176,16 @@ export class ProductDetailsPage implements OnInit {
 
       let pr = this.activProduct.last_protocol;
       this.activProduct.last_protocol_next = '';
-      this.activProduct.productstatus = 'Normal';
+      this.activProduct.productstatus = ' ';
       this.activProduct.last_protocol_next_color = '#000000';
       if (pr) {
-        if (pr.length > 0) {
+        if (pr.length > 3) {
           try {
             pr = JSON.parse(pr);
-            // if (pr.protocol_date) {
-            //   this.activProduct.last_protocol_date = this.apiService.mysqlDate2view(pr.protocol_date);
-            // }
+            console.log(' last_protocol ', pr );
+            if (pr.protocol_date) {
+               this.activProduct.last_protocol_date = this.apiService.mysqlDate2view(pr.protocol_date);
+            }
             this.activProduct.last_protocol_next_color = 'rgb(74, 83, 86)';
             if (pr.protocol_date_next) {
               this.activProduct.last_protocol_next = this.apiService.mysqlDate2view(pr.protocol_date_next);
@@ -195,20 +196,23 @@ export class ProductDetailsPage implements OnInit {
               if (diffDays < 30) { this.activProduct.last_protocol_next_color = '#e74c3c'; }
             }
 
-            if (pr.result) {
-              if (pr.result == 1) {
-                this.activProduct.productstatus = this.translate.instant('reparieren');
-                this.activProduct.last_protocol_next_color = '#f1c40f';
-              }
-              if (pr.result == 3) {
-                this.activProduct.productstatus = this.translate.instant('unauffindbar');
-                this.activProduct.last_protocol_next_color = '#e74c3c';
-              }
-              if ((pr.result == 2) || (pr.result == 4)) {
-                this.activProduct.productstatus = this.translate.instant('ausmustern');
-                this.activProduct.last_protocol_next_color = '#C558D3';
-              }
+            if (pr.result === 0) {
+              this.activProduct.productstatus = this.translate.instant('betriebsbereit'); 
+              this.activProduct.last_protocol_next_color = '#666';
             }
+            if (pr.result === 1) {
+              this.activProduct.productstatus = this.translate.instant('reparieren');
+              this.activProduct.last_protocol_next_color = '#f1c40f';
+            }
+            if (pr.result === 3) {
+              this.activProduct.productstatus = this.translate.instant('unauffindbar');
+              this.activProduct.last_protocol_next_color = '#e74c3c';
+            }
+            if ((pr.result === 2) || (pr.result == 4)) {
+              this.activProduct.productstatus = this.translate.instant('ausmustern');
+              this.activProduct.last_protocol_next_color = '#C558D3';
+            }
+
           } catch (e) {
               console.error('JSON.parse(pr) err :', e);
               console.log('pr :', pr);
@@ -216,10 +220,8 @@ export class ProductDetailsPage implements OnInit {
         }
       }
       console.log('pr :', pr);
-      const getInsDate = this.getInspectionDates(this.idCustomer);
       const getIns = this.getInspector(this.idCustomer);
       Promise.all([
-        getInsDate,
         getIns
       ]).then((resultX) => {
         this.listProduct.push(this.activProduct);
@@ -227,19 +229,6 @@ export class ProductDetailsPage implements OnInit {
     });
   }
 
-  getInspectionDates(id): Promise<any> {
-    return new Promise((resolve) => {
-      this.apiService.pvs4_get_appointment_date(id).then((done: any) => {
-        if (done.amount != 0) {
-          // if (done.last_visit.length) { this.last_visit = done.last_visit; }
-          // if (done.next_visit.length) { this.next_visit = done.next_visit; }
-          this.activProduct.last_inspection = done.last_inspection;
-          this.activProduct.next_inspection = done.next_inspection;
-        }
-        resolve();
-      });
-    });
-  }
 
   getInspector(id): Promise<any> {
     return new Promise((resolve) => {
