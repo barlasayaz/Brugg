@@ -87,7 +87,7 @@ export class ProtocolListPage implements OnInit {
             { field: 'protocol_date', header: this.translate.instant('Datum'), width: '95px'},
             { field: 'result', header: this.translate.instant('Prüfergebnis'), width: '160px' },
             { field: 'protocol_date_next', header: this.translate.instant('nächste Prüfung'), width: '95px' }
-        ];
+        ];            
 
         this.filterCols = [
             'work_column',
@@ -216,8 +216,11 @@ export class ProtocolListPage implements OnInit {
 
             for (let index = 0; index < this.protocolListAll.length; index++) {
                 let pipe = new DatePipe('en-US');
-                var protocolDate = new Date(this.protocolListAll[index].data.protocol_date.replace(' ', 'T')).toISOString();
+                let protocolDate = new Date(this.protocolListAll[index].data.protocol_date.replace(' ', 'T')).toISOString();
                 this.protocolListAll[index].data.protocol_date = pipe.transform(protocolDate, 'dd.MM.yyyy');
+
+                let next = new Date(this.protocolListAll[index].data.protocol_date_next.replace(' ', 'T')).toISOString();
+                this.protocolListAll[index].data.protocol_date_next = pipe.transform(next, 'dd.MM.yyyy');
 
                 let options = [];
                 try {
