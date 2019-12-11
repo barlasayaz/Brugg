@@ -569,20 +569,21 @@ ion-header ion-toolbar:first-child {
 
 // Toast
 .toast-warning {
-  --background: yellow;
-  --color: black;
+  --background: #ffce00;
+  --color: #fff;
   --border-style: solid;
-  --border-width: 1px;
-  --border-color: black;
+  --border-width: 0px;
+  --border-color: #ffce00;
+  --max-width: 400px;  
 }
 
 .toast-mandatory {
-  --background: yellow;
-  --color: red;
+  --background: #e74c3c;
+  --color: #fff;
   --border-style: solid;
-  --border-width: 1px;
-  --border-color: red;
-  --max-width: 350px;  
+  --border-width: 0px;
+  --border-color: #e74c3c;
+  --max-width: 400px;  
 }
 
 // FAB
