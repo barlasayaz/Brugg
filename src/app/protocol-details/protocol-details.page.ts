@@ -99,7 +99,7 @@ export class ProtocolDetailsPage implements OnInit {
   loadProtocol(id: any) {
     this.apiService.pvs4_get_protocol(id).then((result: any) => {
       this.activProtocol = result.obj;
-       console.log('loadProtocol :', this.activProtocol);
+      console.log('loadProtocol :', this.activProtocol);
       this.activProtocol.items = JSON.parse(this.activProtocol.items);
 
       let pipe = new DatePipe('en-US');
@@ -114,16 +114,16 @@ export class ProtocolDetailsPage implements OnInit {
         this.loadProduct(element.id);
       });
 
-      if (this.activProtocol.result == 0) {
+      if (this.activProtocol.result === 0) {
         this.activProtocol.resultText = this.translate.instant('betriebsbereit');
       }
-      if (this.activProtocol.result == 1) {
+      if (this.activProtocol.result === 1) {
         this.activProtocol.resultText = this.translate.instant('reparieren');
       }
-      if (this.activProtocol.result == 3) {
+      if (this.activProtocol.result === 3) {
         this.activProtocol.resultText = this.translate.instant('unauffindbar');
       }
-      if ((this.activProtocol.result == 2) || (this.activProtocol.result == 4)) {
+      if ((this.activProtocol.result === 2) || (this.activProtocol.result == 4)) {
         this.activProtocol.resultText = this.translate.instant('ausmustern');
       }
 
