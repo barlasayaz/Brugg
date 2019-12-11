@@ -370,7 +370,12 @@ export class ProductDetailsPage implements OnInit {
     callAjax(0);
   }
 
-  printPdf() {
+  async printPdf() {
+    const loader = await this.loadingCtrl.create({
+      message: this.translate.instant('Bitte warten')
+    });
+    loader.present();
+
     let pageDesc: string = this.translate.instant('Seite');
     let productList = [];
     const columns = ['title', 'value'];
@@ -587,7 +592,7 @@ export class ProductDetailsPage implements OnInit {
       };
 
       this.pdf.createPdf(docDefinition, 'download', this.translate.instant('Produkt Details'.replace(/\s/g, '')) + '.pdf');
-
+      loader.dismiss();
     });
   }
 

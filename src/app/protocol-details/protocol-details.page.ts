@@ -211,10 +211,14 @@ export class ProtocolDetailsPage implements OnInit {
     }).then(x => x.present());
   }
 
-  printPdf() {
+  async printPdf() {
+    const loader = await this.loadingCtrl.create({
+      message: this.translate.instant('Bitte warten')
+    });
+    loader.present();
+
     let pageDesc: string = this.translate.instant('Seite');
     var src = 'assets/imgs/banner_' + this.userdata.licensee + '.jpg';
-    let pipe = new DatePipe('en-US');
     let protocolList = [];
     let columns = ['title', 'value'];
     let customer = this.activCustomer;
@@ -246,9 +250,9 @@ export class ProtocolDetailsPage implements OnInit {
     protocolList.push({ 'title': this.translate.instant('Kunde') + ' DB-ID', 'value': customer.id});
     protocolList.push({ 'title': this.translate.instant('Kundennummer'), 'value': customer.customer_number});
     protocolList.push({ 'title': this.translate.instant('Protokoll Nummer'), 'value': protocol.protocol_number});
-    protocolList.push({ 'title': this.translate.instant('Datum'), 'value': pipe.transform(protocol.protocol_date, 'dd.MM.yyyy')});
+    protocolList.push({ 'title': this.translate.instant('Datum'), 'value': protocol.protocol_date});
     protocolList.push({ 'title': this.translate.instant('Prüfergebnis'), 'value': protocol.resultText});
-    protocolList.push({ 'title': this.translate.instant('nächste Prüfung'), 'value': pipe.transform(protocol.protocol_date_next, 'dd.MM.yyyy')});
+    protocolList.push({ 'title': this.translate.instant('nächste Prüfung'), 'value': protocol.protocol_date_next});
     protocolList.push({ 'title': this.translate.instant('Autor'), 'value': protocol.author});
 
     protocolItems.forEach(elementItems => {
@@ -420,7 +424,7 @@ export class ProtocolDetailsPage implements OnInit {
       };
 
       this.pdf.createPdf(docDefinition, 'download', this.translate.instant('Protokoll Details'.replace(/\s/g, '')) + '.pdf');
-
+      loader.dismiss();
     });
   }
 
