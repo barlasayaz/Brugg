@@ -59,7 +59,7 @@ export class NfcScanComponent implements OnInit {
     this.cols = [
       { field: 'id_number', header: 'ID', width: '60px' },
       { field: 'title', header: this.translate.instant('Produkt') },
-      { field: 'next_protocol', header: this.translate.instant('Nächster besuch') },
+      { field: 'next_protocol', header: this.translate.instant('nächste Prüfung') },
       { field: 'details', header: this.translate.instant('Produktdetails') }
     ];
     this.procedure = 0;

@@ -641,7 +641,7 @@ export class ProductEditPage implements OnInit {
     dateTime = dateTime.replace(':', '');
     dateTime = dateTime.replace(':', '');
     dateTime = dateTime.replace('.', '');
-    if (this.idProduct == 0) {
+    if (this.idProduct === 0) {
       productId = dateTime;
     } else {
       let str: any = this.imagesSave;
@@ -658,7 +658,7 @@ export class ProductEditPage implements OnInit {
     formData.append('file', file, 'productimage_' + productId + '.jpg');
     console.log('onBeforeUpload event :', formData, file.name);
 
-   this.apiService.pvs4_uploadphp(formData).then((result: any) => {
+    this.apiService.pvs4_uploadphp(formData).then((result: any) => {
         console.log('result: ', result);
         this.nocache = new Date().getTime();
         this.activProduct.images = this.file_link + 'mobileimages/productimage_' + productId + '.jpg';
