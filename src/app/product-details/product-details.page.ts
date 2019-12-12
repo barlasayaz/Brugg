@@ -440,23 +440,22 @@ export class ProductDetailsPage implements OnInit {
       } else {
         productList.push({ 'title': this.translate.instant('Intervall Prüfen'), 'value': ' ' });
       }
-      if (element.check_interval != undefined) {
-        const last_inspection = this.apiService.mysqlDate2view(element.last_inspection);
-        productList.push({ 'title': this.translate.instant('Letzter prüftermin'), 'value': last_inspection });
+      if (element.last_protocol_date != undefined) {
+        productList.push({ 'title': this.translate.instant('letzte Prüfung'), 'value': element.last_protocol_date });
       } else {
-        productList.push({ 'title': this.translate.instant('Letzter prüftermin'), 'value': ' ' });
+        productList.push({ 'title': this.translate.instant('letzte Prüfung'), 'value': ' ' });
       }
-      if (element.check_interval != undefined) {
-        productList.push({ 'title': this.translate.instant('Nächster prüftermin'), 'value': element.last_protocol_next });
+      if (element.last_protocol_next != undefined) {
+        productList.push({ 'title': this.translate.instant('nächste Prüfung'), 'value': element.last_protocol_next });
       } else {
-        productList.push({ 'title': this.translate.instant('Nächster prüftermin'), 'value': ' ' });
+        productList.push({ 'title': this.translate.instant('nächste Prüfung'), 'value': ' ' });
       }
-      if (element.check_interval != undefined) {
+      if (element.productstatus != undefined) {
         productList.push({ 'title': this.translate.instant('Produktstatus'), 'value': element.productstatus });
       } else {
         productList.push({ 'title': this.translate.instant('Produktstatus'), 'value': ' ' });
       }
-      if (element.check_interval != undefined) {
+      if (element.inspector != undefined) {
         productList.push({ 'title': this.translate.instant('Prüfer'), 'value': element.inspector });
       } else {
         productList.push({ 'title': this.translate.instant('Prüfer'), 'value': ' ' });
