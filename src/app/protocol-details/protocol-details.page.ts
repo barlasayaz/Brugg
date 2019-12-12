@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { NavController, AlertController, Platform, LoadingController, ModalController, ToastController } from '@ionic/angular';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { NavController, AlertController, Platform, LoadingController, ModalController, ToastController, IonSelect } from '@ionic/angular';
 import { CameraOptions, Camera } from '@ionic-native/camera/ngx';
 import { ApiService } from '../services/api';
 import { TranslateService } from '@ngx-translate/core';
@@ -21,6 +21,7 @@ import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-nati
   styleUrls: ['./protocol-details.page.scss'],
 })
 export class ProtocolDetailsPage implements OnInit {
+  @ViewChild('select') select: IonSelect;
   public idProtocol: number = 0;
   public activProtocol: any = {};
   public activCustomer: any = {};
@@ -40,6 +41,8 @@ export class ProtocolDetailsPage implements OnInit {
   public nocache: any;
   public customer_number: any;
   public viewTitle = '';
+  public titleFilter = '';
+  public pdfProduct: any[] = [];
 
   constructor(public navCtrl: NavController,
     public route: ActivatedRoute,
@@ -211,6 +214,32 @@ export class ProtocolDetailsPage implements OnInit {
     }).then(x => x.present());
   }
 
+  goToPDF() {
+    if (this.listProduct.length > 1) {
+      this.select.open();
+    } else {
+      this.pdfProduct = this.listProduct;
+      this.printPdf();
+    }
+  }
+
+  changeFilter() {
+    this.pdfProduct = [];
+    if (this.titleFilter == undefined) {
+      this.titleFilter = 'none';
+    }
+    if (this.titleFilter == 'none') {
+      this.pdfProduct = this.listProduct;
+    } else {
+      for (let k = 0; k < this.listProduct.length; k++) {
+        if (this.listProduct[k].id == this.titleFilter) {
+          this.pdfProduct.push(this.listProduct[k]);
+        }
+      }
+    }
+    this.printPdf();
+  }
+
   async printPdf() {
     const loader = await this.loadingCtrl.create({
       message: this.translate.instant('Bitte warten')
@@ -224,7 +253,7 @@ export class ProtocolDetailsPage implements OnInit {
     let customer = this.activCustomer;
     let protocol = this.activProtocol;
     let protocolItems = this.activProtocol.items;
-    let product = this.listProduct;
+    let product = this.pdfProduct;
 
     // Protocol
     var bodyProtocol = [];
