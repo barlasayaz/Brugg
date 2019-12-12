@@ -65,6 +65,7 @@ export class ProductDetailsPage implements OnInit {
     public ndef: Ndef) {
 
   }
+
   ngOnInit() {
     this.isNFC = false;
     this.platform.ready().then(() => {
@@ -376,224 +377,227 @@ export class ProductDetailsPage implements OnInit {
     });
     loader.present();
 
-    let pageDesc: string = this.translate.instant('Seite');
-    let productList = [];
-    const columns = ['title', 'value'];
-    const product = this.listProduct;
-    let productImagePath = '';
-    let prdctImgTitle: any = [];
-    prdctImgTitle = { text: this.translate.instant('Produktbild'), color: '#ffffff', fillColor: '#009de0', alignment: 'center' };
-    let prdct_img: any = [];
-    prdct_img = { text: ' ' };
+    try {
+      let pageDesc: string = this.translate.instant('Seite');
+      let productList = [];
+      const columns = ['title', 'value'];
+      const product = this.listProduct;
+      let productImagePath = '';
+      let prdctImgTitle: any = [];
+      prdctImgTitle = { text: this.translate.instant('Produktbild'), color: '#ffffff', fillColor: '#009de0', alignment: 'center' };
+      let prdct_img: any = [];
+      prdct_img = { text: ' ' };
 
-    let pdrctNullTitle: any = [];
-    pdrctNullTitle = { text: ' ', color: '#ffffff', fillColor: '#ffffff', border: [false, false, false, false] };
+      let pdrctNullTitle: any = [];
+      pdrctNullTitle = { text: ' ', color: '#ffffff', fillColor: '#ffffff', border: [false, false, false, false] };
 
-    let prdctQrCodeTitle: any = [];
-    prdctQrCodeTitle = { text: this.translate.instant('QR-Code'), color: '#ffffff', fillColor: '#009de0', alignment: 'center' };
+      let prdctQrCodeTitle: any = [];
+      prdctQrCodeTitle = { text: this.translate.instant('QR-Code'), color: '#ffffff', fillColor: '#009de0', alignment: 'center' };
 
-    // Product
-    const bodyProduct = [];
-    const prdctTitle = [
-      {
-        text: this.translate.instant('Produkt Details'),
-        color: '#ffffff',
-        fillColor: '#009de0',
-        colSpan: 2,
-        alignment: 'center'
-      },
-      {
-        text: '',
-        color: '#ffffff',
-        fillColor: '#009de0',
-        colSpan: 2,
-        alignment: 'center'
-      }
-    ];
-    bodyProduct.push(prdctTitle);
+      // Product
+      const bodyProduct = [];
+      const prdctTitle = [
+        {
+          text: this.translate.instant('Produkt Details'),
+          color: '#ffffff',
+          fillColor: '#009de0',
+          colSpan: 2,
+          alignment: 'center'
+        },
+        {
+          text: '',
+          color: '#ffffff',
+          fillColor: '#009de0',
+          colSpan: 2,
+          alignment: 'center'
+        }
+      ];
+      bodyProduct.push(prdctTitle);
 
-    productList = [];
-    product.forEach(element => {
-      console.log('product element :', this.translate.instant('Titel'), element.title);
-      if (element.title != undefined) {
-        productList.push({ 'title': this.translate.instant('Titel'), 'value': element.title });
-      } else {
-        productList.push({ 'title': this.translate.instant('Titel'), 'value': ' ' });
-      }
-      if (element.id != undefined) {
-        productList.push({ 'title': 'DB-ID', 'value': element.id });
-      } else {
-        productList.push({ 'title': 'DB-ID', 'value': ' ' });
-      }
-      if (element.id_number != undefined) {
-        productList.push({ 'title': 'ID', 'value': element.id_number });
-      } else {
-        productList.push({ 'title': 'ID', 'value': ' ' });
-      }
-      if (element.articel_no != undefined) {
-        productList.push({ 'title': this.translate.instant('Articel No'), 'value': element.articel_no });
-      } else {
-        productList.push({ 'title': this.translate.instant('Articel No'), 'value': ' ' });
-      }
-      if (element.customer_description != undefined) {
-        productList.push({ 'title': this.translate.instant('Kundenbezeichnung'), 'value': element.customer_description });
-      } else {
-        productList.push({ 'title': this.translate.instant('Kundenbezeichnung'), 'value': ' ' });
-      }
-      if (element.author != undefined) {
-         productList.push({ 'title': this.translate.instant('Autor'), 'value': element.author });
-      } else {
-         productList.push({ 'title': this.translate.instant('Autor'), 'value': ' ' });
-      }
-      if (element.check_interval != undefined) {
-        productList.push({ 'title': this.translate.instant('Intervall Prüfen'), 'value': element.check_interval });
-      } else {
-        productList.push({ 'title': this.translate.instant('Intervall Prüfen'), 'value': ' ' });
-      }
-      if (element.check_interval != undefined) {
-        const last_inspection = this.apiService.mysqlDate2view(element.last_inspection);
-        productList.push({ 'title': this.translate.instant('Letzter prüftermin'), 'value': last_inspection });
-      } else {
-        productList.push({ 'title': this.translate.instant('Letzter prüftermin'), 'value': ' ' });
-      }
-      if (element.check_interval != undefined) {
-        productList.push({ 'title': this.translate.instant('Nächster prüftermin'), 'value': element.last_protocol_next });
-      } else {
-        productList.push({ 'title': this.translate.instant('Nächster prüftermin'), 'value': ' ' });
-      }
-      if (element.check_interval != undefined) {
-        productList.push({ 'title': this.translate.instant('Produktstatus'), 'value': element.productstatus });
-      } else {
-        productList.push({ 'title': this.translate.instant('Produktstatus'), 'value': ' ' });
-      }
-      if (element.check_interval != undefined) {
-        productList.push({ 'title': this.translate.instant('Prüfer'), 'value': element.inspector });
-      } else {
-        productList.push({ 'title': this.translate.instant('Prüfer'), 'value': ' ' });
-      }
-      if (element.images != undefined) {
-        productImagePath = element.images;
-      } else {
-        productImagePath = '';
-      }
-      // product options
+      productList = [];
+      product.forEach(element => {
+        console.log('product element :', this.translate.instant('Titel'), element.title);
+        if (element.title != undefined) {
+          productList.push({ 'title': this.translate.instant('Titel'), 'value': element.title });
+        } else {
+          productList.push({ 'title': this.translate.instant('Titel'), 'value': ' ' });
+        }
+        if (element.id != undefined) {
+          productList.push({ 'title': 'DB-ID', 'value': element.id });
+        } else {
+          productList.push({ 'title': 'DB-ID', 'value': ' ' });
+        }
+        if (element.id_number != undefined) {
+          productList.push({ 'title': 'ID', 'value': element.id_number });
+        } else {
+          productList.push({ 'title': 'ID', 'value': ' ' });
+        }
+        if (element.articel_no != undefined) {
+          productList.push({ 'title': this.translate.instant('Articel No'), 'value': element.articel_no });
+        } else {
+          productList.push({ 'title': this.translate.instant('Articel No'), 'value': ' ' });
+        }
+        if (element.customer_description != undefined) {
+          productList.push({ 'title': this.translate.instant('Kundenbezeichnung'), 'value': element.customer_description });
+        } else {
+          productList.push({ 'title': this.translate.instant('Kundenbezeichnung'), 'value': ' ' });
+        }
+        if (element.author != undefined) {
+          productList.push({ 'title': this.translate.instant('Autor'), 'value': element.author });
+        } else {
+          productList.push({ 'title': this.translate.instant('Autor'), 'value': ' ' });
+        }
+        if (element.check_interval != undefined) {
+          productList.push({ 'title': this.translate.instant('Intervall Prüfen'), 'value': element.check_interval });
+        } else {
+          productList.push({ 'title': this.translate.instant('Intervall Prüfen'), 'value': ' ' });
+        }
+        if (element.check_interval != undefined) {
+          const last_inspection = this.apiService.mysqlDate2view(element.last_inspection);
+          productList.push({ 'title': this.translate.instant('Letzter prüftermin'), 'value': last_inspection });
+        } else {
+          productList.push({ 'title': this.translate.instant('Letzter prüftermin'), 'value': ' ' });
+        }
+        if (element.check_interval != undefined) {
+          productList.push({ 'title': this.translate.instant('Nächster prüftermin'), 'value': element.last_protocol_next });
+        } else {
+          productList.push({ 'title': this.translate.instant('Nächster prüftermin'), 'value': ' ' });
+        }
+        if (element.check_interval != undefined) {
+          productList.push({ 'title': this.translate.instant('Produktstatus'), 'value': element.productstatus });
+        } else {
+          productList.push({ 'title': this.translate.instant('Produktstatus'), 'value': ' ' });
+        }
+        if (element.check_interval != undefined) {
+          productList.push({ 'title': this.translate.instant('Prüfer'), 'value': element.inspector });
+        } else {
+          productList.push({ 'title': this.translate.instant('Prüfer'), 'value': ' ' });
+        }
+        if (element.images != undefined) {
+          productImagePath = element.images;
+        } else {
+          productImagePath = '';
+        }
+        // product options
 
-      element.items.forEach(elementItems => {
-        if (elementItems.title[this.lang] != '' && elementItems.value != undefined) {
-          if (elementItems.type == 0) {
-            if (elementItems.value == true) {
-              productList.push({ 'title': elementItems.title[this.lang], 'value': '√' });
-            }
-            if (elementItems.value == false) {
-              productList.push({ 'title': elementItems.title[this.lang], 'value': 'O' });
+        element.items.forEach(elementItems => {
+          if (elementItems.title[this.lang] != '' && elementItems.value != undefined) {
+            if (elementItems.type == 0) {
+              if (elementItems.value == true) {
+                productList.push({ 'title': elementItems.title[this.lang], 'value': '√' });
+              }
+              if (elementItems.value == false) {
+                productList.push({ 'title': elementItems.title[this.lang], 'value': 'O' });
+              }
+            } else {
+              productList.push({ 'title': elementItems.title[this.lang], 'value': elementItems.value });
             }
           } else {
-            productList.push({ 'title': elementItems.title[this.lang], 'value': elementItems.value });
+            productList.push({ 'title': elementItems.title[this.lang], 'value': ' ' });
           }
-        } else {
-          productList.push({ 'title': elementItems.title[this.lang], 'value': ' ' });
-        }
+        });
       });
 
-    });
-
-    productList.forEach(function (row) {
+      productList.forEach(function (row) {
       const dataRow = [];
 
       columns.forEach(function (column) {
         dataRow.push(row[column].toString());
       });
+        bodyProduct.push(dataRow);
+      });
 
-      bodyProduct.push(dataRow);
-    });
+      const prdctBody = bodyProduct;
+      console.log('product body :', prdctBody);
 
-    const prdctBody = bodyProduct;
-    console.log('product body :', prdctBody);
+      // Header Picture
 
-    // Header Picture
+      // Product Picture
+      console.log('image path', productImagePath);
 
-    // Product Picture
-    console.log('image path', productImagePath);
+      this.getProductUrlList(productImagePath, dataUrlList => {
+        prdct_img = { 'image': dataUrlList[0].dataURL, 'margin': 0, 'fit': [300, 180], 'alignment': 'center' };
+        let prdct_qr = {};
+        if (this.activProduct.qr_code && this.activProduct.qr_code != '') {
+          const x = document.getElementsByClassName('qrImage')[0];
+          console.log('getElementsByClassName:', x);
+          const y = x.getElementsByTagName('img');
+          console.log('getElementsByTagName:', y);
+          const z = y[0].getAttribute('src');
+          console.log('getAttribute:', z);
+          prdct_qr = { 'image': z, 'margin': 0, 'fit': [200, 100], 'alignment': 'center' };
+        }
 
-    this.getProductUrlList(productImagePath, dataUrlList => {
-      prdct_img = { 'image': dataUrlList[0].dataURL, 'margin': 0, 'fit': [300, 180], 'alignment': 'center' };
-      let prdct_qr = {};
-      if (this.activProduct.qr_code && this.activProduct.qr_code != '') {
-        const x = document.getElementsByClassName('qrImage')[0];
-        console.log('getElementsByClassName:', x);
-        const y = x.getElementsByTagName('img');
-        console.log('getElementsByTagName:', y);
-        const z = y[0].getAttribute('src');
-        console.log('getAttribute:', z);
-        prdct_qr = { 'image': z, 'margin': 0, 'fit': [200, 100], 'alignment': 'center' };
-      }
-
-      const docDefinition = {
-        pageSize: 'A4',
-        pageOrientation: 'landscape',
-        pageMargins: [20, 140, 20, 20],
-        header: {
-          columns: [
-            {
-              'image': dataUrlList[1].dataURL, 'width': 800, margin: 20
-            }
-          ]
-        },
-        content: [
-          {
+        const docDefinition = {
+          pageSize: 'A4',
+          pageOrientation: 'landscape',
+          pageMargins: [20, 140, 20, 20],
+          header: {
             columns: [
               {
-                width: '50%',
-                fontSize: 10,
-                layout: {
-                  hLineWidth: function (i, node) { return 1; },
-                  vLineWidth: function (i, node) { return 1; },
-                  hLineColor: function (i, node) { return '#cccccc'; },
-                  vLineColor: function (i, node) { return '#cccccc'; },
-                  paddingTop: function (i, node) { return 4; },
-                  paddingBottom: function (i, node) { return 4; },
-                },
-                table: {
-                  headerRows: 1,
-                  widths: ['auto', '*'],
-                  body: prdctBody
-                }
-              },
-              {
-                width: '50%',
-                fontSize: 10,
-                layout: {
-                  hLineWidth: function (i, node) { return 1; },
-                  vLineWidth: function (i, node) { return 1; },
-                  hLineColor: function (i, node) { return '#cccccc'; },
-                  vLineColor: function (i, node) { return '#cccccc'; },
-                  paddingTop: function (i, node) { return 4; },
-                  paddingBottom: function (i, node) { return 4; },
-                },
-                table: {
-                  headerRows: 1,
-                  widths: ['*'],
-                  body: [
-                    [prdctImgTitle],
-                    [prdct_img],
-                    [pdrctNullTitle],
-                    [prdctQrCodeTitle],
-                    [prdct_qr]
-                  ]
-                }
+                'image': dataUrlList[1].dataURL, 'width': 800, margin: 20
               }
-            ],
-            columnGap: 10
+            ]
+          },
+          content: [
+            {
+              columns: [
+                {
+                  width: '50%',
+                  fontSize: 10,
+                  layout: {
+                    hLineWidth: function (i, node) { return 1; },
+                    vLineWidth: function (i, node) { return 1; },
+                    hLineColor: function (i, node) { return '#cccccc'; },
+                    vLineColor: function (i, node) { return '#cccccc'; },
+                    paddingTop: function (i, node) { return 4; },
+                    paddingBottom: function (i, node) { return 4; },
+                  },
+                  table: {
+                    headerRows: 1,
+                    widths: ['auto', '*'],
+                    body: prdctBody
+                  }
+                },
+                {
+                  width: '50%',
+                  fontSize: 10,
+                  layout: {
+                    hLineWidth: function (i, node) { return 1; },
+                    vLineWidth: function (i, node) { return 1; },
+                    hLineColor: function (i, node) { return '#cccccc'; },
+                    vLineColor: function (i, node) { return '#cccccc'; },
+                    paddingTop: function (i, node) { return 4; },
+                    paddingBottom: function (i, node) { return 4; },
+                  },
+                  table: {
+                    headerRows: 1,
+                    widths: ['*'],
+                    body: [
+                      [prdctImgTitle],
+                      [prdct_img],
+                      [pdrctNullTitle],
+                      [prdctQrCodeTitle],
+                      [prdct_qr]
+                    ]
+                  }
+                }
+              ],
+              columnGap: 10
+            }
+          ],
+          footer: function (currentPage, pageCount) {
+            return { text: pageDesc + ' ' + currentPage.toString() + ' / ' + pageCount, alignment: 'center' };
           }
-        ],
-        footer: function (currentPage, pageCount) {
-          return { text: pageDesc + ' ' + currentPage.toString() + ' / ' + pageCount, alignment: 'center' };
-        }
-      };
+        };
 
-      this.pdf.createPdf(docDefinition, 'download', this.translate.instant('Produkt Details'.replace(/\s/g, '')) + '.pdf');
+        this.pdf.createPdf(docDefinition, 'download', this.translate.instant('Produkt Details'.replace(/\s/g, '')) + '.pdf');
+        loader.dismiss();
+      });
+    } catch {
       loader.dismiss();
-    });
+      console.error('PDF error');
+    }
   }
 
   editProduct() {
