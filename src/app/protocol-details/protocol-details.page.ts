@@ -386,173 +386,85 @@ export class ProtocolDetailsPage implements OnInit {
           if (elementItems.title[this.lang] != '' && elementItems.value != undefined) {
             if (elementItems.type == 0) {
               if (elementItems.value == true) {
-                protocolList.push({ 'title': elementItems.title[this.lang], 'value': '√'});
+                bodyProduct.push([{ text: elementItems.title[this.lang]}, {text: '√' }]);
               }
               if (elementItems.value == false) {
-                protocolList.push({ 'title': elementItems.title[this.lang], 'value': 'O'});
+                bodyProduct.push([{ text: elementItems.title[this.lang]}, {text: 'O' }]);
               }
             } else {
-              protocolList.push({ 'title': elementItems.title[this.lang], 'value': elementItems.value });
+              bodyProduct.push([{ text: elementItems.title[this.lang]}, {text: elementItems.value }]);
             }
           } else {
-            protocolList.push({ 'title': elementItems.title[this.lang], 'value': ' ' });
+            bodyProduct.push([{ text: elementItems.title[this.lang]}, {text: '' }]);
           }
         });
 
-        protocolList.forEach(function (row) {
-          const dataRow = [];
+      });
 
-          columns.forEach(function (column) {
-            dataRow.push(row[column].toString());
-          });
+      let prdctBody = bodyProduct;
 
-          bodyProtocol.push(dataRow);
-        });
+      console.log('product body :', prdctBody);
 
-        let prtclBody = bodyProtocol;
-        console.log('protocol body :', prtclBody);
-
-        // Product
-        var bodyProduct = [];
-        var prdctTitle = [
-                          {
-                            text: this.translate.instant('Produkt Details'),
-                            color: '#ffffff',
-                            fillColor: '#009de0',
-                            colSpan: 2,
-                            alignment: 'center'
-                          },
-                          {
-                            text: '',
-                            color: '#ffffff',
-                            fillColor: '#009de0',
-                            colSpan: 2,
-                            alignment: 'center'
-                          }
-        ];
-        bodyProduct.push(prdctTitle);
-
-        product.forEach(element => {
-          // console.log('product element :', this.translate.instant('Titel'), element.title);
-
-          if (element.title) {
-            bodyProduct.push([{ text: this.translate.instant('Titel'), color: '#000000', fillColor: '#8bd8f9' },
-                              { text: element.title, color: '#000000', fillColor: '#8bd8f9' }]);
-          } else {
-            bodyProduct.push([{ text: this.translate.instant('Titel'), color: '#000000', fillColor: '#8bd8f9' },
-                              { text: '', color: '#000000', fillColor: '#8bd8f9' }]);
-          }
-          if (element.id_number) {
-            bodyProduct.push([{ text: 'ID' }, { text: element.id_number }]);
-          } else {
-            bodyProduct.push([{ text: 'ID' }, { text: '' }]);
-          }
-          if (element.articel_no) {
-            bodyProduct.push([{ text: this.translate.instant('Articel No') }, { text: element.articel_no }]);
-          } else {
-            bodyProduct.push([{ text: this.translate.instant('Articel No') }, { text: '' }]);
-          }
-          if (element.customer_description) {
-            bodyProduct.push([{ text: this.translate.instant('Kundenbezeichnung') }, { text: element.customer_description }]);
-          } else {
-            bodyProduct.push([{ text: this.translate.instant('Kundenbezeichnung') }, { text: '' }]);
-          }
-          if (element.author) {
-            bodyProduct.push([{ text: this.translate.instant('Autor') }, { text: element.author }]);
-          } else {
-            bodyProduct.push([{ text: this.translate.instant('Autor') }, { text: '' }]);
-          }
-          if (element.check_interval) {
-            bodyProduct.push([{ text: this.translate.instant('Intervall Prüfen') }, { text: element.check_interval }]);
-          } else {
-            bodyProduct.push([{ text: this.translate.instant('Intervall Prüfen') }, { text: '' }]);
-          }
-
-          // product oprtions
-          element.items.forEach(elementItems => {
-            if (elementItems.title[this.lang] != '' && elementItems.value != undefined) {
-              if (elementItems.type == 0) {
-                if (elementItems.value == true) {
-                  bodyProduct.push([{ text: elementItems.title[this.lang]}, {text: '√' }]);
-                }
-                if (elementItems.value == false) {
-                  bodyProduct.push([{ text: elementItems.title[this.lang]}, {text: 'O' }]);
-                }
-              } else {
-                bodyProduct.push([{ text: elementItems.title[this.lang]}, {text: elementItems.value }]);
+      this.pdf.toDataURL(src, resDataURL => {
+        var docDefinition = {
+          pageSize: 'A4',
+          pageOrientation: 'landscape',
+          pageMargins: [20, 140, 20, 20],
+          header: {
+            columns: [
+              {
+                'image': resDataURL, 'width': 800, margin: 20
               }
-            } else {
-              bodyProduct.push([{ text: elementItems.title[this.lang]}, {text: '' }]);
-            }
-          });
-
-        });
-
-        let prdctBody = bodyProduct;
-
-        console.log('product body :', prdctBody);
-
-        this.pdf.toDataURL(src, resDataURL => {
-          var docDefinition = {
-            pageSize: 'A4',
-            pageOrientation: 'landscape',
-            pageMargins: [20, 140, 20, 20],
-            header: {
+            ]
+          },
+          content: [
+            {
               columns: [
                 {
-                  'image': resDataURL, 'width': 800, margin: 20
-                }
-              ]
-            },
-            content: [
-              {
-                columns: [
-                  {
-                    width: '50%',
-                    fontSize: 10,
-                    layout: {
-                      hLineWidth: function (i, node) { return 1; },
-                      vLineWidth: function (i, node) { return 1; },
-                      hLineColor: function (i, node) { return '#cccccc'; },
-                      vLineColor: function (i, node) { return '#cccccc'; },
-                      paddingTop: function (i, node) { return 4; },
-                      paddingBottom: function (i, node) { return 4; },
-                    },
-                    table: {
-                      headerRows: 1,
-                      widths: ['auto', '*'],
-                      body: prtclBody
-                    }
+                  width: '50%',
+                  fontSize: 10,
+                  layout: {
+                    hLineWidth: function (i, node) { return 1; },
+                    vLineWidth: function (i, node) { return 1; },
+                    hLineColor: function (i, node) { return '#cccccc'; },
+                    vLineColor: function (i, node) { return '#cccccc'; },
+                    paddingTop: function (i, node) { return 4; },
+                    paddingBottom: function (i, node) { return 4; },
                   },
-                  {
-                    width: '50%',
-                    fontSize: 10,
-                    layout: {
-                      hLineWidth: function (i, node) { return 1; },
-                      vLineWidth: function (i, node) { return 1; },
-                      hLineColor: function (i, node) { return '#cccccc'; },
-                      vLineColor: function (i, node) { return '#cccccc'; },
-                      paddingTop: function (i, node) { return 4; },
-                      paddingBottom: function (i, node) { return 4; },
-                    },
-                    table: {
-                      headerRows: 1,
-                      widths: ['auto', '*'],
-                      body: prdctBody
-                    }
+                  table: {
+                    headerRows: 1,
+                    widths: ['auto', '*'],
+                    body: prtclBody
                   }
-                ],
-                columnGap: 10
-              }
-            ],
-            footer: function (currentPage, pageCount) {
-              return { text: pageDesc + ' ' + currentPage.toString() + ' / ' + pageCount, alignment: 'center' };
+                },
+                {
+                  width: '50%',
+                  fontSize: 10,
+                  layout: {
+                    hLineWidth: function (i, node) { return 1; },
+                    vLineWidth: function (i, node) { return 1; },
+                    hLineColor: function (i, node) { return '#cccccc'; },
+                    vLineColor: function (i, node) { return '#cccccc'; },
+                    paddingTop: function (i, node) { return 4; },
+                    paddingBottom: function (i, node) { return 4; },
+                  },
+                  table: {
+                    headerRows: 1,
+                    widths: ['auto', '*'],
+                    body: prdctBody
+                  }
+                }
+              ],
+              columnGap: 10
             }
-          };
+          ],
+          footer: function (currentPage, pageCount) {
+            return { text: pageDesc + ' ' + currentPage.toString() + ' / ' + pageCount, alignment: 'center' };
+          }
+        };
 
-          this.pdf.createPdf(docDefinition, 'download', this.translate.instant('Protokoll Details'.replace(/\s/g, '')) + '.pdf');
-          loader.dismiss();
-        });
+        this.pdf.createPdf(docDefinition, 'download', this.translate.instant('Protokoll Details'.replace(/\s/g, '')) + '.pdf');
+        loader.dismiss();
       });
     } catch {
       loader.dismiss();
