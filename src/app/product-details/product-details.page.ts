@@ -177,15 +177,16 @@ export class ProductDetailsPage implements OnInit {
 
       let pr = this.activProduct.last_protocol;
       this.activProduct.last_protocol_next = '';
-      this.activProduct.productstatus = 'Normal';
+      this.activProduct.productstatus = ' ';
       this.activProduct.last_protocol_next_color = '#000000';
       if (pr) {
-        if (pr.length > 0) {
+        if (pr.length > 3) {
           try {
             pr = JSON.parse(pr);
-            // if (pr.protocol_date) {
-            //   this.activProduct.last_protocol_date = this.apiService.mysqlDate2view(pr.protocol_date);
-            // }
+            console.log(' last_protocol ', pr );
+            if (pr.protocol_date) {
+               this.activProduct.last_protocol_date = this.apiService.mysqlDate2view(pr.protocol_date);
+            }
             this.activProduct.last_protocol_next_color = 'rgb(74, 83, 86)';
             if (pr.protocol_date_next) {
               this.activProduct.last_protocol_next = this.apiService.mysqlDate2view(pr.protocol_date_next);
@@ -196,20 +197,23 @@ export class ProductDetailsPage implements OnInit {
               if (diffDays < 30) { this.activProduct.last_protocol_next_color = '#e74c3c'; }
             }
 
-            if (pr.result) {
-              if (pr.result == 1) {
-                this.activProduct.productstatus = this.translate.instant('reparieren');
-                this.activProduct.last_protocol_next_color = '#f1c40f';
-              }
-              if (pr.result == 3) {
-                this.activProduct.productstatus = this.translate.instant('unauffindbar');
-                this.activProduct.last_protocol_next_color = '#e74c3c';
-              }
-              if ((pr.result == 2) || (pr.result == 4)) {
-                this.activProduct.productstatus = this.translate.instant('ausmustern');
-                this.activProduct.last_protocol_next_color = '#C558D3';
-              }
+            if (pr.result === 0) {
+              this.activProduct.productstatus = this.translate.instant('betriebsbereit'); 
+              this.activProduct.last_protocol_next_color = '#666';
             }
+            if (pr.result === 1) {
+              this.activProduct.productstatus = this.translate.instant('reparieren');
+              this.activProduct.last_protocol_next_color = '#f1c40f';
+            }
+            if (pr.result === 3) {
+              this.activProduct.productstatus = this.translate.instant('unauffindbar');
+              this.activProduct.last_protocol_next_color = '#e74c3c';
+            }
+            if ((pr.result === 2) || (pr.result == 4)) {
+              this.activProduct.productstatus = this.translate.instant('ausmustern');
+              this.activProduct.last_protocol_next_color = '#C558D3';
+            }
+
           } catch (e) {
               console.error('JSON.parse(pr) err :', e);
               console.log('pr :', pr);
@@ -217,10 +221,8 @@ export class ProductDetailsPage implements OnInit {
         }
       }
       console.log('pr :', pr);
-      const getInsDate = this.getInspectionDates(this.idCustomer);
       const getIns = this.getInspector(this.idCustomer);
       Promise.all([
-        getInsDate,
         getIns
       ]).then((resultX) => {
         this.listProduct.push(this.activProduct);
@@ -228,19 +230,6 @@ export class ProductDetailsPage implements OnInit {
     });
   }
 
-  getInspectionDates(id): Promise<any> {
-    return new Promise((resolve) => {
-      this.apiService.pvs4_get_appointment_date(id).then((done: any) => {
-        if (done.amount != 0) {
-          // if (done.last_visit.length) { this.last_visit = done.last_visit; }
-          // if (done.next_visit.length) { this.next_visit = done.next_visit; }
-          this.activProduct.last_inspection = done.last_inspection;
-          this.activProduct.next_inspection = done.next_inspection;
-        }
-        resolve();
-      });
-    });
-  }
 
   getInspector(id): Promise<any> {
     return new Promise((resolve) => {
@@ -290,7 +279,8 @@ export class ProductDetailsPage implements OnInit {
         component: NfcScanComponent,
         cssClass: 'nfcscan-modal-css',
         componentProps: {
-          readOnly: false, pid: this.activProduct.id
+          readOnly: false, 
+          pid: this.activProduct.id
         }
       });
 
@@ -416,69 +406,68 @@ export class ProductDetailsPage implements OnInit {
 
       productList = [];
       product.forEach(element => {
-        console.log('product element :', this.translate.instant('Titel'), element.title);
-        if (element.title != undefined) {
-          productList.push({ 'title': this.translate.instant('Titel'), 'value': element.title });
-        } else {
-          productList.push({ 'title': this.translate.instant('Titel'), 'value': ' ' });
-        }
-        if (element.id != undefined) {
-          productList.push({ 'title': 'DB-ID', 'value': element.id });
-        } else {
-          productList.push({ 'title': 'DB-ID', 'value': ' ' });
-        }
-        if (element.id_number != undefined) {
-          productList.push({ 'title': 'ID', 'value': element.id_number });
-        } else {
-          productList.push({ 'title': 'ID', 'value': ' ' });
-        }
-        if (element.articel_no != undefined) {
-          productList.push({ 'title': this.translate.instant('Articel No'), 'value': element.articel_no });
-        } else {
-          productList.push({ 'title': this.translate.instant('Articel No'), 'value': ' ' });
-        }
-        if (element.customer_description != undefined) {
-          productList.push({ 'title': this.translate.instant('Kundenbezeichnung'), 'value': element.customer_description });
-        } else {
-          productList.push({ 'title': this.translate.instant('Kundenbezeichnung'), 'value': ' ' });
-        }
-        if (element.author != undefined) {
-          productList.push({ 'title': this.translate.instant('Autor'), 'value': element.author });
-        } else {
-          productList.push({ 'title': this.translate.instant('Autor'), 'value': ' ' });
-        }
-        if (element.check_interval != undefined) {
-          productList.push({ 'title': this.translate.instant('Intervall Prüfen'), 'value': element.check_interval });
-        } else {
-          productList.push({ 'title': this.translate.instant('Intervall Prüfen'), 'value': ' ' });
-        }
-        if (element.check_interval != undefined) {
-          const last_inspection = this.apiService.mysqlDate2view(element.last_inspection);
-          productList.push({ 'title': this.translate.instant('Letzter prüftermin'), 'value': last_inspection });
-        } else {
-          productList.push({ 'title': this.translate.instant('Letzter prüftermin'), 'value': ' ' });
-        }
-        if (element.check_interval != undefined) {
-          productList.push({ 'title': this.translate.instant('Nächster prüftermin'), 'value': element.last_protocol_next });
-        } else {
-          productList.push({ 'title': this.translate.instant('Nächster prüftermin'), 'value': ' ' });
-        }
-        if (element.check_interval != undefined) {
-          productList.push({ 'title': this.translate.instant('Produktstatus'), 'value': element.productstatus });
-        } else {
-          productList.push({ 'title': this.translate.instant('Produktstatus'), 'value': ' ' });
-        }
-        if (element.check_interval != undefined) {
-          productList.push({ 'title': this.translate.instant('Prüfer'), 'value': element.inspector });
-        } else {
-          productList.push({ 'title': this.translate.instant('Prüfer'), 'value': ' ' });
-        }
-        if (element.images != undefined) {
-          productImagePath = element.images;
-        } else {
-          productImagePath = '';
-        }
-        // product options
+      console.log('product element :', this.translate.instant('Titel'), element.title);
+      if (element.title != undefined) {
+        productList.push({ 'title': this.translate.instant('Titel'), 'value': element.title });
+      } else {
+        productList.push({ 'title': this.translate.instant('Titel'), 'value': ' ' });
+      }
+      if (element.id != undefined) {
+        productList.push({ 'title': 'DB-ID', 'value': element.id });
+      } else {
+        productList.push({ 'title': 'DB-ID', 'value': ' ' });
+      }
+      if (element.id_number != undefined) {
+        productList.push({ 'title': 'ID', 'value': element.id_number });
+      } else {
+        productList.push({ 'title': 'ID', 'value': ' ' });
+      }
+      if (element.articel_no != undefined) {
+        productList.push({ 'title': this.translate.instant('Articel No'), 'value': element.articel_no });
+      } else {
+        productList.push({ 'title': this.translate.instant('Articel No'), 'value': ' ' });
+      }
+      if (element.customer_description != undefined) {
+        productList.push({ 'title': this.translate.instant('Kundenbezeichnung'), 'value': element.customer_description });
+      } else {
+        productList.push({ 'title': this.translate.instant('Kundenbezeichnung'), 'value': ' ' });
+      }
+      if (element.author != undefined) {
+         productList.push({ 'title': this.translate.instant('Autor'), 'value': element.author });
+      } else {
+         productList.push({ 'title': this.translate.instant('Autor'), 'value': ' ' });
+      }
+      if (element.check_interval != undefined) {
+        productList.push({ 'title': this.translate.instant('Intervall Prüfen'), 'value': element.check_interval });
+      } else {
+        productList.push({ 'title': this.translate.instant('Intervall Prüfen'), 'value': ' ' });
+      }
+      if (element.last_protocol_date != undefined) {
+        productList.push({ 'title': this.translate.instant('letzte Prüfung'), 'value': element.last_protocol_date });
+      } else {
+        productList.push({ 'title': this.translate.instant('letzte Prüfung'), 'value': ' ' });
+      }
+      if (element.last_protocol_next != undefined) {
+        productList.push({ 'title': this.translate.instant('nächste Prüfung'), 'value': element.last_protocol_next });
+      } else {
+        productList.push({ 'title': this.translate.instant('nächste Prüfung'), 'value': ' ' });
+      }
+      if (element.productstatus != undefined) {
+        productList.push({ 'title': this.translate.instant('Produktstatus'), 'value': element.productstatus });
+      } else {
+        productList.push({ 'title': this.translate.instant('Produktstatus'), 'value': ' ' });
+      }
+      if (element.inspector != undefined) {
+        productList.push({ 'title': this.translate.instant('Prüfer'), 'value': element.inspector });
+      } else {
+        productList.push({ 'title': this.translate.instant('Prüfer'), 'value': ' ' });
+      }
+      if (element.images != undefined) {
+        productImagePath = element.images;
+      } else {
+        productImagePath = '';
+      }
+      // product options
 
         element.items.forEach(elementItems => {
           if (elementItems.title[this.lang] != '' && elementItems.value != undefined) {

@@ -1,5 +1,17 @@
 <main-nav aktivPage="ProtocolDetails" [idCustomer]="idCustomer" ></main-nav>
-
+<ion-item style="display: none;">
+	<ion-label position="floating" *ngIf="showList">{{translate.instant('Titel')}}</ion-label>
+	<ion-select #select	
+				[hidden]="showList"
+				multiple="true"
+				[(ngModel)]="titleFilter"
+				okText="{{translate.instant('okay')}}"
+				(ionChange)="changeFilter()"
+				cancelText="{{translate.instant('abbrechen')}}">
+		<ion-select-option value="none">{{translate.instant('Alle') + " " + translate.instant('Produkte')}}</ion-select-option>
+		<ion-select-option *ngFor="let p of listProduct" [value]="p.id">{{p.title + " " + p.id_number}}</ion-select-option>
+	</ion-select>
+</ion-item>
 <ion-content>
 	<div class="ek-content">
 		<div class="container">
@@ -181,7 +193,7 @@
 		</ion-fab-button>
 		<ion-fab-button color="primary"
 						title="{{'PDF Ansicht' | translate}}"
-						(click)="printPdf()">
+						(click)="goToPDF()">
 			<ion-icon name="document"></ion-icon>
 		</ion-fab-button>
 	</ion-fab-list>

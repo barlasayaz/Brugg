@@ -30,6 +30,7 @@ export class NfcScanComponent implements OnInit {
   public readonly: boolean;
   public scanList: any = [];
   public isWritable: boolean;
+  public autoMode: boolean = false;  
   public listView = false;
   public tagId = '';
   public cols: any[];
@@ -64,6 +65,10 @@ export class NfcScanComponent implements OnInit {
     ];
     this.procedure = 0;
     this.isWritable = true;
+    if (this.platform.is('android')) {
+      this.autoMode = true;
+      this.readNFC();
+    }
   }
 
   readNFC() {
@@ -73,17 +78,14 @@ export class NfcScanComponent implements OnInit {
       if (this.platform.is('ios')) {
         this.nfc.enabled().then((flag) => {
           this.subscribeNfc_ios();
-      }).catch(this.onFailure);
-      } else {
-        console.log('platform :', this.platform.platforms());
-      }
+        }).catch(this.onFailure);
+      } 
       if (this.platform.is('android')) {
           this.nfc.enabled().then((flag) => {
             this.subscribeNfc_android();
         }).catch(this.onFailure);
-      } else {
-        console.log('platform :', this.platform.platforms());
-      }
+      }       
+      console.log('platform :', this.platform.platforms());
     });
   }
 
@@ -292,6 +294,7 @@ export class NfcScanComponent implements OnInit {
         this.read_nfc_data_andorid(event);
       } else {
         this.procedure = 1;
+        this.nfc_write();
       }
     }
   }
