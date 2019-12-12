@@ -870,9 +870,9 @@
   "English": "English",
   "French": "French",
   "Italian": "Italian",
-  "Hol dir die volle ReBox":"Pick up full ReBox",
-  "Fordern Sie leere ReBox":"Demand Empty ReBox",
-  "Senden Sie selbst eine vollständige ReBox":"Send a full ReBox on your own",
+  "Hol dir die volle ReBox":"Please pick up full ReBox",
+  "Fordern Sie leere ReBox":"Please send me an empty ReBox",
+  "Senden Sie selbst eine vollständige ReBox":"I am sending you a full ReBox",
   "Zeige basisinformation":"Show basic information",
   "Basisinformation ausblenden":"Hide basic information",
   "Basisinformation":"basic information",
@@ -894,5 +894,7 @@
   "Notizen": "Notes",
   "Terminpläne": "Time schedules",
   "Einstellungen": "Settings",  
+  "Möchten Sie diesen Kunden wirklich verschieben?": "Do you really want to move this customer?",
+  "Möchten Sie dieses Produkt wirklich verschieben?": "Do you really want to move this product?",
   "dataschutz-link": "http://www.brugg.com/portal/pics/Documents/Privacy-Policy-DSGVO-Brugg-Group-10-04-2018-EN.pdf"
 }
