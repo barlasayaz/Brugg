@@ -278,7 +278,8 @@ export class ProductDetailsPage implements OnInit {
         component: NfcScanComponent,
         cssClass: 'nfcscan-modal-css',
         componentProps: {
-          readOnly: false, pid: this.activProduct.id
+          readOnly: false, 
+          pid: this.activProduct.id
         }
       });
 

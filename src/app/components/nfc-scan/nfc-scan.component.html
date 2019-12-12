@@ -102,7 +102,7 @@
                   {{'NFC beschreiben' | translate}}
                 </ion-button>
                 &nbsp;&nbsp;
-<!--                   <ion-button *ngIf="procedure==4&&isWritable&&!readonly" class="btn-modal-warning button-larger"
+<!--            <ion-button *ngIf="procedure==4&&isWritable&&!readonly" class="btn-modal-warning button-larger"
                   (click)="nfc_write();">
                   {{'Wiederholen' | translate}}
                 </ion-button>
@@ -110,17 +110,15 @@
                   (click)="procedure=0;">
                   <ion-icon name="repeat"></ion-icon>
                 </ion-button> -->
-                <ion-button class="btn-modal-danger"
-                  (click)="dismiss()">
+                <ion-button class="btn-modal-danger" (click)="dismiss()">
                   <ion-icon name="close" style="font-size: 30px !important;"></ion-icon>
                 </ion-button>
                 &nbsp;&nbsp;
-<!--                   <ion-button *ngIf="procedure==3" class="btn-modal-success"
+<!--            <ion-button *ngIf="procedure==3" class="btn-modal-success"
                   (click)="dismiss()">
                   <ion-icon name="checkmark"></ion-icon>
                 </ion-button> -->
-                <ion-button class="btn-modal-success"
-                  (click)="readNFC()">
+                <ion-button class="btn-modal-success" (click)="readNFC()" *ngIf="!autoMode"  >
                   <ion-icon name="wifi" style="font-size: 30px !important;"></ion-icon>
                 </ion-button>
               </ion-col>
