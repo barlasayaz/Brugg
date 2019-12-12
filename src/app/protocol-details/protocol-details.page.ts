@@ -41,7 +41,8 @@ export class ProtocolDetailsPage implements OnInit {
   public nocache: any;
   public customer_number: any;
   public viewTitle = '';
-  public titleFilter = '';
+  public showList = true;
+  public titleFilter: any[] = [];
   public pdfProduct: any[] = [];
 
   constructor(public navCtrl: NavController,
@@ -223,24 +224,33 @@ export class ProtocolDetailsPage implements OnInit {
     }
   }
 
-  changeFilter() {
+  async changeFilter() {
+    console.log('changeFilter', this.titleFilter);
     this.pdfProduct = [];
-    if (this.titleFilter == undefined) {
-      this.titleFilter = 'none';
-    }
-    if (this.titleFilter == 'none') {
+    if (this.titleFilter.length == 0) {
       this.pdfProduct = this.listProduct;
+      this.printPdf();
     } else {
-      for (let k = 0; k < this.listProduct.length; k++) {
-        if (this.listProduct[k].id == this.titleFilter) {
-          this.pdfProduct.push(this.listProduct[k]);
+      for (let k = 0; k < this.titleFilter.length; k++) {
+        console.log('titleFilter', this.titleFilter[k]);
+        this.pdfProduct = [];
+        if (this.titleFilter[k] == 'none') {
+          this.pdfProduct = this.listProduct;
+          await this.printPdf();
+        } else {
+          for (let j = 0; j < this.listProduct.length; j++) {
+            if (this.listProduct[j].id == this.titleFilter[k]) {
+              this.pdfProduct.push(this.listProduct[j]);
+              await this.printPdf();
+            }
+          }
         }
       }
     }
-    this.printPdf();
   }
 
   async printPdf() {
+    console.log('printPdf', this.pdfProduct);
     const loader = await this.loadingCtrl.create({
       message: this.translate.instant('Bitte warten')
     });

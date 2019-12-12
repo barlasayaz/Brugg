@@ -1,8 +1,9 @@
 <main-nav aktivPage="ProtocolDetails" [idCustomer]="idCustomer" ></main-nav>
 <ion-item style="display: none;">
 	<ion-label position="floating" *ngIf="showList">{{translate.instant('Titel')}}</ion-label>
-	<ion-select #select
+	<ion-select #select	
 				[hidden]="showList"
+				multiple="true"
 				[(ngModel)]="titleFilter"
 				okText="{{translate.instant('okay')}}"
 				(ionChange)="changeFilter()"
