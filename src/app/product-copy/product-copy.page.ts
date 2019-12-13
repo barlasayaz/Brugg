@@ -139,8 +139,14 @@ export class ProductCopyPage implements OnInit {
                 newImgPath = resultProduct.obj.images;
               }
               if (resultProduct.obj.images.indexOf('mobileimages/') != -1) {
-                newImgPath = 'mobileimages/productimage_' + result.id + '.jpg';
-                this.copyFile('mobileimages/productimage_' + this.idProduct + '.jpg', 'mobileimages/productimage_' + result.id + '.jpg');
+                let dateTime: any = new Date().toISOString();
+                dateTime = dateTime.replace('-', '');
+                dateTime = dateTime.replace('-', '');
+                dateTime = dateTime.replace(':', '');
+                dateTime = dateTime.replace(':', '');
+                dateTime = dateTime.replace('.', '');
+                newImgPath = 'mobileimages/productimage_' + dateTime + '.jpg';
+                this.copyFile(newObj.images, 'mobileimages/productimage_' + dateTime + '.jpg');
               }
             } else {
               newImgPath = '';
