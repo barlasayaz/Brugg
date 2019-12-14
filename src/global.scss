@@ -338,14 +338,14 @@ ion-fab-button {
 }
 
 .contactperson-modal-css .modal-wrapper {
-  height: 700px;
+  height: 660px;
   position: absolute;
   display: block;
   border-radius: 8px;
 }
 
 .contactpersonaddress-modal-css .modal-wrapper {
-  height: 700px;
+  height: 660px;
   position: absolute;
   display: block;
   border-radius: 8px;
@@ -359,7 +359,7 @@ ion-fab-button {
 }
 
 .customeredit-modal-css .modal-wrapper {
-  height: 700px;
+  height: 660px;
   position: absolute;
   display: block;
   border-radius: 8px;
@@ -373,7 +373,7 @@ ion-fab-button {
 }
 
 .ordersend-modal-css .modal-wrapper {
-  height: 406px;
+  height: 450px;
   position: absolute;
   display: block;
   border-radius: 8px;
@@ -402,14 +402,14 @@ ion-fab-button {
 }
 
 .productoptedit-modal-css .modal-wrapper {
-  height: 423px;
+  height: 450px;
   position: absolute;
   display: block;
   border-radius: 8px;
 }
 
 .protocoloptedit-modal-css .modal-wrapper {
-  height: 423px;
+  height: 450px;
   position: absolute;
   display: block;
   border-radius: 8px;
@@ -431,6 +431,10 @@ ion-fab-button {
 .item-select .label-floating.sc-ion-label-md-h {
   -webkit-transform: translate3d(0, 37%, 0) !important;
   transform: translate3d(0, 37%, 0) !important;
+  font-size: 11px !important;
+  @media only screen and (max-width: 768px) {
+    font-size: 10px !important;
+}
 }
 
 .alert-sub-title.sc-ion-alert-md,
@@ -562,7 +566,7 @@ ion-header ion-toolbar:first-child {
 
 // toggle border
 .item-border {
-  --background: transparent;
+  // --background: transparent;
   border: 1px solid var(--ion-color-green);
   padding-left: 10px;
 }
@@ -1278,7 +1282,7 @@ ion-modal {
   }
 
   ion-grid {
-    padding: 5px 10px !important;
+    padding: 5px 5px !important;
   }
 }
 
