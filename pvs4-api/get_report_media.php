@@ -115,19 +115,25 @@ function reportMedia($fileName) {
     // Api https://www.pvs2go.com/attachments/
     // $dir  = 'attachments/mobileimages/';
 
-    $dir  = 'attachments/mobileimages/';
+    $dir  = '../attachments/mobileimages/';
     $filesData=  array();
 
     function getDataURI($image, $mime = '') {
         return 'data: '.(function_exists('mime_content_type') ? mime_content_type($image) : $mime).';base64,'.base64_encode(file_get_contents($image));
     }
+    
+    //echo " dir-".$dir."- <br>"; 
 
     if(is_dir($dir)) {
         $dateien = scandir($dir);
+        //print_r($dateien);
         if( $dateien ){
             $nr = 1;
-            foreach( $dateien as $datei){                
+            foreach( $dateien as $datei){     
+                //echo " filename-".$fileName."- <br>";     
+                //echo " datei-".$datei."- <br>";       
                 if ($datei == $fileName) {
+
                     if(is_file($dir.'/'.$datei)){
                         $file =  $datei ;
                         $fileDataUri = getDataURI($dir.'/'.$datei) ;
