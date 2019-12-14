@@ -80,7 +80,7 @@ export class CustomerTablePage implements OnInit {
     public totalRecords: number;
     public rowRecords: number;
     public rowHeight = 26;
-    public rowCount = 100;
+    public rowCount = 20;
     public sortedColumn = { sort_field : null, sort_order : 0 };
     public filterText: string = '';
     public filterOn: boolean = false;
