@@ -159,21 +159,63 @@ export class ProductDetailsPage implements OnInit {
 
       console.log('loadProduct', this.activProduct);
 
-      if (this.activProduct.images == '') {
-        this.activProduct.images = 'assets/imgs/product_img.jpg';
-      }
-
       const str: string = this.activProduct.images;
+      let type;
+      let filePath;
+      let fileName;
       if (str != '') {
         console.log('images 1:', this.activProduct.images);
         if (str.indexOf('img/') != -1) {
-          this.activProduct.images = 'assets/' + this.activProduct.images;
+          type = 'assets';
+          filePath = 'assets/' + this.activProduct.images;
+          fileName = this.activProduct.images.substring(this.activProduct.images.lastIndexOf('/') + 1, this.activProduct.images.length);
         }
         if (str.indexOf('mobileimages/') != -1) {
-          this.activProduct.images = this.file_link + this.activProduct.images;
+          type = 'mobileimages';
+          filePath = this.file_link + this.activProduct.images;
+          fileName = this.activProduct.images.substring(this.activProduct.images.lastIndexOf('/') + 1, this.activProduct.images.length);
         }
         console.log('images 2:', this.activProduct.images);
       }
+
+      if (this.activProduct.images == '') {
+        // this.activProduct.images = 'assets/imgs/product_img.jpg';
+        type = 'assets';
+        filePath = 'assets/imgs/product_img.jpg';
+        fileName = 'product_img.jpg';
+      }
+
+      const arrtt = [];
+      arrtt.push({
+        type:   type,
+        path    : filePath,
+        dataURI   : '',
+        fileName   : fileName
+      });
+
+      this.activProduct.images = arrtt;
+
+      if (this.activProduct.images[0].type == 'mobileimages') {
+        this.loadMedia(this.activProduct.images[0].fileName).then(data => {
+          console.log("loadMedia items",  data);  
+        });
+      }
+
+      // if (this.activProduct.images == '') {
+      //   this.activProduct.images = 'assets/imgs/product_img.jpg';
+      // }
+
+      // const str: string = this.activProduct.images;
+      // if (str != '') {
+      //   console.log('images 1:', this.activProduct.images);
+      //   if (str.indexOf('img/') != -1) {
+      //     this.activProduct.images = 'assets/' + this.activProduct.images;
+      //   }
+      //   if (str.indexOf('mobileimages/') != -1) {
+      //     this.activProduct.images = this.file_link + this.activProduct.images;
+      //   }
+      //   console.log('images 2:', this.activProduct.images);
+      // }
 
       let pr = this.activProduct.last_protocol;
       this.activProduct.last_protocol_next = '';
@@ -230,6 +272,20 @@ export class ProductDetailsPage implements OnInit {
     });
   }
 
+  loadMedia(fileName) {
+    return new Promise((resolve) => { 
+      this.apiService.pvs4_getReportMedia(fileName).then( (data: any) => {
+        console.log('getReportMedia() data: ', data);
+        this.activProduct.images[0].dataURI = data.fileDataUri;
+        resolve();
+
+      }).catch(err => {
+        // show the error message
+        console.log('loadMedia Error: ', err);
+        resolve('LoadError');
+      });
+    });
+  }
 
   getInspector(id): Promise<any> {
     return new Promise((resolve) => {
@@ -329,12 +385,21 @@ export class ProductDetailsPage implements OnInit {
 
   getProductUrlList(productImagePath, callback) {
     const urlList: any = [];
-    urlList.push({
-      link: productImagePath
-    });
+    // urlList.push({
+    //   link: productImagePath
+    // });
+    // urlList.push({
+    //   link: 'assets/imgs/banner_' + this.userdata.licensee + '.jpg'
+    // });
     urlList.push({
       link: 'assets/imgs/banner_' + this.userdata.licensee + '.jpg'
     });
+
+    if (this.activProduct.images[0].type == 'assets') {
+      urlList.push({
+        link: this.activProduct.images[0].path
+      });
+    }
 
     const that = this;
     function callAjax(index) {
@@ -463,7 +528,10 @@ export class ProductDetailsPage implements OnInit {
         productList.push({ 'title': this.translate.instant('Prüfer'), 'value': ' ' });
       }
       if (element.images != undefined) {
-        productImagePath = element.images;
+        // productImagePath = element.images;
+        if (element.images[0].type == 'assets') {
+          productImagePath = element.images[0].path;
+        }
       } else {
         productImagePath = '';
       }
@@ -505,7 +573,10 @@ export class ProductDetailsPage implements OnInit {
       console.log('image path', productImagePath);
 
       this.getProductUrlList(productImagePath, dataUrlList => {
-        prdct_img = { 'image': dataUrlList[0].dataURL, 'margin': 0, 'fit': [300, 180], 'alignment': 'center' };
+        if (this.activProduct.images[0].type == 'assets') {
+          this.activProduct.images[0].dataURI = dataUrlList[1].dataURL;
+        }
+        prdct_img = { 'image': this.activProduct.images[0].dataURI, 'margin': 0, 'fit': [300, 180], 'alignment': 'center' };
         let prdct_qr = {};
         if (this.activProduct.qr_code && this.activProduct.qr_code != '') {
           const x = document.getElementsByClassName('qrImage')[0];
@@ -524,7 +595,7 @@ export class ProductDetailsPage implements OnInit {
           header: {
             columns: [
               {
-                'image': dataUrlList[1].dataURL, 'width': 800, margin: 20
+                'image': dataUrlList[0].dataURL, 'width': 800, margin: 20
               }
             ]
           },
