@@ -64,7 +64,7 @@
       </ion-col>
       <ion-col size-xl="1.4" size-lg="1.4" size-md="1.4" size-sm="1.4" size="1.4"
                *ngIf="activAppointment.appointment_type<2">
-          <ion-item lines="none" >
+          <ion-item lines="none" style="margin-left: -5px;">
               <ion-button size="small"
                           (click)="open_customer()"
                           [disabled]="!customer || idCustomer==0" 
@@ -99,7 +99,7 @@
       <!-- Date -->
       <ion-col size-xl="3.2" size-lg="3.2" size-md="3.2" size-sm="3.2" size="3.2">
         <ion-item lines="none">
-          <ion-label position="floating">{{translate.instant('Datum')}}</ion-label>
+          <ion-label position="floating" class="item-toggle">{{translate.instant('Datum')}}</ion-label>
           <ion-datetime  required
                          mode="ios"
                         name="Date1"
@@ -114,7 +114,7 @@
       <ion-col size-xl="2.6" size-lg="2.6" size-md="2.6" size-sm="2.6" size="2.6" *ngIf="activAppointment.appointment_type<2">
         <!-- Start Time -->
         <ion-item lines="none">
-          <ion-label position="floating">{{translate.instant('Startzeit')}}</ion-label>
+          <ion-label position="floating" class="item-toggle">{{translate.instant('Startzeit')}}</ion-label>
           <ion-datetime required
                         mode="ios"
                         name="StartTime1"
@@ -132,7 +132,7 @@
       <ion-col size-xl="2.6" size-lg="2.6" size-md="2.6" size-sm="2.6" size="2.6" *ngIf="activAppointment.appointment_type<2">
         <!-- End Time -->
         <ion-item lines="none">
-          <ion-label position="floating">{{translate.instant('Endzeit')}}</ion-label>
+          <ion-label position="floating" class="item-toggle">{{translate.instant('Endzeit')}}</ion-label>
           <ion-datetime required
                         mode="ios"
                         name="EndTime1"
@@ -148,9 +148,9 @@
         </ion-item>
       </ion-col>
       <ion-col size-xl="2.2" size-lg="2.2" size-md="2.2" size-sm="2.2" size="2.2" *ngIf="activAppointment.appointment_type<2">
-          <ion-item lines="none" style="margin-top: 5px !important;">
-            <ion-label position="floating" style="font-size: 11px !important; transform: translate3d(0,35%,0) !important;">{{translate.instant('Erinnerung')}}</ion-label>
-            <ion-toggle [(ngModel)]="reminder[1]" class="item-border"></ion-toggle>
+          <ion-item lines="none"> 
+            <ion-label position="floating" class="item-toggle">{{translate.instant('Erinnerung')}}</ion-label>
+            <ion-toggle mode="md" [(ngModel)]="reminder[1]" class="item-border"></ion-toggle>
             <!-- <ion-button size="small"
                         [ngClass]="getReminderClass(1)"
                         (click)="setReminder(1);"
@@ -165,7 +165,7 @@
       <!-- Date -->
       <ion-col size-xl="3.2" size-lg="3.2" size-md="3.2" size-sm="3.2" size="3.2" *ngIf="addDate>=2">
         <ion-item lines="none">
-          <ion-label position="floating">{{translate.instant('Datum')}}</ion-label>
+          <ion-label position="floating" class="item-toggle">{{translate.instant('Datum')}}</ion-label>
           <ion-datetime required
                         mode="ios"
                         [(ngModel)]="activAppointment.appointment_date2"
@@ -179,7 +179,7 @@
       <ion-col size-xl="2.6" size-lg="2.6" size-md="2.6" size-sm="2.6" size="2.6" *ngIf="activAppointment.appointment_type<2 && addDate>=2">
         <!-- Start Time -->
         <ion-item lines="none">
-          <ion-label position="floating">{{translate.instant('Startzeit')}}</ion-label>
+          <ion-label position="floating" class="item-toggle">{{translate.instant('Startzeit')}}</ion-label>
           <ion-datetime required
                         mode="ios"
                         type="time"
@@ -195,7 +195,7 @@
       <ion-col size-xl="2.6" size-lg="2.6" size-md="2.6" size-sm="2.6" size="2.6" *ngIf="activAppointment.appointment_type<2 && addDate>=2">
         <!-- End Time -->
         <ion-item lines="none">
-          <ion-label position="floating">{{translate.instant('Endzeit')}}</ion-label>
+          <ion-label position="floating" class="item-toggle">{{translate.instant('Endzeit')}}</ion-label>
           <ion-datetime required
                         mode="ios"
                         type="time"
@@ -209,9 +209,9 @@
         </ion-item>
       </ion-col>
       <ion-col size-xl="2.2" size-lg="2.2" size-md="2.2" size-sm="2.2" size="2.2" *ngIf="activAppointment.appointment_type<2 && addDate>=2">
-          <ion-item lines="none" style="margin-top: 5px !important;">
-            <ion-label position="floating" style="font-size: 11px !important; transform: translate3d(0,35%,0) !important;">{{translate.instant('Erinnerung')}}</ion-label>
-            <ion-toggle [(ngModel)]="reminder[2]" class="item-border"></ion-toggle>
+          <ion-item lines="none">
+            <ion-label position="floating" class="item-toggle">{{translate.instant('Erinnerung')}}</ion-label>
+            <ion-toggle mode="md" [(ngModel)]="reminder[2]" class="item-border"></ion-toggle>
             <!-- <ion-button size="small"
                         [ngClass]="getReminderClass(2)"
                         (click)="setReminder(2);"
@@ -221,11 +221,10 @@
           </ion-item>
       </ion-col>
       <ion-col size-xl="1.2" size-lg="1.2" size-md="1.2" size-sm="1.2" size="1.2" *ngIf="activAppointment.appointment_type<2 && addDate>=2">
-        <ion-item lines="none">
+        <ion-item lines="none" class="date-trash-button">
           <ion-button size="small"
                       class="btn-red"
-                      (click)="minusDate();"
-                      style="margin-top: 30px;">
+                      (click)="minusDate();">
             <ion-icon name="trash"></ion-icon>
           </ion-button>
         </ion-item>
@@ -236,7 +235,7 @@
       <!-- Date -->
       <ion-col size-xl="3.2" size-lg="3.2" size-md="3.2" size-sm="3.2" size="3.2" *ngIf="addDate>=3">
         <ion-item lines="none">
-          <ion-label position="floating">{{translate.instant('Datum')}}</ion-label>
+          <ion-label position="floating" class="item-toggle">{{translate.instant('Datum')}}</ion-label>
           <ion-datetime required
                         mode="ios"
                         [(ngModel)]="activAppointment.appointment_date3"
@@ -250,7 +249,7 @@
       <ion-col size-xl="2.6" size-lg="2.6" size-md="2.6" size-sm="2.6" size="2.6" *ngIf="activAppointment.appointment_type<2 && addDate>=3">
         <!-- Start Time -->
         <ion-item lines="none">
-          <ion-label position="floating">{{translate.instant('Startzeit')}}</ion-label>
+          <ion-label position="floating" class="item-toggle">{{translate.instant('Startzeit')}}</ion-label>
           <ion-datetime required
                         mode="ios"
                         type="time"
@@ -266,7 +265,7 @@
       <ion-col size-xl="2.6" size-lg="2.6" size-md="2.6" size-sm="2.6" size="2.6" *ngIf="activAppointment.appointment_type<2 && addDate>=3">
         <!-- End Time -->
         <ion-item lines="none">
-          <ion-label position="floating">{{translate.instant('Endzeit')}}</ion-label>
+          <ion-label position="floating" class="item-toggle">{{translate.instant('Endzeit')}}</ion-label>
           <ion-datetime required
                         mode="ios"
                         type="time"
@@ -280,9 +279,9 @@
         </ion-item>
       </ion-col>
       <ion-col size-xl="2.2" size-lg="2.2" size-md="2.2" size-sm="2.2" size="2.2" *ngIf="activAppointment.appointment_type<2 && addDate>=3">
-          <ion-item lines="none" style="margin-top: 5px !important;">
-            <ion-label position="floating" style="font-size: 11px !important; transform: translate3d(0,35%,0) !important;">{{translate.instant('Erinnerung')}}</ion-label>
-            <ion-toggle [(ngModel)]="reminder[3]" class="item-border"></ion-toggle>
+          <ion-item lines="none">
+            <ion-label position="floating" class="item-toggle">{{translate.instant('Erinnerung')}}</ion-label>
+            <ion-toggle mode="md" [(ngModel)]="reminder[3]" class="item-border"></ion-toggle>
             <!-- <ion-button size="small"
                         [ngClass]="getReminderClass(3)"
                         (click)="setReminder(3);"
@@ -292,11 +291,10 @@
           </ion-item>
       </ion-col>
       <ion-col size-xl="1.2" size-lg="1.2" size-md="1.2" size-sm="1.2" size="1.2" *ngIf="activAppointment.appointment_type<2 && addDate>=3">
-        <ion-item lines="none">
+        <ion-item lines="none" class="date-trash-button">
           <ion-button size="small"
                       class="btn-red"
-                      (click)="minusDate();"
-                      style="margin-top: 30px;">
+                      (click)="minusDate();">
             <ion-icon name="trash"></ion-icon>
           </ion-button>
         </ion-item>
@@ -307,7 +305,7 @@
       <!-- Date -->
       <ion-col size-xl="3.2" size-lg="3.2" size-md="3.2" size-sm="3.2" size="3.2" *ngIf="addDate>=4">
         <ion-item lines="none">
-          <ion-label position="floating">{{translate.instant('Datum')}}</ion-label>
+          <ion-label position="floating" class="item-toggle">{{translate.instant('Datum')}}</ion-label>
           <ion-datetime required
                         mode="ios"
                         [(ngModel)]="activAppointment.appointment_date4"
@@ -321,7 +319,7 @@
       <ion-col size-xl="2.6" size-lg="2.6" size-md="2.6" size-sm="2.6" size="2.6" *ngIf="activAppointment.appointment_type<2 && addDate>=4">
         <!-- Start Time -->
         <ion-item lines="none">
-          <ion-label position="floating">{{translate.instant('Startzeit')}}</ion-label>
+          <ion-label position="floating" class="item-toggle">{{translate.instant('Startzeit')}}</ion-label>
           <ion-datetime required
                         mode="ios"
                         type="time"
@@ -337,7 +335,7 @@
       <ion-col size-xl="2.6" size-lg="2.6" size-md="2.6" size-sm="2.6" size="2.6" *ngIf="activAppointment.appointment_type<2 && addDate>=4">
         <!-- End Time -->
         <ion-item lines="none">
-          <ion-label position="floating">{{translate.instant('Endzeit')}}</ion-label>
+          <ion-label position="floating" class="item-toggle">{{translate.instant('Endzeit')}}</ion-label>
           <ion-datetime required
                         mode="ios"
                         type="time"
@@ -351,9 +349,9 @@
         </ion-item>
       </ion-col>
       <ion-col size-xl="2.2" size-lg="2.2" size-md="2.2" size-sm="2.2" size="2.2" *ngIf="activAppointment.appointment_type<2 && addDate>=4">
-          <ion-item lines="none" style="margin-top: 5px !important;">
-            <ion-label position="floating" style="font-size: 11px !important; transform: translate3d(0,35%,0) !important;">{{translate.instant('Erinnerung')}}</ion-label>
-            <ion-toggle [(ngModel)]="reminder[4]" class="item-border"></ion-toggle>
+          <ion-item lines="none">
+            <ion-label position="floating" class="item-toggle">{{translate.instant('Erinnerung')}}</ion-label>
+            <ion-toggle mode="md" [(ngModel)]="reminder[4]" class="item-border"></ion-toggle>
            <!--  <ion-button size="small"
                         [ngClass]="getReminderClass(4)"
                         (click)="setReminder(4);"
@@ -363,11 +361,10 @@
           </ion-item>
       </ion-col>
       <ion-col size-xl="1.2" size-lg="1.2" size-md="1.2" size-sm="1.2" size="1.2" *ngIf="activAppointment.appointment_type<2 && addDate>=4">
-        <ion-item lines="none">
+        <ion-item lines="none" class="date-trash-button">
           <ion-button size="small"
                       class="btn-red"
-                      (click)="minusDate();"
-                      style="margin-top: 30px;">
+                      (click)="minusDate();">
             <ion-icon name="trash"></ion-icon>
           </ion-button>
         </ion-item>
@@ -376,9 +373,9 @@
     <!-- # 5 -->
     <ion-row>
       <!-- Date -->
-      <ion-col size-xl="3.2" size-lg="3.2" size-md="3.2" size-sm="3.2" size="3.2" size="3.8" *ngIf="addDate>=5">
+      <ion-col size-xl="3.2" size-lg="3.2" size-md="3.2" size-sm="3.2" size="3.2" *ngIf="addDate>=5">
         <ion-item lines="none">
-          <ion-label position="floating">{{translate.instant('Datum')}}</ion-label>
+          <ion-label position="floating" class="item-toggle">{{translate.instant('Datum')}}</ion-label>
           <ion-datetime required
                         mode="ios"
                         [(ngModel)]="activAppointment.appointment_date5"
@@ -392,7 +389,7 @@
       <ion-col size-xl="2.6" size-lg="2.6" size-md="2.6" size-sm="2.6" size="2.6" *ngIf="activAppointment.appointment_type<2 && addDate>=5">
         <!-- Start Time -->
         <ion-item lines="none">
-          <ion-label position="floating">{{translate.instant('Startzeit')}}</ion-label>
+          <ion-label position="floating" class="item-toggle">{{translate.instant('Startzeit')}}</ion-label>
           <ion-datetime required
                         mode="ios"
                         type="time"
@@ -408,7 +405,7 @@
       <ion-col size-xl="2.6" size-lg="2.6" size-md="2.6" size-sm="2.6" size="2.6" *ngIf="activAppointment.appointment_type<2 && addDate>=5">
         <!-- End Time -->
         <ion-item lines="none">
-          <ion-label position="floating">{{translate.instant('Endzeit')}}</ion-label>
+          <ion-label position="floating" class="item-toggle">{{translate.instant('Endzeit')}}</ion-label>
           <ion-datetime required
                         mode="ios"
                         type="time"
@@ -422,9 +419,9 @@
         </ion-item>
       </ion-col>
       <ion-col size-xl="2.2" size-lg="2.2" size-md="2.2" size-sm="2.2" size="2.2" *ngIf="activAppointment.appointment_type<2 && addDate>=5">
-          <ion-item lines="none" style="margin-top: 5px !important;">
-            <ion-label position="floating" style="font-size: 11px !important; transform: translate3d(0,35%,0) !important;">{{translate.instant('Erinnerung')}}</ion-label>
-            <ion-toggle [(ngModel)]="reminder[5]" class="item-border"></ion-toggle>
+          <ion-item lines="none">
+            <ion-label position="floating" class="item-toggle">{{translate.instant('Erinnerung')}}</ion-label>
+            <ion-toggle mode="md" [(ngModel)]="reminder[5]" class="item-border"></ion-toggle>
             <!-- <ion-button size="small"
                         [ngClass]="getReminderClass(5)"
                         (click)="setReminder(5);"
@@ -434,11 +431,10 @@
           </ion-item>
       </ion-col>
       <ion-col size-xl="1.2" size-lg="1.2" size-md="1.2" size-sm="1.2" size="1.2" *ngIf="activAppointment.appointment_type<2 && addDate>=5">
-        <ion-item lines="none">
+        <ion-item lines="none" class="date-trash-button">
           <ion-button size="small"
                       class="btn-red"
-                      (click)="minusDate();"
-                      style="margin-top: 30px;">
+                      (click)="minusDate();">
             <ion-icon name="trash"></ion-icon>
           </ion-button>
         </ion-item>
@@ -449,7 +445,7 @@
       <!-- Date -->
       <ion-col size-xl="3.2" size-lg="3.2" size-md="3.2" size-sm="3.2" size="3.2" *ngIf="addDate>=6">
         <ion-item lines="none">
-          <ion-label position="floating">{{translate.instant('Datum')}}</ion-label>
+          <ion-label position="floating" class="item-toggle">{{translate.instant('Datum')}}</ion-label>
           <ion-datetime required
                         mode="ios"
                         [(ngModel)]="activAppointment.appointment_date6"
@@ -463,7 +459,7 @@
       <ion-col size-xl="2.6" size-lg="2.6" size-md="2.6" size-sm="2.6" size="2.6" *ngIf="activAppointment.appointment_type<2 && addDate>=6">
         <!-- Start Time -->
         <ion-item lines="none">
-          <ion-label position="floating">{{translate.instant('Startzeit')}}</ion-label>
+          <ion-label position="floating" class="item-toggle">{{translate.instant('Startzeit')}}</ion-label>
           <ion-datetime required
                         mode="ios"
                         type="time"
@@ -479,7 +475,7 @@
       <ion-col size-xl="2.6" size-lg="2.6" size-md="2.6" size-sm="2.6" size="2.6" *ngIf="activAppointment.appointment_type<2 && addDate>=6">
         <!-- End Time -->
         <ion-item lines="none">
-          <ion-label position="floating">{{translate.instant('Endzeit')}}</ion-label>
+          <ion-label position="floating" class="item-toggle">{{translate.instant('Endzeit')}}</ion-label>
           <ion-datetime required
                         mode="ios"
                         type="time"
@@ -493,9 +489,9 @@
         </ion-item>
       </ion-col>
       <ion-col size-xl="2.2" size-lg="2.2" size-md="2.2" size-sm="2.2" size="2.2" *ngIf="activAppointment.appointment_type<2 && addDate>=6">
-          <ion-item lines="none" style="margin-top: 5px !important;">
-            <ion-label position="floating" style="font-size: 11px !important; transform: translate3d(0,35%,0) !important;">{{translate.instant('Erinnerung')}}</ion-label>
-            <ion-toggle [(ngModel)]="reminder[6]" class="item-border"></ion-toggle>
+          <ion-item lines="none">
+            <ion-label position="floating" class="item-toggle">{{translate.instant('Erinnerung')}}</ion-label>
+            <ion-toggle mode="md" [(ngModel)]="reminder[6]" class="item-border"></ion-toggle>
             <!-- <ion-button size="small"
                         [ngClass]="getReminderClass(6)"
                         (click)="setReminder(6);"
@@ -505,11 +501,10 @@
           </ion-item>
       </ion-col>
       <ion-col size-xl="1.2" size-lg="1.2" size-md="1.2" size-sm="1.2" size="1.2" *ngIf="activAppointment.appointment_type<2 && addDate>=6">
-        <ion-item lines="none">
+        <ion-item lines="none" class="date-trash-button">
           <ion-button size="small"
                       class="btn-red"
-                      (click)="minusDate();"
-                      style="margin-top: 30px;">
+                      (click)="minusDate();">
             <ion-icon name="trash"></ion-icon>
           </ion-button>
         </ion-item>
@@ -520,7 +515,7 @@
       <!-- Date -->
       <ion-col size-xl="3.2" size-lg="3.2" size-md="3.2" size-sm="3.2" size="3.2" *ngIf="addDate>=7">
         <ion-item lines="none">
-          <ion-label position="floating">{{translate.instant('Datum')}}</ion-label>
+          <ion-label position="floating" class="item-toggle">{{translate.instant('Datum')}}</ion-label>
           <ion-datetime required
                         mode="ios"
                         [(ngModel)]="activAppointment.appointment_date7"
@@ -534,7 +529,7 @@
       <ion-col size-xl="2.6" size-lg="2.6" size-md="2.6" size-sm="2.6" size="2.6" *ngIf="activAppointment.appointment_type<2 && addDate>=7">
         <!-- Start Time -->
         <ion-item lines="none">
-          <ion-label position="floating">{{translate.instant('Startzeit')}}</ion-label>
+          <ion-label position="floating" class="item-toggle">{{translate.instant('Startzeit')}}</ion-label>
           <ion-datetime required
                         mode="ios"
                         type="time"
@@ -549,7 +544,7 @@
       <ion-col size-xl="2.6" size-lg="2.6" size-md="2.6" size-sm="2.6" size="2.6" *ngIf="activAppointment.appointment_type<2 && addDate>=7">
         <!-- End Time -->
         <ion-item lines="none">
-          <ion-label position="floating">{{translate.instant('Endzeit')}}</ion-label>
+          <ion-label position="floating" class="item-toggle">{{translate.instant('Endzeit')}}</ion-label>
           <ion-datetime required
                         mode="ios"
                         type="time"
@@ -563,9 +558,9 @@
         </ion-item>
       </ion-col>
       <ion-col size-xl="2.2" size-lg="2.2" size-md="2.2" size-sm="2.2" size="2.2" *ngIf="activAppointment.appointment_type<2 && addDate>=7">
-          <ion-item lines="none" style="margin-top: 5px !important;">
-            <ion-label position="floating" style="font-size: 11px !important; transform: translate3d(0,35%,0) !important;">{{translate.instant('Erinnerung')}}</ion-label>
-            <ion-toggle [(ngModel)]="reminder[7]" class="item-border"></ion-toggle>
+          <ion-item lines="none">
+            <ion-label position="floating" class="item-toggle">{{translate.instant('Erinnerung')}}</ion-label>
+            <ion-toggle mode="md" [(ngModel)]="reminder[7]" class="item-border"></ion-toggle>
             <!-- <ion-button size="small"
                         [ngClass]="getReminderClass(7)"
                         (click)="setReminder(7);"
@@ -575,11 +570,10 @@
           </ion-item>
       </ion-col>
       <ion-col size-xl="1.2" size-lg="1.2" size-md="1.2" size-sm="1.2" size="1.2" *ngIf="activAppointment.appointment_type<2 && addDate>=7">
-        <ion-item lines="none">
+        <ion-item lines="none" class="date-trash-button">
           <ion-button size="small"
                       class="btn-red"
-                      (click)="minusDate();"
-                      style="margin-top: 30px;">
+                      (click)="minusDate();">
             <ion-icon name="trash"></ion-icon>
           </ion-button>
         </ion-item>
@@ -590,7 +584,7 @@
       <!-- Date -->
       <ion-col size-xl="3.2" size-lg="3.2" size-md="3.2" size-sm="3.2" size="3.2" *ngIf="addDate>=8">
         <ion-item lines="none">
-          <ion-label position="floating">{{translate.instant('Datum')}}</ion-label>
+          <ion-label position="floating" class="item-toggle">{{translate.instant('Datum')}}</ion-label>
           <ion-datetime required
                         mode="ios"
                         [(ngModel)]="activAppointment.appointment_date8"
@@ -604,7 +598,7 @@
       <ion-col size-xl="2.6" size-lg="2.6" size-md="2.6" size-sm="2.6" size="2.6" *ngIf="activAppointment.appointment_type<2 && addDate>=8">
         <!-- Start Time -->
         <ion-item lines="none">
-          <ion-label position="floating">{{translate.instant('Startzeit')}}</ion-label>
+          <ion-label position="floating" class="item-toggle">{{translate.instant('Startzeit')}}</ion-label>
           <ion-datetime required
                         mode="ios"
                         type="time"
@@ -620,7 +614,7 @@
       <ion-col size-xl="2.6" size-lg="2.6" size-md="2.6" size-sm="2.6" size="2.6" *ngIf="activAppointment.appointment_type<2 && addDate>=8">
         <!-- End Time -->
         <ion-item lines="none">
-          <ion-label position="floating">{{translate.instant('Endzeit')}}</ion-label>
+          <ion-label position="floating" class="item-toggle">{{translate.instant('Endzeit')}}</ion-label>
           <ion-datetime required
                         mode="ios"
                         type="time"
@@ -634,9 +628,9 @@
         </ion-item>
       </ion-col>
       <ion-col size-xl="2.2" size-lg="2.2" size-md="2.2" size-sm="2.2" size="2.2" *ngIf="activAppointment.appointment_type<2 && addDate>=8">
-          <ion-item lines="none" style="margin-top: 5px !important;">
-            <ion-label position="floating" style="font-size: 11px !important; transform: translate3d(0,35%,0) !important;">{{translate.instant('Erinnerung')}}</ion-label>
-            <ion-toggle [(ngModel)]="reminder[8]" class="item-border"></ion-toggle>
+          <ion-item lines="none">
+            <ion-label position="floating" class="item-toggle">{{translate.instant('Erinnerung')}}</ion-label>
+            <ion-toggle mode="md" [(ngModel)]="reminder[8]" class="item-border"></ion-toggle>
             <!-- <ion-button size="small"
                         [ngClass]="getReminderClass(8)"
                         (click)="setReminder(8);"
@@ -646,11 +640,10 @@
           </ion-item>
       </ion-col>
       <ion-col size-xl="1.2" size-lg="1.2" size-md="1.2" size-sm="1.2" size="1.2" *ngIf="activAppointment.appointment_type<2 && addDate>=8">
-        <ion-item lines="none">
+        <ion-item lines="none" class="date-trash-button">
           <ion-button size="small"
                       class="btn-red"
-                      (click)="minusDate();"
-                      style="margin-top: 30px;">
+                      (click)="minusDate();">
             <ion-icon name="trash"></ion-icon>
           </ion-button>
         </ion-item>
@@ -661,7 +654,7 @@
       <!-- Date -->
       <ion-col size-xl="3.2" size-lg="3.2" size-md="3.2" size-sm="3.2" size="3.2" *ngIf="addDate>=9">
         <ion-item lines="none">
-          <ion-label position="floating">{{translate.instant('Datum')}}</ion-label>
+          <ion-label position="floating" class="item-toggle">{{translate.instant('Datum')}}</ion-label>
           <ion-datetime required
                         mode="ios"
                         [(ngModel)]="activAppointment.appointment_date9"
@@ -675,7 +668,7 @@
       <ion-col size-xl="2.6" size-lg="2.6" size-md="2.6" size-sm="2.6" size="2.6" *ngIf="activAppointment.appointment_type<2 && addDate>=9">
         <!-- Start Time -->
         <ion-item lines="none">
-          <ion-label position="floating">{{translate.instant('Startzeit')}}</ion-label>
+          <ion-label position="floating" class="item-toggle">{{translate.instant('Startzeit')}}</ion-label>
           <ion-datetime required
                         mode="ios"
                         type="time"
@@ -691,7 +684,7 @@
       <ion-col size-xl="2.6" size-lg="2.6" size-md="2.6" size-sm="2.6" size="2.6" *ngIf="activAppointment.appointment_type<2 && addDate>=9">
         <!-- End Time -->
         <ion-item lines="none">
-          <ion-label position="floating">{{translate.instant('Endzeit')}}</ion-label>
+          <ion-label position="floating" class="item-toggle">{{translate.instant('Endzeit')}}</ion-label>
           <ion-datetime required
                         mode="ios"
                         type="time"
@@ -705,9 +698,9 @@
         </ion-item>
       </ion-col>
       <ion-col size-xl="2.2" size-lg="2.2" size-md="2.2" size-sm="2.2" size="2.2" *ngIf="activAppointment.appointment_type<2 && addDate>=9">
-          <ion-item lines="none" style="margin-top: 5px !important;">
-            <ion-label position="floating" style="font-size: 11px !important; transform: translate3d(0,35%,0) !important;">{{translate.instant('Erinnerung')}}</ion-label>
-            <ion-toggle [(ngModel)]="reminder[9]" class="item-border"></ion-toggle>
+          <ion-item lines="none">
+            <ion-label position="floating" class="item-toggle">{{translate.instant('Erinnerung')}}</ion-label>
+            <ion-toggle mode="md" [(ngModel)]="reminder[9]" class="item-border"></ion-toggle>
             <!-- <ion-button size="small"
                         [ngClass]="getReminderClass(9)"
                         (click)="setReminder(9);"
@@ -717,11 +710,10 @@
           </ion-item>
       </ion-col>
       <ion-col size-xl="1.2" size-lg="1.2" size-md="1.2" size-sm="1.2" size="1.2" *ngIf="activAppointment.appointment_type<2 && addDate>=9">
-        <ion-item lines="none">
+        <ion-item lines="none" class="date-trash-button">
           <ion-button size="small"
                       class="btn-red"
-                      (click)="minusDate();"
-                      style="margin-top: 30px;">
+                      (click)="minusDate();">
             <ion-icon name="trash"></ion-icon>
           </ion-button>
         </ion-item>
