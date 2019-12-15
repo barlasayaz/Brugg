@@ -471,71 +471,71 @@ export class ProductDetailsPage implements OnInit {
 
       productList = [];
       product.forEach(element => {
-      console.log('product element :', this.translate.instant('Titel'), element.title);
-      if (element.title != undefined) {
-        productList.push({ 'title': this.translate.instant('Titel'), 'value': element.title });
-      } else {
-        productList.push({ 'title': this.translate.instant('Titel'), 'value': ' ' });
-      }
-      if (element.id != undefined) {
-        productList.push({ 'title': 'DB-ID', 'value': element.id });
-      } else {
-        productList.push({ 'title': 'DB-ID', 'value': ' ' });
-      }
-      if (element.id_number != undefined) {
-        productList.push({ 'title': 'ID', 'value': element.id_number });
-      } else {
-        productList.push({ 'title': 'ID', 'value': ' ' });
-      }
-      if (element.articel_no != undefined) {
-        productList.push({ 'title': this.translate.instant('Articel No'), 'value': element.articel_no });
-      } else {
-        productList.push({ 'title': this.translate.instant('Articel No'), 'value': ' ' });
-      }
-      if (element.customer_description != undefined) {
-        productList.push({ 'title': this.translate.instant('Kundenbezeichnung'), 'value': element.customer_description });
-      } else {
-        productList.push({ 'title': this.translate.instant('Kundenbezeichnung'), 'value': ' ' });
-      }
-      if (element.author != undefined) {
-         productList.push({ 'title': this.translate.instant('Autor'), 'value': element.author });
-      } else {
-         productList.push({ 'title': this.translate.instant('Autor'), 'value': ' ' });
-      }
-      if (element.check_interval != undefined) {
-        productList.push({ 'title': this.translate.instant('Intervall Prüfen'), 'value': element.check_interval });
-      } else {
-        productList.push({ 'title': this.translate.instant('Intervall Prüfen'), 'value': ' ' });
-      }
-      if (element.last_protocol_date != undefined) {
-        productList.push({ 'title': this.translate.instant('letzte Prüfung'), 'value': element.last_protocol_date });
-      } else {
-        productList.push({ 'title': this.translate.instant('letzte Prüfung'), 'value': ' ' });
-      }
-      if (element.last_protocol_next != undefined) {
-        productList.push({ 'title': this.translate.instant('nächste Prüfung'), 'value': element.last_protocol_next });
-      } else {
-        productList.push({ 'title': this.translate.instant('nächste Prüfung'), 'value': ' ' });
-      }
-      if (element.productstatus != undefined) {
-        productList.push({ 'title': this.translate.instant('Produktstatus'), 'value': element.productstatus });
-      } else {
-        productList.push({ 'title': this.translate.instant('Produktstatus'), 'value': ' ' });
-      }
-      if (element.inspector != undefined) {
-        productList.push({ 'title': this.translate.instant('Prüfer'), 'value': element.inspector });
-      } else {
-        productList.push({ 'title': this.translate.instant('Prüfer'), 'value': ' ' });
-      }
-      if (element.images != undefined) {
-        // productImagePath = element.images;
-        if (element.images[0].type == 'assets') {
-          productImagePath = element.images[0].path;
+        console.log('product element :', this.translate.instant('Titel'), element.title);
+        if (element.title != undefined) {
+          productList.push({ 'title': this.translate.instant('Titel'), 'value': element.title });
+        } else {
+          productList.push({ 'title': this.translate.instant('Titel'), 'value': ' ' });
         }
-      } else {
-        productImagePath = '';
-      }
-      // product options
+        if (element.id != undefined) {
+          productList.push({ 'title': 'DB-ID', 'value': element.id });
+        } else {
+          productList.push({ 'title': 'DB-ID', 'value': ' ' });
+        }
+        if (element.id_number != undefined) {
+          productList.push({ 'title': 'ID', 'value': element.id_number });
+        } else {
+          productList.push({ 'title': 'ID', 'value': ' ' });
+        }
+        if (element.articel_no != undefined) {
+          productList.push({ 'title': this.translate.instant('Articel No'), 'value': element.articel_no });
+        } else {
+          productList.push({ 'title': this.translate.instant('Articel No'), 'value': ' ' });
+        }
+        if (element.customer_description != undefined) {
+          productList.push({ 'title': this.translate.instant('Kundenbezeichnung'), 'value': element.customer_description });
+        } else {
+          productList.push({ 'title': this.translate.instant('Kundenbezeichnung'), 'value': ' ' });
+        }
+        if (element.author != undefined) {
+          productList.push({ 'title': this.translate.instant('Autor'), 'value': element.author });
+        } else {
+          productList.push({ 'title': this.translate.instant('Autor'), 'value': ' ' });
+        }
+        if (element.check_interval != undefined) {
+          productList.push({ 'title': this.translate.instant('Intervall Prüfen'), 'value': element.check_interval });
+        } else {
+          productList.push({ 'title': this.translate.instant('Intervall Prüfen'), 'value': ' ' });
+        }
+        if (element.last_protocol_date != undefined) {
+          productList.push({ 'title': this.translate.instant('letzte Prüfung'), 'value': element.last_protocol_date });
+        } else {
+          productList.push({ 'title': this.translate.instant('letzte Prüfung'), 'value': ' ' });
+        }
+        if (element.last_protocol_next != undefined) {
+          productList.push({ 'title': this.translate.instant('nächste Prüfung'), 'value': element.last_protocol_next });
+        } else {
+          productList.push({ 'title': this.translate.instant('nächste Prüfung'), 'value': ' ' });
+        }
+        if (element.productstatus != undefined) {
+          productList.push({ 'title': this.translate.instant('Produktstatus'), 'value': element.productstatus });
+        } else {
+          productList.push({ 'title': this.translate.instant('Produktstatus'), 'value': ' ' });
+        }
+        if (element.inspector != undefined) {
+          productList.push({ 'title': this.translate.instant('Prüfer'), 'value': element.inspector });
+        } else {
+          productList.push({ 'title': this.translate.instant('Prüfer'), 'value': ' ' });
+        }
+        if (element.images != undefined) {
+          // productImagePath = element.images;
+          if (element.images[0].type == 'assets') {
+            productImagePath = element.images[0].path;
+          }
+        } else {
+          productImagePath = '';
+        }
+        // product options
 
         element.items.forEach(elementItems => {
           if (elementItems.title[this.lang] != '' && elementItems.value != undefined) {
@@ -573,6 +573,7 @@ export class ProductDetailsPage implements OnInit {
       console.log('image path', productImagePath);
 
       this.getProductUrlList(productImagePath, dataUrlList => {
+        console.log('getProductUrlList() ');
         if (this.activProduct.images[0].type == 'assets') {
           this.activProduct.images[0].dataURI = dataUrlList[1].dataURL;
         }
@@ -650,13 +651,13 @@ export class ProductDetailsPage implements OnInit {
             return { text: pageDesc + ' ' + currentPage.toString() + ' / ' + pageCount, alignment: 'center' };
           }
         };
-
+        console.log('pdf.createPdf ');
         this.pdf.createPdf(docDefinition, 'download', this.translate.instant('Produkt Details'.replace(/\s/g, '')) + '.pdf');
         loader.dismiss();
       });
-    } catch {
+    } catch (e) {
       loader.dismiss();
-      console.error('PDF error');
+      console.error('printPdf error',e);
     }
   }
 

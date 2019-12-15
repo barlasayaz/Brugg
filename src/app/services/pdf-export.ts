@@ -174,8 +174,18 @@ export class PdfExportService {
       }
   
       createPdf(docDefinition, pdfMethod, fileName) {
-          return new Promise((res) => { 
-              if (!document.URL.startsWith('http') || document.URL.startsWith('http://localhost:8080')) {
+          return new Promise((res) => {     
+            let dirPath = "";
+            let isDevice = false;
+            if (this.platform.is('android')) {
+                dirPath = this.file.externalRootDirectory;
+                isDevice = true;
+            } else if (this.platform.is('ios')) {
+                dirPath = this.file.documentsDirectory;
+                isDevice = true;
+            }          
+              if (isDevice) {
+                console.log("createPdf  DEVICES ");
                   // FOR MOBILE DEVICES
                   if(pdfMethod == 'base64') {
                       const pdfDocGenerator = pdfMake.createPdf(docDefinition);
@@ -186,6 +196,7 @@ export class PdfExportService {
                       });
                   } else {
                       pdfMake.createPdf(docDefinition).getBuffer((buffer) => {
+                          console.log("createPdf  pdfMake.createPdf ");
                           var utf8 = new Uint8Array(buffer); // Convert to UTF-8...
                           let binaryArray = utf8.buffer; // Convert to Binary...
   
@@ -215,13 +226,18 @@ export class PdfExportService {
                                       };
                                       fileWriter.write(binaryArray);
                                   });
-                              }).catch((error) => { });
-                          }).catch((error) => { });
+                                }).catch((error) => {
+                                    console.error("PcreatePdf  file.createFile Error:",error);
+                                });
+                          }).catch((error) => { 
+                            console.error("PcreatePdf  file.createDir Error:",error);
+                          });
                           res(buffer);
                       });                    
                   }
               }
               else {
+                console.log("createPdf  BROWSERS ");
                   //FOR BROWSERS
                   // Download the PDF
                   if(pdfMethod == 'download') {
