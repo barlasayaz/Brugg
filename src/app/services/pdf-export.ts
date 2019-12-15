@@ -199,14 +199,6 @@ export class PdfExportService {
                           console.log("createPdf  pdfMake.createPdf ");
                           var utf8 = new Uint8Array(buffer); // Convert to UTF-8...
                           let binaryArray = utf8.buffer; // Convert to Binary...
-  
-                          let dirPath = "";
-                          if (this.platform.is('android')) {
-                              dirPath = this.file.externalRootDirectory;
-                          } else if (this.platform.is('ios')) {
-                              dirPath = this.file.documentsDirectory;
-                          }
-  
                           let dirName = 'DailySheet';
   
                           this.file.createDir(dirPath, dirName, true).then((dirEntry) => {
