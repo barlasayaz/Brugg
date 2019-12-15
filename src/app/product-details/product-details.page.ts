@@ -110,7 +110,7 @@ export class ProductDetailsPage implements OnInit {
     });
   }
 
-  loadProduct(id) {
+  loadProduct(id:number) {
     this.activProduct.images = '';
     this.apiService.pvs4_get_product(id).then((result: any) => {
       this.activProduct = result.obj;
@@ -196,7 +196,7 @@ export class ProductDetailsPage implements OnInit {
       this.activProduct.images = arrtt;
 
       if (this.activProduct.images[0].type == 'mobileimages') {
-        this.loadMedia(this.activProduct.images[0].fileName).then(data => {
+        this.loadMedia(this.activProduct.images[0].fileName, 'mobileimages' ).then(data => {
           console.log("loadMedia items",  data);  
         });
       }
@@ -272,16 +272,16 @@ export class ProductDetailsPage implements OnInit {
     });
   }
 
-  loadMedia(fileName) {
+  loadMedia(fileName:string, subDir:string) {
     return new Promise((resolve) => { 
-      this.apiService.pvs4_getMedia(fileName).then( (data: any) => {
+      this.apiService.pvs4_getMedia(fileName, subDir).then( (data: any) => {
         console.log('getMedia() data: ', data);
         this.activProduct.images[0].dataURI = data.fileDataUri;
         resolve();
 
       }).catch(err => {
         // show the error message
-        console.log('loadMedia Error: ', err);
+        console.log('getMedia Error: ', err);
         resolve('LoadError');
       });
     });

@@ -103,19 +103,10 @@ function media($fileName) {
     //ok
     $files=  array();
     $filesMime=  array();
-    if(($_SERVER['HTTP_HOST'] == 'localhost')||($_SERVER['HTTP_HOST'] == '192.168.1.102')){
-        $link = 'http://192.168.1.102/BruggPVS4/attachments/';
-    }else{
-        $link = 'https://www.pvs2go.com/attachments/';
-    }
+    $subDir = "mobileimages";
+    if(isset($_POST['subDir'])) $subDir =  trim( mysqli_escape_string($con,$_POST['subDir']) ) ;
 
-    // Api http://localhost/BruggPVS4/attachments/
-    // $dir  = '../attachments/mobileimages/';
-
-    // Api https://www.pvs2go.com/attachments/
-    // $dir  = 'attachments/mobileimages/';
-
-    $dir  = '../attachments/mobileimages/';
+    $dir  = '../attachments/'.$subDir.'/';
     $filesData=  array();
 
     function getDataURI($image, $mime = '') {
@@ -134,9 +125,9 @@ function media($fileName) {
                 //echo " datei-".$datei."- <br>";       
                 if ($datei == $fileName) {
 
-                    if(is_file($dir.'/'.$datei)){
+                    if(is_file($dir.$datei)){
                         $file =  $datei ;
-                        $fileDataUri = getDataURI($dir.'/'.$datei) ;
+                        $fileDataUri = getDataURI($dir.$datei) ;
                     }
                 }                
             }

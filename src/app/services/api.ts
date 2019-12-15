@@ -1115,10 +1115,11 @@ export class ApiService {
     });
   }
 
-  pvs4_getMedia(fileName) {
+  pvs4_getMedia(fileName:string, subDir:string) {
     return new Promise((res, rej) => {
       const data = {
-        fileName: fileName
+        fileName: fileName,
+        subDir: subDir
       };
       this.pvs4_api_post('get_media.php', data).then((done: any) => {
           res(done);
