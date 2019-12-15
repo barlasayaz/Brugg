@@ -274,8 +274,8 @@ export class ProductDetailsPage implements OnInit {
 
   loadMedia(fileName) {
     return new Promise((resolve) => { 
-      this.apiService.pvs4_getReportMedia(fileName).then( (data: any) => {
-        console.log('getReportMedia() data: ', data);
+      this.apiService.pvs4_getMedia(fileName).then( (data: any) => {
+        console.log('getMedia() data: ', data);
         this.activProduct.images[0].dataURI = data.fileDataUri;
         resolve();
 

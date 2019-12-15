@@ -1115,12 +1115,12 @@ export class ApiService {
     });
   }
 
-  pvs4_getReportMedia(fileName) {
+  pvs4_getMedia(fileName) {
     return new Promise((res, rej) => {
       const data = {
         fileName: fileName
       };
-      this.pvs4_api_post('get_report_media.php', data).then((done: any) => {
+      this.pvs4_api_post('get_media.php', data).then((done: any) => {
           res(done);
       },
         err => { // return the error

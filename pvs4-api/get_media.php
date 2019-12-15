@@ -29,7 +29,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
     case "POST":
         // if we are passed an email
         if(isset($_POST['fileName']) ) {
-            reportMedia( $_POST['fileName'] );
+            media( $_POST['fileName'] );
         }else{
             http_response_code(500);
             $error = new \stdClass();
@@ -61,7 +61,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
 
 
 
-function reportMedia($fileName) {
+function media($fileName) {
     global $brugg_id_api,$database_location,$database_username,$database_password,$database_name;
     $con=mysqli_connect($database_location,$database_username,$database_password,$database_name);
     mysqli_query($con,"SET NAMES 'utf8'");
