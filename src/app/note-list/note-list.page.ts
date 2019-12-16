@@ -66,7 +66,7 @@ export class NoteListPage implements OnInit {
     public pointofContactList: any = [];
     public modelChanged: Subject<any> = new Subject<any>();
     public rowHeight = 26;
-    public rowCount = 100;
+    public rowCount = 20;
     public sortedColumn = { sort_field : null, sort_order : 0 };
     public filterText = '';
     public filterOn = false;

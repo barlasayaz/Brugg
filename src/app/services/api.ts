@@ -24,7 +24,7 @@ export class ApiService {
   public appointmentEndTime: string = '16:59';
   public appointmentMinTime: string = '07:00';
   public appointmentMaxTime: string = '17:59';
-  public version: any = '4.4.51';
+  public version: any = '4.4.52';
   private reset_semaphor = false;
   private reset_timeout: any = 0;
 
@@ -1115,12 +1115,13 @@ export class ApiService {
     });
   }
 
-  pvs4_getReportMedia(fileName) {
+  pvs4_getMedia(fileName:string, subDir:string) {
     return new Promise((res, rej) => {
       const data = {
-        fileName: fileName
+        fileName: fileName,
+        subDir: subDir
       };
-      this.pvs4_api_post('get_report_media.php', data).then((done: any) => {
+      this.pvs4_api_post('get_media.php', data).then((done: any) => {
           res(done);
       },
         err => { // return the error

@@ -82,7 +82,7 @@ export class MainNavComponent implements OnInit {
         text: this.searchText
       };
       this.ping.emit(eventObj);
-    }, 700);
+    }, 900);
   }
 
   sendPing(ping) {

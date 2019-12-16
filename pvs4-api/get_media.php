@@ -29,7 +29,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
     case "POST":
         // if we are passed an email
         if(isset($_POST['fileName']) ) {
-            reportMedia( $_POST['fileName'] );
+            media( $_POST['fileName'] );
         }else{
             http_response_code(500);
             $error = new \stdClass();
@@ -61,7 +61,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
 
 
 
-function reportMedia($fileName) {
+function media($fileName) {
     global $brugg_id_api,$database_location,$database_username,$database_password,$database_name;
     $con=mysqli_connect($database_location,$database_username,$database_password,$database_name);
     mysqli_query($con,"SET NAMES 'utf8'");
@@ -103,34 +103,31 @@ function reportMedia($fileName) {
     //ok
     $files=  array();
     $filesMime=  array();
-    if(($_SERVER['HTTP_HOST'] == 'localhost')||($_SERVER['HTTP_HOST'] == '192.168.1.102')){
-        $link = 'http://192.168.1.102/BruggPVS4/attachments/';
-    }else{
-        $link = 'https://www.pvs2go.com/attachments/';
-    }
+    $subDir = "mobileimages";
+    if(isset($_POST['subDir'])) $subDir =  trim( mysqli_escape_string($con,$_POST['subDir']) ) ;
 
-    // Api http://localhost/BruggPVS4/attachments/
-    // $dir  = '../attachments/mobileimages/';
-
-    // Api https://www.pvs2go.com/attachments/
-    // $dir  = 'attachments/mobileimages/';
-
-    $dir  = 'attachments/mobileimages/';
+    $dir  = '../attachments/'.$subDir.'/';
     $filesData=  array();
 
     function getDataURI($image, $mime = '') {
         return 'data: '.(function_exists('mime_content_type') ? mime_content_type($image) : $mime).';base64,'.base64_encode(file_get_contents($image));
     }
+    
+    //echo " dir-".$dir."- <br>"; 
 
     if(is_dir($dir)) {
         $dateien = scandir($dir);
+        //print_r($dateien);
         if( $dateien ){
             $nr = 1;
-            foreach( $dateien as $datei){                
+            foreach( $dateien as $datei){     
+                //echo " filename-".$fileName."- <br>";     
+                //echo " datei-".$datei."- <br>";       
                 if ($datei == $fileName) {
-                    if(is_file($dir.'/'.$datei)){
+
+                    if(is_file($dir.$datei)){
                         $file =  $datei ;
-                        $fileDataUri = getDataURI($dir.'/'.$datei) ;
+                        $fileDataUri = getDataURI($dir.$datei) ;
                     }
                 }                
             }

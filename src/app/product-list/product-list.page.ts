@@ -58,7 +58,7 @@ export class ProductListPage implements OnInit {
     public selectedRow: number;
     public selectMode: boolean = false;
     public rowHeight = 26;
-    public rowCount = 100;
+    public rowCount = 20;
     public showBasicInfo = true;
     public lengthBasicInfo = 90;
     public sortedColumn = { sort_field : null, sort_order : 0 };
@@ -94,7 +94,8 @@ export class ProductListPage implements OnInit {
                 .subscribe(model => {
                     this.generate_productList(0, this.rowCount, this.sortedColumn.sort_field, this.sortedColumn.sort_order);
                     localStorage.setItem('filter_values_product', JSON.stringify(this.columnFilterValues));
-        });
+            });
+
     }
     @ViewChild('fab1') fab1: any;
     @ViewChild('fab2') fab2: any;
@@ -181,16 +182,17 @@ export class ProductListPage implements OnInit {
     }
 
     async loadNodes(event: LazyLoadEvent) {
+        console.log('loadNodes:', event);
         setTimeout(() => {
-        if (this.totalRecords > 0) {
-            if (event.sortField && event.sortField.length > 0) {
-                this.sortedColumn.sort_field = event.sortField;
-                this.sortedColumn.sort_order = event.sortOrder;
-                localStorage.setItem('sort_column_product', JSON.stringify(this.sortedColumn));
+            if (this.totalRecords > 0) {
+                if (event.sortField && event.sortField.length > 0) {
+                    this.sortedColumn.sort_field = event.sortField;
+                    this.sortedColumn.sort_order = event.sortOrder;
+                    localStorage.setItem('sort_column_product', JSON.stringify(this.sortedColumn));
+                }
+                this.generate_productList(event.first, event.rows, event.sortField, event.sortOrder);
             }
-            this.generate_productList(event.first, event.rows, event.sortField, event.sortOrder);
-        }
-    }, 0);
+        }, 100);
         // in a production application, make a remote request to load data using state metadata from event
         // event.first = First row offset
         // event.rows = Number of rows per page
