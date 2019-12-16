@@ -106,6 +106,18 @@ export class ProtocolDetailsPage implements OnInit {
       console.log('loadProtocol :', this.activProtocol);
       this.activProtocol.items = JSON.parse(this.activProtocol.items);
 
+      this.activProtocol.items.forEach(event => {
+        event.type = parseInt(event.type);
+        if (event.type == 0) {
+          if(event.value == true || event.value == 'true') {
+            event.value = true;
+          }
+          if(event.value == false || event.value == 'false') {
+            event.value = false;
+          }
+        }
+      });
+
       let pipe = new DatePipe('en-US');
       var protocolDate = new Date(this.activProtocol.protocol_date.replace(' ', 'T')).toISOString();
       this.activProtocol.protocol_date = pipe.transform(protocolDate, 'dd.MM.yyyy');
@@ -172,8 +184,12 @@ export class ProtocolDetailsPage implements OnInit {
           event.value = this.datePipe.transform(event.value, 'dd.MM.yyyy');
         }
         if (event.type == 0) {
-          if(event.value ==="true") event.value=true;
-          if(event.value ==="false") event.value=false;
+          if(event.value == true || event.value == 'true') {
+            event.value = true;
+          }
+          if(event.value == false || event.value == 'false') {
+            event.value = false;
+          }
         }
       });
       this.listProduct.push(this.activProduct);
