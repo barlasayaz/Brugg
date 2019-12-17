@@ -106,18 +106,16 @@ export class ContactPersonPage {
             this.mandatoryMsg('Bitte füllen Sie alle Pflichtfelder aus.');
             return;
         }
-        if (this.contactPersonEdit.email == undefined || this.contactPersonEdit.email == '') {
+        if (this.contactPersonEdit.phone == undefined) {
             this.mandatoryMsg('Bitte füllen Sie alle Pflichtfelder aus.');
             return;
+        }
+        if (this.contactPersonEdit.email == undefined || this.contactPersonEdit.email == '') {
         } else {
             if (this.validateEmail(this.contactPersonEdit.email) == false) {
                 this.mandatoryMsg('E-Mail nicht standardkonform.');
                 return;
             }
-        }
-        if (this.contactPersonEdit.phone == undefined) {
-            this.mandatoryMsg('Bitte füllen Sie alle Pflichtfelder aus.');
-            return;
         }
 
         let obj = {id: 0,

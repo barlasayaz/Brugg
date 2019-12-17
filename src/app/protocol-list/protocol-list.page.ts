@@ -235,10 +235,10 @@ export class ProtocolListPage implements OnInit {
                     }
                     options[i].type = parseInt(options[i].type);
                     if (options[i].type == 0) {
-                        if (options[i].value == true) {
+                        if (options[i].value == true || options[i].value == 'true') {
                             options[i].value = '√';
                         }
-                        if (options[i].value == false) {
+                        if (options[i].value == false || options[i].value == 'false') {
                              options[i].value = 'x';
                         }
                         this.protocolListAll[index].data[options[i].title[this.lang]] = options[i].value;
