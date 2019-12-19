@@ -216,11 +216,21 @@ export class ProtocolListPage implements OnInit {
 
             for (let index = 0; index < this.protocolListAll.length; index++) {
                 let pipe = new DatePipe('en-US');
-                let protocolDate = new Date(this.protocolListAll[index].data.protocol_date.replace(' ', 'T')).toISOString();
-                this.protocolListAll[index].data.protocol_date = pipe.transform(protocolDate, 'dd.MM.yyyy');
-
-                let next = new Date(this.protocolListAll[index].data.protocol_date_next.replace(' ', 'T')).toISOString();
-                this.protocolListAll[index].data.protocol_date_next = pipe.transform(next, 'dd.MM.yyyy');
+                try {
+                    let protocolDate = new Date(this.protocolListAll[index].data.protocol_date.replace(' ', 'T')).toISOString();
+                    this.protocolListAll[index].data.protocol_date = pipe.transform(protocolDate, 'dd.MM.yyyy');
+                }catch(e){
+                    console.error('protocol_date error:' + index , this.protocolListAll[index].data.protocol_date, e );
+                }
+                try{
+                    if(this.protocolListAll[index].data.protocol_date_next!="0000-00-00"){
+                        let next = new Date(this.protocolListAll[index].data.protocol_date_next.replace(' ', 'T')).toISOString();
+                        this.protocolListAll[index].data.protocol_date_next = pipe.transform(next, 'dd.MM.yyyy');
+                    }                    
+                }catch(e){
+                    console.error('protocol_date_next error:' + index , this.protocolListAll[index].data.protocol_date_next, e );
+                }
+                
 
                 let options = [];
                 try {

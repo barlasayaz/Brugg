@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="brugg.apps.pvs" version="4.4.52" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="brugg.apps.pvs" version="4.4.53" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Brugg PVS</name>
     <description>A Brugg Lifting App.</description>
     <author email="info@schaefer-design.de" href="http://schaefer-design.com/">Schaefer Design</author>
@@ -111,7 +111,7 @@
         <edit-config file="*-Info.plist" mode="merge" target="NSLocationWhenInUseUsageDescription">
             <string>Required to send machine location.</string>
         </edit-config>
-        <edit-config file="*-Info.plist" mode="merge" target="NSLocationWhenInUseUsageDescription">
+        <edit-config file="*-Info.plist" mode="merge" target="NSLocationAlwaysUsageDescription">
             <string>Required to send machine location</string>
         </edit-config>
     </platform>
