@@ -429,9 +429,9 @@
                   </ion-button>
                 </ion-col>   
               </ion-row>
-              <!-- Notes -->
               <ion-row style="margin-top:10px;">
-                <ion-col size-xl="12" size-lg="12" size-md="12" size-sm="12" size="12">  
+                 <!-- Notes -->
+                <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="12" size="12">  
                   <div class="kunden-col">
                     <div class="table-info" style="background: white;">      
                       <div class="thead">
@@ -439,9 +439,61 @@
                           <div class="th">{{'Notizen' | translate}}</div>
                         </div>
                         <ion-textarea type="text" 
-                                      rows="3" 
+                                      rows="{{noteRows}}" 
                                       [(ngModel)]="activOrderForm.note">
                         </ion-textarea>                       
+                      </div>
+                    </div>
+                  </div>
+                </ion-col>
+                 <!-- Product Image -->
+                <ion-col size-xl="6" size-lg="6" size-md="6" size-sm="12" size="12">  
+                  <div class="kunden-col">
+                    <div class="table-info" style="background: white;">      
+                      <div class="thead">
+                        <div class="tr table-subheader table-subheader-fix">
+                          <div class="th" style="max-width: 15%;">{{'Bild' | translate}}</div>
+                          <div class="table-subheader-buttons" style="max-width: 85%; text-align: right;">
+                            <ion-button size="small"
+                                        class="btn-red"
+                                        (click)="showConfirmDeletImageAlert()"
+                                        [disabled] = "!activOrderForm.image">
+                              <ion-icon name="trash"></ion-icon>
+                            </ion-button> 
+                              <ion-button size="small"
+                                          (click)="getImage()">
+                                <ion-icon name="folder-open"></ion-icon>
+                              </ion-button>   
+                              <ion-button size="small"
+                                          (click)="getCamera()"
+                                          [disabled]="!mobilePlatform"
+                                          style="padding-right: 6px;">
+                                <ion-icon name="camera"></ion-icon>
+                              </ion-button> 
+                              <p-fileUpload #fubauto
+                                            class="btn-primary"
+                                            mode="basic"
+                                            name="file"
+                                            url="{{url}}upload.php"
+                                            method="POST"
+                                            accept="image/*"
+                                            maxFileSize="5000000"
+                                            customUpload="true"
+                                            (onSelect)="validateFileSize($event, fubauto.maxFileSize)"
+                                            (uploadHandler)="onFileUpload($event)"
+                                            [auto]="true"
+                                            chooseLabel="{{'Wähle Bild' | translate}}">
+                              </p-fileUpload>
+                          </div>
+                        </div>
+
+                        <div class="tbody">
+                          <div class="whitebox-image">
+                            <img *ngIf="activOrderForm.image" src="{{activOrderForm.image}}?{{nocache}}">
+                        </div> 
+                      </div>   
+
+
                       </div>
                     </div>
                   </div>

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, ModalController, Events, Platform, LoadingController } from '@ionic/angular';
+import { NavController, ModalController, Events, Platform, LoadingController, AlertController,ToastController } from '@ionic/angular';
 import { ApiService } from '../services/api';
 import { TranslateService } from '@ngx-translate/core';
 import { UserdataService } from '../services/userdata';
@@ -7,6 +7,9 @@ import { DatePipe } from '@angular/common';
 import { PdfExportService } from '../services/pdf-export';
 import { OrderSendPage } from './order-send/order-send.page';
 import { ActivatedRoute } from '@angular/router';
+import { DialogproduktbildmodalPage } from '../components/dialogproduktbildmodal/dialogproduktbildmodal.component';
+import { CameraOptions, Camera } from '@ionic-native/camera/ngx';
+import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
 
 /**
  * Generated class for the OrderFormPage page.
@@ -28,6 +31,13 @@ export class OrderFormPage {
   public activCustomer: any = [];
   public contactPersonList: any = [];
   public listProduct: any[] = [];
+  public nocache: any;
+  public noteRows: any;
+  public file_link: any;
+  public url: any;
+  public imageDataUri: any;
+  public imageURI: any;
+  private loader: HTMLIonLoadingElement;
   public lang: string = localStorage.getItem('lang');
   public products: any = [{
     quantity: '',
@@ -81,6 +91,8 @@ export class OrderFormPage {
       articleno: '',
       designation: ''},
     note: '',
+    image: '',
+    imageType: '',
     commissioned: '',
     customerNumber: '',
     dbId: ''
@@ -96,10 +108,29 @@ export class OrderFormPage {
               public pdf: PdfExportService,
               public datePipe: DatePipe,
               public loadingCtrl: LoadingController,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              public alertCtrl: AlertController,
+              private toastCtrl: ToastController,
+              public camera: Camera,
+              public transfer: FileTransfer) {
 
                 this.idCustomer = 0;
                 this.mobilePlatform = false;
+                this.noteRows = 5;
+                this.dateiListe();
+                this.activOrderForm.image = '';
+                this.url = this.apiProvider.pvsApiURL;
+                this.imageDataUri = '';
+                this.activOrderForm.image = '';
+                this.imageDataUri = '';
+                this.activOrderForm.imageType = '';
+                this.noteRows = 5;
+
+                this.pdf.toDataURL('assets/imgs/product_img.jpg', data => {
+                  if (data) {
+                    this.imageDataUri = data;
+                  }
+                });
 
                 platform.ready().then(() => {
                   if ( this.platform.is('ios') ||
@@ -546,6 +577,12 @@ export class OrderFormPage {
       bodyNotesHeader.push([ { text: this.activOrderForm.note, color: '#000000', fillColor: '#ffffff', fontSize: 10 } ]);
       bodyNotesHeader.push([ { text: '', color: '#ffffff', fillColor: '#ffffff', fontSize: 12 , border: [false, false, false, false]} ]);
 
+      /* Image */
+      let bodyImageHeader = [];
+      bodyImageHeader.push([ { text: this.translate.instant('Bild'), color: '#ffffff', fillColor: '#005e86', fontSize: 12 } ]);
+      bodyImageHeader.push([ { image: this.imageDataUri, margin: 0, fit: [200, 100], alignment: 'center' } ]);
+      bodyImageHeader.push([ { text: '', color: '#ffffff', fillColor: '#ffffff', fontSize: 12 , border: [false, false, false, false]} ]);
+
       /* Commissioned */
       let bodyCommissionedHeader = [];
       bodyCommissionedHeader.push([ { text: this.translate.instant('Beauftragt'), color: '#ffffff', fillColor: '#005e86', fontSize: 12 } ]);
@@ -946,7 +983,7 @@ export class OrderFormPage {
             {
               columns: [
                 {
-                  width: '100%',
+                  width: '50%',
                   fontSize: 10,
                   layout: {
                     hLineWidth: function (i, node) { return 1; },
@@ -961,6 +998,23 @@ export class OrderFormPage {
                     widths: ['*'],
                     body: bodyNotesHeader
                   }
+                },
+                {
+                  width: '50%',
+                  fontSize: 10,
+                  layout: {
+                    hLineWidth: function (i, node) { return 1; },
+                    vLineWidth: function (i, node) { return 1; },
+                    hLineColor: function (i, node) { return '#cccccc'; },
+                    vLineColor: function (i, node) { return '#cccccc'; },
+                    paddingTop: function (i, node) { return 4; },
+                    paddingBottom: function (i, node) { return 4; },
+                  },
+                  table: {
+                    headerRows: 1,
+                    widths: ['*'],
+                    body: bodyImageHeader
+                  },
                 },
               ],
               columnGap: 10
@@ -1003,6 +1057,235 @@ export class OrderFormPage {
 
       });
 
+    });
+  }
+
+  dateiListe() {
+    this.apiProvider.pvs4_get_file(0, 'product').then((result) => {
+        console.log('dateiliste', result);
+        this.file_link = result['file_link'];
+        console.log('file link :', this.file_link);
+    });
+  }
+
+  showConfirmDeletImageAlert() {
+    let alert = this.alertCtrl.create({
+      header: this.translate.instant('Achtung'),
+      message: this.translate.instant('Das Bild wird gelöscht. Sind Sie sicher?'),
+      buttons: [
+        {
+          text: this.translate.instant('nein'),
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: this.translate.instant('ja'),
+          handler: () => {
+            this.delImage();
+          }
+        }
+      ]
+    }).then(x => x.present());
+
+  }
+
+  delImage() {
+    this.activOrderForm.image = '';
+    this.imageDataUri = '';
+    this.activOrderForm.imageType = '';
+    this.noteRows = 5;
+
+    this.pdf.toDataURL('assets/imgs/product_img.jpg', data => {
+      if (data) {
+        this.imageDataUri = data;
+      }
+    });
+
+  }
+
+  async getImage() {
+    const modal =
+      await this.modalCtrl.create({
+        component: DialogproduktbildmodalPage,
+        cssClass: 'getimage-modal-css',
+        componentProps: {
+          'redDirect': 1
+        }
+      });
+
+    modal.onDidDismiss().then(data => {
+      if (data['data']) {
+        console.log('getImage data :', data, data['data']);
+        this.nocache = new Date().getTime();
+        this.activOrderForm.image = data['data'];
+        this.activOrderForm.imageType = 'assets';
+        this.noteRows = 10;
+        console.log('image ........ :', this.activOrderForm.image);
+        this.pdf.toDataURL(this.activOrderForm.image, data => {
+          if (data) {
+            this.imageDataUri = data;
+          }
+        });
+      }
+    });
+    modal.present();
+
+    console.log('get images :', this.activOrderForm.image);
+  }
+
+  getCamera() {
+    let options: CameraOptions = {
+      quality: 100,
+      destinationType: this.camera.DestinationType.FILE_URI,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE
+    };
+
+    this.imageURI = '';
+    this.camera.getPicture(options).then((imageData) => {
+      // imageData is either a base64 encoded string or a file URI
+      // If it's base64 (DATA_URL):
+      // this.activProduct.images = 'data:image/jpeg;base64,' + imageData;
+      this.imageURI = imageData;
+      this.uploadFile();
+    }, (err) => {
+      console.log(err);
+    });
+  }
+
+  async uploadFile() {
+    if (!this.loader) {
+      this.loader = await this.loadingCtrl.create({
+        message: 'Uploading...'
+      });
+    }
+    await this.loader.present();
+    const fileTransfer: FileTransferObject = this.transfer.create();
+
+    let productId: any;
+    let dateTime: any = new Date().toISOString();
+    dateTime = dateTime.replace('-', '');
+    dateTime = dateTime.replace('-', '');
+    dateTime = dateTime.replace(':', '');
+    dateTime = dateTime.replace(':', '');
+    dateTime = dateTime.replace('.', '');
+
+    let options: FileUploadOptions = {
+      fileKey: 'file',
+      fileName: 'orderformimage_' + dateTime + '.jpg',
+      chunkedMode: false,
+      mimeType: 'image/jpeg',
+      httpMethod: 'POST',
+      params: {
+        'dir': 'mobileimages',
+        'token': window.localStorage['access_token']
+      }
+    };
+
+    console.log('imageURI :', this.imageURI);
+    console.log('upload :', this.url + 'upload.php');
+
+    fileTransfer.upload(this.imageURI, this.url + 'upload.php', options)
+      .then((data) => {
+        console.log('Uploaded Successfully :', data);
+        this.nocache = new Date().getTime();
+        this.activOrderForm.image = this.file_link + 'mobileimages/orderformimage_' + dateTime + '.jpg';
+        this.activOrderForm.imageType = 'mobileimages';
+        this.noteRows = 10;
+
+        const arrttMobileimages = [];
+        arrttMobileimages.push({
+          type      : 'mobileimages',
+          path      : this.activOrderForm.image,
+          dataURI   : '',
+          fileName  : this.activOrderForm.image.substring(this.activOrderForm.image.lastIndexOf('/') + 1, this.activOrderForm.image.length)
+        });
+        this.loadMedia(arrttMobileimages[0].fileName, 'mobileimages').then(data => {
+          this.imageDataUri = data;
+        });
+
+        this.hideLoader();
+        console.log('image ........ :', this.activOrderForm.image);
+      }, (err) => {
+        console.log('Uploaded Error :', err);
+        this.activOrderForm.image = '';
+        this.activOrderForm.imageType = '';
+        this.hideLoader();
+      });
+  }
+
+  async hideLoader() {
+    if (this.loader) {
+      await this.loader.dismiss();
+      this.loader = null;
+    }
+  }
+
+  onFileUpload(data: { files: File }): void {
+    const formData: FormData = new FormData();
+    const file = data.files[0];
+    this.activOrderForm.image = '';
+
+    console.log('uploader :', formData, file);
+
+    let dateTime: any = new Date().toISOString();
+    dateTime = dateTime.replace('-', '');
+    dateTime = dateTime.replace('-', '');
+    dateTime = dateTime.replace(':', '');
+    dateTime = dateTime.replace(':', '');
+    dateTime = dateTime.replace('.', '');
+
+    formData.append('token', window.localStorage['access_token']);
+    formData.append('dir', 'mobileimages');
+    formData.append('file', file, 'orderformimage_' + dateTime + '.jpg');
+    console.log('onBeforeUpload event :', formData, file.name);
+
+    this.apiProvider.pvs4_uploadphp(formData).then((result: any) => {
+        console.log('result: ', result);
+        this.nocache = new Date().getTime();
+        this.activOrderForm.image = this.file_link + 'mobileimages/orderformimage_' + dateTime + '.jpg';
+        this.activOrderForm.imageType = 'mobileimages';
+        console.log('upload images :', this.file_link, this.activOrderForm.image);
+        this.noteRows = 10;
+
+        const arrttMobileimages = [];
+        arrttMobileimages.push({
+          type      : 'mobileimages',
+          path      : this.activOrderForm.image,
+          dataURI   : '',
+          fileName  : this.activOrderForm.image.substring(this.activOrderForm.image.lastIndexOf('/') + 1, this.activOrderForm.image.length)
+        });
+        this.loadMedia(arrttMobileimages[0].fileName, 'mobileimages').then(data => {
+          this.imageDataUri = data;
+        });
+
+        console.log('image ........ :', this.activOrderForm.image);
+    });
+
+  }
+
+  validateFileSize(event: any, maxFileSize: number) {
+    if (event.files[0].size > maxFileSize) {
+      const toast = this.toastCtrl.create({
+        message: this.translate.instant('Die Dateigröße die Sie hochladen sollte höchstens 5 MB betragen'),
+        cssClass: 'toast-warning',
+        duration: 3500
+      }).then(x => x.present());
+    }
+  }
+
+  loadMedia(fileName: string, subDir: string) {
+    return new Promise((resolve) => {
+      this.apiProvider.pvs4_getMedia(fileName, subDir).then( (data: any) => {
+        console.log('getMedia() data: ', data);
+        resolve(data.fileDataUri);
+
+      }).catch(err => {
+        // show the error message
+        console.log('getMedia Error: ', err);
+        resolve('LoadError');
+      });
     });
   }
 

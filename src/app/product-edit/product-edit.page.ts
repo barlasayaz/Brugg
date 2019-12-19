@@ -592,7 +592,8 @@ export class ProductEditPage implements OnInit {
     fileTransfer.upload(this.imageURI, this.url + 'upload.php', options)
       .then((data) => {
         console.log('Uploaded Successfully :', data);
-        this.activProduct.images = this.imageURI;
+        this.nocache = new Date().getTime();
+        this.activProduct.images = this.file_link + 'mobileimages/productimage_' + productId + '.jpg';
         this.imagesSave = 'mobileimages/productimage_' + productId + '.jpg';
         console.log('upload images :', this.imagesSave);
         this.hideLoader();
@@ -616,7 +617,6 @@ export class ProductEditPage implements OnInit {
           obj['title'] = JSON.stringify(this.activProduct['title']);
           obj['images'] = this.imagesSave;
           this.apiService.pvs4_set_product(obj).then((result: any) => {
-            this.nocache = new Date().getTime();
             console.log('result: ', result);
           });
         }

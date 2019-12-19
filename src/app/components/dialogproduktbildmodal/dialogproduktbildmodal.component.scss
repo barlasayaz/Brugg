@@ -6,8 +6,8 @@
     .dir, .file {
         float: left;  
         padding: 10px;
-        width: 180px;
-        height: 170px;
+        width: 165px;
+        height: 160px;
         overflow: hidden;
         font-size: 13px;
     }
@@ -20,4 +20,8 @@
         max-width: 100px;
         max-height: 100px;
         height: fit-content;
+    }
+
+    .modal-body {
+        padding: 0 !important;
     }
