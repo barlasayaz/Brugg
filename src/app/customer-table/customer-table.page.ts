@@ -79,6 +79,7 @@ export class CustomerTablePage implements OnInit {
     modelChanged: Subject<any> = new Subject<any>();
     public totalRecords: number;
     public rowRecords: number;
+    public childRecords: number;
     public rowHeight = 26;
     public rowCount = 20;
     public sortedColumn = { sort_field : null, sort_order : 0 };
@@ -344,7 +345,10 @@ export class CustomerTablePage implements OnInit {
             console.log('page_load result :', result);
 
             this.customerListAll = result.list;
-            console.log('total records :', this.customerListAll.length);
+            this.childRecords = 0;
+            this.data_tree(this.customerListAll);
+            this.totalRecords = this.customerListAll.length + this.childRecords;
+            console.log('total records :', this.totalRecords);
 
             // console.log(' customerListAll ', this.customerListAll );
             if (localStorage.getItem('filter_values_customer') != undefined) {
@@ -487,8 +491,13 @@ export class CustomerTablePage implements OnInit {
             });
         }
 
-        this.rowRecords = this.customerListView.length;
-        this.totalRecords = this.customerListAll.length;
+        this.childRecords = 0;
+        if (this.isFilterOn()) {
+            this.data_tree(this.customerListSearch);
+        } else {
+            this.data_tree(this.customerListAll);
+        }
+        this.rowRecords = this.customerListView.length + this.childRecords;
 
         console.log('start_index - end_index :', start_index, end_index);
 
@@ -788,6 +797,9 @@ export class CustomerTablePage implements OnInit {
     data_tree(nodes: TreeNode[]): any {
         for (let i = 0; i < nodes.length; i++) {
             this.allnodes.push(nodes[i].data);
+            if (nodes[i].data.parent != 0) {
+                this.childRecords++;
+            }
             if (nodes[i].children && nodes[i].children.length > 0) {
                 this.data_tree(nodes[i].children);
             }

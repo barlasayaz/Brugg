@@ -51,6 +51,7 @@ export class ProductListPage implements OnInit {
     public expendedNodes: string[] = [];
     public totalRecords: number;
     public rowRecords: number;
+    public childRecords: number;
     public lang: string = localStorage.getItem('lang');
     public navigationSubscription: any;
     public childCount: number;
@@ -380,7 +381,7 @@ export class ProductListPage implements OnInit {
                 this.prepare_line(line.children[i]);
             }
         }
-        
+
     }
 
     async page_load() {
@@ -402,6 +403,10 @@ export class ProductListPage implements OnInit {
             console.log('pvs4_get_product_list ok');
             const list = JSON.parse(JSON.stringify(result.list));
             this.productListAll = list;
+            this.childRecords = 0;
+            this.data_tree(this.productListAll);
+            this.totalRecords = this.productListAll.length + this.childRecords;
+            console.log('total records :', this.totalRecords);
 
             let json = '{';
             for (let j = 0; j < this.cols.length; j++) {
@@ -586,7 +591,7 @@ export class ProductListPage implements OnInit {
             console.error('JSON.parse productListAll err :', e);
             console.log('productListAll :', this.productListAll);
         }
-        
+
         if (!this.isFilterOn()) {
             this.productListView = JSON.parse(JSON.stringify(actvPssvProduct));
         } else {
@@ -632,12 +637,18 @@ export class ProductListPage implements OnInit {
                 }
             });
         }
-        this.rowRecords = this.productListView.length;
-        this.totalRecords = actvPssvProduct.length;
+
+        this.childRecords = 0;
+        if (this.isFilterOn()) {
+            this.data_tree(this.productListSearch);
+        } else {
+            this.data_tree(this.productListAll);
+        }
+        this.rowRecords = this.productListView.length + this.childRecords;
 
         console.log('start_index - end_index :', start_index, end_index);
 
-       if ((start_index + end_index + this.rowCount) >= this.rowRecords) {
+        if ((start_index + end_index + this.rowCount) >= this.rowRecords) {
             this.productListView = this.productListView.slice(start_index, this.rowRecords);
         } else {
             this.productListView = this.productListView.slice(start_index, (start_index + end_index));
@@ -1150,6 +1161,9 @@ export class ProductListPage implements OnInit {
     data_tree(nodes: TreeNode[]): any {
         for (let i = 0; i < nodes.length; i++) {
             this.allnodes.push(nodes[i].data);
+            if (nodes[i].data.parent != 0) {
+                this.childRecords++;
+            }
             if (nodes[i].children && nodes[i].children.length > 0) {
                 this.data_tree(nodes[i].children);
             }
