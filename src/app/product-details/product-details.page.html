@@ -165,16 +165,18 @@
 <ion-fab vertical="bottom" horizontal="end" slot="fixed" class="liftiball">
 	<ion-fab-button color="tertiary">
 		<ion-icon name="menu"></ion-icon>
-	</ion-fab-button>
+	</ion-fab-button> 
 	<ion-fab-list side="top">
 		<ion-fab-button color="primary"
 						title="{{'Produkt bearbeiten' | translate}}"
-						(click)="editProduct()">
+						(click)="editProduct()"
+						*ngIf="userdata.role_set.edit_products">
 			<ion-icon name="create"></ion-icon>
 		</ion-fab-button>
 		<ion-fab-button color="primary"
 						title="{{'Produkt duplizieren alt' | translate}}"
-						(click)="copyProduct()">
+						(click)="copyProduct()"
+						*ngIf="userdata.role_set.edit_products">
 			<ion-icon name="copy"></ion-icon>
 		</ion-fab-button>
 		<ion-fab-button color="primary"
@@ -185,8 +187,7 @@
 		</ion-fab-button>
 		<ion-fab-button color="primary"
 						title="{{'Protokollverlauf' | translate}}"
-						(click)="menu_history()"
-						*ngIf="userdata.role_set.edit_products">
+						(click)="menu_history()">
 			<ion-icon name="filing"></ion-icon>
 		</ion-fab-button>
 		<ion-fab-button color="primary"
