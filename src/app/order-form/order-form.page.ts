@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, ModalController, Events, Platform, LoadingController, AlertController,ToastController } from '@ionic/angular';
 import { ApiService } from '../services/api';
+import { SystemService } from './../services/system';
 import { TranslateService } from '@ngx-translate/core';
 import { UserdataService } from '../services/userdata';
 import { DatePipe } from '@angular/common';
@@ -39,12 +40,13 @@ export class OrderFormPage {
   public imageURI: any;
   private loader: HTMLIonLoadingElement;
   public lang: string = localStorage.getItem('lang');
-  public products: any = [{
-    quantity: '',
-    pvsid: '',
-    articleno: '',
-    designation: ''
-  }];
+  public products: any[] = [];
+  // public products: any = [{
+  //   quantity: '',
+  //   pvsid: '',
+  //   articleno: '',
+  //   designation: ''
+  // }];
   public activOrderForm: any = {
     orderCheckBox: false,
     offerCheckBox: false,
@@ -100,6 +102,7 @@ export class OrderFormPage {
 
   constructor(public navCtrl: NavController,
               public apiProvider: ApiService,
+              public systemService: SystemService,
               public userdata: UserdataService,
               public translate: TranslateService,
               public modalCtrl: ModalController,
@@ -146,6 +149,7 @@ export class OrderFormPage {
                 this.idCustomer = parseInt(this.route.snapshot.paramMap.get('id'));
                 this.getContactList();
                 this.loadCustomer(this.idCustomer);
+                this.loadProducts();
 
                 this.maxDate = this.apiProvider.maxDate;
                 this.activOrderForm.commissioned = this.userdata.first_name + ' ' +
@@ -237,26 +241,36 @@ export class OrderFormPage {
     }
   }
 
+  private loadProducts() {
+    this.products = this.systemService.getProduct();
+  }
+
   addProduct() {
-    this.products.push({
-      quantity: '',
-      pvsid: '',
-      articleno: '',
-      designation: ''
-    });
+    // this.products.push({
+    //   quantity: '',
+    //   pvsid: '',
+    //   articleno: '',
+    //   designation: ''
+    // });
+    this.systemService.addProduct(0, '', '', '', '');
+    this.loadProducts();
     console.log('addProduct :', this.products);
   }
 
   remProduct(index) {
-    this.products.splice(index, 1);
+    this.systemService.removeProduct(index);
+    // this.products.splice(index, 1);
     if (this.products.length == 0) {
-      this.products.push({
-        quantity: '',
-        pvsid: '',
-        articleno: '',
-        designation: ''
-      });
+      // this.products.push({
+      //   quantity: '',
+      //   pvsid: '',
+      //   articleno: '',
+      //   designation: ''
+      // });
+      this.systemService.addProduct(0, '', '', '', '');
     }
+    this.loadProducts();
+    console.log('remProduct :', this.products);
   }
 
    ordersSend() {
@@ -286,6 +300,10 @@ export class OrderFormPage {
       modalPage.onDidDismiss().then(ret => {
         if (ret) {
           console.log('OrderSendPage ret', ret);
+          if (ret.data == true) {
+            this.systemService.resetProduct();
+            this.loadProducts();
+          }
         }
       });
       modalPage.present();

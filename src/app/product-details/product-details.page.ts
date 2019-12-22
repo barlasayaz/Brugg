@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController, AlertController, ModalController, Platform, LoadingController, ToastController } from '@ionic/angular';
 import { ApiService } from '../services/api';
+import { SystemService } from './../services/system';
 import { TranslateService } from '@ngx-translate/core';
 import { UserdataService } from '../services/userdata';
 import { QrBarcodeComponent } from '../components/qr-barcode/qr-barcode.component';
@@ -49,6 +50,7 @@ export class ProductDetailsPage implements OnInit {
   constructor(public navCtrl: NavController,
     public userdata: UserdataService,
     public apiService: ApiService,
+    public systemService: SystemService,
     public translate: TranslateService,
     public alertCtrl: AlertController,
     private toastCtrl: ToastController,
@@ -124,6 +126,11 @@ export class ProductDetailsPage implements OnInit {
       }
 
       this.activProduct.title = title;
+
+      this.systemService.addProduct(this.activProduct.id, '1',
+                                    this.activProduct.id_number,
+                                    this.activProduct.articel_no,
+                                    this.activProduct.title);
 
       if (this.activProduct.items) {
         try {

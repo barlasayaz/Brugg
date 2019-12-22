@@ -21,6 +21,7 @@ export class SystemService {
   public customerText: string;
   public shrinkMenu: boolean;
   public filterText: string;
+  private products: any[] = [];
 
   // public opcuaServerUri:string  = "opc.tcp://192.168.178.124:49320/Kepware.KEPServerEX.V6";
   // public opcuaServerPfad:string = "Hebemittel.SPS";
@@ -62,4 +63,36 @@ export class SystemService {
     return this.filterText ;
   }
 
+  addProduct(id: number, quantity: string, pvsid: string, articleno: string, designation: string) {
+    let x = '';
+    for (let i = 0, len = this.products.length; i < len; i++) {
+      if (this.products[i].id == 0) {
+      } else {
+        if (this.products[i].id == id) {
+          x = 'NOT';
+        }
+      }
+    }
+    if (x == '') {
+      this.products.push({
+        id: id,
+        quantity: quantity,
+        pvsid: pvsid,
+        articleno: articleno,
+        designation: designation
+      });
+    }
+  }
+
+  getProduct() {
+    return  this.products.slice();
+  }
+
+  removeProduct(index: number) {
+    this.products.splice(index, 1);
+  }
+
+  resetProduct() {
+    this.products = [];
+  }
 }
