@@ -127,11 +127,6 @@ export class ProductDetailsPage implements OnInit {
 
       this.activProduct.title = title;
 
-      this.systemService.addProduct(this.activProduct.id, '1',
-                                    this.activProduct.id_number,
-                                    this.activProduct.articel_no,
-                                    this.activProduct.title);
-
       if (this.activProduct.items) {
         try {
           this.activProduct.items = JSON.parse(this.activProduct.items);
@@ -292,6 +287,13 @@ export class ProductDetailsPage implements OnInit {
         resolve('LoadError');
       });
     });
+  }
+
+  addProductToOrderForm() {
+    this.systemService.addProduct(this.activProduct.id, '1',
+    this.activProduct.id_number,
+    this.activProduct.articel_no,
+    this.activProduct.title);
   }
 
   getInspector(id): Promise<any> {

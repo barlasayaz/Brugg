@@ -202,6 +202,11 @@
 			<ion-icon name="document"></ion-icon>
 		</ion-fab-button>
 		<ion-fab-button color="primary"
+						title="{{'Bestellen' | translate}}"
+						(click)="addProductToOrderForm()">
+			<ion-icon name="basket"></ion-icon>
+		</ion-fab-button>
+		<ion-fab-button color="primary"
 						title="{{'NFC beschreiben' | translate}}"
 						(click)="nfc_scan()"
 						[disabled]="!isNFC"
