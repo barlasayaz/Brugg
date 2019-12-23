@@ -188,7 +188,7 @@
 		<ion-fab-button color="primary"
 						title="{{'Protokoll Löschen' | translate}}"
 						(click)="protocolDeactivate()"
-						[disabled]="userdata.role_set.check_products==false">
+						*ngIf="userdata.role_set.check_products">
 			<ion-icon name="trash"></ion-icon>
 		</ion-fab-button>
 		<ion-fab-button color="primary"

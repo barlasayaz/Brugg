@@ -193,7 +193,7 @@
 		<ion-fab-button color="primary"
 						title="{{'Neues Protokoll' | translate}}"
 						(click)="createProtocol()"
-						[disabled]="userdata.role_set.check_products==false">
+						*ngIf="userdata.role_set.check_products">
 			<ion-icon name="clipboard"></ion-icon>
 		</ion-fab-button>
 		<ion-fab-button color="primary"

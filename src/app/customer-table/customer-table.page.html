@@ -124,26 +124,29 @@
 </ion-fab>
 
 <ion-fab [hidden]="workMode" vertical="bottom" horizontal="end" slot="fixed" class="liftiball" #fab1>
-    <ion-fab-button color="tertiary" (click)="fabClick(1)" >
+    <ion-fab-button color="tertiary" (click)="fabClick(1)">
         <ion-icon name="menu"></ion-icon>
     </ion-fab-button>
     <ion-fab-list side="top">
         <!-- BUTTON -->
         <ion-fab-button color="success"
                         title="{{'Neu' | translate}}"
-                        (click)="menu_new()">
+                        (click)="menu_new()"
+                        *ngIf="userdata.role_set.edit_customer">
             <ion-icon name="add"></ion-icon>
         </ion-fab-button>
         <!-- BUTTON -->
         <ion-fab-button color="success"
                         title="{{'Bearbeiten' | translate}}"
-                        (click)="menu_edit()">
+                        (click)="menu_edit()"
+                        *ngIf="userdata.role_set.edit_customer">
             <ion-icon name="create"></ion-icon>
         </ion-fab-button>
         <!-- BUTTON -->
         <ion-fab-button color="primary"
                         title="{{'Bewegen' | translate}}"
-                        (click)="menu_move()">
+                        (click)="menu_move()"
+                        *ngIf="userdata.role_set.edit_customer">
             <ion-icon name="move"></ion-icon>
         </ion-fab-button>
         <!-- BUTTON -->

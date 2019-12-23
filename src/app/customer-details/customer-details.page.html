@@ -158,7 +158,7 @@
                           <div class="thead">
                             <div class="tr table-subheader table-subheader-fix">
                               <div class="th" style="padding-right: 5px;">{{'Adressen' | translate}}</div>
-                              <ion-button [disabled]="contactPersonCount == 0" (click)="addAddress()">
+                              <ion-button [disabled]="contactPersonCount == 0 || !userdata.role_set.edit_contact_persons" (click)="addAddress()">
                                 <ion-icon name="md-create"></ion-icon>
                               </ion-button>
                               <ion-button [disabled]="pageCount<=0" (click)="pageBack()">
@@ -354,7 +354,8 @@
         </ion-fab-button>
         <ion-fab-button color="primary"
                         title="{{'Ansprechpartner' | translate}}"
-                        (click)="contactPersonPage()">
+                        (click)="contactPersonPage()"
+                        *ngIf="userdata.role_set.edit_contact_persons">
             <ion-icon name="people"></ion-icon>
         </ion-fab-button>
         <ion-fab-button color="primary"
@@ -366,7 +367,7 @@
         <ion-fab-button color="success"
                         title="{{'Kundendaten bearbeiten' | translate}}"
                         (click)="customerEdit()"
-                        *ngIf="(userdata.role==1)||(userdata.role==2)">
+                        *ngIf="(userdata.role==1||userdata.role==2)&&userdata.role_set.edit_customer">
             <ion-icon name="create"></ion-icon>
         </ion-fab-button>
   </ion-fab-list>

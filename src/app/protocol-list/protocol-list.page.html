@@ -124,13 +124,15 @@
         <!-- BUTTON -->
         <ion-fab-button color="danger"
                         title="{{'Löschen' | translate}}"
-                        (click)="editMode=true;">
+                        (click)="editMode=true;"
+                        *ngIf="userdata.role_set.check_products">
             <ion-icon name="trash"></ion-icon> 
         </ion-fab-button>
         <!-- BUTTON -->
         <ion-fab-button color="success"
                         title="{{'Neue Protokollvorlage' | translate}}"
-                        (click)="create_template()">
+                        (click)="create_template()"
+                        *ngIf="userdata.role_set.edit_protocol_templates">
             <ion-icon name="add"></ion-icon>
             <ion-icon name="list"></ion-icon>
         </ion-fab-button>
