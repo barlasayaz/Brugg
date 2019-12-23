@@ -101,7 +101,6 @@ export class OrderSendPage {
   async send() {
     console.log('send()');
 
-    console.log('aaaa :', this.Betreff);
     if (this.Ziel_DropDown == 0) {   // Destination
       this.mandatoryMsg('Bitte füllen Sie alle Pflichtfelder aus.');
       return;
@@ -159,11 +158,11 @@ export class OrderSendPage {
     if (this.Ziel_DropDown == 2) {
       this.params.Type = 0;
     }
-    console.log('params :', this.params);
+    //console.log('params :', this.params);
 
-    console.log(JSON.stringify(this.params));
+    //console.log(JSON.stringify(this.params));
     this.apiProvider.pvs4_set_orders_send(this.params).then(async (result: any) => {
-      console.log('pvs4_set_orders_send :', result);
+      //console.log('pvs4_set_orders_send :', result);
       if (result != null) {
         if (result['status'] == 1) {
           // OK

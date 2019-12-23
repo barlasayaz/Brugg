@@ -104,7 +104,7 @@ export class ProductListPage implements OnInit {
     fabClick(nr: number) {
         console.log('fabClick():', nr);
         if (nr === 1) { this.fab2.close(); }
-        if (nr === 2) { this.fab1.close(); }
+        if ((nr === 2) && this.fab1) { this.fab1.close(); }
     }
 
     update(data: any): void {

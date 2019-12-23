@@ -938,7 +938,7 @@ export class ApiService {
   }
 
   pvs4_set_orders_send(obj: any) {
-    console.log('pvs4_set_orders_send():', obj);
+    //console.log('pvs4_set_orders_send():', obj);
     return new Promise((res, rej) => {
       this.pvs4_api_post('set_orders_send.php', obj).then((done: any) => {// return the result
         console.log('pvs4_set_orders_send', done);

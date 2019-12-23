@@ -174,7 +174,7 @@
 			<ion-icon name="create"></ion-icon>
 		</ion-fab-button>
 		<ion-fab-button color="primary"
-						title="{{'Produkt duplizieren alt' | translate}}"
+						title="{{'Produkt kopieren' | translate}}"
 						(click)="copyProduct()"
 						*ngIf="userdata.role_set.edit_products">
 			<ion-icon name="copy"></ion-icon>
@@ -202,15 +202,17 @@
 			<ion-icon name="document"></ion-icon>
 		</ion-fab-button>
 		<ion-fab-button color="primary"
-						title="{{'NFC Scan' | translate}}"
+						title="{{'NFC beschreiben' | translate}}"
 						(click)="nfc_scan()"
-						[disabled]="!isNFC">
+						[disabled]="!isNFC"
+						*ngIf="userdata.role_set.edit_products">
 			<ion-icon name="wifi"></ion-icon>
 		</ion-fab-button>
 		<ion-fab-button color="primary"
 						title="{{'QR-Code scannen' | translate}}"
 						(click)="qr_code()"
-						[disabled]="!mobilePlatform">
+						[disabled]="!mobilePlatform"
+						*ngIf="userdata.role_set.edit_products">
 			<ion-icon name="qr-scanner"></ion-icon>
 		</ion-fab-button>
 	</ion-fab-list>

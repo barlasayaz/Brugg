@@ -163,7 +163,7 @@
     </ion-fab-button>
 </ion-fab>
 
-<ion-fab [hidden]="workMode" vertical="bottom" horizontal="end" slot="fixed" class="liftiball" #fab1>
+<ion-fab [hidden]="workMode" vertical="bottom" horizontal="end" slot="fixed" class="liftiball" #fab1 *ngIf="userdata.role_set.edit_products||userdata.role_set.check_products||userdata.role_set.edit_product_templates" >
     <ion-fab-button color="tertiary" (click)="fabClick(1)" >
         <ion-icon name="menu"></ion-icon>
     </ion-fab-button>
@@ -246,7 +246,7 @@
         </ion-fab-button>
         <!-- BUTTON -->
         <ion-fab-button color="success"
-                        title="{{'Produkt duplizieren alt' | translate}}"
+                        title="{{'Produkt kopieren' | translate}}"
                         (click)="work_mode(5)"
                         *ngIf=" userdata.role_set.edit_products">
             <ion-icon name="copy"></ion-icon>
