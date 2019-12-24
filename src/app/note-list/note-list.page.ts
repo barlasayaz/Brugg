@@ -131,8 +131,11 @@ export class NoteListPage implements OnInit {
         console.log('filterText :', this.filterText);
 
         console.log('NoteListPage idCustomer:', this.idCustomer);
-        this.page_load();
 
+    }
+
+    ionViewWillEnter() {
+        this.page_load();
     }
 
     update(data: any): void {
@@ -218,9 +221,13 @@ export class NoteListPage implements OnInit {
         });
         loader.present();
 
+        let progressBar = 0;
         this.rowRecords = 0;
         this.totalRecords = 0;
-        this.events.publish('prozCustomer', 0);
+        this.events.publish('progressBar', progressBar);
+        this.events.publish('rowRecords', this.rowRecords);
+        this.events.publish('totalRecords', this.totalRecords);
+
         this.apiService.pvs4_get_note_list(this.idCustomer).then((result: any) => {
             this.noteListAll = JSON.parse(JSON.stringify(result.list));
             if (localStorage.getItem('filter_values_note') != undefined) {

@@ -4,7 +4,7 @@ import { ApiService } from '../services/api';
 import { TranslateService } from '@ngx-translate/core';
 import { UserdataService } from '../services/userdata';
 import { TreeTable } from 'primeng/components/treetable/treetable';
-import { TreeNode, MenuItem, LazyLoadEvent } from 'primeng/api';
+import { TreeNode, LazyLoadEvent } from 'primeng/api';
 import { ExcelService } from '../services/excel';
 import { PdfExportService } from '../services/pdf-export';
 import { DatePipe } from '@angular/common';
@@ -50,7 +50,7 @@ export class ProtocolListPage implements OnInit {
     public rowHeight = 26;
     public rowCount = 20;
     public sortedColumn = { sort_field : null, sort_order : 0 };
-    public editMode = false;    
+    public editMode = false;
 
     @ViewChild('tt') dataTable: TreeTable;
     @ViewChild('divHeightCalc') divHeightCalc: any;
@@ -87,7 +87,7 @@ export class ProtocolListPage implements OnInit {
             { field: 'protocol_date', header: this.translate.instant('Datum'), width: '95px'},
             { field: 'result', header: this.translate.instant('Prüfergebnis'), width: '160px' },
             { field: 'protocol_date_next', header: this.translate.instant('nächste Prüfung'), width: '95px' }
-        ];            
+        ];
 
         this.filterCols = [
             'work_column',
@@ -107,6 +107,10 @@ export class ProtocolListPage implements OnInit {
         if (localStorage.getItem('sort_column_protocol') != undefined) {
             this.sortedColumn = JSON.parse(localStorage.getItem('sort_column_protocol'));
         }
+
+    }
+
+    ionViewWillEnter() {
         this.page_load();
     }
 
@@ -195,11 +199,14 @@ export class ProtocolListPage implements OnInit {
         });
         loader.present();
 
+        let progressBar = 0;
         this.rowRecords = 0;
         this.totalRecords = 0;
         this.selectedNode = [];
         this.selectedRow = 0;
-        this.events.publish('prozCustomer', 0);
+        this.events.publish('progressBar', progressBar);
+        this.events.publish('rowRecords', this.rowRecords);
+        this.events.publish('totalRecords', this.totalRecords);
 
         this.apiService.pvs4_get_customer(this.idCustomer).then((result: any) => {
             this.activCustomer = result.obj;
@@ -219,18 +226,17 @@ export class ProtocolListPage implements OnInit {
                 try {
                     let protocolDate = new Date(this.protocolListAll[index].data.protocol_date.replace(' ', 'T')).toISOString();
                     this.protocolListAll[index].data.protocol_date = pipe.transform(protocolDate, 'dd.MM.yyyy');
-                }catch(e){
+                } catch (e) {
                     console.error('protocol_date error:' + index , this.protocolListAll[index].data.protocol_date, e );
                 }
-                try{
-                    if(this.protocolListAll[index].data.protocol_date_next!="0000-00-00"){
+                try {
+                    if(this.protocolListAll[index].data.protocol_date_next != '0000-00-00'){
                         let next = new Date(this.protocolListAll[index].data.protocol_date_next.replace(' ', 'T')).toISOString();
                         this.protocolListAll[index].data.protocol_date_next = pipe.transform(next, 'dd.MM.yyyy');
-                    }                    
-                }catch(e){
+                    }
+                } catch(e) {
                     console.error('protocol_date_next error:' + index , this.protocolListAll[index].data.protocol_date_next, e );
                 }
-                
 
                 let options = [];
                 try {
@@ -487,8 +493,8 @@ export class ProtocolListPage implements OnInit {
     }
 
     viewProtocol(field, protocol) {
-        console.log('viewProtocol()',field, protocol);
-        if(field.field!='title') return;
+        console.log('viewProtocol()', field, protocol);
+        if (field.field != 'title') { return; }
         console.log('viewProtocol.id', protocol.id);
         if (protocol) {
             if (protocol.id) {
@@ -532,7 +538,6 @@ export class ProtocolListPage implements OnInit {
             const obj = this.allnodes[i];
             obj.items = obj.items.replace(/(\\r\\n|\\n|\\r)/gm, ' ');
             const json: any = {};
-            let objStr: any;
             for (let j = 0; j < this.selectedColumns.length; j++) {
                 if (this.selectedColumns[j].field === 'work_column') { continue; }
                 if (obj[this.selectedColumns[j].field]) {

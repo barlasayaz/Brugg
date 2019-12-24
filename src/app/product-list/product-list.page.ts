@@ -173,8 +173,12 @@ export class ProductListPage implements OnInit {
                 this.sortedColumn = JSON.parse(localStorage.getItem('sort_column_product'));
             }
             console.log('ProductListPage idCustomer:', this.idCustomer);
-            this.page_load();
+
         });
+    }
+
+    ionViewWillEnter() {
+        this.page_load();
     }
 
     onResize(event) {
@@ -376,7 +380,7 @@ export class ProductListPage implements OnInit {
 
         // children
         if(line.children){
-            //console.log('prepare_line', line.children);
+            // console.log('prepare_line', line.children);
             for (let i = 0; i < line.children.length; i++) {
                 this.prepare_line(line.children[i]);
             }
@@ -391,14 +395,17 @@ export class ProductListPage implements OnInit {
             message: this.translate.instant('Bitte warten')
         });
         loader.present();
- 
+
+        let progressBar = 0;
         this.rowRecords = 0;
         this.totalRecords = 0;
         this.childCount = 0;
         this.selectedNode = [];
         this.selectedRow = 0;
+        this.events.publish('progressBar', progressBar);
+        this.events.publish('rowRecords', this.rowRecords);
+        this.events.publish('totalRecords', this.totalRecords);
 
-        this.events.publish('prozCustomer', 0);
         this.apiService.pvs4_get_product_list(this.idCustomer, this.showActivePassiveProduct).then((result: any) => {
             console.log('pvs4_get_product_list ok');
             const list = JSON.parse(JSON.stringify(result.list));
@@ -439,7 +446,7 @@ export class ProductListPage implements OnInit {
 
             for (let index = 0; index < this.productListAll.length; index++) {
                 // last_protocol & last_protocol_next
-                this.prepare_line(this.productListAll[index]);                
+                this.prepare_line(this.productListAll[index]);
             }
 
             this.generate_productList(0, this.rowCount, this.sortedColumn.sort_field, this.sortedColumn.sort_order);
@@ -776,16 +783,16 @@ export class ProductListPage implements OnInit {
     }
 
     clickCol(field, data, text){
-        console.log('clickCol()',field, data,text);
-        if(field.field==='title') this.viewProduct(data);
+        console.log('clickCol()', field, data,text);
+        if (field.field === 'title') { this.viewProduct(data); }
 
-        if(field.editField!=true) return;    
-        if(text === undefined) return;    
-        if(text === null) return; 
+        if (field.editField != true) { return; }
+        if (text === undefined) { return; }
+        if (text === null) { return; } 
 
-        if(field.editFieldEN==='customer_description') {
+        if(field.editFieldEN === 'customer_description') {
             let otext = '';
-            if (data.customer_description) otext = String(data.customer_description);
+            if (data.customer_description) { otext = String(data.customer_description); }
             const alert = this.alertCtrl.create({
                 header: this.translate.instant('Kundenbezeichnung'),
                 message: otext,
@@ -813,16 +820,16 @@ export class ProductListPage implements OnInit {
                                     console.log('result: ', setResult);
                                     this.page_load();
                                 });
-                            });                            
+                            });
                         }
                     }
                 ]
             }).then(x => x.present());
-        } 
-        
+        }
+
         if(field.editFieldEN==='Note') {
             let otext = '';
-            if (data[field.field]) otext = String(data[field.field]);
+            if (data[field.field]) { otext = String(data[field.field]); }
             const alert = this.alertCtrl.create({
                 header: field.field,
                 message: otext,
@@ -838,7 +845,8 @@ export class ProductListPage implements OnInit {
                         handler: data => {
                             //  alert.dismiss();
                         }
-                    },{
+                    },
+                    {
                         text: this.translate.instant('okay'),
                         handler: (e) => {
                             console.log('Note:', e);
@@ -849,14 +857,14 @@ export class ProductListPage implements OnInit {
                                 try {
                                     let items = JSON.parse(activProduct.items);
                                     for (let i = 0; i < items.length; i++) {
-                                        if(items[i].type!=2) continue;
-                                        if(items[i].title['en']==="Note") {
+                                        if (items[i].type != 2) { continue; }
+                                        if (items[i].title['en'] === 'Note') {
                                             items[i].value = s;
                                             break;
                                         }
-                                    }                                    
+                                    }
                                     items = JSON.stringify(items);
-                                    //console.log("items new:", items);
+                                    // console.log("items new:", items);
                                     activProduct.items = items;
                                     this.apiService.pvs4_set_product(activProduct).then((setResult: any) => {
                                         console.log('result: ', setResult);
@@ -866,17 +874,17 @@ export class ProductListPage implements OnInit {
                                     console.error('JSON.parse items err :', e);
                                     console.log('items :', activProduct);
                                 }
-                                
-                            });     
+
+                            });
                         }
                     }
                 ]
             }).then(x => x.present());
         }
-        
+
         if(field.editFieldEN==='Location') {
             let otext = '';
-            if (data[field.field]) otext = String(data[field.field]);
+            if (data[field.field]) { otext = String(data[field.field]); }
             const alert = this.alertCtrl.create({
                 header: field.field,
                 message: otext,
@@ -892,7 +900,8 @@ export class ProductListPage implements OnInit {
                         handler: data => {
                             //  alert.dismiss();
                         }
-                    },{
+                    },
+                    {
                         text: this.translate.instant('okay'),
                         handler: (e) => {
                             console.log('Location:', e);
@@ -903,14 +912,14 @@ export class ProductListPage implements OnInit {
                                 try {
                                     let items = JSON.parse(activProduct.items);
                                     for (let i = 0; i < items.length; i++) {
-                                        if(items[i].type!=2) continue;
-                                        if(items[i].title['en']==="Location") {
+                                        if (items[i].type != 2) { continue; }
+                                        if (items[i].title['en'] === 'Location') {
                                             items[i].value = s;
                                             break;
                                         }
-                                    }                                    
+                                    }
                                     items = JSON.stringify(items);
-                                    //console.log("items new:", items);
+                                    // console.log("items new:", items);
                                     activProduct.items = items;
                                     this.apiService.pvs4_set_product(activProduct).then((setResult: any) => {
                                         console.log('result: ', setResult);
@@ -920,13 +929,13 @@ export class ProductListPage implements OnInit {
                                     console.error('JSON.parse items err :', e);
                                     console.log('items :', activProduct);
                                 }
-                                
-                            });     
+
+                            });
                         }
                     }
                 ]
             }).then(x => x.present());
-        } 
+        }
     }
 
     viewProduct(data) {
@@ -1004,7 +1013,7 @@ export class ProductListPage implements OnInit {
             // this.selectMulti = 1;
             this.selectMode = false;
         }
-    }    
+    }
 
     create_template() {
         if (this.userdata.role_set.edit_product_templates == false) { return; }

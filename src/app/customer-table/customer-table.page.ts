@@ -266,6 +266,9 @@ export class CustomerTablePage implements OnInit {
         if (this.filterText.length > 0) { this.filterOn = true; }
         console.log('filterText :', this.filterText);
 
+    }
+
+    ionViewWillEnter() {
         this.page_load();
     }
 
@@ -338,9 +341,13 @@ export class CustomerTablePage implements OnInit {
         });
         loader.present();
 
+        let progressBar = 0;
         this.rowRecords = 0;
         this.totalRecords = 0;
-        this.events.publish('prozCustomer', 0);
+        this.events.publish('progressBar', progressBar);
+        this.events.publish('rowRecords', this.rowRecords);
+        this.events.publish('totalRecords', this.totalRecords);
+
         this.apiService.pvs4_get_customer_list(0, this.filterText).then((result: any) => {
             console.log('page_load result :', result);
 
@@ -702,8 +709,8 @@ export class CustomerTablePage implements OnInit {
     }
 
     viewCustomer(field, data) {
-        console.log('viewCustomer()',field, data);
-        if(field.field!='company') return;
+        console.log('viewCustomer()', field, data);
+        if (field.field != 'company') { return; }
         const id = parseInt(data.id);
         console.log('menu_view id', id);
         this.navCtrl.navigateForward('/customer-details/' + id);
