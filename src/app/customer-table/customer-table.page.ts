@@ -4,7 +4,7 @@ import { ApiService } from '../services/api';
 import { TranslateService } from '@ngx-translate/core';
 import { UserdataService } from '../services/userdata';
 import { TreeTable } from 'primeng/components/treetable/treetable';
-import { TreeNode, MenuItem, LazyLoadEvent } from 'primeng/api';
+import { TreeNode,  LazyLoadEvent } from 'primeng/api';
 import { ExcelService } from '../services/excel';
 import { AlertController } from '@ionic/angular';
 import { CustomerEditComponent } from '../components/customer-edit/customer-edit.component';
@@ -37,12 +37,7 @@ export class CustomerTablePage implements OnInit {
         private route: ActivatedRoute) {
             this.modelChanged.pipe(
                 debounceTime(700))
-                .subscribe(model => {
-                    if (this.isFilterOn()) {
-                        this.menuItems[7].items[0]['disabled'] = false;
-                    } else {
-                        this.menuItems[7].items[0]['disabled'] = true;
-                    }
+                .subscribe(model => {                    
                     this.generate_customerList(0, this.rowCount, this.sortedColumn.sort_field, this.sortedColumn.sort_order);
                     localStorage.setItem('filter_values_customer', JSON.stringify(this.columnFilterValues));
             });
@@ -89,108 +84,7 @@ export class CustomerTablePage implements OnInit {
     public editMode: boolean = false;
     public moveMode: boolean = false;
 
-    public menuItems: MenuItem[] = [{
-        label: this.translate.instant('Ansicht'),
-        icon: 'pi pi-fw pi-eye',
-        disabled: true,
-        command: (event) => {
-            console.log('command menuitem:', event);
-            // this.menu_view();
-        }
-    },
-    {
-        label: this.translate.instant('Bearbeiten'),
-        icon: 'pi pi-fw pi-pencil',
-        disabled: true,
-        visible: this.userdata.role_set.edit_customer,
-        command: (event) => {
-            console.log('command menuitem:', event);
-            this.menu_edit();
-        }
-    },
-    {
-        label: this.translate.instant('Bewegen'),
-        icon: 'pi pi-fw pi-chevron-up',
-        visible: this.userdata.role_set.edit_customer,
-        disabled: true,
-        command: (event) => {
-            console.log('command menuitem:', event);
-            this.menu_move();
-        }
-    },
-    {
-        label: this.translate.instant('Stammordner'),
-        icon: 'pi pi-fw pi-chevron-down',
-        visible: false,
-        disabled: false,
-        command: (event) => {
-            if (this.userdata.role_set.edit_customer != true) { return; }
-            console.log('command menuitem:', event);
-            this.menu_move();
-        }
-    },
-    {
-        label: this.translate.instant('Neu'),
-        icon: 'pi pi-fw pi-plus',
-        visible: this.userdata.role_set.edit_customer,
-        command: (event) => {
-            if (this.userdata.role_set.edit_customer != true) { return; }
-            console.log('command menuitem:', event);
-            this.menu_new();
-        }
-    },
-    {
-        label: this.translate.instant('Filter'),
-        icon: 'pi pi-fw pi-filter',
-        command: (event) => {
-            console.log('command menuitem:', event);
-            this.menu_filter();
-        }
-    },
-    {
-        label: this.translate.instant('Spalten'),
-        icon: 'pi pi-fw pi-eject',
-        command: (event) => {
-            console.log('command menuitem:', event);
-            this.show_columns();
-        }
-    },
-    {
-        label: this.translate.instant('Aktion'),
-        icon: 'pi pi-fw pi-cog',
-        items: [
-            {
-                label: this.translate.instant('Cancel filters'),
-                icon: 'pi pi-fw pi-filter',
-                disabled: true,
-                command: (event) => {
-                    console.log('command menuitem:', event);
-                    this.cancel_filters(2);
-                }
-            },
-            {
-                label: this.translate.instant('XLSx export'),
-                icon: 'pi pi-fw pi-save',
-                command: (event) => {
-                    this.excel_export();
-                }
-            },
-            {
-                label: this.translate.instant('PDF export'),
-                icon: 'pi pi-fw pi-save',
-                command: (event) => {
-                    this.pdf_export();
-                }
-            }
-        ]
-    }];
-
-    public popupMenu: MenuItem[] = [{
-        label: this.translate.instant('Menü'),
-        icon: 'fa fa-fw fa-list',
-        items: this.menuItems
-    }];
-
+    
     @ViewChild('tt') dataTable: TreeTable;
     @ViewChild('divHeightCalc') divHeightCalc: any;
     @ViewChild('fab1') fab1: any;
@@ -199,18 +93,14 @@ export class CustomerTablePage implements OnInit {
     fabClick(nr: number) {
         console.log('fabClick():', nr);
         if (nr === 1) { this.fab2.close(); }
-        if (nr === 2) { this.fab1.close(); }
+        if ((nr === 2) && this.fab1){ this.fab1.close(); }
     }
 
     update(data: any): void {
         console.log('update():', data);
         if (data.lable === 'searchText') {
             this.columnFilterValues['search_all'] = data.text;
-            if (this.isFilterOn()) {
-                this.menuItems[7].items[0]['disabled'] = false;
-            } else {
-                this.menuItems[7].items[0]['disabled'] = true;
-            }
+            
             this.generate_customerList(0, this.rowCount, this.sortedColumn.sort_field, this.sortedColumn.sort_order);
             localStorage.setItem('filter_values_customer', JSON.stringify(this.columnFilterValues));
         }
@@ -433,7 +323,6 @@ export class CustomerTablePage implements OnInit {
 
     cancel_filters(cancel_type) {
         console.log('cancel_filters');
-        this.menuItems[7].items[0]['disabled'] = true;
         if (cancel_type == 1) {
             for (let i = 0; i < this.cols.length; i++) {
                 this.columnFilterValues[this.cols[i].field] = '';
@@ -507,20 +396,6 @@ export class CustomerTablePage implements OnInit {
             this.customerListView = this.customerListView.slice(start_index, (start_index + end_index));
         }
 
-        if (this.customerListView.length > 0) {
-            if (this.isFilterOn()) {
-                this.menuItems[7].items[0]['disabled'] = false;
-            } else {
-                this.menuItems[7].items[0]['disabled'] = true;
-            }
-            this.menuItems[7].items[1]['disabled'] = false;
-            this.menuItems[7].items[2]['disabled'] = false;
-        } else {
-            this.menuItems[7].items[0]['disabled'] = true;
-            this.menuItems[7].items[1]['disabled'] = true;
-            this.menuItems[7].items[2]['disabled'] = true;
-        }
-
         let progressBar;
         if (this.totalRecords > 0 ) {
             progressBar = Math.round(this.rowRecords * 100 / this.totalRecords);
@@ -560,28 +435,11 @@ export class CustomerTablePage implements OnInit {
     }
 
     nodeSelect() {
-        /*
-        console.log('nodeSelect:', this.menuItems, this.workMode);
-        let id_sn = 0;
-
-        if(this.workMode){
-            this.selectedNode = null;
-            return;
-        }else{
-            //id_sn = this.selectedNode.data.id;
-            this.menu_view();
-        }
-        */
-
+        console.log('nodeSelect:');
     }
 
     nodeUnselect() {
         console.log('nodeUnselect:');
-        this.menuItems[0].disabled = true;
-        this.menuItems[1].disabled = true;
-        this.menuItems[2].disabled = true;
-        this.menuItems[2].visible = this.userdata.role_set.edit_customer;
-        this.menuItems[3].visible = false;
         this.move_id = 0;
     }
 
