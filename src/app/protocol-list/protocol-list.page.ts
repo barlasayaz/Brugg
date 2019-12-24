@@ -4,7 +4,7 @@ import { ApiService } from '../services/api';
 import { TranslateService } from '@ngx-translate/core';
 import { UserdataService } from '../services/userdata';
 import { TreeTable } from 'primeng/components/treetable/treetable';
-import { TreeNode, LazyLoadEvent } from 'primeng/api';
+import { TreeNode,  LazyLoadEvent } from 'primeng/api';
 import { ExcelService } from '../services/excel';
 import { PdfExportService } from '../services/pdf-export';
 import { DatePipe } from '@angular/common';

@@ -123,7 +123,7 @@
     </ion-fab-button>
 </ion-fab>
 
-<ion-fab [hidden]="workMode" vertical="bottom" horizontal="end" slot="fixed" class="liftiball" #fab1>
+<ion-fab [hidden]="workMode" vertical="bottom" horizontal="end" slot="fixed" class="liftiball" #fab1 *ngIf="userdata.role_set.edit_customer" >
     <ion-fab-button color="tertiary" (click)="fabClick(1)">
         <ion-icon name="menu"></ion-icon>
     </ion-fab-button>

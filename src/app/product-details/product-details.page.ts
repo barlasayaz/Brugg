@@ -697,7 +697,7 @@ export class ProductDetailsPage implements OnInit {
   }
 
   createProtocol() {
-    if (this.userdata.role_set.edit_products == false) { return; }
+    if (this.userdata.role_set.check_products == false) { return; }
     console.log('select product :', this.activProduct);
     if (this.activProduct.id > 0) {
       const nodeList = [];

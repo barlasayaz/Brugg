@@ -24,7 +24,6 @@ export class ProtocolTemplatePage implements OnInit {
   public availableOptions: any[];
   public draggedOption: any = {};
   public templateTitleObj: any = { de: '', en: '', fr: '', it: '' };
-  public menuItems: any[] = [];
   public idCustomer = 0;
   public idTemplate = 0;
   public searchText = '';
