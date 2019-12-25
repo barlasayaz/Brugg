@@ -14,6 +14,7 @@ import { debounceTime } from 'rxjs/operators';
 import { SystemService } from '../services/system';
 import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
 import { ActivatedRoute } from '@angular/router';
+import { DatePipe } from '@angular/common';
 
 @Component({
     selector: 'app-customer-table',
@@ -622,6 +623,7 @@ export class CustomerTablePage implements OnInit {
         const columns: any[] = [];
         const widthsArray: string[] = [];
         const headerRowVisible: any = 1;
+        const pipe = new DatePipe('en-US');
         for (let k = 0; k < this.selectedColumns.length; k++) {
             if (this.selectedColumns[k].field === 'work_column') { continue; }
             columns.push({ text: this.selectedColumns[k].header, style: 'header' });
@@ -643,7 +645,14 @@ export class CustomerTablePage implements OnInit {
             for (let j = 0; j < this.selectedColumns.length; j++) {
                 if (this.selectedColumns[j].field === 'work_column') { continue; }
                 if (obj[this.selectedColumns[j].field]) {
-                   rowArray.push(obj[this.selectedColumns[j].field]);
+                    console.log('obj :', this.selectedColumns[j].field, obj[this.selectedColumns[j].field]);
+                    if (this.selectedColumns[j].field == 'last_date') {
+                        rowArray.push(pipe.transform(obj[this.selectedColumns[j].field], 'dd.MM.yyyy'));
+                    } else if (this.selectedColumns[j].field == 'next_date') {
+                        rowArray.push(pipe.transform(obj[this.selectedColumns[j].field], 'dd.MM.yyyy'));
+                    } else {
+                        rowArray.push(obj[this.selectedColumns[j].field]);
+                    }
                 } else {
                    rowArray.push('');
                 }

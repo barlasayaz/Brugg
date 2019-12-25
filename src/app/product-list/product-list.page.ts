@@ -1104,7 +1104,7 @@ export class ProductListPage implements OnInit {
         }
         let obj: any;
         const headerRowVisible: any = 0;
-        widthsArray.push('*', 'auto', '*', '*', '*', '*', '*', '*', '*');
+        widthsArray.push('*', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto');
 
         for (let i = 0, len = this.allnodes.length; i < len; i++) {
             obj = this.allnodes[i];
