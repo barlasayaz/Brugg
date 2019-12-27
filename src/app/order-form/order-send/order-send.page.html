@@ -15,9 +15,8 @@
                               id="Ziel_DropDown"
                               [(ngModel)]="Ziel_DropDown"
                               okText="{{translate.instant('okay')}}"
-                              cancelText="{{translate.instant('abbrechen')}}">
-                    <ion-select-option value="0" [selected]="Ziel_DropDown==0" >{{translate.instant('bitte wählen')}}</ion-select-option>
-                    <ion-select-option value="1">Brugg Lifting</ion-select-option>
+                              cancelText="{{translate.instant('abbrechen')}}">                              
+                    <ion-select-option value="1" [selected]="Ziel_DropDown==1">Brugg Lifting</ion-select-option>
                     <ion-select-option value="3">Brugg Lifting Ecublens</ion-select-option>
                     <ion-select-option value="2">{{translate.instant('Mein Einkauf')}}</ion-select-option>
                   </ion-select>

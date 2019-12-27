@@ -117,44 +117,90 @@ export class OrderFormPage {
               public camera: Camera,
               public transfer: FileTransfer) {
 
-                this.idCustomer = 0;
-                this.mobilePlatform = false;
-                this.noteRows = 5;
-                this.dateiListe();
-                this.activOrderForm.image = '';
-                this.url = this.apiProvider.pvsApiURL;
-                this.imageDataUri = '';
-                this.activOrderForm.image = '';
-                this.imageDataUri = '';
-                this.activOrderForm.imageType = '';
-                this.noteRows = 5;
+  }
 
-                this.pdf.toDataURL('assets/imgs/product_img.jpg', data => {
-                  if (data) {
-                    this.imageDataUri = data;
-                  }
-                });
+  ionViewWillEnter() {
+    this.idCustomer = 0;
+    this.mobilePlatform = false;
+    this.noteRows = 5;
+    this.dateiListe();
+    this.activOrderForm.orderCheckBox = false;
+    this.activOrderForm.orderCheckBox = false;
+    this.activOrderForm.offerCheckBox = false;
+    this.activOrderForm.repairCheckBox = false;
+    this.activOrderForm.inspectionCheckBox = false;
+    this.activOrderForm.rentCheckBox = false;
+    this.activOrderForm.billing.company = '';
+    this.activOrderForm.billing.street = '';
+    this.activOrderForm.billing.zipCodePlace = '';
+    this.activOrderForm.billing.sector = '';
+    this.activOrderForm.billing.email = '';
+    this.activOrderForm.billing.phone = '';
+    this.activOrderForm.billing.internet = '';
+    this.activOrderForm.shipping.name = '';
+    this.activOrderForm.shipping.street = '';
+    this.activOrderForm.shipping.zipCodePlace = '';
+    this.activOrderForm.shipping.department = '';
+    this.activOrderForm.shipping.email = '';
+    this.activOrderForm.shipping.phone = '';
+    this.activOrderForm.shipping.mobile = '';
+    this.activOrderForm.order_nr = '';
+    this.activOrderForm.contract_nr = '';
+    this.activOrderForm.pvs_order_nr = Date.now();
+    this.activOrderForm.commission = '';
+    this.activOrderForm.order_date = '';
+    this.activOrderForm.delivery_date = '';
+    this.activOrderForm.sampleDeliveryCheckBox = false;
+    this.activOrderForm.creditCheckBox = false;
+    this.activOrderForm.confOrderCheckBox = false;
+    this.activOrderForm.afterLoadingCheckBox = false;
+    this.activOrderForm.postCheckBox = false;
+    this.activOrderForm.expressCheckBox = false;
+    this.activOrderForm.aboutBrachtCheckBox = false;
+    this.activOrderForm.lkwCheckBox = false;
+    this.activOrderForm.evenPickupCheckBox = false;
+    this.activOrderForm.keepIdNumber = false;
+    this.activOrderForm.products.quantity = '';
+    this.activOrderForm.products.pvsid = '';
+    this.activOrderForm.products.articleno = '';
+    this.activOrderForm.products.designation = '';
+    this.activOrderForm.note = '';
+    this.activOrderForm.image = '';
+    this.activOrderForm.imageType = '';
+    this.activOrderForm.commissioned = '';
+    this.activOrderForm.customerNumber = '';
+    this.activOrderForm.dbId = '';
 
-                platform.ready().then(() => {
-                  if ( this.platform.is('ios') ||
-                    this.platform.is('android') ) {
-                    this.mobilePlatform = true;
-                    console.log('platform mobile:', this.platform.platforms());
-                  } else {
-                    console.log('platform not mobile:', this.platform.platforms());
-                    this.mobilePlatform = false;
-                  }
-                });
+    this.url = this.apiProvider.pvsApiURL;
+    this.imageDataUri = '';
+    this.noteRows = 5;
 
-                this.idCustomer = parseInt(this.route.snapshot.paramMap.get('id'));
-                this.getContactList();
-                this.loadCustomer(this.idCustomer);
-                this.loadProducts();
+    this.pdf.toDataURL('assets/imgs/product_img.jpg', data => {
+      if (data) {
+        this.imageDataUri = data;
+      }
+    });
 
-                this.maxDate = this.apiProvider.maxDate;
-                this.activOrderForm.commissioned = this.userdata.first_name + ' ' +
-                                                   this.userdata.last_name + ' (' +
-                                                   this.userdata.email + ')';
+    this.platform.ready().then(() => {
+      if ( this.platform.is('ios') ||
+        this.platform.is('android') ) {
+        this.mobilePlatform = true;
+        console.log('platform mobile:', this.platform.platforms());
+      } else {
+        console.log('platform not mobile:', this.platform.platforms());
+        this.mobilePlatform = false;
+      }
+    });
+
+    this.idCustomer = parseInt(this.route.snapshot.paramMap.get('id'));
+    this.getContactList();
+    this.loadCustomer(this.idCustomer);
+    this.loadProducts();
+
+    this.maxDate = this.apiProvider.maxDate;
+    this.activOrderForm.commissioned = this.userdata.first_name + ' ' +
+                                       this.userdata.last_name + ' (' +
+                                       this.userdata.email + ')';
   }
 
   loadCustomer(id: number) {
@@ -241,7 +287,7 @@ export class OrderFormPage {
     }
   }
 
-  private loadProducts() {
+  loadProducts() {
     this.products = this.systemService.getProduct();
   }
 
@@ -301,6 +347,7 @@ export class OrderFormPage {
         if (ret) {
           console.log('OrderSendPage ret', ret);
           if (ret.data == true) {
+            this.ionViewWillEnter();
             this.systemService.resetProduct();
             this.loadProducts();
           }

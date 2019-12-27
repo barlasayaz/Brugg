@@ -18,7 +18,7 @@ import { ToastController } from '@ionic/angular';
   styleUrls: ['./order-send.page.scss'],
 })
 export class OrderSendPage {
-  public Ziel_DropDown: any = '0';
+  public Ziel_DropDown: any = '1';
   public Empfaenger: string = '';
   public idCustomer: number;
   public RE_Ansp: any = {};
@@ -83,9 +83,6 @@ export class OrderSendPage {
   }
 
   changeAim() {
-    if (this.Ziel_DropDown == 0) {
-      this.Empfaenger = '';
-    }
     if (this.Ziel_DropDown == 1) {
       this.Empfaenger = 'info.lifting@brugg.com';
     }
@@ -100,11 +97,6 @@ export class OrderSendPage {
 
   async send() {
     console.log('send()');
-
-    if (this.Ziel_DropDown == 0) {   // Destination
-      this.mandatoryMsg('Bitte füllen Sie alle Pflichtfelder aus.');
-      return;
-    }
 
     if (this.Betreff == '') {   // Subject
       this.mandatoryMsg('Bitte füllen Sie alle Pflichtfelder aus.');
