@@ -23,7 +23,7 @@ export class AppointmentEditComponent implements OnInit {
     active: 1,
     appointment_type: '0',
     idCustomer: this.idCustomer,
-    idUser: this.userdata.id,
+    idUser: 0,
     notes: '',
     appointment_date: new Date().toISOString(),
     id: 0,
@@ -120,13 +120,13 @@ export class AppointmentEditComponent implements OnInit {
       this.employeeList = resultX[0];
       this.contactPersonList = resultX[1];
 
-      if (this.navParams.get('appointment')) {
-        if (this.activAppointment.idUser == null) {
+      // if (this.navParams.get('appointment')) {
+        if (this.activAppointment.idUser == 0) {
           this.activAppointment.idUser = this.userdata.id;
         } else {
           this.activAppointment.idUser = parseInt(this.activAppointment.idUser);
         }
-      }
+      // }
 
       // For ion-select id must be integer. Data id and ngModel value id...
       this.activAppointment.idContactPerson = parseInt(this.activAppointment.idContactPerson);

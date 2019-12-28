@@ -1,23 +1,22 @@
-.item-border {
-    padding-top: 19px !important;
-    padding-bottom: 17px !important;
-    padding-left: 6px !important;
-    padding-right: 50px !important;
-    @media only screen and (max-width: 768px) {
-        padding-right: 10px !important;
-    }
-}
-
-.item-toggle {
-    transform: translate3d(0, 37%, 0) !important;
-    font-size: 11px !important;
-    margin-top: 6px;
-    @media only screen and (max-width: 768px) {
-        transform: translate3d(0, 16%, 0) !important;
-    }
-}
-
 .date-trash-button {
     margin-top: 22px;
     margin-left: -8px;
+}
+
+.label-floating.sc-ion-label-ios-h, .label-stacked.sc-ion-label-ios-h {
+    font-size: 12px !important;
+    margin: 8px 5px -13px 5px !important;
+}
+
+.item-border-toggle {
+    border: 1px solid var(--ion-color-green) !important;
+    padding-left: 15px !important;
+    padding-right: 40px !important;
+    padding-top: 18px !important;
+    padding-bottom: 18px !important;
+    @media only screen and (max-width: 768px) {
+        padding-left: 6px !important;
+        padding-right: 14px !important;
+        font-size: 10px !important;
+    }
 }
