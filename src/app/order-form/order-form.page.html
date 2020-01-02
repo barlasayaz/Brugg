@@ -120,20 +120,18 @@
                   <div class="table-info">      
                     <div class="thead">
                       <div class="tr table-subheader table-subheader-fix">
-                         <div style="width: inherit;">
-                          <ion-item lines="none" style="--background: #005e86;">
-                            <ion-label position="fixed" style="color: white !important;">{{translate.instant('Lieferadresse')}}</ion-label>
-                            <ion-select (ionChange)="changeContactPerson($event)"
-                                        name="RE_Ansp"
-                                        id="RE_Ansp"
-                                        class='contact-person'
-                                        okText="{{translate.instant('okay')}}"
-                                        cancelText="{{translate.instant('abbrechen')}}">
-                              <ion-select-option value="0" selected>{{translate.instant('Gleich wie Rechnungsadresse')}}</ion-select-option>
-                              <ion-select-option value="1">{{translate.instant('Manuelle Eingabe')}}</ion-select-option>         
-                              <ion-select-option [value]="ansp" *ngFor="let ansp of contactPersonList">{{ansp.first_name}} {{ansp.last_name}}</ion-select-option>
-                            </ion-select>
-                          </ion-item>
+                        <div class="th">{{translate.instant('Lieferadresse')}}</div>
+                        <div style="padding-right: 10px;">
+                          <ion-select (ionChange)="changeContactPerson($event)"
+                                      name="RE_Ansp"
+                                      id="RE_Ansp"
+                                      class='contact-person'
+                                      okText="{{translate.instant('okay')}}"
+                                      cancelText="{{translate.instant('abbrechen')}}">
+                            <ion-select-option value="0" selected>{{translate.instant('Gleich wie Rechnungsadresse')}}</ion-select-option>
+                            <ion-select-option value="1">{{translate.instant('Manuelle Eingabe')}}</ion-select-option>         
+                            <ion-select-option [value]="ansp" *ngFor="let ansp of contactPersonList">{{ansp.first_name}} {{ansp.last_name}}</ion-select-option>
+                          </ion-select>
                         </div>
                       </div>
                     </div>
@@ -333,7 +331,7 @@
                     <div class="table-info"> 
                       <div class="tbody">
                         <div class="tr table-body" style="background: #fff">
-                          <ion-label>
+                          <ion-label style="padding-right: 32px;">
                               {{'ID-Nummer beibehalten' | translate}}
                           </ion-label>
                           <ion-toggle checked="false"
@@ -351,7 +349,7 @@
                          style="
                                 background: #005e86; 
                                 color: white;
-                                padding: 10px;
+                                padding: 5px;
                                 border-radius:3px 0px 0px 0px;">
                   <div>{{'Menge' | translate}}</div>
                 </ion-col>
@@ -359,29 +357,29 @@
                          style=" 
                                 background: #005e86; 
                                 color: white;
-                                padding: 10px;">
+                                padding: 5px;">
                   <div>{{'PVS ID' | translate}}</div>
                 </ion-col>
                 <ion-col size-xl="2" size-lg="2" size-md="2" size-sm="2" size="2" 
                          style="
                                background: #005e86; 
                                color: white;
-                               padding: 10px;">
+                               padding: 5px;">
                   <div>{{'Artikel-Nr.' | translate}}</div>
                 </ion-col>
-                <ion-col size-xl="5" size-lg="5" size-md="5" size-sm="5" size="5" 
+                <ion-col size-xl="4.5" size-lg="4.5" size-md="4.5" size-sm="4.5" size="4.5" 
                          style="
                                background: #005e86; 
                                color: white; 
-                               padding: 10px;">
+                               padding: 5px;">
                   <div>{{'Bezeichnung' | translate}}</div>
                 </ion-col>   
-                <ion-col size-xl="1" size-lg="1" size-md="1" size-sm="1" size="1" 
+                <ion-col size-xl="1.5" size-lg="1.5" size-md="1.5" size-sm="1.5" size="1.5" 
                          style=" 
                                background: #005e86; 
                                color: white;
                                text-align: center;
-                               padding: 5px 0px 5px 0px;
+                               padding: 8px 0px 5px 0px;
                                border-radius: 0px 3px 0px 0px;">
                   <ion-button size="small"
                               style="font-size: 0.7em;"
@@ -413,14 +411,14 @@
                             [(ngModel)]="product.articleno">
                   </ion-input>
                 </ion-col>
-                <ion-col size-xl="5" size-lg="5" size-md="5" size-sm="5" size="5" 
+                <ion-col size-xl="4.5" size-lg="4.5" size-md="4.5" size-sm="4.5" size="4.5" 
                         style="background: #fff;">
                   <ion-textarea type="text" 
                                 style="color: black; border:1px solid #ccc;height:44px;margin-top:4px;padding-top: 0;"
                                 [(ngModel)]="product.designation">
                   </ion-textarea>
                 </ion-col>   
-                <ion-col size-xl="1" size-lg="1" size-md="1" size-sm="1" size="1"
+                <ion-col size-xl="1.5" size-lg="1.5" size-md="1.5" size-sm="1.5" size="1.5"
                          style=" text-align: center; padding: 18px 0px 5px 0px;background: #fff;border-radius: 0px 0px 3px 0px;">
                   <ion-button size="small"
                               style="font-size: 0.7em; --background: red;"
