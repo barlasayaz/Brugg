@@ -58,7 +58,7 @@ export class AppointmentDashboardComponent implements OnInit, AfterViewInit {
     lang = localStorage.getItem('lang');
     @ViewChild('calendar') calendarComponent: FullCalendarComponent;
     @ViewChild('select') select: IonSelect;
- 
+
     constructor(public navCtrl: NavController,
         public apiService: ApiService,
         public userdata: UserdataService,
@@ -127,6 +127,11 @@ export class AppointmentDashboardComponent implements OnInit, AfterViewInit {
                     this.customButtonText = this.people[k].first_name + ' ' + this.people[k].last_name;
                 }
             }
+        }
+
+        if (this.customButtonText == '') {
+            this.customButtonText = this.translate.instant('Alle Mitarbeiter');
+            this.peopleFilter = 'none';
         }
 
         if (this.enableAfterViewInit == true) {
@@ -385,5 +390,5 @@ export class AppointmentDashboardComponent implements OnInit, AfterViewInit {
     getStatistik() {
         this.navCtrl.navigateRoot('/statistics');
     }
-    
+
 }
