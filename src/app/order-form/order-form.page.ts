@@ -119,7 +119,7 @@ export class OrderFormPage {
 
   }
 
-  ionViewWillEnter() {
+  ngOnInit() {
     this.idCustomer = 0;
     this.mobilePlatform = false;
     this.noteRows = 5;
@@ -347,7 +347,7 @@ export class OrderFormPage {
         if (ret) {
           console.log('OrderSendPage ret', ret);
           if (ret.data == true) {
-            this.ionViewWillEnter();
+            this.ngOnInit();
             this.systemService.resetProduct();
             this.loadProducts();
           }
