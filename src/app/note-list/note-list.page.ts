@@ -472,30 +472,36 @@ export class NoteListPage implements OnInit {
         });
         loader.present();
 
-        const data: any = [];
-        this.allnodes = [];
-        if (this.isFilterOn()) {
-            this.data_tree(this.noteListSearch);
-        } else {
-            this.data_tree(this.noteListAll);
-        }
-        for (let i = 0, len = this.allnodes.length; i < len; i++) {
-            const obj = this.allnodes[i];
-            obj.notes = obj.notes.replace(/(\\r\\n|\\n|\\r)/gm, ' ');
-            const json: any = {};
-            for (let j = 0; j < this.selectedColumns.length; j++) {
-                if (this.selectedColumns[j].field === 'work_column') { continue; }
-                if (obj[this.selectedColumns[j].field]) {
-                    json[this.selectedColumns[j].header] = obj[this.selectedColumns[j].field];
-                } else {
-                    json[this.selectedColumns[j].header] = '';
-                }
+        try {
+            const data: any = [];
+            this.allnodes = [];
+            if (this.isFilterOn()) {
+                this.data_tree(this.noteListSearch);
+            } else {
+                this.data_tree(this.noteListAll);
             }
-            // console.log('>>json :', json);
-            data.push(json);
+            for (let i = 0, len = this.allnodes.length; i < len; i++) {
+                const obj = this.allnodes[i];
+                obj.notes = obj.notes.replace(/(\\r\\n|\\n|\\r)/gm, ' ');
+                const json: any = {};
+                for (let j = 0; j < this.selectedColumns.length; j++) {
+                    if (this.selectedColumns[j].field === 'work_column') { continue; }
+                    if (obj[this.selectedColumns[j].field]) {
+                        json[this.selectedColumns[j].header] = obj[this.selectedColumns[j].field];
+                    } else {
+                        json[this.selectedColumns[j].header] = '';
+                    }
+                }
+                // console.log('>>json :', json);
+                data.push(json);
+            }
+            this.excelService.exportAsExcelFile(data, 'note_view.xlsx');
+            loader.dismiss();
+
+        } catch (e) {
+            console.log('!!! Excel Error !!!');
+            loader.dismiss();
         }
-        this.excelService.exportAsExcelFile(data, 'note_view.xlsx');
-        loader.dismiss();
     }
 
     async pdf_export() {
@@ -504,45 +510,51 @@ export class NoteListPage implements OnInit {
         });
         loader.present();
 
-        const columns: any[] = [];
-        const widthsArray: string[] = [];
-        const headerRowVisible: any = 1;
-        for (let k = 0; k < this.selectedColumns.length; k++) {
-            if (this.selectedColumns[k].field === 'work_column') { continue; }
-            columns.push({ text: this.selectedColumns[k].header, style: 'header' });
-            widthsArray.push('*');
-        }
-        const bodyArray: any[] = [];
-        bodyArray.push(columns);
-        this.allnodes = [];
-        if (this.isFilterOn()) {
-            this.data_tree(this.noteListSearch);
-        } else {
-            this.data_tree(this.noteListAll);
-        }
-        let obj: any;
-        let rowArray: any[] = [];
-        for (let i = 0, len = this.allnodes.length; i < len; i++) {
-            obj = this.allnodes[i];
-            obj.notes = obj.notes.replace(/(\\r\\n|\\n|\\r)/gm, ' ');
-            rowArray = [];
-            for (let j = 0; j < this.selectedColumns.length; j++) {
-                if (this.selectedColumns[j].field === 'work_column') { continue; }
-                if (obj[this.selectedColumns[j].field]) {
-                    rowArray.push(obj[this.selectedColumns[j].field]);
-                } else {
-                    rowArray.push('');
-                }
+        try {
+            const columns: any[] = [];
+            const widthsArray: string[] = [];
+            const headerRowVisible: any = 1;
+            for (let k = 0; k < this.selectedColumns.length; k++) {
+                if (this.selectedColumns[k].field === 'work_column') { continue; }
+                columns.push({ text: this.selectedColumns[k].header, style: 'header' });
+                widthsArray.push('*');
             }
-            bodyArray.push(rowArray);
-        }
+            const bodyArray: any[] = [];
+            bodyArray.push(columns);
+            this.allnodes = [];
+            if (this.isFilterOn()) {
+                this.data_tree(this.noteListSearch);
+            } else {
+                this.data_tree(this.noteListAll);
+            }
+            let obj: any;
+            let rowArray: any[] = [];
+            for (let i = 0, len = this.allnodes.length; i < len; i++) {
+                obj = this.allnodes[i];
+                obj.notes = obj.notes.replace(/(\\r\\n|\\n|\\r)/gm, ' ');
+                rowArray = [];
+                for (let j = 0; j < this.selectedColumns.length; j++) {
+                    if (this.selectedColumns[j].field === 'work_column') { continue; }
+                    if (obj[this.selectedColumns[j].field]) {
+                        rowArray.push(obj[this.selectedColumns[j].field]);
+                    } else {
+                        rowArray.push('');
+                    }
+                }
+                bodyArray.push(rowArray);
+            }
 
-        this.pdf.get_ListDocDefinition(bodyArray,
-                                       widthsArray,
-                                       headerRowVisible,
-                                       this.translate.instant('Notiz') + ' ' + this.translate.instant('Liste'),
-                                       this.translate.instant('Notiz') + this.translate.instant('Liste') + '.pdf');
-        loader.dismiss();
+            this.pdf.get_ListDocDefinition(bodyArray,
+                                        widthsArray,
+                                        headerRowVisible,
+                                        this.translate.instant('Notiz') + ' ' + this.translate.instant('Liste'),
+                                        this.translate.instant('Notiz') + this.translate.instant('Liste') + '.pdf');
+            loader.dismiss();
+
+        } catch (e) {
+            console.log('!!! PDF Error !!!');
+            loader.dismiss();
+        }
     }
 
     data_tree(nodes: TreeNode[]): any {

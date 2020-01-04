@@ -527,31 +527,37 @@ export class ProtocolListPage implements OnInit {
         });
         loader.present();
 
-        const data: any = [];
-        this.allnodes = [];
-        if (this.isFilterOn()) {
-            this.data_tree(this.protocolListSearch);
-        } else {
-            this.data_tree(this.protocolListAll);
-        }
-        for (let i = 0, len = this.allnodes.length; i < len; i++) {
-            const obj = this.allnodes[i];
-            obj.items = obj.items.replace(/(\\r\\n|\\n|\\r)/gm, ' ');
-            const json: any = {};
-            for (let j = 0; j < this.selectedColumns.length; j++) {
-                if (this.selectedColumns[j].field === 'work_column') { continue; }
-                if (obj[this.selectedColumns[j].field]) {
-                    json[this.selectedColumns[j].header] = obj[this.selectedColumns[j].field];
-                } else {
-                    json[this.selectedColumns[j].header] = '';
-                }
+        try {
+            const data: any = [];
+            this.allnodes = [];
+            if (this.isFilterOn()) {
+                this.data_tree(this.protocolListSearch);
+            } else {
+                this.data_tree(this.protocolListAll);
             }
-            // console.log('>>json :', json);
-            data.push(json);
+            for (let i = 0, len = this.allnodes.length; i < len; i++) {
+                const obj = this.allnodes[i];
+                obj.items = obj.items.replace(/(\\r\\n|\\n|\\r)/gm, ' ');
+                const json: any = {};
+                for (let j = 0; j < this.selectedColumns.length; j++) {
+                    if (this.selectedColumns[j].field === 'work_column') { continue; }
+                    if (obj[this.selectedColumns[j].field]) {
+                        json[this.selectedColumns[j].header] = obj[this.selectedColumns[j].field];
+                    } else {
+                        json[this.selectedColumns[j].header] = '';
+                    }
+                }
+                // console.log('>>json :', json);
+                data.push(json);
+            }
+            console.log('data :', data);
+            this.excelService.exportAsExcelFile(data, 'protocol_view.xlsx');
+            loader.dismiss();
+
+        } catch (e) {
+            console.log('!!! Excel Error !!!');
+            loader.dismiss();
         }
-        console.log('data :', data);
-        this.excelService.exportAsExcelFile(data, 'protocol_view.xlsx');
-        loader.dismiss();
     }
 
     async pdf_export() {
@@ -560,75 +566,97 @@ export class ProtocolListPage implements OnInit {
         });
         loader.present();
 
-        const pdfTitle: any = this.translate.instant('Protokolle') + ' ' + this.translate.instant('Liste');
-        let columns: any[] = [];
-        const widthsArray: string[] = [];
-        const bodyArray: any[] = [];
-        this.allnodes = [];
-        let rowArray: any[] = [];
-        if (this.isFilterOn()) {
-            this.data_tree(this.protocolListSearch);
-        } else {
-            this.data_tree(this.protocolListAll);
-        }
-        let obj: any;
-        const headerRowVisible: any = 0;
-        widthsArray.push('*', 'auto', '*', '*', '*', '*', '*');
-
-        for (let i = 0, len = this.allnodes.length; i < len; i++) {
-            obj = this.allnodes[i];
-            obj.items = obj.items.replace(/(\\r\\n|\\n|\\r)/gm, ' ');
-
-            columns = [];
-            for (let k = 0; k < 8; k++) {
-                if (this.selectedColumns[k].field === 'work_column') { continue; }
-                columns.push({ text: this.selectedColumns[k].header, style: 'header' });
+        try {
+            const pdfTitle: any = this.translate.instant('Protokolle') + ' ' + this.translate.instant('Liste');
+            let columns: any[] = [];
+            const widthsArray: string[] = [];
+            const bodyArray: any[] = [];
+            this.allnodes = [];
+            let rowArray: any[] = [];
+            if (this.isFilterOn()) {
+                this.data_tree(this.protocolListSearch);
+            } else {
+                this.data_tree(this.protocolListAll);
             }
-            bodyArray.push(columns);
+            let obj: any;
+            const headerRowVisible: any = 0;
+            let selectColumnsLength: any = this.selectedColumns.length;
+            if (this.selectedColumns.length < 8) {
+                selectColumnsLength = this.selectedColumns.length;
+            } else {
+                selectColumnsLength = 8;
+            }
+            if (selectColumnsLength == 2) {
+                widthsArray.push('auto');
+            } else if (selectColumnsLength == 3) {
+                widthsArray.push('auto', 'auto');
+            } else if (selectColumnsLength == 4) {
+                widthsArray.push('auto', 'auto', 'auto');
+            } else if (selectColumnsLength == 5) {
+                widthsArray.push('auto', 'auto', 'auto', 'auto');
+            } else if (selectColumnsLength == 6) {
+                widthsArray.push('auto', 'auto', 'auto', 'auto', 'auto');
+            } else if (selectColumnsLength == 7) {
+                widthsArray.push('auto', 'auto', 'auto', 'auto', 'auto', 'auto');
+            } else if (selectColumnsLength == 8) {
+                widthsArray.push('auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto');
+            }
 
-            rowArray = [];
-            for (let j = 0; j < 8; j++) {
-                if (this.selectedColumns[j].field === 'work_column') { continue; }
-                if (obj[this.selectedColumns[j].field]) {
-                    rowArray.push(obj[this.selectedColumns[j].field]);
-                } else {
-                    rowArray.push('');
+            for (let i = 0, len = this.allnodes.length; i < len; i++) {
+                obj = this.allnodes[i];
+                obj.items = obj.items.replace(/(\\r\\n|\\n|\\r)/gm, ' ');
+
+                columns = [];
+                for (let k = 0; k < selectColumnsLength; k++) {
+                    if (this.selectedColumns[k].field === 'work_column') { continue; }
+                    columns.push({ text: this.selectedColumns[k].header, style: 'header' });
                 }
-            }
-            bodyArray.push(rowArray);
-
-            for (let l = 8; l < this.selectedColumns.length; l++) {
-                rowArray = [];
-                rowArray.push({ text: this.selectedColumns[l].header, style: 'header' });
-                if (obj[this.selectedColumns[l].field]) {
-                    rowArray.push(obj[this.selectedColumns[l].field]);
-                } else {
-                    rowArray.push('');
-                }
-                rowArray.push({text: '', border: [false, false, false, false]});
-                rowArray.push({text: '', border: [false, false, false, false]});
-                rowArray.push({text: '', border: [false, false, false, false]});
-                rowArray.push({text: '', border: [false, false, false, false]});
-                rowArray.push({text: '', border: [false, false, false, false]});
-                bodyArray.push(rowArray);
-            }
+                bodyArray.push(columns);
 
                 rowArray = [];
-                rowArray.push({text: '', border: [false, false, false, false]});
-                rowArray.push({text: '', border: [false, false, false, false]});
-                rowArray.push({text: '', border: [false, false, false, false]});
-                rowArray.push({text: '', border: [false, false, false, false]});
-                rowArray.push({text: '', border: [false, false, false, false]});
-                rowArray.push({text: '', border: [false, false, false, false]});
-                rowArray.push({text: '', border: [false, false, false, false]});
+                for (let j = 0; j < selectColumnsLength; j++) {
+                    if (this.selectedColumns[j].field === 'work_column') { continue; }
+                    if (obj[this.selectedColumns[j].field]) {
+                        rowArray.push(obj[this.selectedColumns[j].field]);
+                    } else {
+                        rowArray.push('');
+                    }
+                }
                 bodyArray.push(rowArray);
-        }
 
-        this.pdf.get_ListDocDefinition(bodyArray,
-                                       widthsArray,
-                                       headerRowVisible,
-                                       pdfTitle, this.translate.instant('Protokolle') + this.translate.instant('Liste') + '.pdf');
-        loader.dismiss();
+                for (let l = selectColumnsLength; l < this.selectedColumns.length; l++) {
+                    rowArray = [];
+                    rowArray.push({ text: this.selectedColumns[l].header, style: 'header' });
+                    if (obj[this.selectedColumns[l].field]) {
+                        rowArray.push(obj[this.selectedColumns[l].field]);
+                    } else {
+                        rowArray.push('');
+                    }
+                    rowArray.push({text: '', border: [false, false, false, false]});
+                    rowArray.push({text: '', border: [false, false, false, false]});
+                    rowArray.push({text: '', border: [false, false, false, false]});
+                    rowArray.push({text: '', border: [false, false, false, false]});
+                    rowArray.push({text: '', border: [false, false, false, false]});
+                    bodyArray.push(rowArray);
+                }
+
+                    rowArray = [];
+                    for (let j = 0; j < selectColumnsLength - 1; j++) {
+                        rowArray.push({text: '', border: [false, false, false, false]});
+                    }
+                    bodyArray.push(rowArray);
+            }
+
+            this.pdf.get_ListDocDefinition(bodyArray,
+                                        widthsArray,
+                                        headerRowVisible,
+                                        pdfTitle, this.translate.instant('Protokolle') + this.translate.instant('Liste') + '.pdf');
+            loader.dismiss();
+
+        } catch (e) {
+            console.log('!!! PDF Error !!!');
+            loader.dismiss();
+        }
     }
 
     data_tree(nodes: TreeNode[]): any {
