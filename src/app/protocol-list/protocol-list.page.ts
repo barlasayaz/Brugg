@@ -102,11 +102,11 @@ export class ProtocolListPage implements OnInit {
         ];
         this.selectedColumns = JSON.parse(JSON.stringify(this.cols));
 
-        console.log('ProductListPage idCustomer:', this.idCustomer, this.system.platform);
         this.idCustomer = parseInt(this.route.snapshot.paramMap.get('id'));
         if (localStorage.getItem('sort_column_protocol') != undefined) {
             this.sortedColumn = JSON.parse(localStorage.getItem('sort_column_protocol'));
         }
+        console.log('ProductListPage idCustomer:', this.idCustomer, this.system.platform);
 
     }
 

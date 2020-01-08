@@ -93,13 +93,24 @@ export class ProductDetailsPage implements OnInit {
     });
 
       this.url = this.apiService.pvsApiURL;
+
       if (this.route.snapshot.data['special']) {
         let params = this.route.snapshot.data['special'];
         this.idProduct = params['id'];
         this.idCustomer = params['idCustomer'];
       }
-      this.dateiListe();
-      this.nocache = new Date().getTime();
+      console.log('parameters :', this.idProduct, this.idCustomer);
+
+  }
+
+  ionViewWillEnter() {
+    if (this.route.snapshot.data['special']) {
+      let params = this.route.snapshot.data['special'];
+      this.idProduct = params['id'];
+      this.idCustomer = params['idCustomer'];
+    }
+    this.dateiListe();
+    this.nocache = new Date().getTime();
   }
 
   dateiListe() {

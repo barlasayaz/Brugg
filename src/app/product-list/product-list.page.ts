@@ -167,14 +167,12 @@ export class ProductListPage implements OnInit {
             { field: 'check_interval', header: this.translate.instant('Intervall Prüfen'), width: '130px' }
         ];
         this.selectedColumns = JSON.parse(JSON.stringify(this.cols));
-        this.route.queryParams.subscribe(params => {
-            this.idCustomer = parseInt(this.route.snapshot.paramMap.get('id'));
-            if (localStorage.getItem('sort_column_product') != undefined) {
-                this.sortedColumn = JSON.parse(localStorage.getItem('sort_column_product'));
-            }
-            console.log('ProductListPage idCustomer:', this.idCustomer);
 
-        });
+        this.idCustomer = parseInt(this.route.snapshot.paramMap.get('id'));
+        if (localStorage.getItem('sort_column_protocol') != undefined) {
+            this.sortedColumn = JSON.parse(localStorage.getItem('sort_column_protocol'));
+        }
+        console.log('ProductListPage idCustomer:', this.idCustomer, this.system.platform);
     }
 
     ionViewWillEnter() {
@@ -783,7 +781,7 @@ export class ProductListPage implements OnInit {
     }
 
     clickCol(field, data, text){
-        console.log('clickCol()', field, data,text);
+        console.log('clickCol()', field, data, text, data.id);
         if (field.field === 'title') { this.viewProduct(data); }
 
         if (field.editField != true) { return; }
@@ -939,7 +937,7 @@ export class ProductListPage implements OnInit {
     }
 
     viewProduct(data) {
-        console.log('viewProduct', data);
+        console.log('viewProduct', data, data.id, data.parent, this.idCustomer);
         const obj = {
             id: data.id,
             idCustomer: this.idCustomer,
