@@ -62,7 +62,7 @@ export class MainNavComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('main-nav ngOnInit this.idCustomer:', this.idCustomer );
+    console.log('main-nav ngOnInit this.idCustomer:', this.aktivPage, this.idCustomer );
     if (this.idCustomer > 0) {
       this.apiService.pvs4_get_customer(this.idCustomer).then((result: any) => {
         if (result && result.obj) {
@@ -139,6 +139,7 @@ export class MainNavComponent implements OnInit {
 
   homePage() {
     this.systemService.customerId = 0;
+    this.idCustomer = 0;
   }
 
 }

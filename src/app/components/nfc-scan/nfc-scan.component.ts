@@ -7,6 +7,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { ApiService } from '../../services/api';
 import { DataService } from '../../services/data.service';
 import * as moment from 'moment';
+import { SystemService } from '../../services/system';
+
 /**
  * Generated class for the NfcScanComponent component.
  *
@@ -50,7 +52,8 @@ export class NfcScanComponent implements OnInit {
     public platform: Platform,
     private navParams: NavParams,
     private apiService: ApiService,
-    private navCtrl: NavController) {
+    private navCtrl: NavController,
+    public systemService: SystemService) {
 
   }
 
@@ -168,8 +171,11 @@ export class NfcScanComponent implements OnInit {
                 if (!this.listView) {
                   // result.obj.title = JSON.parse(result.obj.title);
                   this.viewCtrl.dismiss();
+                  this.systemService.customerId = result.obj.customer;
                   const data = {
                     id: result.obj.id,
+                    idCustomer: result.obj.customer,
+                    parent: result.obj.parent
                   };
                   this.dataService.setData(data);
                   this.navCtrl.navigateForward(['/product-details'] );
@@ -334,8 +340,11 @@ export class NfcScanComponent implements OnInit {
                 if (!this.listView) {
                   // result.obj.title = JSON.parse(result.obj.title);
                   this.viewCtrl.dismiss();
+                  this.systemService.customerId = result.obj.customer;
                   const data = {
                     id: result.obj.id,
+                    idCustomer: result.obj.customer,
+                    parent: result.obj.parent
                   };
                   this.dataService.setData(data);
                   this.navCtrl.navigateForward(['/product-details'] );
