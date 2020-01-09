@@ -95,6 +95,7 @@ function processing($user, $customer) {
     $ret_sql= mysqli_query( $con, $sql );
 
     $liste = [];
+    $child_liste = [];
     $anz_liste = 0;
     if($ret_sql) { 
         // OK
@@ -110,7 +111,8 @@ function processing($user, $customer) {
                     return 1;
                 }else{
                     if(isset($value['children'])){
-                        recu_find_parent($value['children'], $child); 
+                        $ret = recu_find_parent($value['children'], $child); 
+                        if($ret == 1) return 1;
                     }
                 }   
             }
@@ -120,15 +122,36 @@ function processing($user, $customer) {
             if($row['parent']==0){
                 $liste[] = array('data' => utf8encodeArray($row) );
             }else{
-                recu_find_parent($liste, $row);
+                if(recu_find_parent($liste, utf8encodeArray($row)) == 0) $child_liste[] = utf8encodeArray($row);
             }            
             $anz_liste++;
         }
+        
+        $len = count($child_liste);
+        $rest = [];
+        if( $len > 0){            
+            for($i=0; $i<$len; $i++ ){
+                $row = $child_liste[$i];
+                if(recu_find_parent($liste, $row) == 0)  $rest[] = $row;
+            }
+        }
+
+        $len = count($rest);
+        $rest2 = [];
+        if( $len > 0){            
+            for($i=0; $i<$len; $i++ ){
+                $row = $rest[$i];
+                if(recu_find_parent($liste, $row) == 0)  $rest2[] = $row;
+            }
+        }
+       
+        
 //print_r($liste);
         http_response_code(200);
         $ok = new \stdClass();
         $ok->amount = $anz_liste;
-        $ok->list = $liste;
+        $ok->list = $liste;       
+        $ok->rest = $rest2;
         echo json_encode($ok);
         mysqli_close($con);
         die;
