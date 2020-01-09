@@ -879,6 +879,12 @@ ion-select {
   opacity: 1 !important;
   pointer-events: none !important;
 }
+.item-interactive-disabled.sc-ion-label-ios-h:not(.item-multiple-inputs), 
+.item-interactive-disabled:not(.item-multiple-inputs) .sc-ion-label-ios-h {
+  cursor: default !important;
+  opacity: 1 !important;
+  pointer-events: none !important;
+  }
 
 //STACKED LABEL
 .item-label-stacked {
