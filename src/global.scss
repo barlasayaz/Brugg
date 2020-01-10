@@ -63,11 +63,6 @@ ion-app.ios {
     --box-shadow: 0px 1px 9px rgba(0, 0, 0, 0.3);
   }
 
-  .native-input.sc-ion-input-ios {
-    padding-left:10px !important;
-    padding-right:10px !important;
-  }
-
 }
 
 ///PVS4
@@ -428,16 +423,6 @@ ion-fab-button {
   background: var(--ion-color-primary) !important;
   padding-top: 15px !important;
   padding-bottom: 15px !important;
-}
-
-.item-select.label-floating.sc-ion-label-md-h,
-.item-select .label-floating.sc-ion-label-md-h {
-  -webkit-transform: translate3d(0, 37%, 0) !important;
-  transform: translate3d(0, 37%, 0) !important;
-  font-size: 11px !important;
-  @media only screen and (max-width: 768px) {
-    font-size: 10px !important;
-  }
 }
 
 .alert-sub-title.sc-ion-alert-md,
