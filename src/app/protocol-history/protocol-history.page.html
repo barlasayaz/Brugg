@@ -1,78 +1,97 @@
 <main-nav aktivPage="ProtocolHistory" [idCustomer]="idCustomer"></main-nav>
 
 <ion-content>
-    <div class="ek-content">
-      <div class="container" id="ps_protocol">
-        <div class="mt20 content-sm" id="protocol_history">		
-          <ion-grid>
-            <ion-row>
-              <div class="table-responsive">
-                <ion-col size-xl="12" size-lg="12" size-md="12" size-sm="12" size="12">
-                  <div class="table table-striped">                      
-                    <div class="thead">
-                      <div class="tr table-header">
-                        <div class="th">{{'Protokollverlauf' | translate}}</div>
-                        <div style="color: white; text-align: left;">
-                            {{'Produkt ID' | translate}} : {{idProduct}} &nbsp;&nbsp; {{'Produkt Titel' | translate}} : {{titleProduct}}
-                        </div> 
+  <div class="ek-content">
+    <div class="container container-fix">
+      <div class="mt20 content-sm">
+        <ion-grid>
+          <ion-row>
+            <ion-col size-xl="12" size-lg="12" size-md="12" size-sm="12" size="12" style="padding:0px;">
+              <div class="table-responsive" id="ps_protocol_history">                      
+                <div class="table table-striped" id="protocol_history">
+                  <div class="thead">
+                    <div class="tr table-header">
+                      <div class="table-header-title">{{'Protokollverlauf' | translate}}</div>
+                    </div>
+                  </div>
+                  <div class="tbody">
+                    <div class="tr table-subheader table-subheader-fix">
+                      <div class="table-subheader-buttons">
                         <div>
-                          <ion-button [disabled]="pageCount<=0" (click)="pageBack()" style="--background: var(--ion-color-tertiary,#3880ff);">
-                            <ion-icon name="arrow-back"></ion-icon>
+                          <ion-button size="small" [disabled]="pageCount<=0" (click)="pageBack()">
+                            <ion-icon name="arrow-back"></ion-icon> 
                           </ion-button>
-                          <ion-button [disabled]="pageCount>pageTotalCount-5" (click)="pageForward()" style="--background: var(--ion-color-tertiary,#3880ff);">
+                          <ion-button size="small" [disabled]="pageCount>pageTotalCount-5" (click)="pageForward()">
                             <ion-icon name="arrow-forward"></ion-icon>
                           </ion-button>
                         </div>
-                      </div>
-                    </div>                    
-                  </div>
-                </ion-col>
-              </div>
-            </ion-row>  
-            <ion-row>  
-              <div class="table-responsive">
-                <div class="table table-striped">
-                  <div class="tbody" style="margin-top: -30px; max-height: 540px; overflow-x: auto;"> 
-                    <div class="tr table-body" *ngFor="let col of cols">
-                      <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="12" size="12"> 
-                        <div class="td">{{col.header}}</div>
-                      </ion-col>
-                      <ion-col size-xl="2" size-lg="2" size-md="2" size-sm="12" size="12" *ngFor="let index of listCount"> 
-                        <div class="td" *ngIf="col.field != 'protocol_date' && protocolList[index].data[col.field] != true && protocolList[index].data[col.field] != false"> {{protocolList[index].data[col.field]}} </div>
-                        <div class="td" *ngIf="col.field == 'protocol_date'"> {{protocolList[index].data[col.field] | date: 'dd.MM.yyyy'}} </div>
-                        <div class="td" *ngIf="col.field != 'protocol_date'">
-                          <img class="td" *ngIf="protocolList[index].data[col.field] == true" src="/assets/imgs/available.png" alt="" height="17px" />
-                          <img class="td" *ngIf="protocolList[index].data[col.field] == false" src="/assets/imgs/not_available.png" alt="" height="17px" />
+                        &nbsp;&nbsp;&nbsp;
+                        <div class="product-title">
+                          {{titleProduct}}
                         </div>
-                      </ion-col>
-                    </div>             	
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ion-col>
+          </ion-row>  
+          <ion-row>  
+            <div class="table-responsive">
+              <div class="table table-striped">
+                <div class="tbody" style="margin-top: -20px; max-height: 510px; overflow-x: auto;">
+                  <div class="tr table-body hidden-down" *ngFor="let col of cols">
+                    <ion-col size-xl="4" size-lg="4" size-md="4" size-sm="4" size="4">
+                      <div class="td">{{col.header}}</div>
+                    </ion-col>
+                    <ion-col size-xl="2" size-lg="2" size-md="2" size-sm="2" size="2" *ngFor="let index of listCount"> 
+                      <div class="td" *ngIf="col.field != 'protocol_date' && col.field != 'protocol_date_next' && protocolList[index].data[col.field] != true && protocolList[index].data[col.field] != 'true' && protocolList[index].data[col.field] != false && protocolList[index].data[col.field] != 'false'"> {{protocolList[index].data[col.field]}} </div>
+                      <div class="td" *ngIf="col.field == 'protocol_date' || col.field == 'protocol_date_next'"> {{protocolList[index].data[col.field].substring(0, 10) | date: 'dd.MM.yyyy'}} </div>
+                      <div class="td" *ngIf="col.field != 'protocol_date' && col.field != 'protocol_date_next'">
+                        <img class="td" *ngIf="protocolList[index].data[col.field] == true || protocolList[index].data[col.field] == 'true'" src="/assets/imgs/available.png" alt="" height="17px" />
+                        <img class="td" *ngIf="protocolList[index].data[col.field] == false || protocolList[index].data[col.field] == 'false'" src="/assets/imgs/not_available.png" alt="" height="17px" />
+                      </div>
+                    </ion-col>
+                  </div>
+                  <div class="tr table-body hidden-up" *ngFor="let index of listCount">
+                    <div class="td" *ngFor="let col of cols">
+                      <div class="before">{{col.header}}</div>
+                      <div class="after" *ngIf="col.field != 'protocol_date' && col.field != 'protocol_date_next' && protocolList[index].data[col.field] != true && protocolList[index].data[col.field] != 'true' && protocolList[index].data[col.field] != false && protocolList[index].data[col.field] != 'false'">{{protocolList[index].data[col.field]}}</div>
+                      <div class="after" *ngIf="col.field == 'protocol_date' || col.field == 'protocol_date_next'"> {{protocolList[index].data[col.field].substring(0, 10) | date: 'dd.MM.yyyy'}} </div>
+                      <div class="after" *ngIf="col.field != 'protocol_date' && col.field != 'protocol_date_next'">
+                        <img class="after" *ngIf="protocolList[index].data[col.field] == true || protocolList[index].data[col.field] == 'true'" src="/assets/imgs/available.png" alt="" height="17px" />
+                        <img class="after" *ngIf="protocolList[index].data[col.field] == false || protocolList[index].data[col.field] == 'false'" src="/assets/imgs/not_available.png" alt="" height="17px" />
+                      </div>
+                    </div>
+                  </div>         
                 </div>
               </div>
             </div>	
           </ion-row>		
-          </ion-grid>
-        </div>
+        </ion-grid>
       </div>
     </div>
-  </ion-content>
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed" class="liftiball">
-    <ion-fab-button color="tertiary">
-      <ion-icon name="menu"></ion-icon>
+  </div>
+</ion-content >
+
+<ion-fab vertical="bottom" horizontal="end" slot="fixed" class="liftiball">
+  <ion-fab-button color="tertiary">
+    <ion-icon name="menu"></ion-icon>
+  </ion-fab-button>
+  <ion-fab-list side="top">
+    <ion-fab-button color="warning"
+                    title="{{'PDF Export' | translate}}"
+                    (click)="printPdf()"
+                    [disabled]="pdfxlsButton">
+      <ion-icon name="download"></ion-icon>
     </ion-fab-button>
-    <ion-fab-list side="top">
-      <ion-fab-button color="warning"
-                      title="{{'PDF Export' | translate}}"
-                      (click)="printPdf()"
-                      [disabled]="pdfxlsButton">
-        <ion-icon name="download"></ion-icon>
-      </ion-fab-button>
-      <ion-fab-button color="warning"
-                      title="{{'XLS Export' | translate}}"
-                      (click)="printExcel()"
-                      [disabled]="pdfxlsButton">
-        <ion-icon name="stats"></ion-icon>
-      </ion-fab-button>
-    </ion-fab-list>
-  </ion-fab>
+    <ion-fab-button color="warning"
+                    title="{{'XLS Export' | translate}}"
+                    (click)="printExcel()"
+                    [disabled]="pdfxlsButton">
+      <ion-icon name="stats"></ion-icon>
+    </ion-fab-button>
+  </ion-fab-list>
+</ion-fab>
 
 <bottom-nav></bottom-nav>

@@ -72,12 +72,14 @@ export class ProtocolHistoryPage implements OnInit {
 
         this.cols = [
             { field: 'protocol_number', header: this.translate.instant('Protokoll Nummer') },
-            { field: 'protocol_date', header: this.translate.instant('Datum') }
+            { field: 'protocol_date', header: this.translate.instant('Datum') },
+            { field: 'protocol_date_next', header: this.translate.instant('Nächster prüftermin') }
         ];
 
         this.colsExcel = [
             { field: 'protocol_number', header: this.translate.instant('Protokoll Nummer') },
-            { field: 'protocol_date', header: this.translate.instant('Datum') }
+            { field: 'protocol_date', header: this.translate.instant('Datum') },
+            { field: 'protocol_date_next', header: this.translate.instant('Nächster prüftermin') }
         ];
 
         this.url = this.apiService.pvsApiURL;
@@ -166,10 +168,13 @@ export class ProtocolHistoryPage implements OnInit {
                     this.cols.push({ field: options[i].title[this.lang], header: options[i].title[this.lang] });
                 }
                 const pipe = new DatePipe('en-US');
+                if (options[i].type == 4) {
+                    prtcl[index].data[options[i].title[this.lang]] = pipe.transform(options[i].value, 'HH:mm');
+                }
                 if (options[i].type == 5) {
                     prtcl[index].data[options[i].title[this.lang]] = pipe.transform(options[i].value, 'dd.MM.yyyy');
                 }
-                if (options[i].type != 5) {
+                if (options[i].type != 4 && options[i].type != 5) {
                     prtcl[index].data[options[i].title[this.lang]] = options[i].value;
                 }
             }
@@ -287,8 +292,11 @@ export class ProtocolHistoryPage implements OnInit {
                 colArray.push(this.cols[i].header);
                 let colCnt: any = 0;
                 for (let j = colCountStart + colCountAdd, lenB = colCountEnd + colCountAdd; j < lenB; j++) {
+                    const pipe = new DatePipe('en-US');
                     if (this.cols[i].field == 'protocol_date') {
-                        const pipe = new DatePipe('en-US');
+                        colArray.push((pipe.transform(this.protocolList[j].data[this.cols[i].field], 'dd.MM.yyyy')).replace('undefined', ''));
+                    } else if (this.cols[i].field == 'protocol_date_next') {
+                        // this.protocolList[j].data[this.cols[i].field] = this.protocolList[j].data[this.cols[i].field] + ' 00:00:00';
                         colArray.push((pipe.transform(this.protocolList[j].data[this.cols[i].field], 'dd.MM.yyyy')).replace('undefined', ''));
                     } else {
                         if (i > 1) {
