@@ -140,7 +140,7 @@ export class NfcScanComponent implements OnInit {
     console.log('read_nfc_data()', nfcEvent);
     if (!nfcEvent.tag.ndefMessage) {
       const toast = this.toastCtrl.create({
-        message: this.translate.instant('Produkt unbekannt'),
+        message: this.translate.instant('NFC unbekannt'),
         cssClass: 'toast-warning',
         duration: 3000
       }).then(x => x.present());
@@ -162,7 +162,7 @@ export class NfcScanComponent implements OnInit {
                 console.log('nfc result', result);
                 if (result.amount == 0) {
                   const toast = this.toastCtrl.create({
-                    message: this.translate.instant('Produkt unbekannt'),
+                    message: this.translate.instant('Produkt unbekannt: '+pid),
                     cssClass: 'toast-warning',
                     duration: 3000
                   }).then(x => x.present());
@@ -309,7 +309,7 @@ export class NfcScanComponent implements OnInit {
     console.log('read_nfc_data()', nfcEvent);
     if (!nfcEvent.tag.ndefMessage) {
       const toast = this.toastCtrl.create({
-        message: this.translate.instant('Produkt unbekannt'),
+        message: this.translate.instant('NFC unbekannt'),
         cssClass: 'toast-warning',
         duration: 3000
       }).then(x => x.present());
@@ -327,11 +327,11 @@ export class NfcScanComponent implements OnInit {
             const pid = parseInt(res[2]);
             console.log('NFC pid', pid);
             if (pid > 0) {
-              this.apiService.pvs4_get_nfc_product(this.tagId).then((result: any) => {
+              this.apiService.pvs4_get_nfc_product(this.tagId).then((result: any) => {              
                 console.log('nfc result', result);
                 if (result.amount == 0) {
                   const toast = this.toastCtrl.create({
-                    message: this.translate.instant('Produkt unbekannt'),
+                    message: this.translate.instant('Produkt unbekannt: '+pid),
                     cssClass: 'toast-warning',
                     duration: 3000
                   }).then(x => x.present());

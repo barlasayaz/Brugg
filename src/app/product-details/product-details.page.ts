@@ -350,6 +350,7 @@ export class ProductDetailsPage implements OnInit {
   }
 
   async nfc_scan() {
+    console.log('nfc_scan()');
     const modal =
       await this.modalCtrl.create({
         component: NfcScanComponent,
@@ -364,6 +365,7 @@ export class ProductDetailsPage implements OnInit {
   }
 
   async qr_code() {
+    console.log('qr_code()');
     const obj = {};
     const modal =
       await this.modalCtrl.create({
