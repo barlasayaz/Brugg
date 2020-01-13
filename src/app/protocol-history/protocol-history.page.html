@@ -46,7 +46,7 @@
                     </ion-col>
                     <ion-col size-xl="2" size-lg="2" size-md="2" size-sm="2" size="2" *ngFor="let index of listCount"> 
                       <div class="td" *ngIf="col.field != 'protocol_date' && col.field != 'protocol_date_next' && protocolList[index].data[col.field] != true && protocolList[index].data[col.field] != 'true' && protocolList[index].data[col.field] != false && protocolList[index].data[col.field] != 'false'"> {{protocolList[index].data[col.field]}} </div>
-                      <div class="td" *ngIf="col.field == 'protocol_date' || col.field == 'protocol_date_next'"> {{protocolList[index].data[col.field].substring(0, 10) | date: 'dd.MM.yyyy'}} </div>
+                      <div class="td" *ngIf="col.field == 'protocol_date' || col.field == 'protocol_date_next'"> {{protocolList[index].data[col.field] | date: 'dd.MM.yyyy'}} </div>
                       <div class="td" *ngIf="col.field != 'protocol_date' && col.field != 'protocol_date_next'">
                         <img class="td" *ngIf="protocolList[index].data[col.field] == true || protocolList[index].data[col.field] == 'true'" src="/assets/imgs/available.png" alt="" height="17px" />
                         <img class="td" *ngIf="protocolList[index].data[col.field] == false || protocolList[index].data[col.field] == 'false'" src="/assets/imgs/not_available.png" alt="" height="17px" />
@@ -57,7 +57,7 @@
                     <div class="td" *ngFor="let col of cols">
                       <div class="before">{{col.header}}</div>
                       <div class="after" *ngIf="col.field != 'protocol_date' && col.field != 'protocol_date_next' && protocolList[index].data[col.field] != true && protocolList[index].data[col.field] != 'true' && protocolList[index].data[col.field] != false && protocolList[index].data[col.field] != 'false'">{{protocolList[index].data[col.field]}}</div>
-                      <div class="after" *ngIf="col.field == 'protocol_date' || col.field == 'protocol_date_next'"> {{protocolList[index].data[col.field].substring(0, 10) | date: 'dd.MM.yyyy'}} </div>
+                      <div class="after" *ngIf="col.field == 'protocol_date' || col.field == 'protocol_date_next'"> {{protocolList[index].data[col.field] | date: 'dd.MM.yyyy'}} </div>
                       <div class="after" *ngIf="col.field != 'protocol_date' && col.field != 'protocol_date_next'">
                         <img class="after" *ngIf="protocolList[index].data[col.field] == true || protocolList[index].data[col.field] == 'true'" src="/assets/imgs/available.png" alt="" height="17px" />
                         <img class="after" *ngIf="protocolList[index].data[col.field] == false || protocolList[index].data[col.field] == 'false'" src="/assets/imgs/not_available.png" alt="" height="17px" />
