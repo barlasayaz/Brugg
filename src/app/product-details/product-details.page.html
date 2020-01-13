@@ -30,6 +30,10 @@
 												<div class="td">{{activProduct.id_number}}</div>
 											</div>
 											<div class="tr table-body">
+												<div class="td">NFC</div>
+												<div class="td">{{activProduct.nfc_tag_id}}</div>
+											</div>
+											<div class="tr table-body">
 												<div class="td">{{'Articel No' | translate}}</div>
 												<div class="td">{{activProduct.articel_no}}</div>
 											</div>
@@ -216,7 +220,6 @@
 		<ion-fab-button color="primary"
 						title="{{'QR-Code scannen' | translate}}"
 						(click)="qr_code()"
-						[disabled]="!mobilePlatform"
 						*ngIf="userdata.role_set.edit_products">
 			<ion-icon name="qr-scanner"></ion-icon>
 		</ion-fab-button>
