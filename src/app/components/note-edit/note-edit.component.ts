@@ -64,9 +64,10 @@ export class NoteEditComponent {
     this.apiService.pvs4_get_note(this.idNote).then((result: any) => {
       this.activNote = result.obj;
       this.activNote.contact_person = parseInt(this.activNote.contact_person);
-      console.log('activeNote :', this.activNote);
+      console.log('activeNote :', this.activNote, result.obj.notes_date.replace(' ', 'T'));
+      result.obj.notes_date = result.obj.notes_date.replace(' ', 'T');
       if (result.obj.notes_date && result.obj.notes_date != null && new Date(result.obj.notes_date) >= new Date(1970, 0, 1)) {
-         this.activNote.notes_date = new Date(result.obj.notes_date).toISOString();
+        this.activNote.notes_date = new Date(result.obj.notes_date).toISOString();
       }
       console.log('loadNote: ' , this.activNote);
       this.loadUserList(this.activNote.contact_person);
