@@ -158,13 +158,21 @@ export class NfcScanComponent implements OnInit {
             const pid = parseInt(res[2]);
             console.log('NFC pid', pid);
             if (pid > 0) {
-              this.apiService.pvs4_get_product(pid).then((result: any) => {
+              this.apiService.pvs4_get_nfc_product_by_id(pid).then((result: any) => {
                 console.log('nfc result', result);
                 if (result.amount == 0) {
                   const toast = this.toastCtrl.create({
                     message: this.translate.instant('Produkt unbekannt: '+pid),
                     cssClass: 'toast-warning',
                     duration: 3000
+                  }).then(x => x.present());
+                  return;
+                }
+                if (result.amount == 2) {
+                  const toast = this.toastCtrl.create({
+                    message: this.translate.instant('NFC konnte nicht eindeutig zugewiesen werden, eine Neuprogrammierung mit PVS ist nötig.'),
+                    cssClass: 'toast-warning',
+                    duration: 6000
                   }).then(x => x.present());
                   return;
                 }
