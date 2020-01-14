@@ -224,9 +224,9 @@ export class ProtocolHistoryPage implements OnInit {
             const json: any = {};
             for (let j = 0; j < this.selectedColumns.length; j++) {
                 if (this.selectedColumns[j].field == 'protocol_date') {
-                    json[this.selectedColumns[j].header] = pipe.transform(obj[this.selectedColumns[j].field], 'dd.MM.yyyy');
+                    json[this.selectedColumns[j].header] = pipe.transform((obj[this.selectedColumns[j].field]).substring(0, 10), 'dd.MM.yyyy');
                 } else if (this.selectedColumns[j].field == 'protocol_date_next') {
-                    json[this.selectedColumns[j].header] = pipe.transform(obj[this.selectedColumns[j].field], 'dd.MM.yyyy');
+                    json[this.selectedColumns[j].header] = pipe.transform((obj[this.selectedColumns[j].field]).substring(0, 10), 'dd.MM.yyyy');
                 } else if (obj[this.selectedColumns[j].field] == true || obj[this.selectedColumns[j].field] == 'true') {
                     json[this.selectedColumns[j].header] = '√';
                 } else if (obj[this.selectedColumns[j].field] == false || obj[this.selectedColumns[j].field] == 'false') {
@@ -298,13 +298,13 @@ export class ProtocolHistoryPage implements OnInit {
             for (let i = 0, lenA = this.cols.length; i < lenA; i++) {
                 colArray.push(this.cols[i].header);
                 let colCnt: any = 0;
+                const pipe = new DatePipe('en-US');
                 for (let j = colCountStart + colCountAdd, lenB = colCountEnd + colCountAdd; j < lenB; j++) {
-                    const pipe = new DatePipe('en-US');
                     console.log('pdf list :', this.cols[i], this.cols[i].field,  this.protocolList[j].data[this.cols[i].field]);
                     if (this.cols[i].field == 'protocol_date') {
-                        colArray.push((pipe.transform(this.protocolList[j].data[this.cols[i].field], 'dd.MM.yyyy')).replace('undefined', ''));
+                        colArray.push(pipe.transform((this.protocolList[j].data[this.cols[i].field]).substring(0, 10), 'dd.MM.yyyy'));
                     } else if (this.cols[i].field == 'protocol_date_next') {
-                        colArray.push((pipe.transform(this.protocolList[j].data[this.cols[i].field], 'dd.MM.yyyy')).replace('undefined', ''));
+                        colArray.push(pipe.transform((this.protocolList[j].data[this.cols[i].field]).substring(0, 10), 'dd.MM.yyyy'));
                     } else if (this.protocolList[j].data[this.cols[i].field] == true || this.protocolList[j].data[this.cols[i].field] == 'true') {
                            colArray.push('√');
                     } else if (this.protocolList[j].data[this.cols[i].field] == false || this.protocolList[j].data[this.cols[i].field] == 'false') {
