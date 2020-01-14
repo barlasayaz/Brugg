@@ -24,7 +24,7 @@ export class ApiService {
   public appointmentEndTime: string = '16:59';
   public appointmentMinTime: string = '07:00';
   public appointmentMaxTime: string = '17:59';
-  public version: any = '4.4.56';
+  public version: any = '4.4.57';
   private reset_semaphor = false;
   private reset_timeout: any = 0;
 
@@ -685,6 +685,44 @@ export class ApiService {
           done.obj.parent = parseInt(done.obj.parent);
           done.obj.customer = parseInt(done.obj.customer);
           done.obj.check_interval = parseInt(done.obj.check_interval);
+        }
+        res(done);
+      },
+        err => { // return the error
+          rej(err);
+        });
+    });
+  }
+
+  pvs4_get_nfc_product_by_id(productID: number) {
+    const userID = this.userdata.id;
+    return new Promise((res, rej) => {
+      const data = {
+        user: userID,
+        id: productID
+      };
+      this.pvs4_api_post('get_nfc_product_by_id.php', data).then((done: any) => {// return the result
+        // console.log('get_product :', done);
+        if (done.amount) {
+          if (done.amount == 1) {
+            done.obj.id = parseInt(done.obj.id);
+            done.obj.active = parseInt(done.obj.active);
+            done.obj.parent = parseInt(done.obj.parent);
+            done.obj.customer = parseInt(done.obj.customer);
+            done.obj.check_interval = parseInt(done.obj.check_interval);
+          }
+          if (done.amount == 2) {
+            done.obj_pvs3.id = parseInt(done.obj_pvs3.id);
+            done.obj_pvs3.active = parseInt(done.obj_pvs3.active);
+            done.obj_pvs3.parent = parseInt(done.obj_pvs3.parent);
+            done.obj_pvs3.customer = parseInt(done.obj_pvs3.customer);
+            done.obj_pvs3.check_interval = parseInt(done.obj_pvs3.check_interval);
+            done.obj_pvs4.id = parseInt(done.obj_pvs4.id);
+            done.obj_pvs4.active = parseInt(done.obj_pvs4.active);
+            done.obj_pvs4.parent = parseInt(done.obj_pvs4.parent);
+            done.obj_pvs4.customer = parseInt(done.obj_pvs4.customer);
+            done.obj_pvs4.check_interval = parseInt(done.obj_pvs4.check_interval);
+          }
         }
         res(done);
       },

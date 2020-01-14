@@ -217,15 +217,22 @@ export class ProtocolHistoryPage implements OnInit {
         this.allnodes = [];
         console.log('allnodes :', this.allnodes);
         this.data_tree(this.protocolList);
+        const pipe = new DatePipe('en-US');
         for (let i = 0, len = this.allnodes.length; i < len; i++) {
             const obj = this.allnodes[i];
             obj.items = obj.items.replace(/(\\r\\n|\\n|\\r)/gm, ' ');
             const json: any = {};
             for (let j = 0; j < this.selectedColumns.length; j++) {
-                if (obj[this.selectedColumns[j].field]) {
-                    json[this.selectedColumns[j].header] = obj[this.selectedColumns[j].field];
+                if (this.selectedColumns[j].field == 'protocol_date') {
+                    json[this.selectedColumns[j].header] = pipe.transform((obj[this.selectedColumns[j].field]).substring(0, 10), 'dd.MM.yyyy');
+                } else if (this.selectedColumns[j].field == 'protocol_date_next') {
+                    json[this.selectedColumns[j].header] = pipe.transform((obj[this.selectedColumns[j].field]).substring(0, 10), 'dd.MM.yyyy');
+                } else if (obj[this.selectedColumns[j].field] == true || obj[this.selectedColumns[j].field] == 'true') {
+                    json[this.selectedColumns[j].header] = '√';
+                } else if (obj[this.selectedColumns[j].field] == false || obj[this.selectedColumns[j].field] == 'false') {
+                    json[this.selectedColumns[j].header] = 'O';
                 } else {
-                    json[this.selectedColumns[j].header] = '';
+                    json[this.selectedColumns[j].header] = obj[this.selectedColumns[j].field];
                 }
             }
             // console.log('>>json :', json);
@@ -291,18 +298,24 @@ export class ProtocolHistoryPage implements OnInit {
             for (let i = 0, lenA = this.cols.length; i < lenA; i++) {
                 colArray.push(this.cols[i].header);
                 let colCnt: any = 0;
+                const pipe = new DatePipe('en-US');
                 for (let j = colCountStart + colCountAdd, lenB = colCountEnd + colCountAdd; j < lenB; j++) {
-                    const pipe = new DatePipe('en-US');
+                    console.log('pdf list :', this.cols[i], this.cols[i].field,  this.protocolList[j].data[this.cols[i].field]);
                     if (this.cols[i].field == 'protocol_date') {
-                        colArray.push((pipe.transform(this.protocolList[j].data[this.cols[i].field], 'dd.MM.yyyy')).replace('undefined', ''));
+                        colArray.push(pipe.transform((this.protocolList[j].data[this.cols[i].field]).substring(0, 10), 'dd.MM.yyyy'));
                     } else if (this.cols[i].field == 'protocol_date_next') {
-                        // this.protocolList[j].data[this.cols[i].field] = this.protocolList[j].data[this.cols[i].field] + ' 00:00:00';
-                        colArray.push((pipe.transform(this.protocolList[j].data[this.cols[i].field], 'dd.MM.yyyy')).replace('undefined', ''));
+                        colArray.push(pipe.transform((this.protocolList[j].data[this.cols[i].field]).substring(0, 10), 'dd.MM.yyyy'));
+                    } else if (this.protocolList[j].data[this.cols[i].field] == true || this.protocolList[j].data[this.cols[i].field] == 'true') {
+                           colArray.push('√');
+                    } else if (this.protocolList[j].data[this.cols[i].field] == false || this.protocolList[j].data[this.cols[i].field] == 'false') {
+                           colArray.push('O');
+                    } else if (this.protocolList[j].data[this.cols[i].field] == null || this.protocolList[j].data[this.cols[i].field] == 'null') {
+                            colArray.push('');
                     } else {
                         if (i > 1) {
                             colArray.push(('' + this.protocolList[j].data[this.cols[i].field] + '').replace('undefined', ''));
                         } else {
-                            colArray.push((this.protocolList[j].data[this.cols[i].field]).replace('undefined',''));
+                            colArray.push((this.protocolList[j].data[this.cols[i].field]).replace('undefined', ''));
                         }
                     }
                     colCnt = colCnt + 1;
