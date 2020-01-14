@@ -117,7 +117,8 @@ export class NfcScanComponent implements OnInit {
   }
 
   nfcReadNdef_ios(event: any) {
-    console.log('nfcReadNdef()', JSON.stringify(event));
+    console.log('nfcReadNdef()', event );
+    console.log('nfcReadNdef()', JSON.stringify(event) );
     console.log('received ndef message. the tag contains: ', JSON.stringify(event.tag));
     console.log('received ndef message. the ndefMessage contains: ', JSON.stringify(event.tag.ndefMessage));
     console.log('received ndef message. the id contains: ', JSON.stringify(event.tag.ndefMessage[0].id), this.ndef.encodeMessage(event));
