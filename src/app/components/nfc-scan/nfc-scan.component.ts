@@ -171,7 +171,7 @@ export class NfcScanComponent implements OnInit {
                 }
                 if (result.amount == 2) {
                   const toast = this.toastCtrl.create({
-                    message: this.translate.instant('NFC konnte nicht eindeutig zugewiesen werden, eine Neuprogrammierung mit PVS ist nötig.'),
+                    message: this.translate.instant('NFC kann nicht eindeutig zugewiesen werden, eine erneute Zuweisung ist erforderlich.'),
                     cssClass: 'toast-warning',
                     duration: 6000
                   }).then(x => x.present());

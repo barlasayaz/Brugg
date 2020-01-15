@@ -89,10 +89,10 @@ function processing($id) {
     // escape the uemailid to prevent sql injection
     $id   = trim( mysqli_escape_string($con,$id) );
     $id   = intval($id);
-    $sql_4    = "SELECT * FROM `products` WHERE  `nfc_tag_id` != '' AND  `id`=$id;";
+    $sql_4    = "SELECT * FROM `products` WHERE  `nfc_tag_id` != '' AND  `id`=$id ORDER BY `id`;";
     $ret_sql_4= mysqli_query( $con, $sql_4 );
 
-    $sql_3    = "SELECT * FROM `products` WHERE  `nfc_tag_id` != '' AND `pvs3_id`=$id;";
+    $sql_3    = "SELECT * FROM `products` WHERE  `nfc_tag_id` != '' AND `pvs3_id`=$id ORDER BY `id`;";
     $ret_sql_3= mysqli_query( $con, $sql_3 );
 
     $liste = [];

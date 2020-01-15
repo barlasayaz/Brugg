@@ -88,7 +88,7 @@ function processing($tagID) {
     // escape the uemailid to prevent sql injection
     $tagID   = trim( mysqli_escape_string($con,$tagID) );
     
-    $sql    = "SELECT * FROM `products` WHERE  `nfc_tag_id`='$tagID';";
+    $sql    = "SELECT * FROM `products` WHERE  `nfc_tag_id`='$tagID' ORDER BY `id`;";
     $ret_sql= mysqli_query( $con, $sql );
 
     $obj = mysqli_fetch_assoc($ret_sql);
