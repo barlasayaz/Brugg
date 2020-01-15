@@ -7,48 +7,65 @@
 <ion-content>
   <ion-grid style="padding-top: 0px; padding-bottom: 0px; padding-left: 15px; padding-right: 15px;">
     <ion-row>
-        <ion-col size-xl="12" size-lg="12" size-md="12" size-sm="12" size="12">
-            <div class="table-responsive" id="ps_product" style="padding:10px; border: 1px solid #ccc">
-								<div class="table-info table-striped">
-									<div class="tbody">
-                    <div class="tr table-body">
-                      <div class="td td-lbl">{{'Firma' | translate}}</div>
-                      <div class="td">{{activCustomer.company}}</div>
-                    </div>
-										<div class="tr table-body">
-											<div class="td td-lbl">{{'Titel' | translate}}</div>
-											<div class="td">{{activProduct.title}}</div>
-										</div>
-										<div class="tr table-body">
-											<div class="td td-lbl">DB-ID</div>
-											<div class="td">{{activProduct.id}}</div>
-										</div>
-										<div class="tr table-body">
-											<div class="td td-lbl">ID</div>
-											<div class="td">{{activProduct.id_number}}</div>
-										</div>
-										<div class="tr table-body">
-											<div class="td td-lbl">{{'Articel No' | translate}}</div>
-											<div class="td">{{activProduct.articel_no}}</div>
-                    </div>
-                    <div class="tr table-body">
-                      <div class="td">{{'Kundenbezeichnung' | translate}}</div>
-                      <div class="td">{{activProduct.customer_description}}</div>
-                    </div>
-										<div class="tr table-body">
-											<div class="td td-lbl">{{'Autor' | translate}}</div>
-											<div class="td">{{activProduct.author}}</div>
-										</div>
-										<div class="tr table-body">
-											<div class="td td-lbl">{{'Intervall Prüfen' | translate}}</div>
-											<div class="td">{{activProduct.check_interval}}</div>
-										</div>
-									</div>
-								</div>
-							</div>
-        </ion-col>
+      <ion-col size-xl="12" size-lg="12" size-md="12" size-sm="12" size="12">
+        <div class="table-responsive" id="ps_product" style="border: 1px solid #ccc !important">
+          <div class="table-info table-striped">
+            <div class="tbody">
+              <div class="tr table-body">
+                <div class="td td-lbl">{{'Firma' | translate}}</div>
+                <div class="td">{{activCustomer.company}}</div>
+              </div>
+              <div class="tr table-body">
+                <div class="td td-lbl">{{'Titel' | translate}}</div>
+                <div class="td">{{activProduct.title}}</div>
+              </div>
+              <div class="tr table-body">
+                <div class="td td-lbl">DB-ID</div>
+                <div class="td">{{activProduct.id}}</div>
+              </div>
+              <div class="tr table-body">
+                <div class="td td-lbl">ID</div>
+                <div class="td">{{activProduct.id_number}}</div>
+              </div>
+              <div class="tr table-body">
+                <div class="td td-lbl">{{'Articel No' | translate}}</div>
+                <div class="td">{{activProduct.articel_no}}</div>
+              </div>
+              <div class="tr table-body">
+                <div class="td">{{'Kundenbezeichnung' | translate}}</div>
+                <div class="td">{{activProduct.customer_description}}</div>
+              </div>
+              <div class="tr table-body">
+                <div class="td td-lbl">{{'Autor' | translate}}</div>
+                <div class="td">{{activProduct.author}}</div>
+              </div>
+              <div class="tr table-body">
+                <div class="td td-lbl">{{'Intervall Prüfen' | translate}}</div>
+                <div class="td">{{activProduct.check_interval}}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ion-col>
     </ion-row>
-
+    <ion-row>
+      <ion-col size-xl="12" size-lg="12" size-md="12" size-sm="12" size="12">
+        <div class="table-responsive" id="ps_product" style="border: 1px solid #ccc !important">
+          <div class="table-info table-striped">
+            <div class="tbody">
+              <div class="tr table-body">
+                <div class="td td-lbl">{{'Kopieren' | translate}} {{'Produktbild' | translate}}</div>
+                <div class="td"><ion-checkbox [(ngModel)]="activProduct.productImageCheck"></ion-checkbox></div>
+              </div>
+              <div class="tr table-body">
+                <div class="td td-lbl">{{'Kopieren' | translate}} {{'Dateianhänge' | translate}}</div>
+                <div class="td"><ion-checkbox [(ngModel)]="activProduct.productAttachmentCheck"></ion-checkbox></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ion-col>
+    </ion-row>
   </ion-grid>
 </ion-content>
 

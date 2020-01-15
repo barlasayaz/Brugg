@@ -70,6 +70,8 @@ export class ProductCopyPage implements OnInit {
   loadProduct() {
     this.apiService.pvs4_get_product(this.idProduct).then((result: any) => {
       this.activProduct = result.obj;
+      this.activProduct.productImageCheck = true;
+      this.activProduct.productAttachmentCheck = true;
       console.log('loadProduct: ' , this.activProduct);
 
       let title = '';
@@ -109,7 +111,7 @@ export class ProductCopyPage implements OnInit {
   }
 
   productCopy() {
-      this.apiService.pvs4_get_product(this.idProduct).then((resultProduct: any) => {
+    this.apiService.pvs4_get_product(this.idProduct).then((resultProduct: any) => {
         let newObj = {
             id:                   0,
             title:                resultProduct.obj.title,
@@ -129,12 +131,16 @@ export class ProductCopyPage implements OnInit {
             author:               resultProduct.obj.author
           };
 
+          if (!this.activProduct.productImageCheck) {
+            newObj.images = '';
+          }
+
           console.log('obj :', newObj);
           this.apiService.pvs4_set_product(newObj).then((result: any) => {
             console.log('migration product result: ', result);
 
             let newImgPath: string = '';
-            if (resultProduct.obj.images) {
+            if (resultProduct.obj.images && this.activProduct.productImageCheck) {
               if (resultProduct.obj.images.indexOf('img/') != -1) {
                 newImgPath = resultProduct.obj.images;
               }
@@ -152,14 +158,16 @@ export class ProductCopyPage implements OnInit {
               newImgPath = '';
             }
 
-            this.apiService.pvs4_get_file(this.idProduct, 'product').then((result2) => {
-              console.log('dateiliste :', result2);
-              this.attachmentsFileCount = result2['files'].length;
-              console.log('attachmentsFileCount :', this.attachmentsFileCount);
-              if (this.attachmentsFileCount > 0) {
-                this.copyFile('product_' + this.idProduct, 'product_' + result.id);
-              }
-          });
+            if (this.activProduct.productAttachmentCheck) {
+              this.apiService.pvs4_get_file(this.idProduct, 'product').then((result2) => {
+                console.log('dateiliste :', result2);
+                this.attachmentsFileCount = result2['files'].length;
+                console.log('attachmentsFileCount :', this.attachmentsFileCount);
+                if (this.attachmentsFileCount > 0) {
+                  this.copyFile('product_' + this.idProduct, 'product_' + result.id);
+                }
+              });
+            }
 
             newObj.id = result.id;
             newObj.images = newImgPath;
