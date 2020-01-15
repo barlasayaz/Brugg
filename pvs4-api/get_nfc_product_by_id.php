@@ -20,8 +20,8 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' && empty($_POST)) {
 // switch on the current http method, 
 switch ($_SERVER['REQUEST_METHOD']) {
     case "POST":
-        if(isset($_POST['tagID']) ) {
-            processing( $_POST['tagID']  );
+        if(isset($_POST['id']) ) {
+            processing( $_POST['id']  );
         }else{
             http_response_code(500);
             $error = new \stdClass();
@@ -45,7 +45,8 @@ switch ($_SERVER['REQUEST_METHOD']) {
         die;
 }
 
-function processing($tagID) {
+function processing($id) {
+
     global $brugg_id_api,$database_location,$database_username,$database_password,$database_name;
     $con=mysqli_connect($database_location,$database_username,$database_password,$database_name);
     mysqli_query($con,"SET NAMES 'utf8'");
@@ -86,19 +87,38 @@ function processing($tagID) {
     //-----------------------------------------------------
 
     // escape the uemailid to prevent sql injection
-    $tagID   = trim( mysqli_escape_string($con,$tagID) );
-    
-    $sql    = "SELECT * FROM `products` WHERE  `nfc_tag_id`='$tagID' ORDER BY `id`;";
-    $ret_sql= mysqli_query( $con, $sql );
+    $id   = trim( mysqli_escape_string($con,$id) );
+    $id   = intval($id);
+    $sql_4    = "SELECT * FROM `products` WHERE  `nfc_tag_id` != '' AND  `id`=$id ORDER BY `id`;";
+    $ret_sql_4= mysqli_query( $con, $sql_4 );
 
-    $obj = mysqli_fetch_assoc($ret_sql);
-    $anz = 0;
-    if($obj) $anz = 1;
-    if($ret_sql) {
+    $sql_3    = "SELECT * FROM `products` WHERE  `nfc_tag_id` != '' AND `pvs3_id`=$id ORDER BY `id`;";
+    $ret_sql_3= mysqli_query( $con, $sql_3 );
+
+    $liste = [];
+    $anz_liste = 0;
+
+    if($ret_sql_4 && $ret_sql_3) {
         http_response_code(200);
         $ok = new \stdClass();
-        $ok->amount = $anz ;
-        $ok->obj = $obj ;
+
+        $anz_4 = mysqli_num_rows($ret_sql_4);
+        $anz_3 = mysqli_num_rows($ret_sql_3);
+
+        if(( $anz_4 > 0) && ($anz_3 >0)){
+            $ok->amount = 2;
+            $ok->obj_pvs3 = mysqli_fetch_assoc($ret_sql_3);
+            $ok->obj_pvs4 = mysqli_fetch_assoc($ret_sql_4);
+        }else if( $anz_4 > 0) {
+            $ok->amount = 1;
+            $ok->obj = mysqli_fetch_assoc($ret_sql_4);
+        }else if( $anz_3 > 0) {
+            $ok->amount = 1;
+            $ok->obj = mysqli_fetch_assoc($ret_sql_3);
+        }else{
+            $ok->amount = 0;
+            $ok->obj = [];
+        }
         echo json_encode($ok);
         mysqli_close($con);
         die;
@@ -106,6 +126,7 @@ function processing($tagID) {
         // return 500 problem with query.
         http_response_code(500);
         $error = new \stdClass();
+        $error->error = 6;
         $error->message = 'Internal Server Error';
         echo json_encode($error);
         mysqli_close($con);
