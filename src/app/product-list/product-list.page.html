@@ -41,9 +41,9 @@
         </ng-template>
         <ng-template pTemplate="header" let-columns>
             <tr>
-                <th *ngIf="selectMode" >                       
-                    <ion-button *ngIf="selectedNode.length>0" class="btn btn-danger btn-sm"   (click)="deSelectAll()">
-                            <ion-icon name="ios-close-circle-outline"></ion-icon>
+                <th *ngIf="selectMode" style="padding: 0px 10px !important;">                       
+                    <ion-button size="small" *ngIf="selectedNode.length>0" class="btn btn-danger btn-sm" (click)="deSelectAll()" style="font-size: smaller;">
+                        <ion-icon name="ios-close-circle-outline"></ion-icon>
                     </ion-button>
                 </th>  
                 <th *ngIf="!selectMode"  class="workColumn" [hidden]="!workMode">
@@ -80,9 +80,9 @@
             <tr>
                 <td class="workColumn" [hidden]="!workMode" >     
                     <div class="workWidthfix">
-                        <ion-button [hidden]="!deleteMode" class="btn btn-danger" size="small"  (click)="productDeactivateAlert(rowNode)">
+<!--                         <ion-button [hidden]="!deleteMode" class="btn btn-danger" size="small"  (click)="productDeactivateAlert(rowNode)">
                             <ion-icon name="trash"></ion-icon>
-                        </ion-button>
+                        </ion-button> -->
                         <ion-button [hidden]="!editMode" class="btn btn-success" size="small"  (click)="editProduct(rowData)">
                             <ion-icon name="create"></ion-icon>
                         </ion-button>
@@ -158,8 +158,11 @@
     <ion-fab-button color="danger" title="{{'abbrechen' | translate}}" (click)="work_mode(0);">
         <i class="fas fa-times"></i>
     </ion-fab-button>
-    <ion-fab-button *ngIf="selectMode && (selectedNode.length>0)" color="success" title="{{'Neues Protokoll' | translate}}" (click)="create_protocol();">
+    <ion-fab-button *ngIf="!deleteMode && selectMode && (selectedNode.length>0)" color="success" title="{{'Neues Protokoll' | translate}}" (click)="create_protocol();">
         <i class="fas fa-plus"></i>
+    </ion-fab-button>
+    <ion-fab-button *ngIf="deleteMode && selectMode && (selectedNode.length>0)" color="danger" title="{{'Löschen' | translate}}" (click)="productDeactivateAlert();">
+        <i class="fas fa-trash"></i>
     </ion-fab-button>
 </ion-fab>
 

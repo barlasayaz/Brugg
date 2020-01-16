@@ -695,6 +695,7 @@ export class ProductListPage implements OnInit {
             this.move_id = 0;
             this.move_to = 0;
             this.move_obj = {};
+            this.selectedNode = [];
         } else if (mode === 1) {
             if (this.userdata.role_set.edit_products != true) { return; }
             this.workMode = true;
@@ -703,6 +704,7 @@ export class ProductListPage implements OnInit {
             if (this.userdata.role_set.edit_products != true) { return; }
             this.workMode = true;
             this.deleteMode = true;
+            this.selectMode = true;
         } else if (mode === 3) {
             if (this.userdata.role_set.edit_products != true) { return; }
             this.workMode = true;
@@ -714,6 +716,7 @@ export class ProductListPage implements OnInit {
             if (this.userdata.role_set.check_products != true) { return; }
             this.workMode = true;
             this.selectMode = true;
+            this.deleteMode = false;
         } else if (mode === 5) {
             if (this.userdata.role_set.edit_products != true) { return; }
             this.workMode = true;
@@ -1368,7 +1371,7 @@ export class ProductListPage implements OnInit {
         localStorage.setItem('expanded_nodes_product', JSON.stringify(this.expendedNodes));
     }
 
-    productDeactivateAlert(rowNode) {
+    productDeactivateAlert() {
         const alert = this.alertCtrl.create({
             header: this.translate.instant('Achtung'),
             message: this.translate.instant('Möchten Sie dieses Produkt wirklich deaktivieren'),
@@ -1382,33 +1385,40 @@ export class ProductListPage implements OnInit {
                 {
                     text: this.translate.instant('ja'),
                     handler: () => {
-                        this.productDeactivate(rowNode);
+                        this.productDeactivate();
                     }
                 }
             ]
         }).then(x => x.present());
     }
 
-    productDeactivate(rowNode) {
-        console.log('productDeactivate', rowNode);
-        let isChild = 0;
-        if (rowNode.node['children'] != undefined) {
-            if (rowNode.node.children.length > 0) {
-                isChild++;
+    productDeactivate() {
+        if (this.selectedNode) {
+            console.log('delete product :', this.selectedNode);
+            let isChild = 0;
+            for (let index = 0; index < this.selectedNode.length; index++) {
+                console.log('selectedNode : ', this.selectedNode[index].data, this.selectedNode[index].children);
+                if (this.selectedNode[index].children != undefined) {
+                    if (this.selectedNode[index].children.length > 0) {
+                        isChild++;
+                    }
+                }
             }
-        }
-        if (isChild > 0) {
-            this.showChildMsg();
-        } else {
-            this.apiService.pvs4_get_product(rowNode.node.data.id).then((result: any) => {
-                const activProduct = result.obj;
-                activProduct.active = 0;
-                this.apiService.pvs4_set_product(activProduct).then((setResult: any) => {
-                    console.log('result: ', setResult);
-                    this.page_load();
-                });
-            });
-
+            if (isChild > 0) {
+                this.showChildMsg();
+            } else {
+                for (let i = 0; i < this.selectedNode.length; i++) {
+                    console.log('selectedNode id :', this.selectedNode[i].data.id);
+                    this.apiService.pvs4_get_product(this.selectedNode[i].data.id).then((result: any) => {
+                        const activProduct = result.obj;
+                        activProduct.active = 0;
+                        this.apiService.pvs4_set_product(activProduct).then((setResult: any) => {
+                            console.log('result: ', setResult);
+                            this.page_load();
+                        });
+                    });
+                }
+            }
         }
     }
 
