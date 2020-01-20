@@ -1,13 +1,13 @@
-<main-nav aktivPage="NoteList" 
+<main-nav aktivPage="NoteList"
           [idCustomer]="idCustomer"
-          [searchText]="columnFilterValues['search_all']" 
+          [searchText]="columnFilterValues['search_all']"
           (ping)="update($event)"
           autoDisplay="true">
 </main-nav>
 
 <div class="ek-content" (window:resize)="onResize($event)">
 
-    <div id="heightCalc" 
+    <div id="heightCalc"
          class="heightCalc"
          #divHeightCalc>
     </div>
@@ -21,8 +21,10 @@
                  [rows]="rowCount" 
                  [scrollHeight]="heightCalc"
                  [virtualRowHeight]="rowHeight"
-                 [virtualScroll]="true" 
-                 [lazy]="true" 
+                 [virtualScroll]="true"
+                 selectionMode="checkbox"
+                 [(selection)]="selectedNode"
+                 [lazy]="true"
                  (onLazyLoad)="loadNodes($event)"  
                  [loading]="false" 
                  [totalRecords]="rowRecords"
@@ -31,16 +33,21 @@
                  (onColReorder)="onColReorder($event)"
                  (onColResize)="onColResize($event)"
                  [sortField] = "sortedColumn['sort_field']"
-                 [sortOrder] = "sortedColumn['sort_order']" >    
+                 [sortOrder] = "sortedColumn['sort_order']">    
         <ng-template pTemplate="colgroup" let-columns>
             <colgroup>
-                <col [hidden]="!editMode" [ngStyle]="{width: selectedColumns[0].width}" >
+                <col [hidden]="!workMode" [ngStyle]="{width: selectedColumns[0].width}">
                 <col *ngFor="let col of selectedColumns.slice(1);" [ngStyle]="{width: col.width}">
             </colgroup>
         </ng-template>
         <ng-template pTemplate="header" let-columns>
             <tr>
-                <th class="workColumn" [hidden]="!editMode">
+                <th *ngIf="selectMode" style="padding: 0px 10px !important;">                       
+                    <ion-button size="small" *ngIf="selectedNode.length>0" class="btn btn-danger btn-sm" (click)="deSelectAll()" style="font-size: smaller;">
+                        <ion-icon name="ios-close-circle-outline"></ion-icon>
+                    </ion-button> 
+                </th>  
+                <th *ngIf="!selectMode" class="workColumn" [hidden]="!workMode">
                     <div class="workWidthfix"></div>
                 </th>               
                 <th *ngFor="let col of selectedColumns.slice(1);" 
@@ -52,12 +59,13 @@
                 </th>
             </tr>
             <tr [hidden]="!splitFilter">
-                <th class="workColumn" [hidden]="!editMode">
+                <th class="workColumn" [hidden]="!workMode">
                     <div class="workWidthfix"></div>
                 </th> 
-                <th *ngFor="let col of selectedColumns.slice(1); let i = index" 
+                <th *ngFor="let col of selectedColumns.slice(1); let i = index"
+                    nowrap
                     [ngSwitch]="col.field" 
-                    class="p-table-filter" [ngStyle]="{width: col.width}">
+                    class="p-table-filter">
                     <input pInputText
                            type="text"
                            class="filter-search"
@@ -66,14 +74,18 @@
                 </th>
             </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-rowNode let-rowData="rowData" let-columns="columns">
-            <tr [ttSelectableRow]="rowNode">
-                <td class="workColumn" [hidden]="!editMode">   
+        <ng-template pTemplate="body"
+                     let-rowNode
+                     let-rowData="rowData"
+                     let-columns="columns">
+            <tr>
+                <td class="workColumn" [hidden]="!workMode" >     
                     <div class="workWidthfix">
                         <ion-button [hidden]="!editMode" class="btn btn-success" size="small"  (click)="editNote(rowData)">
                             <ion-icon name="create"></ion-icon>
                         </ion-button>
-                    </div>               
+                        <p-treeTableCheckbox [value]="rowNode" *ngIf="selectMode"></p-treeTableCheckbox>        
+                    </div>                                
                 </td>
                 <td *ngFor="let col of selectedColumns.slice(1); let i = index" 
                     style="text-align: justify;" 
@@ -86,23 +98,32 @@
         </ng-template>
         <ng-template pTemplate="loadingbody" let-columns="columns">
             <tr style="height:34px">
-                    <td  class="workColumn" [hidden]="!editMode"></td>
-                    <td *ngFor="let col of selectedColumns.slice(1)">
-                        <div class="loading-text"></div>
-                    </td>
+                <td  class="workColumn" [hidden]="!workMode"></td>
+                <td *ngFor="let col of selectedColumns.slice(1)">
+                    <div class="loading-text"></div>
+                </td>
             </tr>
         </ng-template>
     </p-treeTable>
 </div>
 
-<ion-fab [hidden]="!editMode" vertical="bottom" horizontal="end" slot="fixed" class="liftiball liftiball-cancel">
+<ion-fab [hidden]="!workMode" vertical="bottom" horizontal="end" slot="fixed" class="liftiball liftiball-cancel">
     <!-- BUTTON -->
-    <ion-fab-button color="danger" title="{{'abbrechen' | translate}}" (click)="editMode=false;">
+    <ion-fab-button *ngIf="deleteMode && selectMode && (selectedNode.length>0)" color="danger" title="{{'Löschen' | translate}}" (click)="noteDeactivate();">
+        <ion-icon name="trash"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-button *ngIf="pdfMode" color="warning" title="{{'PDF Export' | translate}}" (click)="pdf_export();">
+        <ion-icon name="download"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-button *ngIf="excelMode" color="warning" title="{{'XLS Export' | translate}}" (click)="excel_export();">
+        <ion-icon name="stats"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-button color="danger" title="{{'abbrechen' | translate}}" (click)="work_mode(0);">
         <i class="fas fa-times"></i>
     </ion-fab-button>
 </ion-fab>
 
-<ion-fab [hidden]="editMode" vertical="bottom" horizontal="end" slot="fixed" class="liftiball">
+<ion-fab [hidden]="workMode" vertical="bottom" horizontal="end" slot="fixed" class="liftiball">
     <ion-fab-button color="tertiary">
         <ion-icon name="menu"></ion-icon>
     </ion-fab-button>
@@ -116,8 +137,14 @@
         <!-- BUTTON -->
         <ion-fab-button color="success"
                         title="{{'Bearbeiten' | translate}}"
-                        (click)="editMode=true;">
+                        (click)="work_mode(1)">
             <ion-icon name="create"></ion-icon>
+        </ion-fab-button>
+        <!-- BUTTON -->
+        <ion-fab-button color="danger"
+                        title="{{'Löschen' | translate}}"
+                        (click)="work_mode(2)">
+            <ion-icon name="trash"></ion-icon>
         </ion-fab-button>
         <!-- BUTTON -->
         <ion-fab-button color="primary"
@@ -134,13 +161,13 @@
         <!-- BUTTON -->
         <ion-fab-button color="warning"
                         title="{{'PDF Export' | translate}}"
-                        (click)="pdf_export()">
+                        (click)="work_mode(3)">
             <ion-icon name="download"></ion-icon>
         </ion-fab-button>
         <!-- BUTTON -->
         <ion-fab-button color="warning"
                         title="{{'XLS Export' | translate}}"
-                        (click)="excel_export()">
+                        (click)="work_mode(4)">
             <ion-icon name="stats"></ion-icon>
         </ion-fab-button>
     </ion-fab-list>

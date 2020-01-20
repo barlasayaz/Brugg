@@ -23,7 +23,8 @@
                  [scrollHeight]="heightCalc"
                  [virtualRowHeight]="rowHeight" 
                  [virtualScroll]="true" 
-                 selectionMode="checkbox" [(selection)]="selectedNode"
+                 selectionMode="checkbox"
+                 [(selection)]="selectedNode"
                  [lazy]="true" 
                  (onLazyLoad)="loadNodes($event)"
                  [loading]="false" 
@@ -47,21 +48,21 @@
                     </ion-button>
                 </th>  
                 <th *ngIf="!selectMode"  class="workColumn" [hidden]="!workMode">
-                        <div class="workWidthfix"></div>
+                    <div class="workWidthfix"></div>
                 </th> 
                 <th *ngFor="let col of selectedColumns.slice(1);" 
                     ttResizableColumn 
                     [ttSortableColumn]="col.field"
-                    ttReorderableColumn > {{col.header}}
-                    <p-treeTableSortIcon [field]="col.field">
-                    </p-treeTableSortIcon>
+                    ttReorderableColumn> 
+                        {{col.header}}
+                    <p-treeTableSortIcon [field]="col.field"></p-treeTableSortIcon>
                 </th>
             </tr>
             <tr [hidden]="!splitFilter">
-                    <th class="workColumn" [hidden]="!workMode">
-                            <div class="workWidthfix"></div>
-                        </th> 
-                    <th *ngFor="let col of selectedColumns.slice(1)" 
+                <th class="workColumn" [hidden]="!workMode">
+                    <div class="workWidthfix"></div>
+                </th> 
+                <th *ngFor="let col of selectedColumns.slice(1)" 
                     nowrap 
                     [ngSwitch]="col.field" 
                     class="p-table-filter">
@@ -80,17 +81,9 @@
             <tr>
                 <td class="workColumn" [hidden]="!workMode" >     
                     <div class="workWidthfix">
-<!--                         <ion-button [hidden]="!deleteMode" class="btn btn-danger" size="small"  (click)="productDeactivateAlert(rowNode)">
-                            <ion-icon name="trash"></ion-icon>
-                        </ion-button> -->
                         <ion-button [hidden]="!editMode" class="btn btn-success" size="small"  (click)="editProduct(rowData)">
                             <ion-icon name="create"></ion-icon>
                         </ion-button>
-                        <!--
-                        <ion-button [hidden]="workMode"  class="btn btn-primary" size="small"  (click)="viewProduct(rowData)">
-                            <ion-icon name="eye"></ion-icon> 
-                        </ion-button>   
-                        -->
                         <ion-button [hidden]="((!moveMode)||(move_id>0))" class="btn btn-teal" size="small"  (click)="moveProduct(1,rowData)">
                             <ion-icon name="md-move"></ion-icon>
                         </ion-button> 
@@ -155,14 +148,20 @@
 
 <ion-fab [hidden]="!workMode" vertical="bottom" horizontal="end" slot="fixed" class="liftiball liftiball-cancel">
     <!-- BUTTON -->
-    <ion-fab-button color="danger" title="{{'abbrechen' | translate}}" (click)="work_mode(0);">
-        <i class="fas fa-times"></i>
-    </ion-fab-button>
-    <ion-fab-button *ngIf="!deleteMode && selectMode && (selectedNode.length>0)" color="success" title="{{'Neues Protokoll' | translate}}" (click)="create_protocol();">
+    <ion-fab-button *ngIf="protocolMode && selectMode && (selectedNode.length>0)" color="success" title="{{'Neues Protokoll' | translate}}" (click)="create_protocol();">
         <i class="fas fa-plus"></i>
     </ion-fab-button>
-    <ion-fab-button *ngIf="deleteMode && selectMode && (selectedNode.length>0)" color="danger" title="{{'Löschen' | translate}}" (click)="productDeactivateAlert();">
+    <ion-fab-button *ngIf="deleteMode && selectMode && (selectedNode.length>0)" color="danger" title="{{'Löschen' | translate}}" (click)="productDeactivate();">
         <i class="fas fa-trash"></i>
+    </ion-fab-button>
+    <ion-fab-button *ngIf="pdfMode" color="warning" title="{{'PDF Export' | translate}}" (click)="pdf_export();">
+        <ion-icon name="download"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-button *ngIf="excelMode" color="warning" title="{{'XLS Export' | translate}}" (click)="excel_export();">
+        <ion-icon name="stats"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-button color="danger" title="{{'abbrechen' | translate}}" (click)="work_mode(0);">
+        <i class="fas fa-times"></i>
     </ion-fab-button>
 </ion-fab>
 
@@ -238,13 +237,13 @@
         <!-- BUTTON -->
         <ion-fab-button color="warning"
                         title="{{'PDF Export' | translate}}"
-                        (click)="pdf_export()">
+                        (click)="work_mode(8)">
             <ion-icon name="download"></ion-icon>
         </ion-fab-button>
         <!-- BUTTON -->
         <ion-fab-button color="warning"
                         title="{{'XLS Export' | translate}}"
-                        (click)="excel_export()">
+                        (click)="work_mode(9)">
             <ion-icon name="stats"></ion-icon>
         </ion-fab-button>
         <!-- BUTTON -->

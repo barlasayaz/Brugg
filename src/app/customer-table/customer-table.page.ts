@@ -38,7 +38,7 @@ export class CustomerTablePage implements OnInit {
         private route: ActivatedRoute) {
             this.modelChanged.pipe(
                 debounceTime(700))
-                .subscribe(model => {                    
+                .subscribe(model => {
                     this.generate_customerList(0, this.rowCount, this.sortedColumn.sort_field, this.sortedColumn.sort_order);
                     localStorage.setItem('filter_values_customer', JSON.stringify(this.columnFilterValues));
             });
@@ -47,7 +47,7 @@ export class CustomerTablePage implements OnInit {
     public customerListView: TreeNode[] = [];
     public customerListSearch: TreeNode[] = [];
     public cols: any[] = [];
-    public selectedNode: TreeNode;
+    public selectedNode: any;
     public allnodes: any[] = [];
     public selectedColumns: any[];
     public xlsHeader: any[];
@@ -81,11 +81,13 @@ export class CustomerTablePage implements OnInit {
     public sortedColumn = { sort_field : null, sort_order : 0 };
     public filterText: string = '';
     public filterOn: boolean = false;
-    public workMode: boolean = false;
-    public editMode: boolean = false;
-    public moveMode: boolean = false;
+    public workMode: boolean;
+    public editMode: boolean;
+    public moveMode: boolean;
+    public selectMode: boolean;
+    public pdfMode: boolean;
+    public excelMode: boolean;
 
-    
     @ViewChild('tt') dataTable: TreeTable;
     @ViewChild('divHeightCalc') divHeightCalc: any;
     @ViewChild('fab1') fab1: any;
@@ -101,7 +103,7 @@ export class CustomerTablePage implements OnInit {
         console.log('update():', data);
         if (data.lable === 'searchText') {
             this.columnFilterValues['search_all'] = data.text;
-            
+
             this.generate_customerList(0, this.rowCount, this.sortedColumn.sort_field, this.sortedColumn.sort_order);
             localStorage.setItem('filter_values_customer', JSON.stringify(this.columnFilterValues));
         }
@@ -160,6 +162,8 @@ export class CustomerTablePage implements OnInit {
     }
 
     ionViewWillEnter() {
+        this.selectedNode = [];
+        this.work_mode(0);
         this.page_load();
     }
 
@@ -453,20 +457,22 @@ export class CustomerTablePage implements OnInit {
 
     async menu_new() {
         console.log('menu_new', this.selectedNode);
-        const idCustomer = 0;
+     /* const idCustomer = 0;
         let parentCustomer = 0;
         if (this.selectedNode != undefined) {
             if (this.selectedNode.data.id) {
                 parentCustomer = parseInt(this.selectedNode.data.id);
             }
-        }
+        } */
         const modal =
         await this.modalCtrl.create({
           component: CustomerEditComponent,
           cssClass: 'customeredit-modal-css',
           componentProps: {
-            id: idCustomer,
-            parent: parentCustomer
+         /* id: idCustomer,
+            parent: parentCustomer */
+            id: 0,
+            parent: 0
           }
         });
         modal.onDidDismiss().then(async data => {
@@ -475,15 +481,6 @@ export class CustomerTablePage implements OnInit {
             }
         });
         modal.present();
-    }
-
-    workBreak() {
-        this.workMode = false;
-        this.editMode = false;
-        this.moveMode = false;
-        this.move_id = 0;
-        this.move_to = 0;
-        this.move_obj = {};
     }
 
     menu_edit() {
@@ -511,7 +508,7 @@ export class CustomerTablePage implements OnInit {
                 buttons: [{
                     text: this.translate.instant('nein'),
                     handler: data => {
-                        this.workBreak();
+                        this.work_mode(0);
                     }
                 },
                 {
@@ -520,7 +517,7 @@ export class CustomerTablePage implements OnInit {
                         this.move_obj.parent = this.move_to;
                         this.apiService.pvs4_set_customer(this.move_obj).then(async (result: any) => {
                             console.log('result: ', result);
-                            this.workBreak();
+                            this.work_mode(0);
                             this.page_load();
                         });
                     }
@@ -587,9 +584,21 @@ export class CustomerTablePage implements OnInit {
             const data: any = [];
             this.allnodes = [];
             if (this.isFilterOn()) {
-                this.data_tree(this.customerListSearch);
+                if (this.selectedNode.length > 0) {
+                    for (let i = 0; i < this.selectedNode.length; i++) {
+                        this.allnodes.push(this.selectedNode[i].data);
+                    }
+                } else {
+                    this.data_tree(this.customerListSearch);
+                }
             } else {
-                this.data_tree(this.customerListAll);
+                if (this.selectedNode.length > 0) {
+                    for (let i = 0; i < this.selectedNode.length; i++) {
+                        this.allnodes.push(this.selectedNode[i].data);
+                    }
+                } else {
+                    this.data_tree(this.customerListAll);
+                }
             }
             for (let i = 0, len = this.allnodes.length; i < len; i++) {
                 const obj = this.allnodes[i];
@@ -640,9 +649,21 @@ export class CustomerTablePage implements OnInit {
             bodyArray.push(columns);
             this.allnodes = [];
             if (this.isFilterOn()) {
-                this.data_tree(this.customerListSearch);
+                if (this.selectedNode.length > 0) {
+                    for (let i = 0; i < this.selectedNode.length; i++) {
+                        this.allnodes.push(this.selectedNode[i].data);
+                    }
+                } else {
+                    this.data_tree(this.customerListSearch);
+                }
             } else {
-                this.data_tree(this.customerListAll);
+                if (this.selectedNode.length > 0) {
+                    for (let i = 0; i < this.selectedNode.length; i++) {
+                        this.allnodes.push(this.selectedNode[i].data);
+                    }
+                } else {
+                    this.data_tree(this.customerListAll);
+                }
             }
             let obj: any;
             let rowArray: any[] = [];
@@ -836,6 +857,53 @@ export class CustomerTablePage implements OnInit {
     onNodeCollapse(event) {
         this.expendedNodes = this.expendedNodes.filter(function (element, index, array) { return element != event.node.data['id']; });
         localStorage.setItem('expanded_nodes', JSON.stringify(this.expendedNodes));
+    }
+
+    async deSelectAll() {
+        if (this.selectedNode.length > 0) {
+            const alert = await this.alertCtrl.create({
+                header: this.translate.instant('Achtung'),
+                message: this.translate.instant('Möchten Sie wirklich alle abwählen'),
+                buttons: [{
+                    text: this.translate.instant('nein'),
+                    handler: data => {
+                        //  alert.dismiss();
+                    }
+                },
+                {
+                    text: this.translate.instant('ja'),
+                    handler: data => {
+                        this.selectedNode = [];
+                    }
+                }
+                ]
+            });
+            await alert.present();
+        }
+    }
+
+    work_mode(mode: number) {
+        console.log('work_mode()', mode);
+        if (mode === 0) {
+            this.workMode = false;
+            this.editMode = false;
+            this.moveMode = false;
+            this.move_id = 0;
+            this.move_to = 0;
+            this.move_obj = {};
+            this.pdfMode = false;
+            this.excelMode = false;
+            this.selectMode = false;
+            this.selectedNode = [];
+        } else if (mode === 1) {
+            this.workMode = true;
+            this.selectMode = true;
+            this.pdfMode = true;
+        } else if (mode === 2) {
+            this.workMode = true;
+            this.selectMode = true;
+            this.excelMode = true;
+        }
     }
 
 }

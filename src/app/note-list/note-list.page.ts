@@ -70,7 +70,12 @@ export class NoteListPage implements OnInit {
     public sortedColumn = { sort_field : null, sort_order : 0 };
     public filterText = '';
     public filterOn = false;
-    public editMode = false;
+    public editMode: boolean;
+    public deleteMode: boolean;
+    public workMode: boolean;
+    public selectMode: boolean;
+    public pdfMode: boolean;
+    public excelMode: boolean;
 
     @ViewChild('tt') dataTable: TreeTable;
     @ViewChild('divHeightCalc') divHeightCalc: ElementRef;
@@ -135,6 +140,7 @@ export class NoteListPage implements OnInit {
     }
 
     ionViewWillEnter() {
+        this.work_mode(0);
         this.page_load();
     }
 
@@ -476,9 +482,21 @@ export class NoteListPage implements OnInit {
             const data: any = [];
             this.allnodes = [];
             if (this.isFilterOn()) {
-                this.data_tree(this.noteListSearch);
+                if (this.selectedNode.length > 0) {
+                    for (let i = 0; i < this.selectedNode.length; i++) {
+                        this.allnodes.push(this.selectedNode[i].data);
+                    }
+                } else {
+                    this.data_tree(this.noteListSearch);
+                }
             } else {
-                this.data_tree(this.noteListAll);
+                if (this.selectedNode.length > 0) {
+                    for (let i = 0; i < this.selectedNode.length; i++) {
+                        this.allnodes.push(this.selectedNode[i].data);
+                    }
+                } else {
+                    this.data_tree(this.noteListAll);
+                }
             }
             for (let i = 0, len = this.allnodes.length; i < len; i++) {
                 const obj = this.allnodes[i];
@@ -523,9 +541,21 @@ export class NoteListPage implements OnInit {
             bodyArray.push(columns);
             this.allnodes = [];
             if (this.isFilterOn()) {
-                this.data_tree(this.noteListSearch);
+                if (this.selectedNode.length > 0) {
+                    for (let i = 0; i < this.selectedNode.length; i++) {
+                        this.allnodes.push(this.selectedNode[i].data);
+                    }
+                } else {
+                    this.data_tree(this.noteListSearch);
+                }
             } else {
-                this.data_tree(this.noteListAll);
+                if (this.selectedNode.length > 0) {
+                    for (let i = 0; i < this.selectedNode.length; i++) {
+                        this.allnodes.push(this.selectedNode[i].data);
+                    }
+                } else {
+                    this.data_tree(this.noteListAll);
+                }
             }
             let obj: any;
             let rowArray: any[] = [];
@@ -657,4 +687,91 @@ export class NoteListPage implements OnInit {
         return ret;
     }
 
+    work_mode(mode: number) {
+        console.log('work_mode()', mode);
+        if (mode === 0) {
+            this.workMode = false;
+            this.editMode = false;
+            this.deleteMode = false;
+            this.pdfMode = false;
+            this.excelMode = false;
+            this.selectMode = false;
+            this.selectedNode = [];
+        } else if (mode === 1) {
+            this.workMode = true;
+            this.editMode = true;
+        } else if (mode === 2) {
+            this.workMode = true;
+            this.selectMode = true;
+            this.deleteMode = true;
+        } else if (mode === 3) {
+            this.workMode = true;
+            this.selectMode = true;
+            this.pdfMode = true;
+        } else if (mode === 4) {
+            this.workMode = true;
+            this.selectMode = true;
+            this.excelMode = true;
+        }
+    }
+
+    async deSelectAll() {
+        console.log('selectedNode id :', this.selectedNode);
+        if (this.selectedNode.length > 0) {
+            const alert = await this.alertCtrl.create({
+                header: this.translate.instant('Achtung'),
+                message: this.translate.instant('Möchten Sie wirklich alle abwählen'),
+                buttons: [{
+                    text: this.translate.instant('nein'),
+                    handler: data => {
+                        //  alert.dismiss();
+                    }
+                },
+                {
+                    text: this.translate.instant('ja'),
+                    handler: data => {
+                        this.selectedNode = [];
+                        // this.selectedRow = 0;
+                    }
+                }
+                ]
+            });
+            await alert.present();
+        }
+    }
+
+    noteDeactivate() {
+        let alert = this.alertCtrl.create({
+            header: this.translate.instant('Achtung'),
+            message: this.translate.instant('Möchten Sie diese Notiz wirklich deaktivieren'),
+            buttons: [
+              {
+                text: this.translate.instant('nein'),
+                handler: () => {
+                  console.log('Cancel clicked');
+                }
+              },
+              {
+                text: this.translate.instant('ja'),
+                handler: () => {
+                  console.log('selectedNode id :', this.selectedNode);
+                  if (this.selectedNode) {
+                      for (let i = 0; i < this.selectedNode.length; i++) {
+                          console.log('selectedNode id :', this.selectedNode[i]);
+                          this.apiService.pvs4_get_note(this.selectedNode[i].data.id).then((result: any) => {
+                              const activNote = result.obj;
+                              activNote.active = 0;
+                              this.apiService.pvs4_set_note(activNote).then((setResult: any) => {
+                                  console.log('result: ', setResult);
+                                  this.work_mode(0);
+                                  this.page_load();
+                              });
+                          });
+                      }
+                  }
+                }
+              }
+            ]
+          }).then(x => x.present());
+    }
 }
