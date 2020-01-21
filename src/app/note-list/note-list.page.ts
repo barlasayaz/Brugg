@@ -68,7 +68,6 @@ export class NoteListPage implements OnInit {
     public rowHeight = 26;
     public rowCount = 20;
     public sortedColumn = { sort_field : null, sort_order : 0 };
-    public filterText = '';
     public filterOn = false;
     public editMode: boolean;
     public deleteMode: boolean;
@@ -131,9 +130,6 @@ export class NoteListPage implements OnInit {
         if (localStorage.getItem('sort_column_note') != undefined) {
             this.sortedColumn = JSON.parse(localStorage.getItem('sort_column_note'));
         }
-        this.filterText = this.route.snapshot.paramMap.get('filterText');
-      //  if (this.filterText.length > 0) { this.filterOn = true; }
-        console.log('filterText :', this.filterText);
 
         console.log('NoteListPage idCustomer:', this.idCustomer);
 
@@ -149,7 +145,7 @@ export class NoteListPage implements OnInit {
         if (data.lable === 'searchText') {
             this.columnFilterValues['search_all'] = data.text;
             this.generate_noteList(0, this.rowCount, this.sortedColumn.sort_field, this.sortedColumn.sort_order);
-            localStorage.setItem('filter_values_product', JSON.stringify(this.columnFilterValues));
+            localStorage.setItem('filter_values_note', JSON.stringify(this.columnFilterValues));
         }
         if (data.lable === 'toggleFilter') {
             this.menu_filter();

@@ -149,7 +149,7 @@ export class ProtocolListPage implements OnInit {
         if (data.lable === 'searchText') {
             this.columnFilterValues['search_all'] = data.text;
             this.generate_protocolList(0, this.rowCount, this.sortedColumn.sort_field, this.sortedColumn.sort_order);
-            localStorage.setItem('filter_values_product', JSON.stringify(this.columnFilterValues));
+            localStorage.setItem('filter_values_protocol', JSON.stringify(this.columnFilterValues));
         }
         if (data.lable === 'toggleFilter') {
             this.menu_filter();
