@@ -283,106 +283,181 @@ ion-fab-button {
   height: 3840px !important;
 }
 
-.my-data-modal-1-css .modal-wrapper {
-  height: 560px;
+.my-data-modal-1-css .modal-wrapper {  
+  @media (max-width: 640px) {
+    height: calc(100% - 115px);
+  }
+  @media (min-width: 641px) {
+    height: 560px;
+  }
   position: absolute;
   display: block;
   border-radius: 8px;
 }
 
-.my-data-modal-2-css .modal-wrapper {
-  height: 641px;
+.my-data-modal-2-css .modal-wrapper {  
+  @media (max-width: 640px) {
+    height: calc(100% - 115px);
+  }
+  @media (min-width: 641px) {
+    height: 641px;
+  }
   position: absolute;
   display: block;
   border-radius: 8px;
 }
 
 .appointmentedit-modal-css .modal-wrapper {
-  height: 650px;
+  @media (max-width: 640px) {
+    height: calc(100% - 115px);
+  }
+  @media (min-width: 641px) {
+    height: 600px;
+  }
   position: absolute;
   display: block;
   border-radius: 8px;
 }
 
 .rebox-modal-css .modal-wrapper {
-  height: 645px;
+  @media (max-width: 640px) {
+    height: calc(100% - 115px);
+  }
+  @media (min-width: 641px) {
+    height: 645px;
+  }
   position: absolute;
   display: block;
   border-radius: 8px;
 }
 
-.nfcscan-modal-css .modal-wrapper {
-  height: 500px;
+.nfcscan-modal-css .modal-wrapper {  
+  @media (max-width: 640px) {
+    height: calc(100% - 115px);
+  }
+  @media (min-width: 641px) {
+    height: 500px;
+  }
   position: absolute;
   display: block;
   border-radius: 8px;
 }
 
-.qrcode-modal-css .modal-wrapper {
-  height: 500px;
+.qrcode-modal-css .modal-wrapper {  
+  @media (max-width: 640px) {
+    height: calc(100% - 115px);
+  }
+  @media (min-width: 641px) {
+    height: 500px;
+  }
   position: absolute;
   display: block;
   border-radius: 8px;
 }
 
-.imprint-modal-css .modal-wrapper {
-  height: 597px;
+.imprint-modal-css .modal-wrapper {  
+  @media (max-width: 640px) {
+    height: calc(100% - 115px);
+  }
+  @media (min-width: 641px) {
+    height: 597px;
+  }
   position: absolute;
   display: block;
   border-radius: 8px;
 }
 
-.contactperson-modal-css .modal-wrapper {
-  height: 660px;
+.contactperson-modal-css .modal-wrapper {  
+  @media (max-width: 640px) {
+    height: calc(100% - 115px);
+  }
+  @media (min-width: 641px) {
+    height: 660px;
+  }
   position: absolute;
   display: block;
   border-radius: 8px;
 }
 
-.contactpersonaddress-modal-css .modal-wrapper {
-  height: 660px;
+.contactpersonaddress-modal-css .modal-wrapper {  
+  @media (max-width: 640px) {
+    height: calc(100% - 115px);
+  }
+  @media (min-width: 641px) {
+    height: 660px;
+  }
   position: absolute;
   display: block;
   border-radius: 8px;
 }
 
-.noteedit-modal-css .modal-wrapper {
-  height: 585px;
+.noteedit-modal-css .modal-wrapper {  
+  @media (max-width: 640px) {
+    height: calc(100% - 115px);
+  }
+  @media (min-width: 641px) {
+    height: 585px;
+  }
   position: absolute;
   display: block;
   border-radius: 8px;
 }
 
-.customeredit-modal-css .modal-wrapper {
-  height: 660px;
+.customeredit-modal-css .modal-wrapper {  
+  @media (max-width: 640px) {
+    height: calc(100% - 115px);
+  }
+  @media (min-width: 641px) {
+    height: 660px;
+  }
   position: absolute;
   display: block;
   border-radius: 8px;
 }
 
-.assignment-modal-css .modal-wrapper {
-  height: 325px;
+.assignment-modal-css .modal-wrapper {  
+  @media (max-width: 640px) {
+    height: calc(100% - 115px);
+  }
+  @media (min-width: 641px) {
+    height: 325px;
+  }
   position: absolute;
   display: block;
   border-radius: 8px;
 }
 
-.ordersend-modal-css .modal-wrapper {
-  height: 450px;
+.ordersend-modal-css .modal-wrapper {  
+  @media (max-width: 640px) {
+    height: calc(100% - 115px);
+  }
+  @media (min-width: 641px) {
+    height: 450px;
+  }
   position: absolute;
   display: block;
   border-radius: 8px;
 }
 
-.productcopy-modal-css .modal-wrapper {
-  height: 573px;
+.productcopy-modal-css .modal-wrapper {  
+  @media (max-width: 640px) {
+    height: calc(100% - 115px);
+  }
+  @media (min-width: 641px) {
+    height: 573px;
+  }
   position: absolute;
   display: block;
   border-radius: 8px;
 }
 
-.getimage-modal-css .modal-wrapper {
-  height: 607px;
+.getimage-modal-css .modal-wrapper {  
+  @media (max-width: 640px) {
+    height: calc(100% - 115px);
+  }
+  @media (min-width: 641px) {
+    height: 607px;
+  }
   position: absolute;
   display: block;
   border-radius: 8px;
@@ -392,22 +467,37 @@ ion-fab-button {
   }
 }
 
-.productmigration-modal-css .modal-wrapper {
-  height: 332px;
+.productmigration-modal-css .modal-wrapper {  
+  @media (max-width: 640px) {
+    height: calc(100% - 115px);
+  }
+  @media (min-width: 641px) {
+    height: 332px;
+  }
   position: absolute;
   display: block;
   border-radius: 8px;
 }
 
-.productoptedit-modal-css .modal-wrapper {
-  height: 450px;
+.productoptedit-modal-css .modal-wrapper {  
+  @media (max-width: 640px) {
+    height: calc(100% - 115px);
+  }
+  @media (min-width: 641px) {
+    height: 450px;
+  }
   position: absolute;
   display: block;
   border-radius: 8px;
 }
 
-.protocoloptedit-modal-css .modal-wrapper {
-  height: 450px;
+.protocoloptedit-modal-css .modal-wrapper {  
+  @media (max-width: 640px) {
+    height: calc(100% - 115px);
+  }
+  @media (min-width: 641px) {
+    height: 450px;
+  }
   position: absolute;
   display: block;
   border-radius: 8px;
@@ -22551,8 +22641,13 @@ _:-webkit-full-screen,
   padding-left: 0px;
 }
 
-.maplocate-modal-css .modal-wrapper {
-  height: 500px;
+.maplocate-modal-css .modal-wrapper {  
+  @media (max-width: 640px) {
+    height: calc(100% - 115px);
+  }
+  @media (min-width: 641px) {
+    height: 500px;
+  }
   position: absolute;
   display: block;
   border-radius: 8px;
