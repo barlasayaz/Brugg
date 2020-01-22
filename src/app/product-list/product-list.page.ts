@@ -57,20 +57,23 @@ export class ProductListPage implements OnInit {
     public childCount: number;
     public modelChanged: Subject<any> = new Subject<any>();
     public selectedRow: number;
-    public selectMode: boolean = false;
     public rowHeight = 26;
     public rowCount = 20;
     public showBasicInfo = true;
     public lengthBasicInfo = 90;
     public sortedColumn = { sort_field : null, sort_order : 0 };
-    public showActivePassiveProduct: boolean = true;
-    public workMode: boolean = false;
-    public editMode: boolean = false;
-    public moveMode: boolean = false;
-    public deleteMode: boolean = false;
-    public copyMode: boolean = false;
-    public migrationMode: boolean = false;
-    public historyMode: boolean = false;
+    public showActivePassiveProduct: boolean;
+    public selectMode: boolean;
+    public workMode: boolean;
+    public editMode: boolean;
+    public moveMode: boolean;
+    public deleteMode: boolean;
+    public protocolMode: boolean;
+    public pdfMode: boolean;
+    public excelMode: boolean;
+    public copyMode: boolean;
+    public migrationMode: boolean;
+    public historyMode: boolean;
 
     @ViewChild('tt') dataTable: TreeTable;
     @ViewChild('divHeightCalc') divHeightCalc: any;
@@ -176,6 +179,8 @@ export class ProductListPage implements OnInit {
     }
 
     ionViewWillEnter() {
+        this.showActivePassiveProduct = true;
+        this.work_mode(0);
         this.page_load();
     }
 
@@ -243,7 +248,7 @@ export class ProductListPage implements OnInit {
         console.log('funcHeightCalc:', x , this.heightCalc  );
     }
 
-    prepare_line( line:any ){        
+    prepare_line( line: any ) {
         let pr = line.data.last_protocol;
         if (pr) {
             if (pr.length > 0) {
@@ -688,8 +693,11 @@ export class ProductListPage implements OnInit {
             this.editMode = false;
             this.moveMode = false;
             this.deleteMode = false;
+            this.protocolMode = false;
             this.selectMode = false;
             this.copyMode = false;
+            this.pdfMode = false;
+            this.excelMode = false;
             this.migrationMode = false;
             this.historyMode = false;
             this.move_id = 0;
@@ -716,7 +724,7 @@ export class ProductListPage implements OnInit {
             if (this.userdata.role_set.check_products != true) { return; }
             this.workMode = true;
             this.selectMode = true;
-            this.deleteMode = false;
+            this.protocolMode = true;
         } else if (mode === 5) {
             if (this.userdata.role_set.edit_products != true) { return; }
             this.workMode = true;
@@ -729,6 +737,14 @@ export class ProductListPage implements OnInit {
             if (this.userdata.role_set.edit_products != true) { return; }
             this.workMode = true;
             this.historyMode = true;
+        } else if (mode === 8) {
+            this.workMode = true;
+            this.selectMode = true;
+            this.pdfMode = true;
+        } else if (mode === 9) {
+            this.workMode = true;
+            this.selectMode = true;
+            this.excelMode = true;
         }
     }
 
@@ -1062,10 +1078,23 @@ export class ProductListPage implements OnInit {
         try {
             const data: any = [];
             this.allnodes = [];
+
             if (this.isFilterOn()) {
-                this.data_tree(this.productListSearch);
+                if (this.selectedNode.length > 0) {
+                    for (let i = 0; i < this.selectedNode.length; i++) {
+                        this.allnodes.push(this.selectedNode[i].data);
+                    }
+                } else {
+                    this.data_tree(this.productListSearch);
+                }
             } else {
-                this.data_tree(this.productListAll);
+                if (this.selectedNode.length > 0) {
+                    for (let i = 0; i < this.selectedNode.length; i++) {
+                        this.allnodes.push(this.selectedNode[i].data);
+                    }
+                } else {
+                    this.data_tree(this.productListAll);
+                }
             }
             for (let i = 0, len = this.allnodes.length; i < len; i++) {
                 const obj = this.allnodes[i];
@@ -1105,10 +1134,23 @@ export class ProductListPage implements OnInit {
             const bodyArray: any[] = [];
             this.allnodes = [];
             let rowArray: any[] = [];
+
             if (this.isFilterOn()) {
-                this.data_tree(this.productListSearch);
+                if (this.selectedNode.length > 0) {
+                    for (let i = 0; i < this.selectedNode.length; i++) {
+                        this.allnodes.push(this.selectedNode[i].data);
+                    }
+                } else {
+                    this.data_tree(this.productListSearch);
+                }
             } else {
-                this.data_tree(this.productListAll);
+                if (this.selectedNode.length > 0) {
+                    for (let i = 0; i < this.selectedNode.length; i++) {
+                        this.allnodes.push(this.selectedNode[i].data);
+                    }
+                } else {
+                    this.data_tree(this.productListAll);
+                }
             }
             let obj: any;
             const headerRowVisible: any = 0;
@@ -1371,7 +1413,7 @@ export class ProductListPage implements OnInit {
         localStorage.setItem('expanded_nodes_product', JSON.stringify(this.expendedNodes));
     }
 
-    productDeactivateAlert() {
+    productDeactivate() {
         const alert = this.alertCtrl.create({
             header: this.translate.instant('Achtung'),
             message: this.translate.instant('Möchten Sie dieses Produkt wirklich deaktivieren'),
@@ -1385,41 +1427,38 @@ export class ProductListPage implements OnInit {
                 {
                     text: this.translate.instant('ja'),
                     handler: () => {
-                        this.productDeactivate();
+                        if (this.selectedNode) {
+                            console.log('delete product :', this.selectedNode);
+                            let isChild = 0;
+                            for (let index = 0; index < this.selectedNode.length; index++) {
+                                console.log('selectedNode : ', this.selectedNode[index].data, this.selectedNode[index].children);
+                                if (this.selectedNode[index].children != undefined) {
+                                    if (this.selectedNode[index].children.length > 0) {
+                                        isChild++;
+                                    }
+                                }
+                            }
+                            if (isChild > 0) {
+                                this.showChildMsg();
+                            } else {
+                                for (let i = 0; i < this.selectedNode.length; i++) {
+                                    console.log('selectedNode id :', this.selectedNode[i].data.id);
+                                    this.apiService.pvs4_get_product(this.selectedNode[i].data.id).then((result: any) => {
+                                        const activProduct = result.obj;
+                                        activProduct.active = 0;
+                                        this.apiService.pvs4_set_product(activProduct).then((setResult: any) => {
+                                            console.log('result: ', setResult);
+                                            this.work_mode(0);
+                                            this.page_load();
+                                        });
+                                    });
+                                }
+                            }
+                        }
                     }
                 }
             ]
         }).then(x => x.present());
-    }
-
-    productDeactivate() {
-        if (this.selectedNode) {
-            console.log('delete product :', this.selectedNode);
-            let isChild = 0;
-            for (let index = 0; index < this.selectedNode.length; index++) {
-                console.log('selectedNode : ', this.selectedNode[index].data, this.selectedNode[index].children);
-                if (this.selectedNode[index].children != undefined) {
-                    if (this.selectedNode[index].children.length > 0) {
-                        isChild++;
-                    }
-                }
-            }
-            if (isChild > 0) {
-                this.showChildMsg();
-            } else {
-                for (let i = 0; i < this.selectedNode.length; i++) {
-                    console.log('selectedNode id :', this.selectedNode[i].data.id);
-                    this.apiService.pvs4_get_product(this.selectedNode[i].data.id).then((result: any) => {
-                        const activProduct = result.obj;
-                        activProduct.active = 0;
-                        this.apiService.pvs4_set_product(activProduct).then((setResult: any) => {
-                            console.log('result: ', setResult);
-                            this.page_load();
-                        });
-                    });
-                }
-            }
-        }
     }
 
     showChildMsg() {
@@ -1458,6 +1497,6 @@ export class ProductListPage implements OnInit {
         this.showActivePassiveProduct = !this.showActivePassiveProduct;
         this.page_load();
 
-        //this.generate_productList(0, this.rowCount, this.sortedColumn.sort_field, this.sortedColumn.sort_order);
+        // this.generate_productList(0, this.rowCount, this.sortedColumn.sort_field, this.sortedColumn.sort_order);
     }
 }

@@ -70,6 +70,10 @@ export class StartscreenPage {
 
   }
 
+  ionViewWillEnter() {
+    this.customerSearch = '';
+  }
+
   async nfc_scan() {
     const modal =
     await this.modalCtrl.create({

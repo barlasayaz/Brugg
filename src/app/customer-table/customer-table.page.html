@@ -23,6 +23,8 @@
                  [scrollHeight]="heightCalc"
                  [virtualRowHeight]="rowHeight"
                  [virtualScroll]="true" 
+                 selectionMode="checkbox"
+                 [(selection)]="selectedNode"
                  [lazy]="true" 
                  (onLazyLoad)="loadNodes($event)"  
                  [loading]="false" 
@@ -41,7 +43,12 @@
         </ng-template>
         <ng-template pTemplate="header" let-columns>
             <tr>
-                <th class="workColumn" [hidden]="!workMode">
+                <th *ngIf="selectMode" style="padding: 0px 10px !important;">
+                    <ion-button size="small" *ngIf="selectedNode.length>0" class="btn btn-danger btn-sm" (click)="deSelectAll()" style="font-size: smaller;">
+                        <ion-icon name="ios-close-circle-outline"></ion-icon>
+                    </ion-button>
+                </th>  
+                <th *ngIf="!selectMode" class="workColumn" [hidden]="!workMode">
                     <div class="workWidthfix"></div>
                 </th> 
                 <th *ngFor="let col of selectedColumns.slice(1);" 
@@ -57,6 +64,7 @@
                     <div class="workWidthfix"></div>
                 </th> 
                 <th *ngFor="let col of selectedColumns.slice(1)"
+                    nowrap
                     [ngSwitch]="col.field"
                     class="p-table-filter">
                     <input pInputText
@@ -72,7 +80,7 @@
                      let-rowNode
                      let-rowData="rowData"
                      let-columns="columns">
-            <tr [ttSelectableRow]="rowNode">
+            <tr>
                 <td class="workColumn" [hidden]="!workMode">
                     <div class="workWidthfix">                        
                         <ion-button [hidden]="!editMode" class="btn btn-success" size="small" (click)="editCustomer(rowData)">
@@ -86,7 +94,8 @@
                         </ion-button>     
                         <ion-button [hidden]="((!moveMode)||(move_id==0)||(move_id!=rowData.id))" class="btn btn-teal" size="small" (click)="moveCustomer(2,rowData)">
                             <ion-icon name="md-arrow-round-back"></ion-icon>
-                        </ion-button>           
+                        </ion-button>         
+                        <p-treeTableCheckbox [value]="rowNode" *ngIf="selectMode"></p-treeTableCheckbox>  
                     </div>               
                 </td> 
                 <td *ngFor="let col of selectedColumns.slice(1); let i = index" 
@@ -118,7 +127,13 @@
 
 <ion-fab [hidden]="!workMode" vertical="bottom" horizontal="end" slot="fixed" class="liftiball liftiball-cancel">
     <!-- BUTTON -->
-    <ion-fab-button color="danger" title="{{'abbrechen' | translate}}" (click)="workBreak();">
+    <ion-fab-button *ngIf="pdfMode" color="warning" title="{{'PDF Export' | translate}}" (click)="pdf_export();">
+        <ion-icon name="download"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-button *ngIf="excelMode" color="warning" title="{{'XLS Export' | translate}}" (click)="excel_export();">
+        <ion-icon name="stats"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-button color="danger" title="{{'abbrechen' | translate}}" (click)="work_mode(0);">
         <i class="fas fa-times"></i>
     </ion-fab-button>
 </ion-fab>
@@ -173,13 +188,13 @@
         <!-- BUTTON -->
         <ion-fab-button color="warning"
                         title="{{'PDF Export' | translate}}"
-                        (click)="pdf_export()">
+                        (click)="work_mode(1)">
             <ion-icon name="download"></ion-icon>
         </ion-fab-button>
         <!-- BUTTON -->
         <ion-fab-button color="warning"
                         title="{{'XLS Export' | translate}}"
-                        (click)="excel_export()">
+                        (click)="work_mode(2)">
             <ion-icon name="stats"></ion-icon>
         </ion-fab-button>
     </ion-fab-list>

@@ -50,7 +50,11 @@ export class ProtocolListPage implements OnInit {
     public rowHeight = 26;
     public rowCount = 20;
     public sortedColumn = { sort_field : null, sort_order : 0 };
-    public editMode = false;
+    public selectMode: boolean;
+    public workMode: boolean;
+    public deleteMode: boolean;
+    public pdfMode: boolean;
+    public excelMode: boolean;
 
     @ViewChild('tt') dataTable: TreeTable;
     @ViewChild('divHeightCalc') divHeightCalc: any;
@@ -111,7 +115,33 @@ export class ProtocolListPage implements OnInit {
     }
 
     ionViewWillEnter() {
+        this.work_mode(0);
         this.page_load();
+    }
+
+    work_mode(mode: number) {
+        console.log('work_mode()', mode);
+        if (mode === 0) {
+            this.workMode = false;
+            this.deleteMode = false;
+            this.selectMode = false;
+            this.pdfMode = false;
+            this.excelMode = false;
+            this.selectedNode = [];
+        } else if (mode === 1) {
+            if (this.userdata.role_set.edit_products != true) { return; }
+            this.workMode = true;
+            this.deleteMode = true;
+            this.selectMode = true;
+        } else if (mode === 2) {
+            this.workMode = true;
+            this.selectMode = true;
+            this.pdfMode = true;
+        } else if (mode === 3) {
+            this.workMode = true;
+            this.selectMode = true;
+            this.excelMode = true;
+        }
     }
 
     update(data: any): void {
@@ -119,7 +149,7 @@ export class ProtocolListPage implements OnInit {
         if (data.lable === 'searchText') {
             this.columnFilterValues['search_all'] = data.text;
             this.generate_protocolList(0, this.rowCount, this.sortedColumn.sort_field, this.sortedColumn.sort_order);
-            localStorage.setItem('filter_values_product', JSON.stringify(this.columnFilterValues));
+            localStorage.setItem('filter_values_protocol', JSON.stringify(this.columnFilterValues));
         }
         if (data.lable === 'toggleFilter') {
             this.menu_filter();
@@ -531,9 +561,21 @@ export class ProtocolListPage implements OnInit {
             const data: any = [];
             this.allnodes = [];
             if (this.isFilterOn()) {
-                this.data_tree(this.protocolListSearch);
+                if (this.selectedNode.length > 0) {
+                    for (let i = 0; i < this.selectedNode.length; i++) {
+                        this.allnodes.push(this.selectedNode[i].data);
+                    }
+                } else {
+                    this.data_tree(this.protocolListSearch);
+                }
             } else {
-                this.data_tree(this.protocolListAll);
+                if (this.selectedNode.length > 0) {
+                    for (let i = 0; i < this.selectedNode.length; i++) {
+                        this.allnodes.push(this.selectedNode[i].data);
+                    }
+                } else {
+                    this.data_tree(this.protocolListAll);
+                }
             }
             for (let i = 0, len = this.allnodes.length; i < len; i++) {
                 const obj = this.allnodes[i];
@@ -574,9 +616,21 @@ export class ProtocolListPage implements OnInit {
             this.allnodes = [];
             let rowArray: any[] = [];
             if (this.isFilterOn()) {
-                this.data_tree(this.protocolListSearch);
+                if (this.selectedNode.length > 0) {
+                    for (let i = 0; i < this.selectedNode.length; i++) {
+                        this.allnodes.push(this.selectedNode[i].data);
+                    }
+                } else {
+                    this.data_tree(this.protocolListSearch);
+                }
             } else {
-                this.data_tree(this.protocolListAll);
+                if (this.selectedNode.length > 0) {
+                    for (let i = 0; i < this.selectedNode.length; i++) {
+                        this.allnodes.push(this.selectedNode[i].data);
+                    }
+                } else {
+                    this.data_tree(this.protocolListAll);
+                }
             }
             let obj: any;
             const headerRowVisible: any = 0;
@@ -821,13 +875,9 @@ export class ProtocolListPage implements OnInit {
         localStorage.setItem('expanded_nodes_protocol', JSON.stringify(this.expendedNodes));
     }
 
-    protocolDeactivate(protocol) {
-        console.log('delete');
-        this.showConfirmAlert(protocol.id);
-    }
-
     async deSelectAll() {
-        if (this.selectedRow > 0) {
+        console.log('selectedNode id :', this.selectedNode);
+        if (this.selectedNode.length > 0) {
             const alert = await this.alertCtrl.create({
                 header: this.translate.instant('Achtung'),
                 message: this.translate.instant('Möchten Sie wirklich alle abwählen'),
@@ -841,7 +891,7 @@ export class ProtocolListPage implements OnInit {
                     text: this.translate.instant('ja'),
                     handler: data => {
                         this.selectedNode = [];
-                        this.selectedRow = 0;
+                        // this.selectedRow = 0;
                     }
                 }
                 ]
@@ -850,7 +900,7 @@ export class ProtocolListPage implements OnInit {
         }
     }
 
-    showConfirmAlert(idProtocol) {
+    protocolDeactivate() {
         const alert = this.alertCtrl.create({
             header: this.translate.instant('Achtung'),
             message: this.translate.instant('Möchten Sie dieses Protokoll wirklich deaktivieren'),
@@ -864,17 +914,21 @@ export class ProtocolListPage implements OnInit {
                 {
                     text: this.translate.instant('ja'),
                     handler: () => {
-                     //   this.selectedNode.forEach(element => {
-                            this.apiService.pvs4_get_protocol(idProtocol).then((result: any) => {
-                                const activProtocol = result.obj;
-                                activProtocol.active = 0;
-                                this.apiService.pvs4_set_protocol(activProtocol).then((setResult: any) => {
-                                    console.log('result: ', setResult);
-                                    this.editMode = false;
-                                    this.page_load();
+                        console.log('selectedNode id :', this.selectedNode);
+                        if (this.selectedNode) {
+                            for (let i = 0; i < this.selectedNode.length; i++) {
+                                console.log('selectedNode id :', this.selectedNode[i]);
+                                this.apiService.pvs4_get_protocol(this.selectedNode[i].data.id).then((result: any) => {
+                                    const activProtocol = result.obj;
+                                    activProtocol.active = 0;
+                                    this.apiService.pvs4_set_protocol(activProtocol).then((setResult: any) => {
+                                        console.log('result: ', setResult);
+                                        this.work_mode(0);
+                                        this.page_load();
+                                    });
                                 });
-                            });
-                      //  });
+                            }
+                        }
                     }
                 }
             ]
