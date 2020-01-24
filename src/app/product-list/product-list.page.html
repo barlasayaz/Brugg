@@ -136,13 +136,15 @@
                 </td>
             </tr>
         </ng-template>
-        <ng-template pTemplate="loadingbody" let-columns="columns">
+        
+        <ng-template pTemplate="loadingbody">
             <tr style="height:34px">
-                <td *ngFor="let col of selectedColumns;">
+                <td >
                     <div class="loading-text"></div>
                 </td>
             </tr>
         </ng-template>
+        
     </p-treeTable>  
 </div>
 
