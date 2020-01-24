@@ -103,8 +103,6 @@ export class ProductEditPage implements OnInit {
       this.parentProduct = params['parent'];
     }
 
-    this.dateiListe();
-
     this.platform.ready().then(() => {
       if (this.platform.is('ios') ||
         this.platform.is('android') ||
@@ -116,9 +114,12 @@ export class ProductEditPage implements OnInit {
         this.platform.is('tablet')) {
         this.mobilePlatform = true;
       } else {
+        this.mobilePlatform = false;
         console.log('platform :', this.platform.platforms());
       }
     });
+
+    this.dateiListe();
 
     if (!this.parentProduct) { this.parentProduct = 0; }
     if (this.idProduct > 0) {
@@ -479,6 +480,9 @@ export class ProductEditPage implements OnInit {
     modal.onDidDismiss().then(data => {
       if (data['data']) {
         console.log('getImage data :', data, data['data']);
+        if (this.activProduct.images) {
+          this.delImage();
+        }
         this.activProduct.images = data['data'];
         this.imagesSave = data['data'];
 
@@ -553,6 +557,9 @@ export class ProductEditPage implements OnInit {
       });
     }
     await this.loader.present();
+    if (this.activProduct.images) {
+      this.delImage();
+    }
     const fileTransfer: FileTransferObject = this.transfer.create();
 
     let productId: any;
@@ -641,6 +648,9 @@ export class ProductEditPage implements OnInit {
     dateTime = dateTime.replace(':', '');
     dateTime = dateTime.replace(':', '');
     dateTime = dateTime.replace('.', '');
+    if (this.activProduct.images) {
+      this.delImage();
+    }
     if (this.idProduct === 0) {
       productId = dateTime;
     } else {
