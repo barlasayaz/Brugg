@@ -49,7 +49,7 @@ export class OrderSendPage {
                 this.pdfRetVal = this.navParams.get('pdfRetVal');
                 this.getContactList();
                 this.Copy = this.userdata.email;
-                this.Betreff = 'Brugg Drahtseil: ' +  this.company;
+                this.Betreff = 'BRUGG Lifting: ' +  this.company;
                 console.log('activOrderForm :', this.activOrderForm);
                 // console.log('order-send pdfRetVal :', this.pdfRetVal);
   }
