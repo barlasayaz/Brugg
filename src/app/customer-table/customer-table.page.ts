@@ -36,12 +36,14 @@ export class CustomerTablePage implements OnInit {
         public loadingCtrl: LoadingController,
         private screenOrientation: ScreenOrientation,
         private route: ActivatedRoute) {
+            /*
             this.modelChanged.pipe(
                 debounceTime(700))
                 .subscribe(model => {
                     this.generate_customerList(0, this.rowCount, this.sortedColumn.sort_field, this.sortedColumn.sort_order);
-                    localStorage.setItem('filter_values_customer', JSON.stringify(this.columnFilterValues));
+                    //localStorage.setItem('filter_values_customer', JSON.stringify(this.columnFilterValues));
             });
+            */
     }
     public customerListAll: TreeNode[] = [];
     public customerListView: TreeNode[] = [];
@@ -76,8 +78,8 @@ export class CustomerTablePage implements OnInit {
     public totalRecords: number;
     public rowRecords: number;
     public childRecords: number;
-    public rowHeight = 26;
-    public rowCount = 20;
+    public rowHeight = 45;
+    public rowCount = 30;
     public sortedColumn = { sort_field : null, sort_order : 0 };
     public filterText: string = '';
     public filterOn: boolean = false;
@@ -169,24 +171,6 @@ export class CustomerTablePage implements OnInit {
 
     onResize(event) {
         this.funcHeightCalc();
-    }
-
-    async loadNodes(event: LazyLoadEvent) {
-        if (this.totalRecords > 0) {
-            if (event.sortField && event.sortField.length > 0) {
-                this.sortedColumn.sort_field = event.sortField;
-                this.sortedColumn.sort_order = event.sortOrder;
-                localStorage.setItem('sort_column_customer', JSON.stringify(this.sortedColumn));
-            }
-            this.generate_customerList(event.first, event.rows, event.sortField, event.sortOrder);
-        }
-
-        // in a production application, make a remote request to load data using state metadata from event
-        // event.first = First row offset
-        // event.rows = Number of rows per page
-        // event.sortField = Field name to sort with
-        // event.sortOrder = Sort order as number, 1 for asc and -1 for dec
-        // filters: FilterMetadata object having field as key and filter value, filter matchMode as value
     }
 
     funcHeightCalc() {
@@ -356,19 +340,61 @@ export class CustomerTablePage implements OnInit {
         localStorage.setItem('filter_values_customer', JSON.stringify(this.columnFilterValues));
         this.generate_customerList(0, this.rowCount, this.sortedColumn.sort_field, this.sortedColumn.sort_order);
     }
-
-    generate_customerList(start_index: number, end_index: number, sort_field, sort_order) {
-        console.log('generate_customerList()');
-        if (!this.isFilterOn()) {
-            this.customerListView = JSON.parse(JSON.stringify(this.customerListAll));
-        } else {
-            const try_list = JSON.parse(JSON.stringify(this.customerListAll));
-            this.dir_try_filter(try_list);
-            this.customerListView = try_list;
-            this.customerListSearch = try_list;
+    
+    protected scrollTimer;    
+    loadNodes(event: LazyLoadEvent) {
+        console.log('loadNodes:',event);        
+        if (this.totalRecords > 0) {
+            if (event.sortField && event.sortField.length > 0) {
+                this.sortedColumn.sort_field = event.sortField;
+                this.sortedColumn.sort_order = event.sortOrder;
+                localStorage.setItem('sort_column_customer', JSON.stringify(this.sortedColumn));
+            }
+            if (this.scrollTimer) { 
+                clearTimeout(this.scrollTimer);
+            }
+            this.scrollTimer = setTimeout(() => {
+                console.log('scrollTimer ');
+                this.generate_ViewList(event.first, event.rows, event.sortField, event.sortOrder);
+            }, 100);
+            
         }
-        if (sort_field != null) {
-            this.customerListView = this.customerListView.sort((a, b) => {
+    }
+
+ 
+    protected old_sort_field:any = "";
+    protected old_sort_order:any = "";    
+    generate_ViewList(start_index: number, end_index: number, sort_field, sort_order) {
+        this.customerListView = [];
+        console.log('generate_ViewList()' );
+        var start = performance.now();
+        if((sort_field!=this.old_sort_field) || (sort_order!=this.old_sort_order)){
+            this.old_sort_field = sort_field;
+            this.old_sort_order = sort_order;
+            console.log('sort', this.old_sort_field , this.old_sort_order );
+            this.customerListAll = this.customerListAll.sort((a, b) => {
+                const value1 = a.data[sort_field];
+                const value2 = b.data[sort_field];
+
+                if (this.apiService.isEmpty(value1) && !this.apiService.isEmpty(value2)) {
+                    return-1 * sort_order;
+                } else if (!this.apiService.isEmpty(value1) && this.apiService.isEmpty(value2)) {
+                    return 1 * sort_order;
+                } else if (this.apiService.isEmpty(value1) && this.apiService.isEmpty(value2)) {
+                    return 0;
+                } else if ( !isNaN(Number(value1)) && !isNaN(Number(value2)) && Number(value1) > Number(value2)) {
+                    return 1 * sort_order;
+                } else if ( !isNaN(Number(value1)) && !isNaN(Number(value2)) && Number(value1) < Number(value2)) {
+                    return -1 * sort_order;
+                } else if ( value1.toLowerCase( ) > value2.toLowerCase( )) {
+                    return 1 * sort_order;
+                } else if ( value1.toLowerCase( ) < value2.toLowerCase( )) {
+                    return -1 * sort_order;
+                } else {
+                    return 0;
+                }
+            });
+            this.customerListSearch = this.customerListSearch.sort((a, b) => {
                 const value1 = a.data[sort_field];
                 const value2 = b.data[sort_field];
 
@@ -395,18 +421,103 @@ export class CustomerTablePage implements OnInit {
         this.childRecords = 0;
         if (this.isFilterOn()) {
             this.data_tree(this.customerListSearch);
+            this.rowRecords = this.customerListSearch.length + this.childRecords;
+            if ((start_index + end_index + this.rowCount) >= this.rowRecords) {
+                this.customerListView = this.customerListSearch.slice(start_index, this.rowRecords);
+            } else {
+                this.customerListView = this.customerListSearch.slice(start_index, (start_index + end_index));
+            }
         } else {
             this.data_tree(this.customerListAll);
+            this.rowRecords = this.customerListAll.length + this.childRecords;
+            if ((start_index + end_index + this.rowCount) >= this.rowRecords) {
+                this.customerListView = this.customerListAll.slice(start_index, this.rowRecords);
+            } else {
+                this.customerListView = this.customerListAll.slice(start_index, (start_index + end_index));
+            }
         }
-        this.rowRecords = this.customerListView.length + this.childRecords;
+        // CODE, der gemessen werden soll
+        var time = performance.now();
+        console.log('Dauer: ' + (time - start) + ' ms.');
+    }
+
+    generate_customerList(start_index: number, end_index: number, sort_field, sort_order) {
+        console.log('generate_customerList()');
+        var start = performance.now();
+
+        if (this.isFilterOn()) {
+            this.customerListSearch = JSON.parse(JSON.stringify(this.customerListAll));
+            this.dir_try_filter(this.customerListSearch);
+        }
+
+        if (sort_field != null) {
+            this.customerListAll = this.customerListAll.sort((a, b) => {
+                const value1 = a.data[sort_field];
+                const value2 = b.data[sort_field];
+
+                if (this.apiService.isEmpty(value1) && !this.apiService.isEmpty(value2)) {
+                    return-1 * sort_order;
+                } else if (!this.apiService.isEmpty(value1) && this.apiService.isEmpty(value2)) {
+                    return 1 * sort_order;
+                } else if (this.apiService.isEmpty(value1) && this.apiService.isEmpty(value2)) {
+                    return 0;
+                } else if ( !isNaN(Number(value1)) && !isNaN(Number(value2)) && Number(value1) > Number(value2)) {
+                    return 1 * sort_order;
+                } else if ( !isNaN(Number(value1)) && !isNaN(Number(value2)) && Number(value1) < Number(value2)) {
+                    return -1 * sort_order;
+                } else if ( value1.toLowerCase( ) > value2.toLowerCase( )) {
+                    return 1 * sort_order;
+                } else if ( value1.toLowerCase( ) < value2.toLowerCase( )) {
+                    return -1 * sort_order;
+                } else {
+                    return 0;
+                }
+            });
+            this.customerListSearch = this.customerListSearch.sort((a, b) => {
+                const value1 = a.data[sort_field];
+                const value2 = b.data[sort_field];
+
+                if (this.apiService.isEmpty(value1) && !this.apiService.isEmpty(value2)) {
+                    return-1 * sort_order;
+                } else if (!this.apiService.isEmpty(value1) && this.apiService.isEmpty(value2)) {
+                    return 1 * sort_order;
+                } else if (this.apiService.isEmpty(value1) && this.apiService.isEmpty(value2)) {
+                    return 0;
+                } else if ( !isNaN(Number(value1)) && !isNaN(Number(value2)) && Number(value1) > Number(value2)) {
+                    return 1 * sort_order;
+                } else if ( !isNaN(Number(value1)) && !isNaN(Number(value2)) && Number(value1) < Number(value2)) {
+                    return -1 * sort_order;
+                } else if ( value1.toLowerCase( ) > value2.toLowerCase( )) {
+                    return 1 * sort_order;
+                } else if ( value1.toLowerCase( ) < value2.toLowerCase( )) {
+                    return -1 * sort_order;
+                } else {
+                    return 0;
+                }
+            });
+        }
+
+        this.childRecords = 0;
+        if (this.isFilterOn()) {
+            this.data_tree(this.customerListSearch);
+            this.rowRecords = this.customerListSearch.length + this.childRecords;
+            if ((start_index + end_index + this.rowCount) >= this.rowRecords) {
+                this.customerListView = this.customerListSearch.slice(start_index, this.rowRecords);
+            } else {
+                this.customerListView = this.customerListSearch.slice(start_index, (start_index + end_index));
+            }
+        } else {
+            this.data_tree(this.customerListAll);
+            this.rowRecords = this.customerListAll.length + this.childRecords;
+            if ((start_index + end_index + this.rowCount) >= this.rowRecords) {
+                this.customerListView = this.customerListAll.slice(start_index, this.rowRecords);
+            } else {
+                this.customerListView = this.customerListAll.slice(start_index, (start_index + end_index));
+            }
+        }
+        
 
         console.log('start_index - end_index :', start_index, end_index);
-
-        if ((start_index + end_index + this.rowCount) >= this.rowRecords) {
-            this.customerListView = this.customerListView.slice(start_index, this.rowRecords);
-        } else {
-            this.customerListView = this.customerListView.slice(start_index, (start_index + end_index));
-        }
 
         let progressBar;
         if (this.totalRecords > 0 ) {
@@ -421,7 +532,13 @@ export class CustomerTablePage implements OnInit {
         if (localStorage.getItem('expanded_nodes') != undefined) {
             this.expandChildren(this.customerListView, JSON.parse(localStorage.getItem('expanded_nodes')));
         }
+
+        
+        // CODE, der gemessen werden soll
+        var time = performance.now();
+        console.log('Dauer: ' + (time - start) + ' ms.');
     }
+
 
     async editCustomer(rowNode) {
         console.log('editCustomer:', rowNode);

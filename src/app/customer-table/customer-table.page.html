@@ -78,10 +78,9 @@
 
         <ng-template pTemplate="body"
                      let-rowNode
-                     let-rowData="rowData"
-                     let-columns="columns">
+                     let-rowData="rowData" >
             <tr>
-                <td class="workColumn" [hidden]="!workMode">
+                <td class="workColumn" *ngIf="workMode">
                     <div class="workWidthfix">                        
                         <ion-button [hidden]="!editMode" class="btn btn-success" size="small" (click)="editCustomer(rowData)">
                             <ion-icon name="create"></ion-icon>
@@ -105,22 +104,12 @@
                     <label *ngIf="(col.field == 'last_date')">{{rowData[col.field] | date : 'dd.MM.yyyy'}}</label>
                     <label *ngIf="(col.field == 'next_date')">{{rowData[col.field] | date : 'dd.MM.yyyy'}}</label>
                     <label *ngIf="(col.field == 'sector')">{{rowData[col.field] | translate}}</label>
-                    <label *ngIf="(col.field != 'last_date') &&
-                                  (col.field != 'next_date') &&
-                                  (col.field != 'company') &&
-                                  (col.field != 'sector') ">{{rowData[col.field]}}</label>   
+                    <label *ngIf="(col.field != 'last_date') &&  (col.field != 'next_date') &&  (col.field != 'company') &&  (col.field != 'sector') ">{{rowData[col.field]}}</label>   
                     <div class="link" *ngIf="(col.field == 'company')">{{rowData[col.field]}}</div>                 
                 </td>
             </tr>
         </ng-template>
-        <ng-template pTemplate="loadingbody" let-columns="columns">
-            <tr style="height:34px">
-                <td  class="workColumn" [hidden]="!workMode"></td>
-                <td *ngFor="let col of selectedColumns.slice(1)">
-                    <div class="loading-text"></div>
-                </td>
-            </tr>
-        </ng-template>
+
     </p-treeTable>
 
 </div>
