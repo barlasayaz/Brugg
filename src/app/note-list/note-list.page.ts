@@ -391,6 +391,7 @@ export class NoteListPage implements OnInit {
     }
 
     onColReorder(event) {
+        console.log('onColReorder()', event);
         this.selectedColumns = event.columns;
         this.fixReorder();
         localStorage.setItem('show_columns_note', JSON.stringify(this.selectedColumns));
