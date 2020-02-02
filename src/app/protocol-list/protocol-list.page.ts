@@ -55,6 +55,7 @@ export class ProtocolListPage implements OnInit {
     public deleteMode: boolean;
     public pdfMode: boolean;
     public excelMode: boolean;
+    public selCols: any[] = [];
 
     @ViewChild('tt') dataTable: TreeTable;
     @ViewChild('divHeightCalc') divHeightCalc: any;
@@ -105,6 +106,7 @@ export class ProtocolListPage implements OnInit {
             'search_all'
         ];
         this.selectedColumns = JSON.parse(JSON.stringify(this.cols));
+        this.selCols = JSON.parse(JSON.stringify(this.cols));
 
         this.idCustomer = parseInt(this.route.snapshot.paramMap.get('id'));
         if (localStorage.getItem('sort_column_protocol') != undefined) {
@@ -340,6 +342,12 @@ export class ProtocolListPage implements OnInit {
             }
             if (localStorage.getItem('show_columns_protocol') != undefined) {
                 this.selectedColumns = JSON.parse(localStorage.getItem('show_columns_protocol'));
+            }
+            if (localStorage.getItem('selcols_protocol') != undefined) {
+                this.selCols = JSON.parse(localStorage.getItem('selcols_protocol'));
+            } else {
+                this.selCols = this.cols;
+                localStorage.setItem('selcols_protocol', JSON.stringify(this.selCols));
             }
 
             this.generate_protocolList(0, this.rowCount, this.sortedColumn.sort_field, this.sortedColumn.sort_order);
@@ -801,7 +809,12 @@ export class ProtocolListPage implements OnInit {
                         this.selectedColumns.unshift(this.cols[2]);
                         this.selectedColumns.unshift(this.cols[1]);
                         this.selectedColumns.unshift(this.cols[0]);
+                        this.selCols = this.cols.filter(function (element, index, array) { return data.includes(element.field); });
+                        this.selCols.unshift(this.cols[2]);
+                        this.selCols.unshift(this.cols[1]);
+                        this.selCols.unshift(this.cols[0]);
                         localStorage.setItem('show_columns_protocol', JSON.stringify(this.selectedColumns));
+                        localStorage.setItem('selcols_protocol', JSON.stringify(this.selCols));
                     }
                 }
             ]
@@ -844,26 +857,41 @@ export class ProtocolListPage implements OnInit {
     }
 
     onColReorder(event) {
-        this.selectedColumns = event.columns;
-        this.fixReorder();
+        console.log('onColReorder()', event );
+        this.selCols = JSON.parse(localStorage.getItem('selcols_protocol'));
+        const dragIndex = event.dragIndex + 1;
+        const dropIndex = event.dropIndex + 1;
+        function array_move(arr, old_index, new_index) {
+            new_index =((new_index % arr.length) + arr.length) % arr.length;
+            arr.splice(new_index, 0, arr.splice(old_index, 1)[0]);
+            return arr;
+        }
+        if (dragIndex > 2 && dropIndex > 2) {
+            array_move(this.selCols, dragIndex, dropIndex);
+        }
+        this.selectedColumns = this.selCols;
+        // localStorage.setItem('show_columns_protocol', JSON.stringify(this.selectedColumns));
+        localStorage.setItem('selcols_protocol', JSON.stringify(this.selCols));
+        // this.selectedColumns = event.columns;
+        // this.fixReorder();
         localStorage.setItem('show_columns_note', JSON.stringify(this.selectedColumns));
     }
 
-    fixReorder() {
-        console.log('fixReorder()', this.selectedColumns );
-        let cols = [
-            { field: 'work_column', header: '', width: '60px' },
-            { field: 'protocol_number', header: this.translate.instant('Protokoll'), width: '100px' },
-            { field: 'title', header: this.translate.instant('Bezeichnung'), width: '200px' }
-        ];
-        for (let i = 0; i < this.selectedColumns.length; i++) {
-            if (this.selectedColumns[i].field === 'work_column') { continue; }
-            if (this.selectedColumns[i].field === 'protocol_number') { continue; }
-            if (this.selectedColumns[i].field === 'title') { continue; }
-            cols.push(this.selectedColumns[i]);
-        }
-        this.selectedColumns = cols;
-    }
+    // fixReorder() {
+    //     console.log('fixReorder()', this.selectedColumns );
+    //     let cols = [
+    //         { field: 'work_column', header: '', width: '60px' },
+    //         { field: 'protocol_number', header: this.translate.instant('Protokoll'), width: '100px' },
+    //         { field: 'title', header: this.translate.instant('Bezeichnung'), width: '200px' }
+    //     ];
+    //     for (let i = 0; i < this.selectedColumns.length; i++) {
+    //         if (this.selectedColumns[i].field === 'work_column') { continue; }
+    //         if (this.selectedColumns[i].field === 'protocol_number') { continue; }
+    //         if (this.selectedColumns[i].field === 'title') { continue; }
+    //         cols.push(this.selectedColumns[i]);
+    //     }
+    //     this.selectedColumns = cols;
+    // }
 
     onNodeExpand(event) {
         this.expendedNodes.push(event.node.data['id']);

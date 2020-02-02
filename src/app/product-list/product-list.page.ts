@@ -74,6 +74,7 @@ export class ProductListPage implements OnInit {
     public copyMode: boolean;
     public migrationMode: boolean;
     public historyMode: boolean;
+    public selCols: any[] = [];
 
     @ViewChild('tt') dataTable: TreeTable;
     @ViewChild('divHeightCalc') divHeightCalc: any;
@@ -170,6 +171,7 @@ export class ProductListPage implements OnInit {
             { field: 'check_interval', header: this.translate.instant('Intervall Prüfen'), width: '130px' }
         ];
         this.selectedColumns = JSON.parse(JSON.stringify(this.cols));
+        this.selCols = JSON.parse(JSON.stringify(this.cols));
 
         this.idCustomer = parseInt(this.route.snapshot.paramMap.get('id'));
         if (localStorage.getItem('sort_column_protocol') != undefined) {
@@ -438,6 +440,12 @@ export class ProductListPage implements OnInit {
                 if (localStorage.getItem('show_columns_product') != undefined) {
                     this.selectedColumns = JSON.parse(localStorage.getItem('show_columns_product'));
                     this.fixReorder();
+                }
+                if (localStorage.getItem('selcols_product') != undefined) {
+                    this.selCols = JSON.parse(localStorage.getItem('selcols_product'));
+                } else {
+                    this.selCols = this.cols;
+                    localStorage.setItem('selcols_product', JSON.stringify(this.selCols));
                 }
             } catch (e) {
                 console.error('JSON.parse filter err :', e);
@@ -1335,8 +1343,14 @@ export class ProductListPage implements OnInit {
                         this.selectedColumns.unshift(this.cols[2]);
                         this.selectedColumns.unshift(this.cols[1]);
                         this.selectedColumns.unshift(this.cols[0]);
+                        this.selCols = this.cols.filter(function (element, index, array) { return data.includes(element.field); });
+                        this.selCols.unshift(this.cols[3]);
+                        this.selCols.unshift(this.cols[2]);
+                        this.selCols.unshift(this.cols[1]);
+                        this.selCols.unshift(this.cols[0]);
                         console.log('Checkbox data:', this.selectedColumns );
                         localStorage.setItem('show_columns_product', JSON.stringify(this.selectedColumns));
+                        localStorage.setItem('selcols_product', JSON.stringify(this.selCols));
                     }
                 }
             ]
@@ -1380,9 +1394,22 @@ export class ProductListPage implements OnInit {
 
     onColReorder(event) {
         console.log('onColReorder()', event );
-        this.selectedColumns = event.columns;
-        this.fixReorder();
+        this.selCols = JSON.parse(localStorage.getItem('selcols_product'));
+        const dragIndex = event.dragIndex + 1;
+        const dropIndex = event.dropIndex + 1;
+        function array_move(arr, old_index, new_index) {
+            new_index =((new_index % arr.length) + arr.length) % arr.length;
+            arr.splice(new_index, 0, arr.splice(old_index, 1)[0]);
+            return arr;
+        }
+        if (dragIndex > 3 && dropIndex > 3) {
+            array_move(this.selCols, dragIndex, dropIndex);
+        }
+        // this.selectedColumns = event.columns;
+        // this.fixReorder();
+        this.selectedColumns = this.selCols;
         localStorage.setItem('show_columns_product', JSON.stringify(this.selectedColumns));
+        localStorage.setItem('selcols_product', JSON.stringify(this.selCols));
     }
 
     fixReorder() {

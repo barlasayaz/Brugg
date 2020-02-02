@@ -247,8 +247,11 @@ export class NoteListPage implements OnInit {
                 this.selectedColumns = JSON.parse(localStorage.getItem('show_columns_note'));
             }
 
-            if (localStorage.getItem('selcols') != undefined) {
-                this.selCols = JSON.parse(localStorage.getItem('selcols'));
+            if (localStorage.getItem('selcols_note') != undefined) {
+                this.selCols = JSON.parse(localStorage.getItem('selcols_note'));
+            } else {
+                this.selCols = this.cols;
+                localStorage.setItem('selcols_note', JSON.stringify(this.selCols));
             }
 
             for (let i = 0; i < this.noteListAll.length; i++) {
@@ -399,10 +402,8 @@ export class NoteListPage implements OnInit {
 
     onColReorder(event) {
         console.log('onColReorder()', event );
-        // this.selectedColumns = event.columns;
         // console.log('this.selCols ', JSON.stringify(this.selCols));
-
-        this.selCols = JSON.parse(localStorage.getItem('selcols'));
+        this.selCols = JSON.parse(localStorage.getItem('selcols_note'));
         const dragIndex = event.dragIndex + 1;
         const dropIndex = event.dropIndex + 1;
         function array_move(arr, old_index, new_index) {
@@ -413,10 +414,11 @@ export class NoteListPage implements OnInit {
         if (dragIndex > 1 && dropIndex > 1) {
             array_move(this.selCols, dragIndex, dropIndex);
         }
+        // this.selectedColumns = event.columns;
         // this.fixReorder();
         this.selectedColumns = this.selCols;
         localStorage.setItem('show_columns_note', JSON.stringify(this.selectedColumns));
-        localStorage.setItem('selcols', JSON.stringify(this.selCols));
+        localStorage.setItem('selcols_note', JSON.stringify(this.selCols));
     }
 
     // fixReorder() {
@@ -693,7 +695,7 @@ export class NoteListPage implements OnInit {
                         this.selCols.unshift(this.cols[0]);
                         console.log('Checkbox data:', this.selectedColumns, this.selCols );
                         localStorage.setItem('show_columns_note', JSON.stringify(this.selectedColumns));
-                        localStorage.setItem('selcols', JSON.stringify(this.selCols));
+                        localStorage.setItem('selcols_note', JSON.stringify(this.selCols));
                     }
                 }
             ]
