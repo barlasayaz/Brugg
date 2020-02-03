@@ -353,7 +353,13 @@ export class ProductListPage implements OnInit {
                 const pipe = new DatePipe('en-US');
                 line.data[options[i].title[this.lang]] = pipe.transform(options[i].value, 'dd.MM.yyyy');
             } else if (options[i].type == 6) {
-                line.data[options[i].title[this.lang]] = '(' + options[i].value.lat.toString().substring(0, 6) + ',' + options[i].value.long.toString().substring(0, 6) + ')';
+                try{
+                    line.data[options[i].title[this.lang]] = '(' + options[i].value.lat.toString().substring(0, 6) + ',' + options[i].value.long.toString().substring(0, 6) + ')';
+                }catch(e){
+                    console.error('options[i].value.lat or options[i].value.long err :', e);
+                    console.error( options[i] );
+                    line.data[options[i].title[this.lang]] = '(?,?)';
+                }              
             } else if (options[i].type == 2) {
                 if(options[i].value === null) options[i].value="";
                 if(options[i].value === undefined) options[i].value="";
