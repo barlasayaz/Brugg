@@ -89,6 +89,7 @@ export class CustomerTablePage implements OnInit {
     public selectMode: boolean;
     public pdfMode: boolean;
     public excelMode: boolean;
+    public selCols: any[] = [];
 
     @ViewChild('tt') dataTable: TreeTable;
     @ViewChild('divHeightCalc') divHeightCalc: any;
@@ -153,6 +154,7 @@ export class CustomerTablePage implements OnInit {
                            'search_all'];
 
         this.selectedColumns = this.cols;
+        this.selCols = JSON.parse(JSON.stringify(this.cols));
         console.log('CustomerTablePage idCustomer:', this.idCustomer, this.system.platform);
         if (localStorage.getItem('sort_column_customer') != undefined) {
             this.sortedColumn = JSON.parse(localStorage.getItem('sort_column_customer'));
@@ -245,6 +247,12 @@ export class CustomerTablePage implements OnInit {
             }
             if (localStorage.getItem('show_columns') != undefined) {
                 this.selectedColumns = JSON.parse(localStorage.getItem('show_columns'));
+            }
+            if (localStorage.getItem('selcols') != undefined) {
+                this.selCols = JSON.parse(localStorage.getItem('selcols'));
+            } else {
+                this.selCols = this.cols;
+                localStorage.setItem('selcols', JSON.stringify(this.selCols));
             }
 
            this.generate_customerList(0, this.rowCount, this.sortedColumn.sort_field, this.sortedColumn.sort_order);
@@ -909,6 +917,11 @@ export class CustomerTablePage implements OnInit {
                     this.selectedColumns.unshift(this.cols[2]);
                     this.selectedColumns.unshift(this.cols[1]);
                     this.selectedColumns.unshift(this.cols[0]);
+                    this.selCols = this.cols.filter(function (element, index, array) { return data.includes(element.field); });
+                    this.selCols.unshift(this.cols[2]);
+                    this.selCols.unshift(this.cols[1]);
+                    this.selCols.unshift(this.cols[0]);
+                    localStorage.setItem('selcols', JSON.stringify(this.selCols));
                     localStorage.setItem('show_columns', JSON.stringify(this.selectedColumns));
                 }
             }
@@ -947,25 +960,40 @@ export class CustomerTablePage implements OnInit {
     }
 
     onColReorder(event) {
-        this.selectedColumns = event.columns;
-        this.fixReorder();
-        localStorage.setItem('show_columns', JSON.stringify(this.selectedColumns));
-    }
-    fixReorder() {
-        console.log('fixReorder()', this.selectedColumns );
-        let cols = [
-            { field: 'work_column', header: '', width: '60px' },
-            { field: 'id', header: 'DB-ID', width: '100px' },
-            { field: 'company', header: this.translate.instant('Firma'), width: '200px' }
-        ];
-        for (let i = 0; i < this.selectedColumns.length; i++) {
-            if (this.selectedColumns[i].field === 'work_column') { continue; }
-            if (this.selectedColumns[i].field === 'id') { continue; }
-            if (this.selectedColumns[i].field === 'company') { continue; }
-            cols.push(this.selectedColumns[i]);
+        console.log('onColReorder()', event );
+        this.selCols = JSON.parse(localStorage.getItem('selcols'));
+        const dragIndex = event.dragIndex + 1;
+        const dropIndex = event.dropIndex + 1;
+        function array_move(arr, old_index, new_index) {
+            new_index =((new_index % arr.length) + arr.length) % arr.length;
+            arr.splice(new_index, 0, arr.splice(old_index, 1)[0]);
+            return arr;
         }
-        this.selectedColumns = cols;
+        if (dragIndex > 2 && dropIndex > 2) {
+            array_move(this.selCols, dragIndex, dropIndex);
+        }
+        // this.selectedColumns = event.columns;
+        // this.fixReorder();
+        this.selectedColumns = this.selCols;
+        localStorage.setItem('show_columns', JSON.stringify(this.selectedColumns));
+        localStorage.setItem('selcols', JSON.stringify(this.selCols));
     }
+
+    // fixReorder() {
+    //     console.log('fixReorder()', this.selectedColumns );
+    //     let cols = [
+    //         { field: 'work_column', header: '', width: '60px' },
+    //         { field: 'id', header: 'DB-ID', width: '100px' },
+    //         { field: 'company', header: this.translate.instant('Firma'), width: '200px' }
+    //     ];
+    //     for (let i = 0; i < this.selectedColumns.length; i++) {
+    //         if (this.selectedColumns[i].field === 'work_column') { continue; }
+    //         if (this.selectedColumns[i].field === 'id') { continue; }
+    //         if (this.selectedColumns[i].field === 'company') { continue; }
+    //         cols.push(this.selectedColumns[i]);
+    //     }
+    //     this.selectedColumns = cols;
+    // }
 
     onNodeExpand(event) {
         this.expendedNodes.push(event.node.data['id']);
