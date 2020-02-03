@@ -870,11 +870,10 @@ export class ProtocolListPage implements OnInit {
             array_move(this.selCols, dragIndex, dropIndex);
         }
         this.selectedColumns = this.selCols;
-        // localStorage.setItem('show_columns_protocol', JSON.stringify(this.selectedColumns));
-        localStorage.setItem('selcols_protocol', JSON.stringify(this.selCols));
         // this.selectedColumns = event.columns;
         // this.fixReorder();
-        localStorage.setItem('show_columns_note', JSON.stringify(this.selectedColumns));
+        localStorage.setItem('show_columns_protocol', JSON.stringify(this.selectedColumns));
+        localStorage.setItem('selcols_protocol', JSON.stringify(this.selCols));
     }
 
     // fixReorder() {

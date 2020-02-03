@@ -248,11 +248,11 @@ export class CustomerTablePage implements OnInit {
             if (localStorage.getItem('show_columns') != undefined) {
                 this.selectedColumns = JSON.parse(localStorage.getItem('show_columns'));
             }
-            if (localStorage.getItem('selcols') != undefined) {
-                this.selCols = JSON.parse(localStorage.getItem('selcols'));
+            if (localStorage.getItem('selcols_customer') != undefined) {
+                this.selCols = JSON.parse(localStorage.getItem('selcols_customer'));
             } else {
                 this.selCols = this.cols;
-                localStorage.setItem('selcols', JSON.stringify(this.selCols));
+                localStorage.setItem('selcols_customer', JSON.stringify(this.selCols));
             }
 
            this.generate_customerList(0, this.rowCount, this.sortedColumn.sort_field, this.sortedColumn.sort_order);
@@ -921,7 +921,7 @@ export class CustomerTablePage implements OnInit {
                     this.selCols.unshift(this.cols[2]);
                     this.selCols.unshift(this.cols[1]);
                     this.selCols.unshift(this.cols[0]);
-                    localStorage.setItem('selcols', JSON.stringify(this.selCols));
+                    localStorage.setItem('selcols_customer', JSON.stringify(this.selCols));
                     localStorage.setItem('show_columns', JSON.stringify(this.selectedColumns));
                 }
             }
@@ -961,7 +961,7 @@ export class CustomerTablePage implements OnInit {
 
     onColReorder(event) {
         console.log('onColReorder()', event );
-        this.selCols = JSON.parse(localStorage.getItem('selcols'));
+        this.selCols = JSON.parse(localStorage.getItem('selcols_customer'));
         const dragIndex = event.dragIndex + 1;
         const dropIndex = event.dropIndex + 1;
         function array_move(arr, old_index, new_index) {
@@ -976,7 +976,7 @@ export class CustomerTablePage implements OnInit {
         // this.fixReorder();
         this.selectedColumns = this.selCols;
         localStorage.setItem('show_columns', JSON.stringify(this.selectedColumns));
-        localStorage.setItem('selcols', JSON.stringify(this.selCols));
+        localStorage.setItem('selcols_customer', JSON.stringify(this.selCols));
     }
 
     // fixReorder() {
