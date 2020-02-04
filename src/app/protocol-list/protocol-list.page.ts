@@ -55,6 +55,9 @@ export class ProtocolListPage implements OnInit {
     public deleteMode: boolean;
     public pdfMode: boolean;
     public excelMode: boolean;
+    public activProtocolArr: any[] = [];
+    public listProduct: any[] = [];
+    public prdctCount: any = 0;
 
     @ViewChild('tt') dataTable: TreeTable;
     @ViewChild('divHeightCalc') divHeightCalc: any;
@@ -603,6 +606,340 @@ export class ProtocolListPage implements OnInit {
     }
 
     async pdf_export() {
+        if (this.selectedNode.length > 0) {
+            this.loadProtocol();
+        } else {
+            this.pdf_list();
+        }
+    }
+
+    loadProtocol() {
+        this.prdctCount = 0;
+        this.activProtocolArr = [];
+        this.listProduct = [];
+        for (let i = 0; i < this.selectedNode.length; i++) {
+            let activProtocol: any = {};
+            this.apiService.pvs4_get_protocol(this.selectedNode[i].data.id).then((result: any) => {
+                activProtocol = result.obj;
+                console.log('loadProtocol :', activProtocol);
+                activProtocol.items = JSON.parse(activProtocol.items);
+
+                activProtocol.items.forEach(event => {
+                    event.type = parseInt(event.type);
+                    if (event.type == 0) {
+                    if (event.value == true || event.value == 'true') {
+                        event.value = true;
+                    }
+                    if (event.value == false || event.value == 'false') {
+                        event.value = false;
+                    }
+                    }
+                    let pipe = new DatePipe('en-US');
+                    if (event.type == 4) {
+                    event.value = pipe.transform(event.value, 'HH:mm');
+                    }
+                    if (event.type == 5) {
+                    event.value = pipe.transform(event.value, 'dd.MM.yyyy');
+                    }
+                });
+
+                let pipe = new DatePipe('en-US');
+                var protocolDate = new Date(activProtocol.protocol_date.replace(' ', 'T')).toISOString();
+                activProtocol.protocol_date = pipe.transform(protocolDate, 'dd.MM.yyyy');
+                var protocolDateNext = new Date(activProtocol.protocol_date_next.replace(' ', 'T')).toISOString();
+                activProtocol.protocol_date_next = pipe.transform(protocolDateNext, 'dd.MM.yyyy');
+
+                if (activProtocol.result === 0) {
+                    activProtocol.resultText = this.translate.instant('betriebsbereit');
+                }
+                if (activProtocol.result === 1) {
+                    activProtocol.resultText = this.translate.instant('reparieren');
+                }
+                if (activProtocol.result === 3) {
+                    activProtocol.resultText = this.translate.instant('unauffindbar');
+                }
+                if ((activProtocol.result === 2) || (activProtocol.result == 4)) {
+                    activProtocol.resultText = this.translate.instant('ausmustern');
+                }
+
+                this.activProtocolArr.push(activProtocol);
+
+                let productList = JSON.parse(activProtocol.product);
+                productList.forEach(element => {
+                    this.prdctCount++;
+                    this.loadProduct(element.id, activProtocol.id);
+                });
+
+            });
+        }
+
+    }
+
+    loadProduct(id: any, protocolId: any) {
+        let activProduct: any = {};
+        this.apiService.pvs4_get_product(id).then((result: any) => {
+            console.log('result :', result);
+            activProduct = result.obj;
+            let title = {};
+            try {
+                title = JSON.parse(activProduct.title);
+                title = title[this.lang];
+            } catch {
+                console.log('loadProduct title JSON.parse:', activProduct.title);
+            }
+            activProduct.title = title;
+            if (activProduct.items) {
+                try {
+                activProduct.items = JSON.parse(activProduct.items);
+                } catch {
+                console.error('loadProduct items JSON.parse:', activProduct.items);
+                activProduct.items = [];
+                }
+            } else {
+                activProduct.items = [];
+            }
+
+            activProduct.items.forEach(event => {
+                let pipe = new DatePipe('en-US');
+                event.type = parseInt(event.type);
+                if (event.type == 4) {
+                    event.value = pipe.transform(event.value, 'HH:mm');
+                }
+                if (event.type == 5) {
+                event.value = pipe.transform(event.value, 'dd.MM.yyyy');
+                }
+                if (event.type == 0) {
+                if (event.value == true || event.value == 'true') {
+                    event.value = true;
+                }
+                if (event.value == false || event.value == 'false') {
+                    event.value = false;
+                }
+                }
+            });
+            activProduct.protocol_id = protocolId;
+            this.listProduct.push(activProduct);
+            if (this.prdctCount == this.listProduct.length) {
+                this.pdf_details();
+            }
+        });
+    }
+
+    async pdf_details() {
+        console.log('printPdf', this.listProduct, this.activProtocolArr);
+        const loader = await this.loadingCtrl.create({
+          message: this.translate.instant('Bitte warten')
+        });
+        loader.present();
+
+        try {
+            let pageDesc: string = this.translate.instant('Seite');
+            var src = 'assets/imgs/banner_' + this.userdata.licensee + '.jpg';
+            let customer = this.activCustomer;
+            let prtclBody: any;
+            let prdctBody: any;
+
+            var bodyProtocol = [];
+            let prtclTitle = [
+                                {
+                                text: this.translate.instant('Protokoll Details'),
+                                color: '#ffffff',
+                                fillColor: '#009de0',
+                                colSpan: 2,
+                                alignment: 'center'
+                                },
+                                {
+                                text: '',
+                                color: '#ffffff',
+                                fillColor: '#009de0',
+                                colSpan: 2,
+                                alignment: 'center'
+                                }
+            ];
+            bodyProtocol.push(prtclTitle);
+
+        this.activProtocolArr.forEach(elementPrtcl => {
+            console.log('elementPrtcl :', elementPrtcl);
+            let protocol = elementPrtcl;
+            let protocolItems = elementPrtcl.items;
+
+            // Protocol
+            bodyProtocol.push([{ text: this.translate.instant('Kunde'), color: '#000000', fillColor: '#8bd8f9'}, {text: customer.company, color: '#000000', fillColor: '#8bd8f9'}]);
+            bodyProtocol.push([{ text: this.translate.instant('Kunde') + ' DB-ID'}, {text: customer.id}]);
+            bodyProtocol.push([{ text: this.translate.instant('Kundennummer')}, {text: customer.customer_number}]);
+            bodyProtocol.push([{ text: this.translate.instant('Protokoll Nummer')}, {text: protocol.protocol_number}]);
+            bodyProtocol.push([{ text: this.translate.instant('Datum')}, {text: protocol.protocol_date}]);
+            bodyProtocol.push([{ text: this.translate.instant('Prüfergebnis')}, {text: protocol.resultText}]);
+            bodyProtocol.push([{ text: this.translate.instant('nächste Prüfung')}, {text: protocol.protocol_date_next}]);
+            bodyProtocol.push([{ text: this.translate.instant('Autor')}, {text: protocol.author}]);
+
+            protocolItems.forEach(elementItems => {
+                if (elementItems.title[this.lang] != '' && elementItems.value != undefined) {
+                if (elementItems.type == 0) {
+                    if (elementItems.value == true) {
+                        bodyProtocol.push([{ text: elementItems.title[this.lang]}, {text: '√'}]);
+                    }
+                    if (elementItems.value == false) {
+                        bodyProtocol.push([{ text: elementItems.title[this.lang]}, {text: 'O'}]);
+                    }
+                } else {
+                    bodyProtocol.push([{ text: elementItems.title[this.lang]}, {text: elementItems.value }]);
+                }
+                } else {
+                    bodyProtocol.push([{ text: elementItems.title[this.lang]}, {text: ' ' }]);
+                }
+            });
+
+        });
+        prtclBody = bodyProtocol;
+        console.log('protocol body :', prtclBody);
+
+        // Product
+        var bodyProduct = [];
+        var prdctTitle = [
+                            {
+                            text: this.translate.instant('Produkt Details'),
+                            color: '#ffffff',
+                            fillColor: '#009de0',
+                            colSpan: 2,
+                            alignment: 'center'
+                            },
+                            {
+                            text: '',
+                            color: '#ffffff',
+                            fillColor: '#009de0',
+                            colSpan: 2,
+                            alignment: 'center'
+                            }
+        ];
+        bodyProduct.push(prdctTitle);
+
+        this.listProduct.forEach(element => {
+            if (element.title) {
+                bodyProduct.push([{ text: this.translate.instant('Titel'), color: '#000000', fillColor: '#8bd8f9' },
+                                  { text: element.title, color: '#000000', fillColor: '#8bd8f9' }]);
+            } else {
+                bodyProduct.push([{ text: this.translate.instant('Titel'), color: '#000000', fillColor: '#8bd8f9' },
+                                  { text: '', color: '#000000', fillColor: '#8bd8f9' }]);
+            }
+            if (element.id_number) {
+                bodyProduct.push([{ text: 'ID' }, { text: element.id_number }]);
+            } else {
+                bodyProduct.push([{ text: 'ID' }, { text: '' }]);
+            }
+            if (element.articel_no) {
+                bodyProduct.push([{ text: this.translate.instant('Articel No') }, { text: element.articel_no }]);
+            } else {
+                bodyProduct.push([{ text: this.translate.instant('Articel No') }, { text: '' }]);
+            }
+            if (element.customer_description) {
+                bodyProduct.push([{ text: this.translate.instant('Kundenbezeichnung') }, { text: element.customer_description }]);
+            } else {
+                bodyProduct.push([{ text: this.translate.instant('Kundenbezeichnung') }, { text: '' }]);
+            }
+            if (element.author) {
+                bodyProduct.push([{ text: this.translate.instant('Autor') }, { text: element.author }]);
+            } else {
+                bodyProduct.push([{ text: this.translate.instant('Autor') }, { text: '' }]);
+            }
+            if (element.check_interval) {
+                bodyProduct.push([{ text: this.translate.instant('Intervall Prüfen') }, { text: element.check_interval }]);
+            } else {
+                bodyProduct.push([{ text: this.translate.instant('Intervall Prüfen') }, { text: '' }]);
+            }
+
+            // product oprtions
+            element.items.forEach(elementItems => {
+            if (elementItems.title[this.lang] != '' && elementItems.value != undefined) {
+                if (elementItems.type == 0) {
+                if (elementItems.value == true) {
+                    bodyProduct.push([{ text: elementItems.title[this.lang]}, {text: '√' }]);
+                }
+                if (elementItems.value == false) {
+                    bodyProduct.push([{ text: elementItems.title[this.lang]}, {text: 'O' }]);
+                }
+                } else {
+                bodyProduct.push([{ text: elementItems.title[this.lang]}, {text: elementItems.value }]);
+                }
+            } else {
+                bodyProduct.push([{ text: elementItems.title[this.lang]}, {text: '' }]);
+            }
+            });
+
+        });
+
+        prdctBody = bodyProduct;
+
+        console.log('product body :', prdctBody);
+
+          this.pdf.toDataURL(src, resDataURL => {
+            var docDefinition = {
+              pageSize: 'A4',
+              pageOrientation: 'landscape',
+              pageMargins: [20, 140, 20, 20],
+              header: {
+                columns: [
+                  {
+                    'image': resDataURL, 'width': 800, margin: 20
+                  }
+                ]
+              },
+              content: [
+                {
+                  columns: [
+                    {
+                      width: '50%',
+                      fontSize: 10,
+                      layout: {
+                        hLineWidth: function (i, node) { return 1; },
+                        vLineWidth: function (i, node) { return 1; },
+                        hLineColor: function (i, node) { return '#cccccc'; },
+                        vLineColor: function (i, node) { return '#cccccc'; },
+                        paddingTop: function (i, node) { return 4; },
+                        paddingBottom: function (i, node) { return 4; },
+                      },
+                      table: {
+                        headerRows: 1,
+                        widths: ['auto', '*'],
+                        body: prtclBody
+                      }
+                    },
+                    {
+                      width: '50%',
+                      fontSize: 10,
+                      layout: {
+                        hLineWidth: function (i, node) { return 1; },
+                        vLineWidth: function (i, node) { return 1; },
+                        hLineColor: function (i, node) { return '#cccccc'; },
+                        vLineColor: function (i, node) { return '#cccccc'; },
+                        paddingTop: function (i, node) { return 4; },
+                        paddingBottom: function (i, node) { return 4; },
+                      },
+                      table: {
+                        headerRows: 1,
+                        widths: ['auto', '*'],
+                        body: prdctBody
+                      }
+                    }
+                  ],
+                  columnGap: 10
+                }
+              ],
+              footer: function (currentPage, pageCount) {
+                return { text: pageDesc + ' ' + currentPage.toString() + ' / ' + pageCount, alignment: 'center' };
+              }
+            };
+
+            this.pdf.createPdf(docDefinition, 'download', this.translate.instant('Protokoll Details'.replace(/\s/g, '')) + '.pdf');
+            loader.dismiss();
+          });
+        } catch {
+          loader.dismiss();
+          console.error('PDF error');
+        }
+    }
+
+    async pdf_list() {
         const loader = await this.loadingCtrl.create({
             message: this.translate.instant('Bitte warten')
         });
@@ -616,21 +953,9 @@ export class ProtocolListPage implements OnInit {
             this.allnodes = [];
             let rowArray: any[] = [];
             if (this.isFilterOn()) {
-                if (this.selectedNode.length > 0) {
-                    for (let i = 0; i < this.selectedNode.length; i++) {
-                        this.allnodes.push(this.selectedNode[i].data);
-                    }
-                } else {
-                    this.data_tree(this.protocolListSearch);
-                }
+                this.data_tree(this.protocolListSearch);
             } else {
-                if (this.selectedNode.length > 0) {
-                    for (let i = 0; i < this.selectedNode.length; i++) {
-                        this.allnodes.push(this.selectedNode[i].data);
-                    }
-                } else {
-                    this.data_tree(this.protocolListAll);
-                }
+                this.data_tree(this.protocolListAll);
             }
             let obj: any;
             const headerRowVisible: any = 0;
