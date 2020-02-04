@@ -123,12 +123,20 @@ export class StartscreenPage {
     this.navCtrl.navigateForward('/login');
   }
 
+  protected searchTimer;  
   customer_search(event) {
     if (event.keyCode == 13) {
-      console.log('event :', event, event.keyCode, this.customerSearch);
-      this.systemService.customerId = 0;
-      this.systemService.filterText = this.customerSearch;
-      this.navCtrl.navigateForward(['/customer-table', this.customerSearch]);
+      console.log('customer_search event :', event, event.keyCode, this.customerSearch);
+      if (this.searchTimer) { 
+        clearTimeout(this.searchTimer);
+      }
+      this.searchTimer = setTimeout(() => {
+          console.log('searchTimer ');
+          this.systemService.customerId = 0;
+          this.systemService.filterText = this.customerSearch;
+          this.navCtrl.navigateForward(['/customer-table', this.customerSearch]);
+      }, 555);
+
     }
   }
 
