@@ -36,14 +36,14 @@ export class CustomerTablePage implements OnInit {
         public loadingCtrl: LoadingController,
         private screenOrientation: ScreenOrientation,
         private route: ActivatedRoute) {
-            /*
+            
             this.modelChanged.pipe(
                 debounceTime(700))
                 .subscribe(model => {
                     this.generate_customerList(0, this.rowCount, this.sortedColumn.sort_field, this.sortedColumn.sort_order);
-                    //localStorage.setItem('filter_values_customer', JSON.stringify(this.columnFilterValues));
+                    //localStorage.setItem('filter_values_customer', JSON.stringify(this.columnFilterValues)); 
             });
-            */
+            
     }
     public customerListAll: TreeNode[] = [];
     public customerListView: TreeNode[] = [];
